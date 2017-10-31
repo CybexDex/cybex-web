@@ -3,7 +3,7 @@ import {PropTypes} from "react";
 import classNames from "classnames";
 import AccountActions from "actions/AccountActions";
 import AccountStore from "stores/AccountStore";
-import {ChainValidation} from "bitsharesjs/es";
+import {ChainValidation} from "cybexjs";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import AltContainer from "alt-container";

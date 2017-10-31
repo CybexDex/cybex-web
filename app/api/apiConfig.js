@@ -1,12 +1,11 @@
 export const blockTradesAPIs = {
     BASE: "https://api.blocktrades.us/v2",
-    // BASE_OL: "https://api.blocktrades.us/ol/v2",
     BASE_OL: "https://ol-api1.openledger.info/api/v0/ol/support",
     COINS_LIST: "/coins",
     ACTIVE_WALLETS: "/active-wallets",
     TRADING_PAIRS: "/trading-pairs",
     DEPOSIT_LIMIT: "/deposit-limits",
-    ESTIMATE_OUTPUT: "/estimate-output-amount"
+    ESTIMATE_OUTPUT: "timate-output-amount"
 };
 
 export const rudexAPIs = {
@@ -15,23 +14,20 @@ export const rudexAPIs = {
     NEW_DEPOSIT_ADDRESS: "/new-deposit-address"
 };
 
+const TEST_NODE = "ws://121.40.109.65:11011";
+const BITSHARES_NODE = "wss://fake.automatic-selection.com";
+const DEFAULT_WS_NODE = TEST_NODE;
+const DEFAULT_FAUCET = "http://121.40.109.65:3000";
+
 export const settingsAPIs = {
-    DEFAULT_WS_NODE: "wss://fake.automatic-selection.com",
+    DEFAULT_WS_NODE,
     WS_NODE_LIST: [
-        {url: "wss://fake.automatic-selection.com", location: {translate: "settings.api_closest"}},
+        {url: BITSHARES_NODE, location: {translate: "settings.api_closest"}},
+        {url: TEST_NODE, location: "Cybex Test"},
+        {url: "ws://121.40.95.24:8090", location: "Cybex Test Node Backup"},
         {url: "ws://127.0.0.1:8090", location: "Locally hosted"},
-        {url: "wss://bitshares.openledger.info/ws", location: "Nuremberg, Germany"},
-        {url: "wss://eu.openledger.info/ws", location: "Berlin, Germany"},
-        {url: "wss://bit.btsabc.org/ws", location: "Hong Kong"},
-        {url: "wss://bts.ai.la/ws", location: "Hong Kong"},
-        {url: "wss://bitshares.dacplay.org/ws", location:  "Hangzhou, China"},
-        {url: "wss://bitshares-api.wancloud.io/ws", location:  "China"},
-        {url: "wss://openledger.hk/ws", location: "Hong Kong"},
-        {url: "wss://dexnode.net/ws", location: "Dallas, USA"},
-        {url: "wss://bitshares.crypto.fans/ws", location: "Munich, Germany"},
-        {url: "wss://node.testnet.bitshares.eu", location: "Public Testnet Server (Frankfurt, Germany)"}
     ],
-    DEFAULT_FAUCET: "https://bitshares.openledger.info",
+    DEFAULT_FAUCET,
     TESTNET_FAUCET: "https://faucet.testnet.bitshares.eu",
-    RPC_URL: "https://openledger.info/api/"
+    RPC_URL: "ws://121.40.109.65:8092/api/"
 };

@@ -1,4 +1,5 @@
-import {ChainStore} from "bitsharesjs/es";
+import { ChainStore } from "cybexjs";
+import { Apis } from "cybexjs-ws";
 import React from "react";
 import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
@@ -8,7 +9,7 @@ import NotificationStore from "stores/NotificationStore";
 import intlData from "./components/Utility/intlData";
 import alt from "alt-instance";
 import { connect, supplyFluxContext } from "alt-react";
-import {IntlProvider} from "react-intl";
+import { IntlProvider } from "react-intl";
 import SyncError from "./components/SyncError";
 import LoadingIndicator from "./components/LoadingIndicator";
 import Header from "components/Layout/Header";
@@ -19,9 +20,13 @@ import NotificationSystem from "react-notification-system";
 import TransactionConfirm from "./components/Blockchain/TransactionConfirm";
 import WalletUnlockModal from "./components/Wallet/WalletUnlockModal";
 import BrowserSupportModal from "./components/Modal/BrowserSupportModal";
+import WalletDb from "stores/WalletDb";
+import CachedPropertyStore from "stores/CachedPropertyStore";
+import BackupModal from "components/Modal/BackupModal";
+import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
-// import Incognito from "./components/Layout/Incognito";
-// import { isIncognito } from "feature_detect";
+import HelpDrawer from "components/HelpDrawer";
+import Nav from "./components/Layout/Nav"
 
 class App extends React.Component {
 
@@ -94,12 +99,22 @@ class App extends React.Component {
         }
 
         this.props.router.listen(this._rebuildTooltips);
-
+        // Todo
+        this.showBackupTip();
         this._rebuildTooltips();
     }
 
     _onIgnoreIncognitoWarning(){
         this.setState({incognitoWarningDismissed: true});
+    }
+
+    showBackupTip() {
+        var wallet = WalletDb.getWallet();
+        let backup_recommended = (wallet && (!wallet.backup_date || CachedPropertyStore.get("backup_recommended")));
+
+        if (this.props.router.location.pathname.search("wallet/backup/create") === -1 &&
+            backup_recommended)
+            this.backupModal.show();
     }
 
     _rebuildTooltips() {
@@ -110,6 +125,11 @@ class App extends React.Component {
                 this.refs.tooltip.globalRebuild();
             }
         }, 1500);
+    }
+
+    _onLocaleChange(state) {
+        console.debug("[APP]locale change: ", state);
+        this.forceUpdate();
     }
 
     _chainStoreSub() {
@@ -135,7 +155,7 @@ class App extends React.Component {
     }
 
     _onSettingsChange() {
-        let {settings, viewSettings} = SettingsStore.getState();
+        let { settings, viewSettings } = SettingsStore.getState();
         if (settings.get("themes") !== this.state.theme) {
             this.setState({
                 theme: settings.get("themes")
@@ -168,7 +188,7 @@ class App extends React.Component {
     // }
 
     render() {
-        let {isMobile, showChat, dockedChat, theme } = this.state;
+        let { disableChat, isMobile, showChat, dockedChat, theme } = this.state;
         let content = null;
 
         let showFooter = this.props.location.pathname.indexOf("market") === -1;
@@ -190,31 +210,24 @@ class App extends React.Component {
         } else {
             content = (
                 <div className="grid-frame vertical">
-                    <Header/>
-                    <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu"/>
-                    <div className="grid-block">
-                        <div className="grid-block vertical">
-                            {this.props.children}
-                        </div>
-                        <div className="grid-block shrink" style={{overflow: "hidden"}}>
-                            {isMobile ? null :
-                                <Chat
-                                    showChat={showChat}
-                                    disable={true /* disableChat */}
-                                    footerVisible={showFooter}
-                                    dockedChat={dockedChat}
-                                />}
-
+                    <Header />
+                    <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
+                    <div className="main-body">
+                        <Nav />
+                        <div className="grid-block">
+                            <div className="grid-block vertical">
+                                {this.props.children}
+                            </div>
                         </div>
                     </div>
-                    {showFooter ? <Footer synced={this.state.synced}/> : null}
-                    <ReactTooltip ref="tooltip" place="top" type={theme === "lightTheme" ? "dark" : "light"} effect="solid"/>
+                    {showFooter ? <Footer synced={this.state.synced} /> : null}
+                    <ReactTooltip ref="tooltip" place="top" type={theme === "lightTheme" ? "dark" : "light"} effect="solid" />
                 </div>
             );
         }
 
         return (
-            <div style={{backgroundColor: !this.state.theme ? "#2a2a2a" : null}} className={this.state.theme}>
+            <div style={{ backgroundColor: !this.state.theme ? "#2a2a2a" : null }} className={this.state.theme}>
                 <div id="content-wrapper">
                     {content}
                     <NotificationSystem
@@ -228,15 +241,18 @@ class App extends React.Component {
                             }
                         }}
                     />
-                    <TransactionConfirm/>
-                    <WalletUnlockModal/>
-                    <BrowserSupportModal ref="browser_modal"/>
+                    <TransactionConfirm />
+                    <BackupModal ref={backup => { this.backupModal = backup; }} />
+                    <WalletUnlockModal />
+                    <BrowserSupportModal ref="browser_modal" />
                 </div>
             </div>
         );
 
     }
 }
+
+App = withRouter(App);
 
 class RootIntl extends React.Component {
     componentWillMount() {
@@ -250,7 +266,7 @@ class RootIntl extends React.Component {
                 formats={intlData.formats}
                 initialNow={Date.now()}
             >
-                <App {...this.props}/>
+                <App {...this.props} />
             </IntlProvider>
         );
     }
@@ -273,12 +289,12 @@ class Root extends React.Component {
         location: React.PropTypes.object
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //Detect OS for platform specific fixes
-        if(navigator.platform.indexOf('Win') > -1){
+        if (navigator.platform.indexOf('Win') > -1) {
             var main = document.getElementById('content');
             var windowsClass = 'windows';
-            if(main.className.indexOf('windows') === -1){
+            if (main.className.indexOf('windows') === -1) {
                 main.className = main.className + (main.className.length ? ' ' : '') + windowsClass;
             }
         }

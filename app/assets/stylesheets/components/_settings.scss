@@ -1,14 +1,58 @@
+@import "./../layout/size";
 .settings-menu {
-    > li {
+    >li {
         list-style-type: none;
         cursor: pointer;
         padding: 5px 0;
         &:hover {
-                background-color: red;
+            background-color: red;
         }
-
         &.active {
             color: blue;
         }
+    }
+}
+
+.settings-wrapper {
+    .settings-left,
+    .settings-main {
+        padding: 1em;
+    }
+    .settings-left {
+        grid-area: left;
+    }
+    .settings-main {
+        grid-area: main;
+        &>div {
+            margin: auto;
+        }
+    }
+    display: grid;
+    width: 100%;
+    grid-template: "left main" / $width-left-menu auto;
+    @media screen and (orientation: portrait),
+    (max-width: 600px) {
+        grid-template: "left" "main" / auto;
+    }
+}
+
+.api-node {
+    .h3, .h4 {
+        grid-area: name;
+    }
+    p {
+        grid-area: url;
+    }
+    .api-status {
+        grid-area: status;
+        text-align: right;
+        max-width: 12em;
+    }
+    display: grid;
+    height: 4.8em;
+    grid-template: "head status" 1fr "url status" 1fr / 1fr auto;
+    .button {
+        display: block;
+        width: 100%;
     }
 }

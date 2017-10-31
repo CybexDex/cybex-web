@@ -2,7 +2,7 @@ import alt from "alt-instance";
 
 var locales = {};
 if (__ELECTRON__) {
-    ["cn", "de", "es", "fr", "ko", "tr", "ru", "it"].forEach(locale => {
+    ["cn","en", "de", "es", "fr", "ko", "tr", "ru"].forEach(locale => {
         locales[locale] = require("json-loader!assets/locales/locale-" + locale + ".json");
     });
 }
@@ -10,7 +10,9 @@ if (__ELECTRON__) {
 class IntlActions {
 
     switchLocale(locale) {
-        if (locale === "en") {
+        // var locale = "cn"
+        // console.debug("[IntlStore]Translate: ", locale);
+        if (/cn|en/.test(locale)) {
             return {locale};
         }
         if (__ELECTRON__) {
@@ -20,7 +22,7 @@ class IntlActions {
             };
         } else {
             return (dispatch) => {
-                fetch(`${__BASE_URL__}locale-${locale}.json`).then( (reply) => {
+                fetch("locale-" + locale + ".json").then( (reply) => {
                     return reply.json().then(result => {
                         dispatch({
                             locale,
@@ -30,7 +32,9 @@ class IntlActions {
                 }).catch(err => {
                     console.log("fetch locale error:", err);
                     return (dispatch) => {
-                        dispatch({locale: "en"});
+                        // Translate: 异常返回
+                        // dispatch({locale: ""});
+                        dispatch({locale: "cn"});
                     };
                 });
             };

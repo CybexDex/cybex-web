@@ -1,5 +1,5 @@
-import {Apis, Manager} from "bitsharesjs-ws";
-import {ChainStore} from "bitsharesjs/es";
+import {Apis, Manager} from "cybexjs-ws";
+import {ChainStore} from "cybexjs";
 
 // Stores
 import iDB from "idb-instance";

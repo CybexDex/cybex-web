@@ -1,5 +1,5 @@
 import alt from "alt-instance";
-import {ChainConfig} from "bitsharesjs-ws";
+import {ChainConfig} from "cybexjs-ws";
 import counterpart from "counterpart";
 
 class TransactionConfirmActions {

@@ -1,6 +1,6 @@
 import React from "react";
 import {PropTypes} from "react";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import Translate from "react-translate-component";
 import AssetActions from "actions/AssetActions";
 import AssetStore from "stores/AssetStore";

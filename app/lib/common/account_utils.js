@@ -1,4 +1,4 @@
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 import utils from "./utils";
 import counterpart from "counterpart";
 import { estimateFee } from "./trxHelper";
@@ -108,13 +108,13 @@ export default class AccountUtils {
             "coinbase",
             "blocktrade",
             "locktrades",
-            "yun.bts",
+            "yun.cyb",
             "transwiser-walle",
             "transwiser-wallets",
             "ranswiser-wallet",
             "yun.btc",
             "pay.coinbase.com",
-            "pay.bts.com",
+            "pay.cyb.com",
             "btc38.com",
             "yunbi.com",
             "coinbase.com",

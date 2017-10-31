@@ -13,10 +13,10 @@ import AccountStore from "stores/AccountStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import AccountActions from "actions/AccountActions";
 import SettingsActions from "actions/SettingsActions";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "cybexjs-ws";
 import utils from "common/utils";
 import AccountSelector from "../Account/AccountSelector";
-var logo = require("assets/logo-ico-blue.png");
+var logo = require("assets/cybex-logo.png");
 
 class WalletUnlockModal extends React.Component {
 

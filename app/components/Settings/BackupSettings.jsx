@@ -45,7 +45,7 @@ export default class BackupSettings extends React.Component {
             <div>
                 <select
                     onChange={this._changeType.bind(this)}
-                    className="bts-select"
+                    className="cyb-select"
                     value={types[restoreType]}
                 >
                     {options}

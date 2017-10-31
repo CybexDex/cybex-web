@@ -2,8 +2,8 @@ var numeral = require("numeral");
 
 let id_regex = /\b\d+\.\d+\.(\d+)\b/;
 
-import {ChainTypes} from "bitsharesjs/es";
-var {object_type} = ChainTypes;
+import {ChainTypes} from "cybexjs";
+var {object_type, operations} = ChainTypes;
 
 var Utils = {
     get_object_id: (obj_id) => {

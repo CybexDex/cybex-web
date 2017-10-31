@@ -3,8 +3,8 @@ import WalletManagerStore from 'stores/WalletManagerStore'
 import AccountStore from 'stores/AccountStore'
 import PrivateKeyStore from 'stores/PrivateKeyStore'
 
-import {ChainStore, PrivateKey, PublicKey, Aes, key} from "bitsharesjs/es";
-import {Apis, ChainConfig} from "bitsharesjs-ws";
+import {ChainStore, PrivateKey, PublicKey, Aes, key} from "cybexjs";
+import {Apis, ChainConfig} from "cybexjs-ws";
 import BackupActions from "actions/BackupActions"
 import WalletActions from "actions/WalletActions"
 

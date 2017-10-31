@@ -1,4 +1,4 @@
-import {SerializerValidation, TransactionBuilder, TransactionHelper} from "bitsharesjs/es";
+import {SerializerValidation, TransactionBuilder, TransactionHelper} from "cybexjs";
 import ApplicationApi from "./ApplicationApi";
 
 class WalletApi {

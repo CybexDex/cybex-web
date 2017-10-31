@@ -1,3 +1,5 @@
+@import "./../base/mixins";
+@import "./../layout/size";
 .blocktrades-bridge select.native-coin-types {
   width: 11em;
   margin: 0 5px !important;
@@ -96,39 +98,75 @@
 }
 
 div.Blocktrades__gateway {
-    h4 {
-        border-bottom: 1px solid $border-color;
-        padding-bottom: 1rem;
-        margin-bottom: 1.25rem;
-    }
-
-    div.medium-10 {
-        padding-bottom: 1.25rem;
-        margin-bottom: 1.25rem;
-        border-bottom: 1px solid $border-color;
-    }
+  h4 {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  div.medium-10 {
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid $border-color;
+  }
 }
 
 div.service-selector {
-    margin-bottom: 2rem;
-
-    @include breakpoint(medium) {
-        border-bottom: 1px solid $border-color;
-    }
-    > ul.button-group.segmented {
+  margin-bottom: 2rem;
+  @include breakpoint(medium) {
+    border-bottom: 1px solid $border-color;
+  }
+  >ul.button-group.segmented {
+    border-bottom: none;
+    border-top: none;
+    border-right: none;
+    flex-wrap: wrap;
+    a {
+      border-top: 1px solid $border-color;
+      border-bottom: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+      font-size: 1.3rem;
+      @include breakpoint(medium) {
         border-bottom: none;
-        border-top: none;
-        border-right: none;
-        flex-wrap: wrap;
-
-        a {
-            border-top: 1px solid $border-color;
-            border-bottom: 1px solid $border-color;
-            border-right: 1px solid $border-color;
-            font-size: 1.3rem;
-            @include breakpoint(medium) {
-                border-bottom: none;
-            }
-        }
+      }
     }
+  }
+}
+
+.block-wrapper {
+  padding: $space-between + 2; // padding-top: $space-between;
+  // padding-bottom: $space-between;
+  &>div+div {
+    margin-left: $space-between;
+  } // &>div:last-of-type {
+  //   margin-right: $space-between;
+  // }
+  .block-left,
+  .block-right {
+    flex: 1 1 1px;
+  }
+}
+
+.block-right {
+  &.grid-block {
+    border-top-width: 0 !important;
+    border-bottom-width: 0 !important;
+  }
+  &>.grid-block {
+    @include flex(1,
+    1,
+    1px);
+    padding-bottom: $space-between;
+    &+.grid-block {
+      margin-top: $space-between;
+    }
+  }
+}
+
+.block-left {
+  @include display-flex($direction: row, $align-content: stretch);
+  overflow: auto;
+  padding: $space-between;
+  .subheader {
+    font-size: 14.4px;
+  }
 }

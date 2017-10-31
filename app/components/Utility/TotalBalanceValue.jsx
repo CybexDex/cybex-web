@@ -3,7 +3,7 @@ import FormattedAsset from "./FormattedAsset";
 import ChainTypes from "./ChainTypes";
 import BindToChainState from "./BindToChainState";
 import utils from "common/utils";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 import { connect } from "alt-react";
 import MarketsStore from "stores/MarketsStore";
 import SettingsStore from "stores/SettingsStore";

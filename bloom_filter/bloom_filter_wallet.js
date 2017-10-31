@@ -1,14 +1,14 @@
 /* eslint-disable */
 
-// Filter BTS 0.9.2+ import keys export file so that it will include only private keys
-// that may be found in the BTS 2.0 genesis block.
+// Filter CYB 0.9.2+ import keys export file so that it will include only private keys
+// that may be found in the CYB 2.0 genesis block.
 // Dependencies:
 // ./bloom_bitshares.dat (1,048,576 bytes) sha1 4d80faa41a5e868899febdc9dab48d1f2d567487992810cf0532f3c0ee2b266c
 // nodejs, npm, and: npm install
 
 /*
 * ./bloom.dat is from bitshares/graphene/programs/genesis_util/create_bloom_filter.py
-* The bloom filter was created with a genesis containing BTS prefixed keys.  Create
+* The bloom filter was created with a genesis containing CYB prefixed keys.  Create
 * or dowload this file first.
 */
 
@@ -21,10 +21,10 @@ var fs = require('fs')
 
 require('coffee-script/register') // npm install coffee-script
 
-var graphenejs = require("bitsharesjs");
+var graphenejs = require("cybexjs");
 var h = graphenejs.hash;
 var key_utils = graphenejs.key;
-const chainPrefix = "BTS";
+const chainPrefix = "CYB";
 
 fs.readFile('bloom_bitshares.dat', function (err, data) {
     if (err) throw err

@@ -5,7 +5,7 @@ import Operation from "../Blockchain/Operation";
 import Immutable from "immutable";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
-import {ChainTypes as GraphChainTypes} from "bitsharesjs/es";
+import {ChainTypes as GraphChainTypes} from "cybexjs";
 let {operations} = GraphChainTypes;
 
 let ops = Object.keys(operations);

@@ -1,5 +1,5 @@
 import utils from "./utils";
-import {ChainStore, ChainTypes} from "bitsharesjs/es";
+import {ChainStore, ChainTypes} from "cybexjs";
 let {object_type} = ChainTypes;
 let opTypes = Object.keys(object_type);
 
@@ -103,15 +103,15 @@ const MarketUtils = {
 
         if (order.debt) {
             if (invert) {
-                // Price in USD/BTS, amount should be in BTS, value should be in USD, debt is in USD
-                // buy is in USD, sell is in BTS
-                // quote is USD, base is BTS
+                // Price in USD/CYB, amount should be in CYB, value should be in USD, debt is in USD
+                // buy is in USD, sell is in CYB
+                // quote is USD, base is CYB
                 value = order.debt / quotePrecision;
                 amount = this.limitByPrecision(value / price.full, base);
             } else {
-                // Price in BTS/USD, amount should be in USD, value should be in BTS, debt is in USD
-                // buy is in USD, sell is in BTS
-                // quote is USD, base is BTS
+                // Price in CYB/USD, amount should be in USD, value should be in CYB, debt is in USD
+                // buy is in USD, sell is in CYB
+                // quote is USD, base is CYB
 
                 amount = this.limitByPrecision(order.debt / quotePrecision, quote);
                 value = price.full * amount;

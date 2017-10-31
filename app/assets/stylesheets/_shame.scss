@@ -1,6 +1,5 @@
 // Hacks that should get cleaned up and put in appropriate files within the stylesheet layout
 // http://sass-guidelin.es/#shame-file
-
 #content.win32 {
   font-size: 90%;
   h1 {
@@ -30,7 +29,7 @@ a {
 // border is needed when centering
 // input[type="file"] did not work
 input[type="file"] {
-    border: 'solid';
+  border: 'solid';
 }
 
 hr {
@@ -40,8 +39,7 @@ hr {
 }
 
 .error {
-  color: #ff0000;
-  //padding: 16px;
+  color: #ff0000; //padding: 16px;
 }
 
 .reactTooltip {
@@ -55,8 +53,8 @@ hr {
 //padding: "2rem 0 2rem 0"  Using top and bottom padding prevents
 //unnecessary scroll bars but does not disable them for future use.
 .no-overflow-padding {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .no-padding {
@@ -69,7 +67,7 @@ hr {
 
 .center-content {
   text-align: center;
-  > * {
+  >* {
     margin-left: auto;
     margin-right: auto;
   }
@@ -83,7 +81,7 @@ hr {
   cursor: pointer;
 }
 
-a > .label {
+a>.label {
   cursor: pointer;
 }
 
@@ -91,26 +89,34 @@ a > .label {
   display: block;
 }
 
-button, .button {
+button,
+.button {
   transition: all 0.3s ease 0s !important;
-  border: 1px solid transparent;
-  //margin: 2px 5px 2px 5px;
+  border: 1px solid transparent; //margin: 2px 5px 2px 5px;
   vertical-align: middle;
   &.outline {
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       background: none !important;
     }
-
     background: none;
     border: 1px solid #555;
   }
 }
 
-td > button:first-child, td > .button:first-child, div > button:first-child, div > .button:first-child {
+td>button:first-child,
+td>.button:first-child,
+div>button:first-child,
+div>.button:first-child {
   margin-left: 0;
 }
 
-td > button:last-child, td > .button:last-child, div > button:last-child, div > .button:last-child, section > .button:last-child {
+td>button:last-child,
+td>.button:last-child,
+div>button:last-child,
+div>.button:last-child,
+section>.button:last-child {
   margin-right: 0;
 }
 
@@ -126,10 +132,10 @@ td > button:last-child, td > .button:last-child, div > button:last-child, div > 
   font-size: 100% !important;
 }
 
-
 .content-block {
   margin-bottom: 2rem;
-  > h3, .recent-transactions > h3 {
+  >h3,
+  .recent-transactions>h3 {
     font-size: 2rem;
     border-bottom: 1px solid #444;
     margin-top: 0;
@@ -146,25 +152,26 @@ td > button:last-child, td > .button:last-child, div > button:last-child, div > 
 }
 
 .no-border-bottom {
-    border-bottom: none !important;
+  border-bottom: none !important;
 }
 
 .page-header {
   margin-bottom: 2rem;
   border-bottom: 1px solid #444;
-  h3, h1 {
+  h3,
+  h1 {
     margin: 0;
     padding: 1rem 0 1rem 0;
   }
   h3 {
     font-size: 2rem;
   }
-  h1 + h3 {
+  h1+h3 {
     padding-top: 0;
   }
 }
 
-table > tbody > tr.control-row > td {
+table>tbody>tr.control-row>td {
   padding-top: 1rem;
   border-bottom: none;
   vertical-align: middle;
@@ -174,10 +181,10 @@ table > tbody > tr.control-row > td {
     padding-bottom: 0;
     margin-right: 8px !important;
   }
-  > label {
+  >label {
     margin: 0;
   }
-  > input {
+  >input {
     margin-right: 2rem !important;
   }
 }
@@ -195,15 +202,15 @@ div.modal {
   overflow: visible;
 }
 
-.full-width-content > * {
+.full-width-content>* {
   width: 100%;
 }
 
-.op-table > tbody > tr > td:first-child {
+.op-table>tbody>tr>td:first-child {
   min-width: 12rem;
 }
 
-.button-group > .button {
+.button-group>.button {
   margin: 0 1rem 1rem 0;
 }
 
@@ -212,9 +219,9 @@ div.modal {
 }
 
 div.disabled * {
-    opacity: 0.8 !important;
-    cursor: default !important;
-    pointer-events: none !important;
+  opacity: 0.8 !important;
+  cursor: default !important;
+  pointer-events: none !important;
 }
 
 div.disabled input {
@@ -222,7 +229,8 @@ div.disabled input {
 }
 
 .modal-header {
-  > h3, >h6 {
+  >h3,
+  >h6 {
     margin-bottom: 0;
   }
   margin-bottom: 1rem;
@@ -252,7 +260,7 @@ span.time {
   white-space: nowrap;
 }
 
-section > ul > li.key-value {
+section>ul>li.key-value {
   padding: 0.5rem 1rem;
 }
 
@@ -261,7 +269,7 @@ label.inline {
 }
 
 .blocks-row {
-  > div.grid-block {
+  >div.grid-block {
     padding-bottom: 0 !important;
   }
 }
@@ -273,10 +281,10 @@ label.inline {
 .electron-only {
   visibility: hidden;
 }
+
 #content.electron {
   visibility: visible;
 }
-
 
 .Popover-body {
   max-width: 50rem;
@@ -286,7 +294,6 @@ label.inline {
   background: hsl(0, 0%, 32%);
   color: white;
   border-radius: 0.05rem;
-
   .help-content h3 {
     color: white;
   }
@@ -323,11 +330,11 @@ label.inline {
 }
 
 .tooltip-zindex {
-    z-index: 1001;
+  z-index: 1001;
 }
 
 .inline-block {
-    display: inline-block;
+  display: inline-block;
 }
 
 .__react_component_tooltip {
@@ -343,100 +350,114 @@ label.inline {
 }
 
 select {
-    line-height: normal !important;
+  line-height: normal !important;
 }
 
-select.bts-select {
-    border-radius: 5px;
-    cursor:pointer;
-    height: 2em;
-    border: none;
-    background: none;
-    background-color: transparent;
-    max-width: 500px;
-    border-bottom: 1px solid #444;
-    -webkit-appearance: menulist;
-    -moz-appearance: menulist;
-    appearance: menulist;
+select.cyb-select {
+  border-radius: 5px;
+  cursor: pointer;
+  height: 2em;
+  border: none;
+  background: none;
+  background-color: transparent;
+  max-width: 500px;
+  border-bottom: 1px solid #444;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  appearance: menulist;
 }
 
-.windows select.bts-select {
-    height: 2.35em;
+.windows select.cyb-select {
+  height: 2.35em;
 }
 
 @media screen and (min-width: 900px) {
-    .column-show-small {
-        display: none !important;
-    }
+  .column-show-small {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 600px) {
-    .column-hide-tiny {
-        display: none !important;
-    }
+  .column-hide-tiny {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 900px) {
-    .column-hide-small {
-        display: none !important;
-    }
+  .column-hide-small {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: 1100px) {
-    .column-hide-medium {
-        display: none !important;
-    }
+  .column-hide-medium {
+    display: none !important;
+  }
 }
 
-input, textarea {
-    border-radius: 5px !important;
+input,
+textarea {
+  border-radius: 5px !important;
 }
 
 input[type=number] {
-    -moz-appearance:textfield;
+  -moz-appearance: textfield;
 }
 
 .clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 @include breakpoint(xlarge) {
-    form.hide-container {
-        display: inherit !important;
-    }
+  form.hide-container {
+    display: inherit !important;
+  }
 }
 
 .unlock-tooltip {
-    min-width: 150px;
+  min-width: 150px;
 }
 
-section input[type="text"], section input[type="password"] {
-  border:none;
+section input[type="text"],
+section input[type="password"] {
+  border: none;
   max-width: 30rem;
-  &:hover, &:active, &:focus {
-    border:none;
+  &:hover,
+  &:active,
+  &:focus {
+    border: none;
+  }
+  &.full {
+    max-width: unset;
   }
 }
 
 section progress {
-    max-width: 30rem;
+  max-width: 30rem;
 }
 
 .notification {
-    table > tr > td {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-
-        span {
-            line-height: 1.1rem;
-        }
+  table>tr>td {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    span {
+      line-height: 1.1rem;
     }
+  }
 }
 
 .help-tooltip {
-    cursor: help;
+  cursor: help;
 }
 
-h4 {
+.table-cell {
+  display: table-cell;
+  h4 {
     font-weight: 600;
+  }
+  .flex-justify {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
 }

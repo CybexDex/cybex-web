@@ -54,5 +54,5 @@ the reader and customer to leverage those features in full or only partially.
   denotes simply as USD, EUR, CNY, etc. in the wallet. These digital tokens
   represent the same value as their underlaying physical asset. Hence 1 USD in
   this wallet is worth $1 and can be redeemed as such. Any of these tokens is
-  backed by BitShares' company shares (BTS) being locked up as collateral and
+  backed by BitShares' company shares (CYB) being locked up as collateral and
   being available for settlement at its current price.

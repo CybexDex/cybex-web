@@ -7,15 +7,16 @@
     "de": "Deutsch",
     "es": "Español",
     "it": "Italiano",
-    "tr": "Turkish"
+    "tr": "Turkish",
+    "ru": "Русский"
   },
   "sync_fail": {
     "title": "无法与API服务器同步连接",
     "sub_text_1": "请确认你的计算机系统时钟正确。",
     "sub_text_2": "同步你的计算机时钟后，请刷新本页面。如果你的时钟正确，那你连接的API服务器可能与区块链数据不同步，这种情况下，可尝试使用其他API服务器进行连接。"
-},
+  },
   "header": {
-    "title": "BitShares (石墨烯)钱包",
+    "title": "Cybex钱包",
     "account": "账户",
     "dashboard": "概览",
     "explorer": "浏览",
@@ -38,42 +39,52 @@
     "account_value": "账户价值"
   },
   "tooltip": {
-      "call_limit": "市场中最少抵押率头寸的平仓价",
-      "margin_price": "This is the maximum price that a margin called position can be made to pay. It also called the Squeeze Price.",
-      "settle_price": "清算单执行时将使用的价格",
-      "sign_owner": "如果你是账户的所有人，请检查签名是否正确。这只有在你使用所有者账户，而该账户未包括与活跃权限时需要关注。",
-      "latest_price": "市场最近的成交价",
-      "no_price": "未找到该资产最近的成交价来评估价值",
-      "hide_asset": "从列表中隐藏资产",
-      "show_asset": "在主列表中显示资产",
-      "settle": "使用清算你可以在24小时后以当时的喂价转换你的 %(asset)s 资产为 BTS",
-      "filter_ops": "根据操作类型过滤交易历史",
-      "show_block": "显示收录交易的区块信息 #%(block)s ",
-      "coll_ratio": "头寸抵押率计算公式为：抵押量 * 喂价 / 债务",
-      "call_price": "头寸平仓价。如果喂价低于该价格，头寸将被强制平仓。",
-      "close_position": "平仓。你至少需要 %(amount)s %(asset)s 进行平仓",
-      "update_position": "更新头寸。你可随时更新借款及抵押水平。",
-      "cr_danger": "该头寸目前抵押率不足。请考虑补仓已提高抵押率至少至 %(mr)s 或进行平仓。",
-      "cr_warning": "该头寸接近强制平仓价，如果抵押率低于 %(mr)s，将被强制平仓，请考虑补仓或平仓。",
-      "propose_scam": "该提案发起人是已知的诈骗嫌疑人，请不要批准该提案！",
-      "login": "钱包并不提供传统的登录，而是通过锁定和解锁<b>只</b>存储于用户浏览器中的钱包。<br/><br/>当你关闭钱包时，钱包文件即被锁定，也就相当于登出了系统。",
-      "buy_min": "你将至少收到这些金额。如果有定价低于你的设定的订单被撮合，你实际收到的金额会更多。",
-      "borrow": "从系统借出 %(asset)s 。这将创建一个智能合约，冻结你的抵押物，直到你调整仓位或进行平仓。",
-      "memo_tip": "You may include any message in the memo field. Memos are optional but generally required for transfers to exchanges."
+    "call_limit": "市场中最少抵押率头寸的平仓价",
+    "margin_price": "This is the maximum price that a margin called position can be made to pay. It also called the Squeeze Price.",
+    "settle_price": "清算单执行时将使用的价格",
+    "sign_owner": "如果你是账户的所有人，请检查签名是否正确。这只有在你使用所有者账户，而该账户未包括与活跃权限时需要关注。",
+    "latest_price": "市场最近的成交价",
+    "no_price": "未找到该资产最近的成交价来评估价值",
+    "hide_asset": "从列表中隐藏资产",
+    "show_asset": "在主列表中显示资产",
+    "settle": "使用清算你可以在24小时后以当时的喂价转换你的 %(asset)s 资产为 CYB",
+    "filter_ops": "根据操作类型过滤交易历史",
+    "show_block": "显示收录交易的区块信息 #%(block)s ",
+    "coll_ratio": "头寸抵押率计算公式为：抵押量 * 喂价 / 债务",
+    "call_price": "头寸平仓价。如果喂价低于该价格，头寸将被强制平仓。",
+    "close_position": "平仓。你至少需要 %(amount)s %(asset)s 进行平仓",
+    "update_position": "更新头寸。你可随时更新借款及抵押水平。",
+    "cr_danger": "该头寸目前抵押率不足。请考虑补仓已提高抵押率至少至 %(mr)s 或进行平仓。",
+    "cr_warning": "该头寸接近强制平仓价，如果抵押率低于 %(mr)s，将被强制平仓，请考虑补仓或平仓。",
+    "propose_scam": "该提案发起人是已知的诈骗嫌疑人，请不要批准该提案！",
+    "login": "钱包并不提供传统的登录，而是通过锁定和解锁<b>只</b>存储于用户浏览器中的钱包。<br/><br/>当你关闭钱包时，钱包文件即被锁定，也就相当于登出了系统。",
+    "buy_min": "你将至少收到这些金额。如果有定价低于你的设定的订单被撮合，你实际收到的金额会更多。",
+    "borrow": "从系统借出 %(asset)s 。这将创建一个智能合约，冻结你的抵押物，直到你调整仓位或进行平仓。",
+    "memo_tip": "You may include any message in the memo field. Memos are optional but generally required for transfers to exchanges.",
+    "transfer_actions": "Click here to make a transfer, or to deposit/withdraw those assets that support it.",
+    "deposit_tip": "To complete the deposit, go to your %(asset)s wallet and make a transfer to the address listed on this page. You will receive the deposit as soon as it has been confirmed. If a memo is shown , it is essential that you include this memo in your transfer.",
+    "copy_tip": "Click to copy the text",
+    "withdraw_full": "Click to withdraw the full balance",
+    "withdraw_address": "If you don't already have a %(asset)s address, please find a wallet provider and create one in order to complete the withdrawal.",
+    "generate": "The generated password was created by your browser, locally. <br /><br /><strong>No one but you has access to it</strong>.<br /><br /> Paste it below and save a copy in a safe place",
+    "copy_password": "Click here to copy the password to your clipboard",
+    "sync_yes": "The current node is in sync with the blockchain",
+    "sync_no": "The current node is out of sync with the blockchain, try switching to another one",
+    "disconnected": "You are not connected to an API node, try reloading or setting a new access point in the Settings"
   },
   "account": {
-    "intro_text_title": "欢迎来到比特股去中心化交易所！",
-    "intro_text_1": "<b>比特股2.0</b>是一个基于区块链构建的去中心化交易所，该交易所通称DEX, DEX有着工业级的业务处理能力，能够永不停歇地提供公正和透明的服务，这里有比特股首创的bitCNY,bitUSD等智能货币，用户可以在这里根据自己的需要.",
+    "intro_text_title": "欢迎来到Cybex去中心化交易所！",
+    "intro_text_1": "<b>Cybex</b>是一个基于区块链构建的去中心化交易所，该交易所通称DEX, DEX有着工业级的业务处理能力，能够永不停歇地提供公正和透明的服务，这里有bitCNY,bitUSD等智能货币，用户可以在这里根据自己的需要.",
     "intro_text_2": "发行用户定义资产（UIA）,也可以买卖通用的数字资产如BTC, ETH等。",
-    "intro_text_3": "来比特股尽情享受交易的乐趣吧！",
-    "intro_text_4": "<br/>官网：&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' rel='noopener noreferrer' href='https://bitshares.org'>https://bitshares.org</a><br/>论坛：&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' rel='noopener noreferrer' href='https://bitsharestalk.org'>https://bitsharestalk.org</a><br/>QQ群：&nbsp;&nbsp;423951676<br/>Github：<a target='_blank' rel='noopener noreferrer' href='https://github.com/bitshares/bitshares-core'>https://github.com/bitshares/bitshares-core</a>",
+    "intro_text_3": "来Cybex尽情享受交易的乐趣吧！",
     "in_open": "这是你委单中 %(asset)s 资产的数量。",
     "in_open_value": "这是你委单中 %(asset)s 资产的大致价值。",
     "transfer_actions": "转账操作",
     "market_actions": "市场操作",
     "total_estimate": "这是你所有资产的估值， 包含了在界面中设置了隐藏的资产、委单中的资产、债仓及抵押物。估值采用实时获得的区块链上的价格，可能并不那么精确。",
+    "see_open": "未完成订单",
     "trade": "交易",
-    "welcome": "欢迎使用 BitShares (石墨烯)系统",
+    "welcome": "欢迎使用 Cybex (石墨烯)系统",
     "assets": "资产",
     "market_value": "市值",
     "hour_24": "日涨跌幅%",
@@ -91,6 +102,8 @@
       "ref_percentage": "推荐人奖励",
       "network_percentage": "网络收取",
       "fees_paid": "手续费总支出",
+      "fees_pending": "待结费用",
+      "fees_vested": "待解冻金额",
       "in_orders": "委单冻结金额 %(core_asset)s ",
       "unknown": "未知的会员",
       "lifetime": "终身会员",
@@ -124,6 +137,7 @@
     "user_issued_assets": {
       "symbol": "资产代码",
       "name": "资产名称",
+      "vesting": "行权期",
       "description": "描述",
       "max_supply": "最大供给量",
       "precision": "精度",
@@ -174,7 +188,9 @@
       "error_precision": "该资产的精度不同于 %(asset)s",
       "error_invalid": "该资产不能使用",
       "market": "关注的市场交易对",
-      "precision_warning": "警告：创建后该数值将无法更改。"
+      "precision_warning": "警告：创建后该数值将无法更改。",
+      "too_large": "That max supply is too big, please choose a smaller number",
+      "visible": "Hide asset from search and markets"
     },
     "perm": {
       "active": "活跃权限",
@@ -213,7 +229,8 @@
       "new_memo": "新的备注权限密钥",
       "memo_warning": "警告：如果你替换了备注权限密钥，那在你使用密码登录后，旧的交易消息你将无法再解密阅读。同样的，除非你将新的备注密钥导入到旧的钱包中，否则使用旧钱包时也将无法看到新的备注消息。",
       "use_text": "使用",
-      "remove_text": "移除"
+      "remove_text": "移除",
+      "valid_pub": "Valid Public Key"
     },
     "votes": {
       "proxy_current": "你当前选择的投票代理人是",
@@ -320,6 +337,7 @@
     "total_value": "市值",
     "asset_details": "资产详情",
     "id": "账户 ID",
+    "mine": "我的账户",
     "whitelist": {
       "title": "白名单",
       "black": "黑名单",
@@ -330,7 +348,9 @@
       "white_by": "被列白名单",
       "black_by": "被列黑名单",
       "empty_white_by": "%(account)s 未被列入任何白名单",
-      "empty_black_by": "%(account)s 未被列入任何黑名单"
+      "empty_black_by": "%(account)s 未被列入任何黑名单",
+      "whitelist_authorities": "Whitelist authority",
+      "blacklist_authorities": "Blacklist authority"
     },
     "vesting": {
       "title": "待解冻余额",
@@ -348,11 +368,24 @@
     "home": "首页",
     "no_price": "无可用价格信息",
     "create_new": "创建新账户",
+    "create_login": "创建/登录账户",
     "password_login": "使用密码登录",
     "estimate_value": "账户价值估算",
     "polo_scam": "注意：这个账户不是交易所 Poloniex 的存款账户，请发送至 poloniexwallet。",
     "bittrex_scam": "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
-    "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。"
+    "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。",
+    "new_user": "New user?",
+    "existing_user": "Existing user",
+    "restore": "Restore",
+    "advanced": "Advanced",
+    "intro_text_4": "This gives cryptocurrency traders a unique blend of traditional and decentralized trading, all in a familiar exchange interface. Happy trading!",
+    "deposit": "Deposit CYB",
+    "deposit_address": "Your deposit address is your account name",
+    "portfolio": "My Portfolio",
+    "activity": "Activity",
+    "eq_value_header": "Value ({asset})",
+    "qty": "Qty",
+    "total": "Total ({asset})"
   },
   "transfer": {
     "from": "来自",
@@ -424,7 +457,9 @@
     "witness_receive": "Received witness from witness",
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
     "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
-    "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} "
+    "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
+    "fill_order_buy": "{account} bought {amount} at {price}",
+    "fill_order_sell": "{account} sold {amount} at {price}"
   },
   "transaction": {
     "sent": "发送",
@@ -538,7 +573,7 @@
       "transfer_from_blind": "从隐私账户转出",
       "committee_member_update": "更新理事会成员账户",
       "asset_claim_fees": "领取资产手续费",
-      "all": "Show all"
+      "all": "显示所有"
     },
     "confirm": "请确认交易",
     "broadcast_success": "交易已向网络广播",
@@ -599,7 +634,8 @@
     "asset_reserve": "保留资产数量",
     "csv": "导出到.csv 文件",
     "csv_tip": "下载数据格式以逗号间隔的历史数据",
-    "waiting": "等待确认中.."
+    "waiting": "等待确认中..",
+    "borrower": "Borrower"
   },
   "explorer": {
     "accounts": {
@@ -663,7 +699,8 @@
       "id": "ID",
       "issuer": "发行人",
       "precision": "精度",
-      "prediction": "预测市场资产"
+      "prediction": "预测市场资产",
+      "units": "Units"
     },
     "asset": {
       "title": "资产",
@@ -709,6 +746,16 @@
         "maximum_short_squeeze_ratio": "强制平仓比例上限",
         "publisher": "发布人",
         "published": "发布时间"
+      },
+      "margin_positions": {
+        "title": "Margin positions"
+      },
+      "whitelist": {
+        "whitelist_authorities": "Whitelist authorities",
+        "blacklist_authorities": "Blacklist authorities",
+        "whitelist_markets": "Market whitelist",
+        "blacklist_markets": "Market blacklist",
+        "enable_flag": "The whitelist flag must be enabled in order to set whitelist authorities"
       }
     },
     "witnesses": {
@@ -734,7 +781,7 @@
     "workers": {
       "title": "预算项目",
       "period": "周期",
-      "daily_pay": "每日支付(BTS)",
+      "daily_pay": "每日支付(CYB)",
       "website": "网站",
       "vesting_pay": "工资解冻周期(天)",
       "create": "创建一个新的预算项目提案",
@@ -782,6 +829,7 @@
     "darkTheme": "黑色主题",
     "lightTheme": "白色主题",
     "olDarkTheme": "Openledger黑",
+    "cybexDarkTheme": "Cybex暗色",
     "reset": "恢复默认值",
     "disableChat": "禁用聊天",
     "showAssetPercent": "在账户页上显示资产/供给占比",
@@ -818,39 +866,67 @@
     "wallet_required": "要求钱包模式",
     "wallet_required_text": "你需要切换到钱包模式才能恢复旧的备份钱包文件，点击下方按钮继续。",
     "enable_wallet": "启用钱包模式",
-    "connection_error": "Unable to connect to API node %(url)s, falling back to known working nodes"
+    "api_location_cybex": "Cybex测试服务器",
+    "connection_error": "Unable to connect to API node %(url)s, falling back to known working nodes",
+    "cloud_login": "Cloud Wallet Login",
+    "local_wallet": "Local Wallet Login",
+    "faucet_address_text": "The faucet address is used to pay the registration fee for new users.",
+    "active_node": "Active Node",
+    "node_up": "UP",
+    "node_down": "DOWN",
+    "available_nodes": "Available Nodes",
+    "remove": "Remove",
+    "activate": "Activate",
+    "confirm_remove": "Are you sure you want to remove %(name)s from your available nodes?",
+    "valid_node_url": "Node URL must begin with ws:// or wss://",
+    "low_latency": "Low latency",
+    "high_latency": "High latency"
   },
   "pagination": {
     "newer": "更近",
     "older": "更早"
   },
   "footer": {
-    "title": "BitShares (石墨烯)",
+    "title": "Cybex",
     "block": "最新区块",
     "loading": "载入中...",
     "backup": "需要备份",
     "nosync": "区块链数据陈旧，请等待数据完成同步..",
     "connection": "无连接",
-    "brainkey": "建议备份脑钱包密钥"
+    "brainkey": "建议备份脑钱包密钥",
+    "update_available": "UPDATE AVAILABLE",
+    "synced": "Synced",
+    "unsynced": "Out of sync",
+    "disconnected": "Disconnected"
   },
   "exchange": {
     "chart_options": {
-        "tools": "工具",
-        "title": "指标",
-        "sma": "SMA",
-        "ema1": "EMA 1",
-        "ema2": "EMA 2",
-        "smaVolume": "SMA",
-        "macd": "MACD chart",
-        "bb": "Bollinger Bands",
-        "fib": "绘制黄金分割线",
-        "trendline": "Draw trend line",
-        "volume": "显示交易量",
-        "period": "周期",
-        "height": "图表高度",
-        "price_title": "价格指标",
-        "volume_title": "交易量指标"
+      "tools": "工具",
+      "title": "指标",
+      "sma": "SMA",
+      "ema1": "EMA 1",
+      "ema2": "EMA 2",
+      "smaVolume": "SMA",
+      "macd": "MACD chart",
+      "bb": "Bollinger Bands",
+      "fib": "绘制黄金分割线",
+      "trendline": "绘制趋势线",
+      "volume": "显示交易量",
+      "period": "周期",
+      "height": "图表高度",
+      "price_title": "价格指标",
+      "volume_title": "交易量指标",
+      "clamp_chart": "Clamp chart edge"
     },
+    "tabs": {
+      "market": "交易对",
+      "orders": "委单",
+      "trades": "交易历史",
+      "settle": "清算单",
+      "bidask": "买卖单",
+      "depthChart": "深度图"
+    },
+    "amount": "数量",
     "price_history": "价格历史",
     "order_depth": "市场深度",
     "market_history": "市场历史",
@@ -865,13 +941,14 @@
     "volume": "成交量",
     "spread": "买卖价差",
     "quantity": "数量",
+    "buyOrSell": "方向",
     "buy": "买入",
     "buy_min": "至少买",
     "sell": "卖出",
+    "confirm_no_orders_buy": "当前没有买单，请问你确定么?",
+    "confirm_no_orders_sell": "当前没有卖单，请问你确定么?",
     "confirm_buy": "你的订单价格超出最低卖出价 %(diff)s 倍，你确定么？",
     "confirm_sell": "你的订单价低于最高买入价 %(diff)s 倍，你确定么？",
-    "confirm_no_orders_buy": "You are placing a buy order in a market with no open sell orders. Are you certain you wish to proceed?",
-    "confirm_no_orders_sell": "You are placing a sell order in a market with no open buy orders. Are you certain you wish to proceed?",
     "settle": "喂价",
     "core_rate": "转账手续费汇率",
     "squeeze": "强制平仓价",
@@ -929,7 +1006,8 @@
     "show_star_2": "仅",
     "base": "基准货币:",
     "quote": "Quote currency:",
-    "search": "搜索更多交易对"
+    "search": "搜索更多交易对",
+    "order_value": "Order value"
   },
   "markets": {
     "title": "交易所",
@@ -1021,7 +1099,7 @@
     "create_text": "钱包保存在你的浏览器中，而不是在云端。一个钱包中往往包含多个账户。通过备份文件的传输可以轻松实现钱包的跨浏览器或夸计算器的迁移。",
     "account_create_wallet_text": "这个密码将被用来创建你的钱包，并且仅保存在本地的浏览器中，而不是在云端。一个钱包中往往包含多个账户。通过备份文件的传输可以轻松实现钱包的跨浏览器或夸计算器的迁移。",
     "create_account_text": "请输入你期望的账户名。这个账户名将在区块链上进行注册，并将作为你的身份标识。",
-    "first_account_paid": "由于这是你的第一个账户，水龙头服务讲免费为你支付账户在区块链上的注册费用。",
+    "first_account_paid": "由于这是你的第一个账户，水龙头服务将免费为你支付账户在区块链上的注册费用。",
     "must_be_ltm": "费用的支付账户必须为一个终身会员账户。",
     "backup_explain": "点击按钮将生成一个后缀名为 .bin 的备份文件。这个备份文件使用你的钱包密码进行加密。其中包含该钱包中的所有私钥。通过它可以恢复钱包，或者在不同浏览器或者计算机间进行钱包迁移。",
     "backup_new_account": "恭喜，你已经创建了一个新账户。强烈建议你立即备份你的钱包。如果你的计算机/浏览器发生意外，而你又没有备份文件，你将永久丢失钱包及其包含的数据、数字资产。",
@@ -1034,12 +1112,12 @@
     "paste_private": "将私钥黏贴在这里 (钱包导入格式 - WIF)",
     "totals": "资产总计",
     "claim_later": "导入私钥后，你可以将私钥拥有的余额申领到你选择的账户中去。",
-    "bts_09_export": "BTS 0.9.3c 私钥导出文件 (.json)",
+    "bts_09_export": "CYB 0.9.3c 私钥导出文件 (.json)",
     "import_password": "输入导入文件的密码",
     "import_pass_match": "密码相符。解密备份文件中",
     "submit": "提交",
     "import_balance": "导入余额",
-    "import_bts": "导入一个 BTS 0.9.3c 私钥导出文件",
+    "import_bts": "导入一个 CYB 0.9.3c 私钥导出文件",
     "import_private_key": "导入私钥",
     "wallet_browser": "你的浏览器即你的钱包",
     "has_wallet": "当你创建第一个账户时，一个钱包也同时被创建，并保存在你的浏览器中。",
@@ -1080,6 +1158,7 @@
     "create_account_password_text": "新账户的相关密钥将从你的密码衍生出来。<strong>敏感信息不保存在浏览器的缓存或者是中央服务器上，你必须确保能记住或妥善保管好密码！！</strong>",
     "create_password": "使用密码创建一个账户",
     "login_type": "选择登录模式",
+    "login_create_type": "选择登录/创建模式",
     "wallet_model": "钱包模式",
     "password_model": "账户模式",
     "wallet_model_1": "钱包模式下，使用你的密码对钱包文件进行加密后保存在浏览器的存储区域中。并可以通过脑秘钥或者加密的二进制文件进行备份，其中包含了账户中所有的私钥。",
@@ -1088,8 +1167,12 @@
     "password_model_1": "账户模式使用密码和账户名衍生出私钥。",
     "password_model_2": "这使你可以从任何地方登录自己的账户，包括了不同的电脑、不同的浏览器，只需要账户名和密码。但这将有一定暴露在暴力破解的黑客攻击风险中。所以，这种模式下，使用长密码很重要！",
     "password_model_3": "<li>单一账户</li><li>简易登录</li><li>安全性：中</li>",
+    "already_have_wallet": "如果您已有钱包，您可以：",
+    "already_have_account": "如果您已有密码账户，您可以：",
     "use_wallet": "使用钱包模式",
+    "use_wallet_create": "创建钱包模式账户",
     "use_password": "使用账户模式",
+    "use_password_create": "创建账户模式账户",
     "pass_length": "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母。",
     "switch_model_wallet": "切换到钱包模式",
     "switch_model_password": "切换到账户模式",
@@ -1099,7 +1182,16 @@
     "generated": "已创建密码",
     "understand_1": "我理解如果我忘记或丢失了密码，将没有任何人能够帮助我恢复",
     "understand_2": "我已经写下了或者用其它方式保存了我的密码",
-    "bts_rules": "比特股法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。"
+    "bts_rules": "比特股法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。",
+    "answer_right": "备份并保存好我的钱包——一个二进制文件，用于未来任何情况下的恢复",
+    "answer_wrong_1": "可进入交易中心进行交易<br>获取投资收益",
+    "answer_wrong_2": "向钱包充入资金<br>以备交易使用",
+    "answer_wrong_3": "浏览和探索Cybex的各种功能<br>以便更好的使用平台",
+    "go_on": "以知晓备份钱包的重要性，继续进行注册",
+    "backup_primary": "请务必优先<br>备份并妥善保存钱包",
+    "not_first_account": "Since you already have an account, you will need to pay for this new account yourself. In order to do so, your account needs to have lifetime membership, which can be bought in the account page.",
+    "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Bitshares!</strong>",
+    "understand_3": " I understand that I will lose access to my funds if I lose my password"
   },
   "borrow": {
     "title": "%(asset_symbol)s 保证金头寸",
@@ -1113,7 +1205,8 @@
     },
     "close": "平仓",
     "update": "调整",
-    "call_limit": "Market Call Limit"
+    "call_limit": "Market Call Limit",
+    "adjust_short": "Adjust"
   },
   "modal": {
     "issue": {
@@ -1148,16 +1241,20 @@
       "cancel": "否"
     },
     "proposals": {
-        "pay_with": "支付账户",
-        "approval_add": "同意添加",
-        "approval_remove": "同意移除",
-        "key_approval_add": "同意添加密钥",
-        "key_approval_remove": "同意移除密钥"
+      "pay_with": "支付账户",
+      "approval_add": "同意添加",
+      "approval_remove": "同意移除",
+      "key_approval_add": "同意添加密钥",
+      "key_approval_remove": "同意移除密钥"
     },
-    "qrcode":{
-      "label":"二维码",
-      "title":"私钥二维码",
-      "input_message":"请输入用于加密二维码的密码，密码为空表示不加密"
+    "qrcode": {
+      "label": "二维码",
+      "title": "私钥二维码",
+      "input_message": "请输入用于加密二维码的密码，密码为空表示不加密"
+    },
+    "convert": {
+      "amount": "Amount to Convert",
+      "submit": "Ok"
     }
   },
   "init_error": {
@@ -1167,7 +1264,7 @@
     "connected": "已连接",
     "not_connected": "未连接",
     "browser": "不支持的浏览器",
-    "browser_text": "你使用的浏览器(版本)未经过BitShares钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。请了解相关风险。",
+    "browser_text": "你使用的浏览器(版本)未经过Cybex钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。请了解相关风险。",
     "understand": "我理解"
   },
   "refcode": {
@@ -1177,12 +1274,13 @@
     "enter_refcode": "输入推荐码"
   },
   "gateway": {
-      "fee": "Gateway fee",
-      "assets": {
-        "open": "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Openledger 提供的网关服务进行充值提现。",
-        "trade": "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Blocktrades 提供的网关服务进行充值提现。",
-        "bit": "<br/>bit %(asset)s 锚定 %(backed)s 的金融衍生品. 它是100%去中心化，无需信任第三方中心机构，并由锁定在区块链上智能合用中的抵押品进行价值背书。",
-        "bitcny": "<br/><br/>bitCNY 可以通过 Magic Wallet 提供的网关服务进行充值提现。更多信息请访问 https://www.magicw.net/"
+    "fee": "Gateway fee",
+    "title": "充值&提现",
+    "assets": {
+      "open": "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Openledger 提供的网关服务进行充值提现。",
+      "trade": "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Blocktrades 提供的网关服务进行充值提现。",
+      "bit": "<br/>bit %(asset)s 锚定 %(backed)s 的金融衍生品. 它是100%去中心化，无需信任第三方中心机构，并由锁定在区块链上智能合用中的抵押品进行价值背书。",
+      "bitcny": "<br/><br/>bitCNY 可以通过 Magic Wallet 提供的网关服务进行充值提现。更多信息请访问 https://www.magicw.net/"
     },
     "your_account": "你的账户",
     "bridge": "桥接",
@@ -1195,6 +1293,32 @@
     "withdraw": "提现",
     "inventory": "库存",
     "scan_qr": "扫描二维码，手机支付",
+    "transwiser": {
+      "channel": {
+        "withdraw": {
+          "alipay": "支付宝",
+          "weixin_pay": "微信支付",
+          "bank_wire": "银行账户"
+        }
+      },
+      "fee": "手续费",
+      "fee_min": "最低",
+      "gateway": "Transwiser",
+      "visit_weidian": "访问网店进行充值",
+      "deposit_title": "充值人民币到 %(asset)s",
+      "withdraw_title": "提现 %(asset)s 到 %(channel)s",
+      "alipay_account": "支付宝账户",
+      "memo": "备注",
+      "alipay_account_name_notice": "支付宝账户名，一般为邮箱或手机号。",
+      "alipay_realname": "支付宝账户实名",
+      "alipay_realname_notice": "提现到支付宝请在备注栏输入真实姓名以供校验",
+      "withdraw_note": "目前仅支持支付宝提现，将资产按1:1比例兑换成人民币发送到你的支付宝账户中",
+      "you_will_receive": "你将收到 %(amount)s 元人民币",
+      "bank_name": "银行名称",
+      "bank_branch": "分行/支行名",
+      "bank_account": "收款人账号",
+      "bank_holder": "收款人户名"
+    },
     "meta": {
       "open_website": "访问官网"
     },
@@ -1221,15 +1345,41 @@
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
     "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 BTS。",
-    "gateway_text": "网关能让你将BitShares中的资产与外部资产进行互换，比如OPEN.BTC到BTC。",
+    "gateway_text": "网关能让你将Cybex中的资产与外部资产进行互换，比如OPEN.BTC到BTC。",
     "fiat_text": "法币的冲提现服务由CCEDK提供。你必须先行在CCEDK上进行账户注册。下面是支持的货币：",
     "service": "转账服务",
     "purchase": "购买 %(asset)s",
     "purchase_1": "快速简便地从外部钱包使用 %(inputAsset)s 购买 %(outputAsset)s 。这项服务由 <a href='https://blocktrades.us/' target='blank' rel='noopener noreferrer'>Blocktrades</a> 提供",
-    "deposit_limit": "充值限额"
+    "deposit_limit": "充值限额",
+    "bitkapital_text": "Choose an asset to deposit or withdraw:",
+    "bitkapital_withdraw": "You are withdrawing",
+    "bitkapital_receive": "You will receive",
+    "iban": "IBAN",
+    "add_funds": "Quickly and easily add funds to your BitShares account <strong>%(account)s</strong>. This service is provided by Openledger.",
+    "withdraw_funds": "You are going to withdraw funds from your BitShares account to your external %(asset)s account.",
+    "balance_asset": "Current %(asset)s balance",
+    "withdraw_placeholder": "Please enter your %(asset)s address",
+    "convert": "Internal conversion",
+    "convert_now": "Convert now",
+    "convert_coin": "Convert to %(coin)s (%(symbol)s)",
+    "address_with_memo": "%(address)s <span class=\"blocktrades-with-memo\">with memo</span> %(memo)s",
+    "rudex": {
+      "support_block": "For support, please contact RuDEX at:",
+      "min_amount": "Minimum amount: %(minAmount)s %(symbol)s",
+      "min_amount_error": "Please enter number >= minimum",
+      "coming_soon": "Coming soon"
+    },
+    "unavailable": "The gateway service for this asset is currently down, please try again later",
+    "unavailable_bridge": "The brdige service for this asset is currently down, please try again later",
+    "unavailable_OPEN": "The OpenLedger Gateway is down or not responding",
+    "unavailable_RUDEX": "The RuDEX Gateway is down or not responding",
+    "unavailable_TRADE": "The Blocktrades Bridge is down or not responding"
   },
   "propose": "提议",
+  "or": "或",
   "cancel": "取消",
+  "I_know": "我知道了",
+  "I_really_know": "我真的知道了",
   "fees": {
     "title": "费率表"
   },
@@ -1255,7 +1405,13 @@
     "reject": "否决",
     "asset_create": "使用账户{account}创建资产%{asset}s",
     "asset_update": "使用 {account} 更新 {asset} ",
-    "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权"
+    "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
+    "asset_settle": "Request a settlement of",
+    "asset_issue": "Issue {amount} to {to} using {account}",
+    "asset_reserve": "Burn (reserve) {amount} using {account}",
+    "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
+    "feed_producer": "Update the feed producers for the asset {asset} using the account {account}",
+    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}"
   },
   "proposal_create": {
     "review_period": "复审期开始",
@@ -1270,7 +1426,7 @@
     "color": "用户名颜色",
     "user": "用户名",
     "done": "完成",
-    "welcome_user": "欢迎访问BitShares",
+    "welcome_user": "欢迎访问Cybex",
     "welcome": "这是P2P聊天室。没有管理员，也不能保证唯一的用户名。可以从设置中禁用聊天功能。发送消息的频率被限制在每2秒1条。输入 /help 获得命令帮助信息。",
     "disconnected": "你已从聊天室断开链接，请点击下方重新连接。",
     "rate": "请等待至少2秒发送新消息。",
@@ -1278,9 +1434,43 @@
     "users": "%(userCount)s 用户在线",
     "disabled": "聊天室禁用",
     "enable": "启用聊天室",
-    "telegram_link": "参与更加活跃的讨论，请加人 Bitshares Telegram group: <a href='https://t.me/BitSharesDEX' target='blank' rel='noopener noreferrer'>https://t.me/BitSharesDEX</a>"
+    "telegram_link": "参与更加活跃的讨论，请加人 Cybex Telegram group: <a href='https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg' target='blank' rel='noopener noreferrer'>https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg</a>"
   },
-    "trx_error": {
-      "expire": "Your transaction has expired without being confirmed, please try again later."
-    }
+  "trx_error": {
+    "expire": "Your transaction has expired without being confirmed, please try again later."
+  },
+  "backup": {
+    "title": "您的钱包需要备份",
+    "content": "恭喜您，您刚刚成功在Cybex分布式交易市场中得到了一个新的钱包。此刻起，您的所有虚拟资产将存于此钱包中。由于您参与的是分布式交易，所有个人资产完全由您个人进行保管。为保障您个人资产的安全性，在进行各项操作前，请务必备份您的钱包。在您的钱包未备份之前，本提示将重复出现，以最大程度的保证您的资金安全。点击“备份钱包”按钮，将进入备份页面，在您备份钱包操作完成后，本提示将不再出现。非常感谢您的配合。",
+    "go_backup": "备份钱包",
+    "no_backup": "暂不备份",
+    "expire": "Your transaction has expired without being confirmed, please try again later."
+  },
+  "home": {
+    "icon-1": "基于区块链构建",
+    "icon-2": "工业级业务处理能力",
+    "icon-3": "交易品种多样",
+    "icon-4": "服务透明公正",
+    "find_more": "了解详情",
+    "slogan": "欢迎来到<br>Cybex去中心化交易所"
+  },
+  "bazaar": {
+    "currencies": "主要货币",
+    "symbol": "货币符号",
+    "price": "价格($)",
+    "volume": "交易量",
+    "change": "增长率",
+    "portfolio": "收藏夹"
+  },
+  "nav": {
+    "transfer": "转账中心",
+    "exchange": "交易中心",
+    "account": "账户配置",
+    "bazaar": "主要市场",
+    "ledger": "钱包区块"
+  },
+  "incognito": {
+    "no_support": "This Bitshares Wallet relies on Local Storage and IndexedDB which are not persistent when using Incognito Browsing. We recommend using a regular browsing session.",
+    "ignore": "I understand, continue."
+  }
 }

@@ -1,5 +1,5 @@
 [# receive]
-### 获取 BTS
+### 获取 CYB
 为了从其他人或者交易所获得BTS，你只需要提供你的账户名: **{account}**
 
 [# deposit-short]

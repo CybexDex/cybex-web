@@ -6,7 +6,7 @@ import Icon from "../Icon/Icon";
 import LinkToAccountById from "../Utility/LinkToAccountById";
 import pu from "common/permission_utils";
 import {cloneDeep} from "lodash";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 
 class AccountPermissionTree extends React.Component {
 

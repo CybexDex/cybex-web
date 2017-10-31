@@ -1,6 +1,7 @@
 import React from "react";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import BaseModal from "../Modal/BaseModal";
+import Trigger from "react-foundation-apps/src/trigger";
 import utils from "common/utils";
 import Translate from "react-translate-component";
 
@@ -20,7 +21,7 @@ export default class ConfirmModal extends React.Component {
     }
 
     render() {
-        let {type, diff, hasOrders} = this.props;
+        let { type, diff, hasOrders } = this.props;
 
         return (
             <BaseModal id={"modal_confirm_" + type} overlay={true}>
@@ -31,7 +32,9 @@ export default class ConfirmModal extends React.Component {
                     : <Translate content={"exchange.confirm_" + type} diff={utils.format_number(diff, 2)} />}
                     <div className="button-group" style={{paddingTop: "2rem"}}>
                         <input onClick={this._onForce.bind(this, true)} className="button success" type="submit" value="Yes" />
-                        <input onClick={this._onForce.bind(this, false)} className="button info" type="submit" value="No" />
+                        <Trigger close={"modal_confirm_" + type}>
+                            <input className="button info" type="submit" value="No" />
+                        </Trigger>
                     </div>
                 </div>
             </BaseModal>

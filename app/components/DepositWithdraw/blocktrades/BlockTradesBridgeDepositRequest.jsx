@@ -14,7 +14,7 @@ import { blockTradesAPIs } from "api/apiConfig";
 import { debounce } from "lodash";
 import { checkFeeStatusAsync, checkBalance } from "common/trxHelper";
 import { Asset } from "common/MarketClasses";
-import { ChainStore } from "bitsharesjs/es";
+import { ChainStore } from "cybexjs";
 import { getConversionJson } from "common/blockTradesMethods";
 
 class ButtonConversion extends React.Component {
@@ -355,7 +355,7 @@ class BlockTradesBridgeDepositRequest extends React.Component {
 
     constructor(props) {
         super(props);
-        this.refresh_interval = 2 * 60 * 1000; // update deposit limit/estimates every two minutes
+        this.refresh_interval = 2 * 60 * 1000; // update deposit limittimates every two minutes
 
         this.deposit_address_cache = new BlockTradesDepositAddressCache();
 
@@ -464,9 +464,9 @@ class BlockTradesBridgeDepositRequest extends React.Component {
             coin_types.forEach(coin_type => coins_by_type[coin_type.coinType] = coin_type);
 
             // determine which mappings we will display for deposits and withdrawals
-            let allowed_mappings_for_deposit = {}; // all non-bts to bts
-            let allowed_mappings_for_withdraw = {}; // all bts to non-bts
-			let allowed_mappings_for_conversion = {}; // all bts to bts
+            let allowed_mappings_for_deposit = {}; // all non-cyb to cyb
+            let allowed_mappings_for_withdraw = {}; // all cyb to non-cyb
+			let allowed_mappings_for_conversion = {}; // all cyb to cyb
             trading_pairs.forEach(pair => {
                 let input_coin_info = coins_by_type[pair.inputCoinType];
                 let output_coin_info = coins_by_type[pair.outputCoinType];
@@ -856,7 +856,7 @@ class BlockTradesBridgeDepositRequest extends React.Component {
         }
 
         let estimate_output_url = this.state.url +
-                                "/estimate-output-amount?inputAmount=" + encodeURIComponent(input_amount) +
+                                "timate-output-amount?inputAmount=" + encodeURIComponent(input_amount) +
                                 "&inputCoinType=" + encodeURIComponent(input_coin_type) +
                                 "&outputCoinType=" + encodeURIComponent(output_coin_type);
         let estimate_output_promise = fetch(estimate_output_url,
@@ -927,7 +927,7 @@ class BlockTradesBridgeDepositRequest extends React.Component {
         }
 
         let estimate_input_url = this.state.url +
-                                "/estimate-input-amount?outputAmount=" + encodeURIComponent(output_amount) +
+                                "timate-input-amount?outputAmount=" + encodeURIComponent(output_amount) +
                                 "&inputCoinType=" + encodeURIComponent(input_coin_type) +
                                 "&outputCoinType=" + encodeURIComponent(output_coin_type);
         let estimate_input_promise = fetch(estimate_input_url,

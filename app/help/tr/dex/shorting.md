@@ -1,6 +1,6 @@
 # BitAktif Kısa Satışı
 
-BTS'le temasınızı arttırmak ve USD,EUR,GOLD gibi BitAktiflere likidite sağlamak için 
+CYB'le temasınızı arttırmak ve USD,EUR,GOLD gibi BitAktiflere likidite sağlamak için 
 bu BitAktifleri ağdan *ödünç* alabilir ve *kısa satabilirsiniz*. Prosedürü burada kısaca 
 anlatacağız.
 
@@ -9,7 +9,7 @@ anlatacağız.
 BitShares ağının herhangi bir miktarda BitVarlığı piyasaya sürmesi ve yeterli teminat 
 karşılığında katılımcılara borç vermesi mümkündür. 
 
- * *uzlaşma fiyatı* : 1 BTS in dış borsalarda alıp-satılırkenki fiyatı.
+ * *uzlaşma fiyatı* : 1 CYB in dış borsalarda alıp-satılırkenki fiyatı.
  * *idame teminat oranı* (MCR) :  zorunlu minimum teminat oranı 
  * *maksimum kısa sıkıştırma oranı* (MSQR) : Tanıklar tarafından kısaların kısa sıkıştırmalara karşı nereye kadar korunacaklarını belirleyen oran.
  * *kısa sıkıştırmadan korunma* (SQP) : Marjin pozisyonuna ödettirilebilecek en yüksek  
@@ -22,13 +22,13 @@ pozisyonları teminatı tamamlamaları için çağırabilir. Marjin çağrısı 
 teklifinin *çağrı fiyatından* az , ve *SQP* dan büyük olduğu herhangi bir anda 
 meydana gelebilir.
 Marjin pozisyonu, teminatı satın almaya verilen en yüksek teklifin çağrı 
-fiyatından(x/BTS) daha düşük olduğu anda teminatı zorla sattırılır.
+fiyatından(x/CYB) daha düşük olduğu anda teminatı zorla sattırılır.
 
     SQP =  uzlaşma fiyatı / MSQR
     çağrı fiyatı = BORÇ / TEMİNAT * MCR
 
 Marjin çağrısı teminatı alır , ödünç alınmış bitaktif hisselerinin SQP ya kadarki kısmını
-piyasa fiyatından satın alır ve pozisyonu kapar. Teminattan geri kalan BTS müşteriye 
+piyasa fiyatından satın alır ve pozisyonu kapar. Teminattan geri kalan CYB müşteriye 
 iade edilir.
 
 ### Hesap görme
@@ -47,7 +47,7 @@ olursunuz.
 
 Ödünç/kısa pozisyonu tutan kişi , herhangi bir zamanda , piyasa 
 davranışını esnek bir biçimde ayarlamak için teminat oranını değiştirebilir. Eğer 
-teminat oranı arttırılırsa , ilave miktarda BTS teminat olarak kilit altına alınır, teminat 
+teminat oranı arttırılırsa , ilave miktarda CYB teminat olarak kilit altına alınır, teminat 
 oranının düşürülmesi ise tekabül eden miktarda BitVarlığın ağa geri ödenmesini 
 gerektirir.
 

@@ -13,7 +13,7 @@ Emekçi tekliflerine verilen oylar pozitif yada negatif olabilirler, yani beğen
 ## Emekçi bütçesi mekanizması
 Emekçilerin ücretleri, ilk-gelen ilk-çalışır prensibiyle günlük sabit bir bütçeden para tükenene kadar ödenir. Nasıl işlediğini görmek için şu örneğe bakın:
 
-* Tüm Emekçiler için günlük toplam bütçe 400 bin BTS olsun
-* Her biri günlük 100k BTS talep eden toplam oyların pozitif olduğu 5 emekçi teklifi
+* Tüm Emekçiler için günlük toplam bütçe 400 bin CYB olsun
+* Her biri günlük 100k CYB talep eden toplam oyların pozitif olduğu 5 emekçi teklifi
 
-Oyların çoğuna sahip 4 emekçinin her birine günlük 100 bin BTS ödenecek, fakat ödemeler tamamlandığında emekçi bütçesi tükenmiş olacak. O yüzden 5. emekçiye hiç bir şey ödenmeyecek.
+Oyların çoğuna sahip 4 emekçinin her birine günlük 100 bin CYB ödenecek, fakat ödemeler tamamlandığında emekçi bütçesi tükenmiş olacak. O yüzden 5. emekçiye hiç bir şey ödenmeyecek.

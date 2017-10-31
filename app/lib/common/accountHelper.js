@@ -1,4 +1,4 @@
-import { FetchChain } from "bitsharesjs/es";
+import { FetchChain } from "cybexjs";
 import { FeedPrice, Asset } from "./MarketClasses";
 
 function checkMarginStatus(account) {

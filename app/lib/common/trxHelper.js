@@ -1,4 +1,4 @@
-import { FetchChain, PrivateKey, Aes, TransactionHelper, ChainTypes, ops } from "bitsharesjs/es";
+import { FetchChain, PrivateKey, Aes, TransactionHelper, ChainTypes, ops } from "cybexjs";
 import { Price, Asset } from "common/MarketClasses";
 const { operations } = ChainTypes;
 
@@ -115,10 +115,10 @@ function estimateFee(op_type, options, globalObject, data = {}) {
                     /* Dummy priv key */
                     let pKey = _privKey || PrivateKey.fromWif(privKey);
                     if (_privKey) _privKey = pKey;
-                    let memoFromKey = "BTS6B1taKXkDojuC1qECjvC7g186d8AdeGtz8wnqWAsoRGC6RY8Rp";
+                    let memoFromKey = "CYB6B1taKXkDojuC1qECjvC7g186d8AdeGtz8wnqWAsoRGC6RY8Rp";
 
                     // Memos are optional, but if you have one you need to encrypt it
-                    let memoToKey = "BTS8eLeqSZZtB1YHdw7KjQxRSRmaKAseCxhUSqaLxUdqvdGpp6nck";
+                    let memoToKey = "CYB8eLeqSZZtB1YHdw7KjQxRSRmaKAseCxhUSqaLxUdqvdGpp6nck";
 
                     /* Encryption is very expensive so we cache the result for reuse */
                     let message;

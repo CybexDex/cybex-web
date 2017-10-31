@@ -5,7 +5,7 @@ import Operation from "../Blockchain/Operation";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import utils from "common/utils";
-import {ChainTypes as grapheneChainTypes} from "bitsharesjs/es";
+import {ChainTypes as grapheneChainTypes} from "cybexjs";
 import TransitionWrapper from "../Utility/TransitionWrapper";
 import ps from "perfect-scrollbar";
 import counterpart from "counterpart";
@@ -260,7 +260,7 @@ class RecentTransactions extends React.Component {
                                 <tr>
                                     {compactView ? null : <th style={alignLeft} className="column-hide-tiny">
                                         {this.props.showFilters ? (
-                                            <select data-place="left" data-tip={counterpart.translate("tooltip.filter_ops")} style={{paddingTop: 5, width: "auto"}} className="bts-select no-margin" value={this.state.filter} onChange={this._onChangeFilter.bind(this)}>{options}</select>
+                                            <select data-place="left" data-tip={counterpart.translate("tooltip.filter_ops")} style={{paddingTop: 5, width: "auto"}} className="cyb-select no-margin" value={this.state.filter} onChange={this._onChangeFilter.bind(this)}>{options}</select>
                                         ) : null}
                                     </th>}
                                     <th style={alignLeft}><Translate content="account.votes.info" /></th>

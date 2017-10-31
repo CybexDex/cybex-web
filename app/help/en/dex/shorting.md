@@ -1,6 +1,6 @@
 # Short Selling BitAssets
 
-In order to increase your exposure to BTS and offer liquidity to BitAssets, such
+In order to increase your exposure to CYB and offer liquidity to BitAssets, such
 as USD, EUR, GOLD, etc., you can go *borrow* this bitAsset from the network and
 *sell it short*. We will here briefly describe the procedure.
 
@@ -9,7 +9,7 @@ as USD, EUR, GOLD, etc., you can go *borrow* this bitAsset from the network and
 The BitShares network is capable of issuing any amount of any BitAsset and lend
 it out to participants given enough collateral.
 
- * *settlement price*: The price for 1 BTS as it is traded on external exchanges.
+ * *settlement price*: The price for 1 CYB as it is traded on external exchanges.
  * *maintenance collateral ratio* (MCR): A ratio defined by the witnesses as minimum required collateral ratio
  * *maximum short squeeze ratio* (MSQR): A ratio defined by the witnesses as to how far shorts are protected against short squeezes
  * *short squeeze protection* (SQP): Defines the most that a margin position will ever be forced to pay to cover 
@@ -22,13 +22,13 @@ have enough collateral to back their borrowed bitAssets. A margin call will
 occur any time the highest bid is less than the *call price* and greater than
 *SQP*.
 The margin position will be forced to sell its collateral anytime the highest
-offer to buy the collateral is less than the call price (x/BTS).
+offer to buy the collateral is less than the call price (x/CYB).
 
     SQP        = settlement price / MSQR
     call price = DEBT / COLLATERAL * MCR
 
 The margin call will take the collateral, buy shares of borrowed bitAsset at
-market rates up to the SQP and close the position. The remaining BTS of the
+market rates up to the SQP and close the position. The remaining CYB of the
 collateral are returned to the customer.
 
 ### Settlement
@@ -47,7 +47,7 @@ short-selling is now complete and you are short that particular bitAsset.
 
 At any time, the holder of a borrow/short position can modify the collateral
 ratio in order to flexibly adjust to market behavior. If the collateral ratio is
-increase, an additional amount of BTS is locked as collateral, while reducing
+increase, an additional amount of CYB is locked as collateral, while reducing
 the collateral ratio will require an amount of the corresponding BitAsset to be
 payed back to the network.
 

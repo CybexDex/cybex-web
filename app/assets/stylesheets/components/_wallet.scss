@@ -34,6 +34,19 @@
   padding-bottom: 1em;
 }
 
+.wallet-tips {
+  .wallet-option {
+    margin-bottom: 0.3em;
+  }
+  .tip {
+    opacity: 0;
+    transition: all 0.2s;
+  }
+  .alert~.tip {
+    opacity: 1;
+  }
+}
+
 @include breakpoint(medium) {
   .left-menu {
     padding-top: 5em;

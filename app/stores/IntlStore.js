@@ -3,40 +3,46 @@ import IntlActions from "actions/IntlActions";
 import SettingsActions from "actions/SettingsActions";
 import counterpart from "counterpart";
 var locale_en = require("json-loader!assets/locales/locale-en");
+var locale_cn = require("json-loader!assets/locales/locale-cn");
 import ls from "common/localStorage";
 let ss = new ls("__graphene__");
 
+counterpart.registerTranslations("cn", locale_cn);
 counterpart.registerTranslations("en", locale_en);
-counterpart.setFallbackLocale("en");
+counterpart.setFallbackLocale("cn");
 
-import {addLocaleData} from "react-intl";
+import {
+    addLocaleData
+} from "react-intl";
 
 import en from "react-intl/locale-data/en";
-import es from "react-intl/locale-data/es";
+import es from "react-intl/locale-data";
 import fr from "react-intl/locale-data/fr";
 import ko from "react-intl/locale-data/ko";
-import it from "react-intl/locale-data/it";
 import zh from "react-intl/locale-data/zh";
 import de from "react-intl/locale-data/de";
 import tr from "react-intl/locale-data/tr";
 import ru from "react-intl/locale-data/ru";
 
 addLocaleData(en);
-addLocaleData(es);
-addLocaleData(fr);
-addLocaleData(ko);
-addLocaleData(it);
+// addLocaleData(es);
+// addLocaleData(fr);
+// addLocaleData(ko);
 addLocaleData(zh);
-addLocaleData(de);
-addLocaleData(tr);
-addLocaleData(ru);
+// addLocaleData(de);
+// addLocaleData(tr);
+// addLocaleData(ru);
 
 class IntlStore {
     constructor() {
-        this.currentLocale = ss.has("settings_v3") ? ss.get("settings_v3").locale : "en";
+        // 初始化默认语言
+        this.currentLocale = ss.has("settings_v3") ? ss.get("settings_v3").locale : "cn";
 
-        this.locales = ["en"];
-        this.localesObject = {en: locale_en};
+        this.locales = ["cn", "en"];
+        this.localesObject = {
+            en: locale_en,
+            cn: locale_cn
+        };
 
         this.bindListeners({
             onSwitchLocale: IntlActions.switchLocale,
@@ -53,15 +59,21 @@ class IntlStore {
         return this.currentLocale;
     }
 
-    onSwitchLocale({locale, localeData}) {
+    onSwitchLocale({
+        locale,
+        localeData
+    }) {
         switch (locale) {
-        case "en":
-            counterpart.registerTranslations("en", this.localesObject.en);
-            break;
+            case "en":
+                counterpart.registerTranslations("en", this.localesObject.en);
+                break;
+            case "cn":
+                counterpart.registerTranslations("cn", this.localesObject.cn);
+                break;
 
-        default:
-            counterpart.registerTranslations(locale, localeData);
-            break;
+            default:
+                counterpart.registerTranslations(locale, localeData);
+                break;
         }
 
         counterpart.setLocale(locale);
@@ -75,7 +87,9 @@ class IntlStore {
     }
 
     onClearSettings() {
-        this.onSwitchLocale({locale: "en"});
+        this.onSwitchLocale({
+            locale: "cn"
+        });
     }
 }
 

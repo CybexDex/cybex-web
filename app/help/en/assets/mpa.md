@@ -8,7 +8,7 @@ traded digital asset whose value is meant to track the value of a conventional
 underlying asset by means of contracts for difference (CFD). 
 
 A *SmartCoin* (synonym for MPA) is a crypto-currency that *always* has 100% or
-more of its value backed by the BitShares core currency (BTS), to which they can
+more of its value backed by the BitShares core currency (CYB), to which they can
 be converted at any time, as *collateral* in a CFD.
 
 What makes MPAs unique is that they are free from counterparty risk even though

@@ -1,35 +1,33 @@
+@import "./../base/mixins";
+@import "./size";
 .page-layout {
-  > .grid-block {
+  >.grid-block {
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
-    > .grid-content, > .grid-block {
+    >.grid-content,
+    >.grid-block {
       padding: 10px;
     }
   }
-
   .left-column {
     background-color: #fafafa;
   }
-
   .main-content {
-    padding-top: 1.5rem;
     background-color: #f3f3f3;
   }
-
   .right-column {
     background-color: #eaeaea;
   }
-
   .regular-padding {
-    padding: 2rem 1.75rem !important;
+    padding: 1rem 1.75rem 1rem 1.75rem !important;
   }
 }
 
 #account-notify {
-    position: absolute;
-    top: auto !important;
-    right: 0.5em;
-    width: 30em;
+  position: absolute;
+  top: auto !important;
+  right: 0.5em;
+  width: 30em;
 }
 
 @media (max-width: 1100px) {
@@ -55,19 +53,16 @@ div.bordered-header {
 
 .exchange-bordered {
   border: 1px solid rgba(183, 183, 183, 0.29);
-
   div:first-child & {
-    margin: 0 10px 0 10px;
+    // margin: 0 10px 0 10px;
   }
-
   div:last-child & {
-    margin: 0 10px 0 10px;
+    // margin: 0 10px 0 10px;
   }
 }
 
 .generic-bordered-box {
   //border: 1px solid rgba(183, 183, 183, 0.29);
-
   .box-content {
     //padding-left: 10px;
   }
@@ -76,13 +71,12 @@ div.bordered-header {
 .block-content-header {
   font-size: 1.4375rem;
   padding: 0.5rem 0;
-
   @include breakpoint(small only) {
-      font-size: 1.125rem;
+    font-size: 1.125rem;
   }
 }
 
-.table-cell{
+.table-cell {
   display: table-cell;
 }
 
@@ -93,10 +87,209 @@ div.bordered-header {
   position: relative;
 }
 
-.grid-content.app-tables > .content-block, .grid-content.app-tables > .content-block > .generic-bordered-box, .grid-content.app-tables > .content-block > .generic-bordered-box > .overview-tabs {
+.grid-content.app-tables>.content-block,
+.grid-content.app-tables>.content-block>.generic-bordered-box,
+.grid-content.app-tables>.content-block>.generic-bordered-box>.overview-tabs {
   height: 100%;
 }
 
-.grid-content.app-tables > .content-block {
+.grid-content.app-tables>.content-block {
   margin-bottom: 0 !important;
+}
+
+.welcome-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .bg {
+    flex: 1 1 auto;
+    background-image: url("./../background.jpg");
+    background-position: center center;
+    background-size: cover;
+    padding: 1em;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    justify-content: space-evenly;
+    align-items: center;
+    .slogan {
+      text-align: center;
+      font-size: 2.6em;
+      text-shadow: 0 0 3px #000;
+      line-height: 1.2;
+    }
+    .button {
+      padding: 1.2em 2.8em;
+      margin: 0;
+    }
+  }
+  .bottom-zone {
+    background-color: #ffffff;
+    color: #182122;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1em;
+    .card-custom {
+      text-align: center;
+      margin: 1em 2em;
+    }
+    .card-image {
+      img {
+        width: 140px;
+      }
+    }
+    @media screen and (max-width: $size-medium) {
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+  }
+}
+.readable {
+  max-width: 40em;
+}
+// a wrapper containing nav & main block
+.main-body {
+  @include display-flex( row,
+  $align-items: stretch, $flex-wrap: nowrap);
+  flex-grow: 1; // padding-top: $space-between;
+  // padding-bottom: $space-between;
+}
+
+.left-panel {
+  box-shadow: 1px 0  rgba(0, 0, 0, 0.5);
+}
+// Main Nav on the left
+.nav {
+  font-size: 85%;
+  padding: 1.4em 1em;
+  @include display-flex($flex-wrap: nowrap);
+  @include flex(0,
+  0,
+  $flex-basis: $width-nav);
+  @media screen and (max-width: $size-medium) {
+    display: none;
+  }
+  @include shadow(5px);
+  margin: 2px;
+  margin-left: 0;
+  &:not(.expand) {
+    max-height: 85vh;
+  }
+  .nav-items {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-aspect-ratio: 1/1) {
+      overflow-y: auto;
+    }
+  }
+  .nav-link {
+    &+.nav-link {
+      margin-top: 2em;
+    }
+  }
+  .nav-item {
+    text-transform: uppercase;
+    text-align: center;
+    [class^="icon"] {
+      font-size: 3.6em;
+    }
+    .nav-title {
+      margin-top: 4px;
+    }
+  } // 普通模式下fix在窗口左侧
+  // 鼠标划过时展开，否则自动隐藏
+  position: fixed;
+  z-index: 100;
+  transform: translateX(-100%);
+  &:hover {
+    transform: translateX(0);
+  }
+  &.expand {
+    transform: translateX(0);
+    position: relative;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 2px rgba(0, 0, 0, 0.29);
+    margin: 1px;
+    .nav-toggle {
+      margin-left: -20px;
+    }
+  }
+  &::after {}
+  .nav-toggle {
+    width: 22px;
+    height: 20px;
+    position: absolute;
+    left: 100%;
+    top: 140px;
+    margin-top: -10px;
+    margin-left: -12px;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 2px 0 2px black;
+    line-height: 20px;
+    text-align: center;
+    z-index: -1;
+    font-size: 16px;
+  }
+}
+
+.currency-table {
+  .table-cell {
+    height: 3em;
+    line-height: 3;
+  }
+}
+
+.with-shadow {
+  margin: 2px;
+}
+
+.transition {
+  transition: all 0.4s;
+}
+
+.show-for-small-only:not(.ng-hide) {
+  display: none !important;
+  @media screen and (max-width: $size-medium) {
+    display: block !important;
+  }
+}
+
+.margin-column {
+  @media screen and (min-width: $size-medium) {
+    margin-left: $space-between;
+  }
+}
+
+.scroll-bar-for-win {
+   ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    &:window-inactive {
+      display: none;
+    }
+  }
+  /* Track */
+   ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+  /* Handle */
+   ::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+   ::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  /* Add a thumb */
 }

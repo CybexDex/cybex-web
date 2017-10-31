@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "react";
 import AssetActions from "actions/AssetActions";
 import SettingsActions from "actions/SettingsActions";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";
@@ -11,7 +11,7 @@ import counterpart from "counterpart";
 import FormattedAsset from "../Utility/FormattedAsset";
 import AssetName from "../Utility/AssetName";
 import {Tabs, Tab} from "../Utility/Tabs";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 
 class Assets extends React.Component {
 
@@ -92,7 +92,7 @@ class Assets extends React.Component {
         }).map((asset) => {
             let description = assetUtils.parseDescription(asset.options.description);
 
-            let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "BTS");
+            let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "CYB");
 
             return (
                 <tr key={asset.symbol}>
@@ -117,7 +117,7 @@ class Assets extends React.Component {
         }).map((asset) => {
             let description = assetUtils.parseDescription(asset.options.description);
 
-            let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "BTS");
+            let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "CYB");
 
             return (
                 <tr key={asset.symbol}>
@@ -150,7 +150,7 @@ class Assets extends React.Component {
             );
         }).map((asset) => {
             let description = assetUtils.parseDescription(asset.options.description);
-            let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "BTS");
+            let marketID = asset.symbol + "_" + (description.market ? description.market : coreAsset ? coreAsset.get("symbol") : "CYB");
 
             return (
                 <tr key={asset.id.split(".")[2]}>

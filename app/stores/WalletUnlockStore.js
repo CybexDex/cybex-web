@@ -31,7 +31,8 @@ class WalletUnlockStore {
     }
 
     onUnlock({resolve, reject}) {
-        //DEBUG console.log('... onUnlock setState', WalletDb.isLocked())
+        // DEBUG 
+        console.log('... onUnlock setState', WalletDb.isLocked())
         //
         this._setLockTimeout();
         if( ! WalletDb.isLocked()) {
@@ -60,6 +61,7 @@ class WalletUnlockStore {
     }
 
     onChange() {
+        console.debug("WalletUnlockStore: ");
         this.setState({locked: WalletDb.isLocked()})
     }
 

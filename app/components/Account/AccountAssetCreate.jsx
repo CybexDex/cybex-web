@@ -4,7 +4,7 @@ import classnames from "classnames";
 import AssetActions from "actions/AssetActions";
 import HelpContent from "../Utility/HelpContent";
 import utils from "common/utils";
-import {ChainStore, ChainValidation} from "bitsharesjs/es";
+import {ChainStore, ChainValidation} from "cybexjs";
 import FormattedAsset from "../Utility/FormattedAsset";
 import counterpart from "counterpart";
 import ChainTypes from "../Utility/ChainTypes";
@@ -147,6 +147,7 @@ class AccountAssetCreate extends React.Component {
                 precision: 4,
                 max_supply: 100000,
                 max_market_fee: 0,
+                // vesting: 0,
                 market_fee_percent: 0,
                 description: {main: ""}
             },
@@ -204,7 +205,7 @@ class AccountAssetCreate extends React.Component {
             update.description.market = "";
         }
         let description = JSON.stringify(update.description);
-
+        console.debug("Creating: ", update);
         AssetActions.createAsset(account.get("id"), update, flags, permissions, core_exchange_rate, isBitAsset, is_prediction_market, bitasset_opts, description).then(result => {
             console.log("... AssetActions.createAsset(account_id, update)", account.get("id"),  update, flags, permissions)
         });

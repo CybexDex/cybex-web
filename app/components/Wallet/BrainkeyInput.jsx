@@ -1,6 +1,6 @@
 import React, {PropTypes, Component} from "react";
 import cname from "classnames";
-import {hash, key} from "bitsharesjs/es";
+import {hash, key} from "cybexjs";
 
 var dictionary_set;
 

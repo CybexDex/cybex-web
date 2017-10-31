@@ -1,5 +1,5 @@
 import React, {PropTypes, Component} from "react";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import {FormattedDate} from "react-intl";
 import { connect } from "alt-react";
 import WalletActions from "actions/WalletActions";
@@ -11,8 +11,8 @@ import notify from "actions/NotificationActions";
 import {saveAs} from "file-saver";
 import cname from "classnames";
 import Translate from "react-translate-component";
-import {ChainConfig} from "bitsharesjs-ws";
-import {PrivateKey} from "bitsharesjs/es";
+import {ChainConfig} from "cybexjs-ws";
+import {PrivateKey} from "cybexjs";
 import SettingsActions from "actions/SettingsActions";
 
 const connectObject = {
@@ -252,7 +252,8 @@ class Create extends Component {
 
     getBackupName() {
         let name = this.props.wallet.current_wallet
-        let address_prefix = ChainConfig.address_prefix.toLowerCase()
+        // let address_prefix = ChainConfig.address_prefix.toLowerCase()
+        let address_prefix = "Cybex";
         if(name.indexOf(address_prefix) !== 0)
             name = address_prefix + "_" + name
 

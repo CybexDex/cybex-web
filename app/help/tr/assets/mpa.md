@@ -8,8 +8,8 @@ alıp-satılabilen yeni  bir tür dijital varlıklardır. Bunların değerleri, 
 dayandıkları geleneksel varlıkların değerlerini takip etmek üzere dizayn edilmişlerdir. 
 
 *AkıllıPara* (eşanlamı MPA) , değerinin  *daima*  100% yada daha fazlası BitShares'in 
- ana para birimi (BTS) ile desteklenen bir kripto-paradır. Bu *AkıllıParalar* herhangi bir 
-zamanda bir fark-kontratı (CFD) içinde *teminat* olarak BTS'ye dönüştürülebilirler .
+ ana para birimi (CYB) ile desteklenen bir kripto-paradır. Bu *AkıllıParalar* herhangi bir 
+zamanda bir fark-kontratı (CFD) içinde *teminat* olarak CYB'ye dönüştürülebilirler .
 
 Teminatla desteklenen FK'nı andırmalarına rağmen PSV'leri nadir yapan şey 
 onların  karşı taraf riskinden muaf olmalarıdır. Bunun mümkün olması için teminatı 

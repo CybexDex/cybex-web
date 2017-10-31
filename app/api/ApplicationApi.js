@@ -1,6 +1,6 @@
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import WalletDb from "stores/WalletDb";
-import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, ops, FetchChain, ChainStore} from "bitsharesjs/es";
+import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, ops, FetchChain, ChainStore} from "cybexjs";
 
 class ApplicationApi {
 
@@ -283,7 +283,7 @@ class ApplicationApi {
 
             const owner = ChainStore.getAccount(account).get("id");
             if (!owner) reject(new Error("Can't find the owner account, please try again"));
-
+            
             try {
                 tr.add_type_operation("worker_create", {
                     fee: {

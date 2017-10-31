@@ -4,7 +4,7 @@ import Translate from "react-translate-component";
 import accountUtils from "common/account_utils";
 import WalletApi from "api/WalletApi";
 import WalletDb from "stores/WalletDb.js";
-import {ChainStore, FetchChainObjects} from "bitsharesjs/es";
+import {ChainStore, FetchChainObjects} from "cybexjs";
 import WorkerApproval from "./WorkerApproval";
 import AccountVotingProxy from "./AccountVotingProxy";
 import VotingAccountsList from "./VotingAccountsList";
@@ -15,7 +15,7 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import {EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 
 let wallet_api = new WalletApi();
 

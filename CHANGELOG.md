@@ -1,129 +1,5 @@
 ---------------------------------------------------------------------
-Release 2.0.171015
----------------------------------------------------------------------
-New features
---------
-- Tables Rewrite - Account Dashboard #378
-- Add an optional encrypted qr code for the private key (#542)
-- #545: Show gateway status as down for unavailable coins
-- #471: Add label to Find Markets add header
-- #560 Show unavailable messages for openledger and rudex if they time out
-- Add whitelisting to asset update page fix #70 and fix #462
-- Clear transfer form once completed (#564)
-- Use new tables styling in dashboard, add accounts/recent switching
-- #500: Set testnet/mainnet faucets depending on current API node
-- #488: Hover state + click toggle for account name QR code
-- Filter out insecure websocket urls when using https
-- #572: Make sure exchange input only allows numbers, no negative input
-- #543: Add sync status check interval, 'Synced/Out of sync/Disconnnected' warning
-
-Bug fixes
---------
-- #496: Ensure tables retain correct height
-- Remove forced create account step position #576
-- Fix #578: Open orders not displaying all orders
-- Fix ChainStore failing to notify after reset and latency check counter
-- Fix #563: Settlement box width
-- Fix App.jsx synced state to mean blockchain sync status #543
-- Fix #571
-- Fix #479: Max supply bug in asset creation and update
-- #574: Remove nodes that are no longer available
-- Fix issue #294 (#575)
-- Reset backup store when wallet is changed (#570)
-- Fix Backup dashboard link
-- Set cloud wallet login to default, improve settings switching logic
-- #Fix 501: Asset explorer table alignment
-- Fix #567: Explorer My Markets page does not load
-- Round up `for_sale` and down `to_receive`, #562 (#565)
-- Simplify and improve app init chain #531
-- Fix #529: Withrawal modal inputs
-- Fix #483: Remove TRADE.X from dropdown and remove blocktrades gateway
-- #531: Catch some app init errors and redirect, update indexeddbshim
-- Add an image for QR code, fix some styling and translations #444
-- Harmonize login forms between modes
-- Use account.assets from new API to display list of issued assets
-- Set password and username type/name/ids for password managers #527
-- Fix #535: remove ellipsis and cap password length at 45 chars
-- Fix typo (oherwise -> otherwise) (#534)
-- fix: parseInt for minimum_feeds when create asset (#539)
-- #532 change noone to no one
-
----------------------------------------------------------------------
-Release 2.0.170914
----------------------------------------------------------------------
-New features
---------
-- Issue #315 - Add Chart Clamp To Settings Dropdown (#373)
-- Issue #364 - Present an error message that disallows the use of Incognito with the BTS wallet (#394)
-- Issue #311 - Allow for hiding user issued assets (#397)
-- Iss #43 - Notification for new version availability (#382)
-- Display all committee members and witnesses, fix #53
-- #224 build automation (#371)
-- Iss #279 - When selecting a new Node under Settings -> Access, don't hard reload the browser (#380)
-
-Bug fixes
---------
-- fixed #392 (#401)
-- Fix password manager issue and ChainStore account fetching for logins close #403
-- Fix edge and tooltip formats when switching between markets
-- fix issue #385 make height is same with open orders (#396)
-- Make sure period will be placed when selected text has period keyed (#395)
-- Iss 351 - Failed to Sync with API Server UI (#381)
-- Update display price when changing amounts to stay consistent with confirmation screen fix #314
-- Fix #374 (#375)
-- Use only the first part of the remote API errors when broadcasting trx fails #342
-- Fix worker creation submit error close #366
-- Improve order matching when clicking orderbook orders #200
-- Fix #358 (#363)
-- Fix values displayed in MyOpenOrders
-- Remove special treatment of call pricing making it non-invertable #204
-- Fix find market invalid asset warnings close #292
-- Enforce at least 2 decimals for price text #186
-- fix collateral ratios is NAN issue (#362)
-- Fix #345 (#357)
-- Fix Issue #341 (#355)
-- Fix some setState on unmounted component errors
-- Fix MyMarkets console errors
-- Fix 'span cannot appear as child of tbody' error
-- Fix warning in header (td in a) (#338)
-- Update bitsharesjs, #346, fix #304
-- Update apiLatencies after connection
-- Fix API nodes sorting #346
-
----------------------------------------------------------------------
-Release 2.0.170829
----------------------------------------------------------------------
-New features
---------
-- Add memo fee estimation to WithdrawModalBlockTrades and Transfer
-- Show status of all API servers
-- Add WanCloud API servers
-- Allow Modal Close with Keyboard Control
-- Transwiser: add bankwire withdraw option
-- Force very strong generated password on account creation
-
-Bug fixes
---------
-- Fix #188: Total calculation (BTS) is not displayed correctly
-- Add localStorage fallback to BlockTradesDepositAddressCache, fix #327
-- Update BindToChainState for getAccount autosubscribe option, fix #202
-- Ensure proxy props changing updates component state
-- Ensure that vesting balances are updated when hot switching accounts
-- Improve exchange fee calc with pool and balance checks, prevent placing orders when fees are not payable
-- Add balance and fee pool checks to withdrawals
-- Ensure primary asset shows up in balance calculations
-- Add balance and fee pool checks to withdrawals, remove dead code
-- Fix 'unknown value' displayed for 0 amount
-- Fix error message for expired transactions
-- Fix broken telegram chat room link
-- Disable the trollbox, remove password change entry in settings for password logins
-- Fix a rounding issue when estimating non-BTS fees in the exchange
-- Fix Header not showing unlock state properly after wallet/account creation
-- Add a worker creation form
-- Fix depth chart for markets with extreme spreads
-
----------------------------------------------------------------------
-Release 2.0.170410
+Release 2.0.170327
 ---------------------------------------------------------------------
 New features
 --------
@@ -138,7 +14,7 @@ Bug fixes
 - Change positioning of some tooltips
 - Fix password score checker freezing on very long passwords
 - Hide 'something for nothing order history items
-- Update bitsharesjs to fix proposals array undefined error
+- Update cybexjs to fix proposals array undefined error
 - Fix 'Cannot use 'in' operator to search for 'translate'' error in api dropdown
 - Fix order rounding when modifying the 'Total' after clicking an order from the orderbook
 - Improve first-time brainkey lookup to check at least 10 positions
@@ -295,7 +171,7 @@ Bug fixes
 - Scroll orderbook to top when changing markets
 - Don't set feed price in MarketStore for markets without call orders
 - Fix setting of highestBid in MarketStore
-- Update bitsharesjs, fixes vesting balances not loading properly
+- Update cybexjs, fixes vesting balances not loading properly
 - Fix persistence of indicator settings
 - Fix PriceChart resize on switching to/from left orderbook
 - Update Dashboard markets, add loading indication until accounts are ready
@@ -314,7 +190,7 @@ Bug fixes
 - Fix Russian language selection
 - Fix proxy selection
 - Fix committee/witness pages
-- A bug when importing old BTS 1 balances has been fixed
+- A bug when importing old CYB 1 balances has been fixed
 - App init flow has been improved
 - Fix asset creation precision slider
 - Fix HelpContent links
@@ -358,7 +234,7 @@ Bug fixes
 - Fix market flipping for UIAs
 - Fix several bugs related to hash-history react router config
 - Change Graphene to BitShares
-- Replace graphenejs-lib with bitsharesjs
+- Replace graphenejs-lib with cybexjs
 - Fix npm errors
 - Fix line breaks for memos with very long words
 - Make sure asset actions render properly in AccountOverview
@@ -433,7 +309,7 @@ New features
 
 Bug fixes
 --------
-- Add BitShares bloom filter for BTS 1 account imports
+- Add BitShares bloom filter for CYB 1 account imports
 - Fix a GenesisFilter bug and update ImportKeys flow slightly
 - Fix input of uppercase characters in AccountPermissions
 - Fix Highcharts build issues
@@ -647,7 +523,7 @@ Release 2.0.160420
 
 New features
 --------
-- Allow fees for order cancellation and shorting to be paid in assets other than BTS
+- Allow fees for order cancellation and shorting to be paid in assets other than CYB
 - Enable OPEN.STEEM deposits and withdrawals
 
 Bug fixes
@@ -702,7 +578,7 @@ Bug fixes
 - Fix account selector issue
 - Add warning about precision on asset creation #756
 - Fix tooltips not appearing over modals
-- Allow account upgrade, voting, permission changes and withdrawals to be paid in assets other than BTS if necessary #786
+- Allow account upgrade, voting, permission changes and withdrawals to be paid in assets other than CYB if necessary #786
 
 
 ---------------------------------------------------------------------
@@ -794,7 +670,7 @@ Release 2.0.160225
 NEW FEATURES:
 - Add theming support and theme switch in Settings #576
 - Add scrolling to RecentTransactions
-- Add base groups to MyMarkets: BTS, BTC, USD or CNY + others
+- Add base groups to MyMarkets: CYB, BTC, USD or CNY + others
 
 BUG FIXES:
 - Fix BlockTrades select background color
@@ -814,7 +690,7 @@ NEW FEATURES:
 
 BUG FIXES:
 - Exchange buy fee selection
-- Remove link to BTS:BTS market in asset popover, fix asset description #709
+- Remove link to CYB:CYB market in asset popover, fix asset description #709
 - Disable annual membership upgrade #730
 - Fix My Orders not updating when flipping the market
 - Fix Orderbook totals calculation
@@ -973,7 +849,7 @@ Release 2.0.151202
 ---------------------------------------------------------------------
 
 NEW FEATURES:
-- Option to pay fees in BTS if possible #356
+- Option to pay fees in CYB if possible #356
 - Block explorer page that shows the current fee schedule #357
 - Improved my history panel on Exchange page #527
 - Exchange layout improvements: add borders, refactor statusbar, no-data text, panel headers #538
@@ -999,13 +875,13 @@ NEW FEATURES:
 - Show stake percentages at all times in wallet #522
 - Display total assets of all account in chosen currency #512
 - Request settlement of bit asset #493
-- Show BTS balance in Accounts search results table #482
+- Show CYB balance in Accounts search results table #482
 - Exchange > highlight active market state on bottom right #499
 - Deposit/Withdraw page split into tabs (addresses #521)
 
 BUG FIXES:
 - Fix market issue: clicking on account balance vs Lowest Ask #469
-- Transfer Dialog does not fall back to BTS fee when there is no core exchange rate or funded fee pool #329
+- Transfer Dialog does not fall back to CYB fee when there is no core exchange rate or funded fee pool #329
 - "Borrow Asset" window resets on new block on some accounts #505
 - Clicking on lowest or highest buy/sell price does not result in an eligible market order #515
 - Add the collateral ratio number of each asset to the overview page #397

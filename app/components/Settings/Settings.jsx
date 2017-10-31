@@ -126,7 +126,7 @@ class Settings extends React.Component {
 
         case "inverseMarket":
         case "confirmMarketOrder":
-            value = findEntry(e.target.value, defaults[setting]) === 0; // USD/BTS is true, BTS/USD is false
+            value = findEntry(e.target.value, defaults[setting]) === 0; // USD/CYB is true, CYB/USD is false
             break;
 
         case "apiServer":
@@ -225,21 +225,20 @@ class Settings extends React.Component {
 
         return (
             <div className="grid-block page-layout">
-                <div className="grid-block main-content wrap">
-                    <div className="grid-content large-offset-2 shrink" style={{paddingRight: "4rem"}}>
-                        <Translate style={{paddingBottom: 20}} className="bottom-border" component="h4" content="header.settings" />
+                <div className="settings-wrapper">
+                    <div className="grid-content settings-left left-panel">
+                        <Translate className="bottom-border" component="h4" content="header.settings" />
 
-                        <ul className="settings-menu">
+                        <ul className="common-left-menu settings-menu">
                             {menuEntries.map((entry, index) => {
-                                return <li className={index === activeSetting ? "active" : ""} onClick={this._onChangeMenu.bind(this, entry)} key={entry}><Translate content={"settings." + entry} /></li>;
+                                return <Translate component="li" content={"settings." + entry} className={index === activeSetting ? "active" : ""} onClick={this._onChangeMenu.bind(this, entry)} key={entry}/>;
                             })}
                         </ul>
                     </div>
-
-                    <div className="grid-content" style={{paddingLeft: "1rem", paddingRight: "1rem", maxWidth: 1000}}>
-                        <div className="grid-block small-12 medium-10 no-margin vertical">
+                    <div className="grid-content settings-main">
+                        <div className="readable vertical">
                             <Translate component="h3" content={"settings." + menuEntries[activeSetting]} />
-                            {activeEntry != "access" && <Translate unsafe style={{paddingTop: 10, paddingBottom: 20, marginBottom: 30}} className="bottom-border" content={`settings.${menuEntries[activeSetting]}_text`} />}
+                            {activeEntry != "access" && <Translate component="p" unsafe className="bottom-border" content={`settings.${menuEntries[activeSetting]}_text`} />}
                             {entries}
                         </div>
                     </div>

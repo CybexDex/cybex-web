@@ -55,7 +55,7 @@ export default class AccountSelect extends React.Component {
                 ref='account-selector'
                 key={selected_account}
                 defaultValue={selected_account}
-                className="form-control account-select bts-select"
+                className="form-control account-select cyb-select"
                 onChange={this._onAccountChange.bind(this)}
                 style={this.props.center?{margin: '0 auto'}:null}
                 tabIndex={this.props.tabIndex}

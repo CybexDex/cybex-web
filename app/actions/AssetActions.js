@@ -1,10 +1,14 @@
 import alt from "alt-instance";
-import {Apis} from "bitsharesjs-ws";
+import {
+    Apis
+} from "cybexjs-ws";
 import utils from "common/utils";
 import WalletApi from "api/WalletApi";
 import ApplicationApi from "api/ApplicationApi";
 import WalletDb from "stores/WalletDb";
-import {ChainStore} from "bitsharesjs/es";
+import {
+    ChainStore
+} from "cybexjs";
 import big from "bignumber.js";
 
 let wallet_api = new WalletApi();
@@ -69,12 +73,22 @@ class AssetActions {
         let tr = wallet_api.new_transaction();
         let precision = utils.get_asset_precision(createObject.precision);
 
-        big.config({DECIMAL_PLACES: createObject.precision});
+        big.config({
+            DECIMAL_PLACES: createObject.precision
+        });
         let max_supply = (new big(createObject.max_supply)).times(precision).toString();
         let max_market_fee = (new big(createObject.max_market_fee || 0)).times(precision).toString();
         // console.log("max_supply:", max_supply);
         // console.log("max_market_fee:", max_market_fee);
-
+        let now = Date.now() / 1000;
+        let cybex_ext = {
+            "sell_start": now,
+            "sell_end": now + 7 * 24 * 3600,
+            "vesting_end": now + 187 * 24 * 3600
+        };
+        var extension = [
+            [1, cybex_ext]
+        ];
         let corePrecision = utils.get_asset_precision(ChainStore.getAsset(cer.base.asset_id).get("precision"));
 
         let operationJSON = {
@@ -90,6 +104,7 @@ class AssetActions {
                 "market_fee_percent": createObject.market_fee_percent * 100 || 0,
                 "max_market_fee": max_market_fee,
                 "issuer_permissions": permissions,
+                // "vesting": 22,
                 "flags": flags,
                 "core_exchange_rate": {
                     "base": {
@@ -98,23 +113,24 @@ class AssetActions {
                     },
                     "quote": {
                         "amount": cer.quote.amount * precision,
-                        "asset_id": "1.3.1"
+                        "asset_id": "1.3.1" // Origin 131
                     }
                 },
-                "whitelist_authorities": [
-
-                ],
-                "blacklist_authorities": [
-
-                ],
-                "whitelist_markets": [
-
-                ],
-                "blacklist_markets": [
-
-                ],
+                "whitelist_authorities": [],
+                "blacklist_authorities": [],
+                "whitelist_markets": [],
+                "blacklist_markets": [],
                 "description": description,
-                "extensions": null
+                "extensions": extension
+                // "extensions": 
+                // [
+                //     [0],
+                //     [1, {
+                //         "sell_start": 1,
+                //         "sell_end": 2,
+                //         "vesting_end": 2
+                //     }]
+                // ]
             },
             "is_prediction_market": is_prediction_market,
             "extensions": null
@@ -138,13 +154,15 @@ class AssetActions {
     }
 
     updateAsset(issuer, new_issuer, update, core_exchange_rate, asset, flags, permissions,
-            isBitAsset, bitasset_opts, original_bitasset_opts, description, auths) {
+        isBitAsset, bitasset_opts, original_bitasset_opts, description, auths) {
 
         // Create asset action here...
         let tr = wallet_api.new_transaction();
         let quotePrecision = utils.get_asset_precision(asset.get("precision"));
 
-        big.config({DECIMAL_PLACES: asset.get("precision")});
+        big.config({
+            DECIMAL_PLACES: asset.get("precision")
+        });
         let max_supply = (new big(update.max_supply)).times(quotePrecision).toString();
         let max_market_fee = (new big(update.max_market_fee || 0)).times(quotePrecision).toString();
 
@@ -197,7 +215,7 @@ class AssetActions {
 
         console.log("bitasset_opts:", bitasset_opts, "original_bitasset_opts:", original_bitasset_opts);
         if (isBitAsset &&
-            (   bitasset_opts.feed_lifetime_sec !== original_bitasset_opts.feed_lifetime_sec ||
+            (bitasset_opts.feed_lifetime_sec !== original_bitasset_opts.feed_lifetime_sec ||
                 bitasset_opts.minimum_feeds !== original_bitasset_opts.minimum_feeds ||
                 bitasset_opts.force_settlement_delay_sec !== original_bitasset_opts.force_settlement_delay_sec ||
                 bitasset_opts.force_settlement_offset_percent !== original_bitasset_opts.force_settlement_offset_percent ||
@@ -269,7 +287,9 @@ class AssetActions {
         return (dispatch) => {
             if (!inProgress[id]) {
                 inProgress[id] = true;
-                dispatch({loading: true});
+                dispatch({
+                    loading: true
+                });
                 return Apis.instance().db_api().exec("list_assets", [
                     start, count
                 ]).then(assets => {
@@ -294,24 +314,22 @@ class AssetActions {
                     ]) : null;
 
                     Promise.all([
-                        dynamicPromise,
-                        bitAssetPromise
-                    ])
-                    .then(results => {
-                        delete inProgress[id];
-                        dispatch({
-                            assets: assets,
-                            dynamic: results[0],
-                            bitasset_data: results[1],
-                            loading: false
-                        });
-                        return assets && assets.length;
+                            dynamicPromise,
+                            bitAssetPromise
+                        ])
+                        .then(results => {
+                            delete inProgress[id];
+                            dispatch({
+                                assets: assets,
+                                dynamic: results[0],
+                                bitasset_data: results[1],
+                                loading: false
+                            });
 
+                        });
+                    dispatch({
+                        loading: false
                     });
-                })
-                .catch(error => {
-                    console.log("Error in AssetActions.getAssetList: ", error);
-                    dispatch({loading: false});
                     delete inProgress[id];
                 });
             }
@@ -356,8 +374,7 @@ class AssetActions {
                 "asset_id": assetId
             },
             payer,
-            "extensions": [
-            ]
+            "extensions": []
         });
         return WalletDb.process_transaction(tr, null, true).then(result => {
             return true;

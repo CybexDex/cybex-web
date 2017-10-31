@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Router, Route, IndexRoute, browserHistory, hashHistory, Redirect } from "react-router/es";
+import { Router, Route, IndexRoute, browserHistory, hashHistory, Redirect } from "react-router";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
 
@@ -30,7 +30,7 @@ import MarketsContainer from "./components/Exchange/MarketsContainer";
 import Transfer from "./components/Transfer/Transfer";
 import SettingsContainer from "./components/Settings/SettingsContainer";
 import BlockContainer from "./components/Blockchain/BlockContainer";
-import Asset from "./components/Blockchain/Asset";
+import AssetContainer from "./components/Blockchain/AssetContainer";
 import CreateAccount from "./components/Account/CreateAccount";
 import CreateAccountPassword from "./components/Account/CreateAccountPassword";
 import {ExistingAccount, ExistingAccountOptions} from "./components/Wallet/ExistingAccount";
@@ -47,6 +47,7 @@ import Help from "./components/Help";
 import InitError from "./components/InitError";
 import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
+import Bazaar from "./components/Exchange/Bazaar";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -59,9 +60,10 @@ const routes = (
         <IndexRoute component={DashboardContainer}/>
         <Route path="/auth/:data" component={Auth}/>
         <Route path="/dashboard" component={DashboardContainer}/>
+        <Route path="/ledger" component={BlocksContainer} />
+        <Route path="/bazaar" component={Bazaar} />
         <Route path="explorer" component={Explorer}/>
         <Route path="/explorer/fees" component={FeesContainer} />
-        <Route path="/explorer/blocks" component={BlocksContainer} />
         <Route path="/explorer/assets" component={AssetsContainer} />
         <Route path="/explorer/accounts" component={AccountsContainer} />
         <Route path="/explorer/witnesses" component={Witnesses} />
@@ -92,7 +94,7 @@ const routes = (
         <Route path="market/:marketID" component={ExchangeContainer} />
         <Route path="settings" component={SettingsContainer} />
         <Route path="block/:height" component={BlockContainer} />
-        <Route path="asset/:symbol" component={Asset} />
+        <Route path="asset/:symbol" component={AssetContainer} />
         <Route path="create-account" component={LoginSelector}>
             <Route path="wallet" component={CreateAccount} />
             <Route path="password" component={CreateAccountPassword} />
@@ -116,13 +118,13 @@ const routes = (
             <Route path="vesting" component={AccountVesting} />
             <Route path="permissions" component={AccountPermissions} />
             <Route path="voting" component={AccountVoting} />
-            <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
+            {/* <Route path="deposit-withdraw" component={AccountDepositWithdraw} /> */}
             <Route path="orders" component={AccountOrders} />
             <Route path="whitelist" component={AccountWhitelist} />
             <Redirect from="overview" to="dashboard" />
         </Route>
 
-        <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
+        {/* <Route path="deposit-withdraw" component={AccountDepositWithdraw} /> */}
         <Route path="create-worker" component={CreateWorker} />
         <Route path="/init-error" component={InitError} />
         <Route path="/help" component={Help} >

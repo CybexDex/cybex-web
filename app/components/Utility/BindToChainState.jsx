@@ -1,6 +1,6 @@
 import React from "react";
 import {curry, flow, reject, clone, pairs, omit, get, pick} from "lodash";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 import ChainTypes from "./ChainTypes";
 import utils from "common/utils";
 import LoadingIndicator from "../LoadingIndicator";

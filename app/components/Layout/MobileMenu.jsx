@@ -1,7 +1,7 @@
 import React from "react";
 import Panel from "react-foundation-apps/src/panel";
 import Trigger from "react-foundation-apps/src/trigger";
-import {Link} from "react-router/es";
+import { Link } from "react-router";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Translate from "react-translate-component";
 import AccountStore from "stores/AccountStore";
@@ -9,7 +9,7 @@ import { connect } from "alt-react";
 import WalletUnlockStore from "stores/WalletUnlockStore";
 import WalletManagerStore from "stores/WalletManagerStore";
 import SettingsStore from "stores/SettingsStore";
-import { Apis } from "bitsharesjs-ws";
+import { Apis } from "cybexjs-ws";
 
 class MobileMenu extends React.Component {
     constructor() {
@@ -32,24 +32,23 @@ class MobileMenu extends React.Component {
     }
 
     render() {
-        let {id, currentAccount, linkedAccounts, myAccounts} = this.props;
+        let { id, currentAccount, linkedAccounts, myAccounts } = this.props;
         let accounts = null;
 
-        if(linkedAccounts.size > 1) {
-            accounts = linkedAccounts.sort((a, b) => {
-                if (a > b) return 1;
-                if (a < b) return -1;
-                return 0;
-            }).map( a => {
+        if (linkedAccounts.size > 1) {
+            accounts = linkedAccounts.map(a => {
                 return <li key={a} onClick={this.onClick}><Link to={`/account/${a}/overview`}>{a}</Link></li>;
             });
-        }  else if (linkedAccounts.size === 1) {
+        } else if (linkedAccounts.size === 1) {
             accounts = <li key="account" onClick={this.onClick}><Link to={`/account/${linkedAccounts.first()}/overview`}><Translate content="header.account" /></Link></li>;
         }
 
         let linkToAccountOrDashboard;
-        if (linkedAccounts.size > 0) linkToAccountOrDashboard = <a onClick={this._onNavigate.bind(this, "/dashboard")}><Translate content="header.dashboard" /></a>;
-        else linkToAccountOrDashboard = <Link to="/create-account">Create Account</Link>;
+        if (linkedAccounts.size > 1) linkToAccountOrDashboard = <a onClick={this._onNavigate.bind(this, "/dashboard")}><Translate content="header.dashboard" /></a>;
+        else if (currentAccount) linkToAccountOrDashboard = <a onClick={this._onNavigate.bind(this, `/account/${currentAccount}/overview`)}><Translate content="header.account" /></a>;
+        // else linkToAccountOrDashboard = <Link to="/create-account">Create Account</Link>;
+        else linkToAccountOrDashboard =
+            <a onClick={this._onNavigate.bind(this, "/create-account")}><Translate content="account.create_login" /></a>;
 
         let tradeLink = this.props.lastMarket ?
             <a onClick={this._onNavigate.bind(this, `/market/${this.props.lastMarket}`)}><Translate content="header.exchange" /></a> :
@@ -57,29 +56,29 @@ class MobileMenu extends React.Component {
 
         return (
             <Panel id={id} position="left">
-              <div className="grid-content" style={{zIndex: 200}}>
-                <Trigger close={id}>
-                  <a className="close-button">&times;</a>
-                </Trigger>
-                <section style={{marginTop: "3rem"}} className="block-list">
-                    <ul>
-                        <li>{linkToAccountOrDashboard}</li>
-                        <li onClick={this.onClick}><Link to="transfer"><Translate content="header.payments"/></Link></li>
-                        {linkedAccounts.size === 0 ? null :
-                          <li>{tradeLink}</li>}
-                        {currentAccount && myAccounts.indexOf(currentAccount) !== -1 ? <li onClick={this.onClick}><Link to={"/deposit-withdraw/"}><Translate content="account.deposit_withdraw"/></Link></li> : null}
-                        <li><a onClick={this._onNavigate.bind(this, "/explorer")}><Translate content="header.explorer" /></a></li>
-                        <li onClick={this.onClick}><Link to="settings"><Translate content="header.settings"/></Link></li>
+                <div className="grid-content" style={{ zIndex: 200 }}>
+                    <Trigger close={id}>
+                        <a className="close-button">&times;</a>
+                    </Trigger>
+                    <section style={{ marginTop: "3rem" }} className="block-list">
+                        <ul>
+                            <li>{linkToAccountOrDashboard}</li>
+                            <li onClick={this.onClick}><Link to="transfer"><Translate content="header.payments" /></Link></li>
+                            {linkedAccounts.size === 0 && !currentAccount ? null :
+                                <li>{tradeLink}</li>}
+                            {/* {currentAccount && myAccounts.indexOf(currentAccount) !== -1 ? <li onClick={this.onClick}><Link to={"/deposit-withdraw/"}><Translate content="account.deposit_withdraw" /></Link></li> : null} */}
+                            <li><a onClick={this._onNavigate.bind(this, "/explorer")}><Translate content="header.explorer" /></a></li>
+                            <li onClick={this.onClick}><Link to="settings"><Translate content="header.settings" /></Link></li>
 
-                    </ul>
-                </section>
+                        </ul>
+                    </section>
 
-                <section style={{marginTop: "3rem"}} className="block-list">
-                  <header><Translate content="account.accounts" /></header>
-                  <ul>
-                      {accounts}
-                  </ul>
-                  </section>
+                    <section style={{ marginTop: "3rem" }} className="block-list">
+                        <header><Translate content="account.accounts" /></header>
+                        <ul>
+                            {accounts}
+                        </ul>
+                    </section>
                 </div>
             </Panel>
         );
@@ -117,7 +116,7 @@ export default class WidthWrapper extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener("resize", this._checkWidth, {capture: false, passive: true});
+        window.addEventListener("resize", this._checkWidth, { capture: false, passive: true });
     }
 
     componentWillUnmount() {
@@ -128,7 +127,7 @@ export default class WidthWrapper extends React.Component {
         let width = window && window.innerWidth;
         let visible = width <= 640;
         if (visible !== this.state.visible) {
-            this.setState({visible});
+            this.setState({ visible });
         }
     }
 

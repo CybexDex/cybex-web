@@ -39,6 +39,10 @@ class SettingsActions {
         return {id, status};
     }
 
+    toggleNav(value) {
+        return value;
+    }
+
     clearSettings() {
         return (dispatch) => {
             return new Promise((resolve) => {

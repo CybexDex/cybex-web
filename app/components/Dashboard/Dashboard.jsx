@@ -5,19 +5,43 @@ import { RecentTransactions } from "../Account/RecentTransactions";
 import Translate from "react-translate-component";
 import MarketCard from "./MarketCard";
 import utils from "common/utils";
-import { Apis } from "bitsharesjs-ws";
+import { Apis } from "cybexjs-ws";
+var logo = require("assets/cybex-logo.png");
 import LoadingIndicator from "../LoadingIndicator";
 import LoginSelector from "../LoginSelector";
 import cnames from "classnames";
 import SettingsActions from "actions/SettingsActions";
+import WalletUnlockActions from "actions/WalletUnlockActions";
+import Card from "components/Utility/Card"
+import { Link } from "react-router";
+
+const cardList = [
+    {
+        section: "home.icon-1",
+        image: "images/icon_home_1.png"
+    },
+    {
+        section: "home.icon-2",
+        image: "images/icon_home_2.png"
+    },
+    {
+        section: "home.icon-3",
+        image: "images/icon_home_3.png"
+
+    },
+    {
+        section: "home.icon-4",
+        image: "images/icon_home_4.png"
+    },
+];
 
 class Dashboard extends React.Component {
 
     constructor(props) {
         super();
         let marketsByChain = {
-            "4018d784":[
-                ["USD", "BTS"],
+            "c577bfd9": [
+                ["USD", "CYB"],
                 ["USD", "OPEN.BTC"],
                 ["USD", "OPEN.USDT"],
                 ["USD", "OPEN.ETH"],
@@ -30,36 +54,39 @@ class Dashboard extends React.Component {
                 ["CNY", "OPEN.ETH"],
                 ["CNY", "YOYOW"],
                 ["CNY", "OCT"],
-                ["OPEN.BTC", "BTS"],
+                ["OPEN.BTC", "CYB"],
                 ["OPEN.BTC", "OPEN.ETH"],
                 ["OPEN.BTC", "KEXCOIN"],
                 ["OPEN.BTC", "OPEN.DASH"],
+                ["OPEN.BTC", "OBITS"],
                 ["OPEN.BTC", "BLOCKPAY"],
                 ["OPEN.BTC", "OPEN.DGD"],
                 ["OPEN.BTC", "OPEN.STEEM"],
-                ["BTS", "OPEN.ETH"],
+                ["CYB", "BTS"],
                 ["BTS", "OPEN.EOS"],
                 ["BTS", "PPY"],
                 ["BTS", "OPEN.STEEM"],
-                ["BTS", "OBITS"],
-                ["BTS", "RUBLE"],
-                ["BTS", "HERO"],
-                ["BTS", "OCT"],
-                ["BTS", "SILVER"],
-                ["BTS", "GOLD"],
-                ["BTS", "BLOCKPAY"],
-                ["BTS", "BTWTY"],
-                ["BTS", "SMOKE"],
+                ["CYB", "CNY"],
+                ["CYB", "OPEN.ETH"],
+                ["CYB", "HERO"],
+                ["CYB", "OCT"],
+                ["CYB", "RUBLE"],
+                ["CYB", "GOLD"],
+                ["CYB", "BLOCKPAY"],
+                ["CYB", "BTWTY"],
+                ["CYB", "OBITS"],
                 ["KAPITAL", "OPEN.BTC"],
+                ["CYB", "SILVER"],
                 ["USD", "OPEN.STEEM"],
                 ["USD", "OPEN.MAID"],
                 ["OPEN.USDT", "OPEN.BTC"],
+                ["CYB", "OPEN.STEEM"],
                 ["OPEN.BTC", "OPEN.MAID"],
-                ["BTS", "OPEN.MAID"],
-                ["BTS", "OPEN.HEAT"],
-                ["BTS", "OPEN.INCENT"],
+                ["CYB", "OPEN.MAID"],
+                ["CYB", "OPEN.HEAT"],
+                ["CYB", "OPEN.INCENT"],
                 ["HEMPSWEET", "OPEN.BTC"],
-                ["KAPITAL", "BTS"]
+                ["KAPITAL", "CYB"],
             ],
             "39f5e2ed": [
                 ["TEST", "PEG.FAKEUSD"],
@@ -86,7 +113,7 @@ class Dashboard extends React.Component {
     componentDidMount() {
         this._setDimensions();
 
-        window.addEventListener("resize", this._setDimensions, {capture: false, passive: true});
+        window.addEventListener("resize", this._setDimensions, { capture: false, passive: true });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -113,7 +140,7 @@ class Dashboard extends React.Component {
         let width = window.innerWidth;
 
         if (width !== this.state.width) {
-            this.setState({width});
+            this.setState({ width });
         }
     }
 
@@ -134,7 +161,7 @@ class Dashboard extends React.Component {
 
     render() {
         let { linkedAccounts, myIgnoredAccounts, accountsReady, passwordAccount } = this.props;
-        let {width, showIgnored, featuredMarkets, newAssets, currentEntry} = this.state;
+        let { width, showIgnored, featuredMarkets, newAssets, currentEntry } = this.state;
 
         if (passwordAccount && !linkedAccounts.has(passwordAccount)) {
             linkedAccounts = linkedAccounts.add(passwordAccount);
@@ -151,34 +178,60 @@ class Dashboard extends React.Component {
 
         let validMarkets = 0;
 
-        let markets = featuredMarkets
-        .map(pair => {
-            let isLowVolume = this.props.lowVolumeMarkets.get(pair[1] + "_" + pair[0]) || this.props.lowVolumeMarkets.get(pair[0] + "_" + pair[1]);
-            if (!isLowVolume) validMarkets++;
-            let className = "";
-            if (validMarkets > 9) {
-                className += ` show-for-${!accountCount ? "xlarge" : "large"}`;
-            } else if (validMarkets > 6) {
-                className += ` show-for-${!accountCount ? "large" : "medium"}`;
-            }
-
-            return (
-                <MarketCard
-                    key={pair[0] + "_" + pair[1]}
-                    marketId={pair[1] + "_" + pair[0]}
-                    new={newAssets.indexOf(pair[1]) !== -1}
-                    className={className}
-                    quote={pair[0]}
-                    base={pair[1]}
-                    invert={pair[2]}
-                    isLowVolume={isLowVolume}
-                    hide={validMarkets > 20}
-                />
-            );
-        }).filter(a => !!a);
+        let markets = featuredMarkets ? featuredMarkets
+            .map(pair => {
+                let isLowVolume = this.props.lowVolumeMarkets.get(pair[1] + "_" + pair[0]) || this.props.lowVolumeMarkets.get(pair[0] + "_" + pair[1]);
+                if (!isLowVolume) validMarkets++;
+                let className = "";
+                if (validMarkets > 9) {
+                    className += ` show-for-${!accountCount ? "xlarge" : "large"}`;
+                } else if (validMarkets > 6) {
+                    className += ` show-for-${!accountCount ? "large" : "medium"}`;
+                }
+                return (
+                    <MarketCard
+                        key={pair[0] + "_" + pair[1]}
+                        marketId={pair[1] + "_" + pair[0]}
+                        new={newAssets.indexOf(pair[1]) !== -1}
+                        className={className}
+                        quote={pair[0]}
+                        base={pair[1]}
+                        invert={pair[2]}
+                        isLowVolume={isLowVolume}
+                        hide={validMarkets > 20}
+                    />
+                );
+            }).filter(a => !!a) : null;
 
         if (!accountCount) {
-            return <LoginSelector />;
+            return (
+                <div ref="wrapper" className="grid-block page-layout vertical">
+                    <div ref="container" className="grid-block vertical medium-horizontal">
+                        <div className="welcome-page">
+                            <div className="bg">
+                                <div className="logo-wrapper">
+                                    <img src={logo} alt="" />
+                                </div>
+                                <div className="slogan">
+                                    <Translate content="home.slogan" unsafe />
+                                </div>
+                                <Link to="/help">
+                                    <button className="button hollow warning">
+                                        <Translate content="home.find_more" />
+                                    </button>
+                                </Link>
+                            </div>
+                            <div className="bottom-zone">
+                                {
+                                    cardList.map(card => (
+                                        <Card key={card.image} card={card} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
         }
 
         const entries = ["accounts", "recent"];
@@ -186,50 +239,39 @@ class Dashboard extends React.Component {
 
         return (
             <div ref="wrapper" className="grid-block page-layout vertical">
-                <div ref="container" className="grid-container" style={{padding: "25px 10px 0 10px"}}>
-                    <div className="block-content-header" style={{marginBottom: 15}}>
-                    <Translate content="exchange.featured"/>
+                <div ref="container" className="grid-container" style={{ padding: "25px 10px 0 10px" }}>
+                    <div className="block-content-header" style={{ marginBottom: 15 }}>
+                        <Translate content="exchange.featured" />
                     </div>
                     <div className="grid-block small-up-1 medium-up-3 large-up-4 no-overflow fm-outer-container">
                         {markets}
                     </div>
 
-                    {accountCount ? (
-                        <div style={{paddingBottom: "3rem"}}>
-                            <div className="hide-selector" style={{paddingBottom: "1rem"}}>
-                                {entries.map((type, index) => {
-                                    return (
-                                        <div key={type} className={cnames("inline-block", {inactive: activeIndex !== index})} onClick={this._onSwitchType.bind(this, type)}>
-                                            <Translate content={`account.${type}`} />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-
-                            {currentEntry === "accounts" ? <div className="generic-bordered-box" style={{marginBottom: 5}}>
-                                <div className="box-content">
-                                    <DashboardList
-                                        accounts={Immutable.List(names)}
-                                        ignoredAccounts={Immutable.List(ignored)}
-                                        width={width}
-                                        onToggleIgnored={this._onToggleIgnored.bind(this)}
-                                        showIgnored={showIgnored}
-                                    />
-                                    {/* {showIgnored ? <DashboardList accounts={Immutable.List(ignored)} width={width} /> : null} */}
-                                </div>
-                            </div> : null}
-
-                            {currentEntry === "recent" ? <RecentTransactions
-                                style={{marginBottom: 20, marginTop: 20}}
-                                accountsList={linkedAccounts}
-                                limit={10}
-                                compactView={false}
-                                fullHeight={true}
-                                showFilters={true}
-                                dashboard
-                            /> : null}
+                    {accountCount ? <div className="generic-bordered-box" style={{ marginBottom: 5 }}>
+                        <div className="block-content-header" style={{ marginBottom: 15 }}>
+                            <Translate content="account.accounts" />
                         </div>
-                    ) : null}
+                        <div className="box-content">
+                            <DashboardList
+                                accounts={Immutable.List(names)}
+                                ignoredAccounts={Immutable.List(ignored)}
+                                width={width}
+                                onToggleIgnored={this._onToggleIgnored.bind(this)}
+                                showIgnored={showIgnored}
+                            />
+                            {/* {showIgnored ? <DashboardList accounts={Immutable.List(ignored)} width={width} /> : null} */}
+                        </div>
+                    </div> : null}
+
+                    {accountCount ? <RecentTransactions
+                        style={{ marginBottom: 20, marginTop: 20 }}
+                        accountsList={linkedAccounts}
+                        limit={10}
+                        compactView={false}
+                        fullHeight={true}
+                        showFilters={true}
+                    /> : null}
+
                 </div>
             </div>
         );

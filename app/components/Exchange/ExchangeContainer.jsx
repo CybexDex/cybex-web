@@ -7,7 +7,7 @@ import AltContainer from "alt-container";
 import Exchange from "./Exchange";
 import ChainTypes from "../Utility/ChainTypes";
 import LoadingIndicator from "../LoadingIndicator";
-import { EmitterInstance } from "bitsharesjs/es";
+import { EmitterInstance } from "cybexjs";
 import BindToChainState from "../Utility/BindToChainState";
 import MarketsActions from "actions/MarketsActions";
 

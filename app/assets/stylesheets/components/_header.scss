@@ -2,32 +2,34 @@
   justify-content: flex-start;
 }
 
-.icon > svg {
-  > path {
-    fill : #fff;
+.icon>svg {
+  >path {
+    fill: #fff;
   }
 }
 
-.float-left > span.icon.user {
-    top: 0;
+.float-left>span.icon.user {
+  top: 0;
 }
 
 .header {
-    .electron-navigation > ul > li {
-        border: none;
-    }
-    &.primary {
-        border-bottom: 1px solid $border-color;
-    }
+  .electron-navigation>ul>li {
+    border: none;
+  }
+  &.primary {
+    // border-bottom: 1px solid $border-color;
+  }
   padding-left: 0 !important;
-  min-height: 66px;
+  min-height: 56px;
   text-transform: uppercase;
-  .menu-bar > li {
-
+  z-index: 1;
+  &.with-shadow {
+    margin: 0;
+  }
+  .menu-bar>li {
     display: list-item;
-    padding: 0;
-    border-right: 1px solid $border-color;
-    > a {
+    padding: 0; // border-right: 1px solid $border-color;
+    >a {
       font-weight: bold;
       line-height: 2rem;
       padding-left: 0.5rem;
@@ -42,42 +44,46 @@
 }
 
 div.header-balance {
-    a {
-        font-size: 90%;
-        font-weight: bold;
-        &:hover {
-            background-color: transparent !important;
-        };
+  a {
+    font-size: 90%;
+    font-weight: bold;
+    &:hover {
+      background-color: transparent !important;
     }
+    ;
+  }
 }
 
 div.account-drop-down {
-    font-size: 90%;
-    .dropdown-divider {
-        padding-bottom: 10px;
-    }
-  a.button {
-      font-weight: bold;
-      font-size: 90%;
-      background-color: transparent;
+  font-size: 90%;
+  .dropdown-divider {
+    padding-bottom: 10px;
   }
-  a:active.button, a:hover.button {
+  a.button {
+    font-weight: bold;
+    font-size: 90%;
+    background-color: transparent;
+  }
+  a:active.button,
+  a:hover.button {
     background-color: transparent !important;
+  }
+  .table-cell {
+    vertical-align: middle;
   }
 }
 
 div.header-right-menu {
-    > .grp-menu-item {
-        border-left: 1px solid $border-color;
-        line-height: 2rem;
-
-        > a {
-            @include breakpoint(large) {
-              padding-left: 1.25rem;
-              padding-right: 1.25rem;
-            }
-        }
+  >.grp-menu-item {
+    // border-left: 1px solid $border-color;
+    line-height: 2rem;
+    >a {
+      @include breakpoint(large) {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
     }
+  }
 }
 
 .grp-menu-items-group {
@@ -90,7 +96,8 @@ div.header-right-menu {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  > a, .button {
+  >a,
+  .button {
     padding: 0.5rem;
     @include breakpoint(large) {
       padding-left: 0.75rem;
@@ -100,7 +107,7 @@ div.header-right-menu {
   }
 }
 
-.user-icon > a {
+.user-icon>a {
   padding-left: 0.3rem;
   padding-right: 0.3rem;
 }

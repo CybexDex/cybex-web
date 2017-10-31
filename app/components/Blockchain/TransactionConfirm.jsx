@@ -11,7 +11,7 @@ import LoadingIndicator from "../LoadingIndicator";
 import WalletDb from "stores/WalletDb";
 import AccountStore from "stores/AccountStore";
 import AccountSelect from "components/Forms/AccountSelect";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 import utils from "common/utils";
 import Operation from "components/Blockchain/Operation";
 import notify from "actions/NotificationActions";
@@ -98,7 +98,7 @@ class TransactionConfirm extends React.Component {
     render() {
         let {broadcast, broadcasting} = this.props;
         if ( !this.props.transaction || this.props.closed ) {return null; }
-        let button_group, header, confirmButtonClass = "button";
+        let button_group, header, confirmButtonClass = "button nowrap";
         if(this.props.propose && ! this.props.fee_paying_account) confirmButtonClass += " disabled";
 
         if(this.props.error || this.props.included) {

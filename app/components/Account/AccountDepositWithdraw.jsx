@@ -13,7 +13,7 @@ import HelpContent from "../Utility/HelpContent";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
 import SettingsActions from "actions/SettingsActions";
-import { Apis } from "bitsharesjs-ws";
+import { Apis } from "cybexjs-ws";
 import { settingsAPIs, rudexAPIs } from "api/apiConfig";
 import BitKapital from "../DepositWithdraw/BitKapital";
 import RuDexGateway from "../DepositWithdraw/rudex/RuDexGateway";
@@ -198,12 +198,12 @@ class AccountDepositWithdraw extends React.Component {
                                 issuer_account="blocktrades"
                                 account={account}
                                 initial_deposit_input_coin_type="btc"
-                                initial_deposit_output_coin_type="bts"
+                                initial_deposit_output_coin_type="cyb"
                                 initial_deposit_estimated_input_amount="1.0"
-                                initial_withdraw_input_coin_type="bts"
+                                initial_withdraw_input_coin_type="cyb"
                                 initial_withdraw_output_coin_type="btc"
                                 initial_withdraw_estimated_input_amount="100000"
-                                initial_conversion_input_coin_type="bts"
+                                initial_conversion_input_coin_type="cyb"
                                 initial_conversion_output_coin_type="bitbtc"
                                 initial_conversion_estimated_input_amount="1000"
                             />
@@ -274,7 +274,7 @@ class AccountDepositWithdraw extends React.Component {
                         <div className="grid-block vertical medium-horizontal no-margin no-padding">
                             <div className="medium-6 small-order-2 medium-order-1">
                                 <Translate component="label" className="left-label" content="gateway.service" />
-                                <select onChange={this.onSetService.bind(this)} className="bts-select" value={activeService} >
+                                <select onChange={this.onSetService.bind(this)} className="cyb-select" value={activeService} >
                                     {options}
                                 </select>
                                 {
@@ -316,7 +316,7 @@ AccountDepositWithdraw = BindToChainState(AccountDepositWithdraw);
 class DepositStoreWrapper extends React.Component {
 
     componentWillMount() {
-        if (Apis.instance().chain_id.substr(0, 8) === "4018d784") { // Only fetch this when on BTS main net
+        if (Apis.instance().chain_id.substr(0, 8) === "4018d784") { // Only fetch this when on CYB main net
             GatewayActions.fetchCoins.defer(); // Openledger
             GatewayActions.fetchCoinsSimple.defer({backer: "RUDEX", url:rudexAPIs.BASE+rudexAPIs.COINS_LIST}); // RuDEX
             GatewayActions.fetchCoins.defer({backer: "TRADE"}); // Blocktrades

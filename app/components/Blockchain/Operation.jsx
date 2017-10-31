@@ -1,6 +1,6 @@
 import React from "react";
 import FormattedAsset from "../Utility/FormattedAsset";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import classNames from "classnames";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -11,7 +11,7 @@ import LinkToAssetById from "../Utility/LinkToAssetById";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
-import {ChainStore, ChainTypes as grapheneChainTypes} from "bitsharesjs/es";
+import {ChainStore, ChainTypes as grapheneChainTypes} from "cybexjs";
 import account_constants from "chain/account_constants";
 import MemoText from "./MemoText";
 import ProposedOperation from "./ProposedOperation";
@@ -67,12 +67,14 @@ class Row extends React.Component {
     //     this.context.router.push(`/block/${this.props.block}`);
     // }
 
+    // 原有检测更新代码没有考虑i18n情况，会导致i18n更新后翻译未更新
     shouldComponentUpdate(nextProps) {
         let {block, dynGlobalObject} = this.props;
         let last_irreversible_block_num = dynGlobalObject.get("last_irreversible_block_num" );
         if (nextProps.dynGlobalObject === this.props.dynGlobalObject) {
             return false;
         }
+        // console.debug("[Opeartion/Row]shouldComponentUpdate", this.props ,block > last_irreversible_block_num)
         return block > last_irreversible_block_num;
     }
 
@@ -84,7 +86,7 @@ class Row extends React.Component {
         if( block > last_irreversible_block_num ) {
             pending = <span>(<Translate content="operation.pending" blocks={block - last_irreversible_block_num} />)</span>;
         }
-
+        
         fee.amount = parseInt(fee.amount, 10);
 
         return (
@@ -148,6 +150,9 @@ class Operation extends React.Component {
     }
 
     shouldComponentUpdate(nextProps) {
+        // Todos 翻译bug
+        // console.debug("[Operation]shouldComponentUpdate")
+        // return true;
         if (!this.props.op || !nextProps.op) {
             return false;
         }
@@ -163,7 +168,7 @@ class Operation extends React.Component {
         switch (ops[op[0]]) { // For a list of trx types, see chain_types.coffee
 
             case "transfer":
-
+            
                 if(op[1].memo) {
                     memoComponent = <MemoText memo={op[1].memo} />
                 }

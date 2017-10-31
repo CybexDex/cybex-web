@@ -1,14 +1,14 @@
 {
-  "name": "BitShares2-light",
-  "version": "2.0.171015",
-  "description": "Advanced wallet interface for the BitShares financial blockchain.",
-  "homepage": "https://github.com/bitshares/bitshares-ui",
-  "author": "Sigve Kvalsvik <kvalsvik.crypto@gmail.com>",
-  "contributors": [
-    "James Calfee",
-    "Dan Larimer",
-    "Valentine Zavgorodnev <valentine.zavgorodnev@gmail.com>"
+  "name": "Cybex-UI",
+  "version": "1.1.0",
+  "description": "An Advanced wallet interface, inspired by bitshares-ui",
+  "author": [
+    "Cryptonomex, Inc.",
+    "Sigve Kvalsvik, Kvalsvik Crypto"
   ],
+  "browser": {
+    "ws": false
+  },
   "license": "MIT",
   "engines": {
     "node": ">=7.x",
@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bitshares/bitshares-ui"
+    "url": "https://git.coding.net/bobxuyang/cybex-web-wallet.git"
   },
   "main": "build/electron/index.js",
   "scripts": {
@@ -122,14 +122,24 @@
     }
   },
   "dependencies": {
+    "@types/react": "15",
+    "ReconnectingWebSocket": "git+https://github.com/bitshares/reconnecting-websocket",
     "alt": "^0.18.6",
     "alt-container": "^1.0.0",
     "alt-react": "0.0.1",
     "bignumber.js": "^4.0.0",
-    "bitsharesjs": "^1.3.4",
+    "bs58": "^3.0.0",
+    "bufferutil": "^3.0.2",
+    "bytebuffer": "^5.0.0",
+    "chart.js": "^2.7.0",
     "classnames": "^2.2.1",
     "cookies-js": "^1.2.1",
+    "create-hash": "^1.1.2",
     "counterpart": "^0.17.1",
+    "create-hmac": "^1.1.4",
+    "crypto-js": "^3.1.9-1",
+    "deep-equal": "^1.0.1",
+    "ecurve": "^1.0.2",
     "event-emitter": "^0.3.4",
     "file-saver": "^1.3.3",
     "foundation-apps": "git+https://github.com/zurb/foundation-apps.git",
@@ -147,6 +157,8 @@
     "object-assign": "^4.0.1",
     "perfect-scrollbar": "git+https://github.com/bitshares/perfect-scrollbar.git",
     "qrcode.react": "^0.7.1",
+    "preload-webpack-plugin": "^2.0.0",
+    "rc-queue-anim": "^1.2.2",
     "react": "^15.6.1",
     "react-clipboard.js": "^1.0.1",
     "react-dom": "^15.6.1",
@@ -163,11 +175,17 @@
     "react-tooltip": "^3.2.2",
     "react-transition-group": "^1.2.0",
     "react-translate-component": "^0.13.2",
+    "rxjs": "^5.4.3",
+    "secure-random": "^1.1.1",
     "tcomb": "2.5.2",
+    "utf-8-validate": "^3.0.3",
     "whatwg-fetch": "^2.0.1",
+    "ws": "^2.2.0",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@types/react-router": "3",
+    "awesome-typescript-loader": "^3.2.3",
     "babel-core": "^6.21.0",
     "babel-eslint": "^7.1.1",
     "babel-jest": "^18.0.0",
@@ -193,9 +211,11 @@
     "express": "^4.14.0",
     "express-history-api-fallback": "^2.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
+    "feathers": "^2.2.0",
     "file-loader": "^0.8.4",
     "git-rev-sync": "^1.9.1",
     "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.30.1",
     "jest-cli": "^18.1.0",
     "json-loader": "^0.5.4",
     "mocha": "^3.2.0",
@@ -208,9 +228,11 @@
     "style-loader": "^0.13.1",
     "svg-inline-loader": "^0.7.1",
     "svgo-loader": "1.1.2",
+    "typescript": "^2.5.2",
     "url-loader": "^0.5.7",
     "webpack": "^3.5.6",
     "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.8.2",
     "webpack-hot-middleware": "^2.14.0",
     "worker-loader": "^0.8.1"
   }

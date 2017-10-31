@@ -1,4 +1,4 @@
-import {hash, key} from "bitsharesjs/es";
+import {hash, key} from "cybexjs";
 
 var bts_genesiskeys_bloom_url = undefined
 try {
@@ -8,13 +8,13 @@ try {
     bts_genesiskeys_bloom_url = url
 } catch(e) {
     // webpack deployment exception (not run time)
-    console.log("WARN: Will be unable to filter BTS 1.0 wallet imports, did not find assets/bts_genesiskeys_bloom.dat", e)
+    console.log("WARN: Will be unable to filter CYB 1.0 wallet imports, did not find assets/bts_genesiskeys_bloom.dat", e)
 }
 
 /**
-    This should only be applied to a BTS 1.0 export file taken on the
+    This should only be applied to a CYB 1.0 export file taken on the
     discontinued chain. Any public key string or address (all 5 formats) carried
-    over to the BTS 2.0 genesis block will be in this filter.
+    over to the CYB 2.0 genesis block will be in this filter.
 
     Their may be some false positives but no false negatives.
 */
@@ -75,7 +75,7 @@ export default class GenesisFilter {
 
     filter( account_keys, status ) {
         if( ! this.isAvailable() ) {
-            console.log("WARN: Missing bloom filter for BTS 0.9.x wallets")
+            console.log("WARN: Missing bloom filter for CYB 0.9.x wallets")
             status({ error: "missing_bloom" })
             return
         }
@@ -103,9 +103,9 @@ export default class GenesisFilter {
                             return
                         }
                         var currentKey = keys.public_keys[k]
-                        if( /^GPH/.test(currentKey) ) currentKey = "BTS" + currentKey.substring(3)
+                        if( /^GPH/.test(currentKey) ) currentKey = "CYB" + currentKey.substring(3)
                         if(this.inGenesis( currentKey )) continue
-                        var addresses = key.addresses(currentKey, 'BTS')
+                        var addresses = key.addresses(currentKey, 'CYB')
                         var addy_found = false
                         for(var i = 0; i < addresses.length; i++) {
                             if(this.inGenesis( addresses[i] )) {

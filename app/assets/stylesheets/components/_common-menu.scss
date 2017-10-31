@@ -1,0 +1,11 @@
+.common-left-menu {
+  margin: 0;
+  &>li, .menu-item {
+    transition: 0.3s all;
+    padding: 0.4em;
+    &:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+    }
+  }
+}

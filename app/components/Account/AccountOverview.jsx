@@ -9,12 +9,12 @@ import AssetName from "../Utility/AssetName";
 import CollateralPosition from "../Blockchain/CollateralPosition";
 import { RecentTransactions } from "./RecentTransactions";
 import Proposals from "components/Account/Proposals";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 import SettingsActions from "actions/SettingsActions";
 import assetUtils from "common/asset_utils";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import ChainTypes from "../Utility/ChainTypes";
 import EquivalentPrice from "../Utility/EquivalentPrice";
 import BindToChainState from "../Utility/BindToChainState";
@@ -24,7 +24,7 @@ import BorrowModal from "../Modal/BorrowModal";
 import ReactTooltip from "react-tooltip";
 import SimpleDepositWithdraw from "../Dashboard/SimpleDepositWithdraw";
 import SimpleDepositBlocktradesBridge from "../Dashboard/SimpleDepositBlocktradesBridge";
-import { Apis } from "bitsharesjs-ws";
+import { Apis } from "cybexjs-ws";
 import GatewayActions from "actions/GatewayActions";
 import {Tabs, Tab} from "../Utility/Tabs";
 import AccountOrders from "./AccountOrders";
@@ -82,7 +82,7 @@ class AccountOverview extends React.Component {
             withdrawAsset: null,
             bridgeAsset: null,
             alwaysShowAssets: [
-                // "BTS",
+                // "CYB",
                 // "USD",
                 // "CNY",
                 // "OPEN.BTC",
@@ -215,7 +215,7 @@ class AccountOverview extends React.Component {
             let {market} = assetUtils.parseDescription(asset.getIn(["options", "description"]));
             symbol = asset.get("symbol");
             if (symbol.indexOf("OPEN.") !== -1 && !market) market = "USD";
-            let preferredMarket = market ? market : core_asset ? core_asset.get("symbol") : "BTS";
+            let preferredMarket = market ? market : core_asset ? core_asset.get("symbol") : "CYB";
 
             /* Table content */
             directMarketLink = notCore ? <Link to={`/market/${asset.get("symbol")}_${preferredMarket}`}><Icon name="trade" className="icon-14px" /></Link> : emptyCell;
@@ -337,7 +337,7 @@ class AccountOverview extends React.Component {
                     const notCore = asset.get("id") !== "1.3.0";
                     let {market} = assetUtils.parseDescription(asset.getIn(["options", "description"]));
                     if (asset.get("symbol").indexOf("OPEN.") !== -1 && !market) market = "USD";
-                    let preferredMarket = market ? market : core_asset ? core_asset.get("symbol") : "BTS";
+                    let preferredMarket = market ? market : core_asset ? core_asset.get("symbol") : "CYB";
                     let directMarketLink = notCore ? <Link to={`/market/${asset.get("symbol")}_${preferredMarket}`}><Icon name="trade" className="icon-14px" /></Link> : emptyCell;
                     let {isBitAsset, borrowModal, borrowLink} = renderBorrow(asset, this.props.account);
                     if (includeAsset && visible || !includeAsset && !visible) balances.push(
@@ -448,8 +448,11 @@ class AccountOverview extends React.Component {
 
         if (account_balances) {
             // Filter out balance objects that have 0 balance or are not included in open orders
+            // console.debug("Account_Balances: ", account_balances);
             account_balances = account_balances.filter((a, index) => {
+                // console.debug("Account_Balances: ", a, index);
                 let balanceObject = ChainStore.getObject(a);
+                console.debug("BalanceObject: ", balanceObject);
                 if (balanceObject && (!balanceObject.get("balance") && !orders[index])) {
                     return false;
                 } else {
@@ -728,7 +731,7 @@ class BalanceWrapper extends React.Component {
     };
 
     componentWillMount() {
-        if (Apis.instance().chain_id.substr(0, 8) === "4018d784") { // Only fetch this when on BTS main net
+        if (Apis.instance().chain_id.substr(0, 8) === "4018d784") { // Only fetch this when on CYB main net
             GatewayActions.fetchCoins();
             GatewayActions.fetchBridgeCoins();
         }

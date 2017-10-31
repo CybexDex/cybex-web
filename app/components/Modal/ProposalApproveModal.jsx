@@ -11,7 +11,7 @@ import WalletDb from "stores/WalletDb";
 import WalletApi from "api/WalletApi";
 import NestedApprovalState from "../Account/NestedApprovalState";
 import pu from "common/permission_utils";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 
 let wallet_api = new WalletApi();
 

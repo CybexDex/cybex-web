@@ -104,7 +104,7 @@ class RuDexGateway extends React.Component {
                         <div>
                             <label style={{minHeight: "2rem"}} className="left-label"><Translate content={"gateway.choose_" + action} />: </label>
                             <select
-                                className="external-coin-types bts-select"
+                                className="external-coin-types cyb-select"
                                 onChange={this.onSelectCoin.bind(this)}
                                 value={activeCoin}
                             >

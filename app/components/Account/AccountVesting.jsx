@@ -1,10 +1,10 @@
 import React from "react";
 import Translate from "react-translate-component";
 import FormattedAsset from "../Utility/FormattedAsset";
-import {ChainStore} from "bitsharesjs/es";
+import {ChainStore} from "cybexjs";
 import utils from "common/utils";
 import WalletActions from "actions/WalletActions";
-import {Apis} from "bitsharesjs-ws";
+import {Apis} from "cybexjs-ws";
 
 class VestingBalance extends React.Component {
 

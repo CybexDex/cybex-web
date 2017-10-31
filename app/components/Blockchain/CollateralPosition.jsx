@@ -13,7 +13,7 @@ import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 import TotalBalanceValue from "../Utility/TotalBalanceValue";
 import {List} from "immutable";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
 import EquivalentPrice from "../Utility/EquivalentPrice";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "react";
 import FormattedAsset from "../Utility/FormattedAsset";
-import {Link as RealLink} from "react-router/es";
+import {Link as RealLink} from "react-router";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import classNames from "classnames";
@@ -16,7 +16,7 @@ import Icon from "../Icon/Icon";
 import PrivateKeyStore from "stores/PrivateKeyStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import ProposedOperation from "./ProposedOperation";
-import {ChainTypes} from "bitsharesjs/es";
+import {ChainTypes} from "cybexjs";
 let {operations} = ChainTypes;
 import ReactTooltip from "react-tooltip";
 

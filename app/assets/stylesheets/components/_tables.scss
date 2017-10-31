@@ -41,3 +41,39 @@
     font-size: 94%;
   }
 }
+
+.table-flex {
+  @include display-flex( $align-items: stretch, $justify-content: stretch);
+  flex-wrap: nowrap;
+  .table-head,
+  .table-body {
+    flex-grow: 1;
+    overflow: auto;
+    @include display-flex( $align-items: stretch, $justify-content: stretch);
+  }
+  .table-head {
+    flex-shrink: 0;
+  }
+  .table-body {
+    flex-shrink: 1;
+    flex-wrap: nowrap; 
+  }
+  .table-row {
+    @include display-flex(row,
+    $align-items: stretch, $justify-content: stretch);
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+  .table-cell {
+    flex-shrink: 0;
+    flex-basis: 1px;
+    flex-grow: 1;
+    @for $i from 1 through 3 {
+      &.table-col-#{$i} {
+        flex-basis: 1px * $i;
+        flex-grow: $i;
+      }
+    }
+  }
+}

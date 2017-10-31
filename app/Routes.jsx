@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route, IndexRoute, Redirect } from "react-router/es";
+import { Route, IndexRoute } from "react-router";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
 
@@ -35,6 +35,12 @@ const routes = (
         }}/>
         <Route path="explorer" getComponent={(location, cb) => {
             System.import("components/Explorer/Explorer").then(loadRoute(cb)).catch(errorLoading);
+        }}/>
+        <Route path="bazaar" getComponent={(location, cb) => {
+            System.import("components/Exchange/Bazaar").then(loadRoute(cb)).catch(errorLoading);
+        }}/>
+        <Route path="ledger" getComponent={(location, cb) => {
+            System.import("components/Explorer/BlocksContainer").then(loadRoute(cb)).catch(errorLoading);
         }}/>
         <Route path="/explorer/fees" getComponent={(location, cb) => {
             System.import("components/Blockchain/FeesContainer").then(loadRoute(cb)).catch(errorLoading);
@@ -122,7 +128,7 @@ const routes = (
             System.import("components/Blockchain/BlockContainer").then(loadRoute(cb)).catch(errorLoading);
         }}/>
         <Route path="asset/:symbol" getComponent={(location, cb) => {
-            System.import("components/Blockchain/Asset").then(loadRoute(cb)).catch(errorLoading);
+            System.import("components/Blockchain/AssetContainer").then(loadRoute(cb)).catch(errorLoading);
         }}/>
         <Route path="create-account" getComponent={(location, cb) => {
             System.import("components/LoginSelector").then(loadRoute(cb)).catch(errorLoading);
@@ -161,7 +167,7 @@ const routes = (
             <IndexRoute getComponent={(location, cb) => {
                 System.import("components/Account/AccountOverview").then(loadRoute(cb)).catch(errorLoading);
             }}/>
-            <Route path="dashboard" getComponent={(location, cb) => {
+            <Route path="overview" getComponent={(location, cb) => {
                 System.import("components/Account/AccountOverview").then(loadRoute(cb)).catch(errorLoading);
             }}/>
             <Route path="assets" getComponent={(location, cb) => {
@@ -185,16 +191,15 @@ const routes = (
             <Route path="voting" getComponent={(location, cb) => {
                 System.import("components/Account/AccountVoting").then(loadRoute(cb)).catch(errorLoading);
             }}/>
-            <Route path="deposit-withdraw" getComponent={(location, cb) => {
+            {/* <Route path="deposit-withdraw" getComponent={(location, cb) => {
                 System.import("components/Account/AccountDepositWithdraw").then(loadRoute(cb)).catch(errorLoading);
-            }}/>
+            }}/> */}
             <Route path="orders" getComponent={(location, cb) => {
                 System.import("components/Account/AccountOrders").then(loadRoute(cb)).catch(errorLoading);
             }}/>
             <Route path="whitelist" getComponent={(location, cb) => {
                 System.import("components/Account/AccountWhitelist").then(loadRoute(cb)).catch(errorLoading);
             }}/>
-            <Redirect from="overview" to="dashboard" />
         </Route>
         <Route path="deposit-withdraw" getComponent={(location, cb) => {
             System.import("components/Account/AccountDepositWithdraw").then(loadRoute(cb)).catch(errorLoading);

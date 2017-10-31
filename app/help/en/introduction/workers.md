@@ -13,8 +13,8 @@ Votes for worker proposals can be positive or negative, which means you can down
 ## Worker budget mechanics
 Workers receive pay from a fixed daily budget on a first-come, first-serve basis until there are no more funds left. To see how this works, say we the following:
 
-* A daily total budget of 400k BTS for all workers
-* 5 worker proposals with a positive votes total, with daily pay requests of 100k BTS each
+* A daily total budget of 400k CYB for all workers
+* 5 worker proposals with a positive votes total, with daily pay requests of 100k CYB each
 
-Now the four workers with the most votes will all receive 100k BTS each per day, but once they've been paid the worker budget is empty. Therefore the fifth worker will receive nothing.
+Now the four workers with the most votes will all receive 100k CYB each per day, but once they've been paid the worker budget is empty. Therefore the fifth worker will receive nothing.
 

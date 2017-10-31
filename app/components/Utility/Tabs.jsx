@@ -154,7 +154,7 @@ class Tabs extends React.Component {
 
                     <ul style={style} className={cnames("button-group no-margin", tabsClass, {segmented})}>
                         {collapseTabs ?
-                            <select value={this.state.activeTab} style={{margin: 10}} className="bts-select" onChange={(e) => {this._changeTab(parseInt(e.target.value, 10));}}>{tabs}</select> :
+                            <select value={this.state.activeTab} style={{margin: 10}} className="cyb-select" onChange={(e) => {this._changeTab(parseInt(e.target.value, 10));}}>{tabs}</select> :
                             tabs
                         }
                     </ul>

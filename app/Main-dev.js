@@ -1,4 +1,4 @@
-require("./assets/loader-dev");
+// require("./assets/loader-dev");
 if (!window.Intl) { // Safari polyfill
     require.ensure(["intl"], require => {
         window.Intl = require("intl");

@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";
 import ChainTypes from "../Utility/ChainTypes";
@@ -12,8 +12,8 @@ import HelpContent from "../Utility/HelpContent";
 import Icon from "../Icon/Icon";
 import assetUtils from "common/asset_utils";
 import utils from "common/utils";
-import {ChainStore} from "bitsharesjs/es";
-import {Apis} from "bitsharesjs-ws";
+import {ChainStore} from "cybexjs";
+import {Apis} from "cybexjs-ws";
 import { Tabs, Tab } from "../Utility/Tabs";
 import { CallOrder, FeedPrice } from "common/MarketClasses";
 
@@ -223,7 +223,7 @@ class Asset extends React.Component {
 
         // Add market link
         const core_asset = ChainStore.getAsset("1.3.0");
-        let preferredMarket = description.market ? description.market : core_asset ? core_asset.get("symbol") : "BTS";
+        let preferredMarket = description.market ? description.market : core_asset ? core_asset.get("symbol") : "CYB";
         if ("bitasset" in asset && asset.bitasset.is_prediction_market) {
             preferredMarket = ChainStore.getAsset(asset.bitasset.options.short_backing_asset);
             if (preferredMarket) {

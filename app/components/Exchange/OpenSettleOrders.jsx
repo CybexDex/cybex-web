@@ -1,6 +1,6 @@
 import React from "react";
-import {PropTypes} from "react";
-import {FormattedDate} from "react-intl";
+import { PropTypes } from "react";
+import { FormattedDate } from "react-intl";
 import FormattedAsset from "../Utility/FormattedAsset";
 // import Ps from "perfect-scrollbar";
 import utils from "common/utils";
@@ -11,15 +11,15 @@ import TimeAgo from "../Utility/TimeAgo";
 class TableHeader extends React.Component {
 
     render() {
-        let {baseSymbol, quoteSymbol} = this.props;
+        let { baseSymbol, quoteSymbol } = this.props;
 
         return (
             <thead>
                 <tr>
-                    <th style={{textAlign: "right"}}><Translate content="exchange.price" /><br/>{baseSymbol ? <span className="header-sub-title">(<AssetName name={baseSymbol} />/<AssetName name={quoteSymbol} />)</span> : null}</th>
-                    <th style={{textAlign: "right"}}><Translate content="transfer.amount" /><br/>{quoteSymbol ? <span className="header-sub-title">(<AssetName name={quoteSymbol} />)</span> : null}</th>
-                    <th style={{textAlign: "right"}}><Translate content="transaction.settlement_date" /><br/><span style={{visibility: "hidden"}} className="header-sub-title">d</span></th>
-            </tr>
+                    <th style={{ textAlign: "center" }}><Translate content="exchange.price" />&nbsp;{baseSymbol ? <span className="header-sub-title">(<AssetName name={baseSymbol} />/<AssetName name={quoteSymbol} />)</span> : null}</th>
+                    <th style={{ textAlign: "center" }}><Translate content="transfer.amount" />&nbsp;{quoteSymbol ? <span className="header-sub-title">(<AssetName name={quoteSymbol} />)</span> : null}</th>
+                    <th style={{ textAlign: "center" }}><Translate content="transaction.settlement_date" />&nbsp;<span style={{ visibility: "hidden" }} className="header-sub-title">d</span></th>
+                </tr>
             </thead>
         );
     }
@@ -40,7 +40,7 @@ class SettleOrderRow extends React.Component {
     // }
 
     render() {
-        let {quote, order, showSymbols} = this.props;
+        let { quote, order, showSymbols } = this.props;
 
         let amountSymbol = showSymbols ? " " + quote.get("symbol") : null;
 
@@ -77,19 +77,19 @@ class OpenSettleOrders extends React.Component {
     // }
 
     render() {
-        let {orders, base, quote, quoteSymbol, baseSymbol} = this.props;
+        let { orders, base, quote, quoteSymbol, baseSymbol } = this.props;
 
         let activeOrders = null;
-
-        if(orders.size > 0 && base && quote) {
+        
+        if (orders.size > 0 && base && quote) {
             let index = 0;
 
             activeOrders = orders
-            .sort((a, b) => {
-                return a.isBefore(b) ? -1 : 1;
-            }).map(order => {
-                return <SettleOrderRow key={index++} order={order} base={base} quote={quote}/>;
-            }).toArray();
+                .sort((a, b) => {
+                    return a.isBefore(b) ? -1 : 1;
+                }).map(order => {
+                    return <SettleOrderRow key={index++} order={order} base={base} quote={quote} />;
+                }).toArray();
 
         } else {
             return null;
@@ -100,15 +100,17 @@ class OpenSettleOrders extends React.Component {
                 key="open_orders"
                 className="grid-block no-overflow small-12 no-padding vertical medium-horizontal middle-content"
             >
-                <div className="small-12 medium-6 large-6 xlarge-4 order-1" style={{paddingBottom: "1rem"}}>
+                <div className="small-12 order-1" style={{ paddingBottom: "1rem" }}>
                     <div className="exchange-bordered">
-                        <div className="exchange-content-header">
-                            <Translate content="exchange.settle_orders" />
-                        </div>
-
-                        <div className="grid-block" style={{maxHeight: "400px", overflow: "hidden", }} ref="orders">
+                        {
+                            this.props.withHeader &&
+                            <div className="exchange-content-header">
+                                <Translate content="exchange.settle_orders" />
+                            </div>
+                        }
+                        <div className="grid-block" style={{ maxHeight: "400px", overflow: "hidden", }} ref="orders">
                             <table className="table order-table text-right table-hover">
-                                <TableHeader type="buy" baseSymbol={baseSymbol} quoteSymbol={quoteSymbol}/>
+                                <TableHeader type="buy" baseSymbol={baseSymbol} quoteSymbol={quoteSymbol} />
                                 <tbody ref="orders">
                                     {activeOrders}
                                 </tbody>

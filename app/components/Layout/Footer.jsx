@@ -1,11 +1,13 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import AltContainer from "alt-container";
 import Translate from "react-translate-component";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import CachedPropertyStore from "stores/CachedPropertyStore";
 import BlockchainStore from "stores/BlockchainStore";
+import { ChainStore } from "cybexjs";
 import WalletDb from "stores/WalletDb";
+import TimeAgo from "../Utility/TimeAgo";
 import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
 
@@ -30,12 +32,6 @@ class Footer extends React.Component {
         this.state = {};
     }
 
-    componentDidMount() {
-        this.checkNewVersionAvailable.call(this);
-
-        this.downloadLink = "https://bitshares.org/download";
-    }
-
     shouldComponentUpdate(nextProps) {
         return (
             nextProps.dynGlobalObject !== this.props.dynGlobalObject ||
@@ -45,29 +41,8 @@ class Footer extends React.Component {
         );
     }
 
-    checkNewVersionAvailable(){
-        if (__ELECTRON__) {
-            fetch("https://api.github.com/repos/bitshares/bitshares-ui/releases/latest").then((res)=>{
-                return res.json();
-            }).then(function(json){
-                let oldVersion = String(json.tag_name);
-                let newVersion = String(APP_VERSION);
-                if((oldVersion !== newVersion)){
-                    this.setState({newVersion});
-                }
-            }.bind(this));
-        }
-    }
-
-    downloadVersion(){
-        var a = document.createElement("a");
-        a.href = this.downloadLink;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.style = "display: none;";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+    handleClick() {
+        this.backupModal.show();
     }
 
     render() {
@@ -85,27 +60,13 @@ class Footer extends React.Component {
             <div className="show-for-medium grid-block shrink footer">
                 <div className="align-justify grid-block">
                     <div className="grid-block">
-                        <div className="logo" style={
-                            {
-                                fontSize: state.newVersion ? "0.9em" : "1em",
-                                cursor: state.newVersion ? "pointer" : "normal",
-                                marginTop: state.newVersion ? "-5px" : "0px",
-                                overflow: "hidden"
-                            }
-                        } onClick={state.newVersion ? this.downloadVersion.bind(this)  : null} {...logoProps}>
-                        {state.newVersion && <Icon name="download" style={{marginRight: "20px", marginTop: "10px", fontSize: "1.35em",  display: "inline-block"}} />}
-                        <span style={updateStyles}>
-                            <Translate content="footer.title"  />
-                            <span className="version">{version}</span>
-                        </span>
-
-                        {state.newVersion && <Translate content="footer.update_available" style={{color: "#FCAB53", position: "absolute", top: "8px", left: "36px"}}/>}
+                        <div className="logo">
+                            <Translate content="footer.title" /><span className="version">{version}</span>
                         </div>
                     </div>
-                    {synced ? null : <div className="grid-block shrink txtlabel cancel"><Translate content="footer.nosync" />&nbsp; &nbsp;</div>}
-                    {!connected ? <div className="grid-block shrink txtlabel error"><Translate content="footer.connection" />&nbsp; &nbsp;</div> : null}
-                    {this.props.backup_recommended ?
-                    <span>
+                    {this.props.synced ? null : <div className="grid-block shrink txtlabel error"><Translate content="footer.nosync" />&nbsp; &nbsp;</div>}
+                    {this.props.rpc_connection_status === "closed" ? <div className="grid-block shrink txtlabel error"><Translate content="footer.connection" />&nbsp; &nbsp;</div> : null}
+                    {this.props.backup_recommended ? <span>
                         <div className="grid-block">
                             <a className="shrink txtlabel facolor-alert"
                                 data-tip="Please understand that you are responsible for making your own backup&hellip;"

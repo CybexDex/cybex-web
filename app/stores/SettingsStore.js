@@ -4,10 +4,10 @@ import IntlActions from "actions/IntlActions";
 import Immutable from "immutable";
 import {merge} from "lodash";
 import ls from "common/localStorage";
-import { Apis } from "bitsharesjs-ws";
+import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
 
-const CORE_ASSET = "BTS"; // Setting this to BTS to prevent loading issues when used with BTS chain which is the most usual case currently
+const CORE_ASSET = "CYB"; // Setting this to CYB to prevent loading issues when used with CYB chain which is the most usual case currently
 
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
@@ -28,20 +28,23 @@ class SettingsStore {
             onClearSettings: SettingsActions.clearSettings,
             onSwitchLocale: IntlActions.switchLocale,
             onSetUserMarket: SettingsActions.setUserMarket,
-            onUpdateLatencies: SettingsActions.updateLatencies
+            // onSetGuideMode: SettingsActions.setGuideMode,
+            onUpdateLatencies: SettingsActions.updateLatencies,
+            onToggleNav: SettingsActions.toggleNav
         });
 
         this.initDone = false;
         this.defaultSettings = Immutable.Map({
-            locale: "en",
+            locale: "cn",
             apiServer: settingsAPIs.DEFAULT_WS_NODE,
             faucet_address: settingsAPIs.DEFAULT_FAUCET,
             unit: CORE_ASSET,
             showSettles: false,
             showAssetPercent: false,
             walletLockTimeout: 60 * 10,
-            themes: "darkTheme",
+            themes: "cybexDarkTheme",
             disableChat: false,
+            navState: true,
             passwordLogin: true
         });
 
@@ -51,15 +54,15 @@ class SettingsStore {
 
         let defaults = {
             locale: [
-                "en",
                 "cn",
-                "fr",
-                "ko",
-                "de",
-                "es",
-                "it",
-                "tr",
-                "ru"
+                "en",
+                // Todos
+                // "fr",
+                // "ko",
+                // "de",
+                // "es",
+                // "tr",
+                // "ru"
             ],
             apiServer: [],
             unit: [
@@ -83,9 +86,10 @@ class SettingsStore {
                 {translate: "no"}
             ],
             themes: [
+                "cybexDarkTheme",
                 "darkTheme",
                 "lightTheme",
-                "olDarkTheme"
+                "olDarkTheme",
             ],
             passwordLogin: [
                 {translate: "cloud_login"},
@@ -151,14 +155,21 @@ class SettingsStore {
             this.marketsKey = this._getChainKey("userMarkets");
             // Default markets setup
             let topMarkets = {
-                markets_4018d784: [ // BTS MAIN NET
-                    "OPEN.MKR", "BTS", "OPEN.ETH", "ICOO", "BTC", "OPEN.LISK", "BKT",
+                markets_4018d784: [ // CYB MAIN NET
+                    "OPEN.MKR", "CYB", "OPEN.ETH", "ICOO", "BTC", "OPEN.LISK", "BKT",
                     "OPEN.STEEM", "OPEN.GAME", "OCT", "USD", "CNY", "BTSR", "OBITS",
                     "OPEN.DGD", "EUR", "GOLD", "SILVER", "IOU.CNY", "OPEN.DASH",
                     "OPEN.USDT", "OPEN.EURT", "OPEN.BTC", "CADASTRAL", "BLOCKPAY", "BTWTY",
                     "OPEN.INCNT", "KAPITAL", "OPEN.MAID", "OPEN.SBD", "OPEN.GRC",
                     "YOYOW", "HERO", "RUBLE", "SMOKE", "STEALTH", "BRIDGE.BCO",
-                    "BRIDGE.BTC", "KEXCOIN", "PPY", "OPEN.EOS", "OPEN.OMG"
+                ],
+                markets_c577bfd9: [ // CYBEX MAIN NET
+                    "CYB", "CYB", "YAN", "IMLAB", "ICOO", "BTC", "ETH", "COLAB",
+                    "OPEN.STEEM", "OPEN.GAME", "OCT", "USD", "CNY", "BTSR", "OBITS",
+                    "OPEN.DGD", "EUR", "GOLD", "SILVER", "IOU.CNY", "OPEN.DASH",
+                    "OPEN.USDT", "OPEN.EURT", "OPEN.BTC", "CADASTRAL", "BLOCKPAY", "BTWTY",
+                    "OPEN.INCNT", "KAPITAL", "OPEN.MAID", "OPEN.SBD", "OPEN.GRC",
+                    "YOYOW", "HERO", "RUBLE"
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "PEG.FAKEUSD", "BTWTY"
@@ -166,19 +177,22 @@ class SettingsStore {
             };
 
             let bases = {
-                markets_4018d784: [ // BTS MAIN NET
-                    "USD", "OPEN.BTC", "CNY", "BTS", "BTC"
+                markets_4018d784: [ // CYB MAIN NET
+                    "USD", "OPEN.BTC", "CNY", "CYB", "BTC"
+                ],
+                markets_c577bfd9: [ // CYB MAIN NET
+                    "CYB", "CYB", "USD", "CNY","BTC" ,"OPEN.BTC"
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "TEST"
                 ]
             };
 
-            let coreAssets = {markets_4018d784: "BTS", markets_39f5e2ed: "TEST"};
-            let coreAsset = coreAssets[this.starredKey] || "BTS";
+            let coreAssets = {markets_c577bfd9: "CYB", markets_4018d784: "CYB", markets_39f5e2ed: "TEST"};
+            let coreAsset = coreAssets[this.starredKey] || "CYB";
             this.defaults.unit[0] = coreAsset;
 
-            let chainBases = bases[this.starredKey] || bases.markets_4018d784;
+            let chainBases = bases[this.starredKey] || bases.markets_c577bfd9;
             this.preferredBases = Immutable.List(chainBases);
 
             function addMarkets(target, base, markets) {
@@ -329,6 +343,17 @@ class SettingsStore {
 
     onSwitchLocale({locale}) {
         this.onChangeSetting({setting: "locale", value: locale});
+    }
+
+    onSetGuideMode(isEnabled) {
+        this.settings.set("guideMode", !!isEnabled);
+    }
+
+    onToggleNav(targetState) {
+        this.onChangeSetting({
+            setting: "navState",
+            value: !this.settings.get("navState")
+        });
     }
 
     _getChainKey(key) {

@@ -46,5 +46,5 @@ müşteriye kalmıştır.
   diye kısaltılmışlardır. Bu dijital kuponlar dayandıkları fiziksel varlıkla aynı değeri 
   temsil ederler. Yani bu cüzdandaki 1 USD nin değeri 1 dolardır ve o şekilde 
   ödenebilir. Bu kuponların hepsinin karşılığı olarak teminat olarak kitli tutulan ve anlık 
-  fiyatında hesap görümü için mevcut olabilen, **BitShares'in şirket hisseleri (BTS)** 
+  fiyatında hesap görümü için mevcut olabilen, **BitShares'in şirket hisseleri (CYB)** 
    vardır.

@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router/es";
+import {Link} from "react-router";
 import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
 import { connect } from "alt-react";
