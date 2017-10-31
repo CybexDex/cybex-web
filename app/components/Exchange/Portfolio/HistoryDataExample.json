@@ -1,0 +1,19 @@
+[{
+  "id": "5.1.2623294",
+  "key": {
+    "base": "1.3.121",
+    "quote": "1.3.861",
+    "seconds": 1800,
+    "open": "2017-09-26T08:00:00"
+  },
+  "high_base": 54065,
+  "high_quote": 140824,
+  "low_base": 54065,
+  "low_quote": 140824,
+  "open_base": 54065,
+  "open_quote": 140824,
+  "close_base": 54065,
+  "close_quote": 140824,
+  "base_volume": 54065,
+  "quote_volume": 140824
+}]

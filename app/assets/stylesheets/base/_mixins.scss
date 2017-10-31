@@ -1,0 +1,25 @@
+@mixin display-flex( $direction: column, $justify-content: flex-start, $align-items: center, $align-content: normal, $flex-wrap: wrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  align-content: $align-content;
+  flex-wrap: $flex-wrap;
+}
+
+;
+@mixin flex( $flex-grow: 1, $flex-shrink: 1, $flex-basis: auto) {
+  flex-basis: $flex-basis;
+  flex-grow: $flex-grow;
+  flex-shrink: $flex-shrink;
+}
+
+@mixin shadow($size: 3px) {
+  box-shadow: 0 0 $size rgba(0, 0, 0, 0.8);
+}
+
+@mixin exchange-header($height: 28px) {
+  padding: 0 10px; 
+  line-height: $height;
+  min-height: $height; 
+}

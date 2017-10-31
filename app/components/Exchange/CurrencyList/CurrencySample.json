@@ -1,0 +1,1215 @@
+{
+  "marketId": "OPEN.LISK_USD",
+  "id": "OPEN.LISK_USD",
+  "resolved": true,
+  "quote": {
+    "id": "1.3.977",
+    "symbol": "OPEN.LISK",
+    "precision": 6,
+    "issuer": "1.2.96397",
+    "options": {
+      "flags": 5,
+      "market_fee_percent": 30,
+      "whitelist_authorities": [],
+      "max_supply": "200000000000000",
+      "extensions": [],
+      "blacklist_markets": [],
+      "core_exchange_rate": {
+        "base": {
+          "amount": 100000,
+          "asset_id": "1.3.0"
+        },
+        "quote": {
+          "amount": 1000000,
+          "asset_id": "1.3.977"
+        }
+      },
+      "description": "{\"main\":\"Pre-sale LISK managed by OpenLedger\",\"market\":\"\"}",
+      "max_market_fee": "1000000000000",
+      "issuer_permissions": 79,
+      "blacklist_authorities": [],
+      "whitelist_markets": []
+    },
+    "dynamic_asset_data_id": "2.3.977",
+    "dynamic": {
+      "asset_id": "1.3.977",
+      "id": "2.3.977",
+      "current_supply": "500000000000",
+      "confidential_supply": 0,
+      "accumulated_fees": 12408653,
+      "fee_pool": 357751145
+    }
+  },
+  "base": {
+    "dynamic_asset_data_id": "2.3.121",
+    "bitasset": {
+      "current_feed": {
+        "settlement_price": {
+          "base": {
+            "amount": 627,
+            "asset_id": "1.3.121"
+          },
+          "quote": {
+            "amount": 84236,
+            "asset_id": "1.3.0"
+          }
+        },
+        "maintenance_collateral_ratio": 1750,
+        "maximum_short_squeeze_ratio": 1100,
+        "core_exchange_rate": {
+          "base": {
+            "amount": 251,
+            "asset_id": "1.3.121"
+          },
+          "quote": {
+            "amount": 32106,
+            "asset_id": "1.3.0"
+          }
+        }
+      },
+      "asset_id": "1.3.121",
+      "settlement_price": {
+        "base": {
+          "amount": 0,
+          "asset_id": "1.3.0"
+        },
+        "quote": {
+          "amount": 0,
+          "asset_id": "1.3.0"
+        }
+      },
+      "force_settled_volume": 0,
+      "feeds": [
+        ["1.2.167", ["2017-09-25T03:12:09", {
+          "settlement_price": {
+            "base": {
+              "amount": 739,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 99691,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 739,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 94706,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.277", ["2017-09-25T03:16:21", {
+          "settlement_price": {
+            "base": {
+              "amount": 745769,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 100000000,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 745769,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 80000000,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.333", ["2017-09-23T02:50:06", {
+          "settlement_price": {
+            "base": {
+              "amount": 569,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 80522,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 569,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 76495,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.369", ["2017-09-25T02:50:51", {
+          "settlement_price": {
+            "base": {
+              "amount": 627,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 84236,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 571,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 75953,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.564", ["2017-09-25T02:47:24", {
+          "settlement_price": {
+            "base": {
+              "amount": 19,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 2525,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 19,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 2500,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.964", ["2017-06-26T06:36:00", {
+          "settlement_price": {
+            "base": {
+              "amount": 1466,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 56845,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 2543,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 97630,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.1191", ["2016-08-31T06:21:00", {
+          "settlement_price": {
+            "base": {
+              "amount": 67,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 90389,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 67,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 85869,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.2850", ["2017-09-25T01:47:03", {
+          "settlement_price": {
+            "base": {
+              "amount": 271,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 37078,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 271,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 29662,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.3284", ["2017-09-25T02:45:33", {
+          "settlement_price": {
+            "base": {
+              "amount": 699,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 93913,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 520,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 55891,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.4952", ["2017-09-25T01:54:06", {
+          "settlement_price": {
+            "base": {
+              "amount": 199,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 27234,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 199,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 23148,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.6004", ["2016-01-14T04:00:00", {
+          "settlement_price": {
+            "base": {
+              "amount": 23,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 68677,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 23,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 65243,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.9952", ["2017-09-25T02:41:54", {
+          "settlement_price": {
+            "base": {
+              "amount": 360,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 48709,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 432,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 48709,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.10091", ["2017-07-12T07:56:36", {
+          "settlement_price": {
+            "base": {
+              "amount": 1121,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 92426,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 124,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 8179,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.10285", ["2017-09-25T03:16:33", {
+          "settlement_price": {
+            "base": {
+              "amount": 773,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 99865,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 251,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 32106,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.13774", ["2015-11-16T03:47:03", {
+          "settlement_price": {
+            "base": {
+              "amount": 31,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 89750,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 31,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 85262,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.14035", ["2017-09-25T02:36:12", {
+          "settlement_price": {
+            "base": {
+              "amount": 479,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 63802,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 689,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 90865,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.18513", ["2017-01-10T15:55:30", {
+          "settlement_price": {
+            "base": {
+              "amount": 27,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 71989,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 27,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 68389,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.20638", ["2017-05-02T11:45:03", {
+          "settlement_price": {
+            "base": {
+              "amount": 116,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 83661,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 116,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 79477,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.23043", ["2017-09-25T02:50:57", {
+          "settlement_price": {
+            "base": {
+              "amount": 16,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 2139,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 426,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 56387,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.23725", ["2016-11-20T03:05:09", {
+          "settlement_price": {
+            "base": {
+              "amount": 17,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 42371,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 17,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 40252,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.23836", ["2017-09-25T03:00:12", {
+          "settlement_price": {
+            "base": {
+              "amount": 747902,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 100000000,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 747902,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 95000000,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.25010", ["2017-09-25T02:31:06", {
+          "settlement_price": {
+            "base": {
+              "amount": 728,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 98927,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 728,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 93980,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.28788", ["2016-05-28T14:48:51", {
+          "settlement_price": {
+            "base": {
+              "amount": 26,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 80781,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 26,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 76741,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.29205", ["2017-09-24T16:16:06", {
+          "settlement_price": {
+            "base": {
+              "amount": 334,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 44223,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 697,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 91372,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.30889", ["2017-09-25T02:37:15", {
+          "settlement_price": {
+            "base": {
+              "amount": 2,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 271,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 918,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 99511,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.31359", ["2017-09-25T02:39:21", {
+          "settlement_price": {
+            "base": {
+              "amount": 623,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 84611,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 414,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 44981,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.31489", ["2017-09-25T02:54:33", {
+          "settlement_price": {
+            "base": {
+              "amount": 737,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 98565,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 186,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 24629,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.31810", ["2017-09-25T02:47:27", {
+          "settlement_price": {
+            "base": {
+              "amount": 284,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 38095,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 325,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 43163,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.31890", ["2017-04-20T08:05:06", {
+          "settlement_price": {
+            "base": {
+              "amount": 121,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 97980,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 121,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 93081,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.31965", ["2015-11-17T01:15:06", {
+          "settlement_price": {
+            "base": {
+              "amount": 8,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 22801,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 8,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 21660,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.32321", ["2015-12-03T19:39:54", {
+          "settlement_price": {
+            "base": {
+              "amount": 29,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 89894,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 29,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 85399,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.32495", ["2017-01-25T22:40:12", {
+          "settlement_price": {
+            "base": {
+              "amount": 9,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 24908,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 9,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 23662,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.35248", ["2017-09-25T03:08:09", {
+          "settlement_price": {
+            "base": {
+              "amount": 427,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 58451,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 427,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 46760,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.89292", ["2015-10-14T19:00:00", {
+          "settlement_price": {
+            "base": {
+              "amount": 31,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 57535,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1500,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 31,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 60411,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.90109", ["2015-11-09T19:33:33", {
+          "settlement_price": {
+            "base": {
+              "amount": 27,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 87800,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 27,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 83410,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.91689", ["2016-05-13T06:30:12", {
+          "settlement_price": {
+            "base": {
+              "amount": 37,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 99975,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 37,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 94976,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.91787", ["2017-09-25T03:04:12", {
+          "settlement_price": {
+            "base": {
+              "amount": 747603,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 100000000,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 747603,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 95000000,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.95289", ["2015-11-17T01:12:09", {
+          "settlement_price": {
+            "base": {
+              "amount": 34,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 96911,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 34,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 92065,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.130210", ["2017-09-25T02:39:57", {
+          "settlement_price": {
+            "base": {
+              "amount": 454,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 61123,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 361,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 48121,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.130258", ["2017-09-24T13:33:00", {
+          "settlement_price": {
+            "base": {
+              "amount": 284,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 39027,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 599,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 81499,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.133999", ["2017-09-25T02:41:03", {
+          "settlement_price": {
+            "base": {
+              "amount": 701,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 94527,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 554,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 73965,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.134261", ["2017-03-20T14:37:15", {
+          "settlement_price": {
+            "base": {
+              "amount": 32,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 65523,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 32,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 62246,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.152739", ["2017-09-25T02:53:12", {
+          "settlement_price": {
+            "base": {
+              "amount": 747975,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 100000000,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 747975,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 95000000,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.157641", ["2017-09-25T03:11:15", {
+          "settlement_price": {
+            "base": {
+              "amount": 747726,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 100000000,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 747726,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 95000000,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]],
+        ["1.2.158783", ["2017-09-25T03:11:57", {
+          "settlement_price": {
+            "base": {
+              "amount": 7144043,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 1050000000,
+              "asset_id": "1.3.0"
+            }
+          },
+          "maintenance_collateral_ratio": 1750,
+          "maximum_short_squeeze_ratio": 1100,
+          "core_exchange_rate": {
+            "base": {
+              "amount": 7144043,
+              "asset_id": "1.3.121"
+            },
+            "quote": {
+              "amount": 1000000000,
+              "asset_id": "1.3.0"
+            }
+          }
+        }]]
+      ],
+      "is_prediction_market": false,
+      "settlement_fund": 0,
+      "id": "2.4.21",
+      "current_feed_publication_time": "2017-09-24T13:33:00",
+      "options": {
+        "feed_lifetime_sec": 86400,
+        "minimum_feeds": 7,
+        "force_settlement_delay_sec": 86400,
+        "force_settlement_offset_percent": 100,
+        "maximum_force_settlement_volume": 50,
+        "short_backing_asset": "1.3.0",
+        "extensions": []
+      }
+    },
+    "bitasset_data_id": "2.4.21",
+    "symbol": "USD",
+    "issuer": "1.2.0",
+    "id": "1.3.121",
+    "precision": 4,
+    "options": {
+      "flags": 128,
+      "market_fee_percent": 0,
+      "whitelist_authorities": [],
+      "max_supply": "1000000000000000",
+      "extensions": [],
+      "blacklist_markets": [],
+      "core_exchange_rate": {
+        "base": {
+          "amount": 251,
+          "asset_id": "1.3.121"
+        },
+        "quote": {
+          "amount": 32106,
+          "asset_id": "1.3.0"
+        }
+      },
+      "description": "1 United States dollar",
+      "max_market_fee": "1000000000000000",
+      "issuer_permissions": 511,
+      "blacklist_authorities": [],
+      "whitelist_markets": []
+    },
+    "dynamic": {
+      "asset_id": "1.3.121",
+      "id": "2.3.121",
+      "current_supply": "31366378005",
+      "confidential_supply": 3459,
+      "accumulated_fees": 2858747,
+      "fee_pool": "13330318642"
+    }
+  }
+}

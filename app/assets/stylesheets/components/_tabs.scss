@@ -1,0 +1,20 @@
+@import "./../base/mixins";
+.tab-list {
+  list-style: none;
+  margin: 0;
+  @include display-flex(column, $justify-content: flex-start);
+  .tab-list-item {
+    list-style: none;
+    margin: 0;
+  }
+  &.tab-list-horizontal {
+    flex-direction: row;
+    min-height: 30px;
+  }
+  &.tab-list-justify {
+    justify-content: space-between;
+    .tab-list-item {
+      flex-grow: 1;
+    }
+  }
+}

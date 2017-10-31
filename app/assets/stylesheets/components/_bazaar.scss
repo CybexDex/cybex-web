@@ -1,0 +1,92 @@
+@import "./../layout/size";
+.bazaar-wrapper {
+  margin: $space-between + 2;
+  display: flex;
+  >.bazaar-left,
+  >.bazaar-right {
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 1 1 auto;
+    width: 50%;
+  }
+  .currency-table {
+    padding: 2px;
+    .table-caption,
+    .table-cell {
+      padding: 0 6px;
+    }
+    .table-cell {
+      &:not(:first-child) {
+        text-align: right;
+      }
+    }
+    .table-caption,
+    .table-header {
+      text-transform: capitalize;
+    }
+  }
+  .pcard-wrapper {
+    $height-wrapper: 6em;
+    display: flex;
+    height: $height-wrapper;
+    min-height: $height-wrapper;
+    min-width: $size-medium;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
+    margin: $space-between + 2px;
+    .p-tag, .p-body {
+      flex-shrink: 0;
+    }
+    .p-tag {
+      width: 20px;
+    }
+    .p-body {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 1em;
+      width: 260px;
+    }
+    .p-row {
+      margin-top: 2px;
+    }
+    .p-name {
+      font-size: 1.4em;
+    }
+    .p-price {
+      font-size: 1.8em;
+    }
+    .p-chart {
+      flex: 1 1 auto;
+      border-left: 2px solid;
+      width: 240px;
+    }
+    .spc-wrapper {
+      position: relative;
+      height: $height-wrapper;
+    }
+  }
+  @mixin vertical {
+    margin: 0;
+    padding: $space-between + 2px;
+    flex-direction: column;
+
+    .bazaar-left,
+    .bazaar-right {
+      width: 100%;
+      height: 400px;
+      min-height: 400px;
+      margin: unset;
+    }
+
+    .bazaar-right {
+      order: -1;
+      margin-bottom: $space-between + 2px;
+    }
+
+    .pcard-wrapper {}
+  }
+  @media screen and (max-width: $size-large) {
+    @include vertical();
+  }
+}

@@ -1,0 +1,82 @@
+@import "theme-template";
+
+// variables
+
+$primary-text-color: #fff;
+$dark-text-color: #444;
+$light-text-color: #e0e0e0;
+$secondary-text-color: darken($primary-text-color, 20%);
+$link-text-color: #36BCC7;
+$error-text-color: #E3745B;
+
+$bg-color: #232C36;
+$panel-bg-color: #28323F;
+$light-panel-bg-color: #353742;
+$super-light-panel-bg-color: lighten($light-panel-bg-color, 8%);
+$button-bg-color: #4A90E2;
+$secondary-button-bg-color: #546979;
+$input-background: lighten($bg-color, 8%);
+
+$alert-color: $error-text-color;
+$info-color: #4A90E2;
+$success-color: #18BC9C;
+$warning-color: #FF7F00;
+$fee-color: $secondary-text-color;
+
+// Exchange colors
+$bid-color: #50D2C2;
+$ask-color: #E3745B;
+$call-color: #BBBF2B;
+$positive-color: #04B528;
+$negative-color: #DD0000;
+$row-accent-color: #3C3C3C;
+$header-color: #484848;
+
+// Chat colors
+$chat-text-color: #191A1F;
+
+// Account table view colors
+$account-header: #656565;
+$account-cells: #4b5158;
+$account-green: #7ED321;
+$account-primarytext: white;
+$account-dimmed: #afafaf;
+$account-border: #323131;
+$account-background: #3f3f3f;
+
+.cybexDarkTheme {
+  @include theme(
+    $primary-text-color,
+    $bg-color,
+    $dark-text-color,
+    $link-text-color,
+    $light-text-color,
+    $secondary-text-color,
+    $success-color,
+    $info-color,
+    $warning-color,
+    $alert-color,
+    $super-light-panel-bg-color,
+    $panel-bg-color,
+    $button-bg-color,
+    $secondary-button-bg-color,
+    $fee-color,
+    $bid-color,
+    $ask-color,
+    $call-color,
+    $light-panel-bg-color,
+    $positive-color,
+    $negative-color,
+    $row-accent-color,
+    $header-color,
+    $chat-text-color,
+    $input-background,
+    $account-header,
+    $account-cells,
+    $account-green,
+    $account-primarytext,
+    $account-dimmed,
+    $account-border,
+    $account-background
+  );
+}
