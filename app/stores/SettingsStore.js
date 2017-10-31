@@ -81,10 +81,6 @@ class SettingsStore {
                 {translate: "yes"},
                 {translate: "no"}
             ],
-            disableChat: [
-                {translate: "yes"},
-                {translate: "no"}
-            ],
             themes: [
                 "cybexDarkTheme",
                 "darkTheme",

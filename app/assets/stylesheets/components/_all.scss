@@ -10,7 +10,6 @@
 @import "pagination";
 @import "tables";
 @import "wallet";
-@import "chatbox";
 @import "dashboard";
 @import "settings";
 @import "exchange";
@@ -32,4 +31,8 @@
 
 .bottom-border {
     border-bottom: 1px solid #444;
+}
+
+.linethrough {
+    text-decoration: line-through;
 }

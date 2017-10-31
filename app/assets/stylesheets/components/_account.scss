@@ -1,107 +1,108 @@
 .common-left-panel.account-left-panel {
-  >div.grid-block {
-    border-right: 1px solid $border-color;
-  }
-  .account-buttons-row .button {
-    min-width: 4.5rem;
-  }
-  .bottom {
-    border-top: 1px solid transparent;
-    padding: 0.5rem;
-    >.center {
-      width: auto;
-      margin: 0 auto;
+    >div.grid-block {
+        border-right: 1px solid $border-color;
     }
-  }
-  span.button {
-    font-size: 1.1rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-  }
-  a.pay-button {
-    font-weight: bold;
-    letter-spacing: 2px;
-    font-size: 1.1rem;
-    border: 0;
-    padding-top: 0.7rem;
-    padding-bottom: 0.7rem;
-  }
+    .account-buttons-row .button {
+        min-width: 4.5rem;
+    }
+    .bottom {
+        border-top: 1px solid transparent;
+        padding: 0.5rem;
+        >.center {
+            width: auto;
+            margin: 0 auto;
+        }
+    }
+    span.button {
+        font-size: 1.1rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+    a.pay-button {
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-size: 1.1rem;
+        border: 0;
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+    }
 }
 
 @keyframes flash {
-  from,
-  50%,
-  to {
-    opacity: 1;
-  }
-  25%,
-  75% {
-    opacity: 0;
-  }
+    from,
+    50%,
+    to {
+        opacity: 1;
+    }
+    25%,
+    75% {
+        opacity: 0;
+    }
 }
 
 .flash {
-  animation-name: flash;
+    animation-name: flash;
 }
 
 .account-info {
-  text-align: center;
-  .account-title {
-    transition: opacity 0.25s linear, transform 0.25s linear, color 0.25s linear;
-    margin-bottom: 0;
-    font-weight: 600;
-    &.flash {
-      opacity: 0.35;
-      transform: scale(1.1);
+    text-align: center;
+    .account-title {
+        transition: opacity 0.25s linear, transform 0.25s linear, color 0.25s linear;
+        margin-bottom: 0;
+        font-weight: 600;
+        &.flash {
+            opacity: 0.35;
+            transform: scale(1.1);
+        }
     }
-  }
-  >p:first-of-type {
-    font-size: 85%;
-    line-height: 1.2;
-  }
-  .account-image {
-    padding-bottom: 1rem;
-    >canvas {
-      padding: 1rem;
-      border: 1px solid $border-color;
+    >p:first-of-type {
+        font-size: 85%;
+        line-height: 1.2;
     }
-  }
-  >div.secondary {
-    padding-bottom: 1rem;
-    position: relative;
-    >span:first-of-type {
-      font-weight: bold;
+    .account-image {
+        padding-bottom: 1rem;
+        >canvas {
+            padding: 1rem;
+            border: 1px solid $border-color;
+        }
     }
-    >span.my-account-label {
-      top: 4px;
-      font-size: 0.8rem;
-      position: absolute;
-      right: 0;
-      text-transform: uppercase;
-      font-variant: small-caps;
+    >div.secondary {
+        padding-bottom: 1rem;
+        position: relative;
+        >span:first-of-type {
+            font-weight: bold;
+        }
+        >span.my-account-label {
+            top: 4px;
+            font-size: 0.8rem;
+            position: absolute;
+            right: 0;
+            text-transform: uppercase;
+            font-variant: small-caps;
+        }
     }
-  }
 }
 
-.common-left-menu,.account-left-menu {
-  >li {
-    &.menu-subheader {
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      padding: 1.5rem 0.5rem 0.25rem 0.5rem;
-      text-align: center;
-      border-bottom: none !important;
-      >span {
-        display: inline-block;
-        color: inherit;
-        cursor: pointer;
-      }
+.common-left-menu,
+.account-left-menu {
+    >li {
+        &.menu-subheader {
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            padding: 1.5rem 0.5rem 0.25rem 0.5rem;
+            text-align: center;
+            border-bottom: none !important;
+            >span {
+                display: inline-block;
+                color: inherit;
+                cursor: pointer;
+            }
+        }
+        >a {
+            padding-left: 1.75rem !important;
+            border-right: 3px solid transparent;
+        }
     }
-    >a {
-      padding-left: 1.75rem !important;
-      border-right: 3px solid transparent;
-    }
-  }
 }
 
 // .no-amount {
@@ -111,116 +112,153 @@
 //     font-weight: bold;
 // }
 .weight-input {
-  display: table-cell;
-  margin: 0 1rem !important;
-  width: 30% !important;
+    display: table-cell;
+    margin: 0 1rem !important;
+    width: 30% !important;
 }
 
 .threshold input {
-  width: 5rem !important;
+    width: 5rem !important;
 }
 
 .more-button {
-  padding-top: 0.5rem;
+    padding-top: 0.5rem;
 }
 
 .create-account-header {
-  height: 180px;
+    height: 180px;
 }
 
 a.action-button>span {
-  text-transform: lowercase;
+    text-transform: lowercase;
 }
 
 div.hide-selector {
-  padding-bottom: 10px;
-  >div {
-    font-size: 1.15rem;
-    cursor: pointer;
-    &:nth-of-type(n + 2) {
-      padding-left: 10px;
+    padding-bottom: 10px;
+    >div {
+        font-size: 1.15rem;
+        cursor: pointer;
+        &:nth-of-type(n + 2) {
+            padding-left: 10px;
+        }
+        &.inactive {
+            color: grey;
+        }
+        &:hover.inactive {
+            color: inherit;
+        }
     }
-    &.inactive {
-      color: grey;
-    }
-    &:hover.inactive {
-      color: inherit;
-    }
-  }
 }
 
 div.overview-tabs {
-  >div.service-selector {
-    margin-bottom: 0;
-    border: none;
-  }
-  div.hide-selector {
-    padding-left: 5px;
-  }
-  >div.tab-content {
-    padding: 20px;
-  }
-  ul.account-overview>li.total-value>a {
-    span.tab-title {
-      text-transform: uppercase;
-      font-variant: small-caps;
-      font-size: 0.8rem;
+    >div.service-selector {
+        margin-bottom: 0;
+        border: none;
+        overflow-x: hidden;
     }
-    div.tab-subtext {
-      font-size: 0.8rem;
-      text-align: right;
+    div.hide-selector {
+        padding-left: 5px;
     }
-  }
-}
-
-ul.account-overview {
-  width: 100%;
-  li {
-    >a {
-      font-size: 1.1rem;
-      >div.tab-subtext {
-        font-size: 70%;
-        text-align: right;
-      }
+    >div.tab-content {
+        padding: 20px;
     }
-    &.total-value {
-      >a {
-        cursor: default;
-        >span.tab-title {
-          font-size: 95%;
+    &.with-buttons ul.account-overview>li:not(.total-value)>a {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    ul.account-overview>li.total-value {
+        input {
+            min-width: 13rem;
         }
-      }
+        >a {
+            span.tab-title {
+                text-transform: uppercase;
+                font-variant: small-caps;
+                font-size: 0.8rem;
+            }
+            div.tab-subtext {
+                font-size: 0.8rem;
+                text-align: right;
+            }
+        }
     }
-  }
+    ul.account-overview {
+        display: table;
+        li {
+            display: table-cell;
+            vertical-align: middle;
+            >a {
+                font-size: 1.1rem;
+                >div.tab-subtext {
+                    font-size: 70%;
+                    text-align: right;
+                }
+            }
+            &.total-value {
+                >a {
+                    cursor: default;
+                    >span.tab-title {
+                        font-size: 95%;
+                    }
+                }
+            }
+        }
+    }
+    table.table.dashboard-table {
+        >thead>tr>th {
+            font-weight: 600;
+            font-size: 80%;
+            text-align: center;
+            border: 1px solid;
+        }
+        >tbody>tr {
+            >td {
+                font-size: 0.9rem;
+                text-align: center;
+                border: 1px solid;
+                &.worker-name {
+                    max-width: 15rem;
+                    overflow-x: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    >div span.icon>svg {
+                        width: 1.75rem;
+                        height: 1.75rem;
+                    }
+                    >div>a {
+                        font-size: 90%;
+                    }
+                }
+            }
+            &.total-value {
+                td {
+                    vertical-align: middle;
+                    padding: 8px 5px;
+                    border-bottom: none;
+                    word-wrap: none;
+                }
+                td:first-of-type {
+                    text-align: left;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+                td:nth-child(3) {
+                    font-weight: 600;
+                    text-align: right;
+                }
+            }
+        }
+    }
 }
 
-table.table.dashboard-table {
-  >thead>tr>th {
-    font-weight: 600;
-    font-size: 80%;
-    text-align: center;
-  }
-  >tbody>tr {
-    >td {
-      font-size: 0.9rem;
-      text-align: center;
-      border: 1px solid;
+div.hide-selector>div.new-worker-button {
+    padding-left: 0;
+    padding-top: 10px;
+    @include breakpoint(medium) {
+        padding-top: 0;
+        position: relative;
+        top: -10px;
+        float: right;
+        clear: both;
     }
-    &.total-value {
-      td {
-        vertical-align: middle;
-        padding: 8px 5px;
-        border-bottom: none;
-      }
-      td:first-of-type {
-        text-align: left;
-        text-transform: uppercase;
-        font-weight: 600;
-      }
-      td:nth-child(3) {
-        font-weight: 600;
-        text-align: right;
-      }
-    }
-  }
 }

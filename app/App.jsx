@@ -14,7 +14,6 @@ import SyncError from "./components/SyncError";
 import LoadingIndicator from "./components/LoadingIndicator";
 import Header from "components/Layout/Header";
 import MobileMenu from "components/Layout/MobileMenu";
-import Chat from "./components/Chat/ChatWrapper";
 import ReactTooltip from "react-tooltip";
 import NotificationSystem from "react-notification-system";
 import TransactionConfirm from "./components/Blockchain/TransactionConfirm";
@@ -43,9 +42,6 @@ class App extends React.Component {
             synced: this._syncStatus(),
             syncFail,
             theme: SettingsStore.getState().settings.get("themes"),
-            disableChat: SettingsStore.getState().settings.get("disableChat", true),
-            showChat: SettingsStore.getState().viewSettings.get("showChat", false),
-            dockedChat: SettingsStore.getState().viewSettings.get("dockedChat", false),
             isMobile: !!(/android|ipad|ios|iphone|windows phone/i.test(user_agent) || isSafari),
             incognito: false,
             incognitoWarningDismissed: false
@@ -161,23 +157,7 @@ class App extends React.Component {
                 theme: settings.get("themes")
             });
         }
-        if (settings.get("disableChat") !== this.state.disableChat) {
-            this.setState({
-                disableChat: settings.get("disableChat")
-            });
-        }
-
-        if (viewSettings.get("showChat") !== this.state.showChat) {
-            this.setState({
-                showChat: viewSettings.get("showChat")
-            });
-        }
-
-        if (viewSettings.get("dockedChat") !== this.state.dockedChat) {
-            this.setState({
-                dockedChat: viewSettings.get("dockedChat")
-            });
-        }
+        
 
     }
 
@@ -188,10 +168,10 @@ class App extends React.Component {
     // }
 
     render() {
-        let { disableChat, isMobile, showChat, dockedChat, theme } = this.state;
+        let {isMobile, theme } = this.state;
         let content = null;
 
-        let showFooter = this.props.location.pathname.indexOf("market") === -1;
+        let showFooter = 1;
         // if(incognito && !incognitoWarningDismissed){
         //     content = (
         //         <Incognito onClickIgnore={this._onIgnoreIncognitoWarning.bind(this)}/>
@@ -203,7 +183,7 @@ class App extends React.Component {
             );
         } else if (this.state.loading) {
             content = <div className="grid-frame vertical">
-                <LoadingIndicator loadingText={"Connecting to APIS and tarting app"}/>
+                <LoadingIndicator loadingText={"Connecting to APIs and starting app"}/>
             </div>;
         } else if (this.props.location.pathname === "/init-error") {
             content = <div className="grid-frame vertical">{this.props.children}</div>;

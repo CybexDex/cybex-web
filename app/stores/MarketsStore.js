@@ -319,6 +319,9 @@ class MarketsStore {
         if (result.history) {
             this.activeMarketHistory = this.activeMarketHistory.clear();
             result.history.forEach(order => {
+                if (!/Z$/.test(order.time)) {
+                    order.time += "Z";
+                }
                 order.op.time = order.time;
                 /* Only include history objects that aren't 'something for nothing' to avoid confusion */
                 if (!(order.op.receives.amount == 0 || order.op.pays.amount == 0)) {

@@ -1116,6 +1116,9 @@
                 &.active {
                     color: darken($error-text-color, 20%);
                 }
+                .icon.locked > svg > path {
+                    fill: $button-bg-color;
+                }
             }
         }
     }
@@ -1142,6 +1145,19 @@
         .nav-item {
             &.active {
                 color: $warning-color;
+            }
+
+            &.unsupported {
+                > td {
+                    color: grey;
+                    > a {
+                        color: grey;
+                    }
+
+                    svg > path {
+                        fill: grey;
+                    }
+                }
             }
         }
     }

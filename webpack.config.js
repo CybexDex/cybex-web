@@ -56,6 +56,7 @@ module.exports = function (env) {
     var outputPath = path.join(root_dir, "assets");
 
     // COMMON PLUGINS
+    const baseUrl = env.electron ? "" : "baseUrl" in env ? env.baseUrl : "/";
     var plugins = [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
@@ -63,7 +64,7 @@ module.exports = function (env) {
             // APP_VERSION: JSON.stringify(git.tag()),
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
-            __BASE_URL__: JSON.stringify("baseUrl" in env ? env.baseUrl : "/"),
+            __BASE_URL__: JSON.stringify(baseUrl),
             __UI_API__: JSON.stringify(env.apiUrl || "https://ui.bitshares.eu/api"),
             __TESTNET__: !!env.testnet,
         }),

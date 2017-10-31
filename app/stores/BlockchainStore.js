@@ -28,6 +28,9 @@ class BlockchainStore {
 
     onGetBlock(block) {
         if (!this.blocks.get(block.id)) {
+            if (!/Z$/.test(block.timestamp)) {
+                block.timestamp += "Z";
+            }
             block.timestamp = new Date(block.timestamp);
             this.blocks = this.blocks.set(
                 block.id,
@@ -40,6 +43,9 @@ class BlockchainStore {
         let {block, maxBlock} = payload;
         if (typeof block.timestamp === "string") {
             block.timestamp += "+00:00";
+            if (!/Z$/.test(block.timestamp)) {
+                block.timestamp += "Z";
+            }
         }
         block.timestamp = new Date(block.timestamp);
         if (block.id > maxBlock - this.maxBlocks) {
@@ -63,9 +69,9 @@ class BlockchainStore {
 
     }
 
-    onUpdateRpcConnectionStatus(status){
+    onUpdateRpcConnectionStatus(status) {
         let prev_status = this.rpc_connection_status;
-        if(status === "reconnect")  ChainStore.resetCache();
+        if (status === "reconnect") ChainStore.resetCache();
         else this.rpc_connection_status = status;
         if (prev_status === null && status === "error")
             this.no_ws_connection = true;

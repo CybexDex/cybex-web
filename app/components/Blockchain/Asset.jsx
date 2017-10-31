@@ -74,6 +74,7 @@ class Asset extends React.Component {
 
     componentWillMount() {
         if (this.props.asset.has("bitasset")) {
+            console.log("asset:", this.props.asset.get("id"));
             const assets = {
                 [this.props.asset.get("id")]: this.props.asset.toJS(),
                 [this.props.backingAsset.get("id")]: this.props.backingAsset.toJS()
@@ -92,21 +93,27 @@ class Asset extends React.Component {
                 settlePrice = settlePrice.setIn(["quote", "asset_id"], this.props.asset.get("id"));
                 sqr = 1000;
             }
-            const feedPrice = new FeedPrice({
-                priceObject: settlePrice,
-                market_base: this.props.asset.get("id"),
-                sqr,
-                assets
-            });
 
-            Apis.instance().db_api().exec("get_call_orders", [
-                this.props.asset.get("id"), 300
-            ]).then(call_orders => {
-                let callOrders = call_orders.map(c => {
-                    return new CallOrder(c, assets, this.props.asset.get("id"), feedPrice, isPredictionMarket);
+            try {
+                const feedPrice = new FeedPrice({
+                    priceObject: settlePrice,
+                    market_base: this.props.asset.get("id"),
+                    sqr,
+                    assets
                 });
-                this.setState({callOrders});
-            });
+
+                Apis.instance().db_api().exec("get_call_orders", [
+                    this.props.asset.get("id"), 300
+                ]).then(call_orders => {
+                    let callOrders = call_orders.map(c => {
+                        return new CallOrder(c, assets, this.props.asset.get("id"), feedPrice, isPredictionMarket);
+                    });
+                    this.setState({callOrders});
+                });
+            } catch(err) {
+                console.log(err);
+            }
+
         }
     }
 
@@ -510,7 +517,7 @@ class Asset extends React.Component {
         for (var i = 0; i < feeds.length; i++) {
             var feed = feeds[i];
             var publisher = feed[0];
-            var publishDate = new Date(feed[1][0]);
+            var publishDate = new Date(feed[1][0] + "Z");
             var settlement_price = feed[1][1].settlement_price;
             var core_exchange_rate = feed[1][1].core_exchange_rate;
             var maintenance_collateral_ratio = '' + feed[1][1].maintenance_collateral_ratio/10 + '%';
@@ -529,7 +536,7 @@ class Asset extends React.Component {
 
         const {sortDirection} = this.state;
 
-        let filterFunctions = {
+        let sortFunctions = {
             name: function(a, b) {
                 let nameA = ChainStore.getAccount(a.borrower, false);
                 if (nameA) nameA = nameA.get("name");
@@ -547,6 +554,9 @@ class Asset extends React.Component {
             },
             debt: function(a, b) {
                 return (sortDirection ? 1 : -1) * (b.amountToReceive().getAmount() - a.amountToReceive().getAmount());
+            },
+            ratio: function(a, b) {
+                return (sortDirection ? 1 : -1) * (a.getRatio() - b.getRatio());
             }
         };
 
@@ -600,14 +610,14 @@ class Asset extends React.Component {
                                                     noPopOver
                                                 />)</span> : null}
                                             </th>
-                                            <th className="clickable" onClick={this._toggleSortOrder.bind(this, "price")}>
+                                            <th className="clickable" onClick={this._toggleSortOrder.bind(this, "ratio")}>
                                                 <Translate content="borrow.coll_ratio" />
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {this.state.callOrders
-                                            .sort(filterFunctions[this.state.marginTableSort])
+                                            .sort(sortFunctions[this.state.marginTableSort])
                                             .map(c => {
                                                 return (
                                                     <tr className="margin-row" key={c.id}>
