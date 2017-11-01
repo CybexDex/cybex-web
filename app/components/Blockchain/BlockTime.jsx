@@ -51,6 +51,7 @@ class BlockTime extends React.Component {
 
                 //{this.state.time ?  <FormattedDate value={this.state.time} format="short"/> : null}
     render() {
+        // console.debug("Block Height: ", this.props);        
         return (
             <span className="time" key={this.props.block_number}>
                 {this.state.time ? <TimeAgo time={this.state.time} /> : null }

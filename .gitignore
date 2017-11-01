@@ -20,3 +20,5 @@ app/bundle
 app/stats-dev.json
 app/stats-prod.json
 app/test/MarketClasses.js
+.awcache
+dist

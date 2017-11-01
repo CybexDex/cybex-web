@@ -1,5 +1,80 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @import "../utils/utils";
-@mixin theme( $primary-text-color, $bg-color, $dark-text-color, $link-text-color, $light-text-color, $secondary-text-color, $success-color, $info-color, $warning-color, $alert-color, $super-light-panel-bg-color, $panel-bg-color, $button-bg-color, $secondary-button-bg-color, $fee-color, $bid-color, $ask-color, $call-color, $light-panel-bg-color, $positive-color, $negative-color, $row-accent-color, $header-color, $chat-text-color, $input-background, $account-header, $account-cells, $account-green, $account-primarytext, $account-dimmed, $account-border, $account-background) {
+@mixin theme( 
+    $primary-text-color, 
+    $bg-color, 
+    $dark-text-color, 
+    $link-text-color, 
+    $light-text-color, 
+    $secondary-text-color, 
+    $success-color, 
+    $info-color, 
+    $warning-color, 
+    $alert-color, 
+    $super-light-panel-bg-color, 
+    $panel-bg-color, 
+    $button-bg-color, 
+    $secondary-button-bg-color, 
+    $fee-color, 
+    $bid-color, 
+    $ask-color, 
+    $call-color, 
+    $light-panel-bg-color, 
+    $positive-color, 
+    $negative-color, 
+    $row-accent-color, 
+    $header-color, 
+    $input-background, 
+    $account-header, 
+    $account-cells, 
+    $account-green, 
+    $account-primarytext, 
+    $account-dimmed, 
+    $account-border, 
+    $account-background
+    ) {
     $color-panel-divider: lighten($panel-bg-color, 30%);
     .font-secondary {
         color: $secondary-text-color;
@@ -854,7 +929,7 @@
             background-color: $header-color;
             font-size: 12px;
             >option {
-                color: $chat-text-color;
+                color: $light-text-color;
             }
         }
     }
@@ -942,25 +1017,7 @@
         background-color: darken($light-panel-bg-color, 5%);
         cursor: pointer;
     }
-    #chatbox {
-        .chat-text {
-            color: $chat-text-color;
-        }
-        .chatbox-content {
-            background-color: #ccc;
-            color: $chat-text-color;
-        }
-        .chatbox-title {
-            background-color: $header-color !important;
-        }
-        select {
-            height: 3rem;
-            font-size: 12px;
-        }
-        input {
-            color: $chat-text-color;
-        }
-    } // Settings
+    // Settings
     .settings-menu {
         >li {
             &:hover {

@@ -19,7 +19,7 @@ class BlockchainActions {
                     }
                     result.id = height; // The returned object for some reason does not include the block height..
                     // console.log("time to fetch block #" + height,":", new Date() - start, "ms");
-
+                    console.debug("Block Action: ", result);
                     dispatch({block: result, maxBlock: maxBlock});
 
                 }).catch((error) => {

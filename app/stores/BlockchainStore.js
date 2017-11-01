@@ -31,6 +31,7 @@ class BlockchainStore {
             if (!/Z$/.test(block.timestamp)) {
                 block.timestamp += "Z";
             }
+            console.debug("BlockStore: ", block);
             block.timestamp = new Date(block.timestamp);
             this.blocks = this.blocks.set(
                 block.id,
@@ -42,9 +43,11 @@ class BlockchainStore {
     onGetLatest(payload) {
         let {block, maxBlock} = payload;
         if (typeof block.timestamp === "string") {
-            block.timestamp += "+00:00";
+            // block.timestamp += "+00:00";
+            console.debug("BLOCKTEMP: ", block.timestamp);
             if (!/Z$/.test(block.timestamp)) {
                 block.timestamp += "Z";
+                console.debug("BLOCKTEMP: ", block.timestamp);                        
             }
         }
         block.timestamp = new Date(block.timestamp);
