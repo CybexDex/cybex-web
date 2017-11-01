@@ -22,3 +22,4 @@ app/stats-prod.json
 app/test/MarketClasses.js
 .awcache
 dist
+yarn.*
