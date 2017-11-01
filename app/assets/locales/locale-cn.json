@@ -215,6 +215,8 @@
       "threshold": "阈值",
       "confirm_add": "增加",
       "cancel": "取消",
+      "approve": "同意",
+      "remove": "删除",
       "add_permission_label": "输入账户名/公钥以及权重",
       "account_name_or_key": "账户名或公钥",
       "memo_public_key": "备注公钥",

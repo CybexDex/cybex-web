@@ -10,15 +10,15 @@ import WalletDb from "stores/WalletDb";
 import WalletApi from "api/WalletApi";
 import NestedApprovalState from "../Account/NestedApprovalState";
 import pu from "common/permission_utils";
-import {ChainStore} from "cybexjs";
+import { ChainStore } from "cybexjs";
 
 class ProposalApproveModal extends React.Component {
 
-   static propTypes = {
-       accounts: ChainTypes.ChainAccountsList
-   };
+    static propTypes = {
+        accounts: ChainTypes.ChainAccountsList
+    };
 
-   constructor(props) {
+    constructor(props) {
         super();
         this.state = {
             active: null,
@@ -26,9 +26,9 @@ class ProposalApproveModal extends React.Component {
             owner: null,
             payee: null
         }
-   }
+    }
 
-   onActiveAccount(accountMap, keyMap, type, account) {
+    onActiveAccount(accountMap, keyMap, type, account) {
         let newState = {};
 
         if (keyMap[account]) {
@@ -43,11 +43,11 @@ class ProposalApproveModal extends React.Component {
         }
         this.setState(newState);
 
-   }
+    }
 
     _onProposalAction(oldProposal) {
         let proposalObject = oldProposal.toJS();
-        let {active, key, owner, payee} = this.state;
+        let { active, key, owner, payee } = this.state;
 
         let proposal = {
             fee_paying_account: payee || active,
@@ -103,7 +103,7 @@ class ProposalApproveModal extends React.Component {
     }
 
     render() {
-        let {proposal, type} = this.props;
+        let { proposal, type } = this.props;
 
         let accountNames = [];
         let accountMap = {};
@@ -112,7 +112,7 @@ class ProposalApproveModal extends React.Component {
         if (this.props.accounts.length) {
             this.props.accounts.forEach(account => {
                 let accountCheck = isAdd ? account && !proposal.get(`available_${type}_approvals`).includes(account.get("id")) :
-                        account && proposal.get(`available_${type}_approvals`).includes(account.get("id"));
+                    account && proposal.get(`available_${type}_approvals`).includes(account.get("id"));
                 if (accountCheck) {
                     accountMap[account.get("name")] = account.get("id");
                     accountNames.push(account.get("name"));
@@ -140,7 +140,7 @@ class ProposalApproveModal extends React.Component {
                     <div className="content-block">
                         <h4>{isAdd ? "Add approval" : "Remove approval"}</h4>
                     </div>
-                    <div className="content-block" style={{paddingRight: "20%"}}>
+                    <div className="content-block" style={{ paddingRight: "20%" }}>
 
                         <NestedApprovalState
                             proposal={proposal.get("id")}
@@ -151,8 +151,8 @@ class ProposalApproveModal extends React.Component {
                     </div>
 
                     <div className="content-block full-width-content">
-                       <div className="full-width-content form-group">
-                           <Translate content="modal.proposals.pay_with" component="label" />
+                        <div className="full-width-content form-group">
+                            <Translate content="modal.proposals.pay_with" component="label" />
                             <AccountSelect
                                 account_names={myAccounts}
                                 onChange={this.onChangePayee.bind(this)}
@@ -160,31 +160,32 @@ class ProposalApproveModal extends React.Component {
                         </div>
 
                         {accountNames.length || keyNames.length ? (
-                        <div className="full-width-content form-group">
-                            <Translate content={`modal.proposals.approval_${isAdd ? "add" : "remove"}`} component="label" />
-                            <AccountSelect
-                                account_names={accountNames.concat(keyNames)}
-                                onChange={this.onActiveAccount.bind(this, accountMap, keyMap, type)}
-                            />
-                        </div>) : null}
+                            <div className="full-width-content form-group">
+                                <Translate content={`modal.proposals.approval_${isAdd ? "add" : "remove"}`} component="label" />
+                                <AccountSelect
+                                    account_names={accountNames.concat(keyNames)}
+                                    onChange={this.onActiveAccount.bind(this, accountMap, keyMap, type)}
+                                />
+                            </div>) : null}
 
                         {false && keyNames.length ? (
-                        <div className="full-width-content form-group">
-                            <Translate content={`modal.proposals.key_approval_${isAdd ? "add" : "remove"}`} component="label" />
-                            <AccountSelect
-                                account_names={keyNames}
-                                onChange={this.onActiveAccount.bind(this, keyMap, "key")}
-                            />
-                        </div>) : null}
+                            <div className="full-width-content form-group">
+                                <Translate content={`modal.proposals.key_approval_${isAdd ? "add" : "remove"}`} component="label" />
+                                <AccountSelect
+                                    account_names={keyNames}
+                                    onChange={this.onActiveAccount.bind(this, keyMap, "key")}
+                                />
+                            </div>) : null}
                     </div>
 
                     <div className="content-block">
-                        <input
+                        <button
                             type="submit"
                             className="button"
                             onClick={this._onProposalAction.bind(this, proposal)}
-                            value={isAdd ? "Approve" : "Remove"}
-                        />
+                        >
+                            <Translate content={isAdd ? "account.perm.approve" : "account.perm.remove"} />
+                        </button>
                         <div onClick={this.onCancel.bind(this)} className=" button">
                             <Translate content="account.perm.cancel" />
                         </div>
@@ -199,8 +200,8 @@ ProposalApproveModal = BindToChainState(ProposalApproveModal);
 class FirstLevel extends React.Component {
 
     static propTypes = {
-       account: ChainTypes.ChainAccount.isRequired,
-       proposal: ChainTypes.ChainObject.isRequired
+        account: ChainTypes.ChainAccount.isRequired,
+        proposal: ChainTypes.ChainObject.isRequired
     };
 
     constructor() {
@@ -220,7 +221,7 @@ class FirstLevel extends React.Component {
     }
 
     _updateState() {
-        let {proposal, account} = this.props;
+        let { proposal, account } = this.props;
         let type = proposal.get("required_active_approvals").size ? "active" : "owner";
 
         let required = pu.listToIDs(proposal.get(`required_${type}_approvals`));
@@ -236,8 +237,8 @@ class FirstLevel extends React.Component {
     }
 
     render() {
-        let {action} = this.props;
-        let {requiredPermissions, available, availableKeys, type} = this.state;
+        let { action } = this.props;
+        let { requiredPermissions, available, availableKeys, type } = this.state;
         let finalRequired = [];
 
         requiredPermissions.forEach(account => {
@@ -285,16 +286,16 @@ export default class ModalWrapper extends React.Component {
     }
 
     render() {
-        let {modalId, proposal} = this.props;
+        let { modalId, proposal } = this.props;
 
         return (
             <BaseModal id={modalId} overlay={true} ref={modalId}>
                 {this.state.open ? (
-                <div className="grid-block vertical">
-                    <FirstLevel
-                        {...this.props}
-                    />
-                </div>) : null}
+                    <div className="grid-block vertical">
+                        <FirstLevel
+                            {...this.props}
+                        />
+                    </div>) : null}
             </BaseModal>
         );
     }

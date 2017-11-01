@@ -1163,10 +1163,10 @@
             color: $account-primarytext;
             border-color: $account-border !important;
             &:first-of-type {
-                border-left: 1px solid $account-border;
+                border-left: $account-border;
             }
             &:last-of-type {
-                border-right: 1px solid $account-border;
+                border-right: $account-border;
             }
         }
         > tbody > tr {

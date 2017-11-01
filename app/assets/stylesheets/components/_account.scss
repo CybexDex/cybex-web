@@ -160,7 +160,7 @@ div.overview-tabs {
         padding-left: 5px;
     }
     >div.tab-content {
-        padding: 20px;
+        // padding: 20px;
     }
     &.with-buttons ul.account-overview>li:not(.total-value)>a {
         padding-left: 3px;
@@ -247,6 +247,14 @@ div.overview-tabs {
                     text-align: right;
                 }
             }
+        }
+        td,th {
+          &:first-of-type {
+            border-left: 0;
+          }
+          &:last-of-type {
+            border-right: 0;
+          }
         }
     }
 }
