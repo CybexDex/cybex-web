@@ -36,13 +36,13 @@ $header-color: #484848;
 $chat-text-color: #191A1F;
 
 // Account table view colors
-$account-header: #656565;
+$account-header: $header-color;
 $account-cells: #4b5158;
 $account-green: #7ED321;
 $account-primarytext: white;
 $account-dimmed: #afafaf;
 $account-border: #323131;
-$account-background: #3f3f3f;
+$account-background: $panel-bg-color;
 
 .cybexDarkTheme {
   @include theme(

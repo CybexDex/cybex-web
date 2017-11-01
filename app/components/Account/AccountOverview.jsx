@@ -555,7 +555,7 @@ class AccountOverview extends React.Component {
         const hiddenSubText = <span style={{visibility: "hidden"}}>H</span>;
 
         return (
-            <div className="grid-content app-tables" ref="appTables">
+            <div className="app-tables with-shadow" ref="appTables">
                 <div className="content-block small-12">
                     <div className="generic-bordered-box">
                         <Tabs defaultActiveTab={1} segmented={false} setting="overviewTab" className="overview-tabs" tabsClass="account-overview no-padding bordered-header content-block" onChangeTab={this.adjustHeightOnChangeTab.bind(this)}>
@@ -647,7 +647,8 @@ class AccountOverview extends React.Component {
 
                             </Tab> */}
 
-                            <Tab title="account.activity" subText={hiddenSubText}>
+                            {/* <Tab title="account.activity" subText={hiddenSubText}> */}
+                            <Tab title="account.activity">
                                 <RecentTransactions
                                     accountsList={Immutable.fromJS([account.get("id")])}
                                     compactView={false}

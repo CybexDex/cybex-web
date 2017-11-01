@@ -9,7 +9,7 @@
     margin-left: 0;
     margin-right: 0;
   }
-  .main-content {
+  .center-block {
     min-height: 30em;
   }
   margin-left: $space-between;
@@ -18,7 +18,7 @@
 
 @mixin vertical {
   @include smallMarket();
-  .main-content {
+  .center-block {
     // min-height: 50vh;
     // max-height: 50vh;
   }
@@ -29,7 +29,7 @@
 
 @mixin smallHorizontal {
   @include smallMarket();
-  .main-content {
+  .center-block {
     min-height: 100vh;
     max-height: 100vh;
   }
@@ -62,7 +62,7 @@
       margin-top: $space-between;
     }
   }
-  .main-content {
+  .center-block {
     flex-grow: 10;
     max-width: unset;
     .top-bar {

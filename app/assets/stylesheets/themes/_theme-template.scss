@@ -1,46 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @import "../utils/utils";
 @mixin theme( 
     $primary-text-color, 
@@ -239,7 +196,7 @@
             border-bottom-color: $bg-color;
             background-color: darken($bg-color, 4%);
         }
-        .main-content {
+        .main-content, .center-block {
             background-color: $bg-color;
         }
         .right-column {
@@ -1159,6 +1116,98 @@
             white-space: nowrap;
         }
     }
+
+     /* Table view account */
+     div.overview-tabs {
+        background-color: $account-background;
+        > div.service-selector {
+            background-color: $account-header;
+        }
+    }
+    ul.account-overview {
+
+        li {
+            > a {
+                color: $account-dimmed;
+                background-color: $account-header;
+                border: none;
+                &:hover {
+                    background-color: $account-header;
+                    color: $account-primarytext;
+                }
+                > div.tab-subtext {
+                    color: $account-green;
+                }
+            }
+            &.is-active > a {
+                color: $account-primarytext;
+                background-color: $account-header;
+            }
+            &.total-value {
+                > a {
+                    background-color: $account-cells;
+                    &:hover > span.tab-title {
+                        color: $account-dimmed;
+                    }
+                }
+                .icon.locked > svg > path {
+                    fill: $button-bg-color;
+                }
+            }
+        }
+    }
+
+    table.table.dashboard-table {
+        > thead > tr > th {
+            background-color: $account-header;
+            color: $account-primarytext;
+            border-color: $account-border !important;
+            &:first-of-type {
+                border-left: 1px solid $account-border;
+            }
+            &:last-of-type {
+                border-right: 1px solid $account-border;
+            }
+        }
+        > tbody > tr {
+            > td {
+                background-color: $account-cells;
+                color: $account-primarytext;
+                border-color: $account-border !important;
+                .icon > svg > path {
+                    fill: $account-primarytext;
+                }
+
+                .icon.locked > svg > path {
+                    fill: $button-bg-color;
+                }
+            }
+            &.total-value {
+                td {
+                    background-color: $account-header;
+                }
+                td:nth-child(n+2) {
+                    color: $account-green;
+                    text-align: right;
+                }
+            }
+
+            &.unsupported {
+                > td {
+                    color: grey;
+                    > a {
+                        color: grey;
+                    }
+
+                    svg > path {
+                        fill: grey;
+                    }
+                }
+            }
+        }
+    }
+
+
     .card-list {
         .card-custom {
             color: $light-panel-bg-color;
