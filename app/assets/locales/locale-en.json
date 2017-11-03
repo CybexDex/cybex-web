@@ -808,7 +808,7 @@
     "workers": {
       "title": "Worker name",
       "period": "Duration",
-      "daily_pay": "Daily pay (BTS)",
+      "daily_pay": "Daily pay (CYB)",
       "website": "Website",
       "vesting_pay": "Salary vesting period (days)",
       "create": "Create a new worker proposal",

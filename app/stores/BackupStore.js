@@ -29,6 +29,7 @@ class BackupStore extends BaseStore {
     }
 
     setWalletObjct(wallet_object) {
+        console.debug("setWallet: ", wallet_object);
         this.setState({wallet_object})
     }
 

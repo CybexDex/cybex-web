@@ -11,6 +11,7 @@ class WalletActions {
 
     /** Restore and make active a new wallet_object. */
     restore(wallet_name = "default", wallet_object) {
+        console.debug("WalletName: ", wallet_name);
         wallet_name = wallet_name.toLowerCase();
         return {wallet_name, wallet_object};
     }

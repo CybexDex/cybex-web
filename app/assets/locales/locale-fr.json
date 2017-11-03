@@ -36,7 +36,7 @@
     "no_price": "There's no recent price available for this asset that can be used to estimate its value.",
     "hide_asset": "Click here to hide this asset from this list.",
     "show_asset": "Click here to show this asset in the main list.",
-    "settle": "Settling will let you convert your holdings of %(asset)s to BTS after a delay of 24 hours, at a price equal to the feed price at that time.",
+    "settle": "Settling will let you convert your holdings of %(asset)s to CYB after a delay of 24 hours, at a price equal to the feed price at that time.",
     "filter_ops": "Use this list to filter your history by operation type.",
     "show_block": "Click here to show block #%(block)s where this transaction occured.",
     "coll_ratio": "The collateral ratio of the position is COLLATERAL * FEED PRICE / DEBT.",
@@ -393,7 +393,7 @@
     "workers": {
       "title": "Ouvriers",
       "period": "Worker duration",
-      "daily_pay": "Daily pay (BTS)",
+      "daily_pay": "Daily pay (CYB)",
       "website": "Website",
       "vesting_pay": "Salary vesting period (days)",
       "create": "Create a new worker proposal",
@@ -401,7 +401,7 @@
       "create_text_2": "Consider carefully the parameters you choose as they can not be changed once you've published your worker.",
       "name_text": "The name of your worker should be short and descriptive, something like this: 'Worker Purpose - Account Name'",
       "date_text": "The start date should be at least a week into the future in order to allow people the time to discover, evaluate and vote for your worker.",
-      "pay_text": "The daily pay defines how much you want to be paid per day and is defined in BTS. The current best practice is to define a salary in USD/CNY, and commit to burning whatever surplus you receive as a result of the BTS price increasing. As long as your worker is active and has sufficient votes to be above the refund worker, you will receive this daily salary.",
+      "pay_text": "The daily pay defines how much you want to be paid per day and is defined in CYB. The current best practice is to define a salary in USD/CNY, and commit to burning whatever surplus you receive as a result of the CYB price increasing. As long as your worker is active and has sufficient votes to be above the refund worker, you will receive this daily salary.",
       "url_text": "You should supply a website, github document or google doc that describes in more detail the purpose of the worker and how you intend to use the worker pay.",
       "vesting_text": "The vesting period defines the number of days that worker earnings will vest before being fully claimable."
     },

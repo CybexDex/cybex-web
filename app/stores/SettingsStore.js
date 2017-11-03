@@ -160,7 +160,7 @@ class SettingsStore {
                     "YOYOW", "HERO", "RUBLE", "SMOKE", "STEALTH", "BRIDGE.BCO",
                 ],
                 markets_c577bfd9: [ // CYBEX MAIN NET
-                    "CYB", "CYB", "YAN", "IMLAB", "ICOO", "BTC", "ETH", "COLAB",
+                    "CYB", "BTS", "YAN", "IMLAB", "ICOO", "BTC", "ETH", "COLAB",
                     "OPEN.STEEM", "OPEN.GAME", "OCT", "USD", "CNY", "BTSR", "OBITS",
                     "OPEN.DGD", "EUR", "GOLD", "SILVER", "IOU.CNY", "OPEN.DASH",
                     "OPEN.USDT", "OPEN.EURT", "OPEN.BTC", "CADASTRAL", "BLOCKPAY", "BTWTY",
@@ -177,7 +177,7 @@ class SettingsStore {
                     "USD", "OPEN.BTC", "CNY", "CYB", "BTC"
                 ],
                 markets_c577bfd9: [ // CYB MAIN NET
-                    "CYB", "CYB", "USD", "CNY","BTC" ,"OPEN.BTC"
+                    "CYB", "BTS", "USD", "CNY","BTC" ,"OPEN.BTC"
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "TEST"

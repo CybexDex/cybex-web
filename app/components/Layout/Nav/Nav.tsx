@@ -63,6 +63,7 @@ const NavLink = ({ icon, name, isActive, id }: NavItem) => (
     </div>
   </div>
 );
+
 type NavProps = WithRouterProps & { settings: any, currentAccount: string, [x: string]: string };
 export class Nav extends React.Component<NavProps, any> {
   constructor(props: NavProps) {
@@ -73,9 +74,6 @@ export class Nav extends React.Component<NavProps, any> {
   }
 
   toggleNav() {
-    // this.setState(prev => ({
-    //   isExpand: !prev.isExpand
-    // }));
     SettingsActions.toggleNav(true);
   }
 
@@ -108,7 +106,7 @@ export class Nav extends React.Component<NavProps, any> {
                     this.props.location.pathname.search(routeTo) !== -1
                 } {...link} />
               </Link>
-            )
+            );
           })
         }
         </div>

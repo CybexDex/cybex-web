@@ -1352,7 +1352,7 @@
     "valid_address": "请输入合法的 %(coin_type)s 地址",
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
-    "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 BTS。",
+    "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
     "gateway_text": "网关能让你将Cybex中的资产与外部资产进行互换，比如OPEN.BTC到BTC。",
     "fiat_text": "法币的冲提现服务由CCEDK提供。你必须先行在CCEDK上进行账户注册。下面是支持的货币：",
     "service": "转账服务",

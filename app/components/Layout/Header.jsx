@@ -20,12 +20,15 @@ import { Apis } from "cybexjs-ws";
 import notify from "actions/NotificationActions";
 import IntlActions from "actions/IntlActions";
 import AccountImage from "../Account/AccountImage";
+import ContextMenuStore from "stores/ContextMenuStore";
 
 var logo = require("assets/cybex-logo.png");
 
 const FlagImage = ({ flag, width = 20, height = 20 }) => {
     return <img height={height} width={width} src={"language-dropdown/" + flag.toUpperCase() + ".png"} />;
 };
+
+export const HeadContextMenuId = "$headerContext";
 
 class Header extends React.Component {
 
@@ -72,6 +75,7 @@ class Header extends React.Component {
         return (
             nextProps.linkedAccounts !== this.props.linkedAccounts ||
             nextProps.currentAccount !== this.props.currentAccount ||
+            nextProps.contextMenu !== this.props.contextMenu ||
             nextProps.passwordLogin !== this.props.passwordLogin ||
             nextProps.locked !== this.props.locked ||
             nextProps.current_wallet !== this.props.current_wallet ||
@@ -141,7 +145,7 @@ class Header extends React.Component {
 
     render() {
         let { active } = this.state;
-        let { currentAccount, starredAccounts, passwordLogin } = this.props;
+        let { currentAccount, starredAccounts, passwordLogin, contextMenu } = this.props;
         let locked_tip = counterpart.translate("header.locked_tip");
         let unlocked_tip = counterpart.translate("header.unlocked_tip");
 
@@ -286,7 +290,7 @@ class Header extends React.Component {
                         return (
                             <li key={locale}>
                                 {/* <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale);  location.reload(false) }}> */}
-                                <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale);}}>
+                                <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale); }}>
                                     <span className="table-cell"><FlagImage flag={locale} /></span>
                                     <span className="table-cell" style={{ paddingLeft: 10 }}><Translate content={"languages." + locale} /></span>
 
@@ -298,8 +302,8 @@ class Header extends React.Component {
             </ActionSheet.Content>
         </ActionSheet>;
 
-        const enableDepositWithdraw = Apis.instance().chain_id.substr(0, 8) === "4018d784";
-
+        // const enableDepositWithdraw = Apis.instance().chain_id.substr(0, 8) === "4018d784";
+        const enableDepositWithdraw = false;
         return (
             <div className="header menu-group primary with-shadow">
                 <div className="show-for-small-only">
@@ -324,6 +328,7 @@ class Header extends React.Component {
                 <div className="grid-block show-for-medium">
                     <ul className="menu-bar">
                         <li>{dashboard}</li>
+                        <li>{contextMenu}</li>
                         {/* {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`} className={cnames({ active: active.indexOf("account/") !== -1 })}><Translate content="header.account" /></Link></li>} */}
                         {/* {currentAccount || myAccounts.length ? <li><a className={cnames({ active: active.indexOf("transfer") !== -1 })} onClick={this._onNavigate.bind(this, "/transfer")}><Translate component="span" content="header.payments" /></a></li> : null} */}
                         {/* {!(currentAccount || myAccounts.length) ? <li><a className={cnames({ active: active.indexOf("explorer") !== -1 })} onClick={this._onNavigate.bind(this, "/explorer")}><Translate component="span" content="header.explorer" /></a></li> : null} */}
@@ -366,11 +371,12 @@ class Header extends React.Component {
 
 export default connect(Header, {
     listenTo() {
-        return [AccountStore, WalletUnlockStore, WalletManagerStore, SettingsStore];
+        return [AccountStore, WalletUnlockStore, WalletManagerStore, SettingsStore, ContextMenuStore];
     },
     getProps() {
         const chainID = Apis.instance().chain_id;
         return {
+            contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],
             linkedAccounts: AccountStore.getState().linkedAccounts,
             currentAccount: AccountStore.getState().currentAccount || AccountStore.getState().passwordAccount,
             locked: WalletUnlockStore.getState().locked,

@@ -75,7 +75,7 @@ class BackupRestore extends Component {
 
         return (
             <div>
-                <Translate style={{textAlign: "left", maxWidth: "30rem"}} component="p" content="wallet.import_backup_choose" />
+                <Translate component="p" content="wallet.import_backup_choose" />
                 {(new FileReader).readAsBinaryString ? null : <p className="error">Warning! You browser doesn't support some some file operations required to restore backup, we recommend you to use Chrome or Firefox browsers to restore your backup.</p>}
                 <Upload>
                     <NameSizeModified/>
@@ -156,7 +156,8 @@ class NewWalletName extends Component {
         if( ! has_current_wallet) {
             let walletName = "default";
             if (this.props.backup.name) {
-                walletName = this.props.backup.name.match(/[a-z0-9_-]*/)[0]
+                // fixed: 正则匹配错误
+                walletName = this.props.backup.name.match(/[a-zA-Z0-9_-]*/)[0]
             }
             WalletManagerStore.setNewWallet(walletName)
             this.setState({accept: true})
@@ -428,6 +429,7 @@ class DecryptBackup extends Component {
         let private_key = PrivateKey.fromSeed(this.state.backup_password || "")
         let contents = this.props.backup.contents
         decryptWalletBackup(private_key.toWif(), contents).then( wallet_object => {
+            console.debug("Backup: ", wallet_object);
             this.setState({verified: true})
             if(this.props.saveWalletObject)
                 BackupStore.setWalletObjct(wallet_object)
