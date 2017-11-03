@@ -18,6 +18,11 @@ _this = {
             address_prefix: ADDRESS_PREFIX,
             chain_id: "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8"
         },
+        CybexOpen: {
+            core_asset: "CYB",
+            address_prefix: "CYB",
+            chain_id: "c577bfd972938e3d67d106282930deff2a2aec3522de38e8d8b111606ccaf2d2"
+        },
         Cybex: {
             core_asset: "CYB",
             address_prefix: "CYB",
