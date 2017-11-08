@@ -110,7 +110,7 @@ class AssetActions {
                     },
                     "quote": {
                         "amount": cer.quote.amount * precision,
-                        "asset_id": "1.3.0" // Origin 131
+                        "asset_id": "1.3.1" // Origin 131
                     }
                 },
                 "whitelist_authorities": [],
