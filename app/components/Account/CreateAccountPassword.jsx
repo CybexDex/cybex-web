@@ -403,7 +403,7 @@ class CreateAccountPassword extends React.Component {
                     {step === 3 ? this._renderGetStartedText() : null}
 
                     {step === 1 ? (
-                        <div>
+                        <div style={{"align-self": "center", "margin-top": "1em"}}>
                             {this._renderAccountCreateForm()}
                         </div>
                     ) : step === 2 ? this._renderBackup() :
