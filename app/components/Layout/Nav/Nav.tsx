@@ -24,7 +24,7 @@ interface NavItem {
 const NavLinks: Array<NavItem> = [
   {
     id: "account",
-    routeTo: accountName => `/account/${accountName}/overview`,
+    routeTo: accountName => `/account/${accountName}/dashboard`,
     name: "Account",
     icon: "package",
     displayOnlyWhen: "currentAccount"
