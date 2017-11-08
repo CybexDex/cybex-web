@@ -83,6 +83,7 @@ class WalletDb extends BaseStore {
             return _passwordKey[private_key_tcomb.pubkey];
         }
         let private_key_hex = aes_private.decryptHex(private_key_tcomb.encrypted_key)
+        console.debug("Private_key_hex: ", private_key_hex, private_key_tcomb);
         return PrivateKey.fromBuffer(new Buffer(private_key_hex, 'hex'))
     }
 
@@ -293,6 +294,7 @@ class WalletDb extends BaseStore {
 
     /** This also serves as 'unlock' */
     validatePassword( password, unlock = false, account = null, roles = ["active", "owner", "memo"] ) {
+        console.debug("ValidatePassword: ", password, account, roles);
         if (account) {
             let id = 0;
             function setKey(role, priv, pub) {
@@ -324,6 +326,7 @@ class WalletDb extends BaseStore {
 
             /* Test the pubkey for each role against either the wif key, or the password generated keys */
             roles.forEach(role => {
+                console.debug("FromWif: ", fromWif);
                 if (!fromWif) {
                     key = this.generateKeyFromPassword(account, role, password);
                 }

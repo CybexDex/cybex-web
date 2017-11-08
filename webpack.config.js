@@ -175,11 +175,11 @@ module.exports = function (env) {
         output: {
             publicPath: env.prod ? "" : "/",
             path: outputPath,
-            filename: "[name].js",
+            filename: "[name]-[hash:7].js",
             pathinfo: !env.prod,
             sourceMapFilename: "[name].js.map"
         },
-        devtool: env.prod ? "source-map" : "cheap-module-eval-source-map",
+        devtool: env.prod ? false : "cheap-module-eval-source-map",
         module: {
             rules: [{
                     test: /\.tsx|\.ts$/,
