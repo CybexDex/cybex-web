@@ -397,7 +397,11 @@ select.cyb-select {
 
 input,
 textarea {
-  border-radius: 5px !important;
+  // border-radius: 5px !important;
+  &:focus {
+    transition: box-shadow 0.2s;
+    box-shadow: 0 0 2px;
+  }
 }
 
 input[type=number] {

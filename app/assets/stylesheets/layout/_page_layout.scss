@@ -294,3 +294,20 @@ div.bordered-header {
   }
   /* Add a thumb */
 }
+
+.grid-content .grid-block.full-container {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.switch-container {
+  line-height: 30px;
+}
+
+.grid-x-padding {
+  [class^="small-"],[class^="medium-"],[class^="large-"] {
+    &:not(:first-of-type) {
+      padding-left: 1em;
+    }
+  }
+}

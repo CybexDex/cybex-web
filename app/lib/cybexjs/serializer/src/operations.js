@@ -59,9 +59,7 @@ var Serializer = function (operation_name, serilization_types_object) {
 export var void_ext = new Serializer("void_ext");
 
 var cybex_vesting_ext = new Serializer("cybex_vesting_ext", {
-    sell_start: uint64,
-    sell_end: uint64,
-    vesting_end: uint64
+    vesting_period: uint64
 });
 
 var future_extensions = static_variant([void_ext, cybex_vesting_ext]);

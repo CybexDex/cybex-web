@@ -75,17 +75,16 @@ class AssetActions {
         });
         let max_supply = (new big(createObject.max_supply)).times(precision).toString();
         let max_market_fee = (new big(createObject.max_market_fee || 0)).times(precision).toString();
-        // console.log("max_supply:", max_supply);
-        // console.log("max_market_fee:", max_market_fee);
         let now = Date.now() / 1000;
-        let cybex_ext = {
-            "sell_start": now,
-            "sell_end": now + 7 * 24 * 3600,
-            "vesting_end": now + 187 * 24 * 3600
-        };
-        var extension = [
-            [1, cybex_ext]
-        ];
+        var extension = null;
+        if (createObject.vesting_period) {
+            let cybex_ext = {
+                "vesting_period": createObject.vesting_period
+            };
+            extension = [
+                [1, cybex_ext]
+            ];
+        }
         let corePrecision = utils.get_asset_precision(ChainStore.getAsset(cer.base.asset_id).get("precision"));
 
         let operationJSON = {
