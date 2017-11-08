@@ -86,7 +86,7 @@ class CreateAccount extends React.Component {
             TransactionConfirmStore.unlisten(this.onFinishConfirm);
             TransactionConfirmStore.reset();
 
-            FetchChain("getAccount", this.state.accountName).then(() => {
+            FetchChain("getAccount", this.state.accountName, undefined, {[this.state.accountName]: true}).then(() => {
                 console.log("onFinishConfirm");
                 this.props.router.push("/wallet/backup/create?newAccount=true");
             });
@@ -101,8 +101,8 @@ class CreateAccount extends React.Component {
 
             AccountActions.createAccount(name, this.state.registrar_account, referralAccount || this.state.registrar_account, 0, refcode).then(() => {
                 // User registering his own account
-                if (this.state.registrar_account) {
-                    FetchChain("getAccount", name).then(() => {
+                if(this.state.registrar_account) {
+                    FetchChain("getAccount", name, undefined, {[name]: true}).then(() => {
                         this.setState({
                             step: 2,
                             loading: false
@@ -110,13 +110,12 @@ class CreateAccount extends React.Component {
                     });
                     TransactionConfirmStore.listen(this.onFinishConfirm);
                 } else { // Account registered by the faucet
-                    // this.props.router.push(`/wallet/backup/create?newAccount=true`);
-                    FetchChain("getAccount", name).then(() => {
+                    FetchChain("getAccount", name, undefined, {[name]: true}).then(() => {
                         this.setState({
-                            step: 2
+                            step: 2,
+                            loading: false
                         });
                     });
-                    // this.props.router.push(`/account/${name}/overview`);
 
                 }
             }).catch(error => {

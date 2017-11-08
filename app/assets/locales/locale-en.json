@@ -20,7 +20,7 @@
     "ru": "Русский"
   },
   "incognito": {
-    "no_support": "This Bitshares Wallet relies on Local Storage and IndexedDB which are not persistent when using Incognito Browsing. We recommend using a regular browsing session.",
+    "no_support": "This BitShares Wallet relies on Local Storage and IndexedDB which are not persistent when using Incognito Browsing. We recommend using a regular browsing session.",
     "ignore": "I understand, continue."
   },
   "sync_fail": {
@@ -1206,7 +1206,7 @@
     "current_pass": "Current password",
     "no_wallet": "You do not have a local wallet yet",
     "generated": "Generated password",
-    "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Bitshares!</strong>",
+    "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in BitShares!</strong>",
     "understand_1": "I understand that no one can recover my password if I lose or forget it",
     "understand_2": "I have written down or otherwise stored my password",
     "understand_3": " I understand that I will lose access to my funds if I lose my password",
@@ -1395,7 +1395,7 @@
       "coming_soon": "Coming soon"
     },
     "unavailable": "The gateway service for this asset is currently down, please try again later",
-    "unavailable_bridge": "The brdige service for this asset is currently down, please try again later",
+    "unavailable_bridge": "The bridge service for this asset is currently down, please try again later",
     "unavailable_OPEN": "The OpenLedger Gateway is down or not responding",
     "unavailable_RUDEX": "The RuDEX Gateway is down or not responding",
     "unavailable_TRADE": "The Blocktrades Bridge is down or not responding"

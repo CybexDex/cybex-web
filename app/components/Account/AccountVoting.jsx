@@ -26,14 +26,12 @@ class AccountVoting extends React.Component {
     static propTypes = {
         initialBudget: ChainTypes.ChainObject.isRequired,
         globalObject: ChainTypes.ChainObject.isRequired,
-        dynamicGlobal: ChainTypes.ChainObject.isRequired,
         proxy: ChainTypes.ChainAccount.isRequired
     };
 
     static defaultProps = {
         initialBudget: SettingsStore.getState().viewSettings.get("lastBudgetObject", "2.13.1"),
-        globalObject: "2.0.0",
-        dynamicGlobal: "2.1.0"
+        globalObject: "2.0.0"
     };
 
     constructor(props) {
@@ -352,24 +350,29 @@ class AccountVoting extends React.Component {
         budgetObject = ChainStore.getObject(lastBudgetObject ? lastBudgetObject : "2.13.1");
         if (budgetObject) {
             let timestamp = budgetObject.get("time");
+            if (!/Z$/.test(timestamp)) {
+                timestamp += "Z";
+            }
             let now = new Date();
 
             let idIndex = parseInt(budgetObject.get("id").split(".")[2], 10);
-            let currentID = idIndex + Math.floor((now - new Date(timestamp + "+00:00").getTime()) / 1000 / 60 / 60) - 1;
+            let currentID = idIndex + Math.floor((now - new Date(timestamp).getTime()) / 1000 / 60 / 60) - 1;
             let newID = "2.13." + Math.max(idIndex, currentID);
 
             ChainStore.getObject(newID);
 
             this.setState({lastBudgetObject: newID});
         } else {
-            if (lastBudgetObject !== "2.13.1") {
-                let newBudgetObjectId = parseInt(lastBudgetObject.split(".")[2], 10) - 1;
+            const newBudgetObjectId = parseInt(lastBudgetObject.split(".")[2], 10) - 1;
+            if (typeof newBudgetObjectId === "number" && newBudgetObjectId > 1) {
+
+                const lastId = Math.max(1, newBudgetObjectId - 1);
                 this.setState({
-                    lastBudgetObject: "2.13." + (newBudgetObjectId - 1)
+                    lastBudgetObject: "2.13." + lastId
                 });
 
                 SettingsActions.changeViewSetting.defer({
-                    lastBudgetObject: "2.13." + (newBudgetObjectId - 1)
+                    lastBudgetObject: "2.13." + lastId
                 });
             }
         }
