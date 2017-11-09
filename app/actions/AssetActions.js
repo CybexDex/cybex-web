@@ -100,7 +100,6 @@ class AssetActions {
                 "market_fee_percent": createObject.market_fee_percent * 100 || 0,
                 "max_market_fee": max_market_fee,
                 "issuer_permissions": permissions,
-                // "vesting": 22,
                 "flags": flags,
                 "core_exchange_rate": {
                     "base": {

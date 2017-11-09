@@ -207,7 +207,7 @@ class AccountAssetCreate extends React.Component {
         let description = JSON.stringify(update.description);
         let filteredUpdate = {...update};
         if (!isVestingAsset) {
-            delete filteredUpdate[isVestingAsset];
+            delete filteredUpdate.vesting_period;
         }
 
         console.debug("Creating: ", update);
