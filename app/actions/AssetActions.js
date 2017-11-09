@@ -79,7 +79,7 @@ class AssetActions {
         var extension = null;
         if (createObject.vesting_period) {
             let cybex_ext = {
-                "vesting_period": createObject.vesting_period
+                "vesting_period": createObject.vesting_period * 3600 * 24
             };
             extension = [
                 [1, cybex_ext]
