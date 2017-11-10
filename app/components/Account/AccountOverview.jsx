@@ -67,34 +67,34 @@ const sortFunctions = {
     }
 };
 
-class PortfolioSelectors extends React.Component {
-    componentWillMount() {
-        console.debug("Did Mount");
-        let { hiddenBalances, showHidden, toggleHiddenAssets } = this.props;
-        ContextMenuActions.addMenu(HeadContextMenuId,
-            <div className="hide-selector">
-                <div className={cnames("inline-block", { inactive: showHidden && hiddenBalances.length })} onClick={showHidden ? toggleHiddenAssets : () => { }}>
-                    <Translate content="account.hide_hidden" />
-                </div>
-                {hiddenBalances.length ? <div className={cnames("inline-block", { inactive: !showHidden })} onClick={!showHidden ? toggleHiddenAssets : () => { }}>
-                    <Translate content="account.show_hidden" />
-                </div> : null}
-            </div>
-        );
-    }
+// class PortfolioSelectors extends React.Component {
+//     componentWillMount() {
+//         console.debug("Did Mount");
+//         let { hiddenBalances, showHidden, toggleHiddenAssets } = this.props;
+//         ContextMenuActions.addMenu(HeadContextMenuId,
+//             <div className="hide-selector">
+//                 <div className={cnames("inline-block", { inactive: showHidden && hiddenBalances.length })} onClick={showHidden ? toggleHiddenAssets : () => { }}>
+//                     <Translate content="account.hide_hidden" />
+//                 </div>
+//                 {hiddenBalances.length ? <div className={cnames("inline-block", { inactive: !showHidden })} onClick={!showHidden ? toggleHiddenAssets : () => { }}>
+//                     <Translate content="account.show_hidden" />
+//                 </div> : null}
+//             </div>
+//         );
+//     }
 
-    componentWillUnmount() {
-        console.debug("Will Unmount");
-        ContextMenuActions.detachMenu(HeadContextMenuId);
-    }
+//     componentWillUnmount() {
+//         console.debug("Will Unmount");
+//         ContextMenuActions.detachMenu(HeadContextMenuId);
+//     }
 
-    render() {
-        
-        return (
-            <div></div>
-        );
-    }
-}
+//     render() {
+
+//         return (
+//             <div></div>
+//         );
+//     }
+// }
 
 class AccountOverview extends React.Component {
 
@@ -588,15 +588,30 @@ class AccountOverview extends React.Component {
             <div className="app-tables with-shadow" ref="appTables">
                 <div className="content-block small-12">
                     <div className="generic-bordered-box">
-                        <Tabs defaultActiveTab={1}
-                            segmented={false} setting="overviewTab" className="overview-tabs" tabsClass="account-overview no-padding bordered-header content-block" onChangeTab={this.adjustHeightOnChangeTab.bind(this)}>
+                        <Tabs
+                            defaultActiveTab={1}
+                            segmented={false}
+                            setting="overviewTab"
+                            className="overview-tabs"
+                            contentClass="no-padding"
+                            tabsClass="account-overview no-padding bordered-header content-block"
+                            onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
+                        >
 
                             {/* <Tab disabled className="total-value" title={<span>{counterpart.translate("account.eq_value")}&nbsp;<AssetName name={preferredUnit} noTip /></span>} subText={totalValue}>
 
                             </Tab> */}
 
                             <Tab title="account.portfolio" subText={portFolioValue}>
-                                {/* <PortfolioSelectors {...{ hiddenBalances, showHidden, toggleHiddenAssets: this._toggleHiddenAssets.bind(this) }} /> */}
+                                {/* <PortfolioSelectors {...{ hiddenBalances, showHidden, toggleHiddenAssets: this._toggleHiddenAssets.bind(this) }} />*/}
+                                <div className="hide-selector">
+                                    <div className={cnames("hide-selector-item", { inactive: showHidden && hiddenBalances.length })} onClick={showHidden ? this._toggleHiddenAssets.bind(this) : () => { }}>
+                                        <Translate content="account.hide_hidden" />
+                                    </div>
+                                    {hiddenBalances.length ? <div className={cnames("hide-selector-item", { inactive: !showHidden })} onClick={!showHidden ? this._toggleHiddenAssets.bind(this) : () => { }}>
+                                        <Translate content="account.show_hidden" />
+                                    </div> : null}
+                                </div>
                                 <table className="table dashboard-table">
                                     <thead>
                                         <tr>

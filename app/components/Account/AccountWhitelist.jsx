@@ -173,9 +173,11 @@ class AccountWhitelist extends React.Component {
             <div className="grid-content">
                 <div className="generic-bordered-box">
                     <Tabs
-                        tabsClass="bordered-header no-padding"
                         setting="whitelistTab"
                         contentClass="grid-content shrink small-vertical medium-horizontal no-padding"
+                        segmented={false} 
+                        className="overview-tabs with-shadow" style={{ "width": "100%" }}
+                        tabsClass="account-overview no-padding bordered-header content-block"
                     >
                         <Tab title="account.whitelist.title">
                             <div style={{paddingBottom: "1rem"}} className="small-12">

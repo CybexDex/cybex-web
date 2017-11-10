@@ -5,11 +5,11 @@ import counterpart from "counterpart";
 import utils from "common/utils";
 import accountUtils from "common/account_utils";
 import ApplicationApi from "api/ApplicationApi";
-import {PublicKey} from "bitsharesjs/es";
+import { PublicKey } from "bitsharesjs/es";
 import AccountPermissionsList from "./AccountPermissionsList";
 import AccountPermissionsMigrate from "./AccountPermissionsMigrate";
 import PubKeyInput from "../Forms/PubKeyInput";
-import {Tabs, Tab} from "../Utility/Tabs";
+import { Tabs, Tab } from "../Utility/Tabs";
 import HelpContent from "../Utility/HelpContent";
 import { RecentTransactions } from "./RecentTransactions";
 
@@ -17,7 +17,7 @@ class AccountPermissions extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isOwner: false};
+        this.state = { isOwner: false };
         this.onPublish = this.onPublish.bind(this);
         this.onReset = this.onReset.bind(this);
     }
@@ -41,15 +41,15 @@ class AccountPermissions extends React.Component {
         let keys = key_auths.map(a => a.get(0));
         let addresses = address_auths.map(a => a.get(0));
 
-        let weights = account_auths.reduce( (res, a) => { res[a.get(0)] = a.get(1); return res;}, {});
-        weights = key_auths.reduce( (res, a) => { res[a.get(0)] = a.get(1); return res;}, weights);
-        weights = address_auths.reduce( (res, a) => { res[a.get(0)] = a.get(1); return res;}, weights);
+        let weights = account_auths.reduce((res, a) => { res[a.get(0)] = a.get(1); return res; }, {});
+        weights = key_auths.reduce((res, a) => { res[a.get(0)] = a.get(1); return res; }, weights);
+        weights = address_auths.reduce((res, a) => { res[a.get(0)] = a.get(1); return res; }, weights);
 
-        return {threshold, accounts, keys, addresses, weights};
+        return { threshold, accounts, keys, addresses, weights };
     }
 
     permissionsToJson(threshold, accounts, keys, addresses, weights) {
-        let res = {weight_threshold: threshold};
+        let res = { weight_threshold: threshold };
         res["account_auths"] = accounts.sort(utils.sortID).map(a => [a, weights[a]]).toJS();
         res["key_auths"] = keys.sort(utils.sortID).map(a => [a, weights[a]]).toJS();
         res["address_auths"] = addresses.sort(utils.sortID).map(a => [a, weights[a]]).toJS();
@@ -165,7 +165,7 @@ class AccountPermissions extends React.Component {
         });
     }
 
-    onAddItem(collection, item_value, weight){
+    onAddItem(collection, item_value, weight) {
         let state = {};
         let list = collection + (utils.is_object_id(item_value) ? "_accounts" : "_keys");
         state[list] = this.state[list].push(item_value);
@@ -194,13 +194,13 @@ class AccountPermissions extends React.Component {
     }
 
     sumUpWeights(accounts, keys, addresses, weights) {
-        let sum = accounts.reduce( (sum, a) => sum + weights[a], 0);
-        sum = keys.reduce( (sum, a) => sum + weights[a], sum);
-        return addresses.reduce( (sum, a) => sum + weights[a], sum);
+        let sum = accounts.reduce((sum, a) => sum + weights[a], 0);
+        sum = keys.reduce((sum, a) => sum + weights[a], sum);
+        return addresses.reduce((sum, a) => sum + weights[a], sum);
     }
 
     onMemoKeyChanged(memo_key) {
-        this.setState({memo_key});
+        this.setState({ memo_key });
     }
 
     onSetPasswordKeys(keys, roles = ["active", "owner", "memo"]) {
@@ -216,18 +216,18 @@ class AccountPermissions extends React.Component {
     render() {
         let error1, error2;
 
-        let {active_accounts, active_keys, active_addresses, active_weights} = this.state;
-        let {owner_accounts, owner_keys, owner_addresses, owner_weights} = this.state;
+        let { active_accounts, active_keys, active_addresses, active_weights } = this.state;
+        let { owner_accounts, owner_keys, owner_addresses, owner_weights } = this.state;
 
         let threshold = this.state.active_threshold > 0 ? this.state.active_threshold : 0;
         let weights_total = this.sumUpWeights(active_accounts, active_keys, active_addresses, active_weights);
         if (this.didChange("active") && weights_total < threshold)
-            error1 = counterpart.translate("account.perm.warning1", {weights_total, threshold});
+            error1 = counterpart.translate("account.perm.warning1", { weights_total, threshold });
 
         threshold = this.state.owner_threshold > 0 ? this.state.owner_threshold : 0;
         weights_total = this.sumUpWeights(owner_accounts, owner_keys, owner_addresses, owner_weights);
         if (this.didChange("owner") && weights_total < threshold)
-            error2 = counterpart.translate("account.perm.warning2", {weights_total, threshold});
+            error2 = counterpart.translate("account.perm.warning2", { weights_total, threshold });
 
         let publish_buttons_class = "button" + (!(error1 || error2) && this.isChanged() && this.isValidPubKey(this.state.memo_key) ? "" : " disabled");
         let reset_buttons_class = "button outline" + (this.isChanged() ? "" : " disabled");
@@ -237,17 +237,23 @@ class AccountPermissions extends React.Component {
         return (
             <div className="grid-content">
                 <div className="generic-bordered-box">
-                    <Tabs setting="permissionsTabs" tabsClass="no-padding bordered-header" contentClass="grid-content no-overflow no-padding">
+                    <Tabs
+                        setting="permissionsTabs"
+                        segmented={false} 
+                        className="overview-tabs with-shadow" style={{ "width": "100%" }}
+                        contentClass="grid-content no-overflow"
+                        tabsClass="account-overview no-padding bordered-header content-block"
+                    >
 
-                    <Tab title="account.perm.active">
-                            <HelpContent style={{maxWidth: "800px"}} path="components/AccountPermActive" />
+                        <Tab title="account.perm.active">
+                            <HelpContent style={{ maxWidth: "800px" }} path="components/AccountPermActive" />
                             <form className="threshold">
-                                <label className="horizontal"><Translate content="account.perm.threshold"/> &nbsp; &nbsp;
+                                <label className="horizontal"><Translate content="account.perm.threshold" /> &nbsp; &nbsp;
                                     <input type="number" placeholder="0" size="5"
                                         value={this.state.active_threshold}
                                         onChange={this.onThresholdChanged.bind(this, "active_threshold")}
                                         autoComplete="off"
-                                        tabIndex={1}/>
+                                        tabIndex={1} />
                                 </label>
                             </form>
                             <AccountPermissionsList
@@ -262,7 +268,7 @@ class AccountPermissions extends React.Component {
                                 placeholder={counterpart.translate("account.perm.account_name_or_key")}
                                 tabIndex={2}
                             />
-                            <br/>
+                            <br />
                             {error1 ? <div className="content-block has-error">{error1}</div> : null}
 
                             <div>
@@ -277,23 +283,23 @@ class AccountPermissions extends React.Component {
                                     data-tip={counterpart.translate("tooltip.sign_owner")}
                                 ><span ><Translate content="account.perm.sign_owner" />:&nbsp;&nbsp;</span>
                                 </label>
-                                <div className="switch" onClick={() => {this.setState({isOwner: !this.state.isOwner});}}>
+                                <div className="switch" onClick={() => { this.setState({ isOwner: !this.state.isOwner }); }}>
                                     <input type="checkbox" checked={this.state.isOwner} />
                                     <label />
                                 </div>
                             </div>
 
-                    </Tab>
+                        </Tab>
 
-                    <Tab title="account.perm.owner">
-                            <HelpContent style={{maxWidth: "800px"}} path="components/AccountPermOwner" />
+                        <Tab title="account.perm.owner">
+                            <HelpContent style={{ maxWidth: "800px" }} path="components/AccountPermOwner" />
                             <form className="threshold">
-                                <label className="horizontal"><Translate content="account.perm.threshold"/> &nbsp; &nbsp;
+                                <label className="horizontal"><Translate content="account.perm.threshold" /> &nbsp; &nbsp;
                                     <input type="number" placeholder="0" size="5"
-                                           value={this.state.owner_threshold}
-                                           onChange={this.onThresholdChanged.bind(this, "owner_threshold")}
-                                           autoComplete="off"
-                                           tabIndex={4}/>
+                                        value={this.state.owner_threshold}
+                                        onChange={this.onThresholdChanged.bind(this, "owner_threshold")}
+                                        autoComplete="off"
+                                        tabIndex={4} />
                                 </label>
                             </form>
                             <AccountPermissionsList
@@ -308,53 +314,53 @@ class AccountPermissions extends React.Component {
                                 placeholder={counterpart.translate("account.perm.account_name_or_key")}
                                 tabIndex={5}
                             />
-                            <br/>
+                            <br />
                             {error2 ? <div className="content-block has-error">{error2}</div> : null}
 
-                    </Tab>
+                        </Tab>
 
-                    <Tab title="account.perm.memo_key">
-                        <HelpContent style={{maxWidth: "800px"}} path="components/AccountPermMemo" />
-                        <PubKeyInput
-                            ref="memo_key"
-                            value={this.state.memo_key}
-                            label="account.perm.memo_public_key"
-                            placeholder="Public Key"
-                            onChange={this.onMemoKeyChanged.bind(this)}
-                            tabIndex={7}
-                        />
+                        <Tab title="account.perm.memo_key">
+                            <HelpContent style={{ maxWidth: "800px" }} path="components/AccountPermMemo" />
+                            <PubKeyInput
+                                ref="memo_key"
+                                value={this.state.memo_key}
+                                label="account.perm.memo_public_key"
+                                placeholder="Public Key"
+                                onChange={this.onMemoKeyChanged.bind(this)}
+                                tabIndex={7}
+                            />
 
 
 
-                    </Tab>
+                        </Tab>
 
-                    <Tab title="account.perm.password_model">
-                        <AccountPermissionsMigrate
-                            active={this.state.password_active}
-                            owner={this.state.password_owner}
-                            memo={this.state.password_memo}
-                            onSetPasswordKeys={this.onSetPasswordKeys.bind(this)}
-                            account={this.props.account}
-                            activeKeys={this.state.active_keys}
-                            ownerKeys={this.state.owner_keys}
-                            memoKey={this.state.memo_key}
-                            onAddActive={this.onAddItem.bind(this, "active")}
-                            onRemoveActive={this.onRemoveItem.bind(this, "active")}
-                            onAddOwner={this.onAddItem.bind(this, "owner")}
-                            onRemoveOwner={this.onRemoveItem.bind(this, "owner")}
-                            onSetMemo={this.onMemoKeyChanged.bind(this)}
-                        />
+                        <Tab title="account.perm.password_model">
+                            <AccountPermissionsMigrate
+                                active={this.state.password_active}
+                                owner={this.state.password_owner}
+                                memo={this.state.password_memo}
+                                onSetPasswordKeys={this.onSetPasswordKeys.bind(this)}
+                                account={this.props.account}
+                                activeKeys={this.state.active_keys}
+                                ownerKeys={this.state.owner_keys}
+                                memoKey={this.state.memo_key}
+                                onAddActive={this.onAddItem.bind(this, "active")}
+                                onRemoveActive={this.onRemoveItem.bind(this, "active")}
+                                onAddOwner={this.onAddItem.bind(this, "owner")}
+                                onRemoveOwner={this.onRemoveItem.bind(this, "owner")}
+                                onSetMemo={this.onMemoKeyChanged.bind(this)}
+                            />
 
-                    </Tab>
-                </Tabs>
+                        </Tab>
+                    </Tabs>
 
-                <div className="divider" />
-                    <div style={{paddingTop: 20}}>
-                        <button style={{fontSize: "1.2rem"}} className={publish_buttons_class} onClick={this.onPublish} tabIndex={8}>
-                            <Translate content="account.perm.publish"/>
+                    <div className="divider" />
+                    <div style={{ paddingTop: 20 }}>
+                        <button style={{ fontSize: "1.2rem" }} className={publish_buttons_class} onClick={this.onPublish} tabIndex={8}>
+                            <Translate content="account.perm.publish" />
                         </button>
                         <button className={reset_buttons_class} onClick={this.onReset} tabIndex={9}>
-                            <Translate content="account.perm.reset"/>
+                            <Translate content="account.perm.reset" />
                         </button>
                     </div>
                 </div>
@@ -364,7 +370,7 @@ class AccountPermissions extends React.Component {
                     limit={25}
                     compactView={false}
                     filter="account_update"
-                    style={{paddingTop: "2rem", paddingBottom: "2rem"}}
+                    style={{ paddingTop: "2rem", paddingBottom: "2rem" }}
                 />
 
             </div>

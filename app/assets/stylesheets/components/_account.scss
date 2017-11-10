@@ -134,7 +134,17 @@ a.action-button>span {
 }
 
 div.hide-selector {
-    padding-bottom: 10px;
+    // padding-bottom: 10px;
+    $height-of-selector: 36px;
+    &::after, &::before {
+        display: block;
+        content: "";
+        clear: both;
+    }
+    .hide-selector-item {
+        line-height: $height-of-selector;
+        float: left;
+    }
     >div {
         font-size: 1.15rem;
         cursor: pointer;
@@ -264,9 +274,9 @@ div.hide-selector>div.new-worker-button {
     padding-top: 10px;
     @include breakpoint(medium) {
         padding-top: 0;
-        position: relative;
-        top: -10px;
+        // position: relative;
+        // top: -10px;
         float: right;
-        clear: both;
+        // clear: both;
     }
 }

@@ -598,7 +598,8 @@ class AccountAssetCreate extends React.Component {
                     <Translate component="h3" content="header.create_asset" />
                     <Tabs
                         setting="overviewTab"
-                        segmented={false} className="overview-tabs with-shadow" style={{ "width": "100%" }}
+                        segmented={false} 
+                        className="overview-tabs with-shadow" style={{ "width": "100%" }}
                         contentClass="grid-block shrink small-vertical medium-horizontal full-container"
                         tabsClass="account-overview no-padding bordered-header content-block"
                     >

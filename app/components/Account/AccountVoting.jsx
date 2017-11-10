@@ -2,21 +2,21 @@ import React from "react";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import accountUtils from "common/account_utils";
-import {ChainStore, FetchChainObjects} from "bitsharesjs/es";
+import { ChainStore, FetchChainObjects } from "bitsharesjs/es";
 import WorkerApproval from "./WorkerApproval";
 import VotingAccountsList from "./VotingAccountsList";
 import cnames from "classnames";
-import {Tabs, Tab} from "../Utility/Tabs";
+import { Tabs, Tab } from "../Utility/Tabs";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
-import {Link} from "react-router/es";
+import { Link } from "react-router/es";
 import ApplicationApi from "api/ApplicationApi";
 import tableHeightHelper from "lib/common/tableHeightHelper";
 import AccountSelector from "./AccountSelector";
 import Icon from "../Icon/Icon";
 import AssetName from "../Utility/AssetName";
 import counterpart from "counterpart";
-import {EquivalentValueComponent} from "../Utility/EquivalentValueComponent";
+import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";
 import FormattedAsset from "../Utility/FormattedAsset";
 import SettingsActions from "actions/SettingsActions";
 import SettingsStore from "stores/SettingsStore";
@@ -39,8 +39,8 @@ class AccountVoting extends React.Component {
         const proxyId = props.proxy.get("id");
         const proxyName = props.proxy.get("name");
         this.state = {
-            proxy_account_id: proxyId === "1.2.5" ? "": proxyId,//"1.2.16",
-            prev_proxy_account_id: proxyId === "1.2.5" ? "": proxyId,
+            proxy_account_id: proxyId === "1.2.5" ? "" : proxyId,//"1.2.16",
+            prev_proxy_account_id: proxyId === "1.2.5" ? "" : proxyId,
             current_proxy_input: proxyId === "1.2.5" ? "" : proxyName,
             witnesses: null,
             committee: null,
@@ -76,29 +76,29 @@ class AccountVoting extends React.Component {
         if (np.account !== this.props.account) {
             const proxyId = np.proxy.get("id");
             let newState = {
-                proxy_account_id: proxyId === "1.2.5" ? "": proxyId
+                proxy_account_id: proxyId === "1.2.5" ? "" : proxyId
             };
-            this.setState({prev_proxy_account_id: newState.proxy_account_id});
+            this.setState({ prev_proxy_account_id: newState.proxy_account_id });
             this.updateAccountData(np, newState);
         }
         this.getBudgetObject();
     }
 
-    updateAccountData({account}, state = this.state) {
-        let {proxy_account_id} = state;
+    updateAccountData({ account }, state = this.state) {
+        let { proxy_account_id } = state;
         const proxy = ChainStore.getAccount(proxy_account_id);
         let options = account.get("options");
         let proxyOptions = proxy ? proxy.get("options") : null;
         // let proxy_account_id = proxy ? proxy.get("id") : "1.2.5";
         let current_proxy_input = proxy ? proxy.get("name") : "";
-        if (proxy_account_id === "1.2.5" ) {
+        if (proxy_account_id === "1.2.5") {
             proxy_account_id = "";
             current_proxy_input = "";
         }
 
         let votes = options.get("votes");
         let vote_ids = votes.toArray();
-        let vids = Immutable.Set( vote_ids );
+        let vids = Immutable.Set(vote_ids);
         // ChainStore.getObjectsByVoteIds(vote_ids);
 
         let proxyPromise = null, proxy_vids = Immutable.Set([]);
@@ -106,7 +106,7 @@ class AccountVoting extends React.Component {
         if (hasProxy && proxyOptions) {
             let proxy_votes = proxyOptions.get("votes");
             let proxy_vote_ids = proxy_votes.toArray();
-            proxy_vids = Immutable.Set( proxy_vote_ids );
+            proxy_vids = Immutable.Set(proxy_vote_ids);
             proxyPromise = FetchChainObjects(ChainStore.getObjectByVoteID, proxy_vote_ids, 5000);
         }
 
@@ -119,23 +119,23 @@ class AccountVoting extends React.Component {
                 let witnesses = new Immutable.List();
                 let committee = new Immutable.List();
                 let workers = new Immutable.Set();
-                objects.forEach( obj => {
+                objects.forEach(obj => {
                     let account_id = obj.get("committee_member_account");
                     if (account_id) {
                         committee = committee.push(account_id);
-                    } else if( account_id = obj.get( "worker_account" ) ) {
-                       // console.log( "worker: ", obj );
-                   //     workers = workers.add(obj.get("id"));
-                    } else if( account_id = obj.get("witness_account") ) {
+                    } else if (account_id = obj.get("worker_account")) {
+                        // console.log( "worker: ", obj );
+                        //     workers = workers.add(obj.get("id"));
+                    } else if (account_id = obj.get("witness_account")) {
                         witnesses = witnesses.push(account_id);
                     }
                 });
 
-                return {witnesses, committee, workers};
+                return { witnesses, committee, workers };
             }
 
-            let {witnesses, committee, workers} = sortVoteObjects(vote_objs);
-            let {witnesses: proxy_witnesses, committee: proxy_committee, workers: proxy_workers} = sortVoteObjects(proxy_vote_objs || []);
+            let { witnesses, committee, workers } = sortVoteObjects(vote_objs);
+            let { witnesses: proxy_witnesses, committee: proxy_committee, workers: proxy_workers } = sortVoteObjects(proxy_vote_objs || []);
             let state = {
                 proxy_account_id,
                 current_proxy_input,
@@ -150,7 +150,7 @@ class AccountVoting extends React.Component {
                 prev_witnesses: witnesses,
                 prev_committee: committee,
                 prev_workers: workers,
-                prev_vote_ids : vids
+                prev_vote_ids: vids
             };
             this.setState(state);
         });
@@ -158,9 +158,9 @@ class AccountVoting extends React.Component {
 
     isChanged(s = this.state) {
         return s.proxy_account_id !== s.prev_proxy_account_id ||
-               s.witnesses !== s.prev_witnesses ||
-               s.committee !== s.prev_committee ||
-               !Immutable.is(s.vote_ids, s.prev_vote_ids);
+            s.witnesses !== s.prev_witnesses ||
+            s.committee !== s.prev_committee ||
+            !Immutable.is(s.vote_ids, s.prev_vote_ids);
     }
 
     _getVoteObjects(type = "witnesses", vote_ids) {
@@ -193,8 +193,8 @@ class AccountVoting extends React.Component {
 
     onPublish() {
         let updated_account = this.props.account.toJS();
-        let updateObject = {account: updated_account.id};
-        let new_options = {memo_key: updated_account.options.memo_key};
+        let updateObject = { account: updated_account.id };
+        let new_options = { memo_key: updated_account.options.memo_key };
         // updated_account.new_options = updated_account.options;
         let new_proxy_id = this.state.proxy_account_id;
         new_options.voting_account = new_proxy_id ? new_proxy_id : "1.2.5";
@@ -209,7 +209,7 @@ class AccountVoting extends React.Component {
         };
 
         // Remove votes for expired workers
-        let {vote_ids} = this.state;
+        let { vote_ids } = this.state;
         let workers = this._getWorkerArray();
         let now = new Date();
 
@@ -233,13 +233,13 @@ class AccountVoting extends React.Component {
 
 
         // Submit votes
-        FetchChainObjects(ChainStore.getWitnessById, this.state.witnesses.toArray(), 4000).then( res => {
+        FetchChainObjects(ChainStore.getWitnessById, this.state.witnesses.toArray(), 4000).then(res => {
             let witnesses_vote_ids = res.map(o => o.get("vote_id"));
             return Promise.all([Promise.resolve(witnesses_vote_ids), FetchChainObjects(ChainStore.getCommitteeMemberById, this.state.committee.toArray(), 4000)]);
-        }).then( res => {
+        }).then(res => {
             updateObject.new_options.votes = res[0]
                 .concat(res[1].map(o => o.get("vote_id")))
-                .concat(vote_ids.filter( id => {
+                .concat(vote_ids.filter(id => {
                     return id.split(":")[0] === "2";
                 }).toArray())
                 .sort((a, b) => {
@@ -267,19 +267,19 @@ class AccountVoting extends React.Component {
         });
     }
 
-    onAddItem(collection, item_id){
+    onAddItem(collection, item_id) {
         let state = {};
         state[collection] = this.state[collection].push(item_id);
         this.setState(state);
     }
 
-    onRemoveItem(collection, item_id){
+    onRemoveItem(collection, item_id) {
         let state = {};
         state[collection] = this.state[collection].filter(i => i !== item_id);
         this.setState(state);
     }
 
-    onChangeVotes( addVotes, removeVotes) {
+    onChangeVotes(addVotes, removeVotes) {
         let state = {};
         state.vote_ids = this.state.vote_ids;
         if (addVotes.length) {
@@ -298,13 +298,13 @@ class AccountVoting extends React.Component {
     }
 
     validateAccount(collection, account) {
-        if(!account) return null;
-        if(collection === "witnesses") {
+        if (!account) return null;
+        if (collection === "witnesses") {
             return FetchChainObjects(ChainStore.getWitnessById, [account.get("id")], 3000).then(res => {
                 return res[0] ? null : "Not a witness";
             });
         }
-        if(collection === "committee") {
+        if (collection === "committee") {
             return FetchChainObjects(ChainStore.getCommitteeMemberById, [account.get("id")], 3000).then(res => {
                 return res[0] ? null : "Not a committee member";
             });
@@ -322,7 +322,7 @@ class AccountVoting extends React.Component {
                 proxy_workers: Immutable.Set()
             });
         }
-        this.setState({current_proxy_input});
+        this.setState({ current_proxy_input });
     }
 
     onProxyAccountFound(proxy_account) {
@@ -344,7 +344,7 @@ class AccountVoting extends React.Component {
     }
 
     getBudgetObject() {
-        let {lastBudgetObject} = this.state;
+        let { lastBudgetObject } = this.state;
         let budgetObject;
 
         budgetObject = ChainStore.getObject(lastBudgetObject ? lastBudgetObject : "2.13.1");
@@ -361,7 +361,7 @@ class AccountVoting extends React.Component {
 
             ChainStore.getObject(newID);
 
-            this.setState({lastBudgetObject: newID});
+            this.setState({ lastBudgetObject: newID });
         } else {
             const newBudgetObjectId = parseInt(lastBudgetObject.split(".")[2], 10) - 1;
             if (typeof newBudgetObjectId === "number" && newBudgetObjectId > 1) {
@@ -400,11 +400,11 @@ class AccountVoting extends React.Component {
     }
 
     render() {
-        let {workerTableIndex} = this.state;
+        let { workerTableIndex } = this.state;
         let preferredUnit = this.props.settings.get("unit") || "1.3.0";
         let hasProxy = !!this.state.proxy_account_id; // this.props.account.getIn(["options", "voting_account"]) !== "1.2.5";
-        let publish_buttons_class = cnames("button", {disabled : !this.isChanged()});
-        let {globalObject} = this.props;
+        let publish_buttons_class = cnames("button", { disabled: !this.isChanged() });
+        let { globalObject } = this.props;
         let budgetObject;
         if (this.state.lastBudgetObject) {
             budgetObject = ChainStore.getObject(this.state.lastBudgetObject);
@@ -424,123 +424,123 @@ class AccountVoting extends React.Component {
 
         let voteThreshold = 0;
         let workers = workerArray
-        .filter(a => {
-            if (!a) {
-                return false;
-            }
+            .filter(a => {
+                if (!a) {
+                    return false;
+                }
 
-            return (
-                new Date(a.get("work_end_date") + "Z") > now &&
-                new Date(a.get("work_begin_date") + "Z") <= now
-            );
+                return (
+                    new Date(a.get("work_end_date") + "Z") > now &&
+                    new Date(a.get("work_begin_date") + "Z") <= now
+                );
 
-        })
-        .sort((a, b) => {
-            return this._getTotalVotes(b) - this._getTotalVotes(a);
-        })
-        .map((worker, index) => {
-            let dailyPay = parseInt(worker.get("daily_pay"), 10);
-            workerBudget = workerBudget - dailyPay;
-            let votes = worker.get("total_votes_for") - worker.get("total_votes_against");
-            if (workerBudget <= 0 && !voteThreshold) {
-                voteThreshold = votes;
-            }
+            })
+            .sort((a, b) => {
+                return this._getTotalVotes(b) - this._getTotalVotes(a);
+            })
+            .map((worker, index) => {
+                let dailyPay = parseInt(worker.get("daily_pay"), 10);
+                workerBudget = workerBudget - dailyPay;
+                let votes = worker.get("total_votes_for") - worker.get("total_votes_against");
+                if (workerBudget <= 0 && !voteThreshold) {
+                    voteThreshold = votes;
+                }
 
-            if (voteThreshold && votes < voteThreshold) return null;
+                if (voteThreshold && votes < voteThreshold) return null;
 
-            return (
-                <WorkerApproval
-                    preferredUnit={preferredUnit}
-                    rest={workerBudget + dailyPay}
-                    rank={index + 1}
-                    key={worker.get("id")}
-                    worker={worker.get("id")}
-                    vote_ids={this.state[hasProxy ? "proxy_vote_ids" : "vote_ids"]}
-                    onChangeVotes={this.onChangeVotes.bind(this)}
-                    proxy={hasProxy}
-                    voteThreshold={voteThreshold}
-                />
-            );
-        }).filter(a => !!a);
+                return (
+                    <WorkerApproval
+                        preferredUnit={preferredUnit}
+                        rest={workerBudget + dailyPay}
+                        rank={index + 1}
+                        key={worker.get("id")}
+                        worker={worker.get("id")}
+                        vote_ids={this.state[hasProxy ? "proxy_vote_ids" : "vote_ids"]}
+                        onChangeVotes={this.onChangeVotes.bind(this)}
+                        proxy={hasProxy}
+                        voteThreshold={voteThreshold}
+                    />
+                );
+            }).filter(a => !!a);
 
         // unusedBudget = Math.max(0, workerBudget);
 
         let newWorkers = workerArray
-        .filter(a => {
-            if (!a) {
-                return false;
-            }
+            .filter(a => {
+                if (!a) {
+                    return false;
+                }
 
-            let votes = a.get("total_votes_for") - a.get("total_votes_against");
-            return (
-                (new Date(a.get("work_end_date")+ "Z") > now &&
-                votes < voteThreshold) ||
-                new Date(a.get("work_begin_date")+ "Z") > now
-            );
+                let votes = a.get("total_votes_for") - a.get("total_votes_against");
+                return (
+                    (new Date(a.get("work_end_date") + "Z") > now &&
+                        votes < voteThreshold) ||
+                    new Date(a.get("work_begin_date") + "Z") > now
+                );
 
-        })
-        .sort((a, b) => {
-            return this._getTotalVotes(b) - this._getTotalVotes(a);
-        })
-        .map((worker, index) => {
-            // let dailyPay = parseInt(worker.get("daily_pay"), 10);
-            // workerBudget = workerBudget - dailyPay;
+            })
+            .sort((a, b) => {
+                return this._getTotalVotes(b) - this._getTotalVotes(a);
+            })
+            .map((worker, index) => {
+                // let dailyPay = parseInt(worker.get("daily_pay"), 10);
+                // workerBudget = workerBudget - dailyPay;
 
-            return (
-                <WorkerApproval
-                    preferredUnit={preferredUnit}
-                    rest={0}
-                    rank={index + 1}
-                    key={worker.get("id")}
-                    worker={worker.get("id")}
-                    vote_ids={this.state[hasProxy ? "proxy_vote_ids" : "vote_ids"]}
-                    onChangeVotes={this.onChangeVotes.bind(this)}
-                    proxy={hasProxy}
-                    voteThreshold={voteThreshold}
-                />
-            );
-        });
+                return (
+                    <WorkerApproval
+                        preferredUnit={preferredUnit}
+                        rest={0}
+                        rank={index + 1}
+                        key={worker.get("id")}
+                        worker={worker.get("id")}
+                        vote_ids={this.state[hasProxy ? "proxy_vote_ids" : "vote_ids"]}
+                        onChangeVotes={this.onChangeVotes.bind(this)}
+                        proxy={hasProxy}
+                        voteThreshold={voteThreshold}
+                    />
+                );
+            });
 
         let expiredWorkers = workerArray
-        .filter(a => {
-            if (!a) {
-                return false;
-            }
+            .filter(a => {
+                if (!a) {
+                    return false;
+                }
 
-            return (
-                new Date(a.get("work_end_date")) <= now
-            );
+                return (
+                    new Date(a.get("work_end_date")) <= now
+                );
 
-        })
-        .sort((a, b) => {
-            return this._getTotalVotes(b) - this._getTotalVotes(a);
-        })
-        .map((worker, index) => {
-            // let dailyPay = parseInt(worker.get("daily_pay"), 10);
-            // workerBudget = workerBudget - dailyPay;
+            })
+            .sort((a, b) => {
+                return this._getTotalVotes(b) - this._getTotalVotes(a);
+            })
+            .map((worker, index) => {
+                // let dailyPay = parseInt(worker.get("daily_pay"), 10);
+                // workerBudget = workerBudget - dailyPay;
 
-            return (
-                <WorkerApproval
-                    preferredUnit={preferredUnit}
-                    rest={0}
-                    rank={index + 1}
-                    key={worker.get("id")}
-                    worker={worker.get("id")}
-                    vote_ids={this.state[hasProxy ? "proxy_vote_ids" : "vote_ids"]}
-                    onChangeVotes={this.onChangeVotes.bind(this)}
-                    proxy={hasProxy}
-                    voteThreshold={voteThreshold}
-                />
-            );
-        });
+                return (
+                    <WorkerApproval
+                        preferredUnit={preferredUnit}
+                        rest={0}
+                        rank={index + 1}
+                        key={worker.get("id")}
+                        worker={worker.get("id")}
+                        vote_ids={this.state[hasProxy ? "proxy_vote_ids" : "vote_ids"]}
+                        onChangeVotes={this.onChangeVotes.bind(this)}
+                        proxy={hasProxy}
+                        voteThreshold={voteThreshold}
+                    />
+                );
+            });
 
         let actionButtons = (
             <div>
-                <button className={cnames(publish_buttons_class, {success: this.isChanged()})} onClick={this.onPublish} tabIndex={4}>
-                    <Translate content="account.votes.publish"/>
+                <button className={cnames(publish_buttons_class, { success: this.isChanged() })} onClick={this.onPublish} tabIndex={4}>
+                    <Translate content="account.votes.publish" />
                 </button>
                 <button className={"button " + publish_buttons_class} onClick={this.onReset} tabIndex={8}>
-                    <Translate content="account.perm.reset"/>
+                    <Translate content="account.perm.reset" />
                 </button>
             </div>
         );
@@ -554,15 +554,15 @@ class AccountVoting extends React.Component {
                 onAccountChanged={this.onProxyAccountFound}
                 tabIndex={1}
                 placeholder="Proxy not set"
-        >
-            <span style={{paddingLeft: 5, position: "relative", top: -1, display: (hasProxy ? "" : "none")}}><Icon name="locked" size="1x" /></span>
-            <span style={{paddingLeft: 5, position: "relative", top: 9, display: (!hasProxy ? "" : "none")}}><Link to="/help/voting"><Icon name="question-circle" size="1x" /></Link></span>
-        </AccountSelector>);
+            >
+                <span style={{ paddingLeft: 5, position: "relative", top: -1, display: (hasProxy ? "" : "none") }}><Icon name="locked" size="1x" /></span>
+                <span style={{ paddingLeft: 5, position: "relative", top: 9, display: (!hasProxy ? "" : "none") }}><Link to="/help/voting"><Icon name="question-circle" size="1x" /></Link></span>
+            </AccountSelector>);
 
         const showExpired = workerTableIndex === 2;
 
         const saveText = (
-            <div className="inline-block" style={{visibility: this.isChanged() ? "visible": "hidden", color: "red", padding: "0.85rem", fontSize: "0.9rem"}}>
+            <div className="inline-block" style={{ display: this.isChanged() ? "block" : "none", color: "red", padding: "0.85rem", fontSize: "0.9rem" }}>
                 <Translate content="account.votes.save_finish" />
             </div>
         );
@@ -580,89 +580,90 @@ class AccountVoting extends React.Component {
                             defaultActiveTab={1}
                             segmented={false}
                             tabsClass="account-overview no-padding bordered-header content-block"
+                            contentClass="no-padding"
                             onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
                             actionButtons={actionButtons}
                         >
 
-                                <Tab
-                                    disabled
-                                    title={proxyInput}
-                                    className="total-value"
-                                >
-                                </Tab>
+                            <Tab
+                                disabled
+                                title={proxyInput}
+                                className="total-value"
+                            >
+                            </Tab>
 
-                                <Tab title="explorer.witnesses.title">
-                                    <div className={cnames("content-block")}>
-                                        <div className="hide-selector">
-                                            {/* <Link to="/help/voting/witness"><Icon name="question-circle" /></Link> */}
-                                            <div className="new-worker-button">
-                                                {saveText}
-                                            </div>
-                                        </div>
-                                        <VotingAccountsList
-                                            type="witness"
-                                            label="account.votes.add_witness_label"
-                                            items={this.state.all_witnesses}
-                                            validateAccount={this.validateAccount.bind(this, "witnesses")}
-                                            onAddItem={this.onAddItem.bind(this, "witnesses")}
-                                            onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
-                                            tabIndex={hasProxy ? -1 : 2}
-                                            supported={this.state[hasProxy ? "proxy_witnesses" : "witnesses"]}
-                                            withSelector={false}
-                                            active={globalObject.get("active_witnesses")}
-                                            proxy={this.state.proxy_account_id}
-                                        />
-                                    </div>
-                                </Tab>
-
-                                <Tab title="explorer.committee_members.title">
-                                    <div className={cnames("content-block")}>
-                                        <div className="hide-selector">
-                                            {/* <Link to="/help/voting/committee"><Icon name="question-circle" /></Link> */}
-                                            <div className="new-worker-button">
-                                                {saveText}
-                                            </div>
-                                        </div>
-                                        <VotingAccountsList
-                                            type="committee"
-                                            label="account.votes.add_committee_label"
-                                            items={this.state.all_committee}
-                                            validateAccount={this.validateAccount.bind(this, "committee")}
-                                            onAddItem={this.onAddItem.bind(this, "committee")}
-                                            onRemoveItem={this.onRemoveItem.bind(this, "committee")}
-                                            tabIndex={hasProxy ? -1 : 3}
-                                            supported={this.state[hasProxy ? "proxy_committee" : "committee"]}
-                                            withSelector={false}
-                                            active={globalObject.get("active_committee_members")}
-                                            proxy={this.state.proxy_account_id}
-                                        />
-                                    </div>
-                                </Tab>
-
-                                <Tab title="account.votes.workers_short">
-
+                            <Tab title="explorer.witnesses.title">
+                                <div className={cnames("content-block")}>
                                     <div className="hide-selector">
-                                        {/* <Link to="/help/voting/worker"><Icon name="question-circle" /></Link> */}
-                                        <div style={{paddingLeft: 10}} className={cnames("inline-block", {inactive: workerTableIndex !== 0})} onClick={this._setWorkerTableIndex.bind(this, 0)}>
-                                            {counterpart.translate("account.votes.new", {count: newWorkers.length})}
-                                        </div>
-                                        <div className={cnames("inline-block", {inactive: workerTableIndex !== 1})} onClick={this._setWorkerTableIndex.bind(this, 1)}>
-                                            {counterpart.translate("account.votes.active", {count: workers.length})}
-                                        </div>
-
-                                        {expiredWorkers.length ? <div className={cnames("inline-block", {inactive: !showExpired})} onClick={!showExpired ? this._setWorkerTableIndex.bind(this, 2) : () => {}}>
-                                            <Translate content="account.votes.expired" />
-                                        </div> : null}
-
+                                        {/* <Link to="/help/voting/witness"><Icon name="question-circle" /></Link> */}
                                         <div className="new-worker-button">
                                             {saveText}
-                                            <Link to="/create-worker">
-                                                <div className="button no-margin"><Translate content="account.votes.create_worker" /></div>
-                                            </Link>
                                         </div>
                                     </div>
+                                    <VotingAccountsList
+                                        type="witness"
+                                        label="account.votes.add_witness_label"
+                                        items={this.state.all_witnesses}
+                                        validateAccount={this.validateAccount.bind(this, "witnesses")}
+                                        onAddItem={this.onAddItem.bind(this, "witnesses")}
+                                        onRemoveItem={this.onRemoveItem.bind(this, "witnesses")}
+                                        tabIndex={hasProxy ? -1 : 2}
+                                        supported={this.state[hasProxy ? "proxy_witnesses" : "witnesses"]}
+                                        withSelector={false}
+                                        active={globalObject.get("active_witnesses")}
+                                        proxy={this.state.proxy_account_id}
+                                    />
+                                </div>
+                            </Tab>
 
-                                    {/* {showExpired ? null : (
+                            <Tab title="explorer.committee_members.title">
+                                <div className={cnames("content-block")}>
+                                    <div className="hide-selector">
+                                        {/* <Link to="/help/voting/committee"><Icon name="question-circle" /></Link> */}
+                                        <div className="new-worker-button">
+                                            {saveText}
+                                        </div>
+                                    </div>
+                                    <VotingAccountsList
+                                        type="committee"
+                                        label="account.votes.add_committee_label"
+                                        items={this.state.all_committee}
+                                        validateAccount={this.validateAccount.bind(this, "committee")}
+                                        onAddItem={this.onAddItem.bind(this, "committee")}
+                                        onRemoveItem={this.onRemoveItem.bind(this, "committee")}
+                                        tabIndex={hasProxy ? -1 : 3}
+                                        supported={this.state[hasProxy ? "proxy_committee" : "committee"]}
+                                        withSelector={false}
+                                        active={globalObject.get("active_committee_members")}
+                                        proxy={this.state.proxy_account_id}
+                                    />
+                                </div>
+                            </Tab>
+
+                            <Tab title="account.votes.workers_short">
+
+                                <div className="hide-selector">
+                                    {/* <Link to="/help/voting/worker"><Icon name="question-circle" /></Link> */}
+                                    <div style={{ paddingLeft: 10 }} className={cnames("hide-selector-item", { inactive: workerTableIndex !== 0 })} onClick={this._setWorkerTableIndex.bind(this, 0)}>
+                                        {counterpart.translate("account.votes.new", { count: newWorkers.length })}
+                                    </div>
+                                    <div className={cnames("hide-selector-item", { inactive: workerTableIndex !== 1 })} onClick={this._setWorkerTableIndex.bind(this, 1)}>
+                                        {counterpart.translate("account.votes.active", { count: workers.length })}
+                                    </div>
+
+                                    {expiredWorkers.length ? <div className={cnames("hide-selector-item", { inactive: !showExpired })} onClick={!showExpired ? this._setWorkerTableIndex.bind(this, 2) : () => { }}>
+                                        <Translate content="account.votes.expired" />
+                                    </div> : null}
+
+                                    <div className="new-worker-button flex-flow-end">
+                                        {saveText}
+                                        <Link to="/create-worker">
+                                            <div className="button no-margin"><Translate content="account.votes.create_worker" /></div>
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                {/* {showExpired ? null : (
                                     <div style={{paddingTop: 10, paddingBottom: 20}}>
                                         <table>
                                             <tbody>
@@ -680,79 +681,79 @@ class AccountVoting extends React.Component {
                                         </table>
                                     </div>)} */}
 
-                                    <table className="table dashboard-table">
+                                <table className="table dashboard-table">
 
-                                        {workerTableIndex === 2 ? null :
+                                    {workerTableIndex === 2 ? null :
                                         workerTableIndex === 0 ?
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th colSpan="3" style={{textAlign: "left"}}>
-                                                    <Translate content="account.votes.threshold" />
-                                                </th>
-                                                <th style={{textAlign: "right"}}>
-                                                    <FormattedAsset decimalOffset={5} hide_asset amount={voteThreshold} asset="1.3.0" />
-                                                </th>
-                                                <th colSpan="3"></th>
-                                            </tr>
-                                            <tr >
-                                                <th style={{border: "none", backgroundColor: "transparent"}}></th>
-                                            </tr>
-                                        </thead> :
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th style={{textAlign: "left"}}><Translate content="account.votes.total_budget" /> (<AssetName name={preferredUnit} />)</th>
-                                                <th colSpan="4" className="hide-column-small"></th>
-                                                <th style={{textAlign: "right"}}>
-                                                    {globalObject ? <EquivalentValueComponent hide_asset fromAsset="1.3.0" toAsset={preferredUnit} amount={totalBudget}/> : null}
-                                                </th>
-                                                <th className="hide-column-small"></th>
-                                            </tr>
-                                            <tr >
-                                                <th style={{border: "none", backgroundColor: "transparent"}}></th>
-                                            </tr>
-                                        </thead>}
-                                        <thead>
-                                            <tr>
-                                                {workerTableIndex === 2 ? null : <th style={{textAlign: "right"}}><Translate content="account.votes.line" /></th>}
-                                                <th style={{textAlign: "left"}}><Translate content="account.user_issued_assets.description" /></th>
-                                                <th style={{textAlign: "right"}} className="hide-column-small">
-                                                    <Translate content="account.votes.total_votes" />
-                                                </th>
-                                                {workerTableIndex === 0 ?
-                                                <th style={{textAlign: "right"}}>
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th colSpan="3" style={{ textAlign: "left" }}>
+                                                        <Translate content="account.votes.threshold" />
+                                                    </th>
+                                                    <th style={{ textAlign: "right" }}>
+                                                        <FormattedAsset decimalOffset={5} hide_asset amount={voteThreshold} asset="1.3.0" />
+                                                    </th>
+                                                    <th colSpan="3"></th>
+                                                </tr>
+                                                <tr >
+                                                    <th style={{ border: "none", backgroundColor: "transparent" }}></th>
+                                                </tr>
+                                            </thead> :
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th style={{ textAlign: "left" }}><Translate content="account.votes.total_budget" /> (<AssetName name={preferredUnit} />)</th>
+                                                    <th colSpan="4" className="hide-column-small"></th>
+                                                    <th style={{ textAlign: "right" }}>
+                                                        {globalObject ? <EquivalentValueComponent hide_asset fromAsset="1.3.0" toAsset={preferredUnit} amount={totalBudget} /> : null}
+                                                    </th>
+                                                    <th className="hide-column-small"></th>
+                                                </tr>
+                                                <tr >
+                                                    <th style={{ border: "none", backgroundColor: "transparent" }}></th>
+                                                </tr>
+                                            </thead>}
+                                    <thead>
+                                        <tr>
+                                            {workerTableIndex === 2 ? null : <th style={{ textAlign: "right" }}><Translate content="account.votes.line" /></th>}
+                                            <th style={{ textAlign: "left" }}><Translate content="account.user_issued_assets.description" /></th>
+                                            <th style={{ textAlign: "right" }} className="hide-column-small">
+                                                <Translate content="account.votes.total_votes" />
+                                            </th>
+                                            {workerTableIndex === 0 ?
+                                                <th style={{ textAlign: "right" }}>
                                                     <Translate content="account.votes.missing" />
                                                 </th> : null}
-                                                <th><Translate content="explorer.workers.period" /></th>
-                                                {workerTableIndex === 2 || workerTableIndex === 0 ? null :
-                                                <th style={{textAlign: "right"}} className="hide-column-small">
+                                            <th><Translate content="explorer.workers.period" /></th>
+                                            {workerTableIndex === 2 || workerTableIndex === 0 ? null :
+                                                <th style={{ textAlign: "right" }} className="hide-column-small">
                                                     <Translate content="account.votes.funding" />
                                                 </th>}
-                                                <th style={{textAlign: "right"}} className="hide-column-small">
-                                                    <Translate content="account.votes.daily_pay" />
-                                                    <div style={{paddingTop: 5, fontSize: "0.8rem"}}>
-                                                        (<AssetName name={preferredUnit} />)
+                                            <th style={{ textAlign: "right" }} className="hide-column-small">
+                                                <Translate content="account.votes.daily_pay" />
+                                                <div style={{ paddingTop: 5, fontSize: "0.8rem" }}>
+                                                    (<AssetName name={preferredUnit} />)
                                                     </div>
-                                                </th>
-                                                {workerTableIndex === 2 || workerTableIndex === 0 ? null :
-                                                <th style={{textAlign: "right"}}>
+                                            </th>
+                                            {workerTableIndex === 2 || workerTableIndex === 0 ? null :
+                                                <th style={{ textAlign: "right" }}>
                                                     <Translate content="explorer.witnesses.budget" />
-                                                    <div style={{paddingTop: 5, fontSize: "0.8rem"}}>
+                                                    <div style={{ paddingTop: 5, fontSize: "0.8rem" }}>
                                                         (<AssetName name={preferredUnit} />)
                                                     </div>
                                                 </th>}
 
-                                                <th><Translate content="account.votes.toggle" /></th>
-                                            </tr>
-                                        </thead>
+                                            <th><Translate content="account.votes.toggle" /></th>
+                                        </tr>
+                                    </thead>
 
-                                        <tbody>
-                                            {workerTableIndex === 0 ? newWorkers : workerTableIndex === 1 ? workers : expiredWorkers}
-                                        </tbody>
+                                    <tbody>
+                                        {workerTableIndex === 0 ? newWorkers : workerTableIndex === 1 ? workers : expiredWorkers}
+                                    </tbody>
 
-                                    </table>
-                                </Tab>
+                                </table>
+                            </Tab>
                         </Tabs>
                     </div>
                 </div>
