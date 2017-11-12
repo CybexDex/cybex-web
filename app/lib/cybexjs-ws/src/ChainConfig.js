@@ -1,10 +1,10 @@
 let _this;
 
-const ADDRESS_PREFIX = "BTS"; // 修改此处会修改包括各种key生成在内的前缀；
+const ADDRESS_PREFIX = "CYB"; // 修改此处会修改包括各种key生成在内的前缀；
 
 const PREFIX_OF_CHAIN = {
-    "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8": ADDRESS_PREFIX,
-    "c577bfd972938e3d67d106282930deff2a2aec3522de38e8d8b111606ccaf2d2": ADDRESS_PREFIX,
+    "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8": "BTS",
+    "c577bfd972938e3d67d106282930deff2a2aec3522de38e8d8b111606ccaf2d2": "BTS",
     "a42af4f55e76505b97529e8be59ed549065fb9bf8d2edf2bb3707df231b0e5e0": "CYB",
     "133572a395d5b12c7db7f2d5f0dadd347b68ccbd996defafcb5768954c6d46c5": "CYB",
     "45ad2d3f9ef92a49b55c2227eb06123f613bb35dd08bd876f2aea21925a67a67": "MUSE",
@@ -87,7 +87,7 @@ _this = {
                     ecc_config.address_prefix = network.address_prefix;
                 }
 
-                // console.log("INFO    Configured for", network_name, ":", network.core_asset, "\n");
+                console.log("INFO    Configured for", network_name, ":", network.address_prefix, "\n");
 
                 return {
                     network_name: network_name,
