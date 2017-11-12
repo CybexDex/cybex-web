@@ -83,8 +83,8 @@ class PublicKey {
         @return PublicKey
     */
     static fromStringOrThrow(public_key, address_prefix = ChainConfig.address_prefix) {
-        console.debug("Public Key: ", public_key);
-        console.debug("Prefix: ", address_prefix);
+        // console.debug("Public Key: ", public_key);
+        // console.debug("Prefix: ", address_prefix);
         var prefix = public_key.slice(0, address_prefix.length);
         assert.equal(
             address_prefix, prefix,

@@ -134,6 +134,7 @@ class RecentTransactions extends React.Component {
     _getHistory(accountsList, filterOp, customFilter) {
         let history = [];
         let seen_ops = new Set();
+        console.debug("AccountList: ", accountsList);
         for (let account of accountsList) {
             if(account) {
                 let h = account.get("history");
@@ -157,7 +158,7 @@ class RecentTransactions extends React.Component {
                             return final && a.op[1][filter] === customFilter.values[filter];
                             break;
                     }
-                }, true)
+                }, true);
                 return finalValue;
             });
         }
