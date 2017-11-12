@@ -2,6 +2,29 @@ let _this;
 
 const ADDRESS_PREFIX = "BTS"; // 修改此处会修改包括各种key生成在内的前缀；
 
+const PREFIX_OF_CHAIN = {
+    "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8": ADDRESS_PREFIX,
+    "c577bfd972938e3d67d106282930deff2a2aec3522de38e8d8b111606ccaf2d2": ADDRESS_PREFIX,
+    "a42af4f55e76505b97529e8be59ed549065fb9bf8d2edf2bb3707df231b0e5e0": "CYB",
+    "133572a395d5b12c7db7f2d5f0dadd347b68ccbd996defafcb5768954c6d46c5": "CYB",
+    "45ad2d3f9ef92a49b55c2227eb06123f613bb35dd08bd876f2aea21925a67a67": "MUSE",
+    "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447": "TEST"
+};
+
+const Network = class {
+    constructor(chain_id, core_asset) {
+        this.chain_id = chain_id;
+        this.core_asset = core_asset;
+    }
+
+    get address_prefix() {
+        return localStorage &&
+            localStorage.getItem(`PREFIX_${this.chain_id}`) ||
+            PREFIX_OF_CHAIN[this.chain_id] ||
+            this.core_asset;
+    };
+};
+
 let ecc_config = {
     address_prefix: process.env.npm_config__graphene_ecc_default_address_prefix || ADDRESS_PREFIX
 };
@@ -13,36 +36,30 @@ _this = {
     expire_in_secs_proposal: 24 * 60 * 60,
     review_in_secs_committee: 24 * 60 * 60,
     networks: {
-        BitShares: {
-            core_asset: ADDRESS_PREFIX,
-            address_prefix: ADDRESS_PREFIX,
-            chain_id: "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8"
-        },
-        CybexOpen: {
-            core_asset: "CYB",
-            address_prefix: ADDRESS_PREFIX,
-            chain_id: "c577bfd972938e3d67d106282930deff2a2aec3522de38e8d8b111606ccaf2d2"
-        },
-        Cybex: {
-            core_asset: "CYB",
-            address_prefix: "CYB",
-            chain_id: "a42af4f55e76505b97529e8be59ed549065fb9bf8d2edf2bb3707df231b0e5e0"
-        },
-        CybexTest: {
-            core_asset: "CYB",
-            address_prefix: "CYB",
-            chain_id: "133572a395d5b12c7db7f2d5f0dadd347b68ccbd996defafcb5768954c6d46c5"
-        },
-        Muse: {
-            core_asset: "MUSE",
-            address_prefix: "MUSE",
-            chain_id: "45ad2d3f9ef92a49b55c2227eb06123f613bb35dd08bd876f2aea21925a67a67"
-        },
-        Test: {
-            core_asset: "TEST",
-            address_prefix: "TEST",
-            chain_id: "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447"
-        },
+        BitShares: new Network(
+            "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8",
+            ADDRESS_PREFIX
+        ),
+        CybexOpen: new Network(
+            "c577bfd972938e3d67d106282930deff2a2aec3522de38e8d8b111606ccaf2d2",
+            ADDRESS_PREFIX
+        ),
+        Cybex: new Network(
+            "a42af4f55e76505b97529e8be59ed549065fb9bf8d2edf2bb3707df231b0e5e0",
+            ADDRESS_PREFIX
+        ),
+        CybexTest: new Network(
+            "133572a395d5b12c7db7f2d5f0dadd347b68ccbd996defafcb5768954c6d46c5",
+            ADDRESS_PREFIX
+        ),
+        Muse: new Network(
+            "45ad2d3f9ef92a49b55c2227eb06123f613bb35dd08bd876f2aea21925a67a67",
+            "MUSE"
+        ),
+        Test: new Network(
+            "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447",
+            "TEST"
+        ),
         Obelisk: {
             core_asset: "GOV",
             address_prefix: "FEW",
@@ -51,7 +68,7 @@ _this = {
     },
 
     /** Set a few properties for known chain IDs. */
-    setChainId: function(chain_id) {
+    setChainId: function (chain_id) {
 
         let i, len, network, network_name, ref;
         ref = Object.keys(_this.networks);
@@ -75,7 +92,7 @@ _this = {
                 return {
                     network_name: network_name,
                     network: network
-                }
+                };
             }
         }
 
@@ -85,7 +102,7 @@ _this = {
 
     },
 
-    reset: function() {
+    reset: function () {
         _this.core_asset = "CORE";
         _this.address_prefix = ADDRESS_PREFIX;
         ecc_config.address_prefix = ADDRESS_PREFIX;
@@ -95,10 +112,10 @@ _this = {
         console.log("Chain config reset");
     },
 
-    setPrefix: function(prefix = ADDRESS_PREFIX) {
+    setPrefix: function (prefix = ADDRESS_PREFIX) {
         _this.address_prefix = prefix;
         ecc_config.address_prefix = prefix;
     }
-}
+};
 
 export default _this;
