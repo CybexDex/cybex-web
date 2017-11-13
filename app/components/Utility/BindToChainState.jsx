@@ -148,6 +148,7 @@ function BindToChainState(Component, options = {}) {
             let new_state = {};
             let all_objects_counter = 0;
             let resolved_objects_counter = 0;
+            // console.debug("Update: ", this.chain_objects);
             for( let key of this.chain_objects )
             {
                 let prop = props[key] || this.dynamic_props[key] || this.default_props[key];

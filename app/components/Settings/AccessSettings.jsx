@@ -6,6 +6,7 @@ import { settingsAPIs } from "../../api/apiConfig";
 import willTransitionTo from "../../routerTransition";
 import { withRouter } from "react-router";
 import { connect } from "alt-react";
+import { ChainConfig, Apis } from "cybexjs-ws";
 const URL_FRAGMENT_OF_TESTNET = "121.40";
 const autoSelectAPI = "wss://fake.automatic-selection.com";
 const testnetAPI = settingsAPIs.WS_NODE_LIST.find(a => a.url.indexOf(URL_FRAGMENT_OF_TESTNET) !== -1);
@@ -67,7 +68,7 @@ class ApiNode extends React.Component {
 
         var Status = (isTestnet && !ping) ? null : <div className="api-status">
             <Translate style={{ color: up ? green : red, marginBottom: 0 }} component="h3" content={"settings." + (up ? "node_up" : "node_down")} />
-            {up && <Translate content={`settings.${latencyKey}`}  style={{ color }}/>}
+            {up && <Translate content={`settings.${latencyKey}`} style={{ color }} />}
             {!up && <span style={{ color: "red" }}>__</span>}
         </div>;
 
@@ -110,6 +111,7 @@ class AccessSettings extends React.Component {
         });
 
         this.isDefaultNode = isDefaultNode;
+        this.chain = ChainConfig.address_prefix;
     }
 
     getNodeIndexByURL(url) {
@@ -144,6 +146,18 @@ class AccessSettings extends React.Component {
             up: node.url in props.apiLatencies,
             ping: props.apiLatencies[node.url]
         };
+    }
+
+    setPrefix() {
+        let e = document.getElementById("setPrefix");
+        console.debug("SetPrefix: ", e);
+        if (!e || !e.value) return;
+        let value = e.value;
+        let chainKey = "PREFIX_" + Apis.instance().chain_id;
+        if (localStorage) {
+            localStorage.setItem(chainKey, value);
+        }
+        location.reload();
     }
 
     renderNode(node, allowActivation) {
@@ -227,6 +241,11 @@ class AccessSettings extends React.Component {
                         return renderNode(node, true);
                     })
                 }
+            </div>
+            <div className="form-group grid-block grid-x-padding full-container">
+                Specified Prefix - {Apis.instance().chain_id}
+                <input className="small-10 medium-10" id="setPrefix" type="text" value={this.nodePrefix} />
+                <button className="small-2 medium-2" onClick={this.setPrefix.bind(this)}>Confirm</button>
             </div>
         </div>;
     }

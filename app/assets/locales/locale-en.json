@@ -1438,7 +1438,11 @@
   },
   "home": {
     "find_more": "Find More",
-    "slogan": "Welcome to the Cybex DEX"
+    "slogan": "Welcome to the Cybex distributed exchange!",
+    "icon-1": "Blockchain-based",
+    "icon-2": "Industrial-strength",
+    "icon-3": "Multi-assets trading",
+    "icon-4": "Fully transparent transactions"
   },
   "nav": {
     "transfer": "TRANSFER",
