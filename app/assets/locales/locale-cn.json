@@ -203,7 +203,7 @@
       "cer_warning_1": "警告",
       "cer_warning_2": "Make sure your core exchange rate is higher than the market price, otherwise people will buy your token from the market and drain your fee pool via implicit arbitrage. The core exchange rate should be updated regularly to reflect market pricing of your asset.",
       "vesting": "设置禁售期",
-      "vesting_end": "冻结周期(天)",
+      "vesting_end": "禁售周期(天)",
       "sell_end": "销售周期"
     },
     "perm": {
