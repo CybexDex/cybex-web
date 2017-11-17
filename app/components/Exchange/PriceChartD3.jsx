@@ -286,7 +286,7 @@ class CandleStickChartWithZoomPan extends React.Component {
 
             <OHLCTooltip
                 className="tooltip-hide-no"
-                
+
                 xDisplayFormat={timeFormatter}
                 volumeFormat={volumeFormat}
                 ohlcFormat={priceFormat}
@@ -350,7 +350,7 @@ class CandleStickChartWithZoomPan extends React.Component {
         const filteredData = zoom === "all" ? priceData : priceData.filter(a => {
             return a.date > filterDate;
         });
-        
+
         return (
             <ChartCanvas
                 ratio={ratio} width={width - 12} height={height}
@@ -623,15 +623,15 @@ export default class Wrapper extends React.Component {
             return content;
         });
 
-        if (!this.props.priceData.length) {
-            return (
-                <div className="grid-content text-center">
-                    <div style={{ paddingTop: this.props.height / 2, height: this.props.height }}>
-                        <Translate content="exchange.no_data" component="h2" />
-                    </div>
-                </div>
-            );
-        }
+        // if (!this.props.priceData.length) {
+        //     return (
+        //         <div className="grid-content text-center">
+        //             <div style={{ paddingTop: this.props.height / 2, height: this.props.height }}>
+        //                 <Translate content="exchange.no_data" component="h2" />
+        //             </div>
+        //         </div>
+        //     );
+        // }
 
         return (
             <div className="no-margin no-padding" style={{ overflow: "visible", width: "100%" }}>
@@ -692,7 +692,19 @@ export default class Wrapper extends React.Component {
                         </li> */}
                     </ul>
                 </div>
-                <CandleStickChartWithZoomPan ref="FitWidth" {...this.props} />
+                {this.props.priceData.length
+                    ? <CandleStickChartWithZoomPan ref="FitWidth" {...this.props} />
+                    : <div className="grid-content text-center">
+                        <div
+                            style={{
+                                paddingTop: this.props.height / 2,
+                                height: this.props.height
+                            }}>
+                            <Translate content="exchange.no_data" component="h2" />
+                        </div>
+                    </div>
+                }
+                {/* <CandleStickChartWithZoomPan ref="FitWidth" {...this.props} /> */}
             </div>
         );
     }
