@@ -52,6 +52,11 @@ const NavLinks: Array<NavItem> = [
     routeTo: "/transfer",
     name: "Transfer",
     icon: "transfer"
+  }, {
+    id: "swap",
+    routeTo: "/swap",
+    name: "SwapTest",
+    icon: "transfer"
   },
 ];
 
@@ -87,28 +92,28 @@ export class Nav extends React.Component<NavProps, any> {
     return (
       <nav id="mainNav" className={getClassName("nav transition", { expand: isExpand })}>
         <div className="nav-items">
-        {
-          NavLinks.filter(link => 
-            link.displayOnlyWhen ? !!this.props[link.displayOnlyWhen] : true
-          ).map(link => {
-            let routeTo = typeof link.routeTo === "function" ?
-              link.routeTo.call(this, routerConfig[link.id]) :
-              link.routeTo;
-            return (
-              <Link
-                key={link.id}
-                to={routeTo}
-                className="nav-link"
-                title={link.name}>
-                <NavLink isActive={
-                  link.activeMatcher ?
-                    link.activeMatcher.test(this.props.location.pathname) :
-                    this.props.location.pathname.search(routeTo) !== -1
-                } {...link} />
-              </Link>
-            );
-          })
-        }
+          {
+            NavLinks.filter(link =>
+              link.displayOnlyWhen ? !!this.props[link.displayOnlyWhen] : true
+            ).map(link => {
+              let routeTo = typeof link.routeTo === "function" ?
+                link.routeTo.call(this, routerConfig[link.id]) :
+                link.routeTo;
+              return (
+                <Link
+                  key={link.id}
+                  to={routeTo}
+                  className="nav-link"
+                  title={link.name}>
+                  <NavLink isActive={
+                    link.activeMatcher ?
+                      link.activeMatcher.test(this.props.location.pathname) :
+                      this.props.location.pathname.search(routeTo) !== -1
+                  } {...link} />
+                </Link>
+              );
+            })
+          }
         </div>
         <a href="javascript:;" className="nav-toggle" onClick={this.toggleNav.bind(this)}>
           <i className={getClassName("", {
