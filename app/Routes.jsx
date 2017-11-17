@@ -60,6 +60,10 @@ const routes = (
         <Route path="/explorer/committee-members" getComponent={(location, cb) => {
             System.import("components/Explorer/CommitteeMembers").then(loadRoute(cb)).catch(errorLoading);
         }} />
+        <Route path="/swap" getComponent={(location, cb) => {
+            System.import("components/SwapContainer").then(loadRoute(cb)).catch(errorLoading);
+        }} />
+
 
         <Route path="wallet" getComponent={(location, cb) => {
             System.import("components/Wallet/WalletManager").then(loadRoute(cb, "WalletManager")).catch(errorLoading);
