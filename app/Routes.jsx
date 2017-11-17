@@ -200,7 +200,7 @@ const routes = (
             <Route path="whitelist" getComponent={(location, cb) => {
                 System.import("components/Account/AccountWhitelist").then(loadRoute(cb)).catch(errorLoading);
             }} />
-            <Redirect from="overview" to="dashboard" />
+            <Redirect from="dashboard" to="overview" />
 
         </Route>
         <Route path="deposit-withdraw" getComponent={(location, cb) => {
