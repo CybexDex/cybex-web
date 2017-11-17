@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Route, IndexRoute } from "react-router";
+import { Route, IndexRoute, Redirect } from "react-router";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
 
