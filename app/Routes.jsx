@@ -61,7 +61,7 @@ const routes = (
             System.import("components/Explorer/CommitteeMembers").then(loadRoute(cb)).catch(errorLoading);
         }} />
         <Route path="/swap" getComponent={(location, cb) => {
-            System.import("components/SwapContainer").then(loadRoute(cb)).catch(errorLoading);
+            System.import("components/Swap/SwapContainer").then(loadRoute(cb)).catch(errorLoading);
         }} />
 
 
