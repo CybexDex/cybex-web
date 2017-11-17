@@ -48,6 +48,7 @@ import InitError from "./components/InitError";
 import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
+import {SwapContainer} from "./components/Swap/SwapContainer";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -68,6 +69,7 @@ const routes = (
         <Route path="/explorer/accounts" component={AccountsContainer} />
         <Route path="/explorer/witnesses" component={Witnesses} />
         <Route path="/explorer/committee-members" component={CommitteeMembers} />
+        <Route path="/swap" component={SwapContainer} />
 
         <Route path="wallet" component={WalletManager} >
             {/* wallet management console */}

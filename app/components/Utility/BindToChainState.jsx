@@ -143,12 +143,12 @@ function BindToChainState(Component, options = {}) {
         {
             //let keep_updating = (options && options.keep_updating) || this.props.keep_updating;
             //if(!next_props && !keep_updating && this.state.resolved) return;
-
+            // console.debug("Update All_Props: ", this.all_chain_props);
             let props = next_props || this.props;
             let new_state = {};
             let all_objects_counter = 0;
             let resolved_objects_counter = 0;
-            // console.debug("Update: ", this.chain_objects);
+            // console.debug("Update: ", next_props);
             for( let key of this.chain_objects )
             {
                 let prop = props[key] || this.dynamic_props[key] || this.default_props[key];
@@ -162,6 +162,7 @@ function BindToChainState(Component, options = {}) {
                     if(this.state[key]) new_state[key] = null;
                 }
             }
+            // console.debug("Update Chain_Account: ", this.chain_accounts);
             for( let key of this.chain_accounts )
             {
                 let prop = props[key] || this.dynamic_props[key] || this.default_props[key];
@@ -251,7 +252,7 @@ function BindToChainState(Component, options = {}) {
                     if(this.state[key]) new_state[key] = null;
                 }
             }
-
+            // console.debug("Update AccountList: ", this.chain_accounts_list);
             for( let key of this.chain_accounts_list )
             {
                 //console.log("-- Wrapper.update -->", this.chain_accounts_list);

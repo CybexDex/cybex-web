@@ -1,0 +1,30 @@
+.swap-container {
+    display: grid;
+    grid-template: "steps list" auto / 1fr auto;
+    height: 100%;
+}
+
+.swap-list {
+    grid-area: list;
+    border: 1px solid;
+    td,
+    th {
+        border-bottom: 1px solid;
+        height: 3em;
+    }
+    td {
+      padding: 0 0.5em;
+    }
+}
+
+.swap-steps {
+    grid-area: steps;
+    overflow-y: auto;
+    hr {
+      margin: 0.5rem 0;
+    }
+}
+
+input:disabled {
+  background-color: transparent !important;
+}
