@@ -1,7 +1,7 @@
 {
   "languages": {
     "en": "English",
-    "cn": "简体中文",
+    "zh": "简体中文",
     "fr": "Français",
     "ko": "한국어",
     "de": "Deutsch",
@@ -900,16 +900,18 @@
   },
   "footer": {
     "title": "Cybex",
-    "block": "最新区块",
-    "loading": "载入中...",
-    "backup": "需要备份",
-    "nosync": "区块链数据陈旧，请等待数据完成同步..",
-    "connection": "无连接",
-    "brainkey": "建议备份脑钱包密钥",
     "update_available": "UPDATE AVAILABLE",
     "synced": "Synced",
     "unsynced": "Out of sync",
-    "disconnected": "Disconnected"
+    "disconnected": "Disconnected",
+    "block": "最新区块",
+		"loading": "载入中...",
+		"backup": "需要备份",
+		"nosync": "区块链数据陈旧，请等待数据完成同步..",
+		"connection": "无连接",
+    "brainkey": "建议备份脑钱包密钥",
+    "connected": "已连接",
+    "latency": "延迟"
   },
   "exchange": {
     "chart_options": {
