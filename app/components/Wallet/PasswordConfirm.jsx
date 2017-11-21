@@ -39,6 +39,7 @@ export default class PasswordConfirm extends Component {
                     <Translate component="label" content={newPassword ? "wallet.new_password" : "wallet.password"} />
                     <section>
                     <input
+                        className="full"
                         type="password"
                         id="password"
                         ref="firstPassword"
@@ -51,6 +52,7 @@ export default class PasswordConfirm extends Component {
                     <Translate component="label" content={newPassword ? "wallet.new_confirm" : "wallet.confirm"} />
                     <section>
                     <input
+                        className="full"
                         type="password"
                         id="confirm"
                         onChange={this.formChange.bind(this)}

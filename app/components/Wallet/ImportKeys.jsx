@@ -503,6 +503,7 @@ class ImportKeys extends Component {
                 let private_plainhex = private_key.toBuffer().toString("hex");
                 let public_key = private_key.toPublicKey(); // S L O W
                 let public_key_string = public_key.toPublicKeyString();
+                console.debug("PublicKey: ", public_key);
                 this.state.imported_keys_public[public_key_string] = true;
                 this.state.keys_to_account[private_plainhex] = {
                     account_names: [], public_key_string};

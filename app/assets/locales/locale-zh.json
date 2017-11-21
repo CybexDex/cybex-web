@@ -378,10 +378,11 @@
       "blacklist_authorities": "Blacklist authority"
     },
     "vesting": {
+      "vesting": "冻结", 
       "title": "待解冻余额",
       "balance_number": "余额 #%(id)s",
       "no_balances": "该账户无待解冻余额",
-      "explain": "待解冻金额包含通过推荐计划返现的手续费支出，以及通过预算计划获得的收入。待解冻金额在解冻期间组建释放，直到所有待解冻金额全部释放。"
+      "explain": "待解冻金额包含通过推荐计划返现的手续费支出，以及通过预算计划获得的收入。待解冻金额在解冻期间逐渐释放，直到所有待解冻金额全部释放。"
     },
     "show_hidden": "显示已忽略资产",
     "hide_hidden": "隐藏已忽略资产",
@@ -724,7 +725,8 @@
         "current_supply": "当前供给",
         "stealth_supply": "隐私供给",
         "market_fee": "交易市场费率",
-        "max_market_fee": "交易市场手续费上限"
+        "max_market_fee": "交易市场手续费上限",
+        "vesting": "默认冻结周期"
       },
       "price_feed": {
         "settlement_price": "喂价",

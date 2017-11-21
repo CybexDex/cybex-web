@@ -764,7 +764,8 @@
         "current_supply": "Current supply",
         "stealth_supply": "Stealth supply",
         "market_fee": "Market fee",
-        "max_market_fee": "Max market fee"
+        "max_market_fee": "Max market fee",
+        "vesting": "Default Lockup Period"        
       },
       "price_feed": {
         "title": "Price Feed",
