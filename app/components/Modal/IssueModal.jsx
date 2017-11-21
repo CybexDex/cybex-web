@@ -7,6 +7,8 @@ import counterpart from "counterpart";
 import AssetActions from "actions/AssetActions";
 import AccountSelector from "../Account/AccountSelector";
 import AmountSelector from "../Utility/AmountSelector";
+import { getObjectExtensionField } from "utils";
+
 
 class IssueModal extends React.Component {
 
@@ -16,29 +18,39 @@ class IssueModal extends React.Component {
 
     constructor(props) {
         super(props);
+        let { options } = this.props.asset_to_issue.toJS();
+        let vestingPeriod = getObjectExtensionField(options, "vesting_period");
+        console.debug("AssetToIssue: ", options, vestingPeriod);
         this.state = {
             amount: props.amount,
             to: props.to,
             to_id: null,
-            memo: null
+            memo: undefined,
+            vestingPeriod
         };
     }
 
-    onAmountChanged({amount,asset}) {
-        this.setState({amount: amount});
+    onAmountChanged({ amount, asset }) {
+        this.setState({ amount: amount });
     }
 
     onToAccountChanged(to) {
-        let state = to ? {to: to.get('name'), to_id: to.get('id')} : {to_id: null};
+        let state = to ? { to: to.get('name'), to_id: to.get('id') } : { to_id: null };
         this.setState(state);
     }
 
     onToChanged(to) {
-        this.setState({to: to, to_id: null});
+        this.setState({ to: to, to_id: null });
+    }
+
+    onVestingChanged(e) {
+        this.setState({
+            vestingPeriod: e.target.value
+        });
     }
 
     onSubmit() {
-        let {asset_to_issue} = this.props;
+        let { asset_to_issue } = this.props;
         let precision = utils.get_asset_precision(asset_to_issue.get("precision"));
         let amount = this.state.amount.replace(/,/g, "");
         amount *= precision;
@@ -48,7 +60,8 @@ class IssueModal extends React.Component {
             asset_to_issue.get("issuer"),
             asset_to_issue.get("id"),
             amount,
-            this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo
+            this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
+            this.state.vestingPeriod
         );
 
         this.setState({
@@ -59,15 +72,15 @@ class IssueModal extends React.Component {
     }
 
     onMemoChanged(e) {
-        this.setState({memo: e.target.value});
+        this.setState({ memo: e.target.value });
     }
 
     render() {
         let asset_to_issue = this.props.asset_to_issue.get('id');
         let tabIndex = 1;
 
-        return ( <form className="grid-block vertical full-width-content">
-            <div className="grid-container " style={{paddingTop: "2rem"}}>
+        return (<form className="grid-block vertical full-width-content">
+            <div className="grid-container " style={{ paddingTop: "2rem" }}>
                 {/* T O */}
                 <div className="content-block">
                     <AccountSelector
@@ -86,15 +99,23 @@ class IssueModal extends React.Component {
                         label="modal.issue.amount"
                         amount={this.state.amount}
                         onChange={this.onAmountChanged.bind(this)}
-                        asset={ asset_to_issue  }
+                        asset={asset_to_issue}
                         assets={[asset_to_issue]}
                         tabIndex={tabIndex++}
                     />
                 </div>
+                {
+                    this.state.vestingPeriod && (
+                        <div className="content-block">
+                            <label htmlFor="issueVesting"><Translate component="span" content="transfer.vesting" /></label>
+                            <input id="issueVesting" type="text" value={this.state.vestingPeriod} onChange={this.onVestingChanged.bind(this)} />
+                        </div>
+                    )
+                }
 
                 {/*  M E M O  */}
                 <div className="content-block">
-                    <label><Translate component="span" content="transfer.memo"/> (<Translate content="transfer.optional" />)</label>
+                    <label><Translate component="span" content="transfer.memo" /> (<Translate content="transfer.optional" />)</label>
                     <textarea rows="1" value={this.state.memo} tabIndex={tabIndex++} onChange={this.onMemoChanged.bind(this)} />
 
                 </div>
@@ -103,7 +124,7 @@ class IssueModal extends React.Component {
                     <input
                         type="submit"
                         className="button success"
-                        onClick={this.onSubmit.bind(this, this.state.to, this.state.amount )}
+                        onClick={this.onSubmit.bind(this, this.state.to, this.state.amount)}
                         value={counterpart.translate("modal.issue.submit")}
                         tabIndex={tabIndex++}
                     />
@@ -119,7 +140,7 @@ class IssueModal extends React.Component {
 
                 </div>
             </div>
-        </form> );
+        </form>);
     }
 }
 

@@ -241,9 +241,9 @@ class AssetActions {
         });
     }
 
-    issueAsset(to_account, from_account, asset_id, amount, memo) {
+    issueAsset(to_account, from_account, asset_id, amount, memo, vestingPeriod) {
 
-        ApplicationApi.issue_asset(to_account, from_account, asset_id, amount, memo);
+        ApplicationApi.issue_asset(to_account, from_account, asset_id, amount, memo, vestingPeriod);
     }
 
     // issueAsset(account_id, issueObject) {

@@ -84,7 +84,7 @@ const ApplicationApi = {
         propose_account = null,
         fee_asset_id = "1.3.0"
     }) {
-        console.debug("Transfer: ", arguments);
+        // console.debug("Transfer: ", arguments);
         let memo_sender = propose_account || from_account;
 
         let unlock_promise = WalletUnlockActions.unlock();
@@ -196,6 +196,7 @@ const ApplicationApi = {
         asset_id,
         amount,
         memo,
+        vestingPeriod,
         encrypt_memo = true,
         optional_nonce = null
         ) {
@@ -256,7 +257,7 @@ const ApplicationApi = {
             }
 
             let tr = new TransactionBuilder();
-            tr.add_type_operation("asset_issue", {
+            let op = {
                 fee: {
                     amount: 0,
                     asset_id: 0
@@ -267,8 +268,14 @@ const ApplicationApi = {
                     asset_id: asset_id
                 },
                 issue_to_account: to_account,
-                memo: memo_object
-            });
+                memo: memo_object,
+            };
+            if (vestingPeriod !== null && vestingPeriod !== undefined) {
+                op.extensions = [
+                    [1, {"vesting_period": vestingPeriod}]
+                ];
+            }
+            tr.add_type_operation("asset_issue", op);
 
             return WalletDb.process_transaction(tr, null, true);
         });

@@ -16,7 +16,7 @@ import { ChainStore } from "cybexjs";
 import { Apis } from "cybexjs-ws";
 import { Tabs, Tab } from "../Utility/Tabs";
 import { CallOrder, FeedPrice } from "common/MarketClasses";
-import { flattenDeep } from "lodash";
+import { getExtension } from "utils";
 
 class AssetFlag extends React.Component {
     render() {
@@ -55,15 +55,6 @@ class AssetPermission extends React.Component {
     }
 }
 
-const getExtension = (extensions, field) => {
-    console.debug("ex: ", flattenDeep(extensions));
-    for (let options of flattenDeep(extensions).filter(o => typeof o === "object")) {
-        if (options[field]) {
-            return options[field];
-        }
-    }
-    return null;
-}
 
 class Asset extends React.Component {
 
@@ -280,7 +271,7 @@ class Asset extends React.Component {
         let flagBooleans = assetUtils.getFlagBooleans(asset.options.flags, this.props.asset.has("bitasset_data_id"));
 
         let bitNames = Object.keys(flagBooleans);
-        console.debug("Options: ", options);
+        // console.debug("Options: ", options);
         let vestingPeriod = options && options.extensions ? getExtension(options.extensions, "vesting_period") : null;
         vestingPeriod = vestingPeriod ? (
             <tr>
@@ -288,7 +279,7 @@ class Asset extends React.Component {
                 <td>{vestingPeriod}</td>
             </tr>
         ) : null;
-        console.debug("Vesting: ", vestingPeriod);
+        // console.debug("Vesting: ", vestingPeriod);
 
         var currentSupply = (dynamic) ? (
             <tr>
