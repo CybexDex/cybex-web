@@ -577,7 +577,7 @@
       "worker_create": "创建雇员",
       "custom": "自定义",
       "assert": "断言操作",
-      "balance_claim": "领取余额",
+      "balance_claim": "解冻余额",
       "override_transfer": "优先覆盖转账",
       "witness_update": "更新见证人",
       "committee_member_update_global_parameters": "全局参数更新",

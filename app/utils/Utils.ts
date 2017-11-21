@@ -1,7 +1,6 @@
 import { flattenDeep } from "lodash";
 
 const getExtension = (extensions, field) => {
-  console.log("ex: ", flattenDeep(extensions));
   for (let options of flattenDeep(extensions).filter(o => typeof o === "object")) {
       if (options[field]) {
           return options[field];

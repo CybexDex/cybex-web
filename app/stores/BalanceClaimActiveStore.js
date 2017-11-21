@@ -146,7 +146,7 @@ class BalanceClaimActiveStore extends BaseStore {
 
     /** @return Promise.resolve(balances) */
     lookupBalanceObjects() {
-        console.log("BalanceClaimActiveStore.lookupBalanceObjects")
+        console.log("BalanceClaimActiveStore.lookupBalanceObjects", this.addresses);
         var db = Apis.instance().db_api()
         var no_balance_address = new Set(this.no_balance_address)
         var no_bal_size = no_balance_address.size
