@@ -104,7 +104,7 @@ let AccountVestedBalances = class extends React.PureComponent<VestedBalancesProp
       <div>
         <div className="grid-block vertical">
           <VestedBalancesLists />
-        </div> {}
+        </div> 
         <div className="vest-bottom grid-block">
           <MyAccounts
             key={this.props.balances}

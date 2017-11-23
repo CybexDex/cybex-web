@@ -1,6 +1,6 @@
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import WalletDb from "stores/WalletDb";
-import {Aes, ChainValidationChainValidation, TransactionBuilder, TransactionHelper, FetchChain, ChainStore} from "cybexjs";
+import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, FetchChain, ChainStore} from "cybexjs";
 
 const ApplicationApi = {
 
