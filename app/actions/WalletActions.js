@@ -282,6 +282,7 @@ class WalletActions {
                     //DEBUG console.log('... balance_claims',balance_claims)
                     let tr = new TransactionBuilder();
 
+                    
                     for(let balance_claim of balance_claims) {
                         tr.add_type_operation("balance_claim", balance_claim);
                     }

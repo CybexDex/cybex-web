@@ -14,6 +14,10 @@ class BalanceClaimActiveActions {
         return claim_account_name;
     }
 
+    refreshBalances() {
+        return true;
+    }
+
 }
 
 const BalanceClaimActiveActionsWrapped = alt.createActions(BalanceClaimActiveActions);

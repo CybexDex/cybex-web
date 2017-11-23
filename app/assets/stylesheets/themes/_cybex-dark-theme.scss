@@ -78,4 +78,9 @@ $account-background: $panel-bg-color;
     $account-border,
     $account-background
   );
+
+
+  select.cyb-select {
+    background-color: transparent;
+  }
 }

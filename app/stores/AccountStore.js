@@ -52,6 +52,7 @@ class AccountStore extends BaseStore {
             "getMyAccounts",
             "isMyAccount",
             "getMyAuthorityForAccount",
+            "getCurrentAccountState",
             "isMyKey",
             "reset",
             "setWallet"
@@ -64,6 +65,7 @@ class AccountStore extends BaseStore {
             myIgnoredAccounts: Immutable.Set(),
             unFollowedAccounts: Immutable.Set(),
             currentAccount: null,
+            currentAccountState: null,
             passwordAccount: null,
             starredAccounts: Immutable.Map(),
             searchAccounts: Immutable.Map(),
@@ -312,7 +314,7 @@ class AccountStore extends BaseStore {
                 accounts.push(account_name);
             }
 
-            // console.log("account:", account_name, "auth:", auth);
+            // console.debug("account:", account.toJS(), "auth:", auth);
         }
         if (this.state.passwordAccount && accounts.indexOf(this.state.passwordAccount) === -1) accounts.push(this.state.passwordAccount);
         // console.log("accounts:", accounts, "linkedAccounts:", this.state.linkedAccounts && this.state.linkedAccounts.toJS());
@@ -435,12 +437,20 @@ class AccountStore extends BaseStore {
         if (!name) {
             name = null;
         }
-
+        let currentAccountState;
+        if (name) {
+            currentAccountState = ChainStore.getAccount(name);
+        }
         this.setState({
-            currentAccount: name
+            currentAccount: name,
+            currentAccountState
         });
 
         accountStorage.set(key, name || null);
+    }
+
+    getCurrentAccountState() {
+        return this.state.currentAccountState;
     }
 
     onSetCurrentAccount(name) {

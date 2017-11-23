@@ -8,57 +8,76 @@ import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
 
-let VestedBalancesLists = class extends React.Component<any> {
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.claim_account_name) this.onClaimAccount(nextProps.claim_account_name, nextProps.checked);
+let VestedBalancesLists = class extends React.PureComponent<any> {
+  constructor(props: any) {
+    super(props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.claim_account_name !== this.props.claim_account_name) {
+      this.onClaimAccount(nextProps.claim_account_name, nextProps.checked);
+    }
+  }
+
+
   render() {
-    if (this.props.balances === undefined || !this.props.total_by_account_asset.size)
-      return <div></div>;
-    console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
-    let index = -1;
+    // if (this.props.balances === undefined || !this.props.total_by_account_asset.size)
+    //   return <div></div>;
+    // // console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
     return <div>
-      <progress value="30" max="100" />
-      <table className="table vest-table">
+      <table className="table dashboard-table vest-table">
         <thead>
           <tr>
             <th>{ /* C H E C K B O X */}</th>
-            <th style={{ textAlign: "center" }}><Translate content="vesting.asset" /></th>
-            <th style={{ textAlign: "center" }}><Translate content="vesting.amount" /></th>
+            <th style={{ textAlign: "center" }}><Translate content="account.asset" /></th>
+            <th style={{ textAlign: "center" }}><Translate content="exchange.amount" /></th>
             <th style={{ textAlign: "center" }}><Translate content="vesting.progress" /></th>
-            <th style={{ textAlign: "center" }}><Translate content="vesting.operation" /></th>
+            <th style={{ textAlign: "center" }}><Translate content="vesting.detail" /></th>
           </tr>
         </thead>
         <tbody>
-          {this.props.total_by_account_asset.map((r, name_asset) =>
-            <tr key={++index}>
-              <td>
-                <input type="checkbox"
-                  checked={!!this.props.checked.get(index)}
-                  onChange={this.onCheckbox.bind(this, index, r.balances)} />
-              </td>
-              <td style={{ textAlign: "center" }}>
-                {r.vesting.unclaimed ?
-                  <FormattedAsset color="info"
-                    amount={r.unclaimed}
-                    asset={name_asset.get(1)}
-                    hide_amount />
-                  : null}
-              </td>
-              <td style={{ textAlign: "center" }}>
-                {r.vesting.unclaimed ? <div>
-                  <FormattedAsset color="info"
-                    amount={r.vesting.total}
-                    asset={name_asset.get(1)}
-                    hide_asset />
-                </div> : null}
-              </td>
-              <td>
-                {r.vesting.unclaimed && <progress value={r.vesting.unclaimed} max={r.vesting.total} />}
-              </td>
+          {this.props.total_by_account_asset.map((r, name_asset) => {
+            let index = r.balances.toJS()[0]["id"];
+            return (
+              <tr key={index}>
+                <td>
+                  <input type="checkbox"
+                    checked={!!this.props.checked.get(index)}
+                    onChange={this.onCheckbox.bind(this, index, r.balances)} />
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {r.vesting.unclaimed ?
+                    <FormattedAsset
+                      amount={r.unclaimed}
+                      asset={name_asset.get(1)}
+                      hide_amount />
+                    : null}
+                </td>
+                <td style={{ textAlign: "center" }}>
+                  {r.vesting.unclaimed ? <div>
+                    <FormattedAsset
+                      amount={r.vesting.total}
+                      asset={name_asset.get(1)}
+                      hide_asset />
+                  </div> : null}
+                </td>
+                <td>
+                  {r.vesting.unclaimed && <progress value={r.vesting.unclaimed} max={r.vesting.total} />}
+                </td>
+                <td>no</td>
+              </tr>
+            );
+          }).toArray()}
+          {
+            this.props.total_by_account_asset.size === 0 && 
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
             </tr>
-          ).toArray()}
+          }
         </tbody>
       </table>
     </div>;
@@ -97,7 +116,9 @@ VestedBalancesLists = connect(VestedBalancesLists, {
   },
   getProps() {
     let props = BalanceClaimActiveStore.getState();
+    // console.debug("Props: ", props);
     let { balances, address_to_pubkey } = props;
+    // console.debug("Balance: ", balances && balances.toJS());
     let private_keys = PrivateKeyStore.getState().keys;
     let groupCountMap = Immutable.Map().asMutable();
     let groupCount = (group, distinct) => {

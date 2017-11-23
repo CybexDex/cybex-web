@@ -31,6 +31,7 @@ class AccountLeftPanel extends React.Component {
             changed ||
             this.props.account !== nextProps.account ||
             this.props.linkedAccounts !== nextProps.linkedAccounts ||
+            this.props.isMyAccount !== nextProps.isMyAccount ||
             nextState.showAdvanced !== this.state.showAdvanced ||
             nextState.showQR !== this.state.showQR ||
             nextState.titleClass !== this.state.titleClass

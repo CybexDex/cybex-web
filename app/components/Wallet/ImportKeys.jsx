@@ -80,6 +80,7 @@ class ImportKeys extends Component {
     }
 
     updateOnChange() {
+        console.debug("updateOnChange: ", this.state);
         BalanceClaimActiveActions.setPubkeys(Object.keys(this.state.imported_keys_public));
     }
 

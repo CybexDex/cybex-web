@@ -16,11 +16,9 @@ class MyAccounts extends Component {
             .filter( account => !!account )
             .filter( account => AccountStore.isMyAccount(account) )
             .map( account => account.get("name") ).sort();
-
-        return <span>
-            <AccountSelect onChange={this.onAccountSelect.bind(this)}
-                account_names={account_names} center={true}/>
-        </span>;
+        let className = this.props.className;
+        return <AccountSelect className onChange={this.onAccountSelect.bind(this)}
+                account_names={account_names} center={true}/>;
     }
 
     onAccountSelect(account_name) {

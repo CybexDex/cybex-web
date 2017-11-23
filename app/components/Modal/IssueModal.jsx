@@ -105,10 +105,10 @@ class IssueModal extends React.Component {
                     />
                 </div>
                 {
-                    this.state.vestingPeriod && (
+                    this.state.vestingPeriod !== undefined && (
                         <div className="content-block">
                             <label htmlFor="issueVesting"><Translate component="span" content="transfer.vesting" /></label>
-                            <input id="issueVesting" type="text" value={this.state.vestingPeriod} onChange={this.onVestingChanged.bind(this)} />
+                            <input tabIndex={tabIndex++} id="issueVesting" type="text" value={this.state.vestingPeriod} onChange={this.onVestingChanged.bind(this)} />
                         </div>
                     )
                 }

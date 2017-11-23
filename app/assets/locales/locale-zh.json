@@ -327,6 +327,7 @@
     "voting": "投票",
     "orders": "订单",
     "select_placeholder": "选择账户...",
+    "select_claim_placeholder": "选择转入账户...",
     "errors": {
       "not_found": "账户 %(name)s 不存在, 你确定输入正确么?",
       "invalid": "非法的账户名",
@@ -399,7 +400,8 @@
     "estimate_value": "账户价值估算",
     "polo_scam": "注意：这个账户不是交易所 Poloniex 的存款账户，请发送至 poloniexwallet。",
     "bittrex_scam": "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
-    "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。"
+    "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。",
+    "vested": "锁定期资产"
   },
   "transfer": {
     "from": "来自",
@@ -1482,5 +1484,9 @@
     "account": "账户配置",
     "bazaar": "主要市场",
     "ledger": "钱包区块"
+  },
+  "vesting": {
+    "progress": "解锁进度",
+    "detail": "详情"
   }
 }

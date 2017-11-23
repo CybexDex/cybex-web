@@ -2,4 +2,15 @@
   progress {
     margin-bottom: 0;
   }
+
+  input[type="checkbox"] {
+    // margin: 0 1em;
+  }
+}
+
+.vest-bottom {
+  .cyb-select {
+    flex-grow: 1;
+    height: auto;
+  }
 }

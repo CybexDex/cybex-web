@@ -227,6 +227,7 @@ class AccountOverview extends React.Component {
             !utils.are_equal_shallow(nextProps.backedCoins, this.props.backedCoins) ||
             !utils.are_equal_shallow(nextProps.balances, this.props.balances) ||
             nextProps.account !== this.props.account ||
+            nextProps.isMyAccount !== this.props.isMyAccount ||
             nextProps.settings !== this.props.settings ||
             nextProps.hiddenAssets !== this.props.hiddenAssets ||
             !utils.are_equal_shallow(nextState, this.state)
@@ -750,15 +751,15 @@ class AccountOverview extends React.Component {
                                     </div>
                                 </div>
                             </Tab>
-                            <Tab title="account.vested" subText={<span className={this.state.globalMarginStatus}>{marginValue}</span>}>
-                                <div className="content-block">
-                                    <div className="generic-bordered-box">
-                                    <AccountVestedBalances />
+                            {this.props.isMyAccount &&
+                                <Tab title="account.vested">
+                                    <div className="content-block">
+                                        <div className="generic-bordered-box">
+                                            <AccountVestedBalances />
+                                        </div>
                                     </div>
-                                </div>
-                            </Tab>
-                            
-
+                                </Tab>
+                            }
                             {/* <Tab title="markets.title" subText={hiddenSubText}>
 
                             </Tab> */}
