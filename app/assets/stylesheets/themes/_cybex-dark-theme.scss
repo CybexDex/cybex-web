@@ -79,8 +79,15 @@ $account-background: $panel-bg-color;
     $account-background
   );
 
+  .vest-bottom {
+    select.cyb-select {
+      background-color: transparent;
+    }
+  }
 
-  select.cyb-select {
-    background-color: transparent;
+  .account-left-panel {
+    margin: -1px;
+    margin-right: 1px;
+    box-shadow: 1px 0 1px rgba(0,0,0,0.65);
   }
 }

@@ -69,35 +69,6 @@ const sortFunctions = {
     }
 };
 
-// class PortfolioSelectors extends React.Component {
-//     componentWillMount() {
-//         console.debug("Did Mount");
-//         let { hiddenBalances, showHidden, toggleHiddenAssets } = this.props;
-//         ContextMenuActions.addMenu(HeadContextMenuId,
-//             <div className="hide-selector">
-//                 <div className={cnames("inline-block", { inactive: showHidden && hiddenBalances.length })} onClick={showHidden ? toggleHiddenAssets : () => { }}>
-//                     <Translate content="account.hide_hidden" />
-//                 </div>
-//                 {hiddenBalances.length ? <div className={cnames("inline-block", { inactive: !showHidden })} onClick={!showHidden ? toggleHiddenAssets : () => { }}>
-//                     <Translate content="account.show_hidden" />
-//                 </div> : null}
-//             </div>
-//         );
-//     }
-
-//     componentWillUnmount() {
-//         console.debug("Will Unmount");
-//         ContextMenuActions.detachMenu(HeadContextMenuId);
-//     }
-
-//     render() {
-
-//         return (
-//             <div></div>
-//         );
-//     }
-// }
-
 class AccountOverview extends React.Component {
 
     static propTypes = {

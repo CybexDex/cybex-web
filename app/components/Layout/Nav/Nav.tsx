@@ -25,6 +25,7 @@ const NavLinks: Array<NavItem> = [
   {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
+    activeMatcher: /^\/account/,    
     name: "Account",
     icon: "package",
     displayOnlyWhen: "currentAccount"

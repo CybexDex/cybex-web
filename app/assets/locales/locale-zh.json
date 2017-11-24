@@ -98,6 +98,7 @@
     "assets": "资产",
     "market_value": "市值",
     "hour_24": "日涨跌幅%",
+    "hour_24_short": "24hr",    
     "recent": "近期活动",
     "name": "账户名",
     "member": {
@@ -1483,7 +1484,8 @@
     "exchange": "交易中心",
     "account": "账户配置",
     "bazaar": "主要市场",
-    "ledger": "钱包区块"
+    "ledger": "钱包区块",
+    "swap": "原子交换"
   },
   "vesting": {
     "progress": "解锁进度",

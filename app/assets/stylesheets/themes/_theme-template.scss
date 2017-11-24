@@ -1262,7 +1262,8 @@
         .nav-toggle {
             background-color: $bg-color;
         }
-        .nav-item {
+        .nav-item, a {
+            color: $light-text-color;
             &.active {
                 color: $warning-color;
             }
