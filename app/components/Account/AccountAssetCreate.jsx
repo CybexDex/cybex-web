@@ -17,6 +17,7 @@ import { Tabs, Tab } from "../Utility/Tabs";
 import AmountSelector from "../Utility/AmountSelector";
 import assetConstants from "chain/asset_constants";
 import { estimateFee } from "common/trxHelper";
+import { Period } from "components/Forms/Period";
 
 let GRAPHENE_MAX_SHARE_SUPPLY = new big(assetConstants.GRAPHENE_MAX_SHARE_SUPPLY);
 
@@ -205,7 +206,7 @@ class AccountAssetCreate extends React.Component {
             update.description.market = "";
         }
         let description = JSON.stringify(update.description);
-        let filteredUpdate = {...update};
+        let filteredUpdate = { ...update };
         if (!isVestingAsset) {
             delete filteredUpdate.vesting_period;
         }
@@ -311,6 +312,13 @@ class AccountAssetCreate extends React.Component {
         this.forceUpdate();
     }
 
+    _onPeriodChange(field, amount) {
+        let { update, errors } = this.state;
+        update[field] = this._forcePositive(amount);
+        this._validateEditFields(update);
+        this.setState({ update });
+    }
+
     _onUpdateInput(value, e) {
         let { update, errors } = this.state;
         let updateState = true;
@@ -341,21 +349,21 @@ class AccountAssetCreate extends React.Component {
 
             case "max_supply":
                 shouldRestoreCursor = true;
-                
+
                 const regexp_numeral = new RegExp(/[[:digit:]]/);
 
                 // Ensure input is valid
-                if(!regexp_numeral.test(target.value)) {
+                if (!regexp_numeral.test(target.value)) {
                     target.value = target.value.replace(/[^0-9.]/g, "");
                 }
 
                 // Catch initial decimal input
-                if(target.value.charAt(0) == ".") { 
-                    target.value = "0."; 
+                if (target.value.charAt(0) == ".") {
+                    target.value = "0.";
                 }
 
                 // Catch double decimal and remove if invalid
-                if(target.value.charAt(target.value.length) != target.value.search(".")) { 
+                if (target.value.charAt(target.value.length) != target.value.search(".")) {
                     target.value.substr(1);
                 }
 
@@ -618,7 +626,7 @@ class AccountAssetCreate extends React.Component {
                     <Translate component="h3" content="header.create_asset" />
                     <Tabs
                         setting="overviewTab"
-                        segmented={false} 
+                        segmented={false}
                         className="overview-tabs with-shadow" style={{ "width": "100%" }}
                         contentClass="grid-block shrink small-vertical medium-horizontal full-container"
                         tabsClass="account-overview no-padding bordered-header content-block"
@@ -659,10 +667,8 @@ class AccountAssetCreate extends React.Component {
                                             <Translate content="account.user_issued_assets.sell_end" />
                                             <input type="number" required min="0" value={this.state.ext.sell_end} onChange={this._onExtInput.bind(this, "sell_end")} />
                                         </label> */}
-                                        <label htmlFor="vestingPeriod" className="small-12 medium-12">
-                                            <Translate content="account.user_issued_assets.vesting_end" />
-                                            <input id="vestingPeriod" type="number" required min="0" value={this.state.update.vesting_period} onChange={this._onUpdateInput.bind(this, "vesting_period")} />
-                                        </label>
+                                        <Translate component="span" htmlFor="vestingPeriod" className="left-label small-12 medium-12" content="account.user_issued_assets.vesting_period" />
+                                        <Period className="period-horizontal" defaultPeriod={this.state.update.vesting_period} name="create" onPeriodChange={this._onPeriodChange.bind(this, "vesting_period")} />
                                         {/* <label htmlFor="" className="small-12 medium-4">
                                             <Translate content="cancel" />
                                             <input type="datetime-local" />
@@ -720,7 +726,7 @@ class AccountAssetCreate extends React.Component {
                                                 assets={[core_exchange_rate.base.asset_id]}
                                                 placeholder="0.0"
                                                 tabIndex={1}
-                                                style={{ width: "100%", paddingLeft: "10px" }}
+                                                style={{ width: "100%" }}
                                             />
                                         </div>
                                     </div>

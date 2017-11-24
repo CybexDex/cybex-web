@@ -8,6 +8,7 @@ import AssetActions from "actions/AssetActions";
 import AccountSelector from "../Account/AccountSelector";
 import AmountSelector from "../Utility/AmountSelector";
 import { getObjectExtensionField } from "utils";
+import { Period } from "components/Forms/Period";
 
 
 class IssueModal extends React.Component {
@@ -43,9 +44,9 @@ class IssueModal extends React.Component {
         this.setState({ to: to, to_id: null });
     }
 
-    onVestingChanged(e) {
+    onPeriodChange(vestingPeriod) {
         this.setState({
-            vestingPeriod: e.target.value
+            vestingPeriod
         });
     }
 
@@ -107,8 +108,8 @@ class IssueModal extends React.Component {
                 {
                     this.state.vestingPeriod !== undefined && (
                         <div className="content-block">
-                            <label htmlFor="issueVesting"><Translate component="span" content="transfer.vesting" /></label>
-                            <input tabIndex={tabIndex++} id="issueVesting" type="text" value={this.state.vestingPeriod} onChange={this.onVestingChanged.bind(this)} />
+                            <label htmlFor="issueVesting"><Translate component="span" content="account.user_issued_assets.vesting_period" /></label>
+                            <Period className="period-horizontal" defaultPeriod={this.state.vestingPeriod} name="issue" tabIndex={tabIndex+=2} onPeriodChange={this.onPeriodChange.bind(this)}/>
                         </div>
                     )
                 }

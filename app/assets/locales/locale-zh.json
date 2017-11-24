@@ -203,8 +203,8 @@
       "visible": "在搜索与市场中隐去资产",
       "cer_warning_1": "警告",
       "cer_warning_2": "Make sure your core exchange rate is higher than the market price, otherwise people will buy your token from the market and drain your fee pool via implicit arbitrage. The core exchange rate should be updated regularly to reflect market pricing of your asset.",
-      "vesting": "设置禁售期",
-      "vesting_end": "禁售周期(天)",
+      "vesting": "设置锁定期",
+      "vesting_period": "锁定周期",
       "sell_end": "销售周期"
     },
     "perm": {
@@ -1490,5 +1490,11 @@
   "vesting": {
     "progress": "解锁进度",
     "detail": "详情"
+  },
+  "period": {
+    "seconds": "秒",
+    "minutes": "分钟",
+    "hours": "小时",
+    "days": "天"
   }
 }

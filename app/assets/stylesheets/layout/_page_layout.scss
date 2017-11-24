@@ -156,6 +156,7 @@ div.bordered-header {
   $align-items: stretch, $flex-wrap: nowrap);
   flex-grow: 1; // padding-top: $space-between;
   // padding-bottom: $space-between;
+  overflow-y: hidden;
 }
 
 .left-panel {

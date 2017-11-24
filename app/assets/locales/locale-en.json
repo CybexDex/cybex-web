@@ -1,13 +1,13 @@
 {
-    "counterpart": {
-        "formats": {
-            "date": {
-                "short_custom": "%e %b '%y",
-                "market_history": "%e/%m %H:%M:%S",
-                "market_history_us": "%m/%e %H:%M:%S"
-            }
-        }
-    },
+  "counterpart": {
+    "formats": {
+      "date": {
+        "short_custom": "%e %b '%y",
+        "market_history": "%e/%m %H:%M:%S",
+        "market_history_us": "%m/%e %H:%M:%S"
+      }
+    }
+  },
   "languages": {
     "en": "English",
     "zh": "简体中文",
@@ -135,6 +135,7 @@
     "polo_scam": "This account is not the real Poloniex account, please send to this account: poloniexwallet.",
     "bittrex_scam": "This account is not the real Bittrex account, please send to this account: bittrex-deposit.",
     "other_scam": "This account is not known to be an official account, please verify the destination before transferring",
+    "vested": "Lockup Assets",
     "whitelist": {
       "title": "Whitelist",
       "black": "Blacklist",
@@ -251,7 +252,7 @@
       "cer_warning_1": "Warning",
       "cer_warning_2": "Make sure your core exchange rate is higher than the market price, otherwise people will buy your token from the market and drain your fee pool via implicit arbitrage. The core exchange rate should be updated regularly to reflect market pricing of your asset.",
       "vesting": "Set Lockup Period",
-      "vesting_end": "Lockup Period(Day)"      
+      "vesting_period": "Lockup Period"
     },
     "connections": {
       "known": "Known by",
@@ -476,7 +477,8 @@
     "copy_address": "Copy Address",
     "copy_memo": "Copy Memo",
     "memo_unlock": "Unlock your wallet/account in order to see this memo",
-    "optional": "Optional"
+    "optional": "Optional",
+    "vesting": ""
   },
   "operation": {
     "pending": "pending %(blocks)s blocks",
@@ -765,7 +767,7 @@
         "stealth_supply": "Stealth supply",
         "market_fee": "Market fee",
         "max_market_fee": "Max market fee",
-        "vesting": "Default Lockup Period"        
+        "vesting": "Default Lockup Period"
       },
       "price_feed": {
         "title": "Price Feed",
@@ -1361,9 +1363,9 @@
     "generate_new_memo": "Get new memo",
     "deposit": "Deposit",
     "withdraw": "Withdrawal",
-	  "convert": "Internal conversion",
+    "convert": "Internal conversion",
     "withdraw_now": "Withdraw now",
-	  "convert_now": "Convert now",
+    "convert_now": "Convert now",
     "inventory": "Inventory",
     "scan_qr": "Scan QR",
     "calc": "Calculating",
@@ -1486,6 +1488,17 @@
     "exchange": "EXCHANGE",
     "account": "ACCOUNT",
     "bazaar": "BAZAAR",
-    "ledger": "LEDGER"
+    "ledger": "LEDGER",
+    "swap": "Atomic Swap"
+  },
+  "vesting": {
+    "progress": "Unlock Progress",
+    "detail": "Detail"
+  },
+  "period": {
+    "seconds": "Seconds",
+    "minutes": "Minutes",
+    "hours": "Hours",
+    "days": "Days"
   }
 }

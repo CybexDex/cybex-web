@@ -130,7 +130,7 @@ class AccountSelector extends React.Component {
                             this.props.hideImage ? null : <AccountImage size={{height: this.props.size || 80, width: this.props.size || 80}}
                                 account={this.props.account ? this.props.account.get("name") : null} custom_image={null}/>}
                                 <input
-                                    style={{textTransform: "lowercase", fontVariant: "initial"}}
+                                    style={{textTransform: "lowercase", fontVariant: "initial", zIndex:"1"}}
                                     type="text"
                                     name="username"
                                     id="username"

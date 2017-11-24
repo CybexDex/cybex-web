@@ -396,6 +396,7 @@ select.cyb-select {
 }
 
 input,
+select,
 textarea {
   // border-radius: 5px !important;
   &:focus {
@@ -467,4 +468,23 @@ section progress {
 }
 .flex-flow-end {
   align-self: flex-end;
+}
+
+// input:-webkit-autofill {
+//   -webkit-box-shadow: 0 0 0 1000px white inset !important;
+// }
+.period-horizontal {
+  width: 100%;
+  display: flex;
+  input {
+    margin-bottom: 0;
+  }
+  select {
+    margin-bottom: 0;
+    margin-left: 10px;
+  }
+}
+
+textarea {
+  resize: none;
 }
