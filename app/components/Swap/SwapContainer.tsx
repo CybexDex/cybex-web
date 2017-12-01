@@ -261,6 +261,7 @@ class SwapSteps extends React.Component<any, any> {
     let { privKey } = WalletDb.generateKeyFromPassword(seed, seed, seed);
     alert("您本次院子交易的提起侧临时私钥为" + seed + ", 请牢记此密钥，在适当的时候将其交给交易对侧，以供其提款使用")
     let pubA = privKey.toPublicKey().toPublicKeyString();
+    console.debug("Start Swap: ", pubA, swap.pubB);    
     await this.createSwapAccount(pubA, swap.pubB);
     console.debug("Notice SIDEB");
     await this.transfer(
@@ -299,17 +300,18 @@ class SwapSteps extends React.Component<any, any> {
     let ownerPublic = privKey.toPublicKey().toPublicKeyString();
 
     await Promise.all([
-      FetchChain("getAccount", "permission-test"),
-      FetchChain("getAccount", "test-new1")
+      FetchChain("getAccount", swap.sideA),
+      FetchChain("getAccount", swap.sideB)
     ]).then((res) => {
       let [chain_registrar, chain_referrer] = res;
+      console.debug("Get Resigter: ", chain_registrar, chain_referrer);
       let createParams = {
         fee: {
           amount: 0,
           asset_id: 0
         },
-        "registrar": chain_referrer.get("id"),
-        "referrer": chain_referrer.get("id"),
+        "registrar": chain_registrar.get("id"),
+        "referrer": chain_registrar.get("id"),
         "referrer_percent": 0,
         "name": name,
         "owner": {
