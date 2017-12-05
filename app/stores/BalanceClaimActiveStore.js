@@ -129,10 +129,10 @@ class BalanceClaimActiveStore extends BaseStore {
         let {
             address_to_pubkey
         } = this.state;
-        console.debug("IndexPubkeys: ", pubkeys);
+        // console.debug("IndexPubkeys: ", pubkeys);
         for (let pubkey of pubkeys) {
             for (let address_string of key.addresses(pubkey)) {
-                console.debug("AddressToPub: ", address_string);
+                // console.debug("AddressToPub: ", address_string);
 
                 // if( !this.no_balance_address.has(address_string)) {
                 // AddressIndex indexes all addresses .. Here only 1 address is involved

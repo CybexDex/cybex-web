@@ -108,7 +108,7 @@ class Block extends BaseComponent {
         let {blocks} = this.props;
         let height = parseInt(this.props.height, 10);
         let block = blocks.get(height);
-        console.debug("Block Height: ", block);
+        // console.debug("Block Height: ", block);
         
         return (
             <div className="grid-block">

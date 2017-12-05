@@ -128,7 +128,7 @@ class App extends React.Component {
     }
 
     _onLocaleChange(state) {
-        console.debug("[APP]locale change: ", state);
+        // console.debug("[APP]locale change: ", state);
         this.forceUpdate();
     }
 

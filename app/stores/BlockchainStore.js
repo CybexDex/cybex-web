@@ -31,7 +31,7 @@ class BlockchainStore {
             if (!/Z$/.test(block.timestamp)) {
                 block.timestamp += "Z";
             }
-            console.debug("BlockStore: ", block);
+            // console.debug("BlockStore: ", block);
             block.timestamp = new Date(block.timestamp);
             this.blocks = this.blocks.set(
                 block.id,

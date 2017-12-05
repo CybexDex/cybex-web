@@ -150,7 +150,7 @@ class AccessSettings extends React.Component {
 
     setPrefix() {
         let e = document.getElementById("setPrefix");
-        console.debug("SetPrefix: ", e);
+        // console.debug("SetPrefix: ", e);
         if (!e || !e.value) return;
         let value = e.value;
         let chainKey = "PREFIX_" + Apis.instance().chain_id;

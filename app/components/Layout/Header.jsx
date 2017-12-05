@@ -166,7 +166,7 @@ class Header extends React.Component {
 
 
         let myAccounts = AccountStore.getMyAccounts();
-        console.debug("MyAccounts: ", myAccounts);
+        // console.debug("MyAccounts: ", myAccounts);
         let myAccountCount = myAccounts.length;
 
         let walletBalance = myAccounts.length && this.props.currentAccount ? (

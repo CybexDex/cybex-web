@@ -3,7 +3,7 @@ import alt from "alt-instance";
 class PrivateKeyActions {
 
     addKey(private_key_object, transaction) {
-        console.debug("AddKey: ", private_key_object, transaction);
+        // console.debug("AddKey: ", private_key_object, transaction);
         // returned promise is deprecated
         return (dispatch) => {
             return new Promise( resolve => {

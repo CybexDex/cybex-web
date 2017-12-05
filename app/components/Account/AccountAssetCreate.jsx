@@ -211,7 +211,7 @@ class AccountAssetCreate extends React.Component {
             delete filteredUpdate.vesting_period;
         }
 
-        console.debug("Creating: ", update);
+        // console.debug("Creating: ", update);
         AssetActions.createAsset(
             account.get("id"),
             filteredUpdate,
@@ -431,7 +431,7 @@ class AccountAssetCreate extends React.Component {
         if (this.state.isVestingAsset) {
             isValid = (isValid && new_state.vesting_period > 0);
         }
-        console.debug("Value: ", isValid);
+        // console.debug("Value: ", isValid);
         this.setState({ isValid, errors });
 
     }
@@ -546,7 +546,7 @@ class AccountAssetCreate extends React.Component {
     }
 
     render() {
-        // console.debug("CurrentUpdate: ", this.state);
+        // // console.debug("CurrentUpdate: ", this.state);
         let { globalObject, core } = this.props;
         let { errors, isValid, update, flagBooleans, permissionBooleans,
             core_exchange_rate, is_prediction_market, isBitAsset, isVestingAsset, bitasset_opts } = this.state;

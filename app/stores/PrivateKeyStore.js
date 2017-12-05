@@ -47,7 +47,7 @@ class PrivateKeyStore extends BaseStore {
     }
 
     setPasswordLoginKey(key) {
-        console.debug("SetPasswordLoginKey: ", key);
+        // console.debug("SetPasswordLoginKey: ", key);
         let keys = this.state.keys.set(key.pubkey, key);
         this.setState({
             keys
@@ -117,7 +117,7 @@ class PrivateKeyStore extends BaseStore {
             resolve({result:"duplicate",id:null});
             return;
         }
-        console.debug("Add Key: ", private_key_object);
+        // console.debug("Add Key: ", private_key_object);
         this.pendingOperation();
         //console.log("... onAddKey private_key_object.pubkey", private_key_object.pubkey)
 

@@ -21,7 +21,7 @@ class IssueModal extends React.Component {
         super(props);
         let { options } = this.props.asset_to_issue.toJS();
         let vestingPeriod = getObjectExtensionField(options, "vesting_period");
-        console.debug("AssetToIssue: ", options, vestingPeriod);
+        // console.debug("AssetToIssue: ", options, vestingPeriod);
         this.state = {
             amount: props.amount,
             to: props.to,

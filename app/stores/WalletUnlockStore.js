@@ -61,7 +61,7 @@ class WalletUnlockStore {
     }
 
     onChange() {
-        console.debug("WalletUnlockStore: ");
+        // console.debug("WalletUnlockStore: ");
         this.setState({locked: WalletDb.isLocked()})
     }
 
