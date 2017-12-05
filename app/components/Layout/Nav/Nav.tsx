@@ -53,12 +53,13 @@ const NavLinks: Array<NavItem> = [
     routeTo: "/transfer",
     name: "Transfer",
     icon: "transfer"
-  }, {
-    id: "swap",
-    routeTo: "/swap",
-    name: "SwapTest",
-    icon: "transfer"
-  },
+  }, 
+  // {
+  //   id: "swap",
+  //   routeTo: "/swap",
+  //   name: "SwapTest",
+  //   icon: "transfer"
+  // },
 ];
 
 const NavLink = ({ icon, name, isActive, id }: NavItem) => (
