@@ -1107,7 +1107,7 @@
     "never_backed_up": "钱包尚未进行过备份",
     "need_backup": "钱包需要备份",
     "noneed_backup": "无需备份",
-    "import_bts1": "从BitShares 0.9.3c导入",
+    "import_bts1": "从Cybex 0.9.3c导入",
     "import_keys_tool": "私钥导入工具",
     "balance_claim_lookup": "查询余额",
     "create_importkeys_text": "导入私钥前，你需要创建一个新的钱包来存储私钥。请根据提示创建钱包。",
@@ -1209,7 +1209,7 @@
     "go_on": "以知晓备份钱包的重要性，继续进行注册",
     "backup_primary": "请务必优先<br>备份并妥善保存钱包",
     "not_first_account": "Since you already have an account, you will need to pay for this new account yourself. In order to do so, your account needs to have lifetime membership, which can be bought in the account page.",
-    "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Bitshares!</strong>",
+    "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Cybex!</strong>",
     "understand_3": " I understand that I will lose access to my funds if I lose my password"
   },
   "borrow": {
@@ -1374,8 +1374,8 @@
     "bitkapital_withdraw": "You are withdrawing",
     "bitkapital_receive": "You will receive",
     "iban": "IBAN",
-    "add_funds": "Quickly and easily add funds to your BitShares account <strong>%(account)s</strong>. This service is provided by Openledger.",
-    "withdraw_funds": "You are going to withdraw funds from your BitShares account to your external %(asset)s account.",
+    "add_funds": "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Openledger.",
+    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(asset)s account.",
     "balance_asset": "Current %(asset)s balance",
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "convert": "Internal conversion",

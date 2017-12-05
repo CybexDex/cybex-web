@@ -3,29 +3,29 @@ import Translate from "react-translate-component";
 import PubKeyInput from "../Forms/PubKeyInput";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
-import {Signature, ChainStore, PublicKey} from "bitsharesjs/es";
+import {Signature, ChainStore, PublicKey} from "cybexjs";
 import {Tabs, Tab} from "../Utility/Tabs";
 import WalletDb from "stores/WalletDb";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import counterpart from "counterpart";
 
 // constants for message format
-const MSG_HEAD = "-----BEGIN BITSHARES SIGNED MESSAGE-----";
+const MSG_HEAD = "-----BEGIN Cybex SIGNED MESSAGE-----";
 const MSG_META = "-----BEGIN META-----";
 const MSG_SIGNATURE = "-----BEGIN SIGNATURE-----";
-const MSG_FOOT = "-----END BITSHARES SIGNED MESSAGE-----";
+const MSG_FOOT = "-----END Cybex SIGNED MESSAGE-----";
 const MSG_SENDER =  "account";
 const MSG_PUBLICKEY = "memokey";
 const MSG_BLOCK = "block";
 const MSG_DATE = "timestamp";
 
-/** This component gives a user interface for signing and verifying messages with the bitShares memo key.
+/** This component gives a user interface for signing and verifying messages with the Cybex memo key.
  *  It consists of two tabs:
  *    - Sign message tab (code prefix: tabSM)
  *    - Verify message tab (code prefix: tabVM)
  *
  *  The message format that is underlying is as follows:
- *  -----BEGIN BITSHARES SIGNED MESSAGE-----
+ *  -----BEGIN Cybex SIGNED MESSAGE-----
  *  <message from the account>
  *  -----BEGIN META-----
  *  account=<account name>
@@ -34,7 +34,7 @@ const MSG_DATE = "timestamp";
  *  timestamp=<current time>
  *  -----BEGIN SIGNATURE-----
  *  <signature>
- *  -----END BITSHARES SIGNED MESSAGE-----
+ *  -----END Cybex SIGNED MESSAGE-----
  *
  *    @author Stefan Schiessl <stefan.schiessl@blockchainprojectsbv.com>
  */
@@ -68,7 +68,7 @@ class AccountSignedMessages extends React.Component {
      *              meta : Dictionary with the meta data
      *                      account : Account name of the signer
      *                      key : Memo public key of the signer
-     *                      block : Current last irreversible block of the bitShares blockchain
+     *                      block : Current last irreversible block of the Cybex blockchain
      *                      timestamp : Time the memo was signed in UTC format
      *              signed : Seperate string that contains all data that will be signed (content + meta)
      *              signature : Signature of the signed data

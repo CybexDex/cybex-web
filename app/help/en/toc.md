@@ -1,6 +1,6 @@
 #### Table of Contents
 
- * [BitShares](introduction/bitshares.md)
+ * [Cybex](introduction/cybex.md)
  * [Wallet](introduction/wallets.md)
  * [Backups](introduction/backups.md)
  * [Blockchain](introduction/blockchain.md)

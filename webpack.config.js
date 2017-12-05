@@ -300,7 +300,6 @@ module.exports = function (env) {
                 iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
                 assets: path.resolve(root_dir, "app/assets"),
                 app: path.resolve(root_dir, "app"),
-                "bitsharesjs/es": path.resolve(root_dir, "app/lib/cybexjs"),
                 counterpart: path.resolve(root_dir, "app/lib/counterpart"),
             },
             modules: [

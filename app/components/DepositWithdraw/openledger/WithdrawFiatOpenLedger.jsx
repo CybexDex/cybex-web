@@ -39,7 +39,7 @@ class WithdrawFiatOpenLedger extends React.Component {
       "jsonrpc": "2.0",
       "method": "getMemoForFiatWithdrawal",
       "params": {
-         "bitsharesAccountName": this.props.account.get('name'),
+         "CybexAccountName": this.props.account.get('name'),
          "currency": this.props.deposit_asset,
          "amount": amount
       },

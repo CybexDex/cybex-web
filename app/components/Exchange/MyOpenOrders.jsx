@@ -9,7 +9,7 @@ import PriceText from "../Utility/PriceText";
 import TransitionWrapper from "../Utility/TransitionWrapper";
 import AssetName from "../Utility/AssetName";
 import Icon from "../Icon/Icon";
-import { ChainStore } from "bitsharesjs/es";
+import { ChainStore } from "cybexjs";
 import { LimitOrder, CallOrder } from "common/MarketClasses";
 const rightAlign = {textAlign: "right"};
 import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";

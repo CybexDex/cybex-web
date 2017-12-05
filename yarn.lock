@@ -1152,6 +1152,12 @@ base-x@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/base-x/-/base-x-1.1.0.tgz#42d3d717474f9ea02207f6d1aa1f426913eeb7ac"
 
+base-x@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/base-x/-/base-x-3.0.2.tgz#bf873861b7514279b7969f340929eab87c11d130"
+  dependencies:
+    safe-buffer "^5.0.1"
+
 base64-js@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.2.0.tgz#a39992d723584811982be5e290bb6a53d86700f1"
@@ -1193,7 +1199,7 @@ big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
 
-bigi@^1.1.0:
+bigi@^1.1.0, bigi@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/bigi/-/bigi-1.4.2.tgz#9c665a95f88b8b08fc05cfd731f561859d725825"
 
@@ -1413,6 +1419,12 @@ bs58@^3.0.0:
   dependencies:
     base-x "^1.1.0"
 
+bs58@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/bs58/-/bs58-4.0.1.tgz#be161e76c354f6f788ae4071f63f34e8c4f0a42a"
+  dependencies:
+    base-x "^3.0.2"
+
 bser@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bser/-/bser-1.0.2.tgz#381116970b2a6deea5646dd15dd7278444b56169"
@@ -1481,7 +1493,7 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-bytebuffer@^5.0.0:
+bytebuffer@^5.0.0, bytebuffer@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/bytebuffer/-/bytebuffer-5.0.1.tgz#582eea4b1a873b6d020a48d58df85f0bba6cfddd"
   dependencies:
@@ -1996,14 +2008,14 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-counterpart@^0.17.1:
-  version "0.17.9"
-  resolved "https://registry.yarnpkg.com/counterpart/-/counterpart-0.17.9.tgz#0379e4d090b9efdb29c636a607c52e35734f5f13"
+counterpart@^0.18.3:
+  version "0.18.4"
+  resolved "https://registry.yarnpkg.com/counterpart/-/counterpart-0.18.4.tgz#347278fd0b85556f7fb609d4c35724b1d4b403bf"
   dependencies:
-    date-names "^0.1.7"
+    date-names "^0.1.11"
     except "^0.1.3"
     extend "^3.0.0"
-    pluralizers "^0.1.4"
+    pluralizers "^0.1.7"
     sprintf-js "^1.0.3"
 
 create-ecdh@^4.0.0:
@@ -2019,7 +2031,7 @@ create-error-class@^3.0.0:
   dependencies:
     capture-stack-trace "^1.0.0"
 
-create-hash@^1.1.0, create-hash@^1.1.2:
+create-hash@^1.1.0, create-hash@^1.1.2, create-hash@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/create-hash/-/create-hash-1.1.3.tgz#606042ac8b9262750f483caddab0f5819172d8fd"
   dependencies:
@@ -2028,7 +2040,7 @@ create-hash@^1.1.0, create-hash@^1.1.2:
     ripemd160 "^2.0.0"
     sha.js "^2.4.0"
 
-create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
+create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4, create-hmac@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/create-hmac/-/create-hmac-1.1.6.tgz#acb9e221a4e17bdb076e90657c42b93e3726cf06"
   dependencies:
@@ -2226,6 +2238,27 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+cybexjs-ws@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/cybexjs-ws/-/cybexjs-ws-1.0.0.tgz#bc27bf1d6ab32b698af29a00c7a7edf580baed0d"
+
+cybexjs@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cybexjs/-/cybexjs-1.0.3.tgz#305ca4cf3efa18506942ee903850a3c15c5297f8"
+  dependencies:
+    bigi "^1.4.2"
+    bs58 "^4.0.1"
+    bytebuffer "^5.0.1"
+    create-hash "^1.1.3"
+    create-hmac "^1.1.6"
+    crypto-js "^3.1.9-1"
+    cybexjs-ws "^1.0.0"
+    deep-equal "^1.0.1"
+    ecurve "^1.0.5"
+    event-emitter "^0.3.4"
+    immutable "^3.8.1"
+    secure-random "^1.1.1"
+
 d3-array@^1.0.2, d3-array@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-1.2.1.tgz#d1ca33de2f6ac31efadb8e050a021d7e2396d5dc"
@@ -2321,9 +2354,9 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-names@^0.1.7:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/date-names/-/date-names-0.1.10.tgz#62f8d9332295044657f3ce7616d8a34021f8ef2b"
+date-names@^0.1.11:
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/date-names/-/date-names-0.1.11.tgz#154bc1714d3e26adb4e305bde20803130a8a8e84"
 
 date-now@1.0.1:
   version "1.0.1"
@@ -2617,6 +2650,13 @@ ecurve@^1.0.2:
   resolved "https://registry.yarnpkg.com/ecurve/-/ecurve-1.0.5.tgz#d148e8fe50a674f983bb5bae09da0ea23e10535e"
   dependencies:
     bigi "^1.1.0"
+
+ecurve@^1.0.5:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/ecurve/-/ecurve-1.0.6.tgz#dfdabbb7149f8d8b78816be5a7d5b83fcf6de797"
+  dependencies:
+    bigi "^1.1.0"
+    safe-buffer "^5.0.1"
 
 ee-first@1.1.1:
   version "1.1.1"
@@ -6094,9 +6134,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-pluralizers@^0.1.4:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/pluralizers/-/pluralizers-0.1.6.tgz#1ab38b6e760e6f97f9846125097b862bc974c81e"
+pluralizers@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/pluralizers/-/pluralizers-0.1.7.tgz#8d38dd0a1b660e739b10ab2eab10b684c9d50142"
 
 portfinder@^1.0.9:
   version "1.0.13"
@@ -6719,7 +6759,7 @@ react-json-inspector@^7.0.0:
     object-assign "2.0.0"
     prop-types "^15.5.10"
 
-react-notification-system@^0.2.12:
+react-notification-system@^0.2.16:
   version "0.2.16"
   resolved "https://registry.yarnpkg.com/react-notification-system/-/react-notification-system-0.2.16.tgz#9b9da20b0d34786b60057c52b42516ea1295374a"
   dependencies:

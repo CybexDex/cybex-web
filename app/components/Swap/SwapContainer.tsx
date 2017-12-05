@@ -12,7 +12,7 @@ import WalletUnlockStore from "stores/WalletUnlockStore";
 import {
   FetchChain,
   TransactionBuilder
-} from "lib/cybexjs";
+} from "cybexjs";
 import MemoText from "components/BlockChain/MemoText";
 
 

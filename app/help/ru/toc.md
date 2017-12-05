@@ -2,7 +2,7 @@
 
 - [Введение](index.md)
 - [Глоссарий](glossary.md)
-- [BitShares](introduction/bitshares.md)
+- [Cybex](introduction/cybex.md)
 - [Кошелек](introduction/wallets.md)
 - [Резервные копии](introduction/backups.md)
 - [Блокчейн](introduction/blockchain.md)

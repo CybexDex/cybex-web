@@ -1,6 +1,6 @@
 # İzinler
 
-BitShares'de , her hesap ikiye ayrılır 
+Cybex'de , her hesap ikiye ayrılır 
 
 * **Etkin  İzin**: fonların yönetimi ve
 * **Sahip İzni**: hesap yönetimi.
@@ -11,7 +11,7 @@ gerekmektedir.
 
 ## Yetkililer
 
-BitShares'de bir *yetkili*,  transfer veya alım-satım gibi işlemlere yetki veren bir veya 
+Cybex'de bir *yetkili*,  transfer veya alım-satım gibi işlemlere yetki veren bir veya 
 daha çok sayıda kişiden oluşur.
 
 Bir yetki , bir yada daha fazla sayıda hesap adı ve *ağırlık* 
@@ -30,7 +30,7 @@ işe yarar.
 ## (Düz) Çok-İmzalı
 
 Düz çok-imzalı bir şema, işlemin geçerli olabilmesi için aralarından 'N' sayıda kişinin 
-imzası gerekli  toplam 'M' sayıda kişiden oluşur. Şimdi biz, BitShares'de, 'M' 
+imzası gerekli  toplam 'M' sayıda kişiden oluşur. Şimdi biz, Cybex'de, 'M' 
 ve 'N' yerine *ağırlıklar* ve *alt-sınır*  kullanıyoruz. Şimdi göreceğimiz gibi tamamen 
 aynı sonuca çok daha esnek bir şekilde varacağız.  
 

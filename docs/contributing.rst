@@ -45,7 +45,7 @@ Wednesday
 
 - Testing is completed
 - Release notes completed by @valzav
-- Project Coordinator announces release on bitsharestalk and provides link to release notes
+- Project Coordinator announces release on Cybextalk and provides link to release notes
 
 Thursday
 ~~~~~~~~

@@ -480,20 +480,20 @@ class BlockTradesBridgeDepositRequest extends React.Component {
                     if (active_wallets.indexOf(input_coin_info.walletType) != -1 &&
                         active_wallets.indexOf(output_coin_info.walletType) != -1)
                     {
-                        if (input_coin_info.walletType != "bitshares2" &&
-                            output_coin_info.walletType == "bitshares2")
+                        if (input_coin_info.walletType != "Cybex2" &&
+                            output_coin_info.walletType == "Cybex2")
                         {
                             allowed_mappings_for_deposit[pair.inputCoinType] = allowed_mappings_for_deposit[pair.inputCoinType] || [];
                             allowed_mappings_for_deposit[pair.inputCoinType].push(pair.outputCoinType);
                         }
-                        else if (input_coin_info.walletType == "bitshares2" &&
-                                 output_coin_info.walletType != "bitshares2")
+                        else if (input_coin_info.walletType == "Cybex2" &&
+                                 output_coin_info.walletType != "Cybex2")
                         {
                             allowed_mappings_for_withdraw[pair.inputCoinType] = allowed_mappings_for_withdraw[pair.inputCoinType] || [];
                             allowed_mappings_for_withdraw[pair.inputCoinType].push(pair.outputCoinType);
                         }
-                        else if (input_coin_info.walletType == "bitshares2" &&
-                                 output_coin_info.walletType == "bitshares2")
+                        else if (input_coin_info.walletType == "Cybex2" &&
+                                 output_coin_info.walletType == "Cybex2")
                         {
                             allowed_mappings_for_conversion[pair.inputCoinType] = allowed_mappings_for_conversion[pair.inputCoinType] || [];
                             allowed_mappings_for_conversion[pair.inputCoinType].push(pair.outputCoinType);

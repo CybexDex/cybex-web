@@ -14,7 +14,7 @@ araştırıcısı da sunmaktadır.
 
 Hangi anda ve kimin blok *üretmeye* izni olduğu  , *Delegated Proof of Stake* 
 (Yetkilendirilmiş-vekil-pay-ispatı) denilen mutabakat mekanizmasıyla belirlenir. 
-Esasında, BitShares hissedarları (elinde CYB kuponu olan)  tercih ettikleri blok 
+Esasında, Cybex hissedarları (elinde CYB kuponu olan)  tercih ettikleri blok 
 üreticilerine blokzincirinde oy verebilirler.  En çok oyu alan o *tanıklar*ın
 blokları üretmelerine izin verilir.
 

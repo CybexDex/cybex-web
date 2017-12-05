@@ -149,7 +149,7 @@ class OpenLedgerFiatDepositWithdrawal extends React.Component {
         };
 
         // get approval status from openledger
-        let json_rpc_request = { "jsonrpc": "2.0", "id": 1, "method": "isValidatedForFiat", "params": {"bitsharesAccountName": this.props.account.get('name')}};
+        let json_rpc_request = { "jsonrpc": "2.0", "id": 1, "method": "isValidatedForFiat", "params": {"CybexAccountName": this.props.account.get('name')}};
         let is_validated_promise = fetch(this.props.rpc_url,
                                                 {method: 'POST',
                                                  headers: new Headers({"Accept": "application/json",

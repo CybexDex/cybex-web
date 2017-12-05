@@ -166,6 +166,7 @@ class Header extends React.Component {
 
 
         let myAccounts = AccountStore.getMyAccounts();
+        console.debug("MyAccounts: ", myAccounts);
         let myAccountCount = myAccounts.length;
 
         let walletBalance = myAccounts.length && this.props.currentAccount ? (
@@ -270,7 +271,7 @@ class Header extends React.Component {
                         </a>
                     </li>
                     <li>
-                        <a href onClick={this._onNavigate.bind(this, "/help/introduction/bitshares")}>
+                        <a href onClick={this._onNavigate.bind(this, "/help/introduction/cybex")}>
                             <span><Translate content="header.help" /></span>
                         </a>
                     </li>

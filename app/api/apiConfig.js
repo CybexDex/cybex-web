@@ -29,6 +29,6 @@ export const settingsAPIs = {
         {url: "ws://127.0.0.1:8090", location: "Locally hosted"},
     ],
     DEFAULT_FAUCET,
-    TESTNET_FAUCET: "https://faucet.testnet.bitshares.eu",
+    TESTNET_FAUCET: "http://121.40.109.65:3000",
     RPC_URL: "ws://121.40.109.65:8092/api/"
 };
