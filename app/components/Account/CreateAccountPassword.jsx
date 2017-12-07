@@ -281,7 +281,7 @@ class CreateAccountPassword extends React.Component {
                 </form>
                 {/* <br />
                 <p>
-                    <Translate content="wallet.bts_rules" unsafe />
+                    <Translate content="wallet.cyb_rules" unsafe />
                 </p> */}
             </div>
         );

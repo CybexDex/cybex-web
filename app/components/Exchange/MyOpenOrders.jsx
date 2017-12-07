@@ -33,7 +33,7 @@ class TableHeader extends React.Component {
         ) : (
             <thead>
                 <tr>
-                    <th colSpan="3"><Translate content="account.bts_market" /></th>
+                    <th colSpan="3"><Translate content="account.cyb_market" /></th>
                     <th style={rightAlign}><Translate content="exchange.price" /></th>
                     <th style={rightAlign}><Translate content="account.qty" /></th>
                     <th style={rightAlign}><Translate content="exchange.total" /></th>

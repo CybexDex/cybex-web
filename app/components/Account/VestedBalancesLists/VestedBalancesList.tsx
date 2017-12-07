@@ -23,7 +23,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
   render() {
     // if (this.props.balances === undefined || !this.props.total_by_account_asset.size)
     //   return <div></div>;
-    console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
+    // console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
     return <div>
       <table className="table dashboard-table vest-table">
         <thead>
@@ -64,7 +64,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
                 <td>
                   {r.vesting.unclaimed && <progress value={r.vesting.unclaimed} max={r.vesting.total} />}
                 </td>
-                <td>no</td>
+                <td>-</td>
               </tr>
             );
           }).toArray()}

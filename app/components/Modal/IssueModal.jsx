@@ -19,9 +19,9 @@ class IssueModal extends React.Component {
 
     constructor(props) {
         super(props);
-        let { options } = this.props.asset_to_issue.toJS();
-        let vestingPeriod = getObjectExtensionField(options, "vesting_period");
-        // console.debug("AssetToIssue: ", options, vestingPeriod);
+        let { options } = this.props.asset;
+        console.debug("Issue Options: ", options);
+        let vestingPeriod = getObjectExtensionField(options, "vesting_period") || undefined;
         this.state = {
             amount: props.amount,
             to: props.to,
@@ -56,13 +56,15 @@ class IssueModal extends React.Component {
         let amount = this.state.amount.replace(/,/g, "");
         amount *= precision;
 
+        let { options } = this.props.asset;
+        let vestingPeriod = getObjectExtensionField(options, "vesting_period");
         AssetActions.issueAsset(
             this.state.to_id,
             asset_to_issue.get("issuer"),
             asset_to_issue.get("id"),
             amount,
             this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
-            this.state.vestingPeriod
+            vestingPeriod && this.state.vestingPeriod
         );
 
         this.setState({
@@ -79,7 +81,8 @@ class IssueModal extends React.Component {
     render() {
         let asset_to_issue = this.props.asset_to_issue.get('id');
         let tabIndex = 1;
-
+        let { options } = this.props.asset;
+        let vestingPeriod = getObjectExtensionField(options, "vesting_period");
         return (<form className="grid-block vertical full-width-content">
             <div className="grid-container " style={{ paddingTop: "2rem" }}>
                 {/* T O */}
@@ -106,10 +109,10 @@ class IssueModal extends React.Component {
                     />
                 </div>
                 {
-                    this.state.vestingPeriod !== undefined && (
+                    vestingPeriod && (
                         <div className="content-block">
                             <label htmlFor="issueVesting"><Translate component="span" content="account.user_issued_assets.vesting_period" /></label>
-                            <Period className="period-horizontal" defaultPeriod={this.state.vestingPeriod} name="issue" tabIndex={tabIndex+=2} onPeriodChange={this.onPeriodChange.bind(this)}/>
+                            <Period className="period-horizontal" defaultPeriod={this.state.vestingPeriod || vestingPeriod} name="issue" tabIndex={tabIndex += 2} onPeriodChange={this.onPeriodChange.bind(this)} />
                         </div>
                     )
                 }

@@ -1,14 +1,14 @@
 import {hash, key} from "cybexjs";
 
-var bts_genesiskeys_bloom_url = undefined
+var cyb_genesiskeys_bloom_url = undefined
 try {
-    var url = require("file-loader?name=bts_genesiskeys_bloom_[sha1:hash:hex:7].dat!assets/bts_genesiskeys_bloom.dat")
+    var url = require("file-loader?name=cyb_genesiskeys_bloom_[sha1:hash:hex:7].dat!assets/cyb_genesiskeys_bloom.dat")
     if(url.indexOf("3cee441") === -1)
-        throw new Error("Incorrect hash: bts_genesiskeys_bloom.dat")
-    bts_genesiskeys_bloom_url = url
+        throw new Error("Incorrect hash: cyb_genesiskeys_bloom.dat")
+    cyb_genesiskeys_bloom_url = url
 } catch(e) {
     // webpack deployment exception (not run time)
-    console.log("WARN: Will be unable to filter CYB 1.0 wallet imports, did not find assets/bts_genesiskeys_bloom.dat", e)
+    console.log("WARN: Will be unable to filter CYB 1.0 wallet imports, did not find assets/cyb_genesiskeys_bloom.dat", e)
 }
 
 /**
@@ -28,7 +28,7 @@ export default class GenesisFilter {
     }
 
     /** Was a bloom file deployed?  This does not try to load it from the server. */
-    isAvailable() { return bts_genesiskeys_bloom_url !== undefined }
+    isAvailable() { return cyb_genesiskeys_bloom_url !== undefined }
 
     init(done) {
         if( this.bloom_buffer ) { done(); return }
@@ -51,7 +51,7 @@ export default class GenesisFilter {
             reader.readAsBinaryString(xhr.response)
         }
         xhr.onerror = () => { console.error('xhr.onerror',e) }
-        xhr.open("GET", bts_genesiskeys_bloom_url)
+        xhr.open("GET", cyb_genesiskeys_bloom_url)
         xhr.send()
     }
 

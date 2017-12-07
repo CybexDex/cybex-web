@@ -22,7 +22,8 @@ import IntlActions from "actions/IntlActions";
 import AccountImage from "../Account/AccountImage";
 import ContextMenuStore from "stores/ContextMenuStore";
 
-var logo = require("assets/cybex-logo.png");
+var logo = require("assets/logo-text.png");
+// var logo = require("assets/cybex-logo.png");
 
 const FlagImage = ({ flag, width = 20, height = 20 }) => {
     return <img height={height} width={width} src={"language-dropdown/" + flag.toUpperCase() + ".png"} />;
@@ -180,7 +181,7 @@ class Header extends React.Component {
                 className={cnames({ active: active === "/" || active.indexOf("dashboard") !== -1 })}
                 onClick={this._onNavigate.bind(this, "/dashboard")}
             >
-                <img style={{ margin: 0, height: 40 }} src={logo} />
+                <img style={{ margin: 0, height: 20, marginLeft: 6 }} src={logo} />
             </a>
         );
 

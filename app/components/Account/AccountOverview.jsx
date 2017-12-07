@@ -661,7 +661,7 @@ class AccountOverview extends React.Component {
                                             <th style={{ textAlign: "right" }}><Translate content="account.qty" /></th>
                                             <th onClick={this._toggleSortOrder.bind(this, "priceValue")} className="column-hide-small clickable" style={{ textAlign: "right" }}><Translate content="exchange.price" /> (<AssetName name={preferredUnit} />)</th>
                                             <th onClick={this._toggleSortOrder.bind(this, "changeValue")} className="column-hide-small clickable" style={{ textAlign: "right" }}><Translate content="account.hour_24_short" /></th>
-                                            {/*<<th style={{textAlign: "right"}}><Translate component="span" content="account.bts_market" /></th>*/}
+                                            {/*<<th style={{textAlign: "right"}}><Translate component="span" content="account.cyb_market" /></th>*/}
                                             <th onClick={this._toggleSortOrder.bind(this, "totalValue")} style={{ textAlign: "right" }} className="column-hide-small clickable">
                                                 <TranslateWithLinks
                                                     noLink

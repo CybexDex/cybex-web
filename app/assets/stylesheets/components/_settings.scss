@@ -37,11 +37,18 @@
 }
 
 .api-node {
-    .h3, .h4 {
+    .h3,
+    .h4 {
         grid-area: name;
     }
     p {
         grid-area: url;
+    }
+    .h4,
+    .h3,
+    p,
+    .api-status {
+        line-height: 2.4;
     }
     .api-status {
         grid-area: status;
@@ -49,8 +56,9 @@
         max-width: 12em;
     }
     display: grid;
-    height: 4.8em;
-    grid-template: "head status" 1fr "url status" 1fr / 1fr auto;
+    height: 5.8em;
+    grid-gap: 4px;
+    grid-template: "head status" 2.4em "url status" 2.4em / 1fr auto;
     .button {
         display: block;
         width: 100%;

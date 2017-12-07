@@ -660,7 +660,7 @@ class ImportKeys extends Component {
                                     {cancelButton}
                             </form>) : (
                             <form onSubmit={this._passwordCheck.bind(this)}>
-                                <label><Translate content="wallet.bts_09_export" />
+                                <label><Translate content="wallet.cyb_09_export" />
                                 {this.state.no_file ? null : <span>&nbsp;
                                     (<a onClick={this.reset.bind(this)}>Reset</a>)</span>}
                                 </label>

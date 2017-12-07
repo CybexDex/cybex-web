@@ -26,10 +26,10 @@ class WebsocketAddModal extends React.Component {
 
     onServerInput(e) {
         let state = {
-            ws: e.target.value  
+            ws: e.target.value
         }
 
-        if(state.ws.indexOf(wss) !== 0 && state.ws.indexOf(ws) !== 0){
+        if (state.ws.indexOf(wss) !== 0 && state.ws.indexOf(ws) !== 0) {
             state.addError = true;
         } else {
             state.addError = null;
@@ -38,8 +38,8 @@ class WebsocketAddModal extends React.Component {
         this.setState(state);
     }
 
-    onNameInput(e){
-        this.setState({name: e.target.value});
+    onNameInput(e) {
+        this.setState({ name: e.target.value });
     }
 
     show(e, url, name) {
@@ -48,9 +48,9 @@ class WebsocketAddModal extends React.Component {
             state.type = "add";
         } else if (e.target.id.indexOf("remove") !== -1) {
             state.type = "remove";
-            state.remove = {url, name};
+            state.remove = { url, name };
         }
-        
+
         this.setState(state);
 
         ZfApi.publish("ws_modal_" + state.type, "open")
@@ -63,7 +63,7 @@ class WebsocketAddModal extends React.Component {
     onAddSubmit(e) {
         e.preventDefault();
 
-        SettingsActions.addWS({location: this.state.name, url: this.state.ws});
+        SettingsActions.addWS({ location: this.state.name, url: this.state.ws });
 
         this.setState({
             ws: this.state.protocol === "https:" ? wss : ws,
@@ -95,32 +95,28 @@ class WebsocketAddModal extends React.Component {
     }
 
     _renderAddModal() {
-        let labelStyle = {padding: 0, color: "white"}
+        let labelStyle = { padding: 0, color: "white" }
 
         return (
             <BaseModal id="ws_modal_add" ref="ws_modal_add" overlay={true} overlayClose={false}>
                 <div className="grid-content">
                     <Translate component="h3" content="settings.add_ws" />
                     <form onSubmit={this.onAddSubmit.bind(this)} noValidate>
-                        <section className="block-list">
-                        <ul>
-                            <li className="with-dropdown" style={{marginBottom: "1em"}}>
-                                <label style={labelStyle}>Name</label>
-                                <input type="text" onChange={this.onNameInput.bind(this)} value={this.state.name} />
-                            </li>
-                            <li className="with-dropdown">
-                                <label style={labelStyle}>Address</label>
-                                <input type="text" onChange={this.onServerInput.bind(this)} defaultValue={this.state.ws} />
-                            </li>
-                        </ul>
-                        {this.state.addError && <p style={{marginBottom: '1em'}}><Translate content="settings.valid_node_url" /></p>}
-                        </section>
+                        <div className="form-field" style={{ marginBottom: "1em" }}>
+                            <label htmlFor="ws_name" style={labelStyle}>Name</label>
+                            <input id="ws_name" type="text" onChange={this.onNameInput.bind(this)} value={this.state.name} />
+                        </div>
+                        <div className="form-field">
+                            <label htmlFor="ws_address" style={labelStyle}>Address</label>
+                            <input id="ws_address" type="text" onChange={this.onServerInput.bind(this)} defaultValue={this.state.ws} />
+                        </div>
+                        {this.state.addError && <p style={{ marginBottom: '1em' }}><Translate content="settings.valid_node_url" /></p>}
                         <div className="button-group">
                             <button type="submit" className={"button " + (this.state.addError ? "disabled" : "")} onClick={this.onAddSubmit.bind(this)} disabled={this.state.addError} >
                                 <Translate content="transfer.confirm" />
                             </button>
                             <Trigger close={"ws_modal_add"}>
-                                <div  className=" button"><Translate content="account.perm.cancel" /></div>
+                                <div className=" button"><Translate content="account.perm.cancel" /></div>
                             </Trigger>
                         </div>
                     </form>
@@ -139,7 +135,7 @@ class WebsocketAddModal extends React.Component {
                 <div className="grid-content no-overflow">
                     <Translate component="h3" content="settings.remove_ws" />
                     <section className="block-list">
-                        <p><Translate component="span" content="settings.confirm_remove" with={{name: this.state.remove.name}} /></p>
+                        <p><Translate component="span" content="settings.confirm_remove" with={{ name: this.state.remove.name }} /></p>
                     </section>
                     <form onSubmit={this.onRemoveSubmit.bind(this)} noValidate>
                         <div className="button-group">

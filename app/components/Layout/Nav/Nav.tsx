@@ -25,7 +25,7 @@ const NavLinks: Array<NavItem> = [
   {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
-    activeMatcher: /^\/account/,    
+    activeMatcher: /^\/account/,
     name: "Account",
     icon: "package",
     displayOnlyWhen: "currentAccount"
@@ -53,7 +53,7 @@ const NavLinks: Array<NavItem> = [
     routeTo: "/transfer",
     name: "Transfer",
     icon: "transfer"
-  }, 
+  },
   // {
   //   id: "swap",
   //   routeTo: "/swap",
@@ -72,7 +72,7 @@ const NavLink = ({ icon, name, isActive, id }: NavItem) => (
 );
 
 type NavProps = WithRouterProps & { settings: any, currentAccount: string, [x: string]: string };
-export class Nav extends React.Component<NavProps, any> {
+export class Nav extends React.Component<NavProps, { isExpand }> {
   constructor(props: NavProps) {
     super(props);
     this.state = {

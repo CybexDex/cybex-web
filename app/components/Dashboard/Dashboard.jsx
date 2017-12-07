@@ -6,7 +6,9 @@ import Translate from "react-translate-component";
 import MarketCard from "./MarketCard";
 import utils from "common/utils";
 import { Apis } from "cybexjs-ws";
-var logo = require("assets/cybex-logo.png");
+let logo = require("assets/logo-main.png");
+// let home1 = require("assets/images/home_1.jpg");
+// let home2 = require("assets/images/home_2.jpg");
 import LoadingIndicator from "../LoadingIndicator";
 import LoginSelector from "../LoginSelector";
 import cnames from "classnames";
@@ -14,6 +16,7 @@ import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import Card from "components/Utility/Card"
 import { Link } from "react-router";
+import Slider from "react-slick";
 
 const cardList = [
     {
@@ -174,6 +177,14 @@ class Dashboard extends React.Component {
         if (!accountsReady) {
             return <LoadingIndicator />;
         }
+        var slideSettings = {
+            dots: false,
+            arrows: false,
+            infinite: true,
+            speed: 1500,
+            fade: true,
+            autoplay: true
+        };
 
         let validMarkets = 0;
 
@@ -204,34 +215,53 @@ class Dashboard extends React.Component {
 
         if (!accountCount) {
             return (
-                <div ref="wrapper" className="grid-block page-layout vertical">
-                    <div ref="container" className="grid-block vertical medium-horizontal">
-                        <div className="welcome-page">
-                            <div className="bg">
-                                <div className="logo-wrapper">
-                                    <img src={logo} alt="" />
-                                </div>
-                                <div className="slogan">
-                                    <Translate content="home.slogan" unsafe />
-                                </div>
-                                <Link to="/help">
-                                    <button className="button hollow warning">
-                                        <Translate content="home.find_more" />
-                                    </button>
-                                </Link>
-                            </div>
-                            <div className="bottom-zone">
-                                {
-                                    cardList.map(card => (
-                                        <Card key={card.image} card={card} />
-                                    ))
-                                }
-                            </div>
+                <div ref="wrapper" className="grid-block page-layout vertical welcome">
+                    <div className="home-slide slide-1">
+                        <div className="title-wrapper">
+                        <Translate component="div" className="slogan slogan-main" content="dashboard.title1" />
+                        <Translate component="div" className="slogan slogan-sub" content="dashboard.subtitle1" />
                         </div>
                     </div>
+                    <div className="home-slide slide-2">
+                        <div className="title-wrapper">
+                            <Translate component="div" className="slogan slogan-main" content="dashboard.title2" />
+                            <Translate component="div" className="slogan slogan-sub" content="dashboard.subtitle2" />
+                        </div>
+                    </div>
+                    <Translate component="a" href="//cybex.io#about" target="_blank" className="home-button" content="dashboard.button" />
                 </div>
             );
         }
+        // if (!accountCount) {
+        //     return (
+        //         <div ref="wrapper" className="grid-block page-layout vertical">
+        //             <div ref="container" className="grid-block vertical medium-horizontal">
+        //                 <div className="welcome-page">
+        //                     <div className="bg">
+        //                         <div className="logo-wrapper">
+        //                             <img src={logo} alt="CybexLogo" />
+        //                         </div>
+        //                         <div className="slogan">
+        //                             <Translate content="home.slogan" unsafe />
+        //                         </div>
+        //                         <Link to="/help">
+        //                             <button className="button hollow warning">
+        //                                 <Translate content="home.find_more" />
+        //                             </button>
+        //                         </Link>
+        //                     </div>
+        //                     <div className="bottom-zone">
+        //                         {
+        //                             cardList.map(card => (
+        //                                 <Card key={card.image} card={card} />
+        //                             ))
+        //                         }
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     );
+        // }
 
         const entries = ["accounts", "recent"];
         const activeIndex = entries.indexOf(currentEntry);

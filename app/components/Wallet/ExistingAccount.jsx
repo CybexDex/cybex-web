@@ -47,7 +47,7 @@ class ExistingAccountOptions extends Component {
             <span>
                 {!has_wallet ? <div>
                     <Link to="existing-account/import-backup"><Translate content="wallet.import_backup" /></Link><br/><br/>
-                    <Link to="existing-account/import-keys"><Translate content="wallet.import_bts1" /></Link><br/><br/>
+                    <Link to="existing-account/import-keys"><Translate content="wallet.import_cyb1" /></Link><br/><br/>
                     <Link to="existing-account/import-keys"><Translate content="wallet.create_wallet" /></Link><br/>
                     <hr/>
                 </div> : null}

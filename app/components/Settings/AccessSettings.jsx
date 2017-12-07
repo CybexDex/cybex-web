@@ -79,11 +79,23 @@ class ApiNode extends React.Component {
         >
             <h3 style={{ marginBottom: 0, marginTop: 0 }}>{name}</h3>
             <p style={{ marginBottom: 0 }}>{displayUrl}</p>
-            {automatic && autoActive ? <div className="api-status"><Translate content="account.votes.active_short" component="h3" /></div> : null}
+            {automatic && autoActive &&
+                <div className="api-status">
+                    <Translate content="account.votes.active_short" component="h3" />
+                </div>
+            }
             {(!allowActivation && !allowRemoval && !automatic) && Status}
-            {allowActivation && !automatic && (up ? !state.hovered : (allowRemoval ? !state.hovered : true)) && Status}
-            {allowRemoval && state.hovered && !(automatic && autoActive) && <div className="button" onClick={this.remove.bind(this, url, name)}><Translate id="remove" content="settings.remove" /></div>}
-            {allowActivation && state.hovered && !(automatic && autoActive) && (automatic || isTestnet ? true : true) && <div className="button" onClick={this.activate.bind(this)}><Translate content="settings.activate" /></div>}
+            {allowActivation && !automatic && !state.hovered && Status}
+            {allowRemoval && state.hovered && !(automatic && autoActive) &&
+                <div className="button" onClick={this.remove.bind(this, url, name)}>
+                    <Translate id="remove" content="settings.remove" />
+                </div>
+            }
+            {allowActivation && state.hovered && !(automatic && autoActive) && (automatic || isTestnet ? true : true) &&
+                <div className="button" onClick={this.activate.bind(this)}>
+                    <Translate content="settings.activate" />
+                </div>
+            }
         </div>;
     }
 }

@@ -19,7 +19,7 @@ export default class LoginSelector extends React.Component {
             <div className="grid-content" style={{ paddingTop: 30 }}>
                 <h2 className="text-center"><Translate content="wallet.login_create_type" /></h2>
                 <div className="grid-block no-margin no-padding vertical medium-horizontal no-overflow login-selector">
-                    <div className="box small-12 medium-5 large-4">
+                    <div className="box small-12 medium-5 large-5">
                         <div className="block-content-header" style={{ position: "relative" }}>
                             <Translate content="wallet.wallet_model" component="h4" />
                         </div>
@@ -50,7 +50,7 @@ export default class LoginSelector extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="box small-12 medium-5 large-4 vertical">
+                    <div className="box small-12 medium-5 large-5 vertical">
                         <div className="block-content-header" style={{ position: "relative" }}>
                             <Translate content="wallet.password_model" component="h4" />
                         </div>

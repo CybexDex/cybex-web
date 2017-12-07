@@ -1,6 +1,6 @@
 import React from "react";
-import {PropTypes} from "react";
-import {Link} from "react-router";
+import { PropTypes } from "react";
+import { Link } from "react-router";
 import Translate from "react-translate-component";
 import AssetActions from "actions/AssetActions";
 import AssetStore from "stores/AssetStore";
@@ -10,7 +10,7 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import notify from "actions/NotificationActions";
 import utils from "common/utils";
-import {debounce} from "lodash";
+import { debounce } from "lodash";
 import LoadingIndicator from "../LoadingIndicator";
 import IssueModal from "../Modal/IssueModal";
 import ReserveAssetModal from "../Modal/ReserveAssetModal";
@@ -77,10 +77,10 @@ class AccountAssets extends React.Component {
 
         if (assets.size === 0 || force) {
             AssetActions.getAssetList.defer("A", 100);
-            this.setState({assetsFetched: 100});
+            this.setState({ assetsFetched: 100 });
         } else if (assets.size >= this.state.assetsFetched) {
             AssetActions.getAssetList.defer(lastAsset.symbol, 100);
-            this.setState({assetsFetched: this.state.assetsFetched + 99});
+            this.setState({ assetsFetched: this.state.assetsFetched + 99 });
         }
     }
 
@@ -94,7 +94,7 @@ class AccountAssets extends React.Component {
 
     _onIssueInput(value, e) {
         let key = e.target.id;
-        let {issue} = this.state;
+        let { issue } = this.state;
 
         if (key === "to") {
             this._searchAccounts(e.target.value);
@@ -108,7 +108,7 @@ class AccountAssets extends React.Component {
             issue[value] = e.target.value;
         }
 
-        this.setState({issue: issue});
+        this.setState({ issue: issue });
     }
 
     _searchAccounts(searchTerm) {
@@ -118,7 +118,7 @@ class AccountAssets extends React.Component {
     _issueAsset(account_id, e) {
         e.preventDefault();
         ZfApi.publish("issue_asset", "close");
-        let {issue} = this.state;
+        let { issue } = this.state;
         let asset = this.props.assets.get(issue.asset_id);
         issue.amount *= utils.get_asset_precision(asset.precision);
         AssetActions.issueAsset(account_id, issue).then(result => {
@@ -143,14 +143,14 @@ class AccountAssets extends React.Component {
 
     _reserveButtonClick(assetId, e) {
         e.preventDefault();
-        this.setState({reserve: assetId});
+        this.setState({ reserve: assetId });
         ZfApi.publish("reserve_asset", "open");
     }
 
     _reserveAsset(account_id, e) {
         e.preventDefault();
         ZfApi.publish("reserve_asset", "close");
-        let {issue} = this.state;
+        let { issue } = this.state;
         let asset = this.props.assets.get(issue.asset_id);
         issue.amount *= utils.get_asset_precision(asset.precision);
         AssetActions.issueAsset(account_id, issue).then(result => {
@@ -158,12 +158,15 @@ class AccountAssets extends React.Component {
         });
     }
 
-    _issueButtonClick(asset_id, symbol, e) {
+    _issueButtonClick(asset_id, symbol, asset, e) {
         e.preventDefault();
-        let {issue} = this.state;
+        let { issue } = this.state;
         issue.asset_id = asset_id;
         issue.symbol = symbol;
-        this.setState({issue: issue});
+        this.setState({
+            issue: issue,
+            assetToIssue: asset
+        });
         ZfApi.publish("issue_asset", "open");
     }
 
@@ -173,19 +176,19 @@ class AccountAssets extends React.Component {
     }
 
     _onAccountSelect(account_name) {
-        let {issue} = this.state;
+        let { issue } = this.state;
         issue.to = account_name;
         issue.to_id = this.props.account_name_to_id[account_name];
-        this.setState({issue: issue});
+        this.setState({ issue: issue });
     }
 
     render() {
-        let {account, account_name, searchAccounts, assets, assetsList} = this.props;
-        let {issue, errors, isValid, create} = this.state;
+        let { account, account_name, searchAccounts, assets, assetsList } = this.props;
+        let { issue, errors, isValid, create } = this.state;
 
         let accountExists = true;
         if (!account) {
-            return <LoadingIndicator type="circle"/>;
+            return <LoadingIndicator type="circle" />;
         } else if (account.notFound) {
             accountExists = false;
         }
@@ -200,37 +203,37 @@ class AccountAssets extends React.Component {
             });
         }
         let myAssets = assets
-        .filter(asset => {
-            return asset.issuer === account.get("id");
-        })
-        .sort((a, b) => {
-            return parseInt(a.id.substring(4, a.id.length), 10) - parseInt(b.id.substring(4, b.id.length), 10);
-        })
-        .map(asset => {
-            let description = assetUtils.parseDescription(asset.options.description);
-            let desc = description.short_name ? description.short_name : description.main;
+            .filter(asset => {
+                return asset.issuer === account.get("id");
+            })
+            .sort((a, b) => {
+                return parseInt(a.id.substring(4, a.id.length), 10) - parseInt(b.id.substring(4, b.id.length), 10);
+            })
+            .map(asset => {
+                let description = assetUtils.parseDescription(asset.options.description);
+                let desc = description.short_name ? description.short_name : description.main;
 
-            if (desc.length > 100) {
-                desc = desc.substr(0, 100) + "...";
-            }
-            return (
+                if (desc.length > 100) {
+                    desc = desc.substr(0, 100) + "...";
+                }
+                return (
                     <tr key={asset.symbol}>
                         <td><Link to={`/asset/${asset.symbol}`}>{asset.symbol}</Link></td>
-                        <td style={{maxWidth: "250px"}}>{desc}</td>
+                        <td style={{ maxWidth: "250px" }}>{desc}</td>
                         <td><FormattedAsset amount={parseInt(asset.dynamic.current_supply, 10)} asset={asset.id} /></td>
                         <td><FormattedAsset amount={parseInt(asset.options.max_supply, 10)} asset={asset.id} /></td>
                         <td>
                             {!asset.bitasset_data_id ? (
-                            <button onClick={this._issueButtonClick.bind(this, asset.id, asset.symbol)} className="button outline">
-                                <Translate content="transaction.trxTypes.asset_issue" />
-                            </button>) : null}
+                                <button onClick={this._issueButtonClick.bind(this, asset.id, asset.symbol, asset)} className="button outline">
+                                    <Translate content="transaction.trxTypes.asset_issue" />
+                                </button>) : null}
                         </td>
 
                         <td>
                             {!asset.bitasset_data_id ? (
-                            <button onClick={this._reserveButtonClick.bind(this, asset.id)} className="button outline">
-                                <Translate content="transaction.trxTypes.asset_reserve" />
-                            </button>) : null}
+                                <button onClick={this._reserveButtonClick.bind(this, asset.id)} className="button outline">
+                                    <Translate content="transaction.trxTypes.asset_reserve" />
+                                </button>) : null}
                         </td>
 
                         <td>
@@ -240,57 +243,60 @@ class AccountAssets extends React.Component {
                         </td>
                     </tr>
                 );
-        }).toArray();
+            }).toArray();
 
         return (
             <div className="grid-content">
 
-                    <div className="content-block generic-bordered-box">
-                        <div className="block-content-header">
-                            <Translate content="account.user_issued_assets.issued_assets" />
-                        </div>
-                        <div className="box-content">
-                            <table className="table dashboard-table">
-                                <thead>
+                <div className="content-block generic-bordered-box">
+                    <div className="block-content-header">
+                        <Translate content="account.user_issued_assets.issued_assets" />
+                    </div>
+                    <div className="box-content">
+                        <table className="table dashboard-table">
+                            <thead>
                                 <tr>
                                     <th><Translate content="account.user_issued_assets.symbol" /></th>
-                                    <th style={{maxWidth: "200px"}}><Translate content="account.user_issued_assets.description" /></th>
+                                    <th style={{ maxWidth: "200px" }}><Translate content="account.user_issued_assets.description" /></th>
                                     <Translate component="th" content="markets.supply" />
                                     <th><Translate content="account.user_issued_assets.max_supply" /></th>
-                                    <th style={{textAlign: "center"}} colSpan="3"><Translate content="account.perm.action" /></th>
+                                    <th style={{ textAlign: "center" }} colSpan="3"><Translate content="account.perm.action" /></th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                    {myAssets}
-                                </tbody>
-                            </table>
-                        </div>
+                            </thead>
+                            <tbody>
+                                {myAssets}
+                            </tbody>
+                        </table>
                     </div>
+                </div>
 
-                    <div className="content-block">
-                        <Link to={`/account/${account_name}/create-asset/`}><button className="button outline"><Translate content="transaction.trxTypes.asset_create" /></button></Link>
+                <div className="content-block">
+                    <Link to={`/account/${account_name}/create-asset/`}><button className="button outline"><Translate content="transaction.trxTypes.asset_create" /></button></Link>
+                </div>
+
+                <BaseModal id="issue_asset" overlay={true}>
+                    <br />
+                    <div className="grid-block vertical">
+                        < IssueModal
+                            asset_to_issue={this.state.issue.asset_id}
+                            asset={this.state.assetToIssue}
+                            onClose={() => {
+                                ZfApi.publish("issue_asset", "close");
+                            }}
+                        />
                     </div>
+                </BaseModal>
 
-                    <BaseModal id="issue_asset" overlay={true}>
-                        <br/>
-                        <div className="grid-block vertical">
-                            <IssueModal
-                                asset_to_issue={this.state.issue.asset_id}
-                                onClose={() => {ZfApi.publish("issue_asset", "close")}}
-                            />
-                        </div>
-                    </BaseModal>
-
-                    <BaseModal id="reserve_asset" overlay={true}>
-                        <br/>
-                        <div className="grid-block vertical">
-                            <ReserveAssetModal
-                                assetId={this.state.reserve}
-                                account={account}
-                                onClose={() => {ZfApi.publish("reserve_asset", "close")}}
-                            />
-                        </div>
-                    </BaseModal>
+                <BaseModal id="reserve_asset" overlay={true}>
+                    <br />
+                    <div className="grid-block vertical">
+                        <ReserveAssetModal
+                            assetId={this.state.reserve}
+                            account={account}
+                            onClose={() => { ZfApi.publish("reserve_asset", "close") }}
+                        />
+                    </div>
+                </BaseModal>
             </div>
         );
     }
@@ -311,6 +317,6 @@ export default connect(AccountAssets, {
         } else {
             assets = AssetStore.getState().assets;
         }
-        return {assets, assetsList};
+        return { assets, assetsList };
     }
 });

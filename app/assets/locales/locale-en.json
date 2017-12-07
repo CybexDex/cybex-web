@@ -399,7 +399,7 @@
     "deposit_address": "Your deposit address is your account name",
     "overview": "Overview",
     "home": "Home",
-    "bts_market": "Market",
+    "cyb_market": "Market",
     "history": "History",
     "payees": "Payees",
     "permissions": "Permissions",
@@ -863,7 +863,7 @@
     }
   },
   "settings": {
-    "passwordLogin": "Login using the account model",
+    "passwordLogin": "Login using the cloud wallet model",
     "cloud_login": "Cloud Wallet Login",
     "local_wallet": "Local Wallet Login",
     "inverseMarket": "Market orientation preference",
@@ -1090,7 +1090,7 @@
     "create_wallet": "Create new local wallet",
     "create_importkeys_text": "In order to import keys, you first need to create a local wallet to contain the keys. Complete the dialog below to create a new local wallet.",
     "create_wallet_backup": "Create new wallet from backup",
-    "import_bts1": "Import from Cybex 0.9.3c",
+    "import_cyb1": "Import from Cybex 0.9.3c",
     "setup_wallet": "Setup your local wallet",
     "delete_wallet": "Delete Local Wallet",
     "delete_confirm_line1": "Are you ABSOLUTELY sure?",
@@ -1106,7 +1106,7 @@
     "create_backup": "Create Backup",
     "backup_brainkey": "Backup Brainkey",
     "create_backup_of": "Create backup now",
-    "import_backup": "Import Cybex 2.0 backup (.bin file)",
+    "import_backup": "Import Cybex backup (.bin file)",
     "import_backup_choose": "Please select your backup file in the dialog below. This is completely safe as the file is not uploaded anywhere and never leaves your browser.",
     "restore_backup": "Restore Backup",
     "import_keys": "Import Keys",
@@ -1172,13 +1172,13 @@
     "paste_private": "Paste private keys here (Wallet Import Format - WIF)",
     "totals": "Asset Totals",
     "claim_later": "Once you've imported the keys, you can claim these balances to an account of your choosing.",
-    "bts_09_export": "CYB 0.9.3c key export file (.json)",
+    "cyb_09_export": "CYB 0.9.3c key export file (.json)",
     "import_password": "Enter import file password",
     "import_pass_match": "Password matches. Decrypting the backup now...",
     "submit": "Submit",
     "import_balance": "Import balance(s)",
     "no_accounts": "No accounts found",
-    "import_bts": "Import a CYB 0.9.3c key export",
+    "import_cyb": "Import a CYB 0.9.3c key export",
     "import_private_key": "Import a private key",
     "wallet_browser": "Your Web Browser is your Wallet",
     "has_wallet": "When you create your first Cybex account, a Cybex local wallet will be automatically created as well and stored in your browser. This local wallet is encrypted with your password, and will contain any private keys belonging to your accounts. It is important that you take the time to backup this wallet once created!",
@@ -1233,7 +1233,7 @@
     "use_wallet": "Use a local wallet",
     "use_wallet_create": "Use the wallet model to create",
     "use_password": "Use a cloud wallet",
-    "use_password_create": "Use the account model to create",
+    "use_password_create": "Use the cloud wallet model to create",
     "pass_length": "The password must contain at least %(minLength)s characters. Ideally you should use 20 or more, and a combination of numbers, special characters and letters.",
     "switch_model_wallet": "Switch to local wallet",
     "switch_model_password": "Switch to cloud wallet",
@@ -1245,7 +1245,7 @@
     "understand_1": "I understand that no one can recover my password if I lose or forget it",
     "understand_2": "I have written down or otherwise stored my password",
     "understand_3": " I understand that I will lose access to my funds if I lose my password",
-    "bts_rules": "The first rule of Cybex is: Do not lose your password.<br/>The second rule of Cybex is: Do not lose your password.<br />The third rule of Cybex is: We cannot recover your password.<br />The fourth rule: If you can remember the password, it's not secure.<br />The fifth rule: Use only randomly-generated passwords.<br />The sixth rule: Do not tell anyone your password.<br />The seventh rule: Always back up your password."
+    "cyb_rules": "The first rule of Cybex is: Do not lose your password.<br/>The second rule of Cybex is: Do not lose your password.<br />The third rule of Cybex is: We cannot recover your password.<br />The fourth rule: If you can remember the password, it's not secure.<br />The fifth rule: Use only randomly-generated passwords.<br />The sixth rule: Do not tell anyone your password.<br />The seventh rule: Always back up your password."
   },
   "borrow": {
     "title": "%(asset_symbol)s Margin",
@@ -1500,5 +1500,12 @@
     "minutes": "Minutes",
     "hours": "Hours",
     "days": "Days"
+  },
+  "dashboard": {
+    "title1": "分布式数字资产交易所",
+    "title2": "构建基于EOS的生态系统",
+    "subtitle1": "基于石墨烯区块链的未来交易系统",
+    "subtitle2": "公开 高效 透明 分布式",
+    "button": "Learn More"
   }
 }

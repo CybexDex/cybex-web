@@ -65,7 +65,7 @@ module.exports = function (env) {
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify(baseUrl),
-            __UI_API__: JSON.stringify(env.apiUrl || "https://ui.bitshares.eu/api"),
+            __UI_API__: JSON.stringify(env.apiUrl || ""),
             __TESTNET__: !!env.testnet,
         }),
         new webpack.optimize.CommonsChunkPlugin({
@@ -238,8 +238,11 @@ module.exports = function (env) {
                     use: scssLoaders
                 },
                 {
-                    test: /\.(jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
-                    include: [path.resolve(root_dir, "app/assets/")],
+                    test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+                    include: [
+                        path.resolve(root_dir, "app/assets/"),
+                        path.resolve(root_dir, "node_modules/slick-carousel")
+                    ],
                     use: [{
                         loader: "url-loader",
                         options: {

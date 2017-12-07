@@ -118,7 +118,7 @@ class AccountLeftPanel extends React.Component {
                                 <li><Link to={`/account/${account_name}/dashboard/`} activeClassName="active"><Translate content="header.dashboard" /></Link></li>
                                 <li><Link to={`/account/${account_name}/member-stats/`} activeClassName="active"><Translate content="account.member.stats" /></Link></li>
                                 {/* <li><Link to={`/account/${account_name}/orders/`} activeClassName="active"><Translate content="account.open_orders"/></Link></li> */}
-                                <li><Link to={`/account/${account_name}/voting/`} activeClassName="active"><Translate content="account.voting" /></Link></li>
+                                {/* <li><Link to={`/account/${account_name}/voting/`} activeClassName="active"><Translate content="account.voting" /></Link></li> */}
 
                                 {/* <li className="menu-subheader" >
                                 <span className="button outline small">
