@@ -237,29 +237,35 @@ class AccessSettings extends React.Component {
                 return 0;
             });
 
-        return <div style={{ paddingTop: "1em" }}>
-            <Translate component="p" content="settings.active_node" />
-            <div className="active-node">
-                {renderNode(activeNode, false)}
-            </div>
+        return (
+            <div className="nodes-wrapper" style={{ paddingTop: "1em" }}>
+                <Translate component="p" content="settings.active_node" />
+                <div className="active-node">
+                    {renderNode(activeNode, false)}
+                </div>
 
-            <div className="available-nodes">
-                <Translate component="p" content="settings.available_nodes" />
-                <span onClick={props.triggerModal.bind(this)} >
-                    <Translate id="add" component="span" content="settings.add_api" />
-                </span>
-                {
-                    nodes.map((node) => {
-                        return renderNode(node, true);
-                    })
-                }
-            </div>
-            <div className="form-group grid-block grid-x-padding full-container">
-                Specified Prefix - {Apis.instance().chain_id}
-                <input className="small-10 medium-10" id="setPrefix" type="text" value={this.nodePrefix} />
-                <button className="small-2 medium-2" onClick={this.setPrefix.bind(this)}>Confirm</button>
-            </div>
-        </div>;
+                <div className="available-nodes">
+                    <Translate component="p" content="settings.available_nodes" />
+                    {
+                        nodes.map((node) => {
+                            return renderNode(node, true);
+                        })
+                    }
+                </div>
+                <div className="button-wrapper">
+                    <Translate id="add"
+                        onClick={props.triggerModal.bind(this)}
+                        component="button"
+                        className="button"
+                        content="settings.add_api"
+                    />
+                </div>
+                {/* <div className="form-group grid-block grid-x-padding full-container">
+                    Specified Prefix - {Apis.instance().chain_id}
+                    <input className="small-10 medium-10" id="setPrefix" type="text" value={this.nodePrefix} />
+                    <button className="small-2 medium-2" onClick={this.setPrefix.bind(this)}>Confirm</button>
+                </div> */}
+            </div>);
     }
 }
 
