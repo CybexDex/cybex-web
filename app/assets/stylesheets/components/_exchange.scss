@@ -152,8 +152,10 @@ p.order-table-title {
 }
 
 .buySellButton {
-    float: right;
+    // float: right;
     min-width: 4rem;
+    margin-top: 4px;
+    width: 100%;
 }
 
 form.order-form {

@@ -414,6 +414,9 @@ class SwapSteps extends React.Component<any, any> {
   render() {
     return (
       <div className="swap-steps">
+        <p>
+          Tips: 本页用于原子交易的Cybex侧开发和逻辑验证
+        </p>
         <SwapField title="提起交换-A" enable={this.props.currentStep === SIDE.UNKNOWN} onSubmit={this.proposeSwap}>
           <div className="form-field">
             <label htmlFor="accountName">发起交易侧用户名: </label>

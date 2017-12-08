@@ -81,7 +81,7 @@ class BuySell extends React.Component {
         if (this.props.price) price = this.props.price;
         if (this.props.total) total = this.props.total;
 
-        let balanceAmount = new Asset({amount: balance ? balance.get("balance") : 0, precision: balancePrecision, asset_id: this.props.balanceId});
+        let balanceAmount = new Asset({ amount: balance ? balance.get("balance") : 0, precision: balancePrecision, asset_id: this.props.balanceId });
 
         const maxBaseMarketFee = new Asset({
             amount: base.getIn(["options", "max_market_fee"]),
@@ -93,8 +93,8 @@ class BuySell extends React.Component {
             asset_id: quote.get("asset_id"),
             precision: quote.get("precision")
         });
-        const quoteFee = !amount ? 0 : Math.min(maxQuoteMarketFee.getAmount({real: true}), amount * quote.getIn(["options", "market_fee_percent"]) / 10000);
-        const baseFee = !amount ? 0 : Math.min(maxBaseMarketFee.getAmount({real: true}), total * base.getIn(["options", "market_fee_percent"]) / 10000);
+        const quoteFee = !amount ? 0 : Math.min(maxQuoteMarketFee.getAmount({ real: true }), amount * quote.getIn(["options", "market_fee_percent"]) / 10000);
+        const baseFee = !amount ? 0 : Math.min(maxBaseMarketFee.getAmount({ real: true }), total * base.getIn(["options", "market_fee_percent"]) / 10000);
         const baseFlagBooleans = assetUtils.getFlagBooleans(base.getIn(["options", "flags"]), base.has("bitasset_data_id"));
         const quoteFlagBooleans = assetUtils.getFlagBooleans(quote.getIn(["options", "flags"]), quote.has("bitasset_data_id"));
 
@@ -106,7 +106,7 @@ class BuySell extends React.Component {
                     <Translate content="explorer.asset.summary.market_fee" />:
                 </div>
                 <div className="grid-block small-5 no-margin no-overflow buy-sell-input">
-                    <input disabled type="text" id="baseMarketFee" value={baseFee} autoComplete="off"/>
+                    <input disabled type="text" id="baseMarketFee" value={baseFee} autoComplete="off" />
                 </div>
                 <div className="grid-block small-4 no-margin no-overflow buy-sell-box">
                     <AssetName noTip name={base.get("symbol")} />
@@ -121,23 +121,23 @@ class BuySell extends React.Component {
                         }
                         className="inline-block tooltip"
                     >
-                        &nbsp;<Icon style={{position: "relative", top: 3}} name="question-circle" />
+                        &nbsp;<Icon style={{ position: "relative", top: 3 }} name="question-circle" />
                     </span>
                 </div>
             </div>
         ) : hasMarketFee ?
-        <div className="grid-block no-padding buy-sell-row">
-            <div style={{visibility: "hidden"}} className="grid-block small-3 no-margin no-overflow buy-sell-label">
-                <Translate content="explorer.asset.summary.market_fee" />:
+                <div className="grid-block no-padding buy-sell-row">
+                    <div style={{ visibility: "hidden" }} className="grid-block small-3 no-margin no-overflow buy-sell-label">
+                        <Translate content="explorer.asset.summary.market_fee" />:
             </div>
-        </div> : null;
+                </div> : null;
         var quoteMarketFee = quoteFlagBooleans["charge_market_fee"] ? (
             <div className="grid-block no-padding buy-sell-row">
                 <div className="grid-block small-3 no-margin no-overflow buy-sell-label">
                     <Translate content="explorer.asset.summary.market_fee" />:
                 </div>
                 <div className="grid-block small-5 no-margin no-overflow buy-sell-input">
-                    <input disabled type="text" id="baseMarketFee" value={quoteFee} autoComplete="off"/>
+                    <input disabled type="text" id="baseMarketFee" value={quoteFee} autoComplete="off" />
                 </div>
                 <div className="grid-block small-4 no-margin no-overflow buy-sell-box">
                     <AssetName noTip name={quote.get("symbol")} />
@@ -152,23 +152,23 @@ class BuySell extends React.Component {
                         }
                         className="inline-block tooltip"
                     >
-                        &nbsp;<Icon style={{position: "relative", top: 3}} name="question-circle" />
+                        &nbsp;<Icon style={{ position: "relative", top: 3 }} name="question-circle" />
                     </span>
                 </div>
             </div>
         ) : hasMarketFee ?
-        <div className="grid-block no-padding buy-sell-row">
-            <div style={{visibility: "hidden"}} className="grid-block small-3 no-margin no-overflow buy-sell-label">
-                <Translate content="explorer.asset.summary.market_fee" />:
+                <div className="grid-block no-padding buy-sell-row">
+                    <div style={{ visibility: "hidden" }} className="grid-block small-3 no-margin no-overflow buy-sell-label">
+                        <Translate content="explorer.asset.summary.market_fee" />:
             </div>
-        </div> : null;
+                </div> : null;
 
         // if (!balanceAmount) {
         //     balanceAmount = 0;
         // }
         const isBid = type === "bid";
         let marketFee = isBid && quoteMarketFee ? quoteMarketFee : !isBid && baseMarketFee ? baseMarketFee : null;
-        let hasBalance = isBid ? balanceAmount.getAmount({real: true}) >= parseFloat(total) : balanceAmount.getAmount({real: true}) >= parseFloat(amount);
+        let hasBalance = isBid ? balanceAmount.getAmount({ real: true }) >= parseFloat(total) : balanceAmount.getAmount({ real: true }) >= parseFloat(amount);
 
         let buttonText = isPredictionMarket ? counterpart.translate("exchange.short") : isBid ? counterpart.translate("exchange.buy") : counterpart.translate("exchange.sell");
         let forceSellText = isBid ? counterpart.translate("exchange.buy") : counterpart.translate("exchange.sell");
@@ -214,9 +214,6 @@ class BuySell extends React.Component {
                 <div className="buy-sell-container">
                     <div className={"exchange-content-header " + type}>
                         <span>{buttonText} <AssetName dataPlace="top" name={quote.get("symbol")} /></span>
-                        {this.props.currentBridges ? <div className="float-right buy-sell-deposit"><a onClick={this._onBuy.bind(this)}><Translate content="exchange.buy" />&nbsp;<span className="asset-name">{buyBorrowDepositName}</span></a></div> : null}
-                        {this.props.backedCoin ? <div className="float-right buy-sell-deposit"><a onClick={this._onDeposit.bind(this)}><Translate content="modal.deposit.submit" /> <span className="asset-name">{buyBorrowDepositName}</span></a></div> : null}
-                        {this.props.onBorrow ? <div className="float-right buy-sell-deposit"><a onClick={this.props.onBorrow}><Translate content="exchange.borrow" />&nbsp;<span className="asset-name">{buyBorrowDepositName}</span></a></div> : null}
                     </div>
                     <form className={(!this.props.isOpen ? "hide-container " : "") + "order-form"} noValidate>
                         <div className="grid-block vertical no-overflow no-padding">
@@ -309,11 +306,11 @@ class BuySell extends React.Component {
 
                                 {/* BUY/SELL button */}
                                 {disabledText ?
-                                    (<div className="float-right" data-tip={disabledText} data-place="right">
-                                        <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
+                                    (<div className="" data-tip={disabledText} data-place="right">
+                                        <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
                                     </div>) :
-                                    (<div className="float-right" data-tip={""}>
-                                        <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
+                                    (<div className="" data-tip={""}>
+                                        <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
                                     </div>)
                                 }
 

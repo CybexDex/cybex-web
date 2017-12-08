@@ -20,15 +20,31 @@ const BITSHARES_NODE = "wss://fake.automatic-selection.com";
 const DEFAULT_WS_NODE = TEST_NODE;
 const DEFAULT_FAUCET = "http://121.40.109.65:3000";
 
+class ApiNode {
+    constructor(url, name) {
+        this.url = url;
+        this.location = name;
+    }
+};
+
+
+const WS_NODE_LIST = [
+    new ApiNode("ws://tokyo-01.cybex.io/", "Tokyo"),
+    new ApiNode("ws://singapore-01.cybex.io/", "Singapore"),
+    new ApiNode("ws://korea-01.cybex.io/", "Korea"),
+    new ApiNode("ws://usa-01.cybex.io/", "USA"),
+    new ApiNode("ws://chengdou-01.cybex.io/", "Chengdou"),
+    new ApiNode("ws://qingdao-01.cybex.io/", "Qingdao"),
+    new ApiNode("ws://hangzhou-01.cybex.io/", "Hangzhou"),
+    new ApiNode("ws://shenzhen-01.cybex.io/", "Shenzhen"),
+    new ApiNode("ws://hongkong-01.cybex.io/", "Hongkong"),
+    new ApiNode("ws://121.40.95.24:8090/", "Develop"),
+];
+
 export const settingsAPIs = {
-    DEFAULT_WS_NODE,
-    WS_NODE_LIST: [
-        {url: BITSHARES_NODE, location: {translate: "settings.api_closest"}},
-        {url: TEST_NODE, location: "Cybex Test"},
-        {url: "ws://121.40.95.24:8090", location: "Cybex Test Node Backup"},
-        {url: "ws://127.0.0.1:8090", location: "Locally hosted"},
-    ],
+    DEFAULT_WS_NODE: BITSHARES_NODE,
+    WS_NODE_LIST,
     DEFAULT_FAUCET,
-    TESTNET_FAUCET: "http://121.40.109.65:3000",
-    RPC_URL: "ws://121.40.109.65:8092/api/"
+    TESTNET_FAUCET: "http://hongkong-01.cybex.io:3000",
+    RPC_URL: "ws://hongkong-01.cybex.io:8092/api/"
 };

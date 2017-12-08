@@ -222,6 +222,7 @@ div.input-wrapper {
 }
 
 .welcome {
+    user-select: none;
     .home-slide {
         position: absolute;
         height: 100%;

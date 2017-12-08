@@ -36,6 +36,7 @@ import tableHeightHelper from "lib/common/tableHeightHelper";
 import ContextMenuActions from "actions/ContextMenuActions";
 import { HeadContextMenuId } from "components/Layout/Header";
 import { AccountVestedBalances } from "components/Account/AccountVestedBalances";
+import CrowdFund from "./AccountCrowdFund";
 
 const sortFunctions = {
     alphabetic: function (a, b, force) {
@@ -727,6 +728,15 @@ class AccountOverview extends React.Component {
                                     <div className="content-block">
                                         <div className="generic-bordered-box">
                                             <AccountVestedBalances />
+                                        </div>
+                                    </div>
+                                </Tab>
+                            }
+                            {this.props.isMyAccount &&
+                                <Tab title="account.crowdfund">
+                                    <div className="content-block">
+                                        <div className="generic-bordered-box">
+                                            <CrowdFund />
                                         </div>
                                     </div>
                                 </Tab>

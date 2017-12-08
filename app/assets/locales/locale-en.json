@@ -439,7 +439,8 @@
     "activity": "Activity",
     "eq_value_header": "Value ({asset})",
     "qty": "Qty",
-    "total": "Total ({asset})"
+    "total": "Total ({asset})",
+    "crowdfund": "Crowd Fund"
   },
   "pagination": {
     "newer": "Newer",

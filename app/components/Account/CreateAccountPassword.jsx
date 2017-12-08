@@ -185,7 +185,7 @@ class CreateAccountPassword extends React.Component {
         return (
             <div style={{ textAlign: "left" }}>
                 <form
-                    style={{ maxWidth: "60rem" }}
+                    style={{ width: "30rem", maxWidth: "60rem" }}
                     onSubmit={this.onSubmit.bind(this)}
                     noValidate
                 >

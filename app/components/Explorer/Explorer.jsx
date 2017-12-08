@@ -24,7 +24,7 @@ class Explorer extends React.Component {
         return (
             <div className="grid-block page-layout flex-start">
                 <div className="grid-block regular-padding small-up-1 medium-up-2 large-up-3">
-                        <ExplorerCard>
+                        {/* <ExplorerCard>
                             <Link to="explorer/blocks">
                                 <div>
                                     <Icon name="blocks" size="5x" fillClass="fill-black"/>
@@ -33,7 +33,7 @@ class Explorer extends React.Component {
                                     <Translate component="span" content="explorer.blocks.title" />
                                 </div>
                             </Link>
-                        </ExplorerCard>
+                        </ExplorerCard> */}
                         <ExplorerCard>
                             <Link to="explorer/assets">
                                 <div>
