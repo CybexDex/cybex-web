@@ -19,7 +19,7 @@ export default class BackupModal extends React.Component {
     }
 
     hide() {
-        ZfApi.publish(this.modalId, "close");        
+        ZfApi.publish(this.modalId, "close");
     }
 
     render() {
@@ -29,9 +29,11 @@ export default class BackupModal extends React.Component {
                 <div className="grid-block vertical text-justify">
                     <Translate content={"backup.content"} />
                     <div className="button-group" style={{ paddingTop: "2rem" }}>
-                        <Link onClick={this.hide} to="/wallet/backup/create" className="button success" type="submit">
-                            <Translate content={"backup.go_backup"} />
-                        </Link>
+                        <button onClick={this.hide} className="button" type="submit" >
+                            <Link to="/wallet/backup/create">
+                                <Translate style={{color: "white"}} content={"backup.go_backup"} />
+                            </Link>
+                        </button>
                         <Trigger close="modal_backup">
                             <button className="button info">
                                 <Translate content={"backup.no_backup"} />

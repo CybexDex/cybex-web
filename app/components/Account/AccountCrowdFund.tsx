@@ -3,6 +3,8 @@ import { connect } from "alt-react";
 import CrowdFundActions from "actions//CrowdFundActions";
 import CrowdFundStore from "stores/CrowdFundStore";
 import * as immutable from "immutable";
+import Translate from "react-translate-component";
+
 // import {} from "PropTypes";
 
 const debug: (fileName: string) => (...toPrint) => void =
@@ -46,11 +48,11 @@ export class CrowdFund extends React.Component<CrowdFundProps, any> {
       <table className="table dashboard-table crowd-table">
         <thead>
           <tr>
-            <th>众筹资产</th>
-            <th>起始时间</th>
-            <th>单位价格</th>
-            <th>锁定时间</th>
-            <th>当前众筹额</th>
+            <Translate component="th" content="crowdfund.asset" />
+            <Translate component="th" content="crowdfund.begin" />
+            <Translate component="th" content="crowdfund.priceOfUnit" />
+            <Translate component="th" content="crowdfund.lockTime" />
+            <Translate component="th" content="crowdfund.currentVol" />
           </tr>
         </thead>
         {allFunds.map(fund =>

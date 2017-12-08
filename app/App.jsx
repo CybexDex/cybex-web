@@ -111,7 +111,6 @@ class App extends React.Component {
     showBackupTip() {
         var wallet = WalletDb.getWallet();
         let backup_recommended = (wallet && (!wallet.backup_date || CachedPropertyStore.get("backup_recommended")));
-
         if (this.props.router.location.pathname.search("wallet/backup/create") === -1 &&
             backup_recommended)
             this.backupModal.show();

@@ -886,20 +886,20 @@
     "enable_wallet": "启用钱包模式",
     "api_location_cybex": "Cybex测试服务器",
 		"connection_error": "无法连接到 API 节点 %(url)s, 请撤回并使用已知可用节点",
-    "cloud_login": "Cloud Wallet Login",
-    "local_wallet": "Local Wallet Login",
-    "faucet_address_text": "The faucet address is used to pay the registration fee for new users.",
-    "active_node": "Active Node",
-    "node_up": "UP",
-    "node_down": "DOWN",
-    "available_nodes": "Available Nodes",
-    "remove": "Remove",
-    "activate": "Activate",
+    "cloud_login": "云钱包登录",
+    "local_wallet": "本地钱包登录",
+    "faucet_address_text": "水龙头地址用来为新用户注册付费",
+    "active_node": "激活节点",
+    "node_up": "较快",
+    "node_down": "较慢",
+    "available_nodes": "可用节点",
+    "remove": "删除",
+    "activate": "激活",
     "confirm_remove": "Are you sure you want to remove %(name)s from your available nodes?",
     "valid_node_url": "Node URL must begin with ws:// or wss://",
-    "low_latency": "Low latency",
-    "medium_latency": "Medium latency",    
-    "high_latency": "High latency"
+    "low_latency": "延迟-低",
+    "medium_latency": "延迟-中",    
+    "high_latency": "延迟-高"
   },
   "pagination": {
     "newer": "更近",
@@ -1505,5 +1505,17 @@
     "subtitle1": "基于石墨烯区块链的未来交易系统",
     "subtitle2": "公开 高效 透明 分布式",
     "button": "了解更多"
+  },
+  "warningDetail": {
+    "p1": "于大多数交易者来说，钱包模式是最为安全的选择。您的本地设备将依据您所设置的钱包密码生成一份二进制的钱包文件，使用这一钱包，您将能够对您的所有资产进行访问和管理。该钱包与钱包密码搭配，是访问您资产的唯一凭证。由于钱包只存在您本人当前的访问环境中，任何其他人无法接触，从而保证了您个人资产的安全性。",
+    "p2": "但同时，钱包文件的意外丢失也将造成非常严重的后果——您存在于该钱包中的资产将丢失，并无法通过其他途径找回。",
+    "p3": "因此，Cybex在协助您完成钱包账户的创建工作后，将推荐并引导您对您的钱包文件进行下载备份。请务必进行下载备份并保存好该文件，牢记该文件存放的位置，同时也推荐使用专用的物理设备，如U盘等，保存好该文件。这样在任何情况下，无论是遇到交易终端的意外情况还是您更换了交易设备，只需找到并恢复您所备份的钱包文件，您便可以继续方便安全的管理您的资产。"
+  },
+  "crowdfund": {
+    "asset":"众筹资产",
+    "begin":"起始时间",
+    "priceOfUnit":"单位价格",
+    "lockTime":"锁定时间",
+    "currentVol":"当前众筹额"
   }
 }
