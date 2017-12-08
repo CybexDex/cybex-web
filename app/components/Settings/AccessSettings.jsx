@@ -9,7 +9,7 @@ import { connect } from "alt-react";
 import { ChainConfig, Apis } from "cybexjs-ws";
 const URL_FRAGMENT_OF_TESTNET = "121.40";
 const autoSelectAPI = "wss://fake.automatic-selection.com";
-const testnetAPI = settingsAPIs.WS_NODE_LIST.find(a => a.url.indexOf(URL_FRAGMENT_OF_TESTNET) !== -1);
+const testnetAPI = settingsAPIs.WS_NODE_LIST.find(a => a.url.indexOf(URL_FRAGMENT_OF_TESTNET) !== -1) || {};
 
 class ApiNode extends React.Component {
     constructor(props) {

@@ -88,7 +88,7 @@ class CreateAccountPassword extends React.Component {
             TransactionConfirmStore.unlisten(this.onFinishConfirm);
             TransactionConfirmStore.reset();
 
-            FetchChain("getAccount", this.state.accountName, undefined, {[this.state.accountName]: true}).then(() => {
+            FetchChain("getAccount", this.state.accountName, undefined, { [this.state.accountName]: true }).then(() => {
                 this.props.router.push("/wallet/backup/create?newAccount=true");
             });
         }
@@ -107,8 +107,8 @@ class CreateAccountPassword extends React.Component {
         AccountActions.createAccountWithPassword(name, password, this.state.registrar_account, referralAccount || this.state.registrar_account, 0, refcode).then(() => {
             AccountActions.setPasswordAccount(name);
             // User registering his own account
-            if(this.state.registrar_account) {
-                FetchChain("getAccount", name, undefined, {[name]: true}).then(() => {
+            if (this.state.registrar_account) {
+                FetchChain("getAccount", name, undefined, { [name]: true }).then(() => {
                     this.setState({
                         step: 2,
                         loading: false
@@ -117,7 +117,7 @@ class CreateAccountPassword extends React.Component {
                 });
                 TransactionConfirmStore.listen(this.onFinishConfirm);
             } else { // Account registered by the faucet
-                FetchChain("getAccount", name, undefined, {[name]: true}).then(() => {
+                FetchChain("getAccount", name, undefined, { [name]: true }).then(() => {
                     this.setState({
                         step: 2
                     });
@@ -317,6 +317,7 @@ class CreateAccountPassword extends React.Component {
                 </div>
                 <div className="divider" />
                 <p className="txtlabel warning"><Translate unsafe content="wallet.password_lose_warning" /></p>
+                <button className="button" onClick={() => this.setState({ step: 3 })}>OK</button>
             </div>);
     }
     _onBackupDownload = () => {
@@ -337,40 +338,27 @@ class CreateAccountPassword extends React.Component {
     _renderGetStarted() {
 
         return (
-            <div>
-                <table className="table">
-                    <tbody>
+            <table className="table">
+                <tbody>
+                    <tr>
+                        <td><Translate content="wallet.tips_dashboard" />:</td>
+                        <td><Link to="/dashboard"><Translate content="header.dashboard" /></Link></td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="wallet.tips_account" />:</td>
+                        <td><Link to={`/account/${this.state.accountName}/overview`} ><Translate content="wallet.link_account" /></Link></td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="wallet.tips_transfer" />:</td>
+                        <td><Link to="/transfer"><Translate content="wallet.link_transfer" /></Link></td>
+                    </tr>
+                    <tr>
+                        <td><Translate content="wallet.tips_settings" />:</td>
+                        <td><Link to="/settings"><Translate content="header.settings" /></Link></td>
+                    </tr>
+                </tbody>
 
-                        <tr>
-                            <td><Translate content="wallet.tips_dashboard" />:</td>
-                            <td><Link to="/dashboard"><Translate content="header.dashboard" /></Link></td>
-                        </tr>
-
-                        <tr>
-                            <td><Translate content="wallet.tips_account" />:</td>
-                            <td><Link to={`/account/${this.state.accountName}/overview`} ><Translate content="wallet.link_account" /></Link></td>
-                        </tr>
-
-                        <tr>
-                            <td><Translate content="wallet.tips_deposit" />:</td>
-                            <td><Link to="/deposit-withdraw"><Translate content="wallet.link_deposit" /></Link></td>
-                        </tr>
-
-
-
-                        <tr>
-                            <td><Translate content="wallet.tips_transfer" />:</td>
-                            <td><Link to="/transfer"><Translate content="wallet.link_transfer" /></Link></td>
-                        </tr>
-
-                        <tr>
-                            <td><Translate content="wallet.tips_settings" />:</td>
-                            <td><Link to="/settings"><Translate content="header.settings" /></Link></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
+            </table>
         );
     }
 
@@ -394,24 +382,22 @@ class CreateAccountPassword extends React.Component {
         // let my_accounts = AccountStore.getMyAccounts();
         // let firstAccount = my_accounts.length === 0;
         return (
-            <div className="sub-content">
-                <div className="grid-block wrap vertical">
-                    {step === 2 ? <p style={{ fontWeight: "bold" }}>
-                        <Translate content={"wallet.step_" + step} />
-                    </p> : null}
+            <div className="grid-block wrap vertical readable" style={{ alignSelf: "center" }}>
+                {step === 2 ? <p style={{ fontWeight: "bold" }}>
+                    <Translate content={"wallet.step_" + step} />
+                </p> : null}
 
-                    {step === 3 ? this._renderGetStartedText() : null}
+                {step === 3 ? this._renderGetStartedText() : null}
 
-                    {step === 1 ? (
-                        <div style={{"align-self": "center", "margin-top": "1em"}}>
-                            {this._renderAccountCreateForm()}
-                        </div>
-                    ) : step === 2 ? this._renderBackup() :
-                            this._renderGetStarted()
-                    }
+                {step === 1 ? (
+                    <div style={{ "align-self": "center", "margin-top": "1em" }}>
+                        {this._renderAccountCreateForm()}
+                    </div>
+                ) : step === 2 ? this._renderBackup() :
+                        this._renderGetStarted()
+                }
 
 
-                </div>
             </div>
         );
     }

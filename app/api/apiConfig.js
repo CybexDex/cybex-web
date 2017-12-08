@@ -29,16 +29,15 @@ class ApiNode {
 
 
 const WS_NODE_LIST = [
+    new ApiNode("ws://111.231.200.95/", "Chengdou"),
+    new ApiNode("ws://118.190.209.196/", "Qingdao"),
+    new ApiNode("ws://47.96.163.7/", "Hangzhou"),
+    new ApiNode("ws://120.79.11.96/", "Shenzhen"),
+    new ApiNode("ws://hongkong-01.cybex.io/", "Hongkong"),
     new ApiNode("ws://tokyo-01.cybex.io/", "Tokyo"),
     new ApiNode("ws://singapore-01.cybex.io/", "Singapore"),
     new ApiNode("ws://korea-01.cybex.io/", "Korea"),
-    new ApiNode("ws://usa-01.cybex.io/", "USA"),
-    new ApiNode("ws://chengdou-01.cybex.io/", "Chengdou"),
-    new ApiNode("ws://qingdao-01.cybex.io/", "Qingdao"),
-    new ApiNode("ws://hangzhou-01.cybex.io/", "Hangzhou"),
-    new ApiNode("ws://shenzhen-01.cybex.io/", "Shenzhen"),
-    new ApiNode("ws://hongkong-01.cybex.io/", "Hongkong"),
-    new ApiNode("ws://121.40.95.24:8090/", "Develop"),
+    new ApiNode("ws://usa-01.cybex.io/", "USA")
 ];
 
 export const settingsAPIs = {
