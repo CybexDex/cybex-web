@@ -18,7 +18,7 @@ export const rudexAPIs = {
 const TEST_NODE = "ws://121.40.109.65:11011";
 const BITSHARES_NODE = "wss://fake.automatic-selection.com";
 const DEFAULT_WS_NODE = TEST_NODE;
-const DEFAULT_FAUCET = "http://121.40.109.65:3000";
+const DEFAULT_FAUCET = "http://118.190.209.196:3000";
 
 class ApiNode {
     constructor(url, name) {
@@ -45,6 +45,6 @@ export const settingsAPIs = {
     DEFAULT_WS_NODE: BITSHARES_NODE,
     WS_NODE_LIST,
     DEFAULT_FAUCET,
-    TESTNET_FAUCET: "http://hongkong-01.cybex.io:3000",
+    TESTNET_FAUCET: "http://118.190.209.196:3000",
     RPC_URL: "ws://hongkong-01.cybex.io:8092/api/"
 };
