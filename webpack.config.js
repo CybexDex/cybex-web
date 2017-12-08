@@ -89,7 +89,7 @@ module.exports = function (env) {
         var cleanDirectories = [outputDir];
 
         // WRAP INTO CSS FILE
-        const extractCSS = new ExtractTextPlugin("[name].css");
+        const extractCSS = new ExtractTextPlugin("[name].[hash:7].css");
         cssLoaders = ExtractTextPlugin.extract({
             fallback: "style-loader",
             use: [{
