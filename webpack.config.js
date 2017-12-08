@@ -3,6 +3,7 @@ var webpack = require("webpack");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
+const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 var Clean = require("clean-webpack-plugin");
 var git = require("git-rev-sync");
 require("es6-promise").polyfill();
@@ -137,15 +138,7 @@ module.exports = function (env) {
         }));
         plugins.push(new webpack.optimize.ModuleConcatenationPlugin());
         if (!env.noUgly) {
-            plugins.push(new webpack.optimize.UglifyJsPlugin({
-                sourceMap: true,
-                compress: {
-                    warnings: true
-                },
-                output: {
-                    screw_ie8: true
-                }
-            }));
+            plugins.push(new UglifyWebpackPlugin());
         }
     } else {
         // plugins.push(new webpack.optimize.OccurenceOrderPlugin());
