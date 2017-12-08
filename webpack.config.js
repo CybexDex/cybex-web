@@ -295,6 +295,7 @@ module.exports = function (env) {
             alias: {
                 iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
                 assets: path.resolve(root_dir, "app/assets"),
+                counterpart: path.resolve(root_dir, "app/lib/counterpart"),
                 app: path.resolve(root_dir, "app"),
             },
             modules: [

@@ -941,6 +941,7 @@
     "valid_node_url": "Node URL must begin with ws:// or wss://",
     "connection_error": "Unable to connect to API node %(url)s, falling back to known working nodes",
     "low_latency": "Low latency",
+    "medium_latency": "Medium latency",
     "api_location_cybex": "Cybex Test Server",
     "high_latency": "High latency"
   },
