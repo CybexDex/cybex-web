@@ -4,7 +4,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 var Clean = require("clean-webpack-plugin");
-// var git = require("git-rev-sync");
+var git = require("git-rev-sync");
 require("es6-promise").polyfill();
 
 // BASE APP DIR
@@ -60,8 +60,8 @@ module.exports = function (env) {
     var plugins = [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.DefinePlugin({
-            APP_VERSION: JSON.stringify("beta"),
-            // APP_VERSION: JSON.stringify(git.tag()),
+            // APP_VERSION: JSON.stringify("beta"),
+            APP_VERSION: JSON.stringify(git.tag()),
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify(baseUrl),
