@@ -32,7 +32,7 @@ class AddressIndex extends BaseStore {
         for less than 10K keys.
     */
     add(pubkey) {
-        console.debug("AddPubkey: ", pubkey);
+        // console.debug("AddPubkey: ", pubkey);
         this.loadAddyMap().then( () => {
             var dirty = false;
             if(this.pubkeys.has(pubkey)) return;

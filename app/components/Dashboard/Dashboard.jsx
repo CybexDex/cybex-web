@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
     constructor(props) {
         super();
         let marketsByChain = {
-            "c577bfd9": [
+            "d3011619": [
                 ["USD", "CYB"],
                 ["USD", "OPEN.BTC"],
                 ["USD", "OPEN.USDT"],

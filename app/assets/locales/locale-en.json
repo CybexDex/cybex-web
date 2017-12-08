@@ -1477,7 +1477,7 @@
     "portfolio": "portfolio"
   },
   "backup": {
-    "content": "恭喜您，您刚刚成功在Cybex分布式交易市场中得到了一个新的钱包。此刻起，您的所有虚拟资产将存于此钱包中。由于您参与的是分布式交易，所有个人资产完全由您个人进行保管。为保障您个人资产的安全性，在进行各项操作前，请务必备份您的钱包。在您的钱包未备份之前，本提示将重复出现，以最大程度的保证您的资金安全。点击“备份钱包”按钮，将进入备份页面，在您备份钱包操作完成后，本提示将不再出现。非常感谢您的配合。",
+    "content": "Congratulation! You’ve just got a new local wallet in the Cybex DEX. From this moment, all your digital asset will be saved in this wallet. Because that you’re going to take part into the distrubuted exchange, all your asset must be stored by yourself. In order to guarantee your assets safefy, please backup your wallet file before any operation or transication being implement.  While the backup has not be done yet, this modal will be shown, repeatedly. Clicking “Go Backup” button will lead you to the backup page. When the backup been performed, this tip will not displayed.Thanks for your cooperation.",
     "go_backup": "Go backup",
     "no_backup": "No backup, temporarily",
     "title": "Your wallet needed to be backup",

@@ -429,7 +429,7 @@ class DecryptBackup extends Component {
         let private_key = PrivateKey.fromSeed(this.state.backup_password || "")
         let contents = this.props.backup.contents
         decryptWalletBackup(private_key.toWif(), contents).then( wallet_object => {
-            console.debug("Backup: ", wallet_object);
+            // console.debug("Backup: ", wallet_object);
             this.setState({verified: true})
             if(this.props.saveWalletObject)
                 BackupStore.setWalletObjct(wallet_object)

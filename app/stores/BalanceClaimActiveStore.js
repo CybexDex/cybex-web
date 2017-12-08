@@ -17,7 +17,7 @@ class BalanceClaimActiveStore extends BaseStore {
         super()
         this.state = this._getInitialState()
         this.no_balance_address = new Set() // per chain
-        console.debug("ClaimStore: ", this.state);
+        // console.debug("ClaimStore: ", this.state);
         this._export("reset")
         // ChainStore.subscribe(this.chainStoreUpdate.bind(this))
         this.bindListeners({
