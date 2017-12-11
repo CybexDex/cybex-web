@@ -28,9 +28,9 @@ class OrderBookRowVertical extends React.Component {
 
         let price = <PriceText price={order.getPrice()} quote={quote} base={base} />;
         return (
-            <tr onClick={this.props.onClick} className={classnames({"final-row": final}, {"my-order": order.isMine(this.props.currentAccount)})}>
-                <td>{utils.format_number(order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({real: true}), base.get("precision"))}</td>
-                <td>{utils.format_number(order[isBid ? "amountToReceive" : "amountForSale"]().getAmount({real: true}), quote.get("precision"))}</td>
+            <tr onClick={this.props.onClick} className={classnames({ "final-row": final }, { "my-order": order.isMine(this.props.currentAccount) })}>
+                <td>{utils.format_number(order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({ real: true }), base.get("precision"))}</td>
+                <td>{utils.format_number(order[isBid ? "amountToReceive" : "amountForSale"]().getAmount({ real: true }), quote.get("precision"))}</td>
                 <td className={integerClass}>
                     {price}
                 </td>
@@ -273,36 +273,36 @@ class OrderBook extends React.Component {
 
         if (base && quote) {
             bidRows = combinedBids
-            .filter(a => {
-                if (this.state.showAllBids || combinedBids.length <= rowCount) {
-                    return true;
-                }
-                return a.getPrice() >= highestBid.getPrice() / 5;
-            })
-            .map((order, index) => {
-                return (horizontal ?
-                    <OrderBookRowHorizontal
-                        index={index}
-                        key={order.getPrice() + (order.isCall() ? "_call" : "")}
-                        order={order}
-                        onClick={this.props.onClick.bind(this, order)}
-                        base={base}
-                        quote={quote}
-                        position={!this.state.flip ? "left" : "right"}
-                        currentAccount={this.props.currentAccount}
-                    /> :
-                    <OrderBookRowVertical
-                        index={index}
-                        key={order.getPrice() + (order.isCall() ? "_call" : "")}
-                        order={order}
-                        onClick={this.props.onClick.bind(this, order)}
-                        base={base}
-                        quote={quote}
-                        final={index === 0}
-                        currentAccount={this.props.currentAccount}
-                    />
-                );
-            });
+                .filter(a => {
+                    if (this.state.showAllBids || combinedBids.length <= rowCount) {
+                        return true;
+                    }
+                    return a.getPrice() >= highestBid.getPrice() / 5;
+                })
+                .map((order, index) => {
+                    return (horizontal ?
+                        <OrderBookRowHorizontal
+                            index={index}
+                            key={order.getPrice() + (order.isCall() ? "_call" : "")}
+                            order={order}
+                            onClick={this.props.onClick.bind(this, order)}
+                            base={base}
+                            quote={quote}
+                            position={!this.state.flip ? "left" : "right"}
+                            currentAccount={this.props.currentAccount}
+                        /> :
+                        <OrderBookRowVertical
+                            index={index}
+                            key={order.getPrice() + (order.isCall() ? "_call" : "")}
+                            order={order}
+                            onClick={this.props.onClick.bind(this, order)}
+                            base={base}
+                            quote={quote}
+                            final={index === 0}
+                            currentAccount={this.props.currentAccount}
+                        />
+                    );
+                });
 
             let tempAsks = combinedAsks
                 .filter(a => {
@@ -387,8 +387,8 @@ class OrderBook extends React.Component {
         );
 
         return (
-            <div className={classnames(this.props.wrapperClass, "grid-block orderbook no-padding small-vertical medium-horizontal align-spaced no-overflow small-12")}>
-                <div className={classnames("small-12 middle-content", this.state.flip ? "order-1" : "order-2")}>
+            <div className={classnames(this.props.wrapperClass, "grid-block orderbook no-padding medium-horizontal align-spaced no-overflow small-12")}>
+                <div className={classnames("small-12 medium-6 middle-content", this.state.flip ? "order-1" : "order-2")}>
                     <div className="exchange-content-header ask">
                         <Translate content="exchange.asks" />
                         <div className="float-right header-sub-title">
@@ -398,10 +398,10 @@ class OrderBook extends React.Component {
                             <span> (<AssetName name={quoteSymbol} />)</span>
                         </div>
                     </div>
-                    <table className="table order-table table-hover text-right no-overflow">
+                    <table className="table order-table table-hover text-right">
                         {!this.state.flip ? rightHeader : leftHeader}
                     </table>
-                    <div className="grid-block" ref="hor_asks" style={{ paddingBottom: 24, overflow: "hidden"}}>
+                    <div className="grid-block" ref="hor_asks">
                         <table style={{ paddingBottom: 5 }} className="table order-table table-hover text-right no-overflow">
                             <TransitionWrapper
                                 ref="askTransition"
@@ -415,7 +415,7 @@ class OrderBook extends React.Component {
                     </div>
                 </div>
 
-                <div className={classnames("small-12 middle-content", this.state.flip ? "order-2" : "order-1")}>
+                <div className={classnames("small-12 medium-6 middle-content", this.state.flip ? "order-2" : "order-1")}>
                     <div className="exchange-content-header bid">
                         <Translate content="exchange.bids" />
                         <div className="float-right header-sub-title">

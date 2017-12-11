@@ -29,7 +29,7 @@ class ApiNode {
 
 
 const WS_NODE_LIST = [
-    new ApiNode("ws://111.231.200.95/", "Chengdou"),
+    new ApiNode("ws://111.231.200.95/", "Chengdo"),
     new ApiNode("ws://118.190.209.196/", "Qingdao"),
     new ApiNode("ws://47.96.163.7/", "Hangzhou"),
     new ApiNode("ws://120.79.11.96/", "Shenzhen"),

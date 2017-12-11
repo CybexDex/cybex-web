@@ -158,6 +158,7 @@ class MyOpenOrders extends React.Component {
 
     _getOrders() {
         const { currentAccount, base, quote } = this.props;
+        console.debug("CurrentOrders: ", currentAccount);
         const orders = currentAccount.get("orders"), call_orders = currentAccount.get("call_orders");
         const baseID = base.get("id"), quoteID = quote.get("id");
         const assets = {
@@ -229,20 +230,19 @@ class MyOpenOrders extends React.Component {
 
         return (
             <div
-                style={{marginBottom: "15px"}}
                 key="open_orders"
                 className={this.props.className}
             >
 
-                <div className="exchange-bordered small-12" style={{height: 266}}>
+                <div className="small-12 flex-wrapper flex-wrapper-main flex-column" style={{maxHeight: 720}}>
                     <div className="exchange-content-header">
                         <Translate content="exchange.my_orders" />
                     </div>
                     <table className="table order-table table-hover">
-                        <TableHeader leftAlign type="sell" baseSymbol={baseSymbol} quoteSymbol={quoteSymbol}/>
+                        <TableHeader type="sell" baseSymbol={baseSymbol} quoteSymbol={quoteSymbol}/>
                     </table>
 
-                    <div className="grid-block no-padding market-right-padding" ref="asks" style={{overflow: "hidden", maxHeight: 200}}>
+                    <div className="grid-block no-padding market-right-padding" ref="asks" style={{overflow: "hidden" , height: "100%", maxHeight: 720}}>
                         <table style={{paddingBottom: 5}}  className="table order-table table-hover">
                             <TransitionWrapper
                                 component="tbody"

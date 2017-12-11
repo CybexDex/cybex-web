@@ -214,7 +214,7 @@ class Exchange extends React.Component {
                 .merge(
                 Observable
                     .fromEvent(window, "resize", { capture: false, passive: true }),
-                    // .debounceTime(500),
+                // .debounceTime(500),
                 this.resizeSubject)
                 .subscribe(resizeEvent => this._getWindowSize);
     }
@@ -1362,7 +1362,7 @@ class Exchange extends React.Component {
                                 )}
                                 key="open_orders"
                                 orders={marketLimitOrders}
-                                currentAccount={currentAccount.get("id")}
+                                currentAccount={currentAccount}
                                 base={base}
                                 quote={quote}
                                 baseSymbol={baseSymbol}

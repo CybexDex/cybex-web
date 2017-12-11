@@ -1,4 +1,13 @@
 {
+  "counterpart": {
+    "formats": {
+      "date": {
+        "short_custom": "%e %b '%y",
+        "market_history": "%e/%m %H:%M:%S",
+        "market_history_us": "%m/%e %H:%M:%S"
+      }
+    }
+  },
   "languages": {
     "en": "English",
     "zh": "简体中文",
@@ -11,9 +20,9 @@
     "ru": "Русский"
   },
   "incognito": {
-		"no_support": "当前Cybex钱包依赖于本地存储和IndexedDB，在使用隐身浏览时会导致不稳定。我们建议您使用常规浏览方式。",
-		"ignore": "我了解，并继续。"
-	},
+    "no_support": "当前Cybex钱包依赖于本地存储和IndexedDB，在使用隐身浏览时会导致不稳定。我们建议您使用常规浏览方式。",
+    "ignore": "我了解，并继续。"
+  },
   "sync_fail": {
     "title": "无法与API服务器同步连接",
     "sub_text_1": "请确认你的计算机系统时钟正确。",
@@ -44,7 +53,7 @@
   },
   "tooltip": {
     "call_limit": "市场中最少抵押率头寸的平仓价",
-		"margin_price": "这是触发平仓的最大价格。也被称为挤压价格。",
+    "margin_price": "这是触发平仓的最大价格。也被称为挤压价格。",
     "settle_price": "清算单执行时将使用的价格",
     "sign_owner": "如果你是账户的所有人，请检查签名是否正确。这只有在你使用所有者账户，而该账户未包括与活跃权限时需要关注。",
     "latest_price": "市场最近的成交价",
@@ -65,24 +74,24 @@
     "buy_min": "你将至少收到这些金额。如果有定价低于你的设定的订单被撮合，你实际收到的金额会更多。",
     "borrow": "从系统借出 %(asset)s 。这将创建一个智能合约，冻结你的抵押物，直到你调整仓位或进行平仓。",
     "transfer_actions": "点击这里进行转账，或充值/提取支持充提功能资产。",
-		"deposit_tip": "为了完成充值，请到 %(asset)s 的外盘钱包，进行转账操作，转账地址即列在当前页的地址。一旦转账得到确认，您将完成充值。如果此页转账信息中有memo出现，您需要在转账时也将memo包括进去。",
-		"copy_tip": "点击这里将你的内容复制到粘贴板上",
-		"withdraw_full": "点击退还所有余额",
-		"withdraw_address": "如果您还没有 %(asset)s 的钱包地址, 为了完成提币，请您找到钱包提供商并创建一个。",
-		"memo_tip": "您可以在memo里留下任何信息. Memo不是必须的，但通常将资产转账到交易所时，需要填写。",
-		"generate": "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 请将它粘贴到下方并保存在一个您认为安全的地方。",
-		"copy_password": "点这里将您的密码复制到粘贴板上",
-		"sync_yes": "当前节点已与区块链同步",
-		"sync_no": "当前节点并未与区块链同步，请换一个节点。",
-		"disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
+    "deposit_tip": "为了完成充值，请到 %(asset)s 的外盘钱包，进行转账操作，转账地址即列在当前页的地址。一旦转账得到确认，您将完成充值。如果此页转账信息中有memo出现，您需要在转账时也将memo包括进去。",
+    "copy_tip": "点击这里将你的内容复制到粘贴板上",
+    "withdraw_full": "点击退还所有余额",
+    "withdraw_address": "如果您还没有 %(asset)s 的钱包地址, 为了完成提币，请您找到钱包提供商并创建一个。",
+    "memo_tip": "您可以在memo里留下任何信息. Memo不是必须的，但通常将资产转账到交易所时，需要填写。",
+    "generate": "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 请将它粘贴到下方并保存在一个您认为安全的地方。",
+    "copy_password": "点这里将您的密码复制到粘贴板上",
+    "sync_yes": "当前节点已与区块链同步",
+    "sync_no": "当前节点并未与区块链同步，请换一个节点。",
+    "disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
   },
   "propose": "提交",
-	"cancel": "取消",
+  "cancel": "取消",
   "account": {
     "new_user": "新用户吗？",
-		"existing_user": "老用户",
-		"restore": "还原",
-		"advanced": "高级",
+    "existing_user": "老用户",
+    "restore": "还原",
+    "advanced": "高级",
     "intro_text_title": "欢迎来到Cybex去中心化交易所！",
     "intro_text_1": "<b>Cybex</b>是一个基于区块链构建的去中心化交易所，该交易所通称DEX, DEX有着工业级的业务处理能力，能够永不停歇地提供公正和透明的服务，这里有bitCNY,bitUSD等智能货币，用户可以在这里根据自己的需要.",
     "intro_text_2": "发行用户定义资产（UIA）,也可以买卖通用的数字资产如BTC, ETH等。",
@@ -92,13 +101,13 @@
     "transfer_actions": "转账操作",
     "market_actions": "市场操作",
     "total_estimate": "这是你所有资产的估值， 包含了在界面中设置了隐藏的资产、委单中的资产、债仓及抵押物。估值采用实时获得的区块链上的价格，可能并不那么精确。",
-		"see_open": "查看委单",
+    "see_open": "查看委单",
     "trade": "交易",
     "welcome": "欢迎使用 Cybex (石墨烯)系统",
     "assets": "资产",
     "market_value": "市值",
     "hour_24": "日涨跌幅%",
-    "hour_24_short": "24hr",    
+    "hour_24_short": "24hr",
     "recent": "近期活动",
     "name": "账户名",
     "member": {
@@ -160,7 +169,7 @@
       "approx_fee": "资产创建费用预估",
       "exists": "资产代码已存在",
       "max_positive": "最大供应量必须是个大于0",
-      "too_large": "最大供应量太大,请选一个小点的数字",      
+      "too_large": "最大供应量太大,请选一个小点的数字",
       "core_exchange_rate": "手续费汇率",
       "quote": "报价资产数量",
       "quote_name": "报价资产",
@@ -302,15 +311,15 @@
       "proxy_known": "已知投票代理",
       "expired": "已过期预算项目",
       "witness": "见证人名字",
-			"committee": "理事会成员名字",
-			"toggle": "切换投票",
-			"supported": "受支持的",
-			"active_short": "活跃",
-			"inactive": "备份",
-			"about": "关于",
-			"create_worker": "创建新工作者",
-			"line": "线",
-			"save_finish": "点击“保存”完成投票"
+      "committee": "理事会成员名字",
+      "toggle": "切换投票",
+      "supported": "受支持的",
+      "active_short": "活跃",
+      "inactive": "备份",
+      "about": "关于",
+      "create_worker": "创建新工作者",
+      "line": "线",
+      "save_finish": "点击“保存”完成投票"
     },
     "options": {
       "num_witnesses": "信任见证人",
@@ -360,10 +369,10 @@
     "asset_details": "资产详情",
     "id": "账户 ID",
     "portfolio": "我的投资组合",
-		"activity": "活动记录",
-		"eq_value_header": "市值 ({asset})",
-		"qty": "数量",
-		"total": "总额 ({asset})",
+    "activity": "活动记录",
+    "eq_value_header": "市值 ({asset})",
+    "qty": "数量",
+    "total": "总额 ({asset})",
     "mine": "我的账户",
     "whitelist": {
       "title": "白名单",
@@ -380,7 +389,7 @@
       "blacklist_authorities": "Blacklist authority"
     },
     "vesting": {
-      "vesting": "冻结", 
+      "vesting": "冻结",
       "title": "待解冻余额",
       "balance_number": "余额 #%(id)s",
       "no_balances": "该账户无待解冻余额",
@@ -420,8 +429,8 @@
       "valid": "请输入一个合法的大于0的半角数字",
       "balance": "最终余额必须大于0",
       "insufficient": "余额不足",
-			"noFeeBalance": "当前所选资产余额不足以支付手续费, 请换一种用来支付手续费的资产。",
-			"noPoolBalance": "这个资产没有充足的手续费池余额用来支付手续费了，请联系资产所有者或换一种资产。"
+      "noFeeBalance": "当前所选资产余额不足以支付手续费, 请换一种用来支付手续费的资产。",
+      "noPoolBalance": "这个资产没有充足的手续费池余额用来支付手续费了，请联系资产所有者或换一种资产。"
     },
     "back": "返回",
     "confirm": "确认发送",
@@ -445,8 +454,8 @@
     "proposal_create": "{account} 创建了拟议交易",
     "proposal_update": "{account} 更新了拟议交易",
     "proposal_delete": "{account} 删除了拟议交易",
-		"fill_order_buy": "{account}以{price}的价格购买了 {amount} ",
-		"fill_order_sell": "{account}以{price}的价格卖出了{amount} ",    
+    "fill_order_buy": "{account}以{price}的价格购买了 {amount} ",
+    "fill_order_sell": "{account}以{price}的价格卖出了{amount} ",
     "vesting_balance_withdraw": "{account} 提取了解冻金额 {amount}",
     "balance_claim": "{account} 领取了余额 {amount}",
     "publish_feed": "{account} 发布了喂价 {price}",
@@ -455,7 +464,7 @@
     "limit_order_sell": "{account} 提交卖单，以 {price} 的价格卖出 {amount} ",
     "limit_order_buy": "{account} 提交买单，以 {price} 的价格买入 {amount} ",
     "call_order_update": "{account} 调整了 {debtSymbol} 债务 {debt} ，以及抵押 {collateral}",
-		"asset_reserve": "{account} 销毁了 {amount}",
+    "asset_reserve": "{account} 销毁了 {amount}",
     "asset_issue": "{account} 发行了 {amount} 到 {to}",
     "asset_create": "{account} 创建了资产 {asset}",
     "asset_update": "{account} 更新了资产 {asset}",
@@ -473,7 +482,7 @@
     "witness_create": "{account} 升级到见证人",
     "witness_update": "{account} 更新了见证人信息",
     "witness_pay": "提取见证人收入到账户",
-		"witness_receive": "已从见证人处获取见证",
+    "witness_receive": "已从见证人处获取见证",
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
     "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
     "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} "
@@ -521,7 +530,7 @@
     "committee_member_create": "创建理事会成员",
     "witness_create": "创建见证人",
     "witness_pay": "提取见证人收入到账户",
-		"witness_receive": "已从见证人处获取见证",
+    "witness_receive": "已从见证人处获取见证",
     "proposal_create": "创建提案",
     "proposal_update": "更新提案",
     "proposal_delete": "删除提案",
@@ -717,12 +726,12 @@
       "issuer": "发行人",
       "precision": "精度",
       "prediction": "预测市场资产",
-			"units": "单位"
+      "units": "单位"
     },
     "asset": {
       "title": "资产",
       "not_found": "资产 %(name)s 不存在",
-			"invalid": "资产名 %(name)s 不合法",
+      "invalid": "资产名 %(name)s 不合法",
       "summary": {
         "asset_type": "资产类型",
         "issuer": "发行人",
@@ -885,20 +894,20 @@
     "wallet_required_text": "你需要切换到钱包模式才能恢复旧的备份钱包文件，点击下方按钮继续。",
     "enable_wallet": "启用钱包模式",
     "api_location_cybex": "Cybex测试服务器",
-		"connection_error": "无法连接到 API 节点 %(url)s, 请撤回并使用已知可用节点",
+    "connection_error": "无法连接到 API 节点 %(url)s, 请撤回并使用已知可用节点",
     "cloud_login": "云钱包登录",
     "local_wallet": "本地钱包登录",
     "faucet_address_text": "水龙头地址用来为新用户注册付费",
     "active_node": "激活节点",
-    "node_up": "较快",
-    "node_down": "较慢",
+    "node_up": "在线",
+    "node_down": "离线",
     "available_nodes": "可用节点",
     "remove": "删除",
     "activate": "激活",
     "confirm_remove": "Are you sure you want to remove %(name)s from your available nodes?",
     "valid_node_url": "Node URL must begin with ws:// or wss://",
     "low_latency": "延迟-低",
-    "medium_latency": "延迟-中",    
+    "medium_latency": "延迟-中",
     "high_latency": "延迟-高"
   },
   "pagination": {
@@ -912,10 +921,10 @@
     "unsynced": "Out of sync",
     "disconnected": "Disconnected",
     "block": "最新区块",
-		"loading": "载入中...",
-		"backup": "需要备份",
-		"nosync": "区块链数据陈旧，请等待数据完成同步..",
-		"connection": "无连接",
+    "loading": "载入中...",
+    "backup": "需要备份",
+    "nosync": "区块链数据陈旧，请等待数据完成同步..",
+    "connection": "无连接",
     "brainkey": "建议备份脑钱包密钥",
     "connected": "已连接",
     "latency": "延迟"
@@ -928,8 +937,8 @@
       "ema1": "EMA 1",
       "ema2": "EMA 2",
       "smaVolume": "SMA",
-			"macd": "MACD 图",
-			"bb": "布林带",
+      "macd": "MACD 图",
+      "bb": "布林带",
       "fib": "绘制黄金分割线",
       "trendline": "绘制趋势线",
       "volume": "显示交易量",
@@ -966,8 +975,8 @@
     "buy": "买入",
     "buy_min": "至少买",
     "sell": "卖出",
-		"confirm_no_orders_buy": "你在一个没有委托卖单的市场下了一个买单，你确定么？",
-		"confirm_no_orders_sell": "你在一个没有委托买单的市场下了一个卖单，你确定么？",
+    "confirm_no_orders_buy": "你在一个没有委托卖单的市场下了一个买单，你确定么？",
+    "confirm_no_orders_sell": "你在一个没有委托买单的市场下了一个卖单，你确定么？",
     "confirm_buy": "你的订单价格超出最低卖出价 %(diff)s 倍，你确定么？",
     "confirm_sell": "你的订单价低于最高买入价 %(diff)s 倍，你确定么？",
     "settle": "喂价",
@@ -1026,7 +1035,7 @@
     "show_star_1": "显示",
     "show_star_2": "仅",
     "base": "基准货币:",
-		"quote": "报价货币:",
+    "quote": "报价货币:",
     "search": "搜索更多交易对",
     "order_value": "Order value"
   },
@@ -1251,7 +1260,7 @@
       "submit": "充值"
     },
     "reserve": {
-			"title": "销毁资产",
+      "title": "销毁资产",
       "amount": "数量",
       "from": "账户",
       "submit": "储备"
@@ -1456,7 +1465,7 @@
     "telegram_link": "参与更加活跃的讨论，请加人 Cybex Telegram group: <a href='https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg' target='blank' rel='noopener noreferrer'>https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg</a>"
   },
   "trx_error": {
-		"expire": "你的交易账单确认超时，请稍后尝试。"
+    "expire": "你的交易账单确认超时，请稍后尝试。"
   },
   "backup": {
     "title": "您的钱包需要备份",
@@ -1498,7 +1507,7 @@
     "minutes": "分钟",
     "hours": "小时",
     "days": "天"
-  }, 
+  },
   "dashboard": {
     "title1": "分布式数字资产交易所",
     "title2": "构建基于EOS的生态系统",
@@ -1512,10 +1521,10 @@
     "p3": "因此，Cybex在协助您完成钱包账户的创建工作后，将推荐并引导您对您的钱包文件进行下载备份。请务必进行下载备份并保存好该文件，牢记该文件存放的位置，同时也推荐使用专用的物理设备，如U盘等，保存好该文件。这样在任何情况下，无论是遇到交易终端的意外情况还是您更换了交易设备，只需找到并恢复您所备份的钱包文件，您便可以继续方便安全的管理您的资产。"
   },
   "crowdfund": {
-    "asset":"众筹资产",
-    "begin":"起始时间",
-    "priceOfUnit":"单位价格",
-    "lockTime":"锁定时间",
-    "currentVol":"当前众筹额"
+    "asset": "众筹资产",
+    "begin": "起始时间",
+    "priceOfUnit": "单位价格",
+    "lockTime": "锁定时间",
+    "currentVol": "当前众筹额"
   }
 }
