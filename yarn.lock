@@ -30,6 +30,12 @@
   version "8.0.46"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.46.tgz#6e1766b2d0ed06631d5b5f87bb8e72c8dbb6888e"
 
+"@types/react-dom@15":
+  version "15.5.6"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-15.5.6.tgz#7794ff7822882b59b899c30294e1b1e62e97757e"
+  dependencies:
+    "@types/react" "^15"
+
 "@types/react-router@3":
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-3.0.13.tgz#493c2f0794313a37e4698deed9b816b2ad239716"
@@ -40,6 +46,10 @@
 "@types/react@*", "@types/react@15":
   version "15.6.5"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.6.5.tgz#fb23b8d8b7226313b645b6e84fb178976bbfe587"
+
+"@types/react@^15":
+  version "15.6.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.6.7.tgz#e910b6aace59d8d0b48dd679c2c03cffedafeec6"
 
 "ReconnectingWebSocket@git+https://github.com/bitshares/reconnecting-websocket":
   version "1.0.1"
