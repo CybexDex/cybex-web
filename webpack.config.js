@@ -234,12 +234,11 @@ module.exports = function (env) {
                     test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
                     include: [
                         path.resolve(root_dir, "app/assets/"),
-                        path.resolve(root_dir, "node_modules/slick-carousel")
                     ],
                     use: [{
                         loader: "url-loader",
                         options: {
-                            limit: 1000000
+                            limit: 8192
                         }
                     }]
                 },
@@ -253,7 +252,7 @@ module.exports = function (env) {
                     use: [{
                         loader: "url-loader",
                         options: {
-                            limit: 100000
+                            limit: 8192
                         }
                     }]
                 },

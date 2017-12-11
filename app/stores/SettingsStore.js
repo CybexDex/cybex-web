@@ -82,9 +82,9 @@ class SettingsStore {
             ],
             themes: [
                 "cybexDarkTheme",
-                "darkTheme",
-                "lightTheme",
-                "olDarkTheme",
+                // "darkTheme",
+                // "lightTheme",
+                // "olDarkTheme",
             ],
             passwordLogin: [
                 {translate: "cloud_login"},

@@ -16,7 +16,6 @@ import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import Card from "components/Utility/Card"
 import { Link } from "react-router";
-import Slider from "react-slick";
 
 const cardList = [
     {
@@ -38,12 +37,28 @@ const cardList = [
     },
 ];
 
+
+
 class Dashboard extends React.Component {
 
     constructor(props) {
         super();
         let marketsByChain = {
             "d3011619": [
+                ["BTS", "CYB"],
+                ["CYB", "BTS"],
+                ["BTS", "OPEN.EOS"],
+                ["BTS", "PPY"],
+                ["BTS", "OPEN.STEEM"],
+                ["CYB", "CNY"],
+                ["CYB", "OPEN.ETH"],
+                ["CYB", "HERO"],
+                ["CYB", "OCT"],
+                ["CYB", "RUBLE"],
+                ["CYB", "GOLD"],
+                ["CYB", "BLOCKPAY"],
+                ["CYB", "BTWTY"],
+                ["CYB", "OBITS"],
                 ["USD", "CYB"],
                 ["USD", "OPEN.BTC"],
                 ["USD", "OPEN.USDT"],
@@ -64,19 +79,6 @@ class Dashboard extends React.Component {
                 ["OPEN.BTC", "BLOCKPAY"],
                 ["OPEN.BTC", "OPEN.DGD"],
                 ["OPEN.BTC", "OPEN.STEEM"],
-                ["CYB", "BTS"],
-                ["BTS", "OPEN.EOS"],
-                ["BTS", "PPY"],
-                ["BTS", "OPEN.STEEM"],
-                ["CYB", "CNY"],
-                ["CYB", "OPEN.ETH"],
-                ["CYB", "HERO"],
-                ["CYB", "OCT"],
-                ["CYB", "RUBLE"],
-                ["CYB", "GOLD"],
-                ["CYB", "BLOCKPAY"],
-                ["CYB", "BTWTY"],
-                ["CYB", "OBITS"],
                 ["KAPITAL", "OPEN.BTC"],
                 ["CYB", "SILVER"],
                 ["USD", "OPEN.STEEM"],
@@ -101,7 +103,7 @@ class Dashboard extends React.Component {
         this.state = {
             width: null,
             showIgnored: false,
-            featuredMarkets: marketsByChain[chainID] || marketsByChain["4018d784"],
+            featuredMarkets: marketsByChain[chainID] || marketsByChain["d3011619"],
             newAssets: [
 
             ],
@@ -177,7 +179,7 @@ class Dashboard extends React.Component {
         if (!accountsReady) {
             return <LoadingIndicator />;
         }
-        var slideSettings = {
+        const slideSettings = {
             dots: false,
             arrows: false,
             infinite: true,
@@ -190,7 +192,10 @@ class Dashboard extends React.Component {
 
         let markets = featuredMarkets ? featuredMarkets
             .map(pair => {
-                let isLowVolume = this.props.lowVolumeMarkets.get(pair[1] + "_" + pair[0]) || this.props.lowVolumeMarkets.get(pair[0] + "_" + pair[1]);
+                // let isLowVolume = this.props.lowVolumeMarkets.get(pair[1] + "_" + pair[0]) || this.props.lowVolumeMarkets.get(pair[0] + "_" + pair[1]);
+                // console.debug("MarketCard: ", pair); 
+                // for demo
+                let isLowVolume = false;
                 if (!isLowVolume) validMarkets++;
                 let className = "";
                 if (validMarkets > 9) {

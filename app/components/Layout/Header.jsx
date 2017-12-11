@@ -339,6 +339,7 @@ class Header extends React.Component {
                     </ul>
                 </div>
                 <div className="grid-block show-for-medium shrink">
+                    <div id="headerPortal"></div>
                     <div className="grp-menu-items-group header-right-menu">
 
                         {!myAccountCount || !walletBalance ? null : walletBalance}
