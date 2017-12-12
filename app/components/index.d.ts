@@ -21,10 +21,6 @@ declare module "alt-react" {
   function connect(Component, injector: any);
 }
 
-declare module "cybexjs-ws" {
-  const Apis;
-}
-
 declare module CommonUtils {
   const price_text: (price: string, base: any, quote: any) => string;
   const format_volume: (amount: number) => string;

@@ -117,15 +117,6 @@ class AssetActions {
                 "blacklist_markets": [],
                 "description": description,
                 "extensions": extension
-                // "extensions": 
-                // [
-                //     [0],
-                //     [1, {
-                //         "sell_start": 1,
-                //         "sell_end": 2,
-                //         "vesting_end": 2
-                //     }]
-                // ]
             },
             "is_prediction_market": is_prediction_market,
             "extensions": null

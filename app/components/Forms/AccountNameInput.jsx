@@ -1,9 +1,9 @@
 import React from "react";
-import {PropTypes} from "react";
+import { PropTypes } from "react";
 import classNames from "classnames";
 import AccountActions from "actions/AccountActions";
 import AccountStore from "stores/AccountStore";
-import {ChainValidation} from "cybexjs";
+import { ChainValidation } from "cybexjs";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import AltContainer from "alt-container";
@@ -47,7 +47,7 @@ class AccountNameInput extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.onChange) this.props.onChange({valid: !this.getError()});
+        if (this.props.onChange) this.props.onChange({ valid: !this.getError() });
     }
 
     getValue() {
@@ -55,7 +55,7 @@ class AccountNameInput extends React.Component {
     }
 
     setValue(value) {
-        this.setState({value});
+        this.setState({ value });
     }
 
     clear() {
@@ -71,7 +71,7 @@ class AccountNameInput extends React.Component {
     }
 
     getError() {
-        if(this.state.value === null) return null;
+        if (this.state.value === null) return null;
         let error = null;
         if (this.state.error) {
             error = this.state.error;
@@ -87,21 +87,32 @@ class AccountNameInput extends React.Component {
         return error;
     }
 
+    errorTranslate(errMsg) {
+        if (!errMsg || typeof errMsg !== "string" || !errMsg.length) return errMsg;
+        if (errMsg.indexOf(".") === errMsg.length - 1) {
+            errMsg = errMsg.slice(0, errMsg.length - 1);
+        }
+        let tokens = errMsg.split(" ");
+        let tag = tokens[tokens.length - 1];
+        return counterpart.translate(`account.name_input.${tag}`);
+    }
+
     validateAccountName(value) {
         this.state.error = value === "" ?
             "Please enter valid account name" :
+            this.errorTranslate(ChainValidation.is_account_name_error(value)) ||
             ChainValidation.is_account_name_error(value)
 
         this.state.warning = null
-        if(this.props.cheapNameOnly) {
-            if( ! this.state.error && ! ChainValidation.is_cheap_name( value ))
+        if (this.props.cheapNameOnly) {
+            if (!this.state.error && !ChainValidation.is_cheap_name(value))
                 this.state.error = counterpart.translate("account.name_input.premium_name_faucet");
         } else {
-            if( ! this.state.error && ! ChainValidation.is_cheap_name( value ))
+            if (!this.state.error && !ChainValidation.is_cheap_name(value))
                 this.state.warning = counterpart.translate("account.name_input.premium_name_warning");
         }
-        this.setState({value: value, error: this.state.error, warning: this.state.warning});
-        if (this.props.onChange) this.props.onChange({value: value, valid: !this.getError()});
+        this.setState({ value: value, error: this.state.error, warning: this.state.warning });
+        if (this.props.onChange) this.props.onChange({ value: value, valid: !this.getError() });
         if (this.props.accountShouldExist || this.props.accountShouldNotExist) AccountActions.accountSearch(value);
     }
 
@@ -123,7 +134,7 @@ class AccountNameInput extends React.Component {
 
     render() {
         let error = this.getError() || "";
-        let class_name = classNames("form-group", "account-name", {"has-error": false});
+        let class_name = classNames("form-group", "account-name", { "has-error": false });
         let warning = this.state.warning;
         // let {noLabel} = this.props;
 
@@ -144,8 +155,8 @@ class AccountNameInput extends React.Component {
                         value={this.state.account_name || this.props.initial_value}
                     />
                 </section>
-                <div style={{textAlign: "left"}} className="facolor-error">{error}</div>
-                <div style={{textAlign: "left"}} className="facolor-warning">{error ? null : warning}</div>
+                <div style={{ textAlign: "left" }} className="facolor-error">{error}</div>
+                <div style={{ textAlign: "left" }} className="facolor-warning">{error ? null : warning}</div>
             </div>
         );
     }
@@ -158,10 +169,10 @@ export default class StoreWrapper extends React.Component {
         return (
             <AltContainer stores={[AccountStore]}
                 inject={{
-                        searchAccounts: () => {
-                            return AccountStore.getState().searchAccounts;
-                        }
-                    }}
+                    searchAccounts: () => {
+                        return AccountStore.getState().searchAccounts;
+                    }
+                }}
             >
                 <AccountNameInput
                     ref="nameInput"

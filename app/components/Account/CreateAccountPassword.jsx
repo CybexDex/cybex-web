@@ -19,6 +19,7 @@ import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import Icon from "../Icon/Icon";
 import CopyButton from "../Utility/CopyButton";
+import PasswordInput from "./../Forms/PasswordInput";
 
 class CreateAccountPassword extends React.Component {
     static contextTypes = {
@@ -72,7 +73,7 @@ class CreateAccountPassword extends React.Component {
         if (!firstAccount) {
             valid = valid && this.state.registrar_account;
         }
-        return valid && this.state.understand_1 && this.state.understand_2;
+        return valid && this.state.understand_1 && this.state.understand_2 && this.state.understand_3;
     }
 
     onAccountNameChange(e) {
@@ -145,8 +146,12 @@ class CreateAccountPassword extends React.Component {
         // if (WalletDb.getWallet()) {
         //     this.createAccount(account_name);
         // } else {
-        let password = this.state.generatedPassword;
+        let password = this.state.password;
         this.createAccount(account_name, password);
+    }
+
+    onPasswordChange(e) {
+        this.setState({ password: e.value, validPassword: e.valid });
     }
 
     onRegistrarAccountChange(registrar_account) {
@@ -160,13 +165,11 @@ class CreateAccountPassword extends React.Component {
 
     _onInput(value, e) {
         this.setState({
-            [value]: value === "confirm_password" ? e.target.value : !this.state[value],
-            validPassword: value === "confirm_password" ? e.target.value === this.state.generatedPassword : this.state.validPassword
+            [value]: value === "password" ? e.target.value : !this.state[value]
         });
     }
 
     _renderAccountCreateForm() {
-
         let { registrar_account } = this.state;
 
         let my_accounts = AccountStore.getMyAccounts();
@@ -211,33 +214,40 @@ class CreateAccountPassword extends React.Component {
                             </span>
                         </div>
                     </section>
-
                     <section>
+                        <PasswordInput
+                            ref="password"
+                            confirmation={true}
+                            passwordLength={12}
+                            onChange={this.onPasswordChange.bind(this)}
+                            noLabel
+                            checkStrength
+                        />
+                    </section>
+                    {/* <section>
                         <label className="left-label"><Translate content="wallet.confirm_password" /></label>
                         <input type="password" name="password" id="password" value={this.state.confirm_password} onChange={this._onInput.bind(this, "confirm_password")} />
-                        {this.state.confirm_password && this.state.confirm_password !== this.state.generatedPassword ?
+                        {this.state.confirm_password && this.state.confirm_password !== this.state.firstPassword ?
                             <div className="has-error"><Translate content="wallet.confirm_error" /></div> : null}
-                    </section>
-
+                    </section> */}
                     <br />
-                    <div className="confirm-checks" onClick={this._onInput.bind(this, "understand_3")}>
+                    <div className="confirm-checks">
                         <label>
-                            <input type="checkbox" onChange={() => { }} checked={this.state.understand_3} />
+                            <input type="checkbox" onChange={this._onInput.bind(this, "understand_3")} checked={this.state.understand_3} />
                             <Translate content="wallet.understand_3" />
                         </label>
                     </div>
                     <br />
-                    <div className="confirm-checks" onClick={this._onInput.bind(this, "understand_1")}>
+                    <div className="confirm-checks">
                         <label>
-                            <input type="checkbox" onChange={() => { }} checked={this.state.understand_1} />
+                            <input type="checkbox" onChange={this._onInput.bind(this, "understand_1")} checked={this.state.understand_1} />
                             <Translate content="wallet.understand_1" />
                         </label>
                     </div>
                     <br />
-
-                    <div className="confirm-checks" style={{ paddingBottom: "1.5rem" }} onClick={this._onInput.bind(this, "understand_2")}>
+                    <div className="confirm-checks" style={{ paddingBottom: "1.5rem" }}>
                         <label>
-                            <input type="checkbox" onChange={() => { }} checked={this.state.understand_2} />
+                            <input type="checkbox" onChange={this._onInput.bind(this, "understand_2")} checked={this.state.understand_2} />
                             <Translate content="wallet.understand_2" />
                         </label>
                     </div>
@@ -313,7 +323,7 @@ class CreateAccountPassword extends React.Component {
 
                 <div>
 
-                    {!this.state.showPass ? <div onClick={() => { this.setState({ showPass: true }); }} className="button"><Translate content="wallet.password_show" /></div> : <div><h5><Translate content="settings.password" />:</h5><div style={{ fontWeight: "bold", wordWrap: "break-word" }} className="no-overflow">{this.state.generatedPassword}</div></div>}
+                    {!this.state.showPass ? <div onClick={() => { this.setState({ showPass: true }); }} className="button"><Translate content="wallet.password_show" /></div> : <div><h5><Translate content="settings.password" />:</h5><div style={{ fontWeight: "bold", wordWrap: "break-word" }} className="no-overflow">{this.state.password}</div></div>}
                 </div>
                 <div className="divider" />
                 <p className="txtlabel warning"><Translate unsafe content="wallet.password_lose_warning" /></p>
@@ -382,7 +392,7 @@ class CreateAccountPassword extends React.Component {
         // let my_accounts = AccountStore.getMyAccounts();
         // let firstAccount = my_accounts.length === 0;
         return (
-            <div className="grid-block wrap vertical readable" style={{ alignSelf: "center" }}>
+            <div className="grid-block wrap vertical readable create-password" style={{ alignSelf: "center" }}>
                 {step === 2 ? <p style={{ fontWeight: "bold" }}>
                     <Translate content={"wallet.step_" + step} />
                 </p> : null}

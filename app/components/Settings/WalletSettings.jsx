@@ -37,19 +37,19 @@ export default class WalletSettings extends React.Component {
 
                 <ChangeActiveWallet />
                 <WalletDelete />
-                <section style={{padding: "15px 0"}} className="block-list">
+                {/* <section style={{padding: "15px 0"}} className="block-list">
                     <header><Translate content="wallet.balance_claims" />:</header>
 
-                </section>
+                </section> */}
 
-                <div style={{paddingBottom: 10}}>
+                {/* <div style={{paddingBottom: 10}}>
                     <Translate content="settings.lookup_text" />:
                 </div>
                 <div className="button outline" onClick={this.onLookup.bind(this)}>
                         <Translate content="wallet.balance_claim_lookup" />
-                </div>
+                </div> */}
 
-                {lookupActive ? <BalanceClaimActive /> : null}
+                {/* {lookupActive ? <BalanceClaimActive /> : null} */}
 
 
                 <section style={{padding: "15px 0"}} className="block-list">

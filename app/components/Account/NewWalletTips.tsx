@@ -53,14 +53,16 @@ const NewWalletTips = class extends Component<NewWalletTipsProps, any> {
   constructor(props: NewWalletTipsProps) {
     super(props);
     this.state = {
-      answerRight: false
+      answerRight: false,
+      warning: false
     };
   }
   render() {
     let { className, onKnownWallet } = this.props;
     return (
       <div className={className + " wallet-tips"}>
-        <CardList onAllDone={onKnownWallet}/>
+        {this.state.warning ? <Translate content="createTip.but" component="p" /> : <Translate content="createTip.may" component="p" />}
+        <CardList onAllDone={onKnownWallet} onWarning={() => this.setState({ warning: true })} />
       </div>
     )
   }

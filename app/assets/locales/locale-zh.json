@@ -79,7 +79,7 @@
     "withdraw_full": "点击退还所有余额",
     "withdraw_address": "如果您还没有 %(asset)s 的钱包地址, 为了完成提币，请您找到钱包提供商并创建一个。",
     "memo_tip": "您可以在memo里留下任何信息. Memo不是必须的，但通常将资产转账到交易所时，需要填写。",
-    "generate": "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 请将它粘贴到下方并保存在一个您认为安全的地方。",
+    "generate": "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 若需要使用改密码，可直接复制并粘贴到密码输入框，并在其他地方备份好该密码。",
     "copy_password": "点这里将您的密码复制到粘贴板上",
     "sync_yes": "当前节点已与区块链同步",
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
@@ -355,6 +355,12 @@
     "cyb_market": "交易市场",
     "name_input": {
       "name_is_taken": "账户名已经被使用",
+      "longer": "用户名过短",
+      "shorter": "用户名过长",
+      "letter": "用户名的每个片段须以字母开头",
+      "dashes": "用户名应仅由字母、数字与连字符‘-’构成",
+      "row": "用户名的每个片段不应有连续呃连字符‘-’",
+      "digit": "用户名的每个片段应以数字或字母结尾",
       "not_found": "账户未找到",
       "premium_name_faucet": "你使用的是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母",
       "premium_name_warning": "这是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母"
@@ -1209,7 +1215,7 @@
     "account_public": "账户名称（公开可见）",
     "current_pass": "当前密码",
     "no_wallet": "你还没有钱包",
-    "generated": "已创建密码",
+    "generated": "推荐密码",
     "understand_1": "我理解如果我忘记或丢失了密码，将没有任何人能够帮助我恢复",
     "understand_2": "我已经写下了或者用其它方式保存了我的密码",
     "cyb_rules": "Cybex法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。",
@@ -1219,9 +1225,9 @@
     "answer_wrong_3": "浏览和探索Cybex的各种功能<br>以便更好的使用平台",
     "go_on": "以知晓备份钱包的重要性，继续进行注册",
     "backup_primary": "请务必优先<br>备份并妥善保存钱包",
-    "not_first_account": "Since you already have an account, you will need to pay for this new account yourself. In order to do so, your account needs to have lifetime membership, which can be bought in the account page.",
+    "not_first_account": "因为您已经是Cybex交易所账户的持有者，如果您需要注册新的账户，则需要支付相应的注册费用，同时，用来支付该费用的账户必须是终身会员账户。终身会员，可以在用户信息页面中购买升级。",
     "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Cybex!</strong>",
-    "understand_3": " I understand that I will lose access to my funds if I lose my password"
+    "understand_3": "我已经了解并知晓，一旦忘记该密码，我将会失去获取并使用该账户资金的途径"
   },
   "borrow": {
     "title": "%(asset_symbol)s 保证金头寸",
@@ -1526,5 +1532,9 @@
     "priceOfUnit": "单位价格",
     "lockTime": "锁定时间",
     "currentVol": "当前众筹额"
+  },
+  "createTip": {
+    "but": "但是……",
+    "may": "您可以……"
   }
 }

@@ -2,6 +2,8 @@ import alt from "alt-instance";
 import {
   Apis
 } from "cybexjs-ws";
+import WalletDb from "stores/WalletDb";
+import WalletApi from "api/WalletApi";
 
 class CrowdFuncActions {
 
@@ -14,6 +16,27 @@ class CrowdFuncActions {
       size,
       res
     });
+  }
+
+  async initCrowdFund(crowdParams: {
+    u: number, t: number, owner: string, asset_id: string
+  }) {
+    let operation = {
+      fee: {
+        asset_id: 0,
+        amount: 0
+      },
+      ...crowdParams
+    };
+    let tr = WalletApi.new_transaction();
+    tr.add_type_operation("initiate_crowdfund", operation);
+
+    try {
+      await WalletDb.process_transaction();
+      return dispatch => dispatch(true);
+    } catch {
+      return dispatch => dispatch(false);      
+    }
   }
 
   allFundsFetched(fetchedData) {

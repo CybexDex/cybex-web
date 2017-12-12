@@ -88,8 +88,9 @@ class TimerButton extends React.Component<TimerButtonProps, any> {
   }
 
   render() {
+    let className = "button hollow" + (this.state.time <= 0 ? "" : " secondary");
     return (
-      <button className="button hollow error" disabled={this.state.time > 0} onClick={this.props.onClick} >
+      <button className={className} disabled={this.state.time > 0} onClick={this.props.onClick} >
         {this.state.time > 0 && (this.state.time + "s")}
         &nbsp;
         {this.props.children}
@@ -134,6 +135,9 @@ export default class CardList extends React.Component<any, CardListState> {
       }));
     } else {
       this.cardList = cardList.slice();
+      if (this.props.onWarning) {
+        this.props.onWarning();
+      }
       this.setState({
         currentStep: 0,
         allKnown: true

@@ -73,18 +73,19 @@ class Header extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return (
-            nextProps.linkedAccounts !== this.props.linkedAccounts ||
-            nextProps.currentAccount !== this.props.currentAccount ||
-            nextProps.contextMenu !== this.props.contextMenu ||
-            nextProps.passwordLogin !== this.props.passwordLogin ||
-            nextProps.locked !== this.props.locked ||
-            nextProps.current_wallet !== this.props.current_wallet ||
-            nextProps.lastMarket !== this.props.lastMarket ||
-            nextProps.starredAccounts !== this.props.starredAccounts ||
-            nextProps.currentLocale !== this.props.currentLocale ||
-            nextState.active !== this.state.active
-        );
+        return true;
+        // return (
+        //     nextProps.linkedAccounts !== this.props.linkedAccounts ||
+        //     nextProps.currentAccount !== this.props.currentAccount ||
+        //     nextProps.contextMenu !== this.props.contextMenu ||
+        //     nextProps.passwordLogin !== this.props.passwordLogin ||
+        //     nextProps.locked !== this.props.locked ||
+        //     nextProps.current_wallet !== this.props.current_wallet ||
+        //     nextProps.lastMarket !== this.props.lastMarket ||
+        //     nextProps.starredAccounts !== this.props.starredAccounts ||
+        //     nextProps.currentLocale !== this.props.currentLocale ||
+        //     nextState.active !== this.state.active
+        // );
     }
 
     _triggerMenu(e) {
