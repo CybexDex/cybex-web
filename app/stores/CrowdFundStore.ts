@@ -15,6 +15,7 @@ class CrowdFundStore extends BaseStore {
         super();
         this.bindListeners({
             onAllFundsFetched: CrowdFundActions.allFundsFetched,
+            onAccountPartiFundsFetched: CrowdFundActions.accountPartiFundsFetched,
         });
     }
 
@@ -25,6 +26,12 @@ class CrowdFundStore extends BaseStore {
             allFunds
         });
         console.debug("Store: ", this);
+    }
+    onAccountPartiFundsFetched(partiCrowds) {
+        this.setState({
+            partiCrowds
+        });
+        console.debug("Store: ", this);        
     }
 
 }

@@ -19,6 +19,7 @@ import assetUtils from "common/asset_utils";
 import { Map, List } from "immutable";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
+import CrowdFundActions from "actions//CrowdFundActions";
 
 class AccountAssets extends React.Component {
 
@@ -182,6 +183,18 @@ class AccountAssets extends React.Component {
         this.setState({ issue: issue });
     }
 
+
+
+    _initCrow = (asset) => {
+        CrowdFundActions.initCrowdFund({
+            u: 2000,
+            t: 300,
+            owner: asset.issuer,
+            asset_id: asset.id
+        });
+    }
+
+
     render() {
         let { account, account_name, searchAccounts, assets, assetsList } = this.props;
         let { issue, errors, isValid, create } = this.state;
@@ -241,6 +254,11 @@ class AccountAssets extends React.Component {
                                 <Translate content="transaction.trxTypes.asset_update" />
                             </button>
                         </td>
+                        <td>
+                            <button onClick={() => this._initCrow(asset)} className="button outline">
+                                <Translate content="transaction.trxTypes.issue_crowd" />
+                            </button>
+                        </td>
                     </tr>
                 );
             }).toArray();
@@ -260,7 +278,7 @@ class AccountAssets extends React.Component {
                                     <th style={{ maxWidth: "200px" }}><Translate content="account.user_issued_assets.description" /></th>
                                     <Translate component="th" content="markets.supply" />
                                     <th><Translate content="account.user_issued_assets.max_supply" /></th>
-                                    <th style={{ textAlign: "center" }} colSpan="3"><Translate content="account.perm.action" /></th>
+                                    <th style={{ textAlign: "center" }} colSpan="4"><Translate content="account.perm.action" /></th>
                                 </tr>
                             </thead>
                             <tbody>

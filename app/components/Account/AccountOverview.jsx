@@ -736,7 +736,7 @@ class AccountOverview extends React.Component {
                                 <Tab title="account.crowdfund">
                                     <div className="content-block">
                                         <div className="generic-bordered-box">
-                                            <CrowdFund />
+                                            <CrowdFund account={account} />
                                         </div>
                                     </div>
                                 </Tab>

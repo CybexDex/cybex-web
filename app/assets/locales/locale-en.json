@@ -668,7 +668,8 @@
       "transfer_to_blind": "Transfer to blinded account",
       "blind_transfer": "Blinded transfer",
       "transfer_from_blind": "Transfer from blinded account",
-      "asset_claim_fees": "Claim asset fees"
+      "asset_claim_fees": "Claim asset fees",
+      "init_crowd": "Initiate Crowdfund"   
     },
     "feeGroups": {
       "general": "General",
@@ -1528,6 +1529,7 @@
     "p3": "Thus, CYBEX will recommend you and offer guidance for you to download and backup your wallet file after helping set up the account. Please make sure that you download the file and keep it safe. Never forget the file location in your computer, and usage of any physical device to store the file is also recommended, such as a USB disk, just remember to keep it safe. With these measures, whether you encounter an unexpected situation of the trading terminal or change the trading device yourself, just locate and restore the wallet file backed up before, you can continue to manage your assets conveniently and securely."
   },
   "crowdfund": {
+    "action": "Operation",
     "asset":"Asset",
     "begin":"Start time",
     "priceOfUnit":"Price of Unit",
