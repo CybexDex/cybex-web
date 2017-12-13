@@ -88,7 +88,7 @@ class TimerButton extends React.Component<TimerButtonProps, any> {
   }
 
   render() {
-    let className = "button hollow" + (this.state.time <= 0 ? "" : " secondary");
+    let className = "button" + (this.state.time <= 0 ? "" : " disabled");
     return (
       <button className={className} disabled={this.state.time > 0} onClick={this.props.onClick} >
         {this.state.time > 0 && (this.state.time + "s")}

@@ -256,7 +256,7 @@ class AccountAssets extends React.Component {
                         </td>
                         <td>
                             <button onClick={() => this._initCrow(asset)} className="button outline">
-                                <Translate content="transaction.trxTypes.issue_crowd" />
+                                <Translate content="transaction.trxTypes.init_crowd" />
                             </button>
                         </td>
                     </tr>
