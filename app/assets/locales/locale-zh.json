@@ -1502,8 +1502,9 @@
     "exchange": "交易中心",
     "account": "账户配置",
     "bazaar": "主要市场",
-    "ledger": "钱包区块",
-    "swap": "原子交换"
+    "explorer": "区块浏览",
+    "swap": "原子交换",
+    "help": "帮助文档"
   },
   "vesting": {
     "progress": "解锁进度",

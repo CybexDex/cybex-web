@@ -3,6 +3,7 @@ import SettingsStore from "stores/SettingsStore";
 import AltContainer from "alt-container";
 import Fees from "./Fees";
 
+
 class FeesContainer extends React.Component {
 
     render() {
@@ -10,11 +11,11 @@ class FeesContainer extends React.Component {
             <AltContainer
                 stores={[SettingsStore]}
                 inject={{
-                        settings : SettingsStore.getState().settings
+                    settings: SettingsStore.getState().settings
                 }}>
-             <Fees {...this.props}/>
+                <Fees {...this.props} />
             </AltContainer>
-           );
+        );
     }
 }
 

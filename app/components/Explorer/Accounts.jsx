@@ -1,13 +1,14 @@
 import React from "react";
-import {PropTypes} from "react";
-import {Link} from "react-router";
+import { PropTypes } from "react";
+import { Link } from "react-router";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import AccountActions from "actions/AccountActions";
-import {debounce} from "lodash";
+import { debounce } from "lodash";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "../Utility/BalanceComponent";
+import { ExplorerNav } from "./ExplorerNav";
 
 class AccountRow extends React.Component {
     static propTypes = {
@@ -20,14 +21,14 @@ class AccountRow extends React.Component {
     };
 
     render() {
-        let {account} = this.props;
+        let { account } = this.props;
         let balance = account.getIn(["balances", "1.3.0"]) || null;
 
         return (
             <tr key={account.get("id")}>
                 <td>{account.get("id")}</td>
                 <td><Link to={`/account/${account.get("name")}/overview`}>{account.get("name")}</Link></td>
-                <td>{!balance? "n/a" : <BalanceComponent balance={balance} />}</td>
+                <td>{!balance ? "n/a" : <BalanceComponent balance={balance} />}</td>
                 <td>{!balance ? "n/a" : <BalanceComponent balance={balance} asPercentage={true} />}</td>
             </tr>
         );
@@ -48,13 +49,13 @@ class Accounts extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         return (
-                !Immutable.is(nextProps.searchAccounts, this.props.searchAccounts) ||
-                nextState.searchTerm !== this.state.searchTerm
-            );
+            !Immutable.is(nextProps.searchAccounts, this.props.searchAccounts) ||
+            nextState.searchTerm !== this.state.searchTerm
+        );
     }
 
     _onSearchChange(e) {
-        this.setState({searchTerm: e.target.value.toLowerCase()});
+        this.setState({ searchTerm: e.target.value.toLowerCase() });
         this._searchAccounts(e.target.value);
     }
 
@@ -63,36 +64,37 @@ class Accounts extends React.Component {
     }
 
     render() {
-        let {searchAccounts} = this.props;
-        let {searchTerm} = this.state;
+        let { searchAccounts } = this.props;
+        let { searchTerm } = this.state;
         let accountRows = null;
 
-        if (searchAccounts.size > 0 && searchTerm &&searchTerm.length > 0) {
+        if (searchAccounts.size > 0 && searchTerm && searchTerm.length > 0) {
             accountRows = searchAccounts.filter(a => {
                 return a.indexOf(searchTerm) !== -1;
             })
-            .sort((a, b) => {
-                if (a > b) {
-                    return 1;
-                } else if (a < b) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            })
-            .map((account, id) => {
-                return (
-                    <AccountRow key={id} account={account} />
-                );
-            }).toArray();
+                .sort((a, b) => {
+                    if (a > b) {
+                        return 1;
+                    } else if (a < b) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                })
+                .map((account, id) => {
+                    return (
+                        <AccountRow key={id} account={account} />
+                    );
+                }).toArray();
         }
 
         return (
             <div className="grid-block page-layout">
+                <ExplorerNav />
                 <div className="grid-block vertical medium-6 medium-offset-3">
                     <div className="grid-content shrink">
                         <Translate component="h3" content="explorer.accounts.title" />
-                        <input type="text" value={this.state.searchTerm} onChange={this._onSearchChange.bind(this)}/>
+                        <input type="text" value={this.state.searchTerm} onChange={this._onSearchChange.bind(this)} />
                     </div>
                     <div className="grid-content">
                         <table className="table">

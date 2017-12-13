@@ -1,8 +1,8 @@
 import React from "react";
-import {PropTypes} from "react";
+import { PropTypes } from "react";
 import AssetActions from "actions/AssetActions";
 import SettingsActions from "actions/SettingsActions";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";
@@ -10,8 +10,10 @@ import assetUtils from "common/asset_utils";
 import counterpart from "counterpart";
 import FormattedAsset from "../Utility/FormattedAsset";
 import AssetName from "../Utility/AssetName";
-import {Tabs, Tab} from "../Utility/Tabs";
-import {ChainStore} from "cybexjs";
+import { Tabs, Tab } from "../Utility/Tabs";
+import { ChainStore } from "cybexjs";
+import { ExplorerNav } from "./ExplorerNav";
+
 
 class Assets extends React.Component {
 
@@ -53,10 +55,10 @@ class Assets extends React.Component {
 
         if (assets.size === 0 || force) {
             AssetActions.getAssetList.defer("A", 100);
-            this.setState({assetsFetched: 100});
+            this.setState({ assetsFetched: 100 });
         } else if (assets.size >= this.state.assetsFetched) {
             AssetActions.getAssetList.defer(lastAsset.symbol, 100);
-            this.setState({assetsFetched: this.state.assetsFetched + 99});
+            this.setState({ assetsFetched: this.state.assetsFetched + 99 });
         }
     }
 
@@ -67,28 +69,28 @@ class Assets extends React.Component {
     }
 
     linkToAccount(name_or_id) {
-        if(!name_or_id) {
+        if (!name_or_id) {
             return <span>-</span>;
         }
 
-        return <LinkToAccountById account={name_or_id}/>
+        return <LinkToAccountById account={name_or_id} />
     }
 
     _onFilter(type, e) {
-        this.setState({[type]: e.target.value.toUpperCase()});
+        this.setState({ [type]: e.target.value.toUpperCase() });
         SettingsActions.changeViewSetting({
             [type]: e.target.value.toUpperCase()
         });
     }
 
     render() {
-        let {assets} = this.props;
+        let { assets } = this.props;
 
         let placeholder = counterpart.translate("markets.filter").toUpperCase();
         let coreAsset = ChainStore.getAsset("1.3.0");
 
         let uia = assets.filter(a => {
-            return !a.market_asset  && a.symbol.indexOf(this.state.filterUIA) !== -1;
+            return !a.market_asset && a.symbol.indexOf(this.state.filterUIA) !== -1;
         }).map((asset) => {
             let description = assetUtils.parseDescription(asset.options.description);
 
@@ -98,7 +100,7 @@ class Assets extends React.Component {
                 <tr key={asset.symbol}>
                     <td><Link to={`/asset/${asset.symbol}`}><AssetName name={asset.symbol} /></Link></td>
                     <td>{this.linkToAccount(asset.issuer)}</td>
-                    <td><FormattedAsset amount={asset.dynamic.current_supply} asset={asset.id} hide_asset={true}/></td>
+                    <td><FormattedAsset amount={asset.dynamic.current_supply} asset={asset.id} hide_asset={true} /></td>
                     <td><Link className="button outline" to={`/market/${marketID}`}><Translate content="header.exchange" /></Link></td>
                 </tr>
             );
@@ -123,7 +125,7 @@ class Assets extends React.Component {
                 <tr key={asset.symbol}>
                     <td><Link to={`/asset/${asset.symbol}`}><AssetName name={asset.symbol} /></Link></td>
                     <td>{this.linkToAccount(asset.issuer)}</td>
-                    <td><FormattedAsset amount={asset.dynamic.current_supply} asset={asset.id} hide_asset={true}/></td>
+                    <td><FormattedAsset amount={asset.dynamic.current_supply} asset={asset.id} hide_asset={true} /></td>
                     <td><Link className="button outline" to={`/market/${marketID}`}><Translate content="header.exchange" /></Link></td>
                 </tr>
             );
@@ -154,22 +156,22 @@ class Assets extends React.Component {
 
             return (
                 <tr key={asset.id.split(".")[2]}>
-                    <td style={{width: "80%"}}>
-                        <div style={{paddingTop: 10, fontWeight: "bold"}}>
+                    <td style={{ width: "80%" }}>
+                        <div style={{ paddingTop: 10, fontWeight: "bold" }}>
                             <Link to={`/asset/${asset.symbol}`}><AssetName name={asset.symbol} /></Link>
                             {description.condition ? <span> ({description.condition})</span> : null}
                         </div>
                         {description ?
-                        <div style={{padding: "10px 20px 5px 0", lineHeight: "18px"}}>
-                            {description.main}
-                        </div> : null}
-                        <div style={{padding: "0 20px 5px 0", lineHeight: "18px"}}>
+                            <div style={{ padding: "10px 20px 5px 0", lineHeight: "18px" }}>
+                                {description.main}
+                            </div> : null}
+                        <div style={{ padding: "0 20px 5px 0", lineHeight: "18px" }}>
                             <LinkToAccountById account={asset.issuer} />
                             <span> - <FormattedAsset amount={asset.dynamic.current_supply} asset={asset.id} /></span>
                             {description.expiry ? <span> - {description.expiry}</span> : null}
                         </div>
                     </td>
-                    <td style={{width: "20%"}}>
+                    <td style={{ width: "20%" }}>
                         <Link className="button outline" to={`/market/${marketID}`}><Translate content="header.exchange" /></Link>
                     </td>
                 </tr>
@@ -186,34 +188,36 @@ class Assets extends React.Component {
 
         return (
             <div className="grid-block vertical">
+                <ExplorerNav />
                 <div className="grid-block page-layout vertical">
                     <div className="grid-block main-content small-12 medium-10 medium-offset-1 main-content vertical">
                         <div className="generic-bordered-box">
                             <Tabs
                                 tabsClass="no-padding bordered-header"
                                 setting="assetsTab"
-                                className="grid-block vertical no-overflow no-padding"
+                                segmented={false}
+                                className="grid-block vertical no-overflow no-padding overview-tabs with-shadow"
                                 contentClass="grid-block vertical"
                             >
                                 <Tab title="explorer.assets.market">
                                     <div className="grid-block shrink">
                                         <div className="grid-content">
-                                            <input style={{maxWidth: "500px"}} placeholder={placeholder} type="text" value={this.state.filterMPA} onChange={this._onFilter.bind(this, "filterMPA")}></input>
+                                            <input style={{ maxWidth: "500px" }} placeholder={placeholder} type="text" value={this.state.filterMPA} onChange={this._onFilter.bind(this, "filterMPA")}></input>
                                         </div>
                                     </div>
-                                    <div className="grid-block" style={{paddingBottom: 20}}>
+                                    <div className="grid-block" style={{ paddingBottom: 20 }}>
                                         <div className="grid-content">
-                                            <table className="table">
+                                            <table className="table dashboard-table">
                                                 <thead>
-                                                <tr>
-                                                    <th><Translate component="span" content="explorer.assets.symbol" /></th>
-                                                    <th><Translate component="span" content="explorer.assets.issuer" /></th>
-                                                    <th><Translate component="span" content="markets.supply" /></th>
-                                                    <th></th>
-                                                </tr>
+                                                    <tr>
+                                                        <th><Translate component="span" content="explorer.assets.symbol" /></th>
+                                                        <th><Translate component="span" content="explorer.assets.issuer" /></th>
+                                                        <th><Translate component="span" content="markets.supply" /></th>
+                                                        <th></th>
+                                                    </tr>
                                                 </thead>
                                                 <tbody>
-                                                {mia}
+                                                    {mia}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -223,23 +227,23 @@ class Assets extends React.Component {
                                 <Tab title="explorer.assets.user">
                                     <div className="grid-block shrink">
                                         <div className="grid-content">
-                                            <input style={{maxWidth: "500px"}} placeholder={placeholder} type="text" value={this.state.filterUIA} onChange={this._onFilter.bind(this, "filterUIA")}></input>
+                                            <input style={{ maxWidth: "500px" }} placeholder={placeholder} type="text" value={this.state.filterUIA} onChange={this._onFilter.bind(this, "filterUIA")}></input>
                                         </div>
                                     </div>
-                                    <div className="grid-block" style={{paddingBottom: 20}}>
+                                    <div className="grid-block" style={{ paddingBottom: 20 }}>
                                         <div className="grid-content">
-                                            <table className="table">
+                                            <table className="table dashboard-table">
                                                 <thead>
-                                                <tr>
-                                                    <th><Translate component="span" content="explorer.assets.symbol" /></th>
-                                                    <th><Translate component="span" content="explorer.assets.issuer" /></th>
-                                                    <th><Translate component="span" content="markets.supply" /></th>
-                                                    <th></th>
-                                                </tr>
+                                                    <tr>
+                                                        <th><Translate component="span" content="explorer.assets.symbol" /></th>
+                                                        <th><Translate component="span" content="explorer.assets.issuer" /></th>
+                                                        <th><Translate component="span" content="markets.supply" /></th>
+                                                        <th></th>
+                                                    </tr>
                                                 </thead>
 
                                                 <tbody>
-                                                {uia}
+                                                    {uia}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -249,14 +253,14 @@ class Assets extends React.Component {
                                 <Tab title="explorer.assets.prediction">
                                     <div className="grid-block shrink">
                                         <div className="grid-content">
-                                            <input style={{maxWidth: "500px"}} placeholder={counterpart.translate("markets.search").toUpperCase()} type="text" value={this.state.filterPM} onChange={this._onFilter.bind(this, "filterPM")}></input>
+                                            <input style={{ maxWidth: "500px" }} placeholder={counterpart.translate("markets.search").toUpperCase()} type="text" value={this.state.filterPM} onChange={this._onFilter.bind(this, "filterPM")}></input>
                                         </div>
                                     </div>
-                                    <div className="grid-block" style={{paddingBottom: 20}}>
+                                    <div className="grid-block" style={{ paddingBottom: 20 }}>
                                         <div className="grid-content">
-                                            <table className="table">
+                                            <table className="table dashboard-table">
                                                 <tbody>
-                                                {pm}
+                                                    {pm}
                                                 </tbody>
                                             </table>
                                         </div>

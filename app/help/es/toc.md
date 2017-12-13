@@ -11,7 +11,7 @@
  * [Cuentas](accounts/general.md)
  * [Permisos](accounts/permissions.md)
  * [Membresías](accounts/membership.md)
- * [Market Pegged Assets](assets/mpa.md) (BitUSD, BitEUR, BitGOLD, Bit\*,...)
+ * [Market Pegged Assets](assets/mpa.md)
  * [Activos Emitidos por Usuarios](assets/uia.md)
  * [BitAssets Privados](assets/privbitassets.md)
  * [Exchange Descentralizado](dex/introduction.md)

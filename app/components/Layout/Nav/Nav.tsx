@@ -27,14 +27,15 @@ const NavLinks: Array<NavItem> = [
     routeTo: accountName => `/account/${accountName}/dashboard`,
     activeMatcher: /^\/account/,
     name: "Account",
-    icon: "package",
+    icon: "wallet",
     displayOnlyWhen: "currentAccount"
   },
   {
-    id: "ledger",
+    id: "explorer",
     routeTo: "/ledger",
-    name: "Ledger",
-    icon: "wallet"
+    activeMatcher: /^\/ledger|explorer/,    
+    name: "Explorer",
+    icon: "diagram"
   },
   {
     id: "bazaar",
@@ -45,7 +46,7 @@ const NavLinks: Array<NavItem> = [
   {
     id: "exchange",
     routeTo: lastMarket => `/market/${lastMarket}`,
-    activeMatcher: /\/market/,
+    activeMatcher: /^\/market/,
     name: "Exchange",
     icon: "to-bit"
   }, {
@@ -58,7 +59,14 @@ const NavLinks: Array<NavItem> = [
     id: "swap",
     routeTo: "/swap",
     name: "SwapTest",
-    icon: "transfer"
+    icon: "exchange"
+  },
+  {
+    id: "help",
+    routeTo: "/help/introduction/cybex",
+    activeMatcher: /^\/help/,
+    name: "Help",
+    icon: "idea"
   },
 ];
 

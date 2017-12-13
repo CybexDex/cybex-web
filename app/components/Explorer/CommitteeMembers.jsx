@@ -3,12 +3,13 @@ import Immutable from "immutable";
 import AccountImage from "../Account/AccountImage";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
-import {ChainStore} from "cybexjs";
+import { ChainStore } from "cybexjs";
 import FormattedAsset from "../Utility/FormattedAsset";
 import Translate from "react-translate-component";
 import { connect } from "alt-react";
 import SettingsActions from "actions/SettingsActions";
 import SettingsStore from "stores/SettingsStore";
+import { ExplorerNav } from "./ExplorerNav";
 
 class CommitteeMemberCard extends React.Component {
 
@@ -26,7 +27,7 @@ class CommitteeMemberCard extends React.Component {
     }
 
     render() {
-        let committee_member_data = ChainStore.getCommitteeMemberById( this.props.committee_member.get("id") );
+        let committee_member_data = ChainStore.getCommitteeMemberById(this.props.committee_member.get("id"));
 
         if (!committee_member_data) {
             return null;
@@ -38,10 +39,10 @@ class CommitteeMemberCard extends React.Component {
                     <h4 className="text-center">{this.props.committee_member.get("name")}</h4>
                     <div className="card-content clearfix">
                         <div className="float-left">
-                            <AccountImage account={this.props.committee_member.get("name")} size={{height: 64, width: 64}}/>
+                            <AccountImage account={this.props.committee_member.get("name")} size={{ height: 64, width: 64 }} />
                         </div>
                         <ul className="balances">
-                            <li><Translate content="account.votes.votes" />: <FormattedAsset decimalOffset={5} amount={committee_member_data.get("total_votes")} asset={"1.3.0"}/></li>
+                            <li><Translate content="account.votes.votes" />: <FormattedAsset decimalOffset={5} amount={committee_member_data.get("total_votes")} asset={"1.3.0"} /></li>
                         </ul>
                     </div>
                 </div>
@@ -49,7 +50,7 @@ class CommitteeMemberCard extends React.Component {
         );
     }
 }
-CommitteeMemberCard = BindToChainState(CommitteeMemberCard, {keep_updating: true});
+CommitteeMemberCard = BindToChainState(CommitteeMemberCard, { keep_updating: true });
 
 class CommitteeMemberRow extends React.Component {
 
@@ -67,10 +68,10 @@ class CommitteeMemberRow extends React.Component {
     }
 
     render() {
-        let {committee_member, rank} = this.props;
-        let committee_member_data = ChainStore.getCommitteeMemberById( committee_member.get("id") )
-        if ( !committee_member_data ) return null;
-        let total_votes = committee_member_data.get( "total_votes" );
+        let { committee_member, rank } = this.props;
+        let committee_member_data = ChainStore.getCommitteeMemberById(committee_member.get("id"))
+        if (!committee_member_data) return null;
+        let total_votes = committee_member_data.get("total_votes");
 
         let url = committee_member_data.get("url");
 
@@ -86,18 +87,18 @@ class CommitteeMemberRow extends React.Component {
         )
     }
 }
-CommitteeMemberRow = BindToChainState(CommitteeMemberRow, {keep_updating: true});
+CommitteeMemberRow = BindToChainState(CommitteeMemberRow, { keep_updating: true });
 
 class CommitteeMemberList extends React.Component {
     static propTypes = {
         committee_members: ChainTypes.ChainObjectsList.isRequired
     }
 
-    constructor () {
+    constructor() {
         super();
         this.state = {
-          sortBy: 'rank',
-          inverseSort: true
+            sortBy: 'rank',
+            inverseSort: true
         };
     }
 
@@ -109,35 +110,35 @@ class CommitteeMemberList extends React.Component {
     }
 
     render() {
-        let {committee_members, cardView, membersList} = this.props;
-        let {sortBy, inverseSort} = this.state;
+        let { committee_members, cardView, membersList } = this.props;
+        let { sortBy, inverseSort } = this.state;
 
         let itemRows = null;
 
         let ranks = {};
 
         committee_members
-        .filter(a => {
-            if (!a) {
-                return false;
-            }
-            return membersList.indexOf(a.get("id")) !== -1;
-        })
-        .sort((a, b) => {
-            if (a && b) {
-                return parseInt(b.get("total_votes"), 10) - parseInt(a.get("total_votes"), 10);
-            }
-        })
-        .forEach( (c, index) => {
-            if (c) {
-                ranks[c.get("id")] = index + 1;
-            }
-        });
+            .filter(a => {
+                if (!a) {
+                    return false;
+                }
+                return membersList.indexOf(a.get("id")) !== -1;
+            })
+            .sort((a, b) => {
+                if (a && b) {
+                    return parseInt(b.get("total_votes"), 10) - parseInt(a.get("total_votes"), 10);
+                }
+            })
+            .forEach((c, index) => {
+                if (c) {
+                    ranks[c.get("id")] = index + 1;
+                }
+            });
 
         if (committee_members.length > 0 && committee_members[1]) {
             itemRows = committee_members
                 .filter(a => {
-                    if (!a) {return false; }
+                    if (!a) { return false; }
                     let account = ChainStore.getObject(a.get("committee_member_account"));
                     if (!account) { return false; }
 
@@ -195,11 +196,11 @@ class CommitteeMemberList extends React.Component {
                             <th ><Translate content="account.votes.url" /></th>
                         </tr>
                     </thead>
-                <tbody>
-                    {itemRows}
-                </tbody>
+                    <tbody>
+                        {itemRows}
+                    </tbody>
 
-            </table>
+                </table>
             )
         }
         else {
@@ -211,7 +212,7 @@ class CommitteeMemberList extends React.Component {
         }
     }
 }
-CommitteeMemberList = BindToChainState(CommitteeMemberList, {keep_updating: true, show_loader: true});
+CommitteeMemberList = BindToChainState(CommitteeMemberList, { keep_updating: true, show_loader: true });
 
 class CommitteeMembers extends React.Component {
 
@@ -241,7 +242,7 @@ class CommitteeMembers extends React.Component {
 
     _onFilter(e) {
         e.preventDefault();
-        this.setState({filterCommitteeMember: e.target.value.toLowerCase()});
+        this.setState({ filterCommitteeMember: e.target.value.toLowerCase() });
 
         SettingsActions.changeViewSetting({
             filterCommitteeMember: e.target.value.toLowerCase()
@@ -259,7 +260,7 @@ class CommitteeMembers extends React.Component {
     }
 
     render() {
-        let {globalObject} = this.props;
+        let { globalObject } = this.props;
         globalObject = globalObject.toJS();
 
         let activeCommitteeMembers = [];
@@ -271,41 +272,43 @@ class CommitteeMembers extends React.Component {
 
         return (
             <div className="grid-block">
+                <ExplorerNav />
                 <div className="grid-block page-layout vertical medium-horizontal">
-                    <div className="grid-block shrink">
+                    {/* <div className="grid-block shrink">
                         <div className="grid-content">
                             <h5><Translate content="explorer.committee_members.active" />: {Object.keys(globalObject.active_committee_members).length}</h5>
-                            <br/>
+                            <br />
                             <div className="view-switcher">
-                                <span className="button outline" onClick={this._toggleView.bind(this)}>{!this.state.cardView ? <Translate content="explorer.witnesses.card"/> : <Translate content="explorer.witnesses.table"/>}</span>
+                                <span className="button outline" onClick={this._toggleView.bind(this)}>{!this.state.cardView ? <Translate content="explorer.witnesses.card" /> : <Translate content="explorer.witnesses.table" />}</span>
                             </div>
                         </div>
 
-                    </div>
+                    </div> */}
                     <div className="grid-block vertical">
-                            <div className="grid-block vertical shrink">
-                                <Translate component="h3" content="markets.filter" />
-                                <input type="text" value={this.state.filterCommitteeMember} onChange={this._onFilter.bind(this)} />
-                            </div>
-                            <div className="grid-content">
-                                <CommitteeMemberList
-                                    committee_members={Immutable.List(globalObject.active_committee_members)}
-                                    membersList={globalObject.active_committee_members}
-                                    filter={this.state.filterCommitteeMember}
-                                    cardView={this.state.cardView}
-                                />
-                            </div>
+                        <div className="grid-block vertical shrink">
+                            <Translate component="h3" content="markets.filter" />
+                            <input type="text" value={this.state.filterCommitteeMember} onChange={this._onFilter.bind(this)} />
+                            <span className="button outline" onClick={this._toggleView.bind(this)}>{!this.state.cardView ? <Translate content="explorer.witnesses.card" /> : <Translate content="explorer.witnesses.table" />}</span>
                         </div>
+                        <div className="grid-content">
+                            <CommitteeMemberList
+                                committee_members={Immutable.List(globalObject.active_committee_members)}
+                                membersList={globalObject.active_committee_members}
+                                filter={this.state.filterCommitteeMember}
+                                cardView={this.state.cardView}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     }
 }
-CommitteeMembers = BindToChainState(CommitteeMembers, {keep_updating: true});
+CommitteeMembers = BindToChainState(CommitteeMembers, { keep_updating: true });
 
 class CommitteeMembersStoreWrapper extends React.Component {
-    render () {
-        return <CommitteeMembers {...this.props}/>;
+    render() {
+        return <CommitteeMembers {...this.props} />;
     }
 }
 

@@ -1503,8 +1503,9 @@
     "exchange": "EXCHANGE",
     "account": "ACCOUNT",
     "bazaar": "BAZAAR",
-    "ledger": "LEDGER",
-    "swap": "Atomic Swap"
+    "explorer": "EXPLORER",
+    "swap": "Atomic Swap",
+    "help": "Documents"    
   },
   "vesting": {
     "progress": "Unlock Progress",

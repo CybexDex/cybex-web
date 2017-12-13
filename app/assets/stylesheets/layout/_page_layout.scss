@@ -183,9 +183,9 @@ div.bordered-header {
     height: 100%;
     display: flex;
     flex-direction: column;
-    @media screen and (max-aspect-ratio: 1/1) {
+    // @media screen and (max-aspect-ratio: 1/1) {
       overflow-y: auto;
-    }
+    // }
   }
   .nav-link {
     &+.nav-link {
@@ -318,4 +318,22 @@ div.bordered-header {
     line-height: 1.4;
   }
   padding: 1em;
+}
+
+#context-hub {
+  padding: 0 10px;
+  &, .explorer-nav {
+    display: flex;
+    flex-grow: 1;
+  }
+  .explorer-nav {
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 10px;
+    box-shadow: 0 -2px 1px rgba(0,0,0,0.8);
+  }
+}
+
+.header {
+  align-items: stretch;
 }

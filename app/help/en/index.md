@@ -23,7 +23,7 @@ of this application.
  * [Memberships](accounts/membership.md)
 
 ## Assets
- * [Market Pegged Assets](assets/mpa.md) (BitUSD, BitEUR, BitGOLD, Bit\*,...)
+ * [Market Pegged Assets](assets/mpa.md)
  * [User Issued Assets](assets/uia.md)
  * [Privatized BitAssets](assets/privbitassets.md)
 

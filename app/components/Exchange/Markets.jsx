@@ -1,5 +1,6 @@
 import React from "react";
 import MyMarkets from "./MyMarkets";
+import { ExplorerNav } from "../Explorer/ExplorerNav"
 
 class Markets extends React.Component {
 
@@ -13,7 +14,7 @@ class Markets extends React.Component {
     }
 
     componentWillMount() {
-        window.addEventListener("resize", this._setDimensions, {capture: false, passive: true});
+        window.addEventListener("resize", this._setDimensions, { capture: false, passive: true });
     }
 
     componentDidMount() {
@@ -28,7 +29,7 @@ class Markets extends React.Component {
         let height = this.refs.wrapper.offsetHeight;
 
         if (height !== this.state.height) {
-            this.setState({height});
+            this.setState({ height });
         }
     }
 
@@ -37,19 +38,20 @@ class Markets extends React.Component {
             <div
                 ref="wrapper"
                 className="grid-block page-layout no-overflow">
+                <ExplorerNav />
                 <MyMarkets
-                    style={{width: "100%", padding: 20}}
+                    style={{ width: "100%", padding: 20 }}
                     listHeight={this.state.height ? this.state.height - 82 : null}
                     className="no-overflow"
-                    headerStyle={{paddingTop: 0, borderTop: "none"}}
+                    headerStyle={{ paddingTop: 0, borderTop: "none" }}
                     columns={
                         [
-                            {name: "star", index: 1},
-                            {name: "market", index: 2},
-                            {name: "quoteSupply", index: 3},
-                            {name: "vol", index: 4},
-                            {name: "price", index: 5},
-                            {name: "change", index: 6}
+                            { name: "star", index: 1 },
+                            { name: "market", index: 2 },
+                            { name: "quoteSupply", index: 3 },
+                            { name: "vol", index: 4 },
+                            { name: "price", index: 5 },
+                            { name: "change", index: 6 }
                         ]
                     }
                 />

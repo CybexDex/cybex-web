@@ -178,7 +178,7 @@ class Header extends React.Component {
 
         let dashboard = (
             <a
-                style={{ paddingTop: 6, paddingBottom: 6 }}
+                style={{ padding: 4, paddingTop: 18, paddingBottom: 18, flex: "0 0 auto" }}
                 className={cnames({ active: active === "/" || active.indexOf("dashboard") !== -1 })}
                 onClick={this._onNavigate.bind(this, "/dashboard")}
             >
@@ -254,32 +254,13 @@ class Header extends React.Component {
                         </ActionSheet.Content> : null}
                 </ActionSheet>);
 
-        let settingsDropdown = <ActionSheet>
-            <ActionSheet.Button title="">
-                <a style={{ padding: "1rem", border: "none" }} className="button">
-                    <Icon className="icon-14px" name="cog" />
-                </a>
-            </ActionSheet.Button>
-            <ActionSheet.Content>
-                <ul className="no-first-element-top-border">
-                    <li>
-                        <a href onClick={this._onNavigate.bind(this, "/settings")}>
-                            <span><Translate content="header.settings" /></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href onClick={this._onNavigate.bind(this, "/explorer")}>
-                            <span><Translate content="header.explorer" /></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href onClick={this._onNavigate.bind(this, "/help/introduction/cybex")}>
-                            <span><Translate content="header.help" /></span>
-                        </a>
-                    </li>
-                </ul>
-            </ActionSheet.Content>
-        </ActionSheet>;
+        let settingsDropdown = <a
+            style={{ padding: "1rem", border: "none" }}
+            className="button"
+            onClick={this._onNavigate.bind(this, "/settings")}
+        >
+            <Icon className="icon-14px" name="cog" />
+        </a>
 
         const flagDropdown = <ActionSheet>
             <ActionSheet.Button title="">
@@ -329,15 +310,8 @@ class Header extends React.Component {
                     </ul>
                 </div> : null}
                 <div className="grid-block show-for-medium">
-                    <ul className="menu-bar">
-                        <li>{dashboard}</li>
-                        <li>{contextMenu}</li>
-                        {/* {!currentAccount ? null : <li><Link to={`/account/${currentAccount}/overview`} className={cnames({ active: active.indexOf("account/") !== -1 })}><Translate content="header.account" /></Link></li>} */}
-                        {/* {currentAccount || myAccounts.length ? <li><a className={cnames({ active: active.indexOf("transfer") !== -1 })} onClick={this._onNavigate.bind(this, "/transfer")}><Translate component="span" content="header.payments" /></a></li> : null} */}
-                        {/* {!(currentAccount || myAccounts.length) ? <li><a className={cnames({ active: active.indexOf("explorer") !== -1 })} onClick={this._onNavigate.bind(this, "/explorer")}><Translate component="span" content="header.explorer" /></a></li> : null} */}
-                        {/* <li>{tradeLink}</li> */}
-                        {enableDepositWithdraw && currentAccount && myAccounts.indexOf(currentAccount) !== -1 ? <li><Link to={"/deposit-withdraw/"} activeClassName="active"><Translate content="account.deposit_withdraw" /></Link></li> : null}
-                    </ul>
+                    {dashboard}
+                    <div id="context-hub"></div>
                 </div>
                 <div className="grid-block show-for-medium shrink">
                     <div className="grp-menu-items-group header-right-menu">

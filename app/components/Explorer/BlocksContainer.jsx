@@ -8,19 +8,19 @@ class BlocksContainer extends React.Component {
     render() {
 
         return (
-              <AltContainer 
-                  stores={[BlockchainStore]}
-                  inject={{
+            <AltContainer
+                stores={[BlockchainStore]}
+                inject={{
                     latestBlocks: () => {
                         return BlockchainStore.getState().latestBlocks;
                     },
                     latestTransactions: () => {
                         return BlockchainStore.getState().latestTransactions;
                     }
-                  }} 
-                  >
-                <Blocks/>
-              </AltContainer>
+                }}
+            >
+                <Blocks />
+            </AltContainer>
         );
     }
 }
