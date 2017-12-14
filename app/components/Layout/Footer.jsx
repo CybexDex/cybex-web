@@ -11,7 +11,7 @@ import SettingsStore from "stores/SettingsStore";
 import SettingsActions from "actions/SettingsActions";
 import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
-
+import { Reconnect } from "./Reconnect";
 class Footer extends React.Component {
 
     static propTypes = {
@@ -27,7 +27,7 @@ class Footer extends React.Component {
         router: React.PropTypes.object
     };
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {};
@@ -48,7 +48,7 @@ class Footer extends React.Component {
 
     render() {
         const { state } = this;
-        const {synced} = this.props;
+        const { synced } = this.props;
         const connected = !(this.props.rpc_connection_status === "closed");
 
         // Current Node Details
@@ -58,7 +58,7 @@ class Footer extends React.Component {
         let block_height = this.props.dynGlobalObject.get("head_block_number");
         let version_match = APP_VERSION.match(/2\.0\.(\d\w+)/);
         let version = version_match ? `.${version_match[1]}` : ` ${APP_VERSION}`;
-        let updateStyles = {display: "inline-block", verticalAlign: "top"};
+        let updateStyles = { display: "inline-block", verticalAlign: "top" };
         let logoProps = {};
 
         return (
@@ -70,7 +70,12 @@ class Footer extends React.Component {
                         </div>
                     </div>
                     {this.props.synced ? null : <div className="grid-block shrink txtlabel error"><Translate content="footer.nosync" />&nbsp; &nbsp;</div>}
-                    {this.props.rpc_connection_status === "closed" ? <div className="grid-block shrink txtlabel error"><Translate content="footer.connection" />&nbsp; &nbsp;</div> : null}
+                    {this.props.rpc_connection_status === "closed" ?
+                        <div className="grid-block shrink txtlabel error">
+                            <Translate content="footer.connection" />&nbsp; &nbsp;
+                            <Reconnect />
+                        </div> : null
+                    }
                     {this.props.backup_recommended ? <span>
                         <div className="grid-block">
                             <a className="shrink txtlabel facolor-alert"
@@ -86,26 +91,28 @@ class Footer extends React.Component {
                             <a className="grid-block shrink txtlabel facolor-alert" onClick={this.onBackupBrainkey.bind(this)}><Translate content="footer.brainkey" /></a>
                             &nbsp;&nbsp;
                         </div>
-                    </span>:null}
+                    </span> : null}
                     {block_height ?
-                    (<div className="grid-block shrink">
-                        <div className="tooltip" onClick={this.onAccess.bind(this)} data-tip={counterpart.translate(`tooltip.${!connected ? "disconnected" : synced ? "sync_yes" : "sync_no"}`) + " " + currentNode} data-place="top">
-                            <div className="footer-status">
-                                { !connected ?
-                                    <span className="warning"><Translate content="footer.disconnected" /></span> :
-                                    <span className="success"><Translate content="footer.connected" /></span>}
-                            </div>
-                            <div className="footer-block">
-                                <span>
-                                    <span className="footer-block-title"><Translate content="footer.latency" /></span>
+                        (<div className="grid-block shrink">
+                            <div className="tooltip" onClick={this.onAccess.bind(this)} data-tip={counterpart.translate(`tooltip.${!connected ? "disconnected" : synced ? "sync_yes" : "sync_no"}`) + " " + currentNode} data-place="top">
+                                <div className="footer-status">
+                                    {!connected ?
+                                        <span className="warning">
+                                            <Translate content="footer.disconnected" />
+                                        </span> :
+                                        <span className="success"><Translate content="footer.connected" /></span>}
+                                </div>
+                                <div className="footer-block">
+                                    <span>
+                                        <span className="footer-block-title"><Translate content="footer.latency" /></span>
                                         &nbsp;{!connected ? "-" : !currentNodePing ? "-" : currentNodePing + "ms"}&nbsp;/&nbsp;
                                     <span className="footer-block-title"><Translate content="footer.block" /></span>
                                         &nbsp;#{block_height}
-                                </span>
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </div>) :
-                    <div className="grid-block shrink"><Translate content="footer.loading" /></div>}
+                        </div>) :
+                        <div className="grid-block shrink"><Translate content="footer.loading" /></div>}
                 </div>
             </div>
         );
@@ -120,11 +127,11 @@ class Footer extends React.Component {
     }
 
     onAccess() {
-        SettingsActions.changeViewSetting({activeSetting: 6});
+        SettingsActions.changeViewSetting({ activeSetting: 6 });
         this.context.router.push("/settings");
     }
 }
-Footer = BindToChainState(Footer, {keep_updating: true});
+Footer = BindToChainState(Footer, { keep_updating: true });
 
 class AltFooter extends Component {
 
@@ -132,12 +139,12 @@ class AltFooter extends Component {
         var wallet = WalletDb.getWallet();
         return <AltContainer
             stores={[CachedPropertyStore, BlockchainStore, WalletDb]}
-            inject ={{
-                backup_recommended: ()=>
-                (wallet && ( ! wallet.backup_date || CachedPropertyStore.get("backup_recommended"))),
-                rpc_connection_status: ()=> BlockchainStore.getState().rpc_connection_status
+            inject={{
+                backup_recommended: () =>
+                    (wallet && (!wallet.backup_date || CachedPropertyStore.get("backup_recommended"))),
+                rpc_connection_status: () => BlockchainStore.getState().rpc_connection_status
             }}
-            ><Footer {...this.props}/>
+        ><Footer {...this.props} />
         </AltContainer>;
     }
 }

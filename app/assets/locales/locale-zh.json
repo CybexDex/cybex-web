@@ -1533,6 +1533,7 @@
     "asset": "众筹资产",
     "begin": "起始时间",
     "priceOfUnit": "单位价格",
+    "endTime": "截止时间",
     "lockTime": "锁定时间",
     "currentVol": "当前众筹额"
   },

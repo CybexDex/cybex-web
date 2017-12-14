@@ -59,7 +59,8 @@ const NavLinks: Array<NavItem> = [
     id: "swap",
     routeTo: "/swap",
     name: "SwapTest",
-    icon: "exchange"
+    icon: "exchange",
+    displayOnlyWhen: "currentAccount"    
   },
   {
     id: "help",

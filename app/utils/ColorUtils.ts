@@ -5,6 +5,18 @@ export type MarketColor = {
 
 type ColorProfile = MarketColor;
 
+export function getHexColorByString(colorString: string) {
+  let string =  ["R", "G", "B"]
+    .map(c => addZero(getColorIndex(c + colorString, 196).toString(16)))
+    .join("");
+    console.debug("FSTIN: ", string);
+    return string;
+}
+
+export function addZero(str: string) {
+  return str.length === 1 ? "0" + str : str;
+}
+
 /**
  * 
  * 

@@ -1534,6 +1534,7 @@
     "asset":"Asset",
     "begin":"Start time",
     "priceOfUnit":"Price of Unit",
+    "endTime":"Crowd Time",
     "lockTime":"Lock Time",
     "currentVol":"Current Vol"
   },

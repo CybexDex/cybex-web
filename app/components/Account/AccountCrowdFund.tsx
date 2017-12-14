@@ -6,12 +6,11 @@ import AccountStore from "stores/AccountStore";
 import * as immutable from "immutable";
 import Translate from "react-translate-component";
 import ChainTypes from "../Utility/ChainTypes";
+import * as moment from "moment";
+import { debugGen } from "utils";
 
 // import {} from "PropTypes";
-
-const debug: (fileName: string) => (...toPrint) => void =
-  filename => (...toPrint) => console.debug(`[${filename}]:`, ...toPrint);
-const log = debug("AccountCrowdFund");
+const debug = debugGen("AccountCrowdFund");
 
 type Fund = {
   id: string,
@@ -20,7 +19,8 @@ type Fund = {
   V: number,
   t: number,
   owner: string,
-  begin: Date
+  begin: Date,
+  beginMoment?: moment.Moment
 };
 
 type CrowdFundProps = {
@@ -37,39 +37,39 @@ let CrowdFund = class extends React.Component<CrowdFundProps, any> {
   }
   constructor(props) {
     super(props);
-    log("constructor");
+    debug("constructor");
     let account = this.getCurrentAccount();
     CrowdFundActions.queryAccountPartiCrowds(account.get("id"));
   }
 
   getCurrentAccount() {
     if (!this.props.account) {
-      throw new Error("No avaliable account"); 
+      throw new Error("No avaliable account");
     }
     return this.props.account;
   }
 
   queryAllFunds = () => {
-    log("queryAllFunds");
+    debug("queryAllFunds");
     CrowdFundActions.queryAllCrowdFunds(0, 20);
   }
 
   queryAccountPartiCrowds = () => {
-    log("queryAllFunds");
+    debug("queryAllFunds");
     let account = this.getCurrentAccount();
     CrowdFundActions.queryAccountPartiCrowds(account.get("id"));
   }
 
   partiCrowd = (fund) => {
-    log("partiCrowd");
+    debug("partiCrowd");
     let account = this.getCurrentAccount();
-    
+
     CrowdFundActions.partiCrowd({
       valuation: 3000, cap: 200000, buyer: account.get("id"), crowdfund: fund.id
     });
   }
   render() {
-    log("render", this.props);
+    debug("render", this.props);
     let allFunds = this.props.allFunds.toArray();
     return (
       <div className="table-wrapper">
@@ -78,7 +78,7 @@ let CrowdFund = class extends React.Component<CrowdFundProps, any> {
             <tr>
               <Translate component="th" content="crowdfund.asset" />
               <Translate component="th" content="crowdfund.begin" />
-              <Translate component="th" content="crowdfund.priceOfUnit" />
+              <Translate component="th" content="crowdfund.endTime" />
               <Translate component="th" content="crowdfund.lockTime" />
               <Translate component="th" content="crowdfund.currentVol" />
               <Translate component="th" content="crowdfund.action" />
@@ -87,8 +87,8 @@ let CrowdFund = class extends React.Component<CrowdFundProps, any> {
           {allFunds.map(fund =>
             <tr key={fund.id}>
               <td>{fund.asset_id}</td>
-              <td>{fund.begin}</td>
-              <td>{fund.u}</td>
+              <td>{fund.beginMoment.format()}</td>
+              <td>{fund.beginMoment.add(fund.u, "s").format()}</td>
               <td>{fund.t}</td>
               <td>{fund.V}</td>
               <td>{

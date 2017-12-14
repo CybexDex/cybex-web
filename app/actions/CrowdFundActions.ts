@@ -4,13 +4,21 @@ import {
 } from "cybexjs-ws";
 import WalletDb from "stores/WalletDb";
 import WalletApi from "api/WalletApi";
+import { debugGen } from "utils";
+import * as moment from "moment";
+
+const debug = debugGen("CrowdFundActions");
 
 class CrowdFundActions {
 
   async queryAllCrowdFunds(start: number = 0, size: number = 20) {
     let startId = "1.16." + start.toString()
     let res = await Apis.instance().db_api().exec("list_crowdfund_objects", [startId, size]);
-    console.debug("RES: ", res);
+    res = res.map(crow => ({
+      ...crow,
+      beginMoment: moment.utc(crow.begin)
+    }));
+    debug("Query All Funds RES: ", res);
     this.allFundsFetched({
       start,
       size,
@@ -20,13 +28,13 @@ class CrowdFundActions {
 
   async queryAccountInitCrowds(accountId) {
     let res = await Apis.instance().db_api().exec("get_crowdfund_objects", [accountId]);
-    console.debug("RES: ", res);
+    console.debug("Query Init RES: ", res);
     this.accountInitFundsFetched(res);
   }
 
   async queryAccountPartiCrowds(accountId) {
     let res = await Apis.instance().db_api().exec("get_crowdfund_contract_objects", [accountId]);
-    console.debug("RES: ", res);
+    console.debug("Query Fund RES: ", res);
     this.accountPartiFundsFetched(res);
   }
 
@@ -79,7 +87,7 @@ class CrowdFundActions {
   accountInitFundsFetched(fetchedData) {
     return fetchedData;
   }
-  
+
   accountPartiFundsFetched(fetchedData) {
     return fetchedData;
   }

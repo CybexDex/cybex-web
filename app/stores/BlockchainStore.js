@@ -2,6 +2,7 @@ import Immutable from "immutable";
 import alt from "alt-instance";
 import BlockchainActions from "actions/BlockchainActions";
 import {ChainStore} from "cybexjs";
+import { browserHistory } from 'react-router'
 
 import {
     Block

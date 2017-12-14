@@ -138,6 +138,7 @@ const routes = (
                 </Route>
             </Route>
         </Route>
+        <Redirect from="*" to="/"/>
     </Route>
 );
 

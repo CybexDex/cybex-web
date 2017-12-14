@@ -209,7 +209,7 @@ const routes = (
             }}/>
             <Route path="signedmessages" getComponent={(location, cb) => {
                 System.import("components/Account/AccountSignedMessages").then(loadRoute(cb)).catch(errorLoading);
-            }}/>
+            }} />
         </Route>
         <Route path="deposit-withdraw" getComponent={(location, cb) => {
             System.import("components/Account/AccountDepositWithdraw").then(loadRoute(cb)).catch(errorLoading);
@@ -235,6 +235,7 @@ const routes = (
                 </Route>
             </Route>
         </Route>
+        <Redirect from="*" to="/"/>
     </Route>
 );
 
