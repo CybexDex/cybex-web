@@ -23,13 +23,15 @@ for (let localeCode of localeCodes) {
 class IntlStore {
     constructor() {
         // 初始化默认语言
-        this.currentLocale = ss.has("settings_v3") ? ss.get("settings_v3").locale : "zh";
 
         this.locales = ["zh", "en"];
         this.localesObject = {
             en: locale_en,
             zh: locale_cn
         };
+        let currentLocale = this.currentLocale = ss.has("settings_v3") ? ss.get("settings_v3").locale : "zh";
+        
+        this.switchLocale(currentLocale);
 
         this.bindListeners({
             onSwitchLocale: IntlActions.switchLocale,
@@ -65,6 +67,14 @@ class IntlStore {
 
         counterpart.setLocale(locale);
         this.currentLocale = locale;
+    }
+
+    switchLocale(locale) {
+        if (locale in this.localesObject) {
+            counterpart.registerTranslations(locale, this.localesObject[locale]);
+            counterpart.setLocale(locale);
+            this.currentLocale = locale;
+        }
     }
 
     onGetLocale(locale) {

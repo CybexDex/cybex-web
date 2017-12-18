@@ -1,31 +1,163 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cybex.io/; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' *; font-src 'self' data:; img-src 'self' data: ;">
     <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
     <title>Cybex</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <base href="/"/>
+    <base href="/" />
     <style>
         body {
-            background-color: #2a2a2a
+            background-color: #232C36 !important;
         }
-        .centerDiv {
-            width:140px; border-radius: 5px; color:lightgrey;
-            padding:10px; height:50px; position:absolute;
-            margin-top:-25px; margin-left:-70px; top:50%; left:50%;
-            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-            font-weight: 100;
-            font-size: 44px;
+
+        #load {
+            position: absolute;
+            width: 600px;
+            height: 36px;
+            left: 50%;
+            top: 40%;
+            margin-left: -300px;
+            overflow: visible;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        #load div {
+            position: absolute;
+            width: 20px;
+            height: 36px;
+            opacity: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            animation: move 2s linear infinite;
+            -o-animation: move 2s linear infinite;
+            -moz-animation: move 2s linear infinite;
+            -webkit-animation: move 2s linear infinite;
+            transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            color: #35C4F0;
+            font-size: 24px;
+        }
+
+        #load div:nth-child(2) {
+            animation-delay: 0.2s;
+            -o-animation-delay: 0.2s;
+            -moz-animation-delay: 0.2s;
+            -webkit-animation-delay: 0.2s;
+        }
+
+        #load div:nth-child(3) {
+            animation-delay: 0.4s;
+            -o-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+        }
+
+        #load div:nth-child(4) {
+            animation-delay: 0.6s;
+            -o-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+        }
+
+        #load div:nth-child(5) {
+            animation-delay: 0.8s;
+            -o-animation-delay: 0.8s;
+            -moz-animation-delay: 0.8s;
+            -webkit-animation-delay: 0.8s;
+        }
+
+        #load div:nth-child(6) {
+            animation-delay: 1s;
+            -o-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            -webkit-animation-delay: 1s;
+        }
+
+        #load div:nth-child(7) {
+            animation-delay: 1.2s;
+            -o-animation-delay: 1.2s;
+            -moz-animation-delay: 1.2s;
+            -webkit-animation-delay: 1.2s;
+        }
+
+        @keyframes move {
+            0% {
+                left: 0;
+                opacity: 0;
+                color: #35C4F0;
+            }
+            35% {
+                left: 41%;
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                opacity: 1;
+                color: rgb(53, 128, 240);
+            }
+            65% {
+                left: 59%;
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                opacity: 1;
+                color: rgb(150, 53, 240);
+            }
+            100% {
+                left: 100%;
+                -moz-transform: rotate(-180deg);
+                -webkit-transform: rotate(-180deg);
+                -o-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+                opacity: 0;
+                color: rgb(240, 53, 109);
+            }
+        }
+
+        #globalLoading {
+            position: fixed;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: #232C36 !important;
+        }
+
+        #globalLoading.fade-out {
+            opacity: 0;
+            -webkit-transition: opacity 0.3s linear 0.2s;
+            -moz-transition: opacity 0.3s linear 0.2s;
+            transition: opacity 0.3s linear 0.2s;
         }
     </style>
 </head>
+
 <body>
     <main id="content">
-        <h1 class="centerDiv" style="">Loading...</h1>
     </main>
+    <div id="globalLoading">
+        <div id="load">
+            <div>G</div>
+            <div>N</div>
+            <div>I</div>
+            <div>D</div>
+            <div>A</div>
+            <div>O</div>
+            <div>L</div>
+        </div>
+    </div>
 </body>
+
 </html>

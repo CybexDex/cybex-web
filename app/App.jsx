@@ -102,6 +102,12 @@ class App extends React.Component {
         // Todo
         this.showBackupTip();
         this._rebuildTooltips();
+
+        let loadingMask = document.getElementById("globalLoading");
+        if (loadingMask) {
+            loadingMask.classList.add("fade-out");
+            setTimeout(() => loadingMask.remove(), 500);
+        }
     }
 
     _onIgnoreIncognitoWarning(){
