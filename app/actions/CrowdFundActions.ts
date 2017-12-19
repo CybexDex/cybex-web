@@ -11,13 +11,20 @@ const debug = debugGen("CrowdFundActions");
 
 class CrowdFundActions {
 
-  async queryAllCrowdFunds(start: number = 0, size: number = 20) {
+  async queryAllCrowdFunds(start: number = 0, size: number = 20, accountId?) {
     let startId = "1.16." + start.toString()
     let res = await Apis.instance().db_api().exec("list_crowdfund_objects", [startId, size]);
     res = res.map(crow => ({
       ...crow,
       beginMoment: moment.utc(crow.begin)
     }));
+    if (accountId) {
+      let accountCrowds = await Promise.all([
+        this.queryAccountInitCrowds(accountId),
+        this.queryAccountPartiCrowds(accountId)
+      ]);
+      debug("AccountCrowd: ", accountCrowds);
+    }
     debug("Query All Funds RES: ", res);
     this.allFundsFetched({
       start,
@@ -28,14 +35,16 @@ class CrowdFundActions {
 
   async queryAccountInitCrowds(accountId) {
     let res = await Apis.instance().db_api().exec("get_crowdfund_objects", [accountId]);
-    console.debug("Query Init RES: ", res);
+    debug("Query Init RES: ", res);
     this.accountInitFundsFetched(res);
+    return (res);
   }
 
   async queryAccountPartiCrowds(accountId) {
     let res = await Apis.instance().db_api().exec("get_crowdfund_contract_objects", [accountId]);
-    console.debug("Query Fund RES: ", res);
+    debug("Query Fund RES: ", res);
     this.accountPartiFundsFetched(res);
+    return (res);    
   }
 
   async initCrowdFund(crowdParams: {

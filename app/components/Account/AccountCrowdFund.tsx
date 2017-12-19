@@ -51,7 +51,7 @@ let CrowdFund = class extends React.Component<CrowdFundProps, any> {
 
   queryAllFunds = () => {
     debug("queryAllFunds");
-    CrowdFundActions.queryAllCrowdFunds(0, 20);
+    CrowdFundActions.queryAllCrowdFunds(0, 20, this.getCurrentAccount().get("id"));
   }
 
   queryAccountPartiCrowds = () => {
