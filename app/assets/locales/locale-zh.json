@@ -606,6 +606,7 @@
       "committee_member_update": "更新理事会成员账户",
       "asset_claim_fees": "领取资产手续费",
       "init_crowd": "发起众筹",
+      "crowd_inited": "资产众筹中",
       "all": "显示所有"
     },
     "confirm": "请确认交易",
@@ -1535,7 +1536,16 @@
     "priceOfUnit": "单位价格",
     "endTime": "截止时间",
     "lockTime": "锁定时间",
-    "currentVol": "当前众筹额"
+    "currentVol": "当前众筹额(CYB)",
+    "crowdWithdraw": "撤回投资",
+    "crowdWithdrawed": "资金已退回",
+    "crowdFinish": "众筹结束",
+    "crowdWorking": "众筹进行中",
+    "partCrowd": "参与众筹",
+    "timeLimit": "众筹时限（自众筹起）",
+    "timeToLock": "预备时限（自认购起）",
+    "cap": "有效众筹上限（CYB）",
+    "valuation": "认购金额（CYB）"
   },
   "createTip": {
     "but": "但是……",

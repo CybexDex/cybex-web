@@ -69,8 +69,12 @@ class Footer extends React.Component {
                             <Translate content="footer.title" /><span className="version">{version}</span>
                         </div>
                     </div>
-                    {this.props.synced ? null : <div className="grid-block shrink txtlabel error"><Translate content="footer.nosync" />&nbsp; &nbsp;</div>}
-                    {this.props.rpc_connection_status === "closed" ?
+                    {this.props.synced ?
+                        null :
+                        <div className="grid-block shrink txtlabel error">
+                            <Translate content="footer.nosync" />&nbsp; &nbsp;
+                            </div>}
+                    {!connected ?
                         <div className="grid-block shrink txtlabel error">
                             <Translate content="footer.connection" />&nbsp; &nbsp;
                             <Reconnect />

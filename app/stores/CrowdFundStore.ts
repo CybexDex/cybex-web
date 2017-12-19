@@ -4,18 +4,24 @@ import {
 } from "immutable";
 import alt from "alt-instance";
 import CrowdFundActions from "actions/CrowdFundActions";
+import { debugGen } from "utils//Utils";
+
+const debug = debugGen("CrowdFundStore");
 
 class CrowdFundStore extends BaseStore {
     bindListeners;
     setState;
     state = {
-        allFunds: List()
+        allFunds: List(),
+        initCrowds: [],
+        partiCrowds: []
     };
     constructor() {
         super();
         this.bindListeners({
             onAllFundsFetched: CrowdFundActions.allFundsFetched,
             onAccountPartiFundsFetched: CrowdFundActions.accountPartiFundsFetched,
+            onAccountInitFundsFetched: CrowdFundActions.accountInitFundsFetched,
         });
     }
 
@@ -25,13 +31,21 @@ class CrowdFundStore extends BaseStore {
         this.setState({
             allFunds
         });
-        console.debug("Store: ", this);
+        debug("onAllFundsFetched: ", this);
     }
+
+    onAccountInitFundsFetched(initCrowds) {
+        this.setState({
+            initCrowds
+        });
+        debug("onAccountInitFundsFetched: ", this);
+    }
+
     onAccountPartiFundsFetched(partiCrowds) {
         this.setState({
             partiCrowds
         });
-        console.debug("Store: ", this);        
+        debug("onAccountPartiFundsFetched: ", this);
     }
 
 }

@@ -42,6 +42,10 @@ class CrowdFundActions {
 
   async queryAccountPartiCrowds(accountId) {
     let res = await Apis.instance().db_api().exec("get_crowdfund_contract_objects", [accountId]);
+    res = res.map(partCrowd => ({
+      ...partCrowd,
+      whenM: moment.utc(partCrowd.when)
+    }));
     debug("Query Fund RES: ", res);
     this.accountPartiFundsFetched(res);
     return (res);    
@@ -80,6 +84,30 @@ class CrowdFundActions {
     };
     let tr = WalletApi.new_transaction();
     tr.add_type_operation("participate_crowdfund", operation);
+
+    try {
+      await WalletDb.process_transaction(tr, null, true);
+      return dispatch => dispatch(true);
+    } catch {
+      return dispatch => dispatch(false);
+    }
+  }
+
+  async withdrawCrowdFund(
+    buyer: string, 
+    crowdfund_contract: string
+  ) {
+    let operation = {
+      fee: {
+        amount: 0,
+        asset_id: "1.3.0"
+      },
+      buyer,
+      crowdfund_contract,
+    };
+  
+    let tr = WalletApi.new_transaction();
+    tr.add_type_operation("withdraw_crowdfund", operation);
 
     try {
       await WalletDb.process_transaction(tr, null, true);

@@ -669,7 +669,8 @@
       "blind_transfer": "Blinded transfer",
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
-      "init_crowd": "Initiate Crowdfund"   
+      "init_crowd": "Initiate Crowdfund",
+      "crowd_inited": "Crowdfunding"
     },
     "feeGroups": {
       "general": "General",
@@ -1536,7 +1537,16 @@
     "priceOfUnit":"Price of Unit",
     "endTime":"Crowd Time",
     "lockTime":"Lock Time",
-    "currentVol":"Current Vol"
+    "currentVol":"Current Vol(CYB)",
+    "crowdWithdraw": "Withdraw",
+    "crowdWithdrawed": "Canceled",
+    "crowdFinish": "Finish",
+    "crowdWorking": "Crowdfunding",
+    "partCrowd": "Participate",
+    "timeLimit": "Time Limit(from Crowdfund beginning)",
+    "timeToLock": "Preparing Time(from participate beginning)",
+    "cap": "Funding Cap(CYB)",
+    "valuation": "Funding Valuation(CYB)"
   },
   "createTip": {
     "but": "But:",

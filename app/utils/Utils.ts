@@ -1,3 +1,4 @@
+declare var __DEV__;
 import { flattenDeep } from "lodash";
 import { getHexColorByString } from "./ColorUtils";
 
@@ -20,8 +21,9 @@ const getObjectExtensionField = (object: any, field: string) => {
 }
 
 const debugGen: (logTag: string, colorRgba?: string) => (...toPrint) => void =
-  (logTag, colorRgba = `#${getHexColorByString(logTag)}`) =>
-    (...toPrint) => console.debug(`%c[${logTag}]:`, `color: ${colorRgba};`, ...toPrint);
+  (logTag, colorRgba = `#${getHexColorByString(logTag)}`) => __DEV__ ?
+    (...toPrint) => console.debug(`%c[${logTag}]:`, `color: ${colorRgba};`, ...toPrint) :
+    () => void (0);
 
 export {
   debugGen,

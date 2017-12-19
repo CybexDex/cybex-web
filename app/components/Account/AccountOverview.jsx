@@ -36,7 +36,7 @@ import tableHeightHelper from "lib/common/tableHeightHelper";
 import ContextMenuActions from "actions/ContextMenuActions";
 import { HeadContextMenuId } from "components/Layout/Header";
 import { AccountVestedBalances } from "components/Account/AccountVestedBalances";
-import CrowdFund from "./AccountCrowdFund";
+import CrowdFund from "components/CrowdFund/AccountCrowdFund";
 
 const sortFunctions = {
     alphabetic: function (a, b, force) {

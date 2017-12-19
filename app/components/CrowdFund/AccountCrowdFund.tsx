@@ -3,11 +3,17 @@ import { connect } from "alt-react";
 import CrowdFundActions from "actions//CrowdFundActions";
 import CrowdFundStore from "stores/CrowdFundStore";
 import AccountStore from "stores/AccountStore";
+import NotificationStore from "stores/NotificationStore";
 import * as immutable from "immutable";
 import Translate from "react-translate-component";
 import ChainTypes from "../Utility/ChainTypes";
 import * as moment from "moment";
 import { debugGen } from "utils";
+import { FundTableEntry } from "./FundTableEntry";
+import { CrowdPartiModal } from "./CrowdPartiModal";
+import BaseModal from "components/Modal/BaseModal";
+import ZfApi from "react-foundation-apps/src/utils/foundation-api";
+
 
 // import {} from "PropTypes";
 const debug = debugGen("AccountCrowdFund");
@@ -26,20 +32,47 @@ type Fund = {
 type CrowdFundProps = {
   allFunds: immutable.List<Fund>;
   partiCrowds: immutable.List<any>;
-  account: immutable.Map<any, any>
+  account: immutable.Map<any, any>;
+  notification?: any
 };
 
-let CrowdFund = class extends React.Component<CrowdFundProps, any> {
+enum CROWS_STATUS {
+  OWNER,
+  OPEN_NOT_IN,
+  OPEN_CAN_WITHDRAW,
+  OPEN_CANT_WITHDRAW,
+  CLOSED
+}
+
+let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
 
   static propTypes = {
     allFunds: React.PropTypes.object,
+    allPartedFunds: React.PropTypes.array,
     account: ChainTypes.ChainAccount.isRequired
   }
+
+  static defaultProps = {
+    allFunds: null,
+    allPartedFunds: [],
+    account: null
+  }
+
   constructor(props) {
     super(props);
     debug("constructor");
     let account = this.getCurrentAccount();
     CrowdFundActions.queryAccountPartiCrowds(account.get("id"));
+    this.state = {
+      fund: null
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.notification !== nextProps.notification) {
+      this.queryAllFunds();
+      this.queryAccountPartiCrowds();
+    }
   }
 
   getCurrentAccount() {
@@ -60,20 +93,44 @@ let CrowdFund = class extends React.Component<CrowdFundProps, any> {
     CrowdFundActions.queryAccountPartiCrowds(account.get("id"));
   }
 
-  partiCrowd = (fund) => {
+
+  handlePartiCrowd = (fund) => {
+    console.debug("Parem: ", fund);
+    this.setState({
+      fund
+    });
+    ZfApi.publish("partCrowdModal", "open");
+  }
+
+  partiCrowd = ({
+    valuation,
+    cap,
+    fund
+  }) => {
     debug("partiCrowd");
     let account = this.getCurrentAccount();
-
     CrowdFundActions.partiCrowd({
-      valuation: 3000, cap: 200000, buyer: account.get("id"), crowdfund: fund.id
+      valuation, cap, buyer: account.get("id"), crowdfund: fund.id
     });
+
+  }
+  withdrawCrowd = (contract) => {
+    debug("withdrawCrowd");
+    let account = this.getCurrentAccount();
+
+    CrowdFundActions.withdrawCrowdFund(
+      account.get("id"),
+      contract.id
+    );
   }
   render() {
     debug("render", this.props);
     let allFunds = this.props.allFunds.toArray();
+    let { partiCrowds } = this.props;
+    let { fund } = this.state;
     return (
       <div className="table-wrapper">
-        <table className="table dashboard-table crowd-table">
+        <table className="table dashboard-table crowd-table" style={{ "tableLayout": "fixed" }}>
           <thead>
             <tr>
               <Translate component="th" content="crowdfund.asset" />
@@ -85,18 +142,26 @@ let CrowdFund = class extends React.Component<CrowdFundProps, any> {
             </tr>
           </thead>
           {allFunds.map(fund =>
-            <tr key={fund.id}>
-              <td>{fund.asset_id}</td>
-              <td>{fund.beginMoment.format()}</td>
-              <td>{fund.beginMoment.add(fund.u, "s").format()}</td>
-              <td>{fund.t}</td>
-              <td>{fund.V}</td>
-              <td>{
-                <button className="button outline" onClick={() => this.partiCrowd(fund)}>参与众筹</button>
-              }</td>
-            </tr>
+            <FundTableEntry
+              key={fund.id}
+              fund={fund}
+              partiCrowds={partiCrowds}
+              partiCrowd={this.handlePartiCrowd}
+              withdrawCrowd={this.withdrawCrowd}
+            />
           )}
         </table>
+        <BaseModal id="partCrowdModal" overlay={true}>
+          <br />
+          <div className="grid-block vertical">
+            {fund && <CrowdPartiModal
+              onSubmit={(params) => this.partiCrowd(params)}
+              onClose={() => { ZfApi.publish("partCrowdModal", "close") }}
+              asset={fund.asset_id}
+              fund={fund}
+            />}
+          </div>
+        </BaseModal>
         <button className="button outline" onClick={this.queryAllFunds}>Query All Funds</button>
       </div>
     );
@@ -110,7 +175,18 @@ CrowdFund = connect(CrowdFund, {
   getProps() {
     return {
       allFunds: CrowdFundStore.getState().allFunds,
-      partiCrowds: CrowdFundStore.getState().partiCrowds
+      notification: NotificationStore.getState().notification,
+      partiCrowds:
+        CrowdFundStore
+          .getState()
+          .partiCrowds
+          .reduce((crowds, nextCrowd) => nextCrowd.crowdfund in crowds ? {
+            ...crowds,
+            [nextCrowd.crowdfund]: [...crowds[nextCrowd.crowdfund], nextCrowd]
+          } : {
+              ...crowds,
+              [nextCrowd.crowdfund]: [nextCrowd]
+            }, {})
     };
   }
 });

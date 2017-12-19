@@ -20,6 +20,8 @@ import { Map, List } from "immutable";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import CrowdFundActions from "actions//CrowdFundActions";
+import CrowdFundStore from "stores/CrowdFundStore";
+import { CrowdInitModal } from "components/CrowdFund/CrowdInitModal";
 
 class AccountAssets extends React.Component {
 
@@ -28,12 +30,14 @@ class AccountAssets extends React.Component {
         name: "",
         description: "",
         max_supply: 0,
-        precision: 0
+        precision: 0,
+        crowdsInited: []
     };
 
     static propTypes = {
         assetsList: ChainTypes.ChainAssetsList,
-        symbol: PropTypes.string.isRequired
+        symbol: PropTypes.string.isRequired,
+        crowdsInited: PropTypes.array.isRequired
     };
 
     constructor(props) {
@@ -85,12 +89,21 @@ class AccountAssets extends React.Component {
         }
     }
 
+    _checkInitedCrowd(account) {
+        if (!account || !account.get("id")) return;
+        CrowdFundActions.queryAccountInitCrowds(account.get("id"));
+    }
+
     componentWillReceiveProps(nextProps) {
         this._checkAssets(nextProps.assets);
+        if (this.props.account.get("id") !== nextProps.account.get("id")) {
+            this._checkInitedCrowd(nextProps.account);
+        };
     }
 
     componentWillMount() {
         this._checkAssets(this.props.assets, true);
+        this._checkInitedCrowd(this.props.account);
     }
 
     _onIssueInput(value, e) {
@@ -171,6 +184,13 @@ class AccountAssets extends React.Component {
         ZfApi.publish("issue_asset", "open");
     }
 
+    _showInitCrowdModal(asset) {
+        this.setState({
+            assetToIssue: asset
+        });
+        ZfApi.publish("initCrowdModal", "open");
+    }
+
     _editButtonClick(symbol, account_name, e) {
         e.preventDefault();
         this.props.router.push(`/account/${account_name}/update-asset/${symbol}`);
@@ -183,12 +203,10 @@ class AccountAssets extends React.Component {
         this.setState({ issue: issue });
     }
 
-
-
-    _initCrow = (asset) => {
+    _initCrow = ({u, t, asset}) => {
         CrowdFundActions.initCrowdFund({
-            u: 2000,
-            t: 300,
+            u,
+            t,
             owner: asset.issuer,
             asset_id: asset.id
         });
@@ -196,9 +214,9 @@ class AccountAssets extends React.Component {
 
 
     render() {
-        let { account, account_name, searchAccounts, assets, assetsList } = this.props;
-        let { issue, errors, isValid, create } = this.state;
-
+        let { account, account_name, searchAccounts, assets, assetsList, crowdsInited } = this.props;
+        let { issue, errors, isValid, create, assetToIssue } = this.state;
+        let crowdsInitedIds = crowdsInited.map(crowd => crowd.asset_id);
         let accountExists = true;
         if (!account) {
             return <LoadingIndicator type="circle" />;
@@ -225,7 +243,7 @@ class AccountAssets extends React.Component {
             .map(asset => {
                 let description = assetUtils.parseDescription(asset.options.description);
                 let desc = description.short_name ? description.short_name : description.main;
-
+                let assedIsInited = crowdsInitedIds.indexOf(asset.id) !== -1;
                 if (desc.length > 100) {
                     desc = desc.substr(0, 100) + "...";
                 }
@@ -255,9 +273,12 @@ class AccountAssets extends React.Component {
                             </button>
                         </td>
                         <td>
-                            <button onClick={() => this._initCrow(asset)} className="button outline">
-                                <Translate content="transaction.trxTypes.init_crowd" />
-                            </button>
+                            {assedIsInited ?
+                                <Translate component="button" className="button disabled outline" content="transaction.trxTypes.crowd_inited" /> :
+                                <button onClick={() => this._showInitCrowdModal(asset)} className="button outline">
+                                    <Translate content="transaction.trxTypes.init_crowd" />
+                                </button>
+                            }
                         </td>
                     </tr>
                 );
@@ -315,6 +336,16 @@ class AccountAssets extends React.Component {
                         />
                     </div>
                 </BaseModal>
+                <BaseModal id="initCrowdModal" overlay={true}>
+                    <br />
+                    <div className="grid-block vertical">
+                        <CrowdInitModal
+                            onSubmit={(params) => this._initCrow(params)}
+                            onClose={() => { ZfApi.publish("initCrowdModal", "close") }}
+                            asset={assetToIssue}
+                        />
+                    </div>
+                </BaseModal>
             </div>
         );
     }
@@ -324,7 +355,7 @@ AccountAssets = BindToChainState(AccountAssets);
 
 export default connect(AccountAssets, {
     listenTo() {
-        return [AssetStore];
+        return [AssetStore, CrowdFundStore];
     },
     getProps(props) {
         let assets = Map(), assetsList = List();
@@ -335,6 +366,11 @@ export default connect(AccountAssets, {
         } else {
             assets = AssetStore.getState().assets;
         }
-        return { assets, assetsList };
+        let crowdsInited = CrowdFundStore.getState().initCrowds;
+        return {
+            assets,
+            assetsList,
+            crowdsInited
+        };
     }
 });

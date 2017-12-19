@@ -220,7 +220,7 @@ class Header extends React.Component {
                         return (
                             <li className={name === account_display_name ? "current-account" : ""} key={name}>
                                 <a href onClick={this._accountClickHandler.bind(this, name)}>
-                                    <span className="table-cell"><AccountImage style={{ position: "relative", top: 5 }} size={{ height: 20, width: 20 }} account={name} /></span>
+                                    <span className="table-cell"><AccountImage style={{ position: "relative", top: 0 }} size={{ height: 20, width: 20 }} account={name} /></span>
                                     <span className="table-cell" style={{ paddingLeft: 10 }}><span>{name}</span></span>
                                 </a>
                             </li>

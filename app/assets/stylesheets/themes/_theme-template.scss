@@ -1,37 +1,5 @@
 @import "../utils/utils";
-@mixin theme( 
-    $primary-text-color, 
-    $bg-color, 
-    $dark-text-color, 
-    $link-text-color, 
-    $light-text-color, 
-    $secondary-text-color, 
-    $success-color, 
-    $info-color, 
-    $warning-color, 
-    $alert-color, 
-    $super-light-panel-bg-color, 
-    $panel-bg-color, 
-    $button-bg-color, 
-    $secondary-button-bg-color, 
-    $fee-color, 
-    $bid-color, 
-    $ask-color, 
-    $call-color, 
-    $light-panel-bg-color, 
-    $positive-color, 
-    $negative-color, 
-    $row-accent-color, 
-    $header-color, 
-    $input-background, 
-    $account-header, 
-    $account-cells, 
-    $account-green, 
-    $account-primarytext, 
-    $account-dimmed, 
-    $account-border, 
-    $account-background
-    ) {
+@mixin theme( $primary-text-color, $bg-color, $dark-text-color, $link-text-color, $light-text-color, $secondary-text-color, $success-color, $info-color, $warning-color, $alert-color, $super-light-panel-bg-color, $panel-bg-color, $button-bg-color, $secondary-button-bg-color, $fee-color, $bid-color, $ask-color, $call-color, $light-panel-bg-color, $positive-color, $negative-color, $row-accent-color, $header-color, $input-background, $account-header, $account-cells, $account-green, $account-primarytext, $account-dimmed, $account-border, $account-background) {
     $color-panel-divider: lighten($panel-bg-color, 30%);
     .font-secondary {
         color: $secondary-text-color;
@@ -196,7 +164,8 @@
             border-bottom-color: $bg-color;
             background-color: darken($bg-color, 4%);
         }
-        .main-content, .center-block {
+        .main-content,
+        .center-block {
             background-color: $bg-color;
         }
         .right-column {
@@ -508,17 +477,14 @@
     .stats .stat .positive {
         color: $positive-color !important;
     }
-
     .value.negative {
         color: $ask-color !important;
         font-weight: bold;
     }
-
     .value.positive {
         color: $bid-color !important;
         font-weight: bold;
     }
-
     .active-bucket {
         background-color: lighten($light-panel-bg-color, 12%);
     }
@@ -984,8 +950,7 @@
     div.fm-container:hover {
         background-color: darken($light-panel-bg-color, 5%);
         cursor: pointer;
-    }
-    // Settings
+    } // Settings
     .settings-menu {
         >li {
             &:hover {
@@ -1127,18 +1092,16 @@
             white-space: nowrap;
         }
     }
-
-     /* Table view account */
-     div.overview-tabs {
+    /* Table view account */
+    div.overview-tabs {
         background-color: $account-background;
-        > div.service-selector {
+        >div.service-selector {
             background-color: $account-header;
         }
     }
     ul.account-overview {
-
         li {
-            > a {
+            >a {
                 color: $account-dimmed;
                 background-color: $account-header;
                 border: none;
@@ -1146,33 +1109,32 @@
                     background-color: $account-header;
                     color: $account-primarytext;
                 }
-                > div.tab-subtext {
+                >div.tab-subtext {
                     color: $account-green;
                 }
             }
             &.is-active {
                 background-color: lighten($account-header, 4%);
-                > a {
+                >a {
                     color: $account-primarytext;
                     background-color: lighten($account-header, 4%);
                 }
             }
             &.total-value {
-                > a {
+                >a {
                     background-color: $account-cells;
-                    &:hover > span.tab-title {
+                    &:hover>span.tab-title {
                         color: $account-dimmed;
                     }
                 }
-                .icon.locked > svg > path {
+                .icon.locked>svg>path {
                     fill: $button-bg-color;
                 }
             }
         }
     }
-
     table.table.dashboard-table {
-        > thead > tr > th {
+        >thead>tr>th {
             background-color: $account-header;
             color: $account-primarytext;
             border-color: $account-border !important;
@@ -1183,16 +1145,15 @@
                 border-right: $account-border;
             }
         }
-        > tbody > tr {
-            > td {
+        >tbody>tr {
+            >td {
                 background-color: $account-cells;
                 color: $account-primarytext;
                 border-color: $account-border !important;
-                .icon > svg > path {
+                .icon>svg>path {
                     fill: $account-primarytext;
                 }
-
-                .icon.locked > svg > path {
+                .icon.locked>svg>path {
                     fill: $button-bg-color;
                 }
             }
@@ -1205,23 +1166,19 @@
                     text-align: right;
                 }
             }
-
             &.unsupported {
-                > td {
+                >td {
                     color: grey;
-                    > a {
+                    >a {
                         color: grey;
                     }
-
-                    svg > path {
+                    svg>path {
                         fill: grey;
                     }
                 }
             }
         }
     }
-
-
     .card-list {
         .card-custom {
             color: $light-panel-bg-color;
@@ -1236,7 +1193,7 @@
                 &.active {
                     color: darken($error-text-color, 20%);
                 }
-                .icon.locked > svg > path {
+                .icon.locked>svg>path {
                     fill: $button-bg-color;
                 }
             }
@@ -1262,20 +1219,19 @@
         .nav-toggle {
             background-color: $bg-color;
         }
-        .nav-item, a {
+        .nav-item,
+        a {
             color: $light-text-color;
             &.active {
                 color: $warning-color;
             }
-
             &.unsupported {
-                > td {
+                >td {
                     color: grey;
-                    > a {
+                    >a {
                         color: grey;
                     }
-
-                    svg > path {
+                    svg>path {
                         fill: grey;
                     }
                 }
@@ -1330,15 +1286,27 @@
         a {
             color: $primary-text-color;
             &.active {
-                color: $warning-color;                
+                color: $warning-color;
+            }
+        }
+    }
+    .table-toggable {
+        .entry-main {
+            &>td:first-child::before {
+                background-color: $success-color;
+            }
+        }
+        .entry-sub {
+            &>td:first-child::before {
+                background-color: darken($success-color, 20%);
             }
         }
     }
 }
 
 .olDarkTheme .gate_fee .amount-selector {
-  width: 100%;
-  display: inline-block;
+    width: 100%;
+    display: inline-block;
 }
 
 .olDarkTheme .gate_fee .right-selector {
