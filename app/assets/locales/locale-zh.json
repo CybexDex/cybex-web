@@ -491,7 +491,10 @@
     "witness_receive": "已从见证人处获取见证",
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
     "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
-    "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} "
+    "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
+    "init_crowd": "{owner} 发起了对于 {asset} 的众筹",
+    "part_crowd": "{account} 向一笔众筹投资了 {amount}",
+    "withdraw_crowd": "{account} 撤回了一笔众筹"
   },
   "transaction": {
     "sent": "发送",
@@ -606,6 +609,9 @@
       "committee_member_update": "更新理事会成员账户",
       "asset_claim_fees": "领取资产手续费",
       "init_crowd": "发起众筹",
+      "initiate_crowdfund": "发起众筹",
+      "participate_crowdfund": "参与众筹",
+      "withdraw_crowdfund": "撤回众筹",
       "crowd_inited": "资产众筹中",
       "all": "显示所有"
     },
@@ -1545,7 +1551,9 @@
     "timeLimit": "众筹时限（自众筹起）",
     "timeToLock": "预备时限（自认购起）",
     "cap": "有效众筹上限（CYB）",
-    "valuation": "认购金额（CYB）"
+    "valuation": "认购金额（CYB）",
+    "ALL": "全部众筹",
+    "ONGOING": "进行中"
   },
   "createTip": {
     "but": "但是……",

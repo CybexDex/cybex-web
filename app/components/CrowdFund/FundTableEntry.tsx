@@ -3,14 +3,27 @@ import { getClassName } from "utils//ClassName";
 import { DATETIME_FORMAT_FULL } from "utils/Contansts";
 import * as moment from "moment";
 import Translate from "react-translate-component";
+import BindToChainState from "../Utility/BindToChainState";
+import ChainTypes from "../Utility/ChainTypes";
+import { debugGen } from "utils";
+import { Map } from "immutable";
 
+const debug = debugGen("FundTableEntry");
 
 enum ContractState {
   NORMAL = 1,
   CANCEL = 2
 }
 
-export class FundTableEntry extends React.Component<{ fund, partiCrowds, partiCrowd, withdrawCrowd }, { expand }> {
+let FundTableEntry = class extends React.Component<{ fund, partiCrowds, partiCrowd, withdrawCrowd, asset?}, { expand }> {
+  static propTypes = {
+    asset: ChainTypes.ChainAsset
+  }
+
+  static defaultProps = {
+    asset: Map()
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -25,12 +38,14 @@ export class FundTableEntry extends React.Component<{ fund, partiCrowds, partiCr
   }
 
   render() {
-    let { fund, partiCrowds, partiCrowd, withdrawCrowd } = this.props;
+    let { fund, partiCrowds, partiCrowd, withdrawCrowd, asset } = this.props;
     let partedCrowd = partiCrowds[fund.id] || [];
     let { expand } = this.state;
     let endM = fund.beginMoment.clone().add(fund.u, "s");
     let nowM = moment.utc();
     let beforeEnd = nowM.isBefore(endM);
+    let symbol = asset.get("symbol");
+    debug(this.props);
     return (
       <tbody className={getClassName("", { "table-toggable": partedCrowd.length, expand })}>
         <tr className="entry-main">
@@ -38,15 +53,15 @@ export class FundTableEntry extends React.Component<{ fund, partiCrowds, partiCr
             {
               partedCrowd.length ?
                 <a href="javascript:;" onClick={this.toggleExpand}>
-                  {fund.asset_id}
+                  {symbol}
                 </a> :
-                fund.asset_id
+                symbol
             }
           </td>
           <td>{fund.beginMoment.format(DATETIME_FORMAT_FULL)}</td>
           <td>{fund.beginMoment.clone().add(fund.u, "s").format(DATETIME_FORMAT_FULL)}</td>
           <td>{fund.t}</td>
-          <td>{fund.V  / 100000}</td>
+          <td>{fund.V / 100000}</td>
           <td>{
             beforeEnd ?
               <Translate
@@ -63,7 +78,7 @@ export class FundTableEntry extends React.Component<{ fund, partiCrowds, partiCr
             let beforeLockEnd = nowM.isBefore(lockM);
             return (
               <tr key={partied.id} className="entry-sub">
-                <td>{fund.asset_id}</td>
+                <td>-</td>
                 <td>{partied.whenM.format(DATETIME_FORMAT_FULL)}</td>
                 <td>{endM.format(DATETIME_FORMAT_FULL)}</td>
                 <td>{lockM.format(DATETIME_FORMAT_FULL)}</td>
@@ -89,3 +104,11 @@ export class FundTableEntry extends React.Component<{ fund, partiCrowds, partiCr
     )
   }
 }
+
+FundTableEntry = BindToChainState(FundTableEntry);
+
+export {
+  FundTableEntry
+}
+
+export default FundTableEntry;

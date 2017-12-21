@@ -135,7 +135,7 @@
     "create-hash": "^1.1.2",
     "create-hmac": "^1.1.4",
     "crypto-js": "^3.1.9-1",
-    "cybexjs": "^1.0.10",
+    "cybexjs": "^1.0.15",
     "cybexjs-ws": "^1.0.5",
     "deep-equal": "^1.0.1",
     "ecurve": "^1.0.2",

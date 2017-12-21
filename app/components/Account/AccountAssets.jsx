@@ -9,6 +9,7 @@ import BaseModal from "../Modal/BaseModal";
 import FormattedAsset from "../Utility/FormattedAsset";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import notify from "actions/NotificationActions";
+import NotificationStore from "stores/NotificationStore";
 import utils from "common/utils";
 import { debounce } from "lodash";
 import LoadingIndicator from "../LoadingIndicator";
@@ -99,6 +100,10 @@ class AccountAssets extends React.Component {
         if (this.props.account.get("id") !== nextProps.account.get("id")) {
             this._checkInitedCrowd(nextProps.account);
         };
+        if (this.props.notification !== nextProps.notification) {
+            this._checkAssets(this.props.assets, true);
+            this._checkInitedCrowd(this.props.account);
+        }
     }
 
     componentWillMount() {
@@ -203,7 +208,7 @@ class AccountAssets extends React.Component {
         this.setState({ issue: issue });
     }
 
-    _initCrow = ({u, t, asset}) => {
+    _initCrow = ({ u, t, asset }) => {
         CrowdFundActions.initCrowdFund({
             u,
             t,
@@ -370,6 +375,7 @@ export default connect(AccountAssets, {
         return {
             assets,
             assetsList,
+            notification: NotificationStore.getState().notification,
             crowdsInited
         };
     }

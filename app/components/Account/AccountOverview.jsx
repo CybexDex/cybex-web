@@ -105,8 +105,8 @@ class AccountOverview extends React.Component {
             ]
         };
 
-        this.tableHeightMountInterval = tableHeightHelper.tableHeightMountInterval.bind(this);
-        this.adjustHeightOnChangeTab = tableHeightHelper.adjustHeightOnChangeTab.bind(this);
+        // this.tableHeightMountInterval = tableHeightHelper.tableHeightMountInterval.bind(this);
+        // this.adjustHeightOnChangeTab = tableHeightHelper.adjustHeightOnChangeTab.bind(this);
         this.priceRefs = {};
         this.valueRefs = {};
         this.changeRefs = {};
@@ -185,13 +185,13 @@ class AccountOverview extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.tableHeightMountIntervalInstance = this.tableHeightMountInterval();
-    }
+    // componentDidMount() {
+    //     this.tableHeightMountIntervalInstance = this.tableHeightMountInterval();
+    // }
 
-    componentWillUnmount() {
-        clearInterval(this.tableHeightMountIntervalInstance);
-    }
+    // componentWillUnmount() {
+    //     clearInterval(this.tableHeightMountIntervalInstance);
+    // }
 
     shouldComponentUpdate(nextProps, nextState) {
         return (
@@ -637,7 +637,7 @@ class AccountOverview extends React.Component {
                             className="overview-tabs"
                             contentClass="no-padding"
                             tabsClass="account-overview no-padding bordered-header content-block"
-                            onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
+                            // onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
                         >
 
                             {/* <Tab disabled className="total-value" title={<span>{counterpart.translate("account.eq_value")}&nbsp;<AssetName name={preferredUnit} noTip /></span>} subText={totalValue}>

@@ -93,7 +93,9 @@ class Row extends React.Component {
             <tr>
                 {hideOpLabel ? null : (
                     <td style={{ textAlign: "left" }} className="left-td column-hide-tiny">
-                        <Link className="inline-block" data-place="bottom" data-tip={counterpart.translate("tooltip.show_block", { block: utils.format_number(this.props.block, 0) })} to={`/block/${this.props.block}`}><TransactionLabel color={color} type={type} /></Link>
+                        <Link className="inline-block" data-place="bottom" data-tip={counterpart.translate("tooltip.show_block", { block: utils.format_number(this.props.block, 0) })} to={`/block/${this.props.block}`}>
+                            <TransactionLabel color={color} type={type} />
+                        </Link>
                     </td>)}
                 <td style={{ padding: "8px 5px", textAlign: "left" }}>
                     <div>
@@ -164,7 +166,6 @@ class Operation extends React.Component {
         let { op, current, block } = this.props;
         let line = null, column = null, color = "info";
         let memoComponent = null;
-
         switch (ops[op[0]]) { // For a list of trx types, see chain_types.coffee
 
             case "transfer":
@@ -854,6 +855,39 @@ class Operation extends React.Component {
                             { type: "account", value: op[1].from, arg: "from" },
                             { type: "account", value: op[1].to, arg: "to" },
                             { type: "amount", value: op[1].amount, arg: "amount" }
+                        ]}
+                    />
+                );
+                break;
+            case "initiate_crowdfund":
+                column = (
+                    <TranslateWithLinks
+                        string="operation.init_crowd"
+                        keys={[
+                            { type: "account", value: op[1].owner, arg: "owner" },
+                            { type: "asset", value: op[1].asset_id, arg: "asset" }
+                        ]}
+                    />
+                );
+                break;
+            case "participate_crowdfund":
+                console.debug("Part: ", op);
+                column = (
+                    <TranslateWithLinks
+                        string="operation.part_crowd"
+                        keys={[
+                            { type: "account", value: op[1].buyer, arg: "account" },
+                            { type: "amount", value: { asset_id: "1.3.0", amount: op[1].valuation }, arg: "amount" },
+                        ]}
+                    />
+                );
+                break;
+            case "withdraw_crowdfund":
+                column = (
+                    <TranslateWithLinks
+                        string="operation.withdraw_crowd"
+                        keys={[
+                            { type: "account", value: op[1].buyer, arg: "account" }
                         ]}
                     />
                 );

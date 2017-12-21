@@ -8,7 +8,7 @@ import * as immutable from "immutable";
 import Translate from "react-translate-component";
 import ChainTypes from "../Utility/ChainTypes";
 import * as moment from "moment";
-import { debugGen } from "utils";
+import { debugGen, getClassName } from "utils";
 import { FundTableEntry } from "./FundTableEntry";
 import { CrowdPartiModal } from "./CrowdPartiModal";
 import BaseModal from "components/Modal/BaseModal";
@@ -44,7 +44,12 @@ enum CROWS_STATUS {
   CLOSED
 }
 
-let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
+enum TABS {
+  ALL,
+  ONGOING
+}
+
+let CrowdFund = class extends React.Component<CrowdFundProps, { fund, tab }> {
 
   static propTypes = {
     allFunds: React.PropTypes.object,
@@ -61,10 +66,9 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
   constructor(props) {
     super(props);
     debug("constructor");
-    let account = this.getCurrentAccount();
-    CrowdFundActions.queryAccountPartiCrowds(account.get("id"));
     this.state = {
-      fund: null
+      fund: null,
+      tab: TABS.ALL
     };
   }
 
@@ -73,6 +77,11 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
       this.queryAllFunds();
       this.queryAccountPartiCrowds();
     }
+  }
+
+  componentWillMount() {
+    this.queryAllFunds();
+    this.queryAccountPartiCrowds();
   }
 
   getCurrentAccount() {
@@ -114,6 +123,7 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
     });
 
   }
+
   withdrawCrowd = (contract) => {
     debug("withdrawCrowd");
     let account = this.getCurrentAccount();
@@ -123,14 +133,35 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
       contract.id
     );
   }
+
+  setTab(tab) {
+    this.setState({
+      tab
+    });
+  }
+
   render() {
     debug("render", this.props);
     let allFunds = this.props.allFunds.toArray();
+    let onGoingFunds = allFunds.filter(fund => fund.beginMoment.clone().add(fund.u, "s").isAfter(moment.utc()));
     let { partiCrowds } = this.props;
-    let { fund } = this.state;
+    let { fund, tab } = this.state;
     return (
       <div className="table-wrapper">
-        <table className="table dashboard-table crowd-table" style={{ "tableLayout": "fixed" }}>
+        {!!onGoingFunds.length && <div className="hide-selector">
+          {
+            [TABS.ALL, TABS.ONGOING].map(tabItem =>
+              <div
+                className={getClassName("hide-selector-item", { inactive: tabItem !== tab })}
+                onClick={tabItem === tab ? () => 0 : () => this.setTab(tabItem)}
+              >
+                <Translate content={"crowdfund." + TABS[tabItem]} />
+              </div>
+            )
+          }
+        </div>
+        }
+        <table className="table dashboard-table crowd-table table-with-highlight" style={{ "tableLayout": "fixed" }}>
           <thead>
             <tr>
               <Translate component="th" content="crowdfund.asset" />
@@ -141,15 +172,25 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
               <Translate component="th" content="crowdfund.action" />
             </tr>
           </thead>
-          {allFunds.map(fund =>
+          {tab === TABS.ALL ? allFunds.map(fund =>
             <FundTableEntry
               key={fund.id}
               fund={fund}
+              asset={fund.asset_id}
               partiCrowds={partiCrowds}
               partiCrowd={this.handlePartiCrowd}
               withdrawCrowd={this.withdrawCrowd}
             />
-          )}
+          ) : onGoingFunds.map(fund =>
+            <FundTableEntry
+              key={fund.id}
+              fund={fund}
+              asset={fund.asset_id}
+              partiCrowds={partiCrowds}
+              partiCrowd={this.handlePartiCrowd}
+              withdrawCrowd={this.withdrawCrowd}
+            />)
+          }
         </table>
         <BaseModal id="partCrowdModal" overlay={true}>
           <br />
@@ -162,7 +203,6 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund }> {
             />}
           </div>
         </BaseModal>
-        <button className="button outline" onClick={this.queryAllFunds}>Query All Funds</button>
       </div>
     );
   }

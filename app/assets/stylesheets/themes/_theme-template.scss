@@ -1133,7 +1133,7 @@
             }
         }
     }
-    table.table.dashboard-table {
+    .table.dashboard-table {
         >thead>tr>th {
             background-color: $account-header;
             color: $account-primarytext;
@@ -1299,6 +1299,20 @@
         .entry-sub {
             &>td:first-child::before {
                 background-color: darken($success-color, 20%);
+            }
+        }
+    }
+    .table-with-highlight {
+        tbody,
+        .tbody {
+            tr,
+            .tr {
+                &:hover {
+                    td,
+                    .td {
+                        color: darken($primary-text-color, 20%);
+                    }
+                }
             }
         }
     }
