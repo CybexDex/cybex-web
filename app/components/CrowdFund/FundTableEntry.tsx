@@ -45,6 +45,8 @@ let FundTableEntry = class extends React.Component<{ fund, partiCrowds, partiCro
     let nowM = moment.utc();
     let beforeEnd = nowM.isBefore(endM);
     let symbol = asset.get("symbol");
+    let lockM = fund.beginMoment.clone().add(fund.t, "s");
+    let beforeLockEnd = nowM.isBefore(lockM);
     debug(this.props);
     return (
       <tbody className={getClassName("", { "table-toggable": partedCrowd.length, expand })}>
@@ -60,7 +62,7 @@ let FundTableEntry = class extends React.Component<{ fund, partiCrowds, partiCro
           </td>
           <td>{fund.beginMoment.format(DATETIME_FORMAT_FULL)}</td>
           <td>{fund.beginMoment.clone().add(fund.u, "s").format(DATETIME_FORMAT_FULL)}</td>
-          <td>{fund.t}</td>
+          <td>{lockM.format(DATETIME_FORMAT_FULL)}</td>
           <td>{fund.V / 100000}</td>
           <td>{
             beforeEnd ?
@@ -74,14 +76,14 @@ let FundTableEntry = class extends React.Component<{ fund, partiCrowds, partiCro
         </tr>
         {
           expand && partedCrowd.map(partied => {
-            let lockM = partied.whenM.clone().add(fund.t, "s");
-            let beforeLockEnd = nowM.isBefore(lockM);
             return (
               <tr key={partied.id} className="entry-sub">
                 <td>-</td>
                 <td>{partied.whenM.format(DATETIME_FORMAT_FULL)}</td>
-                <td>{endM.format(DATETIME_FORMAT_FULL)}</td>
-                <td>{lockM.format(DATETIME_FORMAT_FULL)}</td>
+                <td>-</td>
+                {/* <td>{endM.format(DATETIME_FORMAT_FULL)}</td> */}
+                {/* <td>{lockM.format(DATETIME_FORMAT_FULL)}</td> */}
+                <td>-</td>
                 <td>{partied.valuation / 100000}</td>
                 <td>{
                   partied.state === ContractState.CANCEL ?

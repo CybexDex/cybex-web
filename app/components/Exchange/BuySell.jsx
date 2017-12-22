@@ -280,8 +280,7 @@ class BuySell extends React.Component {
                         </div>
                         <div>
                             <div className="grid-content clear-fix no-padding">
-
-                                <table className="float-left">
+                                <table style={{width: "100%"}}>
                                     <tbody>
                                         <tr className="buy-sell-info">
                                             <td><Translate content="exchange.balance" />:</td>
