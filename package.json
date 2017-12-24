@@ -110,7 +110,7 @@
         "deb",
         "AppImage"
       ],
-      "synopsis": "BitShares: Cryptocurrency and Decentralized Exchange"
+      "synopsis": "Cybex DEX"
     },
     "directories": {
       "buildResources": "resources",
