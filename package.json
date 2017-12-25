@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://git.coding.net/bobxuyang/cybex-web-wallet.git"
+    "url": "https://github.com/CybexDex/cybex-web.git"
   },
   "main": "build/electron/index.js",
   "scripts": {
@@ -110,7 +110,7 @@
         "deb",
         "AppImage"
       ],
-      "synopsis": "BitShares: Cryptocurrency and Decentralized Exchange"
+      "synopsis": "Cybex DEX"
     },
     "directories": {
       "buildResources": "resources",
