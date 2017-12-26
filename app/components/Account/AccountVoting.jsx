@@ -11,7 +11,6 @@ import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import { Link } from "react-router/es";
 import ApplicationApi from "api/ApplicationApi";
-import tableHeightHelper from "lib/common/tableHeightHelper";
 import AccountSelector from "./AccountSelector";
 import Icon from "../Icon/Icon";
 import AssetName from "../Utility/AssetName";
@@ -53,8 +52,6 @@ class AccountVoting extends React.Component {
         this.onPublish = this.onPublish.bind(this);
         this.onReset = this.onReset.bind(this);
         this._getVoteObjects = this._getVoteObjects.bind(this);
-        this.tableHeightMountInterval = tableHeightHelper.tableHeightMountInterval.bind(this);
-        this.adjustHeightOnChangeTab = tableHeightHelper.adjustHeightOnChangeTab.bind(this);
     }
 
     componentWillMount() {
@@ -66,18 +63,18 @@ class AccountVoting extends React.Component {
         this.updateAccountData(this.props);
         this._getVoteObjects();
         this._getVoteObjects("committee");
-        this.tableHeightMountIntervalInstance = this.tableHeightMountInterval();
     }
 
     componentWillReceiveProps(np) {
-        if (np.account !== this.props.account) {
-            const proxyId = np.proxy.get("id");
-            let newState = {
-                proxy_account_id: proxyId === "1.2.5" ? "" : proxyId
-            };
-            this.setState({ prev_proxy_account_id: newState.proxy_account_id });
-            this.updateAccountData(np, newState);
-        }
+        // Comment for performance
+        // if (np.account !== this.props.account) {
+        //     const proxyId = np.proxy.get("id");
+        //     let newState = {
+        //         proxy_account_id: proxyId === "1.2.5" ? "" : proxyId
+        //     };
+        //     this.setState({ prev_proxy_account_id: newState.proxy_account_id });
+        //     this.updateAccountData(np, newState);
+        // }
         this.getBudgetObject();
     }
 
@@ -587,7 +584,6 @@ class AccountVoting extends React.Component {
                             segmented={false}
                             tabsClass="account-overview no-padding bordered-header content-block"
                             contentClass="no-padding"
-                            onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
                             actionButtons={actionButtons}
                         >
 
@@ -702,9 +698,6 @@ class AccountVoting extends React.Component {
                                                     </th>
                                                     <th colSpan="3"></th>
                                                 </tr>
-                                                <tr >
-                                                    <th style={{ border: "none", backgroundColor: "transparent" }}></th>
-                                                </tr>
                                             </thead> :
                                             <thead>
                                                 <tr>
@@ -715,9 +708,6 @@ class AccountVoting extends React.Component {
                                                         {globalObject ? <EquivalentValueComponent hide_asset fromAsset="1.3.0" toAsset={preferredUnit} amount={totalBudget} /> : null}
                                                     </th>
                                                     <th className="hide-column-small"></th>
-                                                </tr>
-                                                <tr >
-                                                    <th style={{ border: "none", backgroundColor: "transparent" }}></th>
                                                 </tr>
                                             </thead>}
                                     <thead>

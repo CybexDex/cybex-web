@@ -6,6 +6,14 @@
         "market_history": "%e/%m %H:%M:%S",
         "market_history_us": "%m/%e %H:%M:%S"
       }
+    },
+    "names": {
+      "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "abbreviated_days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      "abbreviated_months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      "am": "AM",
+      "pm": "PM"
     }
   },
   "languages": {
@@ -319,7 +327,9 @@
       "about": "关于",
       "create_worker": "创建新工作者",
       "line": "线",
-      "save_finish": "点击“保存”完成投票"
+      "save_finish": "点击“保存”完成投票",
+      "threshold": "Votes required to activate",
+      "missing": "所需"
     },
     "options": {
       "num_witnesses": "信任见证人",
