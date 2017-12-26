@@ -99,7 +99,7 @@ class AccountLeftPanel extends React.Component {
                 <div className="grid-block">
                     <div className="grid-content no-padding" style={{ overflowX: "hidden" }}>
 
-                        <div className="regular-padding">
+                        <div className="regular-padding vertical-center">
                             <AccountInfo
                                 account={account.get("id")}
                                 image_size={imageSize}
@@ -118,7 +118,7 @@ class AccountLeftPanel extends React.Component {
                                 <li><Link to={`/account/${account_name}/dashboard/`} activeClassName="active"><Translate content="header.dashboard" /></Link></li>
                                 <li><Link to={`/account/${account_name}/member-stats/`} activeClassName="active"><Translate content="account.member.stats" /></Link></li>
                                 {/* <li><Link to={`/account/${account_name}/orders/`} activeClassName="active"><Translate content="account.open_orders"/></Link></li> */}
-                                {/* <li><Link to={`/account/${account_name}/voting/`} activeClassName="active"><Translate content="account.voting" /></Link></li> */}
+                                <li><Link to={`/account/${account_name}/voting/`} activeClassName="active"><Translate content="account.voting" /></Link></li>
 
                                 {/* <li className="menu-subheader" >
                                 <span className="button outline small">
@@ -156,7 +156,7 @@ class AccountLeftPanel extends React.Component {
                         </section>
 
                         {isMyAccount ?
-                            <div className="regular-padding">
+                            <div className="regular-padding vertical-center">
                                 <div className="button block-button create-account-button">
                                     <Link to={`/create-account/${this.props.passwordLogin ? "password" : "wallet"}`}><Translate content="account.create_new" /></Link>
                                 </div>
