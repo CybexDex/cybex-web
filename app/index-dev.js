@@ -36,4 +36,4 @@ if (module.hot) {
           document.getElementById("content"),
         );
     });
-}
+}   
