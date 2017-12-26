@@ -526,7 +526,10 @@
     "witness_receive": "Received witness from witness",
     "committee_member_update_global_parameters": "{account} updated the global committee parameters",
     "worker_create": "{account} created a worker proposal with daily pay of {pay}",
-    "override_transfer": "{issuer} transferred {amount} from {from} to {to}"
+    "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
+    "init_crowd": "{owner} launched a crowdfund for {asset}",
+    "part_crowd": "{account} invested {amount} to a crowdfund",
+    "withdraw_crowd": "{account} withdrawed a crowdfund investment"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -670,7 +673,10 @@
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
       "init_crowd": "Initiate Crowdfund",
-      "crowd_inited": "Crowdfunding"
+      "crowd_inited": "Crowdfunding",
+      "initiate_crowdfund": "Initiate Crowdfund",
+      "participate_crowdfund": "Participate Crowdfund",
+      "withdraw_crowdfund": "Withdraw Crowdfund"
     },
     "feeGroups": {
       "general": "General",
@@ -1531,7 +1537,7 @@
     "p3": "Thus, CYBEX will recommend you and offer guidance for you to download and backup your wallet file after helping set up the account. Please make sure that you download the file and keep it safe. Never forget the file location in your computer, and usage of any physical device to store the file is also recommended, such as a USB disk, just remember to keep it safe. With these measures, whether you encounter an unexpected situation of the trading terminal or change the trading device yourself, just locate and restore the wallet file backed up before, you can continue to manage your assets conveniently and securely."
   },
   "crowdfund": {
-    "action": "Operation",
+    "action": "Status/Operation",
     "asset":"Asset",
     "begin":"Start time",
     "priceOfUnit":"Price of Unit",
@@ -1540,13 +1546,15 @@
     "currentVol":"Current Vol(CYB)",
     "crowdWithdraw": "Withdraw",
     "crowdWithdrawed": "Canceled",
-    "crowdFinish": "Finish",
+    "crowdFinish": "Finished",
     "crowdWorking": "Crowdfunding",
     "partCrowd": "Participate",
     "timeLimit": "Time Limit(from Crowdfund beginning)",
     "timeToLock": "Preparing Time(from participate beginning)",
     "cap": "Funding Cap(CYB)",
-    "valuation": "Funding Valuation(CYB)"
+    "valuation": "Funding Valuation(CYB)",
+    "ALL": "All Crowdfund",
+    "ONGOING": "Crowdfunding"
   },
   "createTip": {
     "but": "But:",

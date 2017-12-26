@@ -641,7 +641,6 @@ class MyMarkets extends React.Component {
                         {this.props.controls ? <div style={{ paddingBottom: "0.5rem" }}>{this.props.controls}</div> : null}
                         {/* {!myMarketTab ? <input type="text" value={this.state.inputValue} onChange={this._lookupAssets.bind(this)} placeholder="SYMBOL:SYMBOL" /> : null} */}
                     </div>) : null}
-
                 {myMarketTab ?
                     <div className="grid-block shrink" style={{ width: "100%", textAlign: "left", padding: "0.75rem 0.5rem" }}>
                         <label className="no-margin">
@@ -661,38 +660,31 @@ class MyMarkets extends React.Component {
 
                     </div> :
 
-                    <div style={{ width: "100%", textAlign: "left", padding: "0.75rem 0.5rem" }}>
-                        <table>
-                            <tr style={{ width: "100%" }}>
-                                <td>
-                                    <AssetSelector
-                                        onAssetSelect={this._onFoundBaseAsset.bind(this)}
-                                        assets={defaultBases}
-                                        onChange={this._onInputBaseAsset.bind(this)}
-                                        asset={this.state.findBaseInput}
-                                        assetInput={this.state.findBaseInput}
-                                        tabIndex={1}
-                                        style={{ width: "100%", paddingBottom: "1.5rem" }}
-                                        onFound={this._onFoundBaseAsset.bind(this)}
-                                        label="exchange.base"
-                                        noLabel
-                                        inputStyle={{ fontSize: "0.9rem" }}
-                                    />
-                                </td>
-                            </tr>
-                            <tr style={{ width: "100%" }}>
-                                <td>
-                                    <label><Translate content="account.user_issued_assets.name" />:</label>
-                                    <input
-                                        style={{ fontSize: "0.9rem", position: "relative", top: 1 }}
-                                        type="text"
-                                        value={this.state.inputValue}
-                                        onChange={this._onInputName.bind(this)}
-                                        placeholder={counterpart.translate("exchange.search")}
-                                    />
-                                </td>
-                            </tr>
-                        </table>
+                    <div className="grid-block" style={{ overflow: "visible", width: "100%", textAlign: "left", padding: "0.75rem 0.5rem" }}>
+                        <AssetSelector
+                            onAssetSelect={this._onFoundBaseAsset.bind(this)}
+                            assets={defaultBases}
+                            className="small-12 medium-6"
+                            onChange={this._onInputBaseAsset.bind(this)}
+                            asset={this.state.findBaseInput}
+                            assetInput={this.state.findBaseInput}
+                            tabIndex={1}
+                            onFound={this._onFoundBaseAsset.bind(this)}
+                            label="exchange.base"
+                            noLabel
+                            inputStyle={{ fontSize: "0.9rem" }}
+                            style={{ padding: 2 }}
+                        />
+                        <div className="market-more small-12 medium-6" style={{ padding: 2, marginTop: "-1px" }}>
+                            <label><Translate content="account.user_issued_assets.name" />:</label>
+                            <input
+                                style={{ fontSize: "0.9rem", position: "relative", top: 1 }}
+                                type="text"
+                                value={this.state.inputValue}
+                                onChange={this._onInputName.bind(this)}
+                                placeholder={counterpart.translate("exchange.search")}
+                            />
+                        </div>
                     </div>
                 }
 
