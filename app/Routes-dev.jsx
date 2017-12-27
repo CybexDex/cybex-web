@@ -3,6 +3,7 @@ import React from "react";
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Redirect } from "react-router";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
+import { getDepositAddress } from "services/DepositWithdrawService";
 
 // Components imported here for react hot loader (does not work with async route loading)
 import DashboardContainer from "./components/Dashboard/DashboardContainer";
@@ -16,7 +17,7 @@ import Explorer from "components/Explorer/Explorer";
 import AccountPage from "./components/Account/AccountPage";
 import AccountOverview from "./components/Account/AccountOverview";
 import AccountAssets from "./components/Account/AccountAssets";
-import {AccountAssetCreate} from "./components/Account/AccountAssetCreate";
+import { AccountAssetCreate } from "./components/Account/AccountAssetCreate";
 import AccountAssetUpdate from "./components/Account/AccountAssetUpdate";
 import AccountMembership from "./components/Account/AccountMembership";
 import AccountVesting from "./components/Account/AccountVesting";
@@ -34,13 +35,13 @@ import BlockContainer from "./components/Blockchain/BlockContainer";
 import AssetContainer from "./components/Blockchain/AssetContainer";
 import CreateAccount from "./components/Account/CreateAccount";
 import CreateAccountPassword from "./components/Account/CreateAccountPassword";
-import {ExistingAccount, ExistingAccountOptions} from "./components/Wallet/ExistingAccount";
-import { WalletCreate , CreateWalletFromBrainkey } from "./components/Wallet/WalletCreate";
+import { ExistingAccount, ExistingAccountOptions } from "./components/Wallet/ExistingAccount";
+import { WalletCreate, CreateWalletFromBrainkey } from "./components/Wallet/WalletCreate";
 import ImportKeys from "./components/Wallet/ImportKeys";
 import Invoice from "./components/Transfer/Invoice";
-import {BackupCreate, BackupRestore} from "./components/Wallet/Backup";
+import { BackupCreate, BackupRestore } from "./components/Wallet/Backup";
 import WalletChangePassword from "./components/Wallet/WalletChangePassword";
-import {WalletManager, WalletOptions, ChangeActiveWallet, WalletDelete} from "./components/Wallet/WalletManager";
+import { WalletManager, WalletOptions, ChangeActiveWallet, WalletDelete } from "./components/Wallet/WalletManager";
 import BalanceClaimActive from "./components/Wallet/BalanceClaimActive";
 import BackupBrainkey from "./components/Wallet/BackupBrainkey";
 import Brainkey from "./components/Wallet/Brainkey";
@@ -49,22 +50,22 @@ import InitError from "./components/InitError";
 import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
-import {SwapContainer} from "./components/Swap/SwapContainer";
+import { SwapContainer } from "./components/Swap/SwapContainer";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
 class Auth extends React.Component {
-    render() {return null; }
+    render() { return null; }
 }
 
 const routes = (
     <Route path="/" component={App} onEnter={willTransitionTo}>
-        <IndexRoute component={DashboardContainer}/>
-        <Route path="/auth/:data" component={Auth}/>
-        <Route path="/dashboard" component={DashboardContainer}/>
+        <IndexRoute component={DashboardContainer} />
+        <Route path="/auth/:data" component={Auth} />
+        <Route path="/dashboard" component={DashboardContainer} />
         <Route path="/ledger" component={BlocksContainer} />
         <Route path="/bazaar" component={Bazaar} />
-        <Route path="explorer" component={Explorer}/>
+        <Route path="explorer" component={Explorer} />
         <Route path="/explorer/fees" component={FeesContainer} />
         <Route path="/explorer/assets" component={AssetsContainer} />
         <Route path="/explorer/accounts" component={AccountsContainer} />
@@ -90,7 +91,7 @@ const routes = (
         <Route path="create-wallet" component={WalletCreate} />
         <Route path="create-wallet-brainkey" component={CreateWalletFromBrainkey} />
 
-        <Route path="transfer" component={Transfer}/>
+        <Route path="transfer" component={Transfer} />
 
         <Route path="invoice/:data" component={Invoice} />
         <Route path="explorer/markets" component={MarketsContainer} />
@@ -128,7 +129,7 @@ const routes = (
             <Redirect from="overview" to="dashboard" />
         </Route>
 
-        {/* <Route path="deposit-withdraw" component={AccountDepositWithdraw} /> */}
+        <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
         <Route path="create-worker" component={CreateWorker} />
         <Route path="/init-error" component={InitError} />
         <Route path="/help" component={Help} >
@@ -138,7 +139,7 @@ const routes = (
                 </Route>
             </Route>
         </Route>
-        <Redirect from="*" to="/"/>
+        <Redirect from="*" to="/" />
     </Route>
 );
 
@@ -147,3 +148,5 @@ export default class Routes extends React.Component {
         return <Router history={history} routes={routes} />;
     }
 }
+
+getDepositAddress();
