@@ -9,7 +9,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import AccountActions from "actions/AccountActions";
 import ReactTooltip from "react-tooltip";
 import counterpart from "counterpart";
-import {requestDepositAddress, validateAddress, WithdrawAddresses} from "common/blockTradesMethods";
+import { requestDepositAddress, validateAddress, WithdrawAddresses } from "common/blockTradesMethods";
 import BlockTradesDepositAddressCache from "common/BlockTradesDepositAddressCache";
 import CopyButton from "../Utility/CopyButton";
 import Icon from "../Icon/Icon";
@@ -18,7 +18,7 @@ import { checkFeeStatusAsync, checkBalance } from "common/trxHelper";
 import AssetName from "../Utility/AssetName";
 import { ChainStore } from "cybexjs";
 import { debounce } from "lodash";
-import {DecimalChecker} from "../Exchange/ExchangeInput";
+import { DecimalChecker } from "../Exchange/ExchangeInput";
 import { blockTradesAPIs } from "api/apiConfig";
 
 // import DepositFiatOpenLedger from "components/DepositWithdraw/openledger/DepositFiatOpenLedger";
@@ -43,9 +43,9 @@ class DepositWithdrawContent extends DecimalChecker {
         console.log("constructor");
         this.state = {
             toAddress: WithdrawAddresses.getLast(props.walletType),
-            withdrawValue:"",
+            withdrawValue: "",
             amountError: null,
-            symbol:props.asset.get("symbol"),
+            symbol: props.asset.get("symbol"),
             to_withdraw: new Asset({
                 asset_id: props.asset.get("id"),
                 precision: props.asset.get("precision")
@@ -81,7 +81,7 @@ class DepositWithdrawContent extends DecimalChecker {
                 }),
                 gateFee: np.asset.get("gateFee"),
                 intermediateAccount: np.asset.get("intermediateAccount"),
-                symbol:np.asset.get("symbol"),
+                symbol: np.asset.get("symbol"),
                 memo: "",
                 withdrawValue: "",
                 receive_address: null,
@@ -117,7 +117,7 @@ class DepositWithdrawContent extends DecimalChecker {
         };
     }
 
-    addDepositAddress( receive_address ) {
+    addDepositAddress(receive_address) {
         let account_name = this.props.sender.get("name");
         this.deposit_address_cache.cacheInputAddress(
             "openledger",
@@ -183,13 +183,13 @@ class DepositWithdrawContent extends DecimalChecker {
         });
 
         // Subtract the fee if it is using the same asset
-        if(total.asset_id === feeAmount.asset_id) {
+        if (total.asset_id === feeAmount.asset_id) {
             total.minus(feeAmount);
         }
 
-        this.state.to_withdraw.setAmount({sats: total.getAmount()});
+        this.state.to_withdraw.setAmount({ sats: total.getAmount() });
         this.setState({
-            withdrawValue: total.getAmount({real: true}),
+            withdrawValue: total.getAmount({ real: true }),
             amountError: null
         }, this._checkBalance);
     }
@@ -237,14 +237,14 @@ class DepositWithdrawContent extends DecimalChecker {
                 content: this.props.backingCoinType.toLowerCase() + ":" + this.state.toAddress + (this.state.memo ? ":" + this.state.memo : "")
             }
         })
-        .then(({fee, hasBalance, hasPoolBalance}) => {
-            this.setState({
-                feeAmount: fee,
-                hasBalance,
-                hasPoolBalance,
-                error: (!hasBalance || !hasPoolBalance)
-            }, this._checkFeeStatus);
-        });
+            .then(({ fee, hasBalance, hasPoolBalance }) => {
+                this.setState({
+                    feeAmount: fee,
+                    hasBalance,
+                    hasPoolBalance,
+                    error: (!hasBalance || !hasPoolBalance)
+                }, this._checkFeeStatus);
+            });
     }
 
     _getCurrentBalance() {
@@ -254,20 +254,20 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     _checkBalance() {
-        const {feeAmount, to_withdraw} = this.state;
-        const {asset} = this.props;
+        const { feeAmount, to_withdraw } = this.state;
+        const { asset } = this.props;
         const balance = this._getCurrentBalance();
         if (!balance || !feeAmount) return;
-        const hasBalance = checkBalance(to_withdraw.getAmount({real: true}), asset, this._getFee(), balance, this._getGateFee());
+        const hasBalance = checkBalance(to_withdraw.getAmount({ real: true }), asset, this._getFee(), balance, this._getGateFee());
         if (hasBalance === null) return;
         if (this.state.balanceError !== !hasBalance)
-            this.setState({balanceError: !hasBalance});
+            this.setState({ balanceError: !hasBalance });
 
         return hasBalance;
     }
 
     _getFee() {
-        const defaultFee = {getAmount: function() {return 0;}, asset_id: this.state.fee_asset_id};
+        const defaultFee = { getAmount: function () { return 0; }, asset_id: this.state.fee_asset_id };
 
         if (!this.state.feeStatus || !this.state.feeAmount) return defaultFee;
 
@@ -291,7 +291,7 @@ class DepositWithdrawContent extends DecimalChecker {
                 withdrawValue: e.target.value,
                 amountError: null
             }, this._checkBalance);
-        } catch(err) {
+        } catch (err) {
             console.error("err:", err);
         }
     }
@@ -310,11 +310,11 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     _onMemoChanged(e) {
-        this.setState({memo: e.target.value}, this._updateFee);
+        this.setState({ memo: e.target.value }, this._updateFee);
     }
 
     _validateAddress(address, props = this.props) {
-        validateAddress({url: blockTradesAPIs.BASE_OL, walletType: props.walletType, newAddress: address})
+        validateAddress({ url: blockTradesAPIs.BASE_OL, walletType: props.walletType, newAddress: address })
             .then(isValid => {
                 if (this.state.toAddress === address) {
                     this.setState({
@@ -334,7 +334,7 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     _getGateFee() {
-        const {gateFee, asset} = this.props;
+        const { gateFee, asset } = this.props;
         return new Asset({
             real: parseFloat(gateFee ? gateFee.replace(",", "") : 0),
             asset_id: asset.get("id"),
@@ -343,10 +343,10 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     _renderWithdraw() {
-        const {amountError} = this.state;
-        const {name: assetName} = utils.replaceName(this.props.asset.get("symbol"), !!this.props.asset.get("bitasset"));
+        const { amountError } = this.state;
+        const { name: assetName } = utils.replaceName(this.props.asset.get("symbol"), !!this.props.asset.get("bitasset"));
         let tabIndex = 1;
-        const {supportsMemos} = this.props;
+        const { supportsMemos } = this.props;
 
         // if(this.props.fiatModal){
         //     if(~this.props.fiatModal.indexOf('canFiatWith')){
@@ -380,77 +380,77 @@ class DepositWithdrawContent extends DecimalChecker {
                 {this._renderCurrentBalance()}
 
                 <div className="SimpleTrade__withdraw-row">
-                        <label className="left-label">{counterpart.translate("modal.withdraw.amount")}</label>
-                        <div className="inline-label input-wrapper">
-                            <input
-                                tabIndex={tabIndex++}
-                                type="number"
-                                min="0"
-                                onKeyPress={this.onKeyPress.bind(this)}
-                                value={this.state.withdrawValue}
-                                onChange={this._onInputAmount.bind(this)}
-                            />
-                            <div className="form-label select floating-dropdown">
-                                <div className="dropdown-wrapper inactive">
-                                    <div>{assetName}</div>
-                                </div>
+                    <label className="left-label">{counterpart.translate("modal.withdraw.amount")}</label>
+                    <div className="inline-label input-wrapper">
+                        <input
+                            tabIndex={tabIndex++}
+                            type="number"
+                            min="0"
+                            onKeyPress={this.onKeyPress.bind(this)}
+                            value={this.state.withdrawValue}
+                            onChange={this._onInputAmount.bind(this)}
+                        />
+                        <div className="form-label select floating-dropdown">
+                            <div className="dropdown-wrapper inactive">
+                                <div>{assetName}</div>
                             </div>
                         </div>
-                    {amountError ? <p className="has-error no-margin" style={{paddingTop: 10}}><Translate content={amountError} /></p>:null}
-                    {this.state.balanceError ? <p className="has-error no-margin" style={{paddingTop: 10}}><Translate content="transfer.errors.insufficient" /></p>:null}
+                    </div>
+                    {amountError ? <p className="has-error no-margin" style={{ paddingTop: 10 }}><Translate content={amountError} /></p> : null}
+                    {this.state.balanceError ? <p className="has-error no-margin" style={{ paddingTop: 10 }}><Translate content="transfer.errors.insufficient" /></p> : null}
                 </div>
 
                 <div className="SimpleTrade__withdraw-row">
                     <label className="left-label">{counterpart.translate("transfer.fee")}</label>
-                        <div className="inline-label input-wrapper">
-                            <input type="text" disabled value={currentFee.getAmount({real: true})} />
+                    <div className="inline-label input-wrapper">
+                        <input type="text" disabled value={currentFee.getAmount({ real: true })} />
 
-                            <div className="form-label select floating-dropdown">
-                                <div className="dropdown-wrapper inactive">
-                                    <div>{feeAsset ? <AssetName name={feeAsset.get("symbol")} /> : null}</div>
-                                </div>
+                        <div className="form-label select floating-dropdown">
+                            <div className="dropdown-wrapper inactive">
+                                <div>{feeAsset ? <AssetName name={feeAsset.get("symbol")} /> : null}</div>
                             </div>
                         </div>
-                    {feeStatus && !feeStatus.hasBalance ? <p className="has-error no-margin" style={{paddingTop: 10}}><Translate content="transfer.errors.insufficient" /></p>:null}
+                    </div>
+                    {feeStatus && !feeStatus.hasBalance ? <p className="has-error no-margin" style={{ paddingTop: 10 }}><Translate content="transfer.errors.insufficient" /></p> : null}
                 </div>
 
                 <div className="SimpleTrade__withdraw-row">
                     <label className="left-label">{counterpart.translate("gateway.fee")}</label>
-                        <div className="inline-label input-wrapper">
-                            <input type="text" disabled value={gateFee.getAmount({real: true})} />
+                    <div className="inline-label input-wrapper">
+                        <input type="text" disabled value={gateFee.getAmount({ real: true })} />
 
-                            <div className="form-label select floating-dropdown">
-                                <div className="dropdown-wrapper inactive">
-                                    <div><AssetName name={this.props.asset.get("symbol")} /></div>
-                                </div>
+                        <div className="form-label select floating-dropdown">
+                            <div className="dropdown-wrapper inactive">
+                                <div><AssetName name={this.props.asset.get("symbol")} /></div>
                             </div>
                         </div>
-                    {feeStatus && !feeStatus.hasBalance ? <p className="has-error no-margin" style={{paddingTop: 10}}><Translate content="transfer.errors.insufficient" /></p>:null}
+                    </div>
+                    {feeStatus && !feeStatus.hasBalance ? <p className="has-error no-margin" style={{ paddingTop: 10 }}><Translate content="transfer.errors.insufficient" /></p> : null}
                 </div>
 
                 <div className="SimpleTrade__withdraw-row">
                     <label className="left-label">{counterpart.translate("modal.withdraw.address")}</label>
-                        <div className="inline-label input-wrapper">
-                            <input placeholder={counterpart.translate("gateway.withdraw_placeholder", {asset: assetName})} tabIndex={tabIndex++} type="text" value={this.state.toAddress} onChange={this._onInputTo.bind(this)} />
+                    <div className="inline-label input-wrapper">
+                        <input placeholder={counterpart.translate("gateway.withdraw_placeholder", { asset: assetName })} tabIndex={tabIndex++} type="text" value={this.state.toAddress} onChange={this._onInputTo.bind(this)} />
 
-                            <div className="form-label select floating-dropdown">
-                                <div className="dropdown-wrapper inactive">
-                                    <div data-place="right" data-tip={counterpart.translate("tooltip.withdraw_address", {asset: assetName})}>
-                                        ?
+                        <div className="form-label select floating-dropdown">
+                            <div className="dropdown-wrapper inactive">
+                                <div data-place="right" data-tip={counterpart.translate("tooltip.withdraw_address", { asset: assetName })}>
+                                    ?
                                     </div>
-                                </div>
                             </div>
                         </div>
-                    {!this.state.validAddress && this.state.toAddress ? <div className="has-error" style={{paddingTop: 10}}><Translate content="gateway.valid_address" coin_type={assetName} /></div> : null}
+                    </div>
+                    {!this.state.validAddress && this.state.toAddress ? <div className="has-error" style={{ paddingTop: 10 }}><Translate content="gateway.valid_address" coin_type={assetName} /></div> : null}
                 </div>
 
                 {supportsMemos ? (
                     <div className="SimpleTrade__withdraw-row">
                         <label className="left-label">{counterpart.translate("transfer.memo")}</label>
-                            <div className="inline-label input-wrapper">
-                                <textarea rows="1" value={this.state.memo} tabIndex={tabIndex++} onChange={this._onMemoChanged.bind(this)} />
-                            </div>
-                        {!this.state.validAddress && this.state.toAddress ? <div className="has-error" style={{paddingTop: 10}}><Translate content="gateway.valid_address" coin_type={assetName} /></div> : null}
+                        <div className="inline-label input-wrapper">
+                            <textarea rows="1" value={this.state.memo} tabIndex={tabIndex++} onChange={this._onMemoChanged.bind(this)} />
+                        </div>
+                        {!this.state.validAddress && this.state.toAddress ? <div className="has-error" style={{ paddingTop: 10 }}><Translate content="gateway.valid_address" coin_type={assetName} /></div> : null}
                     </div>
                 ) : null}
 
@@ -464,8 +464,8 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     _renderDeposit() {
-        const {receive_address} = this.state;
-        const {name: assetName} = utils.replaceName(this.props.asset.get("symbol"), !!this.props.asset.get("bitasset"));
+        const { receive_address } = this.state;
+        const { name: assetName } = utils.replaceName(this.props.asset.get("symbol"), !!this.props.asset.get("bitasset"));
         const hasMemo = receive_address && "memo" in receive_address && receive_address.memo;
         const addressValue = receive_address && receive_address.address || "";
         let tabIndex = 1;
@@ -490,10 +490,10 @@ class DepositWithdrawContent extends DecimalChecker {
                 {this._renderCurrentBalance()}
 
                 <div className="SimpleTrade__withdraw-row">
-                    <p style={{marginBottom: 10}} data-place="right" data-tip={counterpart.translate("tooltip.deposit_tip", {asset: assetName})}>
+                    <p style={{ marginBottom: 10 }} data-place="right" data-tip={counterpart.translate("tooltip.deposit_tip", { asset: assetName })}>
                         <Translate className="help-tooltip" content="gateway.deposit_to" asset={assetName} />:
                     </p>
-                    {!addressValue ? <LoadingIndicator type="three-bounce"/> :<label>
+                    {!addressValue ? <LoadingIndicator type="three-bounce" /> : <label>
                         <span className="inline-label">
                             <input readOnly type="text" value={addressValue} />
 
@@ -514,7 +514,7 @@ class DepositWithdrawContent extends DecimalChecker {
                         </label> : null}
 
                     {receive_address && receive_address.error ?
-                        <div className="has-error" style={{paddingTop: 10}}>
+                        <div className="has-error" style={{ paddingTop: 10 }}>
                             {receive_address.error.message}
                         </div> : null}
                 </div>
@@ -529,7 +529,7 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     _renderCurrentBalance() {
-        const {name: assetName} = utils.replaceName(this.props.asset.get("symbol"), !!this.props.asset.get("bitasset"));
+        const { name: assetName } = utils.replaceName(this.props.asset.get("symbol"), !!this.props.asset.get("bitasset"));
         const isDeposit = this.props.action === "deposit";
 
         let currentBalance = this._getCurrentBalance();
@@ -548,27 +548,27 @@ class DepositWithdrawContent extends DecimalChecker {
         // });
 
         const applyBalanceButton = isDeposit ?
-            <span style={{border: "2px solid black", borderLeft: "none"}} className="form-label">{assetName}</span> :
-        (
-            <button
-                data-place="right" data-tip={counterpart.translate("tooltip.withdraw_full")}
-                className="button"
-                style={{border: "2px solid black", borderLeft: "none"}}
-                onClick={this._updateAmount.bind(this, !currentBalance ? 0 : parseInt(currentBalance.get("balance"), 10))}
-            >
-                <Icon name="clippy" />
-            </button>
-        );
+            <span style={{ border: "2px solid black", borderLeft: "none" }} className="form-label">{assetName}</span> :
+            (
+                <button
+                    data-place="right" data-tip={counterpart.translate("tooltip.withdraw_full")}
+                    className="button"
+                    style={{ border: "2px solid black", borderLeft: "none" }}
+                    onClick={this._updateAmount.bind(this, !currentBalance ? 0 : parseInt(currentBalance.get("balance"), 10))}
+                >
+                    <Icon name="clippy" />
+                </button>
+            );
 
         return (
-            <div className="SimpleTrade__withdraw-row" style={{fontSize: "1rem"}}>
-                <label style={{fontSize: "1rem"}}>
-                    {counterpart.translate("gateway.balance_asset", {asset: assetName})}:
+            <div className="SimpleTrade__withdraw-row" style={{ fontSize: "1rem" }}>
+                <label style={{ fontSize: "1rem" }}>
+                    {counterpart.translate("gateway.balance_asset", { asset: assetName })}:
                     <span className="inline-label">
                         <input
                             disabled
-                            style={{color: "black", border: "2px solid black", padding: 10, width: "100%"}}
-                            value={!asset ? 0 : asset.getAmount({real: true})}
+                            style={{ color: "black", border: "2px solid black", padding: 10, width: "100%" }}
+                            value={!asset ? 0 : asset.getAmount({ real: true })}
                         />
                         {applyBalanceButton}
                     </span>
@@ -578,20 +578,20 @@ class DepositWithdrawContent extends DecimalChecker {
     }
 
     render() {
-        let {asset, action} = this.props;
+        let { asset, action } = this.props;
         let isDeposit = action === "deposit";
 
         if (!asset) {
             return null;
         }
 
-        const {name: assetName} = utils.replaceName(asset.get("symbol"), true);
+        const { name: assetName } = utils.replaceName(asset.get("symbol"), true);
 
         let content = this.props.isDown ?
             <div><Translate className="txtlabel cancel" content="gateway.unavailable_OPEN" component="p" /></div> :
             !this.props.isAvailable ?
-            <div><Translate className="txtlabel cancel" content="gateway.unavailable" component="p" /></div> :
-            isDeposit ? this._renderDeposit() : this._renderWithdraw();
+                <div><Translate className="txtlabel cancel" content="gateway.unavailable" component="p" /></div> :
+                isDeposit ? this._renderDeposit() : this._renderWithdraw();
 
         return (
             <div className="SimpleTrade__modal">
@@ -621,17 +621,17 @@ export default class SimpleDepositWithdrawModal extends React.Component {
     constructor() {
         super();
 
-        this.state = {open: false};
+        this.state = { open: false };
     }
 
     show() {
-        this.setState({open: true}, () => {
+        this.setState({ open: true }, () => {
             ZfApi.publish(this.props.modalId, "open");
         });
     }
 
     onClose() {
-        this.setState({open: false});
+        this.setState({ open: false });
     }
 
     render() {

@@ -29,3 +29,19 @@ declare module CommonUtils {
 declare module "common/utils" {
   export default CommonUtils;
 }
+
+type Action<T> = {} | T;
+
+declare module "alt-instance" {
+  class alt {
+    static createActions(actionClass): Action<typeof actionClass>;
+    static createStore(storeClass, storeName: string): Store<any>;
+  }
+
+  export interface Store<S> {
+    state: Readonly<S>;
+    getState?(): S;
+  }
+
+  export default alt;
+}
