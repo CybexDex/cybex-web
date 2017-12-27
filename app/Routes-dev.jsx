@@ -3,7 +3,6 @@ import React from "react";
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Redirect } from "react-router";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
-import { getDepositAddress } from "services/DepositWithdrawService";
 
 // Components imported here for react hot loader (does not work with async route loading)
 import DashboardContainer from "./components/Dashboard/DashboardContainer";
@@ -148,5 +147,3 @@ export default class Routes extends React.Component {
         return <Router history={history} routes={routes} />;
     }
 }
-
-getDepositAddress();

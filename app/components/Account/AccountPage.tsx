@@ -9,7 +9,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import { connect } from "alt-react";
 import accountUtils from "lib/common/account_utils";
-import DepositModal from "components/modal/DepositModal";
+import DepositModal from "components//Gateway/DepositModal";
 import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
 
 
@@ -88,14 +88,13 @@ let AccountPage = class extends React.Component<Props, any> {
                                 proxy: account.getIn(["options", "voting_account"])
                             }
                         )}
+                        {depositModal && <DepositModal
+                            balances={account.get("balances", null)}
+                            modalId={DEPOSIT_MODAL_ID}
+                            fade={true}
+                        />}
                     </div>
                 </div>
-                {depositModal && <DepositModal
-                    asset={"1.3.0"}
-                    balances={account.get("balances", null)}
-                    modalId={DEPOSIT_MODAL_ID}
-                    fade={true}
-                />}
             </div>
         );
     }

@@ -57,6 +57,7 @@ class GatewayStore extends BaseStore implements Store<State>{
     }
 
     handleDepositUpdate(depositInfo) {
+        debug("Open: ", depositInfo);        
         this.setState({
             depositInfo
         });
@@ -69,7 +70,6 @@ class GatewayStore extends BaseStore implements Store<State>{
     }
 
     openModal(id) {
-        debug("Open: ", id);
         this.setState({
             modals: this.state.modals.set(id, true)
         });
