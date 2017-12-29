@@ -33,7 +33,7 @@ class ApiNode {
 const WS_NODE_LIST = [
     new ApiNode("111.231.200.95/", "Chengdo"),
     new ApiNode("118.190.209.196/", "Qingdao"),
-    new ApiNode("hanzhou.cybex.io/", "Hangzhou"),
+    new ApiNode("hanzhou.51nebula.com/", "Hangzhou"),
     new ApiNode("120.79.11.96/", "Shenzhen"),
     new ApiNode("hongkong.cybex.io/", "Hongkong"),
     new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
