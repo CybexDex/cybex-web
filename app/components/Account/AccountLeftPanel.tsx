@@ -79,8 +79,17 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
         //     this.setState({ titleClass: undefined });
         // }, 250);
 
-        info ? GatewayActions.openModal(DEPOSIT_MODAL_ID) :
+        info ? GatewayActions.showDepositModal("create-test21", "BTC") :
             GatewayActions.showDepositModal("any", "SDF");
+    }
+    _withdrawClick(info) {
+        // this._toggleQR(true);
+        // this.setState({ titleClass: "account-title flash" });
+        // setTimeout(() => {
+        //     this.setState({ titleClass: undefined });
+        // }, 250);
+
+        GatewayActions.showWithdrawModal("create-test21", "BTC")
     }
 
     render() {
@@ -104,7 +113,6 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
             <div className="grid-block vertical account-left-panel no-padding no-overflow">
                 <div className="grid-block">
                     <div className="grid-content no-padding" style={{ overflowX: "hidden" }}>
-
                         <div className="regular-padding vertical-center">
                             <AccountInfo
                                 account={account.get("id")}
@@ -116,7 +124,6 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
                             />
                             <button onClick={this._depositClick.bind(this)}>Info</button>
                             <button onClick={this._depositClick.bind(this, false)}>Error</button>
-                            
                             <div className="grid-container no-margin" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
                                 {linkBtn}

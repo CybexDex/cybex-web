@@ -44,7 +44,9 @@ class GatewayStore extends BaseStore implements Store<State>{
         bridgeCoins: Map(fromJS(ss.get("bridgeCoins", {}))),
         bridgeInputs: ["btc", "dash", "eth", "steem"],
         down: Map({}),
-        modals: Map()
+        modals: Map(),
+        depositInfo: {},
+        withdrawInfo: {}
     };
     constructor() {
         super();
@@ -57,7 +59,7 @@ class GatewayStore extends BaseStore implements Store<State>{
     }
 
     handleDepositUpdate(depositInfo) {
-        debug("Open: ", depositInfo);        
+        debug("Open: ", depositInfo);
         this.setState({
             depositInfo
         });

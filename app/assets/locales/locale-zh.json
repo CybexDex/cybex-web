@@ -632,7 +632,7 @@
     "balance_claim": "从余额ID #%(balance_id)s 中领取金额 %(balance_amount)s ",
     "balance_owner": "余额所有者公钥",
     "balance_id": "余额ID",
-    "deposit_to": "向账户存入",
+    "deposit_to": "向账户存入%{asset}",
     "claimed": "领取总额",
     "broadcasting": "交易广播中..",
     "broadcasting_short": "交易广播中..",

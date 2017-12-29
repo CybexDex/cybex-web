@@ -22,7 +22,7 @@ class GatewayActions {
   }
 
   async showWithdrawModal(account, type) {
-    let valid = await this.updateDepositAddress(account, type);
+    let valid = await this.updateWithdrawInfo(account, type);
     if (!valid) return;
     this.openModal(WITHDRAW_MODAL_ID);
   }
@@ -45,21 +45,16 @@ class GatewayActions {
     return res;
   }
 
-  async afterUpdateWithdrawInfo(type, account) {
-    // let address;
-    // try {
-    //   address = await getDepositAddress(type);
-    //   debug("Address: ", address);
-    //   NotificationActions.info(address);
-    // } catch (e) {
-    //   debug(e);
-    //   NotificationActions.error(e.message);
-    // }
-    // let res = {
-    //   type, account, address
-    // };
-    // this.afterUpdateDepositInfo(res);
-    // return res;
+  async updateWithdrawInfo(account, type) {
+    this.afterUpdateWithdrawInfo(account, type);
+    return true;
+  }
+
+  afterUpdateWithdrawInfo(account, type) {
+    // for mock
+    return {
+      gatewayFee: 0,
+    }
   }
 
   afterUpdateDepositInfo(depositInfo) {

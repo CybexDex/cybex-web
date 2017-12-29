@@ -232,6 +232,11 @@ class AccountOverview extends React.Component {
         // });
     }
 
+    _showWithdrawModal(action, asset, fiatModal, e) {
+        let { account } = this.props;
+        GatewayActions.showWithdrawModal(account.get("name"), asset);
+    }
+
     _getSeparator(render) {
         return render ? <span>&nbsp;|&nbsp;</span> : null;
     }
@@ -364,7 +369,7 @@ class AccountOverview extends React.Component {
                     <td>
                         {canWithdraw && this.props.isMyAccount ? (
                             <span>
-                                <a className={!canWithdraw ? "disabled" : ""} onClick={canWithdraw ? this._showDepositWithdraw.bind(this, "withdraw_modal", assetName, false) : () => { }}>
+                                <a className={!canWithdraw ? "disabled" : ""} onClick={canWithdraw ? this._showWithdrawModal.bind(this, "withdraw_modal", assetName, false) : () => { }}>
                                     <Icon name="withdraw" className="icon-14px" />
                                 </a>
                             </span>

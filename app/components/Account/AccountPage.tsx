@@ -10,11 +10,13 @@ import BindToChainState from "../Utility/BindToChainState";
 import { connect } from "alt-react";
 import accountUtils from "lib/common/account_utils";
 import DepositModal from "components//Gateway/DepositModal";
-import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
+import WithdrawModal from "components//Gateway/WithdrawModal";
+import { GatewayActions, DEPOSIT_MODAL_ID, WITHDRAW_MODAL_ID } from "actions/GatewayActions";
 
 
 type Props = {
     depositModal?,
+    withdrawModal?,
     backedCoins?,
     viewSettings?,
     myAccounts?,
@@ -50,7 +52,7 @@ let AccountPage = class extends React.Component<Props, any> {
 
     render() {
         let { myAccounts, linkedAccounts, account_name, searchAccounts, settings, wallet_locked, account, hiddenAssets } = this.props;
-        let { depositModal } = this.props;
+        let { depositModal, withdrawModal } = this.props;
         let isMyAccount = AccountStore.isMyAccount(account);
 
         return (
@@ -93,6 +95,10 @@ let AccountPage = class extends React.Component<Props, any> {
                             modalId={DEPOSIT_MODAL_ID}
                             fade={true}
                         />}
+                        {withdrawModal && <WithdrawModal
+                            balances={account.get("balances", null)}
+                            modalId={WITHDRAW_MODAL_ID}
+                        />}
                     </div>
                 </div>
             </div>
@@ -125,7 +131,8 @@ export default connect(AccountPageStoreWrapper, {
             backedCoins: GatewayStore.getState().backedCoins,
             bridgeCoins: GatewayStore.getState().bridgeCoins,
             gatewayDown: GatewayStore.getState().down,
-            depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID)
+            depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
+            withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
         };
     }
 });

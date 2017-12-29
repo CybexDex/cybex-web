@@ -17,14 +17,7 @@ import LoadingIndicator from "../LoadingIndicator";
 import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
 
-const style = {
-  position: "fixed",
-  left: 0,
-  top: 0
-};
-
 type props = { modalId, depositInfo?, open?, className?, asset, balances?};
-
 
 class DepositModal extends React.Component<props, { fadeOut }> {
 
@@ -58,7 +51,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     console.debug(this.props, currentBalance, balance);
     return (
       <BaseModal modalId={modalId} >
-        <h3><Translate content={"gateway.deposit"} /> {assetName}</h3>
+        <h3><Translate content={"gateway.withdraw"} /> {assetName}</h3>
         {/* <p><Translate content="gateway.withdraw_funds" asset={assetName} /></p> */}
         <p>
           {<Translate unsafe content="gateway.add_funds" account={depositInfo.account} />}
