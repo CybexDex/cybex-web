@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { PropTypes } from "react";
 import { Link } from "react-router";
 import ReactTooltip from "react-tooltip";
@@ -7,8 +7,12 @@ import Translate from "react-translate-component";
 import AccountActions from "actions/AccountActions";
 import SettingsActions from "actions/SettingsActions";
 
-class AccountLeftPanel extends React.Component {
 
+import { JadePool } from "services/GatewayConfig";
+import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
+
+class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
+    last_path = null;
     static propTypes = {
         account: React.PropTypes.object.isRequired,
         linkedAccounts: PropTypes.object,
@@ -16,7 +20,6 @@ class AccountLeftPanel extends React.Component {
 
     constructor(props) {
         super(props);
-        this.last_path = null;
 
         this.state = {
             showAdvanced: props.viewSettings.get("showAdvanced", false),
@@ -69,12 +72,15 @@ class AccountLeftPanel extends React.Component {
         SettingsActions.changeViewSetting({ showDepositQR: value });
     }
 
-    _depositClick() {
-        this._toggleQR(true);
-        this.setState({ titleClass: "account-title flash" });
-        setTimeout(() => {
-            this.setState({ titleClass: undefined });
-        }, 250);
+    _depositClick(info) {
+        // this._toggleQR(true);
+        // this.setState({ titleClass: "account-title flash" });
+        // setTimeout(() => {
+        //     this.setState({ titleClass: undefined });
+        // }, 250);
+
+        info ? GatewayActions.openModal(DEPOSIT_MODAL_ID) :
+            GatewayActions.showDepositModal("any", "SDF");
     }
 
     render() {
@@ -108,6 +114,9 @@ class AccountLeftPanel extends React.Component {
                                 toggleQR={this._toggleQR.bind(this)}
                                 titleClass={this.state.titleClass}
                             />
+                            <button onClick={this._depositClick.bind(this)}>Info</button>
+                            <button onClick={this._depositClick.bind(this, false)}>Error</button>
+                            
                             <div className="grid-container no-margin" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
                                 {linkBtn}

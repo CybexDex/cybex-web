@@ -75,7 +75,7 @@ class AccountVoting extends React.Component {
         //     this.setState({ prev_proxy_account_id: newState.proxy_account_id });
         //     this.updateAccountData(np, newState);
         // }
-        this.getBudgetObject();
+        // this.getBudgetObject();
     }
 
     updateAccountData({ account }, state = this.state) {

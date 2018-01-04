@@ -343,3 +343,49 @@ div.bordered-header {
 .header {
   align-items: stretch;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  .modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.overlay.fade-in {
+  animation: fadeIn 300ms ease-in-out;
+}
+
+.overlay.fade-out {
+  animation: fadeOut 300ms ease-in-out;  
+  opacity: 0;
+}

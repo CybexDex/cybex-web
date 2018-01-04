@@ -69,4 +69,4 @@ class GatewayStore {
     }
 }
 
-export default alt.createStore(GatewayStore, "GatewayStore");
+export default alt.createStore(GatewayStoreOld, "GatewayStoreOld");

@@ -1,5 +1,5 @@
-import React from "react";
-import Immutable from "immutable";
+import * as React from "react";
+import * as Immutable from "immutable";
 import Translate from "react-translate-component";
 import BalanceComponent from "../Utility/BalanceComponent";
 import TotalBalanceValue from "../Utility/TotalBalanceValue";
@@ -26,7 +26,6 @@ import ReactTooltip from "react-tooltip";
 import SimpleDepositWithdraw from "../Dashboard/SimpleDepositWithdraw";
 import SimpleDepositBlocktradesBridge from "../Dashboard/SimpleDepositBlocktradesBridge";
 import { Apis } from "cybexjs-ws";
-import GatewayActions from "actions/GatewayActions";
 import { Tabs, Tab } from "../Utility/Tabs";
 import AccountOrders from "./AccountOrders";
 import cnames from "classnames";
@@ -37,6 +36,7 @@ import ContextMenuActions from "actions/ContextMenuActions";
 import { HeadContextMenuId } from "components/Layout/Header";
 import { AccountVestedBalances } from "components/Account/AccountVestedBalances";
 import CrowdFund from "components/CrowdFund/AccountCrowdFund";
+import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
 
 const sortFunctions = {
     alphabetic: function (a, b, force) {
@@ -220,13 +220,16 @@ class AccountOverview extends React.Component {
     }
 
     _showDepositWithdraw(action, asset, fiatModal, e) {
-        e.preventDefault();
-        this.setState({
-            [action === "bridge_modal" ? "bridgeAsset" : action === "deposit_modal" ? "depositAsset" : "withdrawAsset"]: asset,
-            fiatModal
-        }, () => {
-            this.refs[action].show();
-        });
+        let { account } = this.props;
+        console.debug("AccountOverview: ", account, asset);
+        GatewayActions.showDepositModal(account.get("name"), asset);
+        // e.preventDefault();
+        // this.setState({
+        //     [action === "bridge_modal" ? "bridgeAsset" : action === "deposit_modal" ? "depositAsset" : "withdrawAsset"]: asset,
+        //     fiatModal
+        // }, () => {
+        //     this.refs[action].show();
+        // });
     }
 
     _getSeparator(render) {
@@ -298,7 +301,8 @@ class AccountOverview extends React.Component {
             const includeAsset = !hiddenAssets.includes(asset_type);
             const hasBalance = !!balanceObject.get("balance");
             const hasOnOrder = !!orders[asset_type];
-            const canDepositWithdraw = !!this.props.backedCoins.get("OPEN", []).find(a => a.symbol === asset.get("symbol"));
+            // const canDepositWithdraw = true;
+            const canDepositWithdraw = !!this.props.backedCoins.get("JADE", []).find(a => a.symbol === asset.get("symbol"));
             const canWithdraw = canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
             const canBuy = !!this.props.bridgeCoins.get(symbol);
 
@@ -637,7 +641,7 @@ class AccountOverview extends React.Component {
                             className="overview-tabs"
                             contentClass="no-padding"
                             tabsClass="account-overview no-padding bordered-header content-block"
-                            // onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
+                        // onChangeTab={this.adjustHeightOnChangeTab.bind(this)}
                         >
 
                             {/* <Tab disabled className="total-value" title={<span>{counterpart.translate("account.eq_value")}&nbsp;<AssetName name={preferredUnit} noTip /></span>} subText={totalValue}>
@@ -772,7 +776,7 @@ class AccountOverview extends React.Component {
                 </div>
 
                 {/* Deposit Modal */}
-                <SimpleDepositWithdraw
+                {/* <DepositModal
                     ref="deposit_modal"
                     action="deposit"
                     fiatModal={this.state.fiatModal}
@@ -783,7 +787,7 @@ class AccountOverview extends React.Component {
                     balances={this.props.balances}
                     {...currentDepositAsset}
                     isDown={this.props.gatewayDown.get("OPEN")}
-                />
+                /> */}
 
                 {/* Withdraw Modal */}
                 <SimpleDepositWithdraw
@@ -799,18 +803,6 @@ class AccountOverview extends React.Component {
                     isDown={this.props.gatewayDown.get("OPEN")}
                 />
 
-                {/* Bridge modal */}
-                <SimpleDepositBlocktradesBridge
-                    ref="bridge_modal"
-                    action="deposit"
-                    account={this.props.account.get("name")}
-                    sender={this.props.account.get("id")}
-                    asset={this.state.bridgeAsset}
-                    modalId="simple_bridge_modal"
-                    balances={this.props.balances}
-                    bridges={currentBridges}
-                    isDown={this.props.gatewayDown.get("TRADE")}
-                />
             </div>
 
         );
@@ -832,10 +824,7 @@ class BalanceWrapper extends React.Component {
     };
 
     componentWillMount() {
-        if (Apis.instance().chain_id.substr(0, 8) === "4018d784") { // Only fetch this when on CYB main net
-            GatewayActions.fetchCoins();
-            GatewayActions.fetchBridgeCoins();
-        }
+
     }
 
     render() {

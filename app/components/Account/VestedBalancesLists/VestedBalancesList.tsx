@@ -7,10 +7,12 @@ import BalanceClaimActiveStore from "stores/BalanceClaimActiveStore";
 import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
+import { GatewayActions } from "actions/GatewayActions"
 
 let VestedBalancesLists = class extends React.PureComponent<any> {
   constructor(props: any) {
     super(props);
+    // GatewayActions.showDepositModal("any", "BTC");
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,7 +71,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
             );
           }).toArray()}
           {
-            !this.props.total_by_account_asset || this.props.total_by_account_asset.size === 0 && 
+            !this.props.total_by_account_asset || this.props.total_by_account_asset.size === 0 &&
             <tr>
               <td>-</td>
               <td>-</td>
