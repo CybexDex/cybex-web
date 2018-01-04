@@ -197,7 +197,7 @@ class BuySell extends React.Component {
     }
 
     _subToMarket(props, newBucketSize) {
-        let { quoteAsset, baseAsset, bucketSize } = props;
+        let { quoteAsset, baseAsset, bucketSize } = props; 
         if (newBucketSize) {
             bucketSize = newBucketSize;
         }

@@ -311,26 +311,28 @@ class BuySell extends React.Component {
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div className="buysell-buttons-wrapper">
 
-                                {/* BUY/SELL button */}
-                                {disabledText ?
-                                    (<div className="" data-tip={disabledText} data-place="right">
-                                        <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
-                                    </div>) :
-                                    (<div className="" data-tip={""}>
-                                        <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
-                                    </div>)
-                                }
+                                    {/* BUY/SELL button */}
+                                    {disabledText ?
+                                        (<div className="" data-tip={disabledText} data-place="right">
+                                            <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
+                                        </div>) :
+                                        (<div className="" data-tip={""}>
+                                            <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
+                                        </div>)
+                                    }
 
-                                {/* SHORT button */}
-                                {disabledText && isPredictionMarket ? (
-                                    <div style={{ paddingRight: 10 }} className="float-right" data-tip={disabledText} data-place="right">
-                                        <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, false)} value={forceSellText} />
-                                    </div>) : isPredictionMarket ? (
-                                        <div style={{ paddingRight: 10 }} className="float-right" data-tip={""}>
+                                    {/* SHORT button */}
+                                    {disabledText && isPredictionMarket ? (
+                                        <div style={{ paddingLeft: 10 }} className="float-right" data-tip={disabledText} data-place="right">
                                             <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, false)} value={forceSellText} />
-                                        </div>) : null
-                                }
+                                        </div>) : isPredictionMarket ? (
+                                            <div style={{ paddingLeft: 10 }} className="float-right" data-tip={""}>
+                                                <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, false)} value={forceSellText} />
+                                            </div>) : null
+                                    }
+                                </div>
 
                             </div>
                         </div>
