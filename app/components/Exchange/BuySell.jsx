@@ -214,6 +214,15 @@ class BuySell extends React.Component {
                 <div className="buy-sell-container">
                     <div className={"exchange-content-header " + type}>
                         <span>{buttonText} <AssetName dataPlace="top" name={quote.get("symbol")} /></span>
+                        {
+                            this.props.onBorrow &&
+                            <div className="float-right buy-sell-deposit">
+                                <a onClick={this.props.onBorrow}>
+                                    <Translate content="exchange.borrow" />&nbsp;
+                                    <span className="asset-name">{buyBorrowDepositName}</span>
+                                </a>
+                            </div>
+                        }
                     </div>
                     <form className={(!this.props.isOpen ? "hide-container " : "") + "order-form"} noValidate>
                         <div className="grid-block vertical no-overflow no-padding">
@@ -280,7 +289,7 @@ class BuySell extends React.Component {
                         </div>
                         <div>
                             <div className="grid-content clear-fix no-padding">
-                                <table style={{width: "100%"}}>
+                                <table style={{ width: "100%" }}>
                                     <tbody>
                                         <tr className="buy-sell-info">
                                             <td><Translate content="exchange.balance" />:</td>
@@ -302,26 +311,28 @@ class BuySell extends React.Component {
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div className="buysell-buttons-wrapper">
 
-                                {/* BUY/SELL button */}
-                                {disabledText ?
-                                    (<div className="" data-tip={disabledText} data-place="right">
-                                        <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
-                                    </div>) :
-                                    (<div className="" data-tip={""}>
-                                        <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
-                                    </div>)
-                                }
+                                    {/* BUY/SELL button */}
+                                    {disabledText ?
+                                        (<div className="" data-tip={disabledText} data-place="right">
+                                            <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
+                                        </div>) :
+                                        (<div className="" data-tip={""}>
+                                            <input className={buttonClass} type="submit" onClick={onSubmit.bind(this, true)} value={buttonText} />
+                                        </div>)
+                                    }
 
-                                {/* SHORT button */}
-                                {disabledText && isPredictionMarket ? (
-                                    <div style={{ paddingRight: 10 }} className="float-right" data-tip={disabledText} data-place="right">
-                                        <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, false)} value={forceSellText} />
-                                    </div>) : isPredictionMarket ? (
-                                        <div style={{ paddingRight: 10 }} className="float-right" data-tip={""}>
+                                    {/* SHORT button */}
+                                    {disabledText && isPredictionMarket ? (
+                                        <div style={{ paddingLeft: 10 }} className="float-right" data-tip={disabledText} data-place="right">
                                             <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, false)} value={forceSellText} />
-                                        </div>) : null
-                                }
+                                        </div>) : isPredictionMarket ? (
+                                            <div style={{ paddingLeft: 10 }} className="float-right" data-tip={""}>
+                                                <input style={{ margin: 0 }} className={buttonClass} type="submit" onClick={onSubmit.bind(this, false)} value={forceSellText} />
+                                            </div>) : null
+                                    }
+                                </div>
 
                             </div>
                         </div>

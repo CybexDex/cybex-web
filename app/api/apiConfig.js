@@ -18,10 +18,12 @@ export const rudexAPIs = {
 const TEST_NODE = "ws://121.40.109.65:11011";
 const BITSHARES_NODE = "wss://fake.automatic-selection.com";
 const DEFAULT_WS_NODE = TEST_NODE;
-const DEFAULT_FAUCET = "http://118.190.209.196:3000";
+const DEFAULT_FAUCET = "https://faucet.51nebula.com/";
 
 class ApiNode {
-    constructor(url, name) {
+    constructor(host, name) {
+        let schema = location && location.protocol.indexOf("https") !== -1 ? "wss://" : "ws://";
+        let url = schema + host;
         this.url = url;
         this.location = name;
     }
@@ -29,21 +31,21 @@ class ApiNode {
 
 
 const WS_NODE_LIST = [
-    new ApiNode("ws://111.231.200.95/", "Chengdo"),
-    new ApiNode("ws://118.190.209.196/", "Qingdao"),
-    new ApiNode("ws://47.96.163.7/", "Hangzhou"),
-    new ApiNode("ws://120.79.11.96/", "Shenzhen"),
-    new ApiNode("ws://hongkong-01.cybex.io/", "Hongkong"),
-    new ApiNode("ws://tokyo-01.cybex.io/", "Tokyo"),
-    new ApiNode("ws://singapore-01.cybex.io/", "Singapore"),
-    new ApiNode("ws://korea-01.cybex.io/", "Korea"),
-    new ApiNode("ws://usa-01.cybex.io/", "USA")
+    new ApiNode("chengdu.51nebula.com/", "Chengdo"),
+    new ApiNode("qingdao.51nebula.com/", "Qingdao"),
+    new ApiNode("hangzhou.51nebula.com/", "Hangzhou"),
+    new ApiNode("shenzhen.51nebula.com/", "Shenzhen"),
+    new ApiNode("hongkong.cybex.io/", "Hongkong"),
+    new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
+    new ApiNode("singapore-01.cybex.io/", "Singapore"),
+    new ApiNode("korea-01.cybex.io/", "Korea"),
+    new ApiNode("usa-01.cybex.io/", "USA")
 ];
 
 export const settingsAPIs = {
     DEFAULT_WS_NODE: BITSHARES_NODE,
     WS_NODE_LIST,
     DEFAULT_FAUCET,
-    TESTNET_FAUCET: "http://118.190.209.196:3000",
+    TESTNET_FAUCET: "https://faucet.51nebula.com/",
     RPC_URL: "ws://hongkong-01.cybex.io:8092/api/"
 };
