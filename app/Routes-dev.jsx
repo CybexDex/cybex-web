@@ -50,6 +50,7 @@ import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
 import { SwapContainer } from "./components/Swap/SwapContainer";
+import { Gateway } from "./components/Gateway/Gateway";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -129,6 +130,7 @@ const routes = (
         </Route>
 
         <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
+        <Route path="gateway" component={Gateway} />
         <Route path="create-worker" component={CreateWorker} />
         <Route path="/init-error" component={InitError} />
         <Route path="/help" component={Help} >
