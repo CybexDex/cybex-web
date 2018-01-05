@@ -114,9 +114,6 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
                                 toggleQR={this._toggleQR.bind(this)}
                                 titleClass={this.state.titleClass}
                             />
-                            <button onClick={this._depositClick.bind(this)}>Info</button>
-                            <button onClick={this._depositClick.bind(this, false)}>Error</button>
-                            
                             <div className="grid-container no-margin" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
                                 {linkBtn}
