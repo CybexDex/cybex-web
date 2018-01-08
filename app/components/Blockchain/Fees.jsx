@@ -9,7 +9,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import FormattedAsset from "../Utility/FormattedAsset";
 import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";
 import { ChainStore, ChainTypes as grapheneChainTypes } from "cybexjs";
-import { ExplorerNav } from "../explorer/ExplorerNav"
+import { ExplorerNav } from "../Explorer/ExplorerNav";
 
 
 const { operations } = grapheneChainTypes;

@@ -1,4 +1,4 @@
-import * as React from "React";
+import * as React from "react";
 import { connect } from "alt-react";
 import CrowdFundActions from "actions//CrowdFundActions";
 import CrowdFundStore from "stores/CrowdFundStore";
