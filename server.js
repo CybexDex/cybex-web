@@ -4,6 +4,8 @@ var express = require("express");
 var devMiddleware = require("webpack-dev-middleware");
 var hotMiddleware = require("webpack-hot-middleware");
 var feathers = require("feathers");
+const https = require("https");
+const fs = require("fs");
 
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
 var config = require("./webpack.config.js")({
@@ -42,6 +44,13 @@ app.listen(8080, function (err) {
 
     console.log("Listening at http://localhost:8080/");
 });
+const options = {
+    key: fs.readFileSync(path.resolve(__dirname, 'ssl/private.pem')),
+    cert: fs.readFileSync(path.resolve(__dirname, 'ssl/cert.crt'))
+};
+
+const httpsServer = https.createServer(options, app);
+httpsServer.listen(8081);
 
 // new WebpackDevServer(compiler, {
 //     publicPath: config.output.publicPath,
