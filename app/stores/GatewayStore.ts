@@ -37,7 +37,7 @@ class GatewayStore extends BaseStore implements Store<State>{
                     symbol: "BTC"
                 },
                 {
-                    symbol: "ETH"
+                    symbol: "JADE.ETH"
                 },
             ]
         }),

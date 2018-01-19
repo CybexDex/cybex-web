@@ -13,32 +13,29 @@ import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
 import utils from "lib/common/utils";
 import LoadingIndicator from "../LoadingIndicator";
-import NewDepositAddress from "./NewDepositAddress";
 
 import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
-import * as moment from "moment";
-
-const style = {
-  position: "fixed",
-  left: 0,
-  top: 0
-};
 
 type props = { modalId, depositInfo?, open?, className?, asset, balances?};
 
-
-class DepositModal extends React.Component<props, { fadeOut }> {
-
+class DepositModal extends React.Component<props, { fadeOut, withdraw_amount, withdraw_address }> {
   static propTypes = {
+    account: ChainTypes.ChainAccount.isRequired,
+    issuer: ChainTypes.ChainAccount.isRequired,
     asset: ChainTypes.ChainAsset.isRequired,
-    balances: ChainTypes.ChainObjectsList
-    // assets: ChainTypes.ChainAssetsList.isRequired
-  };
-
+    receive_asset_name: React.PropTypes.string,
+    receive_asset_symbol: React.PropTypes.string,
+    memo_prefix: React.PropTypes.string
+  }
 
   constructor(props) {
     super(props);
+    this.state = {
+      withdraw_amount: null,
+      withdraw_address: null,
+      fadeOut: false
+    };
   }
 
   getNewAddress = () => {
@@ -57,34 +54,29 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       amount: currentBalance ? currentBalance.get("balance") : 0
     });
     let assetName = asset.get("symbol");
-    console.debug("MODAL:", this.props, currentBalance, balance);
+    console.debug(this.props, currentBalance, balance);
     return (
       <BaseModal modalId={modalId} >
-        <h3><Translate content={"gateway.deposit"} /> {assetName}</h3>
+        <h3><Translate content={"gateway.withdraw"} /> {assetName}</h3>
+        {/* <p><Translate content="gateway.withdraw_funds" asset={assetName} /></p> */}
         <p>
           {<Translate unsafe content="gateway.add_funds" account={depositInfo.account} />}
         </p>
         {currentBalance && <CurrentBalance currentBalance={balance} asset={asset} />}
         <div className="SimpleTrade__withdraw-row">
-          <p style={{ marginBottom: 10 }}
-            data-place="right"
-            data-tip={counterpart.translate("tooltip.deposit_tip", { asset: assetName })}
-          >
+          <p style={{ marginBottom: 10 }} data-place="right" data-tip={counterpart.translate("tooltip.deposit_tip", { asset: assetName })}>
             <span className="help-tooltip">
               {counterpart.translate("gateway.deposit_to", { asset: assetName })}
             </span>
           </p>
           {!depositInfo ? <LoadingIndicator type="three-bounce" /> : <label>
             <span className="inline-label">
-              <input id="depositAddress" readOnly type="text" value={depositInfo.address} />
+              <input readOnly type="text" value={depositInfo.address} />
               <CopyButton
                 text={depositInfo.address}
               />
             </span>
           </label>}
-          <div className="SimpleTrade__withdraw-row">
-            <p>Current address is generated {moment(depositInfo.timestamp).fromNow()}</p>
-          </div>
           <div className="button-group SimpleTrade__withdraw-row">
             <button className="button" onClick={this.getNewAddress} type="submit" >
               <Translate content="gateway.generate_new" />
@@ -102,11 +94,13 @@ DepositModalWrapper = connect(DepositModalWrapper, {
     return [GatewayStore];
   },
   getProps(props) {
+    console.debug("Props: ", props);
     let { modalId } = props;
+    console.debug("PROPS: ", GatewayStore.getState());
     return {
       open: GatewayStore.getState().modals.get(modalId),
       depositInfo: GatewayStore.getState().depositInfo,
-      asset: GatewayStore.getState().depositInfo.asset
+      asset: GatewayStore.getState().depositInfo.type
     };
   }
 });

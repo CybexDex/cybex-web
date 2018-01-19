@@ -1,55 +1,73 @@
 import * as React from "react";
+import Translate from "react-translate-component";
 
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
 
+import GatewayActions from "actions/GatewayActions";
+
 let NewDepositMut = gql`
-  mutation Mutation($cybexAccount: String!, $assetType: String!) {
-    createDepositRecord(
-      cybexAccount: $cybexAccount,
-      assetType: $assetType
+  mutation Mutation($accountName: String!, $type: String!) {
+    newDepositAddress(
+      accountName: $accountName,
+      asset: $type
     ) {
-      outerAddress
-      cybexAccount
+      address
+      accountName
       timestamp
+      asset
     }
   }
 `;
 
-let NewDepositAddress: any = class extends React.Component<{ Mutation?}, any> {
+let NewDepositAddress: any = class extends React.Component<{ DepositAddress?, accountName, type }, any> {
+
   constructor(props) {
     super(props);
+    this.state = {
+      address: ""
+    };
   }
 
   genNewAddress = async () => {
-    let { Mutation } = this.props;
-    let res = await Mutation({
+    let { DepositAddress, accountName, type } = this.props;
+    let res = await DepositAddress({
       variables: {
-        cybexAccount: "invest21",
-        assetType: "BTC"
+        accountName,
+        type
       }
     });
-    console.debug("RES: ", res);
+    let depositInfo = res.data.newDepositAddress;
+    GatewayActions.afterUpdateDepositInfo({
+      account: depositInfo.accountName,
+      type: depositInfo.asset,
+      address: depositInfo.address
+    });
   }
 
   render() {
-    let { Mutation } = this.props;
-    if (Mutation && Mutation.error) {
+    let { DepositAddress } = this.props;
+    if (DepositAddress && DepositAddress.error) {
       return (
-        <h4>{JSON.stringify(Mutation.error)}</h4>
+        <h4>{JSON.stringify(DepositAddress.error)}</h4>
       );
     }
-    console.debug("MU: ", Mutation);
+    if (DepositAddress && DepositAddress.loading) {
+      return (
+        <h4>Loading...</h4>
+      );
+    }
     return (
       <div>
-        <h4>{JSON.stringify(Mutation)}</h4>
-        <button onClick={this.genNewAddress}>Get New Address</button>
+        <button className="button" onClick={this.genNewAddress}>
+          <Translate content="gateway.generate_new" />
+        </button>
       </div>
     );
   }
 }
 
-NewDepositAddress = graphql(NewDepositMut, { name: "Mutation" })(NewDepositAddress);
+NewDepositAddress = graphql(NewDepositMut, { name: "DepositAddress" })(NewDepositAddress);
 
 export {
   NewDepositAddress

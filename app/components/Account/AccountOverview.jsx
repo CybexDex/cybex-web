@@ -234,7 +234,8 @@ class AccountOverview extends React.Component {
 
     _showWithdrawModal(action, asset, fiatModal, e) {
         let { account } = this.props;
-        GatewayActions.showWithdrawModal(account.get("name"), asset);
+        console.debug("Asset: ", asset);
+        GatewayActions.showWithdrawModal(asset);
     }
 
     _getSeparator(render) {

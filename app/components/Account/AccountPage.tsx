@@ -97,6 +97,8 @@ let AccountPage = class extends React.Component<Props, any> {
                         />}
                         {withdrawModal && <WithdrawModal
                             balances={account.get("balances", null)}
+                            account={account}
+                            issuer={account.get("id")}
                             modalId={WITHDRAW_MODAL_ID}
                         />}
                     </div>

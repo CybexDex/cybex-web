@@ -389,3 +389,9 @@ div.bordered-header {
   animation: fadeOut 300ms ease-in-out;  
   opacity: 0;
 }
+
+.modal {
+  .error-wrapper {
+    margin-top: 10px;
+  }
+}

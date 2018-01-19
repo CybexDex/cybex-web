@@ -5,7 +5,6 @@ import { connect } from "alt-react";
 import { ChainStore } from "cybexjs";
 import GatewayStore from "stores/GatewayStore";
 import { GatewayActions } from "actions/GatewayActions";
-import { verifyAddress } from "services//GatewayService";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "components/Utility/BalanceComponent";
 import AmountSelector from "components/Utility/AmountSelector";
@@ -13,7 +12,6 @@ import ChainTypes from "../Utility/ChainTypes";
 import { Asset } from "lib/common/MarketClasses";
 import Translate from "react-translate-component";
 import CopyButton from "../Utility/CopyButton";
-import ErrorTipBox from "../Utility/ErrorTipBox";
 import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
 import utils from "lib/common/utils";
@@ -22,12 +20,9 @@ import LoadingIndicator from "../LoadingIndicator";
 import NewDepositAddress from "./NewDepositAddress";
 import { ASSETS } from "./Config";
 import { checkFeeStatusAsync, checkBalance } from "lib/common/trxHelper";
-import { debounce } from "lodash";
+
 import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
-import AccountActions from "actions/AccountActions";
-import { calcAmount } from "utils//Asset";
-
 
 const debug = debugGen("WithdrawModal");
 
@@ -38,12 +33,7 @@ const style = {
 };
 
 type props = { modalId, withdrawInfo?, open?, className?, asset, balances?, account?, issuer?, receive_asset_name?, receive_asset_symbol?};
-type state = {
-  withdraw_address_loading,
-  withdraw_address_error?,
-  withdraw_address_valid,
-  error, balanceError, hasPoolBalance, hasBalance, memo, feeStatus, from_account, fee_asset_id?, feeAmount?, fadeOut, withdraw_amount, withdraw_address
-};
+type state = { balanceError, hasPoolBalance, hasBalance, memo, feeStatus, from_account, fee_asset_id?, feeAmount?, fadeOut, withdraw_amount, withdraw_address };
 
 class WithdrawModal extends React.Component<props, state> {
   nestedRef;
@@ -59,8 +49,8 @@ class WithdrawModal extends React.Component<props, state> {
   constructor(props) {
     super(props);
     this.state = {
-      withdraw_amount: 0,
-      withdraw_address: "",
+      withdraw_amount: null,
+      withdraw_address: null,
       fadeOut: false,
       fee_asset_id: "1.3.0",
       feeAmount: null,
@@ -69,52 +59,23 @@ class WithdrawModal extends React.Component<props, state> {
       memo: null,
       hasPoolBalance: null,
       hasBalance: null,
-      balanceError: null,
-      error: false,
-      withdraw_address_loading: false,
-      withdraw_address_valid: false
+      balanceError: null
     };
   }
 
   onWithdrawAmountChange = ({ amount }) => {
-
+    debug("Amount: ", amount);
     this.setState({ withdraw_amount: amount });
   }
 
   onWithdrawAddressChanged(e) {
-    this.setState({
-      withdraw_address: e.target.value,
-      withdraw_address_loading: true,
-      withdraw_address_valid: false,
-    });
-    this.validateAddress(e.target.value);
+    this.setState({ withdraw_address: e.target.value });
   }
-
-  _validateAddress = async (address: string) => {
-    let { error, valid } = await verifyAddress(address,
-      this.props.account.get("name"),
-      this.props.withdrawInfo.type
-    );
-    if (error) {
-      return this.setState({
-        withdraw_address_loading: false,
-        withdraw_address_valid: false,
-        withdraw_address_error: true
-      })
-    }
-    this.setState({
-      withdraw_address_loading: false,
-      withdraw_address_valid: valid,
-    })
-    debug("Valid: ", valid);
-  };
-
-  validateAddress = debounce(this._validateAddress, 250);
 
 
   componentWillMount() {
-    // this._updateFee();
-    // this._checkFeeStatus();
+    this._updateFee();
+    this._checkFeeStatus();
   }
 
   onFeeChanged({ asset }) {
@@ -129,7 +90,7 @@ class WithdrawModal extends React.Component<props, state> {
     if (fee_asset_types.length === 1 && fee_asset_types[0] !== fee_asset_id) {
       fee_asset_id = fee_asset_types[0];
     }
-    debug("UpdateFee: ", state);
+
     if (!from_account) return null;
     checkFeeStatusAsync({
       accountID: from_account.get("id"),
@@ -137,11 +98,11 @@ class WithdrawModal extends React.Component<props, state> {
       options: ["price_per_kbyte"],
       data: {
         type: "memo",
-        content: this.props.receive_asset_symbol + ":" + state.withdraw_address + (state.memo ? ":" + state.memo : "")
+        content: this.props.asset + ":" + state.withdraw_address + (state.memo ? ":" + state.memo : "")
       }
     })
       .then(({ fee, hasBalance, hasPoolBalance }) => {
-        // if (this.unMounted) return;
+        if (this.unMounted) return;
 
         this.setState({
           feeAmount: fee,
@@ -245,44 +206,17 @@ class WithdrawModal extends React.Component<props, state> {
     return hasBalance;
   }
 
-  onSubmit = () => {
-    let precision = this.props.asset.get("precision");
-    let withdrawAmount = calcAmount(this.state.withdraw_amount, precision);
-    let gatewayFeeAmount = calcAmount(this.props.withdrawInfo.fee, precision);
-    AccountActions.transfer(
-      this.props.account.get("id"),
-      this.props.withdrawInfo.gatewayAccount,
-      withdrawAmount,
-      this.props.asset.get("id"),
-      "withdraw:" + this.props.withdrawInfo.type + ":" + this.state.withdraw_address,
-      null,
-      "1.3.0"
-    );
-  }
-
-  // Subcomponent
-  invalid_address_message =
-    <div className="has-error" style={{ paddingTop: 10 }}>
-      <Translate content="gateway.valid_address" coin_type={this.props.withdrawInfo.type} />
-    </div>;
-
-  invalid_gateway_message =
-    <div className="has-error" style={{ paddingTop: 10 }}>
-      <Translate content="gateway.valid_service" />
-    </div>;
-
-  // render
   render() {
     let { asset, withdrawInfo, modalId } = this.props;
-    let {
-      withdraw_amount,
-      withdraw_address,
-      withdraw_address_valid,
-      withdraw_address_loading,
-      withdraw_address_error,
-      memo
-    } = this.state;
-
+    // let currentBalance = this.props.balances.find(b => {
+    //   return b && b.get && b.get("asset_type") === this.props.asset.get("id");
+    // });
+    // let balance = new Asset({
+    //   asset_id: asset.get("id"),
+    //   precision: asset.get("precision"),
+    //   amount: currentBalance ? currentBalance.get("balance") : 0
+    // });
+    // let assetName = asset.get("symbol");
     let balance = null;
     // console.log( "account: ", this.props.account.toJS() );
     let account_balances = this.props.account.get("balances").toJS();
@@ -296,6 +230,7 @@ class WithdrawModal extends React.Component<props, state> {
             <Translate component="span" content="transfer.available" />:
             <BalanceComponent
               balance={account_balances[current_asset_id]}
+              balanceClick={(amount) => this.onWithdrawAmountChange({ amount })}
             />
           </span>
         );
@@ -305,27 +240,6 @@ class WithdrawModal extends React.Component<props, state> {
       balance = "No funds";
     }
     let { fee_asset_types } = this._getAvailableAssets();
-
-
-    // State Control
-    let gatewayServiceInvalid =
-      withdraw_address &&
-      !withdraw_address_loading &&
-      withdraw_address_error;
-
-    let addressInvalid =
-      withdraw_address &&
-      !withdraw_address_loading &&
-      !withdraw_address_valid &&
-      !withdraw_address_error;
-
-    let disableSubmit =
-      !withdraw_address ||
-      addressInvalid ||
-      gatewayServiceInvalid ||
-      withdraw_amount <= 0;
-
-    let amountValid = Number(withdraw_amount) >= 0;
 
     return (
       <BaseModal modalId={modalId} >
@@ -342,18 +256,6 @@ class WithdrawModal extends React.Component<props, state> {
             placeholder="0.0"
             onChange={this.onWithdrawAmountChange.bind(this)}
             display_balance={balance}
-          />
-          <ErrorTipBox
-            isTranslation={true}
-            tips={[
-              {
-                name: "withdraw-amount",
-                isError: !amountValid,
-                isTranslation: true,
-                message: "transfer.errors.valid"
-              },
-            ]}
-            muiltTips={false}
           />
         </div>
 
@@ -381,52 +283,11 @@ class WithdrawModal extends React.Component<props, state> {
 
               <div className="form-label select floating-dropdown">
                 <div className="dropdown-wrapper inactive">
-                  <div>{withdrawInfo.type}</div>
+                  <div>{this.props.asset}</div>
                 </div>
               </div>
             </div>
           </div>) : null}
-        <div className="content-block">
-          <label className="left-label">
-            <Translate component="span" content="modal.withdraw.address" />
-          </label>
-          <div className="blocktrades-select-dropdown">
-            <div className="inline-label">
-              <input type="text" value={withdraw_address} onChange={this.onWithdrawAddressChanged.bind(this)} autoComplete="off" />
-              {/* <span onClick={this.onDropDownList.bind(this)} >&#9660;</span> */}
-              {/* <span onClick={this.onDropDownList.bind(this)} >&#9660;</span> */}
-            </div>
-          </div>
-          <ErrorTipBox
-            isTranslation={true}
-            tips={[
-              {
-                name: "withdraw-address",
-                isError: addressInvalid,
-                isTranslation: true,
-                message: "gateway.valid_address",
-                messageParams: {
-                  coin_type: this.props.withdrawInfo.type
-                }
-              },
-              {
-                name: "withdraw-gateway",
-                isError: gatewayServiceInvalid,
-                isTranslation: true,
-                message: "gateway.valid_service"
-              },
-            ]}
-            muiltTips={false}
-          />
-        </div>
-        {/* Withdraw/Cancel buttons */}
-        <div className="button-group">
-          <Translate
-            content="modal.withdraw.submit"
-            onClick={this.onSubmit}
-            className={"button" + (disableSubmit ? (" disabled") : "")}
-          />
-        </div>
       </BaseModal>
     );
   }
