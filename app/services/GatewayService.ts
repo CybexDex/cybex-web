@@ -28,9 +28,9 @@ const genRequestInit: (body: any) => RequestInit =
     method: "POST",
     body
   });
-
+declare var __DEV__;
 // Configure for Apollo
-const httpLink = new HttpLink({ uri: "http://121.40.95.24:5681/graphql" });
+const httpLink = new HttpLink({ uri: __DEV__ ? "http://121.40.95.24:5681/gateway" : "https://gateway.cybex.io/gateway" });
 
 const client = new ApolloClient({
   link: httpLink,
@@ -80,7 +80,7 @@ export async function getWithdrawInfo(type: string): Promise<{ fee, minValue }> 
 };
 
 
-export async function verifyAddress(address: string, accountName: string, type: string): Promise<{ valid, error? }> {
+export async function verifyAddress(address: string, accountName: string, type: string): Promise<{ valid, error?}> {
   let query = gql`
   query VerifyAddress($type: String!, $accountName: String!, $address: String!) {
     verifyAddress(asset:$type, accountName: $accountName, address: $address) {

@@ -24,8 +24,7 @@ import CachedPropertyStore from "stores/CachedPropertyStore";
 import BackupModal from "components/Modal/BackupModal";
 import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
-import HelpDrawer from "components/HelpDrawer";
-import Nav from "./components/Layout/Nav"
+import Nav from "./components/Layout/Nav";
 
 class App extends React.Component {
 
