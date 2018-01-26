@@ -2355,7 +2355,7 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cybexjs-ws@^1.0.5:
+cybexjs-ws@1.0.5, cybexjs-ws@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/cybexjs-ws/-/cybexjs-ws-1.0.5.tgz#adaea18278d7c2b702b80ae680ac885e25107f33"
 
