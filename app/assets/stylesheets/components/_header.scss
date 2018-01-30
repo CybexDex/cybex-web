@@ -61,7 +61,7 @@ div.account-drop-down {
   }
   a.button {
     font-weight: bold;
-    font-size: 90%;
+    // font-size: 90%;
     background-color: transparent;
   }
   a:active.button,
@@ -114,4 +114,8 @@ div.header-right-menu {
 
 .lower-case {
   text-transform: lowercase;
+}
+
+.text-raw {
+  text-transform: none !important;
 }

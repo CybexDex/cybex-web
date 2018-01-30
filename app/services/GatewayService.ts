@@ -30,7 +30,7 @@ const genRequestInit: (body: any) => RequestInit =
   });
 declare var __DEV__;
 // Configure Apollo
-const httpLink = new HttpLink({ uri: __DEV__ ? "https://gateway.cybex.io/gateway" : "https://gateway.cybex.io/gateway" });
+const httpLink = new HttpLink({ uri: __DEV__ ? "http://localhost:5681/gateway" : "https://gateway.cybex.io/gateway" });
 
 const client = new ApolloClient({
   link: httpLink,

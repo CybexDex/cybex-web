@@ -168,7 +168,14 @@ const ApplicationApi = {
                 from: chain_from.get("id"),
                 to: chain_to.get("id"),
                 amount: { amount, asset_id: chain_asset.get("id") },
-                memo: memo_object
+                memo: memo_object,
+                // extensions: [
+                //     [4, {
+                //         asset_sym: "CYB",
+                //         fee_asset_sym: "CYB",
+                //         name: "owner10",
+                //     }]
+                // ]
             });
 
             return tr.update_head_block().then(() => {
