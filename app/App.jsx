@@ -25,6 +25,8 @@ import BackupModal from "components/Modal/BackupModal";
 import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
 import Nav from "./components/Layout/Nav";
+import GameModal from "./components/Modal/GameModal";
+import { ModalActions } from "./actions/ModalActions";
 
 class App extends React.Component {
 
@@ -73,7 +75,7 @@ class App extends React.Component {
             synced = Math.abs(now - bt) < 5;
         }
         if (setState && synced !== this.state.synced) {
-            this.setState({synced});
+            this.setState({ synced });
         }
         return synced;
     }
@@ -84,7 +86,7 @@ class App extends React.Component {
             SettingsStore.listen(this._onSettingsChange);
             ChainStore.subscribe(this._chainStoreSub);
             AccountStore.tryToSetCurrentAccount();
-        } catch(e) {
+        } catch (e) {
             console.error("e:", e);
         }
     }
@@ -107,10 +109,11 @@ class App extends React.Component {
             loadingMask.classList.add("fade-out");
             setTimeout(() => loadingMask.remove(), 500);
         }
+        ModalActions.showModal("gameModal");
     }
 
-    _onIgnoreIncognitoWarning(){
-        this.setState({incognitoWarningDismissed: true});
+    _onIgnoreIncognitoWarning() {
+        this.setState({ incognitoWarningDismissed: true });
     }
 
     showBackupTip() {
@@ -139,7 +142,7 @@ class App extends React.Component {
     _chainStoreSub() {
         let synced = this._syncStatus();
         if (synced !== this.state.synced) {
-            this.setState({synced});
+            this.setState({ synced });
         }
         if (ChainStore.subscribed !== this.state.synced || ChainStore.subError) {
             let syncFail = ChainStore.subError && (ChainStore.subError.message === "ChainStore sync error, please check your system clock") ? true : false;
@@ -176,7 +179,7 @@ class App extends React.Component {
     // }
 
     render() {
-        let {isMobile, theme } = this.state;
+        let { isMobile, theme } = this.state;
         let content = null;
 
         let showFooter = 1;
@@ -191,7 +194,7 @@ class App extends React.Component {
             );
         } else if (this.state.loading) {
             content = <div className="grid-frame vertical">
-                <LoadingIndicator loadingText={"Connecting to APIs and starting app"}/>
+                <LoadingIndicator loadingText={"Connecting to APIs and starting app"} />
             </div>;
         } else if (this.props.location.pathname === "/init-error") {
             content = <div className="grid-frame vertical">{this.props.children}</div>;
@@ -232,6 +235,7 @@ class App extends React.Component {
                     <TransactionConfirm />
                     <BackupModal ref={backup => { this.backupModal = backup; }} />
                     <WalletUnlockModal />
+                    <GameModal modalId="gameModal" />
                     <BrowserSupportModal ref="browser_modal" />
                 </div>
             </div>
