@@ -209,7 +209,6 @@ const GameModalWapper = connect(GameModal, {
   },
   getProps(props) {
     let { modalId } = props;
-    console.debug("Has: ", IntlStore);
     return {
       locale: IntlStore.getState().currentLocale,
       open: ModalStore.getState().showingModals.has(modalId)
