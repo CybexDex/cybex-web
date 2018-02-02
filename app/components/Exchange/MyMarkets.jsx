@@ -622,7 +622,6 @@ class MyMarkets extends React.Component {
         if (listHeight) {
             listStyle.height = listHeight;
         }
-        console.debug("DefaultMarket: ", baseGroups);
         return (
             <div className={this.props.className} style={this.props.style}>
                 <div

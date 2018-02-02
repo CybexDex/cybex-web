@@ -7,8 +7,8 @@ class ModalActions {
   hideModal(modal_id: string) {
     return modal_id;
   }
-  neverShow(modal_id) {
-    return modal_id;
+  neverShow(modal_id, neverShow) {
+    return {modal_id, neverShow};
   }
 }
 

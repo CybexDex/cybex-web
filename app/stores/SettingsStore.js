@@ -207,13 +207,11 @@ class SettingsStore {
                     return a !== base;
                 }).forEach(market => {
                     target.push([`${market}_${base}`, { "quote": market, "base": base }]);
-                    console.debug("target: ", target);
                 });
             }
 
             let defaultMarkets = [];
             let chainMarkets = topMarkets[this.starredKey] || [];
-            console.debug("Prefer: ", this.preferredBases);
             this.preferredBases.forEach(base => {
                 addMarkets(defaultMarkets, base, chainMarkets);
             });

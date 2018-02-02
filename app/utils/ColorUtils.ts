@@ -9,7 +9,6 @@ export function getHexColorByString(colorString: string) {
   let string =  ["R", "G", "B"]
     .map(c => addZero(getColorIndex(c + colorString, 196).toString(16)))
     .join("");
-    console.debug("FSTIN: ", string);
     return string;
 }
 

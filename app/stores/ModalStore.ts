@@ -50,8 +50,8 @@ class ModalStore extends BaseStore implements Store<State>{
     });
   }
 
-  handleNeverShow({ id, neverShow = true }) {
-    ss.set("modal_has_shown_" + id, neverShow);
+  handleNeverShow({ modal_id, neverShow = true }) {
+    ss.set("modal_has_shown_" + modal_id, neverShow);
   }
 
 }

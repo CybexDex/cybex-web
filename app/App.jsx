@@ -109,7 +109,7 @@ class App extends React.Component {
             loadingMask.classList.add("fade-out");
             setTimeout(() => loadingMask.remove(), 500);
         }
-        ModalActions.showModal("gameModal");
+        ModalActions.showModal("gameModal", true);
     }
 
     _onIgnoreIncognitoWarning() {
