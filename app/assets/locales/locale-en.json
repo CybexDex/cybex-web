@@ -1079,6 +1079,7 @@
     "show_star_1": "Show",
     "show_star_2": "only",
     "quote": "Quote currency:",
+    "base": "Base currency:",
     "search": "Search for more markets here",
     "order_value": "Order value"
   },
