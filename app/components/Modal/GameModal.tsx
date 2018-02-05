@@ -52,7 +52,7 @@ class GameModal extends React.Component<props, { fadeOut?, neverShow? }> {
         </h5>
         <section>
           <h5>
-            活动1️⃣ Bug 赏金猎人：
+            活动1-Bug 赏金猎人：
           </h5>
           <p>
             活动期间，使用CYBEX中发现任何bug。登陆到
@@ -65,7 +65,7 @@ class GameModal extends React.Component<props, { fadeOut?, neverShow? }> {
         </section>
         <section>
           <h5>
-            活动2️⃣ 理财达人排名赛
+            活动2-理财达人排名赛
           </h5>
           <p>
             参与交易，并且在活动期间至少交易10笔。按最终账户游戏币总额排名。前200名可获得以下巨额奖励：
@@ -142,7 +142,7 @@ class GameModal extends React.Component<props, { fadeOut?, neverShow? }> {
         </h5>
         <section>
           <h5>
-          Activity 1️⃣: Bug Hunter: 
+          Activity 1: Bug Hunter: 
           </h5>
           <p>
           During the competition, any bug found in CYBEX, please log in to 
@@ -156,7 +156,7 @@ class GameModal extends React.Component<props, { fadeOut?, neverShow? }> {
         </section>
         <section>
           <h5>
-          Activity 2️⃣: Wealth management ranking competition
+          Activity 2: Wealth management ranking competition
           </h5>
           <p>
           Participate in the competition, and have at least 10 transactions during the event. In the end of competition, the top 200 can get rewards:

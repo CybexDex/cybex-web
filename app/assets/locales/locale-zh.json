@@ -1460,11 +1460,12 @@
     "asset_update": "使用 {account} 更新 {asset} ",
     "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
     "asset_settle": "Request a settlement of",
-    "asset_issue": "Issue {amount} to {to} using {account}",
-    "asset_reserve": "Burn (reserve) {amount} using {account}",
-    "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
-    "feed_producer": "Update the feed producers for the asset {asset} using the account {account}",
-    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}"
+    "asset_issue": " 使用 {account} 发行 {amount} 到 {to}",
+    "asset_reserve": "使用 {account} 销毁 {amount}",
+    "vesting_balance_withdraw": "从{account}的冻结资产中提取 {amount} ",
+    "feed_producer": "Update the feed producers for the asset {asset} using the {account} ",
+    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
+    "limit_order_cancel": "{account}提议撤销订单"
   },
   "proposal_create": {
     "review_period": "复审期开始",
