@@ -70,7 +70,7 @@ class SettingsStore {
                 "CNY",
                 "BTC",
                 "EUR",
-                "GBP"
+                "CYBX"
             ],
             showSettles: [
                 { translate: "yes" },
