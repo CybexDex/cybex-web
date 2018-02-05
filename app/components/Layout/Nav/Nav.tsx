@@ -55,13 +55,13 @@ const NavLinks: Array<NavItem> = [
     name: "Transfer",
     icon: "transfer"
   },
-  {
-    id: "swap",
-    routeTo: "/swap",
-    name: "SwapTest",
-    icon: "exchange",
-    displayOnlyWhen: "currentAccount"    
-  },
+  // {
+  //   id: "swap",
+  //   routeTo: "/swap",
+  //   name: "SwapTest",
+  //   icon: "exchange",
+  //   displayOnlyWhen: "currentAccount"    
+  // },
   {
     id: "help",
     routeTo: "/help/introduction/cybex",
