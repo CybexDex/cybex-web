@@ -1569,6 +1569,7 @@
     "password_s2": "I've alreay backup my password and save it appropriate.",
     "password_s3": "I really want to logout and I know what am I doing.",
     "logout": "Logout",
+    "reload": "Reload",
     "wallet_tip": "You're using the local wallet mode. If you haven't backup your wallet and save it appropriate, please close this modal and take the backup of your wallet. If you done the backup and confirm to logout. You can select the wallet you want to remove it and confirm the delete opearation. After the removing and clicking the 'Reload' button, this page will be reloaded and the wallet information you've deleted will be cleared."
   }
 }
