@@ -27,6 +27,7 @@ import Footer from "./components/Layout/Footer";
 import Nav from "./components/Layout/Nav";
 import GameModal from "./components/Modal/GameModal";
 import { ModalActions } from "./actions/ModalActions";
+import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
 
 class App extends React.Component {
 
@@ -235,7 +236,8 @@ class App extends React.Component {
                     <TransactionConfirm />
                     <BackupModal ref={backup => { this.backupModal = backup; }} />
                     <WalletUnlockModal />
-                    <GameModal modalId="gameModal" />
+                    {/* Logout Modal*/}
+                    <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID}/>
                     <BrowserSupportModal ref="browser_modal" />
                 </div>
             </div>

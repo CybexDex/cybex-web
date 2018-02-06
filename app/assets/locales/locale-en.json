@@ -1513,6 +1513,7 @@
     "bazaar": "BAZAAR",
     "explorer": "EXPLORER",
     "swap": "Atomic Swap",
+    "logout": "Logout",
     "help": "Documents"
   },
   "vesting": {
@@ -1560,5 +1561,14 @@
   "createTip": {
     "but": "But:",
     "may": "You may want to:"
+  },
+  "logout": {
+    "title": "Cybex Logout",
+    "password_tip": "You're using a cloud account. If you really want to logout, please read the statments below and confirm them, one by one. When you confirm them and click the 'Logout' button, the browser will reload current page. Your account information will be erased.",
+    "password_s1": "I know that if I lost my password, it is impossible to find it back.",
+    "password_s2": "I've alreay backup my password and save it appropriate.",
+    "password_s3": "I really want to logout and I know what am I doing.",
+    "logout": "Logout",
+    "wallet_tip": "You're using the local wallet mode. If you haven't backup your wallet and save it appropriate, please close this modal and take the backup of your wallet. If you done the backup and confirm to logout. You can select the wallet you want to remove it and confirm the delete opearation. After the removing and clicking the 'Reload' button, this page will be reloaded and the wallet information you've deleted will be cleared."
   }
 }
