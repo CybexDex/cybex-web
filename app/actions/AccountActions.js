@@ -57,7 +57,7 @@ class AccountActions {
     /**
      *  TODO:  This is a function of teh WalletApi and has no business being part of AccountActions
      */
-    transfer(from_account, to_account, amount, asset, memo, propose_account = null, fee_asset_id = "1.3.0") {
+    transfer(from_account, to_account, amount, asset, memo, propose_account = null, fee_asset_id = "1.3.0", vesting) {
 
         // Set the fee asset to use
         fee_asset_id = accountUtils.getFinalFeeAsset(propose_account || from_account, "transfer", fee_asset_id);
@@ -65,7 +65,7 @@ class AccountActions {
         try {
             return (dispatch) => {
                 return ApplicationApi.transfer({
-                    from_account, to_account, amount, asset, memo, propose_account, fee_asset_id
+                    from_account, to_account, amount, asset, memo, propose_account, fee_asset_id, vesting
                 }).then(result => {
                     // console.log( "transfer result: ", result )
 

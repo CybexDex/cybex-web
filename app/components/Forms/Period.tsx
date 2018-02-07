@@ -4,6 +4,7 @@ import { PeriodSelect, COMMON_PERIODS } from "components/Forms/PeriodSelect";
 
 export type PeriodProps = {
   className?: any;
+  disabled?: boolean;
   name: string;
   tabIndex?: number;
   defaultPeriod: number;
@@ -51,7 +52,7 @@ export class Period extends React.Component<PeriodProps, any> {
     });
   }
   render() {
-    let { tabIndex, className } = this.props;
+    let { tabIndex, className, disabled } = this.props;
     return (
       <div className={className}>
         <input
@@ -59,12 +60,15 @@ export class Period extends React.Component<PeriodProps, any> {
           id={this.getIds().amount}
           name={this.getIds().amount}
           type="number"
+          min="0"
           value={this.state.vestingAmount}
           onChange={this.onVestingChanged.bind(this)}
+          disabled={disabled}
         />
         <PeriodSelect
           tabIndex={tabIndex? tabIndex - 1: -1}
           id={this.getIds().unit}
+          disabled={disabled}          
           name={this.getIds().unit}
           value={this.state.vestingUnit}
           onChange={this.onVestingUnitChanged.bind(this)}

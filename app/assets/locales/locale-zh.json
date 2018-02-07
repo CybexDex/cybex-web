@@ -439,6 +439,7 @@
     "send": "发送",
     "final": "转账后余额",
     "balances": "余额",
+    "vesting_period": "带锁定期转账",
     "errors": {
       "req": "必填信息",
       "pos": "数量必须大于0",

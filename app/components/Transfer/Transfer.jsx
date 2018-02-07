@@ -11,34 +11,36 @@ import counterpart from "counterpart";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import { RecentTransactions } from "../Account/RecentTransactions";
 import Immutable from "immutable";
-import {ChainStore} from "cybexjs";
-import {connect} from "alt-react";
+import { ChainStore } from "cybexjs";
+import { connect } from "alt-react";
 import { checkFeeStatusAsync, checkBalance } from "common/trxHelper";
 import { debounce, isNaN } from "lodash";
 import classnames from "classnames";
 import { Asset } from "common/MarketClasses";
+import { Period } from "components/Forms/Period";
+
 
 class Transfer extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = Transfer.getInitialState();
-        let {query} = this.props.location;
+        let { query } = this.props.location;
 
-        if(query.from) {
+        if (query.from) {
             this.state.from_name = query.from;
             ChainStore.getAccount(query.from);
         }
-        if(query.to) {
+        if (query.to) {
             this.state.to_name = query.to;
             ChainStore.getAccount(query.to);
         }
-        if(query.amount) this.state.amount = query.amount;
-        if(query.asset) {
+        if (query.amount) this.state.amount = query.amount;
+        if (query.asset) {
             this.state.asset_id = query.asset;
             this.state.asset = ChainStore.getAsset(query.asset);
         }
-        if(query.memo) this.state.memo = query.memo;
+        if (query.memo) this.state.memo = query.memo;
         let currentAccount = AccountStore.getState().currentAccount;
         if (!this.state.from_name) this.state.from_name = currentAccount;
         this.onTrxIncluded = this.onTrxIncluded.bind(this);
@@ -63,8 +65,10 @@ class Transfer extends React.Component {
             propose_account: "",
             feeAsset: null,
             fee_asset_id: "1.3.0",
-            feeAmount: new Asset({amount: 0}),
-            feeStatus: {}
+            feeAmount: new Asset({ amount: 0 }),
+            feeStatus: {},
+            vestingPeriod: 0,
+            enableVesting: false
         };
 
     };
@@ -82,7 +86,7 @@ class Transfer extends React.Component {
         if (next_asset_types.length === 1) {
             let asset = ChainStore.getAsset(next_asset_types[0]);
             if (current_types.length !== 1) {
-                this.onAmountChanged({amount: ns.amount, asset});
+                this.onAmountChanged({ amount: ns.amount, asset });
             }
 
             if (next_asset_types[0] !== this.state.fee_asset_id) {
@@ -104,27 +108,27 @@ class Transfer extends React.Component {
                 from_account: ChainStore.getAccount(np.currentAccount),
                 feeStatus: {},
                 fee_asset_id: "1.3.0",
-                feeAmount: new Asset({amount: 0})
-            }, () => {this._updateFee(); this._checkFeeStatus(ChainStore.getAccount(np.currentAccount));});
+                feeAmount: new Asset({ amount: 0 })
+            }, () => { this._updateFee(); this._checkFeeStatus(ChainStore.getAccount(np.currentAccount)); });
         }
     }
 
     _checkBalance() {
-        const {feeAmount, amount, from_account, asset} = this.state;
+        const { feeAmount, amount, from_account, asset } = this.state;
         if (!asset) return;
         const balanceID = from_account.getIn(["balances", asset.get("id")]);
         const feeBalanceID = from_account.getIn(["balances", feeAmount.asset_id]);
-        if (!asset || ! from_account) return;
-        if (!balanceID) return this.setState({balanceError: true});
+        if (!asset || !from_account) return;
+        if (!balanceID) return this.setState({ balanceError: true });
         let balanceObject = ChainStore.getObject(balanceID);
         let feeBalanceObject = feeBalanceID ? ChainStore.getObject(feeBalanceID) : null;
         if (!feeBalanceObject || feeBalanceObject.get("balance") === 0) {
-            this.setState({fee_asset_id: "1.3.0"}, this._updateFee);
+            this.setState({ fee_asset_id: "1.3.0" }, this._updateFee);
         }
         if (!balanceObject || !feeAmount) return;
         const hasBalance = checkBalance(amount, asset, feeAmount, balanceObject);
         if (hasBalance === null) return;
-        this.setState({balanceError: !hasBalance});
+        this.setState({ balanceError: !hasBalance });
     }
 
     _checkFeeStatus(account = this.state.from_account) {
@@ -162,7 +166,7 @@ class Transfer extends React.Component {
     _updateFee(state = this.state) {
         let { fee_asset_id, from_account } = state;
         const { fee_asset_types } = this._getAvailableAssets(state);
-        if ( fee_asset_types.length === 1 && fee_asset_types[0] !== fee_asset_id) {
+        if (fee_asset_types.length === 1 && fee_asset_types[0] !== fee_asset_id) {
             fee_asset_id = fee_asset_types[0];
         }
         if (!from_account) return null;
@@ -175,51 +179,51 @@ class Transfer extends React.Component {
                 content: state.memo
             }
         })
-        .then(({fee, hasBalance, hasPoolBalance}) => {
-            this.setState({
-                feeAmount: fee,
-                fee_asset_id: fee.asset_id,
-                hasBalance,
-                hasPoolBalance,
-                error: (!hasBalance || !hasPoolBalance)
+            .then(({ fee, hasBalance, hasPoolBalance }) => {
+                this.setState({
+                    feeAmount: fee,
+                    fee_asset_id: fee.asset_id,
+                    hasBalance,
+                    hasPoolBalance,
+                    error: (!hasBalance || !hasPoolBalance)
+                });
             });
-        });
     }
 
     fromChanged(from_name) {
-        if (!from_name) this.setState({from_account: null});
-        this.setState({from_name, error: null, propose: false, propose_account: ""});
+        if (!from_name) this.setState({ from_account: null });
+        this.setState({ from_name, error: null, propose: false, propose_account: "" });
     }
 
     toChanged(to_name) {
-        this.setState({to_name, error: null});
+        this.setState({ to_name, error: null });
     }
 
     onFromAccountChanged(from_account) {
-        this.setState({from_account, error: null}, () => {this._updateFee(); this._checkFeeStatus();});
+        this.setState({ from_account, error: null }, () => { this._updateFee(); this._checkFeeStatus(); });
     }
 
     onToAccountChanged(to_account) {
-        this.setState({to_account, error: null});
+        this.setState({ to_account, error: null });
     }
 
-    onAmountChanged({amount, asset}) {
+    onAmountChanged({ amount, asset }) {
         if (!asset) {
             return;
         }
-        this.setState({amount, asset, asset_id: asset.get("id"), error: null}, this._checkBalance);
+        this.setState({ amount, asset, asset_id: asset.get("id"), error: null }, this._checkBalance);
     }
 
-    onFeeChanged({asset}) {
-        this.setState({feeAsset: asset, fee_asset_id: asset.get("id"), error: null}, this._updateFee);
+    onFeeChanged({ asset }) {
+        this.setState({ feeAsset: asset, fee_asset_id: asset.get("id"), error: null }, this._updateFee);
     }
 
     onMemoChanged(e) {
-        this.setState({memo: e.target.value}, this._updateFee);
+        this.setState({ memo: e.target.value }, this._updateFee);
     }
 
     onTrxIncluded(confirm_store_state) {
-        if(confirm_store_state.included && confirm_store_state.broadcasted_transaction) {
+        if (confirm_store_state.included && confirm_store_state.broadcasted_transaction) {
             // this.setState(Transfer.getInitialState());
             TransactionConfirmStore.unlisten(this.onTrxIncluded);
             TransactionConfirmStore.reset();
@@ -238,16 +242,29 @@ class Transfer extends React.Component {
         this.setState({ propose_account });
     }
 
-    resetForm(){
-        this.setState({memo: '', to_name: '', amount: ''});
+    onPeriodSwitchChange = e => {
+        let enableVesting = e.target.checked;
+        this.setState({
+            enableVesting
+        });
+    }
+
+    onPeriodChange(vestingPeriod) {
+        this.setState({
+            vestingPeriod
+        });
+    }
+
+    resetForm() {
+        this.setState({ memo: '', to_name: '', amount: '' });
     }
 
     onSubmit(e) {
         e.preventDefault();
-        this.setState({error: null});
-        const {asset, amount} = this.state;
-        const sendAmount = new Asset({real: amount, asset_id: asset.get("id"), precision: asset.get("precision")});
-
+        this.setState({ error: null });
+        const { asset, amount, enableVesting, vestingPeriod } = this.state;
+        const sendAmount = new Asset({ real: amount, asset_id: asset.get("id"), precision: asset.get("precision") });
+        let vest = enableVesting ? vestingPeriod : null;
         AccountActions.transfer(
             this.state.from_account.get("id"),
             this.state.to_account.get("id"),
@@ -255,16 +272,17 @@ class Transfer extends React.Component {
             asset.get("id"),
             this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
             this.state.propose ? this.state.propose_account : null,
-            this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0"
-        ).then( () => {
+            this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0",
+            vest
+        ).then(() => {
             this.resetForm.call(this);
             TransactionConfirmStore.unlisten(this.onTrxIncluded);
             TransactionConfirmStore.listen(this.onTrxIncluded);
-        }).catch( e => {
-            let msg = e.message ? e.message.split( '\n' )[1] : null;
-            console.log( "error: ", e, msg);
-            this.setState({error: msg});
-        } );
+        }).catch(e => {
+            let msg = e.message ? e.message.split('\n')[1] : null;
+            console.log("error: ", e, msg);
+            this.setState({ error: msg });
+        });
     }
 
     setNestedRef(ref) {
@@ -272,17 +290,17 @@ class Transfer extends React.Component {
     }
 
     _setTotal(asset_id, balance_id) {
-        const {feeAmount} = this.state;
+        const { feeAmount } = this.state;
         let balanceObject = ChainStore.getObject(balance_id);
         let transferAsset = ChainStore.getObject(asset_id);
 
-        let balance = new Asset({amount: balanceObject.get("balance"), asset_id: transferAsset.get("id"), precision: transferAsset.get("precision")});
+        let balance = new Asset({ amount: balanceObject.get("balance"), asset_id: transferAsset.get("id"), precision: transferAsset.get("precision") });
 
         if (balanceObject) {
             if (feeAmount.asset_id === balance.asset_id) {
                 balance.minus(feeAmount);
             }
-            this.setState({amount: balance.getAmount({real: true})}, this._checkBalance);
+            this.setState({ amount: balance.getAmount({ real: true }) }, this._checkBalance);
         }
     }
 
@@ -301,7 +319,7 @@ class Transfer extends React.Component {
         const { from_account, from_error } = state;
         let asset_types = [], fee_asset_types = [];
         if (!(from_account && from_account.get("balances") && !from_error)) {
-            return {asset_types, fee_asset_types};
+            return { asset_types, fee_asset_types };
         }
         let account_balances = state.from_account.get("balances").toJS();
         asset_types = Object.keys(account_balances).sort(utils.sortID);
@@ -320,7 +338,7 @@ class Transfer extends React.Component {
             return hasFeePoolBalance(a) && hasBalance(a);
         });
 
-        return {asset_types, fee_asset_types};
+        return { asset_types, fee_asset_types };
     }
 
     _onAccountDropdown(account) {
@@ -335,11 +353,11 @@ class Transfer extends React.Component {
 
     render() {
         let from_error = null;
-        let {propose, from_account, to_account, asset, asset_id, propose_account, feeAmount,
-            amount, error, to_name, from_name, memo, feeAsset, fee_asset_id, balanceError} = this.state;
+        let { propose, from_account, to_account, asset, asset_id, propose_account, feeAmount,
+            amount, error, to_name, from_name, memo, feeAsset, fee_asset_id, balanceError, enableVesting, vestingPeriod } = this.state;
         let from_my_account = AccountStore.isMyAccount(from_account) || from_name === this.props.passwordAccount;
 
-        if(from_account && ! from_my_account && ! propose ) {
+        if (from_account && !from_my_account && !propose) {
             from_error = <span>
                 {counterpart.translate("account.errors.not_yours")}
                 &nbsp;(<a onClick={this.onPropose.bind(this, true)}>{counterpart.translate("propose")}</a>)
@@ -350,7 +368,7 @@ class Transfer extends React.Component {
         let balance = null;
 
         // Estimate fee
-        let fee = this.state.feeAmount.getAmount({real: true});
+        let fee = this.state.feeAmount.getAmount({ real: true });
         if (from_account && from_account.get("balances") && !from_error) {
 
             let account_balances = from_account.get("balances").toJS();
@@ -358,13 +376,13 @@ class Transfer extends React.Component {
             if (asset_types.length > 0) {
                 let current_asset_id = asset ? asset.get("id") : asset_types[0];
                 let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
-                balance = (<span style={{borderBottom: "#A09F9F 1px dotted", cursor: "pointer"}} onClick={this._setTotal.bind(this, current_asset_id, account_balances[current_asset_id], fee, feeID)}><Translate component="span" content="transfer.available"/>: <BalanceComponent balance={account_balances[current_asset_id]}/></span>);
+                balance = (<span style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }} onClick={this._setTotal.bind(this, current_asset_id, account_balances[current_asset_id], fee, feeID)}><Translate component="span" content="transfer.available" />: <BalanceComponent balance={account_balances[current_asset_id]} /></span>);
             } else {
                 balance = "No funds";
             }
         }
 
-        let propose_incomplete = propose && ! propose_account;
+        let propose_incomplete = propose && !propose_account;
         const amountValue = parseFloat(String.prototype.replace.call(amount, /,/g, ""));
         const isAmountValid = amountValue && !isNaN(amountValue);
         const isToAccountValid = to_account && to_account.get("name") === to_name;
@@ -375,9 +393,9 @@ class Transfer extends React.Component {
 
         return (
             <div className="grid-block vertical">
-            <div className="grid-block shrink vertical medium-horizontal" style={{paddingTop: "2rem"}}>
+                <div className="grid-block shrink vertical medium-horizontal" style={{ paddingTop: "2rem" }}>
 
-                <form style={{paddingBottom: 20, overflow: "visible"}} className="grid-content small-12 medium-6 large-5 large-offset-1 full-width-content" onSubmit={this.onSubmit.bind(this)} noValidate>
+                    <form style={{ paddingBottom: 20, overflow: "visible" }} className="grid-content small-12 medium-6 large-5 large-offset-1 full-width-content" onSubmit={this.onSubmit.bind(this)} noValidate>
 
                         <Translate content="transfer.header" component="h2" />
                         {/*  F R O M  */}
@@ -412,24 +430,32 @@ class Transfer extends React.Component {
                                 label="transfer.amount"
                                 amount={amount}
                                 onChange={this.onAmountChanged.bind(this)}
-                                asset={asset_types.length > 0 && asset ? asset.get("id") : ( asset_id ? asset_id : asset_types[0])}
+                                asset={asset_types.length > 0 && asset ? asset.get("id") : (asset_id ? asset_id : asset_types[0])}
                                 assets={asset_types}
                                 display_balance={balance}
                                 tabIndex={tabIndex++}
                             />
-                            {this.state.balanceError ? <p className="has-error no-margin" style={{paddingTop: 10}}><Translate content="transfer.errors.insufficient" /></p>:null}
+                            {this.state.balanceError ? <p className="has-error no-margin" style={{ paddingTop: 10 }}><Translate content="transfer.errors.insufficient" /></p> : null}
+                        </div>
+                        {/* Vesting Period */}
+                        <div className="content-block">
+                            <label htmlFor="issueVesting">
+                                <Translate component="span" content="transfer.vesting_period" />
+                                <input type="checkbox" onChange={this.onPeriodSwitchChange} />
+                            </label>
+                            <Period disabled={!enableVesting} className="period-horizontal" defaultPeriod={vestingPeriod} name="issue" tabIndex={tabIndex += 2} onPeriodChange={this.onPeriodChange.bind(this)} />
                         </div>
                         {/*  M E M O  */}
                         <div className="content-block transfer-input">
                             {memo && memo.length ? <label className="right-label">{memo.length}</label> : null}
-                            <Translate className="left-label tooltip" component="label" content="transfer.memo" data-place="top" data-tip={counterpart.translate("tooltip.memo_tip")}/>
-                            <textarea style={{marginBottom: 0}} rows="1" value={memo} tabIndex={tabIndex++} onChange={this.onMemoChanged.bind(this)} />
+                            <Translate className="left-label tooltip" component="label" content="transfer.memo" data-place="top" data-tip={counterpart.translate("tooltip.memo_tip")} />
+                            <textarea style={{ marginBottom: 0 }} rows="1" value={memo} tabIndex={tabIndex++} onChange={this.onMemoChanged.bind(this)} />
                             {/* warning */}
-                            { this.state.propose ?
-                                <div className="error-area" style={{position: "absolute"}}>
+                            {this.state.propose ?
+                                <div className="error-area" style={{ position: "absolute" }}>
                                     <Translate content="transfer.warn_name_unable_read_memo" name={this.state.from_name} />
                                 </div>
-                            :null}
+                                : null}
 
                         </div>
 
@@ -441,16 +467,16 @@ class Transfer extends React.Component {
                                 disabled={true}
                                 amount={fee}
                                 onChange={this.onFeeChanged.bind(this)}
-                                asset={fee_asset_types.length && feeAmount ? feeAmount.asset_id : ( fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0])}
+                                asset={fee_asset_types.length && feeAmount ? feeAmount.asset_id : (fee_asset_types.length === 1 ? fee_asset_types[0] : fee_asset_id ? fee_asset_id : fee_asset_types[0])}
                                 assets={fee_asset_types}
                                 tabIndex={tabIndex++}
                                 error={this.state.hasPoolBalance === false ? "transfer.errors.insufficient" : null}
                             />
                             {propose ?
-                                <button className={classnames("button float-right no-margin", {disabled: isSendNotValid})} type="submit" value="Submit" tabIndex={tabIndex++}>
+                                <button className={classnames("button float-right no-margin", { disabled: isSendNotValid })} type="submit" value="Submit" tabIndex={tabIndex++}>
                                     <Translate component="span" content="propose" />
                                 </button> :
-                                <button className={classnames("button float-right no-margin", {disabled: isSendNotValid})} type="submit" value="Submit" tabIndex={tabIndex++}>
+                                <button className={classnames("button float-right no-margin", { disabled: isSendNotValid })} type="submit" value="Submit" tabIndex={tabIndex++}>
                                     <Translate component="span" content="transfer.send" />
                                 </button>
                             }
@@ -461,45 +487,45 @@ class Transfer extends React.Component {
                             allows adjusting of the memo to / from parameters.
                         */}
                         {propose ?
-                        <div className="full-width-content form-group transfer-input">
-                            <label className="left-label"><Translate content="account.propose_from" /></label>
-                            <AccountSelect
-                                account_names={AccountStore.getMyAccounts()}
-                                onChange={this.onProposeAccount.bind(this)}
-                                tabIndex={tabIndex++}
-                            />
-                        </div>:null}
+                            <div className="full-width-content form-group transfer-input">
+                                <label className="left-label"><Translate content="account.propose_from" /></label>
+                                <AccountSelect
+                                    account_names={AccountStore.getMyAccounts()}
+                                    onChange={this.onProposeAccount.bind(this)}
+                                    tabIndex={tabIndex++}
+                                />
+                            </div> : null}
 
 
                         {/*  S E N D  B U T T O N  */}
                         {error ? <div className="content-block has-error">{error}</div> : null}
                         <div>
                             {propose ?
-                            <span>
-                                <button className=" button" onClick={this.onPropose.bind(this, false)} tabIndex={tabIndex++}>
-                                    <Translate component="span" content="cancel" />
-                                </button>
-                            </span> :
-                            null}
+                                <span>
+                                    <button className=" button" onClick={this.onPropose.bind(this, false)} tabIndex={tabIndex++}>
+                                        <Translate component="span" content="cancel" />
+                                    </button>
+                                </span> :
+                                null}
                         </div>
 
                         {/* TODO: show remaining balance */}
-                </form>
-                <div className="grid-content small-12 medium-6 large-4 large-offset-1 right-column">
-                <div className="grid-content no-padding">
-                    <RecentTransactions
-                        accountsList={accountsList}
-                        limit={25}
-                        compactView={true}
-                        filter="transfer"
-                        fullHeight={true}
-                    />
-                </div>
-                </div>
+                    </form>
+                    <div className="grid-content small-12 medium-6 large-4 large-offset-1 right-column">
+                        <div className="grid-content no-padding">
+                            <RecentTransactions
+                                accountsList={accountsList}
+                                limit={25}
+                                compactView={true}
+                                filter="transfer"
+                                fullHeight={true}
+                            />
+                        </div>
+                    </div>
 
-                <div className="grid-content medium-6 large-4">
+                    <div className="grid-content medium-6 large-4">
 
-                </div>
+                    </div>
                 </div>
             </div>
         );

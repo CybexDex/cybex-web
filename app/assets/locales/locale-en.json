@@ -465,6 +465,7 @@
     "final": "Final balance",
     "balances": "Balances",
     "available": "Available",
+    "vesting_period": "With vesting period",
     "errors": {
       "req": "Required field",
       "pos": "Amount must be positive",
