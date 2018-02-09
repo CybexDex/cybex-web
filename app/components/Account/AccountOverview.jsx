@@ -232,6 +232,12 @@ class AccountOverview extends React.Component {
         // });
     }
 
+    _showWithdrawModal(action, asset, fiatModal, e) {
+        let { account } = this.props;
+        console.debug("Asset: ", asset);
+        GatewayActions.showWithdrawModal(asset);
+    }
+
     _getSeparator(render) {
         return render ? <span>&nbsp;|&nbsp;</span> : null;
     }
@@ -301,8 +307,8 @@ class AccountOverview extends React.Component {
             const includeAsset = !hiddenAssets.includes(asset_type);
             const hasBalance = !!balanceObject.get("balance");
             const hasOnOrder = !!orders[asset_type];
-            // const canDepositWithdraw = true;
-            const canDepositWithdraw = !!this.props.backedCoins.get("JADE", []).find(a => a.symbol === asset.get("symbol"));
+            const canDepositWithdraw = false;
+            // const canDepositWithdraw = !!this.props.backedCoins.get("JADE", []).find(a => a.symbol === asset.get("symbol"));
             const canWithdraw = canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
             const canBuy = !!this.props.bridgeCoins.get(symbol);
 
@@ -364,7 +370,7 @@ class AccountOverview extends React.Component {
                     <td>
                         {canWithdraw && this.props.isMyAccount ? (
                             <span>
-                                <a className={!canWithdraw ? "disabled" : ""} onClick={canWithdraw ? this._showDepositWithdraw.bind(this, "withdraw_modal", assetName, false) : () => { }}>
+                                <a className={!canWithdraw ? "disabled" : ""} onClick={canWithdraw ? this._showWithdrawModal.bind(this, "withdraw_modal", assetName, false) : () => { }}>
                                     <Icon name="withdraw" className="icon-14px" />
                                 </a>
                             </span>

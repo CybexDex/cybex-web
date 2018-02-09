@@ -2,7 +2,7 @@ import alt from "alt-instance";
 import SettingsActions from "actions/SettingsActions";
 import IntlActions from "actions/IntlActions";
 import Immutable from "immutable";
-import {merge} from "lodash";
+import { merge } from "lodash";
 import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
@@ -70,15 +70,15 @@ class SettingsStore {
                 "CNY",
                 "BTC",
                 "EUR",
-                "GBP"
+                "CYBX"
             ],
             showSettles: [
-                {translate: "yes"},
-                {translate: "no"}
+                { translate: "yes" },
+                { translate: "no" }
             ],
             showAssetPercent: [
-                {translate: "yes"},
-                {translate: "no"}
+                { translate: "yes" },
+                { translate: "no" }
             ],
             themes: [
                 "cybexDarkTheme",
@@ -87,8 +87,8 @@ class SettingsStore {
                 // "olDarkTheme",
             ],
             passwordLogin: [
-                {translate: "cloud_login"},
-                {translate: "local_wallet"}
+                { translate: "cloud_login" },
+                { translate: "local_wallet" }
             ]
             // confirmMarketOrder: [
             //     {translate: "confirm_yes"},
@@ -109,7 +109,7 @@ class SettingsStore {
         (savedDefaults.apiServer || []).forEach(api => {
             let hasApi = false;
             if (typeof api === "string") {
-                api = {url: api, location: null};
+                api = { url: api, location: null };
             }
             this.defaults.apiServer.forEach(server => {
                 if (server.url === api.url) {
@@ -151,7 +151,8 @@ class SettingsStore {
     init() {
         return new Promise((resolve) => {
             if (this.initDone) resolve();
-            this.starredKey = this._getChainKey("markets");
+            this.starredKey = "markets_game";
+            // this.starredKey = this._getChainKey("markets");
             this.marketsKey = this._getChainKey("userMarkets");
             // Default markets setup
             let topMarkets = {
@@ -164,12 +165,15 @@ class SettingsStore {
                     "YOYOW", "HERO", "RUBLE", "SMOKE", "STEALTH", "BRIDGE.BCO",
                 ],
                 markets_c577bfd9: [ // CYBEX MAIN NET
-                    "CYB", "BTS", "YAN", "IMLAB", "ICOO", "BTC", "ETH", "COLAB",
+                    "CYBX", "BTCX", "ETHX", "CYB", "BTS", "YAN", "IMLAB", "ICOO", "BTC", "ETH", "COLAB",
                     "OPEN.STEEM", "OPEN.GAME", "OCT", "USD", "CNY", "BTSR", "OBITS",
                     "OPEN.DGD", "EUR", "GOLD", "SILVER", "IOU.CNY", "OPEN.DASH",
                     "OPEN.USDT", "OPEN.EURT", "OPEN.BTC", "CADASTRAL", "BLOCKPAY", "BTWTY",
                     "OPEN.INCNT", "KAPITAL", "OPEN.MAID", "OPEN.SBD", "OPEN.GRC",
                     "YOYOW", "HERO", "RUBLE"
+                ],
+                markets_game: [
+                    "CYBX", "BTCX", "ETHX", "LTCX", "BCHX", "XRPX"
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "PEG.FAKEUSD", "BTWTY"
@@ -181,14 +185,17 @@ class SettingsStore {
                     "USD", "OPEN.BTC", "CNY", "CYB", "BTC"
                 ],
                 markets_c577bfd9: [ // CYB MAIN NET
-                    "CYB", "BTS", "USD", "CNY","BTC" ,"OPEN.BTC"
+                    "CYBX", "CYB", "USD", "CNY", "BTC", "OPEN.BTC"
+                ],
+                markets_game: [ // CYB MAIN NET
+                    "CYBX"
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "TEST"
                 ]
             };
 
-            let coreAssets = {markets_c577bfd9: "CYB", markets_4018d784: "CYB", markets_39f5e2ed: "TEST"};
+            let coreAssets = { markets_c577bfd9: "CYB", markets_4018d784: "CYB", markets_39f5e2ed: "TEST" };
             let coreAsset = coreAssets[this.starredKey] || "CYB";
             this.defaults.unit[0] = coreAsset;
 
@@ -199,7 +206,7 @@ class SettingsStore {
                 markets.filter(a => {
                     return a !== base;
                 }).forEach(market => {
-                    target.push([`${market}_${base}`, {"quote": market,"base": base}]);
+                    target.push([`${market}_${base}`, { "quote": market, "base": base }]);
                 });
             }
 
@@ -228,7 +235,7 @@ class SettingsStore {
             payload.value
         );
 
-        switch(payload.setting) {
+        switch (payload.setting) {
             case "faucet_address":
                 if (payload.value.indexOf("testnet") === -1) {
                     this.mainnet_faucet = payload.value;
@@ -289,7 +296,7 @@ class SettingsStore {
     onAddStarMarket(market) {
         let marketID = market.quote + "_" + market.base;
         if (!this.starredMarkets.has(marketID)) {
-            this.starredMarkets = this.starredMarkets.set(marketID, {quote: market.quote, base: market.base});
+            this.starredMarkets = this.starredMarkets.set(marketID, { quote: market.quote, base: market.base });
 
             ss.set(this.starredKey, this.starredMarkets.toJS());
         } else {
@@ -300,7 +307,7 @@ class SettingsStore {
     onSetUserMarket(payload) {
         let marketID = payload.quote + "_" + payload.base;
         if (payload.value) {
-            this.userMarkets = this.userMarkets.set(marketID, {quote: payload.quote, base: payload.base});
+            this.userMarkets = this.userMarkets.set(marketID, { quote: payload.quote, base: payload.base });
         } else {
             this.userMarkets = this.userMarkets.delete(marketID);
         }
@@ -315,14 +322,14 @@ class SettingsStore {
         ss.set(this.starredKey, this.starredMarkets.toJS());
     }
 
-    onClearStarredMarkets(){
+    onClearStarredMarkets() {
         this.starredMarkets = Immutable.Map({});
         ss.set(this.starredKey, this.starredMarkets.toJS());
     }
 
     onAddWS(ws) {
         if (typeof ws === "string") {
-            ws = {url: ws, location: null};
+            ws = { url: ws, location: null };
         }
         this.defaults.apiServer.push(ws);
         ss.set("defaults_v1", this.defaults);
@@ -346,8 +353,8 @@ class SettingsStore {
         }
     }
 
-    onSwitchLocale({locale}) {
-        this.onChangeSetting({setting: "locale", value: locale});
+    onSwitchLocale({ locale }) {
+        this.onChangeSetting({ setting: "locale", value: locale });
     }
 
     onSetGuideMode(isEnabled) {

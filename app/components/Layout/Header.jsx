@@ -228,6 +228,8 @@ class Header extends React.Component {
                     });
             }
         }
+                           
+        let AccountName = ({account_display_name}) => <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span className="text-raw">{account_display_name}</span></div></span>;
 
         accountsDropDown = createAccountLink ?
             createAccountLink :
@@ -235,7 +237,8 @@ class Header extends React.Component {
                 (<ActionSheet.Button title="" setActiveState={() => { }}>
                     <a onClick={this._accountClickHandler.bind(this, account_display_name)} style={{ cursor: "default", padding: "1rem", border: "none" }} className="button">
                         <span className="table-cell"><AccountImage style={{ display: "inline-block" }} size={{ height: 20, width: 20 }} account={account_display_name} /></span>
-                        <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span>{account_display_name}</span></div></span>
+                        {/* <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span>{account_display_name}</span></div></span> */}
+                        <AccountName account_display_name={account_display_name}/>                        
                     </a>
                 </ActionSheet.Button>) :
 
@@ -243,7 +246,7 @@ class Header extends React.Component {
                     <ActionSheet.Button title="">
                         <a style={{ padding: "1rem", border: "none" }} className="button">
                             <span className="table-cell"><AccountImage style={{ display: "inline-block" }} size={{ height: 20, width: 20 }} account={account_display_name} /></span>
-                            <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span>{account_display_name}</span></div></span>
+                            <AccountName account_display_name={account_display_name}/>
                         </a>
                     </ActionSheet.Button>
                     {tradingAccounts.length > 1 ?

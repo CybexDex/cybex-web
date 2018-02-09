@@ -1,5 +1,9 @@
 import { JadePool, CALLBACK_URL, JadeBody } from "./GatewayConfig";
 import { debugGen } from "utils";
+import gql from "graphql-tag";
+import { ApolloClient } from "apollo-client";
+import { HttpLink } from "apollo-link-http";
+import { InMemoryCache } from "apollo-cache-inmemory";
 
 const debug = debugGen("GatewayService");
 
@@ -24,25 +28,87 @@ const genRequestInit: (body: any) => RequestInit =
     method: "POST",
     body
   });
+declare var __DEV__;
+// Configure Apollo
+const httpLink = new HttpLink({ uri: __DEV__ ? "http://localhost:5681/gateway" : "https://gateway.cybex.io/gateway" });
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache()
+});
 
 
-export async function getDepositAddress(type: string): Promise<string> {
-  let originRes: JadeBody =
-    await fetch(
-      JadePool.API_URLS.GET_NEW_ADDRESS,
-      genRequestInit(serilize({
-        type,
-        callback: CALLBACK_URL
-      }))
-    ).then(res => res.json());
-
-  if (originRes.status !== 0) {
-    throw new Error(originRes.message);
+export async function getDepositInfo(accountName, type: string): Promise<{ address, accountName, type, time }> {
+  let mutation = gql`
+  mutation Mutation($accountName: String!, $type: String!) {
+    newDepositAddress(
+      accountName: $accountName,
+      asset: $type
+    ) {
+      address
+      account: accountName
+      type: asset
+      asset: cybexAsset
+      timestamp
+    }
   }
-  return originRes.result.address;
+`;
+
+  return await impl("mutate", {
+    mutation,
+    variables: { accountName, type },
+  }, "newDepositAddress");
+
 };
 
 
+export async function getWithdrawInfo(type: string): Promise<{ fee, minValue }> {
+  let query = gql`
+  query WithdrawInfo($type: String!) {
+    withdrawInfo(type:$type) {
+      fee,
+      minValue,
+      type,
+      gatewayAccount
+    }
+  }
+`;
+  return await impl("query", {
+    query,
+    variables: { type },
+  }, "withdrawInfo");
+};
+
+
+export async function verifyAddress(address: string, accountName: string, type: string): Promise<{ valid, error?}> {
+  let query = gql`
+  query VerifyAddress($type: String!, $accountName: String!, $address: String!) {
+    verifyAddress(asset:$type, accountName: $accountName, address: $address) {
+      valid,
+      asset
+    }
+  }
+`;
+  return await impl("query", {
+    query,
+    variables: { type, accountName, address },
+  }, "verifyAddress");
+};
+
+async function impl(method: string, params: any, dataName: string) {
+  try {
+    return (await client[method](params)).data[dataName];
+  } catch (error) {
+    console.error("GatewayError: ", error);
+    return {
+      error
+    }
+  }
+}
+
+
 export const GatewayService = {
-  getDepositAddress
+  getDepositInfo,
+  getWithdrawInfo,
+  verifyAddress
 };

@@ -1,6 +1,6 @@
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import WalletDb from "stores/WalletDb";
-import {Aes, ChainValidation, TransactionBuilder, TransactionHelper, FetchChain, ChainStore} from "cybexjs";
+import { Aes, ChainValidation, TransactionBuilder, TransactionHelper, FetchChain, ChainStore } from "cybexjs";
 
 const ApplicationApi = {
 
@@ -21,8 +21,8 @@ const ApplicationApi = {
             return Promise.all([
                 FetchChain("getAccount", registrar),
                 FetchChain("getAccount", referrer)
-            ]).then((res)=> {
-                let [ chain_registrar, chain_referrer ] = res;
+            ]).then((res) => {
+                let [chain_registrar, chain_referrer] = res;
 
                 let tr = new TransactionBuilder();
                 tr.add_type_operation("account_create", {
@@ -37,13 +37,13 @@ const ApplicationApi = {
                     "owner": {
                         "weight_threshold": 1,
                         "account_auths": [],
-                        "key_auths": [[ owner_pubkey, 1 ]],
+                        "key_auths": [[owner_pubkey, 1]],
                         "address_auths": []
                     },
                     "active": {
                         "weight_threshold": 1,
-                        "account_auths": [ ],
-                        "key_auths": [[ active_pubkey, 1 ]],
+                        "account_auths": [],
+                        "key_auths": [[active_pubkey, 1]],
                         "address_auths": []
                     },
                     "options": {
@@ -51,7 +51,7 @@ const ApplicationApi = {
                         "voting_account": "1.2.5",
                         "num_witness": 0,
                         "num_committee": 0,
-                        "votes": [ ]
+                        "votes": []
                     }
                 });
                 return WalletDb.process_transaction(
@@ -82,7 +82,8 @@ const ApplicationApi = {
         encrypt_memo = true,
         optional_nonce = null,
         propose_account = null,
-        fee_asset_id = "1.3.0"
+        fee_asset_id = "1.3.0",
+        vesting = null
     }) {
         // console.debug("Transfer: ", arguments);
         let memo_sender = propose_account || from_account;
@@ -97,7 +98,7 @@ const ApplicationApi = {
             FetchChain("getAsset", asset),
             FetchChain("getAsset", fee_asset_id),
             unlock_promise
-        ]).then((res)=> {
+        ]).then((res) => {
 
             let [
                 chain_from, chain_to, chain_memo_sender, chain_propose_account,
@@ -105,17 +106,17 @@ const ApplicationApi = {
             ] = res;
 
             let memo_from_public, memo_to_public;
-            if( memo && encrypt_memo  ) {
+            if (memo && encrypt_memo) {
 
-                memo_from_public = chain_memo_sender.getIn(["options","memo_key"]);
+                memo_from_public = chain_memo_sender.getIn(["options", "memo_key"]);
 
                 // The 1s are base58 for all zeros (null)
-                if( /111111111111111111111/.test(memo_from_public)) {
+                if (/111111111111111111111/.test(memo_from_public)) {
                     memo_from_public = null;
                 }
 
-                memo_to_public = chain_to.getIn(["options","memo_key"])
-                if( /111111111111111111111/.test(memo_to_public)) {
+                memo_to_public = chain_to.getIn(["options", "memo_key"])
+                if (/111111111111111111111/.test(memo_to_public)) {
                     memo_to_public = null
                 }
             }
@@ -123,19 +124,19 @@ const ApplicationApi = {
             let propose_acount_id = propose_account ? chain_propose_account.get("id") : null
 
             let memo_from_privkey;
-            if(encrypt_memo && memo ) {
+            if (encrypt_memo && memo) {
                 memo_from_privkey = WalletDb.getPrivateKey(memo_from_public);
 
-                if(! memo_from_privkey) {
+                if (!memo_from_privkey) {
                     throw new Error("Missing private memo key for sender: " + memo_sender)
                 }
             }
 
             let memo_object;
-            if(memo && memo_to_public && memo_from_public) {
+            if (memo && memo_to_public && memo_from_public) {
                 let nonce = optional_nonce == null ?
-                            TransactionHelper.unique_nonce_uint64() :
-                            optional_nonce;
+                    TransactionHelper.unique_nonce_uint64() :
+                    optional_nonce;
                 memo_object = {
                     from: memo_from_public,
                     to: memo_to_public,
@@ -154,13 +155,11 @@ const ApplicationApi = {
             let fee_asset = chain_fee_asset.toJS();
 
             // Default to CORE in case of faulty core_exchange_rate
-            if( fee_asset.options.core_exchange_rate.base.asset_id === "1.3.0" &&
-                fee_asset.options.core_exchange_rate.quote.asset_id === "1.3.0" ) {
+            if (fee_asset.options.core_exchange_rate.base.asset_id === "1.3.0" &&
+                fee_asset.options.core_exchange_rate.quote.asset_id === "1.3.0") {
                 fee_asset_id = "1.3.0";
             }
-
-            let tr = new TransactionBuilder();
-            let transfer_op = tr.get_type_operation("transfer", {
+            let toTransfer = {
                 fee: {
                     amount: 0,
                     asset_id: fee_asset_id
@@ -168,17 +167,33 @@ const ApplicationApi = {
                 from: chain_from.get("id"),
                 to: chain_to.get("id"),
                 amount: { amount, asset_id: chain_asset.get("id") },
-                memo: memo_object
-            });
+                memo: memo_object,
+                // extensions: [
+                //     [4, {
+                //         asset_sym: "CYB",
+                //         fee_asset_sym: "CYB",
+                //         name: "owner10",
+                //     }]
+                // ]
+            };
+            if (vesting) {
+                toTransfer.extensions = [
+                    [1, {
+                        vesting_period: vesting
+                    }]
+                ];
+            }
+            let tr = new TransactionBuilder();
+            let transfer_op = tr.get_type_operation("transfer", toTransfer);
 
             return tr.update_head_block().then(() => {
-                if( propose_account ) {
+                if (propose_account) {
                     tr.add_type_operation("proposal_create", {
                         proposed_ops: [{ op: transfer_op }],
                         fee_paying_account: propose_acount_id
                     });
                 } else {
-                    tr.add_operation( transfer_op );
+                    tr.add_operation(transfer_op);
                 }
 
                 return WalletDb.process_transaction(
@@ -199,7 +214,7 @@ const ApplicationApi = {
         vestingPeriod,
         encrypt_memo = true,
         optional_nonce = null
-        ) {
+    ) {
 
         let unlock_promise = WalletUnlockActions.unlock();
 
@@ -207,36 +222,36 @@ const ApplicationApi = {
             FetchChain("getAccount", from_account),
             FetchChain("getAccount", to_account),
             unlock_promise
-        ]).then((res)=> {
+        ]).then((res) => {
             let [chain_memo_sender, chain_to] = res;
 
             let memo_from_public, memo_to_public;
-            if( memo && encrypt_memo  ) {
+            if (memo && encrypt_memo) {
 
-                memo_from_public = chain_memo_sender.getIn(["options","memo_key"]);
+                memo_from_public = chain_memo_sender.getIn(["options", "memo_key"]);
 
                 // The 1s are base58 for all zeros (null)
-                if( /111111111111111111111/.test(memo_from_public)) {
+                if (/111111111111111111111/.test(memo_from_public)) {
                     memo_from_public = null;
                 }
 
-                memo_to_public = chain_to.getIn(["options","memo_key"])
-                if( /111111111111111111111/.test(memo_to_public)) {
+                memo_to_public = chain_to.getIn(["options", "memo_key"])
+                if (/111111111111111111111/.test(memo_to_public)) {
                     memo_to_public = null
                 }
             }
 
             let memo_from_privkey;
-            if(encrypt_memo && memo ) {
+            if (encrypt_memo && memo) {
                 memo_from_privkey = WalletDb.getPrivateKey(memo_from_public);
 
-                if(! memo_from_privkey) {
+                if (!memo_from_privkey) {
                     throw new Error("Missing private memo key for sender: " + from_account)
                 }
             }
 
             let memo_object;
-            if(memo && memo_to_public && memo_from_public) {
+            if (memo && memo_to_public && memo_from_public) {
                 let nonce = optional_nonce == null ?
                     TransactionHelper.unique_nonce_uint64() :
                     optional_nonce
@@ -272,7 +287,7 @@ const ApplicationApi = {
             };
             if (vestingPeriod !== null && vestingPeriod !== undefined) {
                 op.extensions = [
-                    [1, {"vesting_period": vestingPeriod}]
+                    [1, { "vesting_period": vestingPeriod }]
                 ];
             }
             tr.add_type_operation("asset_issue", op);
@@ -290,7 +305,7 @@ const ApplicationApi = {
 
             const owner = ChainStore.getAccount(account).get("id");
             if (!owner) reject(new Error("Can't find the owner account, please try again"));
-            
+
             try {
                 tr.add_type_operation("worker_create", {
                     fee: {
@@ -303,9 +318,9 @@ const ApplicationApi = {
                     daily_pay: options.pay * precision,
                     name: options.title,
                     url: options.url,
-                    initializer: [1, {pay_vesting_period_days: options.vesting}]
+                    initializer: [1, { pay_vesting_period_days: options.vesting }]
                 });
-            } catch(err) {
+            } catch (err) {
                 reject(err);
             }
             WalletDb.process_transaction(tr, null, true).then(resolve).catch(reject);

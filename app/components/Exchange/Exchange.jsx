@@ -229,6 +229,7 @@ class Exchange extends React.Component {
     _checkFeeStatus(assets = [this.props.coreAsset, this.props.baseAsset, this.props.quoteAsset], account = this.props.currentAccount) {
         let feeStatus = {};
         let p = [];
+        console.debug("FeeStatusToCheck: ", assets);
         assets.forEach(a => {
             p.push(checkFeeStatusAsync({ accountID: account.get("id"), feeID: a.get("id"), type: "limit_order_create" }));
         });
@@ -298,7 +299,7 @@ class Exchange extends React.Component {
     _getFeeAssets(quote, base, coreAsset) {
         let { currentAccount } = this.props;
         const { feeStatus } = this.state;
-
+        
         function addMissingAsset(target, asset) {
             if (target.indexOf(asset) === -1) {
                 target.push(asset);

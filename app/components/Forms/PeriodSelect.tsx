@@ -34,11 +34,11 @@ export const COMMON_PERIODS: PeriodOptions = [
 ];
 
 type PeriodSelectProps = {
-  tabIndex, className?, value, name, id, items, onChange
+  tabIndex, className?, value, name, id, items, onChange, disabled
 };
 
-export const PeriodSelect = ({ tabIndex, className, value, name, id, items, onChange }: PeriodSelectProps) => (
-  <select tabIndex={tabIndex} className={className} value={value} name={name} id={id} onChange={onChange}>
+export const PeriodSelect = ({ disabled ,tabIndex, className, value, name, id, items, onChange }: PeriodSelectProps) => (
+  <select disabled={disabled} tabIndex={tabIndex} className={className} value={value} name={name} id={id} onChange={onChange}>
     {
       (items as PeriodOptions).map(item =>
         !item.translate ?

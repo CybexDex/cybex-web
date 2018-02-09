@@ -373,6 +373,10 @@ div.bordered-header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    .modal-content {
+      max-height: 70vh;
+      overflow-y: auto !important;
+    }
   }
 }
 
@@ -388,4 +392,23 @@ div.bordered-header {
 .overlay.fade-out {
   animation: fadeOut 300ms ease-in-out;  
   opacity: 0;
+}
+
+.modal {
+  .error-wrapper {
+    margin-top: 10px;
+  }
+
+  .modal-header {
+    box-shadow: 0 1px 1px rgba(0,0,0,0.3);
+  }
+  .modal-footer {
+    box-shadow: 0 -1px 1px rgba(0,0,0,0.3);
+  }
+}
+
+.game-modal {
+  p {
+    text-align: justify;
+  }
 }

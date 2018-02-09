@@ -220,7 +220,7 @@ class PrivateKeyStore extends BaseStore {
         let private_key = from_private_key ? from_private_key : to_private_key;
         let public_key = from_private_key ? memo.to : memo.from;
         public_key = PublicKey.fromPublicKeyString(public_key);
-
+        // console.debug("Private: ", private_key, public_key);
         try {
             private_key = WalletDb.decryptTcomb_PrivateKey(private_key);
         }
@@ -263,7 +263,7 @@ class PrivateKeyStore extends BaseStore {
                         true
                     ).toString("utf-8");
                 } catch(e) {
-                    // console.log("transfer memo exception ...", e);
+                    console.log("transfer memo exception ...", e);
                     memo_text = "**";
                 }
             }

@@ -8,6 +8,9 @@ import SettingsActions from "actions/SettingsActions";
 import { connect } from "alt-react";
 import { Apis } from "cybexjs-ws";
 import Translate from "react-translate-component";
+// For logout
+import { ModalActions } from "actions/ModalActions";
+import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
 
 
 interface NavItem {
@@ -33,7 +36,7 @@ const NavLinks: Array<NavItem> = [
   {
     id: "explorer",
     routeTo: "/ledger",
-    activeMatcher: /^\/ledger|explorer/,    
+    activeMatcher: /^\/ledger|explorer/,
     name: "Explorer",
     icon: "diagram"
   },
@@ -55,13 +58,13 @@ const NavLinks: Array<NavItem> = [
     name: "Transfer",
     icon: "transfer"
   },
-  {
-    id: "swap",
-    routeTo: "/swap",
-    name: "SwapTest",
-    icon: "exchange",
-    displayOnlyWhen: "currentAccount"    
-  },
+  // {
+  //   id: "swap",
+  //   routeTo: "/swap",
+  //   name: "SwapTest",
+  //   icon: "exchange",
+  //   displayOnlyWhen: "currentAccount"    
+  // },
   {
     id: "help",
     routeTo: "/help/introduction/cybex",
@@ -91,6 +94,10 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
 
   toggleNav() {
     SettingsActions.toggleNav(true);
+  }
+
+  logout = () => {
+    ModalActions.showModal(DEFAULT_LOGOUT_MODAL_ID);
   }
 
   render() {
@@ -125,6 +132,10 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
               );
             })
           }
+          {/* Logout Button */}
+          {currentAccount && <a className="nav-link" href="javascript:;" onClick={this.logout}>
+            <NavLink icon="safe-vault" id="logout" name="logout" />
+          </a>}
         </div>
         <a href="javascript:;" className="nav-toggle" onClick={this.toggleNav.bind(this)}>
           <i className={getClassName("", {

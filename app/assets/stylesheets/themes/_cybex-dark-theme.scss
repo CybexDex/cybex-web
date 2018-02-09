@@ -95,6 +95,8 @@ $account-background: $panel-bg-color;
     background-color: $input-background;
     color: $light-text-color;
     border:0;
-    
+    &:disabled {
+      background-color: transparent;
+    }
   }
 }

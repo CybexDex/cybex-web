@@ -11,7 +11,7 @@ import SettingsActions from "actions/SettingsActions";
 import { JadePool } from "services/GatewayConfig";
 import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
 
-class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
+class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
     last_path = null;
     static propTypes = {
         account: React.PropTypes.object.isRequired,
@@ -72,15 +72,18 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
         SettingsActions.changeViewSetting({ showDepositQR: value });
     }
 
-    _depositClick(info) {
+    _depositClick = (info) => {
+        let { account } = this.props;
+        GatewayActions.showDepositModal(account.get("name"), "JADE.ETH");
+    }
+    _withdrawClick = (info) => {
         // this._toggleQR(true);
         // this.setState({ titleClass: "account-title flash" });
         // setTimeout(() => {
         //     this.setState({ titleClass: undefined });
         // }, 250);
 
-        info ? GatewayActions.openModal(DEPOSIT_MODAL_ID) :
-            GatewayActions.showDepositModal("any", "SDF");
+        GatewayActions.showWithdrawModal("CROWDN");
     }
 
     render() {
@@ -104,7 +107,6 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
             <div className="grid-block vertical account-left-panel no-padding no-overflow">
                 <div className="grid-block">
                     <div className="grid-content no-padding" style={{ overflowX: "hidden" }}>
-
                         <div className="regular-padding vertical-center">
                             <AccountInfo
                                 account={account.get("id")}
@@ -114,12 +116,9 @@ class AccountLeftPanel extends React.Component<{myAccounts?, viewSettings?, acco
                                 toggleQR={this._toggleQR.bind(this)}
                                 titleClass={this.state.titleClass}
                             />
-<<<<<<< HEAD
-                            
-=======
->>>>>>> test
-                            <div className="grid-container no-margin" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
+                            <div className="grid-container no-margin full-width-content" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
+                                {/* {isMyAccount && <Translate component="button" content="wallet.link_deposit" className="button" onClick={this._depositClick} />} */}
                                 {linkBtn}
                             </div>
                         </div>

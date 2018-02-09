@@ -22,7 +22,7 @@ const DEFAULT_FAUCET = "https://faucet.51nebula.com/";
 
 class ApiNode {
     constructor(host, name) {
-        let schema = location && location.protocol.indexOf("https") !== -1 ? "wss://" : "ws://";
+        let schema = location && location.protocol.indexOf("https") !== -1 ? "wss://" : "wss://";
         let url = schema + host;
         this.url = url;
         this.location = name;
@@ -46,6 +46,6 @@ export const settingsAPIs = {
     DEFAULT_WS_NODE: BITSHARES_NODE,
     WS_NODE_LIST,
     DEFAULT_FAUCET,
-    TESTNET_FAUCET: "https://faucet.51nebula.com/",
+    TESTNET_FAUCET: "https://faucet.51nebula.com",
     RPC_URL: "ws://hongkong-01.cybex.io:8092/api/"
 };

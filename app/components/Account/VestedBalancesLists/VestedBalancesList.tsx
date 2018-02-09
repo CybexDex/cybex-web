@@ -8,6 +8,7 @@ import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
 import { GatewayActions } from "actions/GatewayActions"
+import * as moment from "moment";
 
 let VestedBalancesLists = class extends React.PureComponent<any> {
   constructor(props: any) {
@@ -26,6 +27,8 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
     // if (this.props.balances === undefined || !this.props.total_by_account_asset.size)
     //   return <div></div>;
     // console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
+    let unclaimed = this.props.total_by_account_asset && this.props.total_by_account_asset.toArray()[0];
+    let balances = unclaimed && unclaimed.balances;
     return <div>
       <table className="table dashboard-table vest-table">
         <thead>
@@ -38,33 +41,39 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
           </tr>
         </thead>
         <tbody>
-          {this.props.total_by_account_asset && this.props.total_by_account_asset.map((r, name_asset) => {
-            let index = r.balances.toJS()[0]["id"];
+          {balances && balances.map(vestingItem => {
+            let index = vestingItem["id"];
+            let { vesting_policy } = vestingItem;
+            let endDate = moment.utc(vesting_policy.begin_timestamp).add(vesting_policy.vesting_cliff_seconds, "s");
+            let now = moment.utc();
+            let progress = vesting_policy.vesting_cliff_seconds - (endDate.valueOf() - now.valueOf()) / 1000;
             return (
               <tr key={index}>
                 <td>
                   <input type="checkbox"
-                    checked={!!this.props.checked.get(index)}
-                    onChange={this.onCheckbox.bind(this, index, r.balances)} />
+                    // checked={!!this.props.checked.get(index)}
+                    onChange={e => this.onCheckbox(index, vestingItem, e)}
+                    disabled={now.isBefore(endDate)}
+                  />
                 </td>
                 <td style={{ textAlign: "center" }}>
-                  {r.vesting.unclaimed ?
+                  {vesting_policy.begin_balance ?
                     <FormattedAsset
-                      amount={r.unclaimed}
-                      asset={name_asset.get(1)}
+                      amount={vestingItem.balance.amount}
+                      asset={vestingItem.balance.asset_id}
                       hide_amount />
                     : null}
                 </td>
                 <td style={{ textAlign: "center" }}>
-                  {r.vesting.unclaimed ? <div>
+                  {vesting_policy.begin_balance ? <div>
                     <FormattedAsset
-                      amount={r.vesting.total}
-                      asset={name_asset.get(1)}
+                      amount={vestingItem.balance.amount}
+                      asset={vestingItem.balance.asset_id}
                       hide_asset />
                   </div> : null}
                 </td>
                 <td>
-                  {r.vesting.unclaimed && <progress value={r.vesting.unclaimed} max={r.vesting.total} />}
+                  {vesting_policy.begin_timestamp && <progress value={progress} max={vesting_policy.vesting_cliff_seconds} />}
                 </td>
                 <td>-</td>
               </tr>
@@ -85,14 +94,14 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
     </div>;
   }
 
-  onCheckbox(index, balances) {
+  onCheckbox(index, balances, e) {
+    let value = e.target.checked;
     let checked = this.props.checked;
-    if (checked.get(index)) {
+    if (!value) {
       checked = checked.delete(index);
     } else {
       checked = checked.set(index, balances);
     }
-
     BalanceClaimActiveActions.setSelectedBalanceClaims(checked);
   }
 

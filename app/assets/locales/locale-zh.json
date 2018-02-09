@@ -439,6 +439,7 @@
     "send": "发送",
     "final": "转账后余额",
     "balances": "余额",
+    "vesting_period": "带锁定期转账",
     "errors": {
       "req": "必填信息",
       "pos": "数量必须大于0",
@@ -632,7 +633,7 @@
     "balance_claim": "从余额ID #%(balance_id)s 中领取金额 %(balance_amount)s ",
     "balance_owner": "余额所有者公钥",
     "balance_id": "余额ID",
-    "deposit_to": "向账户存入",
+    "deposit_to": "向账户存入%{asset}",
     "claimed": "领取总额",
     "broadcasting": "交易广播中..",
     "broadcasting_short": "交易广播中..",
@@ -1340,7 +1341,7 @@
     "bridge": "桥接",
     "gateway": "承兑商",
     "symbol": "资产",
-    "deposit_to": "请将你的%(asset)转账至以下地址",
+    "deposit_to": "请将你的%(asset)s转账至以下地址",
     "balance": "余额",
     "generate": "生成地址",
     "deposit": "充值",
@@ -1394,8 +1395,9 @@
     "withdraw_to": "点击下方按钮进行 %(asset)s 提现",
     "intermediate": "中间账户",
     "asset_to_withdraw": "提现资产:",
-    "support_block": "获得客户支持，请联络 Blocktrades:",
+    "support_block": "获得客户支持，请联络Jadepool:",
     "valid_address": "请输入合法的 %(coin_type)s 地址",
+    "valid_service": "网关功能错误，暂时无法有效验证提取地址，请稍后再试或联系客服人员",
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
     "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
@@ -1409,9 +1411,9 @@
     "bitkapital_withdraw": "You are withdrawing",
     "bitkapital_receive": "You will receive",
     "iban": "IBAN",
-    "add_funds": "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Jadepool.",
+    "add_funds": "您可以快速方便的充入资金到您的Cybex账号<strong>%(account)s</strong>中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> 注：同一账户同一资产充值地址每隔五分钟或该地址充值到账时可重新生成，该地址仅做为一次性充值有效，请勿重复向该地址充入资金",
     "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(asset)s account.",
-    "balance_asset": "Current %(asset)s balance",
+    "balance_asset": "当前您 %(asset)s 资产的的可用余额为",
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "convert": "Internal conversion",
     "convert_now": "Convert now",
@@ -1459,11 +1461,12 @@
     "asset_update": "使用 {account} 更新 {asset} ",
     "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
     "asset_settle": "Request a settlement of",
-    "asset_issue": "Issue {amount} to {to} using {account}",
-    "asset_reserve": "Burn (reserve) {amount} using {account}",
-    "vesting_balance_withdraw": "Withdraw {amount} from vesting balance of {account}",
-    "feed_producer": "Update the feed producers for the asset {asset} using the account {account}",
-    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}"
+    "asset_issue": " 使用 {account} 发行 {amount} 到 {to}",
+    "asset_reserve": "使用 {account} 销毁 {amount}",
+    "vesting_balance_withdraw": "从{account}的冻结资产中提取 {amount} ",
+    "feed_producer": "Update the feed producers for the asset {asset} using the {account} ",
+    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
+    "limit_order_cancel": "{account}提议撤销订单"
   },
   "proposal_create": {
     "review_period": "复审期开始",
@@ -1521,6 +1524,7 @@
     "bazaar": "主要市场",
     "explorer": "区块浏览",
     "swap": "原子交换",
+    "logout": "登出账户",  
     "help": "帮助文档"
   },
   "vesting": {
@@ -1568,5 +1572,15 @@
   "createTip": {
     "but": "但是……",
     "may": "您可以……"
+  },
+  "logout": {
+    "title": "Cybex登出",
+    "password_tip": "您正在使用云账户登录，如果您确定要登出当前账户，请检查下方的安全提示并逐一确认。一旦所有提示被确认，并点击\"登出\"按钮，浏览器将刷新当前页面，您当前用户的登录信息将被清除。",
+    "password_s1": "我知道一旦我的云账户密码丢失，将无法找回",
+    "password_s2": "我已经妥善备份并保存了我的云账户密码",
+    "password_s3": "我确实希望登出我的账户，并且我明确知道自己在做什么",
+    "logout": "登出",
+    "reload": "更新",
+    "wallet_tip": "您当前正在使用本地钱包模式。您可以从下方的列表中选择需要登出的钱包文件，删除该钱包，并点击“更新”按钮, 页面将刷新并使用现存的其他钱包。在删除相应钱包文件之前，请您确认对应的钱包文件或脑钱包密钥已经被妥善备份并保存，否则请关闭本窗口并优先备份钱包文件。否则一旦确认删除该钱包，将没有任何途径可以找回。"
   }
 }
