@@ -41,7 +41,7 @@ class SettingsStore {
 
         this.initDone = false;
         this.defaultSettings = Immutable.Map({
-            locale: "cn",
+            locale: "zh",
             apiServer: settingsAPIs.DEFAULT_WS_NODE,
             faucet_address: settingsAPIs.DEFAULT_FAUCET,
             unit: CORE_ASSET,
@@ -60,8 +60,8 @@ class SettingsStore {
 
         let defaults = {
             locale: [
-                "en",
                 "zh",
+                "en",
             ],
             apiServer: [],
             unit: [
