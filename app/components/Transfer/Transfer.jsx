@@ -19,6 +19,8 @@ import classnames from "classnames";
 import { Asset } from "common/MarketClasses";
 import { Period } from "components/Forms/Period";
 
+import { PublicKeySelector } from "components/Forms/PublicKeySelector";
+
 
 class Transfer extends React.Component {
 
@@ -68,6 +70,7 @@ class Transfer extends React.Component {
             feeAmount: new Asset({ amount: 0 }),
             feeStatus: {},
             vestingPeriod: 0,
+            public_key: "",
             enableVesting: false
         };
 
@@ -254,6 +257,12 @@ class Transfer extends React.Component {
             vestingPeriod
         });
     }
+    onPublicChange(public_key) {
+        console.debug("OnPublicKey: ", public_key);
+        this.setState({
+            public_key
+        });
+    }
 
     resetForm() {
         this.setState({ memo: '', to_name: '', amount: '' });
@@ -262,9 +271,9 @@ class Transfer extends React.Component {
     onSubmit(e) {
         e.preventDefault();
         this.setState({ error: null });
-        const { asset, amount, enableVesting, vestingPeriod } = this.state;
+        const { asset, amount, enableVesting, vestingPeriod, public_key } = this.state;
         const sendAmount = new Asset({ real: amount, asset_id: asset.get("id"), precision: asset.get("precision") });
-        let vest = enableVesting ? vestingPeriod : null;
+        let vest = enableVesting ? { vesting_period: vestingPeriod, public_key }: null;
         AccountActions.transfer(
             this.state.from_account.get("id"),
             this.state.to_account.get("id"),
@@ -443,6 +452,7 @@ class Transfer extends React.Component {
                                 <Translate component="span" content="transfer.vesting_period" />
                                 <input type="checkbox" onChange={this.onPeriodSwitchChange} />
                             </label>
+                            <PublicKeySelector disabled={!enableVesting} name="to_account" account={to_account} onKeyChange={this.onPublicChange.bind(this)} />
                             <Period disabled={!enableVesting} className="period-horizontal" defaultPeriod={vestingPeriod} name="issue" tabIndex={tabIndex += 2} onPeriodChange={this.onPeriodChange.bind(this)} />
                         </div>
                         {/*  M E M O  */}
