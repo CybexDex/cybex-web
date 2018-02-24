@@ -170,10 +170,11 @@ const ApplicationApi = {
                 memo: memo_object,
                 // extensions: [
                 //     [4, {
-                //         asset_sym: "CYB",
+                //         name: "owner9",
+                //         asset_sym: "USDT",
                 //         fee_asset_sym: "CYB",
-                //         name: "owner10",
-                //     }]
+                //         hw_cookie: 5
+                //     }],
                 // ]
             };
             if (vesting) {

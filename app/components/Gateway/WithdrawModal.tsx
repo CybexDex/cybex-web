@@ -6,6 +6,7 @@ import { ChainStore } from "cybexjs";
 import GatewayStore from "stores/GatewayStore";
 import { GatewayActions } from "actions/GatewayActions";
 import { verifyAddress } from "services//GatewayService";
+import { GATEWAY_ID } from "services/GatewayConfig";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "components/Utility/BalanceComponent";
 import AmountSelector from "components/Utility/AmountSelector";
@@ -209,7 +210,7 @@ class WithdrawModal extends React.Component<props, state> {
         options: ["price_per_kbyte"],
         data: {
           type: "memo",
-          content: "withdraw:" + this.props.asset + ":" + state.withdraw_address + (state.memo ? ":" + state.memo : "")
+          content: "withdraw:" + GATEWAY_ID + ":" + this.props.asset + ":" + state.withdraw_address + (state.memo ? ":" + state.memo : "")
         }
       }));
     });
@@ -254,7 +255,7 @@ class WithdrawModal extends React.Component<props, state> {
       this.props.withdrawInfo.gatewayAccount,
       withdrawAmount,
       this.props.asset.get("id"),
-      "withdraw:" + this.props.withdrawInfo.type + ":" + this.state.withdraw_address,
+      "withdraw:" + GATEWAY_ID + ":" + this.props.withdrawInfo.type + ":" + this.state.withdraw_address,
       null,
       "1.3.0"
     );
