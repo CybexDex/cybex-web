@@ -3,7 +3,6 @@ export const JadePool = {
   "CYBEX_ACCOUNT": "jadepool",
   "API_URLS": {
     "GET_NEW_ADDRESS": "http://localhost:5679/jade/getNewAddress"
-    // "GET_NEW_ADDRESS": "http://121.40.109.65:7001/api/v1/addresses/new"
   },
   // Cybex资产: 外部资产
   "ADDRESS_TYPES": {
