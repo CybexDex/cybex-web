@@ -11,6 +11,7 @@ const CORE_ASSET = "CYB"; // Setting this to CYB to prevent loading issues when 
 
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
+const SETTING_VERSION = "defaults_v2";
 
 class SettingsStore {
     constructor() {
@@ -96,9 +97,12 @@ class SettingsStore {
             // ]
         };
 
+        // this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
+        
+        // TODO for Online
         this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
 
-        let savedDefaults = ss.get("defaults_v1", {});
+        let savedDefaults = ss.get(SETTING_VERSION, {});
         /* Fix for old clients after changing cn to zh */
         if (savedDefaults && savedDefaults.locale) {
             let cnIdx = savedDefaults.locale.findIndex(a => a === "cn");
@@ -332,13 +336,13 @@ class SettingsStore {
             ws = { url: ws, location: null };
         }
         this.defaults.apiServer.push(ws);
-        ss.set("defaults_v1", this.defaults);
+        ss.set(SETTING_VERSION, this.defaults);
     }
 
     onRemoveWS(index) {
         if (index !== 0) { // Prevent removing the default apiServer
             this.defaults.apiServer.splice(index, 1);
-            ss.set("defaults_v1", this.defaults);
+            ss.set(SETTING_VERSION, this.defaults);
         }
     }
 
