@@ -1316,6 +1316,10 @@
             }
         }
     }
+    .highlight {
+        background: $info-color;
+        color: $account-primarytext;
+    }
 }
 
 .olDarkTheme .gate_fee .amount-selector {

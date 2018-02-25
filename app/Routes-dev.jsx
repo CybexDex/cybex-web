@@ -51,6 +51,7 @@ import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
 import { SwapContainer } from "./components/Swap/SwapContainer";
 import { Gateway } from "./components/Gateway/Gateway";
+import { Contact } from "./components/HelpDrawer/Contact";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -65,6 +66,7 @@ const routes = (
         <Route path="/dashboard" component={DashboardContainer} />
         <Route path="/ledger" component={BlocksContainer} />
         <Route path="/bazaar" component={Bazaar} />
+        <Route path="/contact" component={Contact} />
         <Route path="explorer" component={Explorer} />
         <Route path="/explorer/fees" component={FeesContainer} />
         <Route path="/explorer/assets" component={AssetsContainer} />
