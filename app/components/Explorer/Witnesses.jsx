@@ -323,6 +323,8 @@ class Witnesses extends React.Component {
         dynGlobalObject = dynGlobalObject.toJS();
         globalObject = globalObject.toJS();
 
+        // console.debug("Nex: ", dynGlobalObject.next_maintenance_time);
+
         let current = ChainStore.getObject(dynGlobalObject.current_witness),
             currentAccount = null;
         if (current) {

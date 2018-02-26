@@ -56,7 +56,7 @@ const filterAndSortURLs = (count, latencies) => {
 let _connectInProgress = false;
 let _connectionCheckPromise = null;
 const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { //appInit is true when called via router onEnter, and false when node is manually selected in access settings
-    console.debug("Transition: ", nextState);
+    // console.debug("Transition: ", nextState);
     const apiLatencies = SettingsStore.getState().apiLatencies;
     latencyChecks = ss.get("latencyChecks", 1);
     let apiLatenciesCount = Object.keys(apiLatencies).length;

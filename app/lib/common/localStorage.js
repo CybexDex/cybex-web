@@ -29,7 +29,7 @@ const localStorage = (key) => {
         },
 
         remove(key) {
-            console.debug("KEY: ", key);
+            // console.debug("KEY: ", key);
             ls.removeItem(STORAGE_KEY + key);
         },
 
