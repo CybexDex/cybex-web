@@ -15,10 +15,8 @@ export const rudexAPIs = {
     NEW_DEPOSIT_ADDRESS: "/new-deposit-address"
 };
 
-const TEST_NODE = "ws://121.40.109.65:11011";
 const BITSHARES_NODE = "wss://fake.automatic-selection.com";
-const DEFAULT_WS_NODE = TEST_NODE;
-const DEFAULT_FAUCET = "https://faucet.cybex.io/";
+const DEFAULT_FAUCET = "https://faucet.51nebula.com";
 
 class ApiNode {
     constructor(host, name) {
@@ -31,18 +29,14 @@ class ApiNode {
 
 
 const WS_NODE_LIST = [
-    new ApiNode("shanghai.51nebula.com/", "Shanghai"),
-    new ApiNode("beijing.51nebula.com/", "Beijing"),
-    new ApiNode("hongkong.cybex.io/", "Hongkong"),
-    new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
-    new ApiNode("singapore-01.cybex.io/", "Singapore"),
-    new ApiNode("korea-01.cybex.io/", "Korea"),
+    new ApiNode("hangzhou.51nebula.com/", "Hangzhou"),
+    new ApiNode("shenzhen.51nebula.com/", "Shenzhen"),
 ];
 
 export const settingsAPIs = {
     DEFAULT_WS_NODE: BITSHARES_NODE,
     WS_NODE_LIST,
     DEFAULT_FAUCET,
-    TESTNET_FAUCET: "https://faucet.cybex.io",
-    RPC_URL: "wss://hongkong.cybex.io:8092/api/"
+    TESTNET_FAUCET: "https://faucet.51nebula.com",
+    RPC_URL: "wss://shenzhen.51nebula.com:8092/api/"
 };
