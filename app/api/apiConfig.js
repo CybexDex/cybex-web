@@ -18,7 +18,7 @@ export const rudexAPIs = {
 const TEST_NODE = "ws://121.40.109.65:11011";
 const BITSHARES_NODE = "wss://fake.automatic-selection.com";
 const DEFAULT_WS_NODE = TEST_NODE;
-const DEFAULT_FAUCET = "https://faucet.cybex.com/";
+const DEFAULT_FAUCET = "https://faucet.cybex.io/";
 
 class ApiNode {
     constructor(host, name) {

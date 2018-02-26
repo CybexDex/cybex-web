@@ -204,7 +204,7 @@ class Header extends React.Component {
 
         let tradeLink = this.props.lastMarket ?
             <a className={cnames({ active: active.indexOf("market/") !== -1 })} onClick={this._onNavigate.bind(this, `/market/${this.props.lastMarket}`)}><Translate component="span" content="header.exchange" /></a> :
-            <a className={cnames({ active: active.indexOf("market/") !== -1 })} onClick={this._onNavigate.bind(this, "/market/CYB_BTS")}><Translate component="span" content="header.exchange" /></a>;
+            <a className={cnames({ active: active.indexOf("market/") !== -1 })} onClick={this._onNavigate.bind(this, "/market/CYB_JADE.ETH")}><Translate component="span" content="header.exchange" /></a>;
 
         // Account selector: Only active inside the exchange
         let accountsDropDown = null, account_display_name, accountsList;

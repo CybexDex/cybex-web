@@ -40,12 +40,12 @@ const NavLinks: Array<NavItem> = [
     name: "Explorer",
     icon: "diagram"
   },
-  {
-    id: "bazaar",
-    routeTo: "/bazaar",
-    name: "Bazaar",
-    icon: "go-up"
-  },
+  // {
+  //   id: "bazaar",
+  //   routeTo: "/bazaar",
+  //   name: "Bazaar",
+  //   icon: "go-up"
+  // },
   {
     id: "exchange",
     routeTo: lastMarket => `/market/${lastMarket}`,
@@ -104,7 +104,7 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
     let { settings, currentAccount, lastMarket } = this.props;
     let routerConfig = {
       account: currentAccount,
-      exchange: lastMarket || "CYB_BTS"
+      exchange: lastMarket || "CYB_JADE.ETH"
     };
     let isExpand = settings.get("navState");
     return (
