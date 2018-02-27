@@ -1,37 +1,20 @@
 import * as React from "react";
-import { DepositAddress } from "./DepositAddress";
-import { NewDepositAddress } from "components/Gateway/NewDepositAddress";
-
-// ApolloProvider
-import { ApolloProvider } from "react-apollo";
-import { ApolloClient } from "apollo-client";
-import { HttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import GatewayActions from "actions/GatewayActions";
+import {} from "services//GatewayConfig";
 
 class GatewayContainer extends React.Component<any, any> {
+  componentWillMount() {
+    GatewayActions.updateWithdrawInfo()
+  }
   render() {
     return (
-      <div>
-        <DepositAddress />
-        <NewDepositAddress />
+      <div className="gateway-wrapper">
+        <hr />
       </div>
     );
   }
 }
 
 
-const httpLink = new HttpLink({ uri: "http://localhost:5681/graphql" });
-
-const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
-});
-
-export const ApolloWrapper = () => (
-  <ApolloProvider client={client}>
-    <GatewayContainer />
-  </ApolloProvider>
-);
-
-export { ApolloWrapper as Gateway }
-export default ApolloWrapper;
+export { GatewayContainer }
+export default GatewayContainer;
