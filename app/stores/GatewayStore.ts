@@ -34,7 +34,7 @@ class GatewayStore extends BaseStore implements Store<State>{
         backedCoins: Map({
             JADE: [
                 {
-                    symbol: "BTC"
+                    symbol: "JADE.BTC"
                 },
                 {
                     symbol: "JADE.ETH"
