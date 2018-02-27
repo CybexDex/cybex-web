@@ -99,9 +99,7 @@ async function impl(method: string, params: any, dataName: string) {
     return (await client[method](params)).data[dataName];
   } catch (error) {
     console.error("GatewayError: ", error);
-    return {
-      error
-    }
+    throw error;
   }
 }
 
