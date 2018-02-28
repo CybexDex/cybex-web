@@ -1,15 +1,19 @@
-var path = require("path");
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
-var Clean = require("clean-webpack-plugin");
-var git = require("git-rev-sync");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const Clean = require("clean-webpack-plugin");
+const git = require("git-rev-sync");
 require("es6-promise").polyfill();
 
 // BASE APP DIR
-var root_dir = path.resolve(__dirname);
+let root_dir = path.resolve(__dirname);
+let gitRevisionPlugin = new GitRevisionPlugin({
+    branch: true
+});
 
 module.exports = function (env) {
     if (!env) {
@@ -22,7 +26,8 @@ module.exports = function (env) {
     }
     // console.log(env.prod ? "Using PRODUCTION options\n" : "Using DEV options\n");
     // STYLE LOADERS
-    var cssLoaders = [{
+    var cssLoaders = [
+        {
             loader: "style-loader"
         },
         {
@@ -33,7 +38,8 @@ module.exports = function (env) {
         }
     ];
 
-    var scssLoaders = [{
+    var scssLoaders = [
+        {
             loader: "style-loader"
         },
         {
@@ -129,6 +135,7 @@ module.exports = function (env) {
             "process.env": {
                 NODE_ENV: JSON.stringify("production")
             },
+            "BRANCH": JSON.stringify(gitRevisionPlugin.branch()),
             __DEV__: false
         }));
         plugins.push(extractCSS);
@@ -146,6 +153,7 @@ module.exports = function (env) {
             "process.env": {
                 NODE_ENV: JSON.stringify("development"),
             },
+            "BRANCH": JSON.stringify(gitRevisionPlugin.branch()),            
             __DEV__: true
         }));
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -174,7 +182,8 @@ module.exports = function (env) {
         },
         devtool: env.prod ? false : "cheap-module-eval-source-map",
         module: {
-            rules: [{
+            rules: [
+                {
                     test: /\.tsx|\.ts$/,
                     include: [
                         path.join(root_dir, "app")
@@ -273,7 +282,8 @@ module.exports = function (env) {
                 },
                 {
                     test: /\.md/,
-                    use: [{
+                    use: [
+                        {
                             loader: "html-loader",
                             options: {
                                 removeAttributeQuotes: false
@@ -318,7 +328,7 @@ module.exports = function (env) {
         },
         plugins: plugins,
         node: {
-            fs: 'empty'
+            fs: "empty"
         },
     };
 

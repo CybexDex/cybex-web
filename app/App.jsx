@@ -29,6 +29,8 @@ import GameModal from "./components/Modal/GameModal";
 import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
 
+console.debug("Branch: ", BRANCH);
+
 class App extends React.Component {
 
     constructor() {

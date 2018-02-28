@@ -39,6 +39,12 @@ class GatewayStore extends BaseStore implements Store<State>{
                 {
                     symbol: "JADE.ETH"
                 },
+                {
+                    symbol: "TEST.BTC"
+                },
+                {
+                    symbol: "TEST.ETH"
+                },
             ]
         }),
         bridgeCoins: Map(fromJS(ss.get("bridgeCoins", {}))),
