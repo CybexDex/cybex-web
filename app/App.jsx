@@ -1,5 +1,4 @@
 import { ChainStore } from "cybexjs";
-import { Apis } from "cybexjs-ws";
 import React from "react";
 import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
@@ -25,11 +24,11 @@ import BackupModal from "components/Modal/BackupModal";
 import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
 import Nav from "./components/Layout/Nav";
-import GameModal from "./components/Modal/GameModal";
 import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
 
-console.debug("Branch: ", BRANCH);
+console.debug("Test Env: ", __TEST__);
+console.debug("Test Env: ", Array.from(__TEST__));
 
 class App extends React.Component {
 

@@ -69,7 +69,7 @@ module.exports = function (env) {
         new webpack.DefinePlugin({
             // APP_VERSION: JSON.stringify("beta"),
             APP_VERSION: JSON.stringify(git.tag()),
-            __TEST__: JSON.stringify(gitRevisionPlugin.branch()).startsWith("test"),
+            __TEST__: JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1,
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify(baseUrl),
