@@ -69,6 +69,7 @@ module.exports = function (env) {
         new webpack.DefinePlugin({
             // APP_VERSION: JSON.stringify("beta"),
             APP_VERSION: JSON.stringify(git.tag()),
+            __TEST__: JSON.stringify(gitRevisionPlugin.branch()).startsWith("test"),
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify(baseUrl),
@@ -135,7 +136,6 @@ module.exports = function (env) {
             "process.env": {
                 NODE_ENV: JSON.stringify("production")
             },
-            "BRANCH": JSON.stringify(gitRevisionPlugin.branch()),
             __DEV__: false
         }));
         plugins.push(extractCSS);
@@ -152,8 +152,7 @@ module.exports = function (env) {
         plugins.push(new webpack.DefinePlugin({
             "process.env": {
                 NODE_ENV: JSON.stringify("development"),
-            },
-            "BRANCH": JSON.stringify(gitRevisionPlugin.branch()),            
+            },         
             __DEV__: true
         }));
         plugins.push(new webpack.HotModuleReplacementPlugin());

@@ -1,22 +1,23 @@
 declare var __DEV__;
-export const JadePool = __DEV__ ? {
-  "CYBEX_ACCOUNT": "jadepool",
+export const JadePool = __TEST__ ? {
+  "GATEWAY_ACCOUNT": "jade-gateway",
   // Cybex资产: 外部资产
   "ADDRESS_TYPES": {
     "TEST.ETH": "ETH",
     "TEST.BTC": "BTC"
   }
 } : {
-    "CYBEX_ACCOUNT": "jadepool",
+    "GATEWAY_ACCOUNT": "jadepool",
     // Cybex资产: 外部资产
     "ADDRESS_TYPES": {
-      "TEST.ETH": "ETH",
-      "TEST.BTC": "BTC"
+      "JADE.ETH": "ETH",
+      "JADE.BTC": "BTC"
     }
   };
 
-export const GATEWAY_URI = __DEV__ ? "https://gatewaytest.cybex.io/gateway" : "https://gatewaytest.cybex.io/gateway";
-export const GATEWAY_ID = __DEV__ ? "CybexGatewayDev" : "CybexGatewayDev";
+declare const __TEST__;
+export const GATEWAY_URI = __TEST__ ? "https://gatewaytest.cybex.io/gateway" : "https://gateway.cybex.io/gateway";
+export const GATEWAY_ID = __TEST__ ? "CybexGatewayDev" : "CybexGateway";
 
 export type JadeBody = {
   status: JadeStatus,

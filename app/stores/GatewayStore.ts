@@ -25,6 +25,19 @@ type State = {
     depositInfo?,
     withdrawInfo?,
 };
+declare const __TEST__;
+const JADE_COINS = __TEST__ ?
+    [{
+        symbol: "TEST.BTC"
+    },
+    {
+        symbol: "TEST.ETH"
+    }] : [{
+        symbol: "JADE.BTC"
+    },
+    {
+        symbol: "JADE.ETH"
+    }];
 
 
 class GatewayStore extends BaseStore implements Store<State>{
@@ -32,20 +45,7 @@ class GatewayStore extends BaseStore implements Store<State>{
     setState;
     state: State = {
         backedCoins: Map({
-            JADE: [
-                {
-                    symbol: "JADE.BTC"
-                },
-                {
-                    symbol: "JADE.ETH"
-                },
-                {
-                    symbol: "TEST.BTC"
-                },
-                {
-                    symbol: "TEST.ETH"
-                },
-            ]
+            JADE: JADE_COINS
         }),
         bridgeCoins: Map(fromJS(ss.get("bridgeCoins", {}))),
         bridgeInputs: ["btc", "dash", "eth", "steem"],
