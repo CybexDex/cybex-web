@@ -109,7 +109,7 @@ class WithdrawModal extends React.Component<props, state> {
     }
     this.setState({
       withdraw_address_loading: false,
-      withdraw_address_error: false,      
+      withdraw_address_error: false,
       withdraw_address_valid: valid,
     })
     debug("Valid: ", valid);
@@ -354,9 +354,13 @@ class WithdrawModal extends React.Component<props, state> {
             tips={[
               {
                 name: "withdraw-amount",
-                isError: !amountValid,
+                isError: !amountValid && Number(withdraw_amount) != 0,
                 isI18n: true,
-                message: "transfer.errors.valid"
+                message: "gateway.low_limit",
+                messageParams: {
+                  symbol: this.props.withdrawInfo.type,
+                  amount: this.props.withdrawInfo.minValue
+                }
               },
             ]}
             muiltTips={false}
