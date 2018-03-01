@@ -141,7 +141,7 @@
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
     "disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
   },
-  "propose": "提交",
+  "propose": "提议",
   "cancel": "取消",
   "account": {
     "new_user": "新用户吗？",
@@ -1522,7 +1522,8 @@
     "review_period": "复审期开始",
     "expiration_time": "过期时间",
     "proposed_operations": "提议的操作",
-    "fee_paying_account": "付费账户"
+    "fee_paying_account": "付费账户",
+    "id": "提议ID"
   },
   "chat": {
     "title": "聊天室",
