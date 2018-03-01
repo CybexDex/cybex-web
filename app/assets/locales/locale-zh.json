@@ -3,6 +3,7 @@
     "formats": {
       "date": {
         "short_custom": "%e %b '%y",
+        "default": "%Y年 %b %e日",
         "market_history": "%e/%m %H:%M:%S",
         "market_history_us": "%m/%e %H:%M:%S"
       }
@@ -41,21 +42,21 @@
         "December"
       ],
       "abbreviated_months": [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        "一月",
+        "二月",
+        "三月",
+        "四月",
+        "五月",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
       ],
-      "am": "AM",
-      "pm": "PM"
+      "am": "上午",
+      "pm": "下午"
     }
   },
   "languages": {
