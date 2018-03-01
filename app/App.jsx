@@ -25,7 +25,7 @@ import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
 import Nav from "./components/Layout/Nav";
 import { ModalActions } from "./actions/ModalActions";
-import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
+import LogoutModal, { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 
 console.debug("Test Env: ", __TEST__);
 console.debug("Test Env: ", Array.from(__TEST__));
@@ -238,7 +238,7 @@ class App extends React.Component {
                     <BackupModal ref={backup => { this.backupModal = backup; }} />
                     <WalletUnlockModal />
                     {/* Logout Modal*/}
-                    <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID}/>
+                    <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
                     <BrowserSupportModal ref="browser_modal" />
                 </div>
             </div>

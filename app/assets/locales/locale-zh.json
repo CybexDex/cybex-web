@@ -135,7 +135,7 @@
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
     "disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
   },
-  "propose": "提交",
+  "propose": "发起提议",
   "cancel": "取消",
   "account": {
     "new_user": "新用户吗？",
@@ -1441,7 +1441,7 @@
     "asset_to_withdraw": "提现资产:",
     "support_block": "获得客户支持，请联络Jadepool:",
     "valid_address": "请输入合法的 %(coin_type)s 地址",
-    "valid_service": "网关功能错误，暂时无法有效验证提取地址，请稍后再试或联系客服人员",
+    "valid_service": "网关链接错误，暂时无法有效验证提取地址，请稍检查您的网络链接",
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
     "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",

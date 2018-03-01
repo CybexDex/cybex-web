@@ -92,19 +92,24 @@ class WithdrawModal extends React.Component<props, state> {
   }
 
   _validateAddress = async (address: string) => {
-    let { error, valid } = await verifyAddress(address,
-      this.props.account.get("name"),
-      this.props.withdrawInfo.type
-    );
-    if (error) {
+    let valid;
+    try {
+      let res = await verifyAddress(address,
+        this.props.account.get("name"),
+        this.props.withdrawInfo.type
+      );
+      debug("Verify Res: ", res);
+      valid = res.valid;
+    } catch (e) {
       return this.setState({
         withdraw_address_loading: false,
         withdraw_address_valid: false,
         withdraw_address_error: true
-      })
+      });
     }
     this.setState({
       withdraw_address_loading: false,
+      withdraw_address_error: false,      
       withdraw_address_valid: valid,
     })
     debug("Valid: ", valid);
@@ -326,7 +331,7 @@ class WithdrawModal extends React.Component<props, state> {
       gatewayServiceInvalid ||
       withdraw_amount <= 0;
 
-    let amountValid = Number(withdraw_amount) >= 0;
+    let amountValid = Number(withdraw_amount) >= withdrawInfo.minValue;
 
     return (
       <BaseModal modalId={modalId} >
@@ -345,12 +350,12 @@ class WithdrawModal extends React.Component<props, state> {
             display_balance={balance}
           />
           <ErrorTipBox
-            isTranslation={true}
+            isI18n={true}
             tips={[
               {
                 name: "withdraw-amount",
                 isError: !amountValid,
-                isTranslation: true,
+                isI18n: true,
                 message: "transfer.errors.valid"
               },
             ]}
@@ -399,12 +404,13 @@ class WithdrawModal extends React.Component<props, state> {
             </div>
           </div>
           <ErrorTipBox
-            isTranslation={true}
+            isI18n={true}
+            placeholder={true}
             tips={[
               {
                 name: "withdraw-address",
                 isError: addressInvalid,
-                isTranslation: true,
+                isI18n: true,
                 message: "gateway.valid_address",
                 messageParams: {
                   coin_type: this.props.withdrawInfo.type
@@ -413,8 +419,14 @@ class WithdrawModal extends React.Component<props, state> {
               {
                 name: "withdraw-gateway",
                 isError: gatewayServiceInvalid,
-                isTranslation: true,
+                isI18n: true,
                 message: "gateway.valid_service"
+              },
+              {
+                name: "withdraw-gateway",
+                isError: withdraw_address_loading,
+                isI18n: true,
+                message: "gateway.loading"
               },
             ]}
             muiltTips={false}
