@@ -121,6 +121,9 @@ class HelpContent extends React.Component {
             console.error(`help section not found ${this.props.path}#${this.props.section}`);
             return null;
         }
+        // return <div style={this.props.style} className="help-content" >
+        //     {this.setVars(value)}
+        // </div>;
         return <div style={this.props.style} className="help-content" dangerouslySetInnerHTML={{__html: this.setVars(value)}}/>;
     }
 }
