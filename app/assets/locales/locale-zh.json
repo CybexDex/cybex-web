@@ -6,6 +6,11 @@
         "default": "%Y年 %b %e日",
         "market_history": "%e/%m %H:%M:%S",
         "market_history_us": "%m/%e %H:%M:%S"
+      },
+      "datetime": {
+        "short_custom": "%e %b '%y",
+        "short": "%e/%m %H:%M:%S",
+        "market_history_us": "%m/%e %H:%M:%S"
       }
     },
     "names": {
