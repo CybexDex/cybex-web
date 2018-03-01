@@ -273,7 +273,7 @@ class Transfer extends React.Component {
         this.setState({ error: null });
         const { asset, amount, enableVesting, vestingPeriod, public_key } = this.state;
         const sendAmount = new Asset({ real: amount, asset_id: asset.get("id"), precision: asset.get("precision") });
-        let vest = enableVesting ? { vesting_period: vestingPeriod, public_key }: null;
+        let vest = enableVesting ? { vesting_period: vestingPeriod, public_key } : null;
         AccountActions.transfer(
             this.state.from_account.get("id"),
             this.state.to_account.get("id"),
@@ -364,8 +364,10 @@ class Transfer extends React.Component {
         let from_error = null;
         let { propose, from_account, to_account, asset, asset_id, propose_account, feeAmount,
             amount, error, to_name, from_name, memo, feeAsset, fee_asset_id, balanceError, enableVesting, vestingPeriod } = this.state;
-        let from_my_account = AccountStore.isMyAccount(from_account) || from_name === this.props.passwordAccount;
-
+        let from_my_account = !from_account
+            || AccountStore.getState().currentAccount === from_account.get("name")
+            || from_name === this.props.passwordAccount;
+        // let from_my_account = AccountStore.isMyAccount(from_account) || from_name === this.props.passwordAccount;
         if (from_account && !from_my_account && !propose) {
             from_error = <span>
                 {counterpart.translate("account.errors.not_yours")}

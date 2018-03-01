@@ -3,7 +3,13 @@
     "formats": {
       "date": {
         "short_custom": "%e %b '%y",
+        "default": "%Y年 %b %e日",
         "market_history": "%e/%m %H:%M:%S",
+        "market_history_us": "%m/%e %H:%M:%S"
+      },
+      "datetime": {
+        "short_custom": "%e %b '%y",
+        "short": "%e/%m %H:%M:%S",
         "market_history_us": "%m/%e %H:%M:%S"
       }
     },
@@ -41,21 +47,21 @@
         "December"
       ],
       "abbreviated_months": [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
+        "一月",
+        "二月",
+        "三月",
+        "四月",
+        "五月",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
       ],
-      "am": "AM",
-      "pm": "PM"
+      "am": "上午",
+      "pm": "下午"
     }
   },
   "languages": {
@@ -135,7 +141,7 @@
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
     "disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
   },
-  "propose": "发起提议",
+  "propose": "提议",
   "cancel": "取消",
   "account": {
     "new_user": "新用户吗？",
@@ -1518,7 +1524,8 @@
     "review_period": "复审期开始",
     "expiration_time": "过期时间",
     "proposed_operations": "提议的操作",
-    "fee_paying_account": "付费账户"
+    "fee_paying_account": "付费账户",
+    "id": "提议ID"
   },
   "chat": {
     "title": "聊天室",
