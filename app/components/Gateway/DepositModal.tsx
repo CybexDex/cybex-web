@@ -25,8 +25,7 @@ const style = {
   top: 0
 };
 
-type props = { modalId, depositInfo?, open?, className?, asset, balances?};
-
+type props = { modalId, depositInfo?, open?, className?, type, asset, balances?};
 
 class DepositModal extends React.Component<props, { fadeOut }> {
 
@@ -43,12 +42,11 @@ class DepositModal extends React.Component<props, { fadeOut }> {
 
   getNewAddress = () => {
     let { depositInfo } = this.props;
-    console.debug("Get New Address: ", depositInfo);
-    GatewayActions.updateDepositAddress(depositInfo.accountName, depositInfo.asset, true);
+    GatewayActions.updateDepositAddress(depositInfo.accountName, depositInfo.type, true);
   }
 
   render() {
-    let { asset, depositInfo, modalId } = this.props;
+    let { asset, depositInfo, modalId, type } = this.props;
     let currentBalance = this.props.balances.find(b => {
       return b && b.get && b.get("asset_type") === this.props.asset.get("id");
     });
@@ -57,11 +55,10 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       precision: asset.get("precision"),
       amount: currentBalance ? currentBalance.get("balance") : 0
     });
-    let assetName = asset.get("symbol");
-    console.debug("MODAL:", this.props, currentBalance, balance);
+    let assetName = type;
     return (
       <BaseModal modalId={modalId} >
-        <h3><Translate content={"gateway.deposit"} /> {assetName}</h3>
+        <h3><Translate content={"gateway.deposit"} /> {asset.get("symbol")}({assetName})</h3>
         <p>
           {<Translate unsafe content="gateway.add_funds" account={depositInfo.accountName} />}
         </p>
@@ -104,9 +101,11 @@ DepositModalWrapper = connect(DepositModalWrapper, {
   },
   getProps(props) {
     let { modalId } = props;
+    
     return {
       open: GatewayStore.getState().modals.get(modalId),
       depositInfo: GatewayStore.getState().depositInfo,
+      type: GatewayStore.getState().depositInfo.type,
       asset: GatewayStore.getState().depositInfo.asset
     };
   }

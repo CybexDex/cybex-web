@@ -48,6 +48,7 @@ export async function getDepositInfo(accountName, asset: string, needNew?): Prom
       address
       accountName
       asset
+      type
       createAt
     }
   }
@@ -61,6 +62,7 @@ query GetAddress($accountName: String!, $asset: String!) {
     address
     accountName
     asset
+    type
     createAt
   }
 }
@@ -83,6 +85,7 @@ export async function getWithdrawInfo(type: string): Promise<{ fee, minValue }> 
     withdrawInfo(type:$type) {
       fee,
       minValue,
+      asset,
       type,
       gatewayAccount
     }

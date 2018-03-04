@@ -5,6 +5,10 @@ export const JadePool = __TEST__ ? {
   "ADDRESS_TYPES": {
     "TEST.ETH": "ETH",
     "TEST.BTC": "BTC"
+  },
+  "ADDRESS_ASSETS": {
+    "ETH": "TEST.ETH",
+    "BTC": "TEST.BTC"
   }
 } : {
     "GATEWAY_ACCOUNT": "jadepool",
@@ -12,6 +16,10 @@ export const JadePool = __TEST__ ? {
     "ADDRESS_TYPES": {
       "JADE.ETH": "ETH",
       "JADE.BTC": "BTC"
+    },
+    "ADDRESS_ASSETS": {
+      "ETH": "JADE.ETH",
+      "BTC": "JADE.BTC"
     }
   };
 

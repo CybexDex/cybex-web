@@ -74,7 +74,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
 
     _depositClick = (info) => {
         let { account } = this.props;
-        GatewayActions.showDepositModal(account.get("name"), "TEST.ETH");
+        GatewayActions.showDepositModal(account.get("name"), "JADE.ETH");
     }
     _withdrawClick = (info) => {
         // this._toggleQR(true);
@@ -82,7 +82,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
         // setTimeout(() => {
         //     this.setState({ titleClass: undefined });
         // }, 250);
-        GatewayActions.showWithdrawModal("TEST.ETH");
+        GatewayActions.showWithdrawModal("JADE.ETH");
     }
 
     render() {
