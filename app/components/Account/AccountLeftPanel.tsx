@@ -74,7 +74,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
 
     _depositClick = (info) => {
         let { account } = this.props;
-        GatewayActions.showDepositModal(account.get("name"), "JADE.ETH");
+        GatewayActions.showDepositModal(account.get("name"), "TEST.ETH");
     }
     _withdrawClick = (info) => {
         // this._toggleQR(true);
@@ -82,8 +82,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
         // setTimeout(() => {
         //     this.setState({ titleClass: undefined });
         // }, 250);
-
-        GatewayActions.showWithdrawModal("CROWDN");
+        GatewayActions.showWithdrawModal("TEST.ETH");
     }
 
     render() {
@@ -118,7 +117,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
                             />
                             <div className="grid-container no-margin full-width-content" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
-                                {/* {isMyAccount && <Translate component="button" content="wallet.link_deposit" className="button" onClick={this._depositClick} />} */}
+                                {isMyAccount && <Translate component="button" content="wallet.link_deposit" className="button" onClick={this._depositClick} />}
                                 {linkBtn}
                             </div>
                         </div>
