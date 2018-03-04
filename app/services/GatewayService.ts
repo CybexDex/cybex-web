@@ -37,26 +37,42 @@ const client = new ApolloClient({
 });
 
 
-export async function getDepositInfo(accountName, type: string): Promise<{ address, accountName, type, time }> {
+export async function getDepositInfo(accountName, asset: string, needNew?): Promise<{ address, accountName, asset, time }> {
+  debug("Get Deposit: ", accountName, asset, needNew);
   let mutation = gql`
-  mutation Mutation($accountName: String!, $type: String!) {
+  mutation GenNewAddress($accountName: String!, $asset: String!) {
     newDepositAddress(
       accountName: $accountName,
-      asset: $type
+      asset: $asset
     ) {
       address
-      account: accountName
-      type: asset
-      asset: cybexAsset
-      timestamp
+      accountName
+      asset
+      createAt
     }
   }
 `;
-
-  return await impl("mutate", {
+  let query = gql`
+query GetAddress($accountName: String!, $asset: String!) {
+  getDepositAddress(
+    accountName: $accountName,
+    asset: $asset
+  ) {
+    address
+    accountName
+    asset
+    createAt
+  }
+}
+`;
+  return needNew ? await impl("mutate", {
     mutation,
-    variables: { accountName, type },
-  }, "newDepositAddress");
+    variables: { accountName, asset },
+  }, "newDepositAddress") :
+    await impl("query", {
+      query,
+      variables: { accountName, asset },
+    }, "getDepositAddress");
 
 };
 
@@ -79,10 +95,10 @@ export async function getWithdrawInfo(type: string): Promise<{ fee, minValue }> 
 };
 
 
-export async function verifyAddress(address: string, accountName: string, type: string): Promise<{ valid, error?}> {
+export async function verifyAddress(address: string, accountName: string, asset: string): Promise<{ valid, error?}> {
   let query = gql`
-  query VerifyAddress($type: String!, $accountName: String!, $address: String!) {
-    verifyAddress(asset:$type, accountName: $accountName, address: $address) {
+  query VerifyAddress($asset: String!, $accountName: String!, $address: String!) {
+    verifyAddress(asset:$asset, accountName: $accountName, address: $address) {
       valid,
       asset
     }
@@ -90,7 +106,7 @@ export async function verifyAddress(address: string, accountName: string, type: 
 `;
   return await impl("query", {
     query,
-    variables: { type, accountName, address },
+    variables: { asset, accountName, address },
   }, "verifyAddress");
 };
 

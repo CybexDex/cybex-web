@@ -327,6 +327,7 @@ class WithdrawModal extends React.Component<props, state> {
 
     let disableSubmit =
       !withdraw_address ||
+      withdraw_address_loading ||
       addressInvalid ||
       gatewayServiceInvalid ||
       withdraw_amount <= 0;
@@ -339,6 +340,11 @@ class WithdrawModal extends React.Component<props, state> {
           <h3><Translate content={"gateway.withdraw"} />
             {this.props.receive_asset_name}({this.props.receive_asset_symbol})
         </h3>
+        </div>
+        <div className="content-block">
+          <p>
+            {<Translate unsafe content="gateway.withdraw_funds" asset={this.props.receive_asset_symbol} />}
+          </p>
         </div>
         <div className="content-block">
           <AmountSelector label="modal.withdraw.amount"

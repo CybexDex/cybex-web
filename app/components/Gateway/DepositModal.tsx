@@ -43,7 +43,8 @@ class DepositModal extends React.Component<props, { fadeOut }> {
 
   getNewAddress = () => {
     let { depositInfo } = this.props;
-    GatewayActions.updateDepositAddress(depositInfo.account, depositInfo.type);
+    console.debug("Get New Address: ", depositInfo);
+    GatewayActions.updateDepositAddress(depositInfo.accountName, depositInfo.asset, true);
   }
 
   render() {
@@ -62,7 +63,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       <BaseModal modalId={modalId} >
         <h3><Translate content={"gateway.deposit"} /> {assetName}</h3>
         <p>
-          {<Translate unsafe content="gateway.add_funds" account={depositInfo.account} />}
+          {<Translate unsafe content="gateway.add_funds" account={depositInfo.accountName} />}
         </p>
         {currentBalance && <CurrentBalance currentBalance={balance} asset={asset} />}
         <div className="SimpleTrade__withdraw-row">
@@ -83,7 +84,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
             </span>
           </label>}
           <div className="SimpleTrade__withdraw-row">
-            <p>Current address is generated {moment(depositInfo.timestamp).fromNow()}</p>
+            <p>Current address is generated {moment(depositInfo.createAt).fromNow()}</p>
           </div>
           <div className="button-group SimpleTrade__withdraw-row">
             <button className="button" onClick={this.getNewAddress} type="submit" >
