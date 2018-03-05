@@ -1232,6 +1232,7 @@
     "wallet_lose_warning": "重要！如果你丢失了钱包或者忘记了钱包密码，你将无法访问钱包以及其中的私钥数据及相关数字资产。确保你已经创建了备份文件，并且备份文件放置在安全处，并且你的密码安全。",
     "tips_deposit": "进行充值",
     "link_deposit": "充值",
+    "link_deposit_asset": "充值 %(asset)s",
     "tips_dashboard": "查看仪表盘",
     "tips_transfer": "发起转账",
     "link_transfer": "转账",

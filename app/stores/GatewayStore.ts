@@ -26,7 +26,7 @@ type State = {
     withdrawInfo?,
 };
 declare const __TEST__;
-const JADE_COINS = __TEST__ ?
+export const JADE_COINS = __TEST__ ?
     [{
         symbol: "TEST.BTC"
     },

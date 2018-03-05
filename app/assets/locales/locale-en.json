@@ -1207,6 +1207,7 @@
     "wallet_lose_warning": "<strong>IMPORTANT: If you lose your local wallet or your pass phrase you will be unable to access any of your funds again. Make sure you store the backup somewhere safe, and memorize or write down your password!</strong>",
     "tips_deposit": "Make a deposit",
     "link_deposit": "Deposits",
+    "link_deposit_asset": "Deposit %(asset)s",    
     "tips_dashboard": "See your dashboard",
     "tips_transfer": "Make a transfer",
     "link_transfer": "Transfers",

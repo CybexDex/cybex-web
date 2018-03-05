@@ -10,6 +10,7 @@ import SettingsActions from "actions/SettingsActions";
 
 import { JadePool } from "services/GatewayConfig";
 import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
+import { JADE_COINS } from "stores/GatewayStore";
 
 class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
     last_path = null;
@@ -72,9 +73,9 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
         SettingsActions.changeViewSetting({ showDepositQR: value });
     }
 
-    _depositClick = (info) => {
+    _depositClick = (typeCode) => {
         let { account } = this.props;
-        GatewayActions.showDepositModal(account.get("name"), "JADE.ETH");
+        return GatewayActions.showDepositModal(account.get("name"), JADE_COINS[typeCode].symbol);
     }
     _withdrawClick = (info) => {
         // this._toggleQR(true);
@@ -117,8 +118,10 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
                             />
                             <div className="grid-container no-margin full-width-content" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
-                                {isMyAccount && <Translate component="button" content="wallet.link_deposit" className="button" onClick={this._depositClick} />}
                                 {linkBtn}
+                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="button" asset={JADE_COINS[1].symbol} onClick={() => this._depositClick(1)} />}
+                
+                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="margin-top button" asset={JADE_COINS[0].symbol} onClick={() => this._depositClick(0)} />}
                             </div>
                         </div>
                         <section className="block-list">
