@@ -43,7 +43,7 @@ type state = {
   withdraw_address_loading,
   withdraw_address_error?,
   withdraw_address_valid,
-  error, balanceError, hasPoolBalance, hasBalance, memo, feeStatus, from_account, fee_asset_id?, feeAmount?, fadeOut, withdraw_amount, withdraw_address
+  error, balanceError, hasPoolBalance, hasBalance, memo, feeStatus, from_account, fee_asset_id?, feeAmount?, fadeOut, useCybAsFee?, withdraw_amount, withdraw_address
 };
 
 class WithdrawModal extends React.Component<props, state> {
@@ -72,6 +72,7 @@ class WithdrawModal extends React.Component<props, state> {
       hasBalance: null,
       balanceError: null,
       error: false,
+      useCybAsFee: true,
       withdraw_address_loading: false,
       withdraw_address_valid: false
     };
@@ -196,7 +197,6 @@ class WithdrawModal extends React.Component<props, state> {
     fee_asset_types = fee_asset_types.filter(a => {
       return hasFeePoolBalance(a) && hasBalance(a);
     });
-
     return { fee_asset_types };
   }
 
@@ -238,6 +238,13 @@ class WithdrawModal extends React.Component<props, state> {
     this.nestedRef = ref;
   }
 
+  onFeeCheckboxChange(e) {
+    let useCybAsFee: boolean = e.target.checked;
+    this.setState({
+      useCybAsFee
+    });
+  }
+
   _checkBalance() {
     const { feeAmount, withdraw_amount } = this.state;
     const { asset } = this.props;
@@ -252,6 +259,8 @@ class WithdrawModal extends React.Component<props, state> {
   }
 
   onSubmit = () => {
+    let { useCybAsFee } = this.state;
+    console.debug("Use Cyb As Fee", useCybAsFee);
     let precision = this.props.asset.get("precision");
     let withdrawAmount = calcAmount(this.state.withdraw_amount, precision);
     let gatewayFeeAmount = calcAmount(this.props.withdrawInfo.fee, precision);
@@ -262,7 +271,7 @@ class WithdrawModal extends React.Component<props, state> {
       this.props.asset.get("id"),
       "withdraw:" + GATEWAY_ID + ":" + this.props.withdrawInfo.type + ":" + this.state.withdraw_address,
       null,
-      "1.3.0"
+      useCybAsFee ? "1.3.0" : this.props.asset.get("id")
     );
   }
 
@@ -286,6 +295,7 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_address_valid,
       withdraw_address_loading,
       withdraw_address_error,
+      useCybAsFee,
       memo
     } = this.state;
 
@@ -333,17 +343,16 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_amount <= 0;
 
     let amountValid = Number(withdraw_amount) >= withdrawInfo.minValue;
-
     return (
       <BaseModal modalId={modalId} >
         <div className="content-block">
           <h3><Translate content={"gateway.withdraw"} />
-            {this.props.receive_asset_name}({this.props.receive_asset_symbol})
+            {this.props.asset.get("symbol")}({this.props.receive_asset_symbol})
         </h3>
         </div>
         <div className="content-block">
           <p>
-            {<Translate unsafe content="gateway.withdraw_funds" asset={this.props.receive_asset_symbol} />}
+            {<Translate unsafe content="gateway.withdraw_funds" type={this.props.receive_asset_symbol} asset={this.props.asset.get("symbol")} />}
           </p>
         </div>
         <div className="content-block">
@@ -402,6 +411,15 @@ class WithdrawModal extends React.Component<props, state> {
               </div>
             </div>
           </div>) : null}
+        <div className="content-block">
+          <div className="inline-label use-cyb">
+            <Translate className="left-label" component="lebel" content="modal.withdraw.cyb_fee" />
+            <div className="switch">
+              <input id="useCybAsFee" type="checkbox" value={useCybAsFee} defaultChecked={true} onChange={this.onFeeCheckboxChange.bind(this)} />
+              <label htmlFor="useCybAsFee" />
+            </div>
+          </div>
+        </div>
         <div className="content-block">
           <label className="left-label">
             <Translate component="span" content="modal.withdraw.address" />

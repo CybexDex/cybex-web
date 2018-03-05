@@ -1297,7 +1297,8 @@
     "withdraw": {
       "amount": "Amount to Withdraw",
       "address": "Withdraw to Address",
-      "submit": "Withdraw"
+      "submit": "Withdraw",
+      "cyb_fee": "Use CYB as the Cybex transfer fee for this operation"      
     },
     "deposit": {
       "amount": "Amount to Deposit",
@@ -1381,7 +1382,7 @@
     "website": "Visit the website",
     "deposit_to": "Please send your %(asset)s to the address below",
     "add_funds": "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Jadepool.<br>* The timeliness of this transfer cannot be promised. ",
-    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(asset)s account. <br>* The timeliness of this transfer cannot be promised. ",
+    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. ",
     "balance_asset": "Current %(asset)s balance",
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "balance": "Current balance",
