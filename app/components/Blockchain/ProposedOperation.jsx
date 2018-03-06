@@ -22,9 +22,10 @@ function getVestingPeriodFromOp(op) {
     if (
         !op.extensions ||
         !op.extensions.length ||
-        !op.extensions[0][0]
+        !op.extensions[0][1]
     ) return 0;
-    return op.extensions[0][0]["vesting_period"] || 0;
+    console.debug("Vesting: ", op.extensions[0][1]);
+    return op.extensions[0][1]["vesting_period"] || 0;
 }
 
 require("./operations.scss");
