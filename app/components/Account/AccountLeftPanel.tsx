@@ -121,7 +121,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
                                 {linkBtn}
                                 {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="button" asset={JADE_COINS[1].symbol} onClick={() => this._depositClick(1)} />}
                 
-                                {/* {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="margin-top button" asset={JADE_COINS[0].symbol} onClick={() => this._depositClick(0)} />} */}
+                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="margin-top button" asset={JADE_COINS[0].symbol} onClick={() => this._depositClick(0)} />}
                             </div>
                         </div>
                         <section className="block-list">

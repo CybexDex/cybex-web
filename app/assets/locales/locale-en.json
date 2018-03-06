@@ -1013,6 +1013,7 @@
     "lowest_ask": "Lowest ask",
     "highest_bid": "Highest bid",
     "total": "Total",
+    "total_bidask": "Total",    
     "value": "Value",
     "price": "Price",
     "latest": "Latest",
