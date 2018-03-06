@@ -4,7 +4,6 @@ import {} from "services//GatewayConfig";
 
 class GatewayContainer extends React.Component<any, any> {
   componentWillMount() {
-    GatewayActions.updateWithdrawInfo()
   }
   render() {
     return (

@@ -11,7 +11,9 @@ import SettingsActions from "actions/SettingsActions";
 import { JadePool } from "services/GatewayConfig";
 import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
 import { JADE_COINS } from "stores/GatewayStore";
-
+const cybexRainbow = require("assets/cybex_rainbow.png");
+const insiders = require("assets/insiders.json");
+console.debug("insiders: ", insiders);
 class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
     last_path = null;
     static propTypes = {
@@ -120,7 +122,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
                                 {linkBtn}
                                 {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="button" asset={JADE_COINS[1].symbol} onClick={() => this._depositClick(1)} />}
-                
+
                                 {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="margin-top button" asset={JADE_COINS[0].symbol} onClick={() => this._depositClick(0)} />}
                             </div>
                         </div>
