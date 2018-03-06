@@ -155,8 +155,7 @@ class SettingsStore {
     init() {
         return new Promise((resolve) => {
             if (this.initDone) resolve();
-            this.starredKey = "markets_game";
-            // this.starredKey = this._getChainKey("markets");
+            this.starredKey = this._getChainKey("markets");
             this.marketsKey = this._getChainKey("userMarkets");
             // Default markets setup
             let topMarkets = {
@@ -179,9 +178,9 @@ class SettingsStore {
                 markets_game: [
                     "CYBX", "BTCX", "ETHX", "LTCX", "BCHX", "XRPX"
                 ],
-                markets_39f5e2ed: [ // TESTNET
-                    "PEG.FAKEUSD", "BTWTY"
-                ]
+                markets_90be01e8: [ // Main Net
+                    "CYB", "JADE.ETH", "JADE.BTC"
+                ],
             };
 
             let bases = {
@@ -196,7 +195,10 @@ class SettingsStore {
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "TEST"
-                ]
+                ],
+                markets_90be01e8: [ // Main Net
+                    "CYB", "JADE.ETH", "JADE.BTC"
+                ],
             };
 
             let coreAssets = { markets_c577bfd9: "CYB", markets_4018d784: "CYB", markets_39f5e2ed: "TEST" };
