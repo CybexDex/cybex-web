@@ -11,9 +11,7 @@ import SettingsActions from "actions/SettingsActions";
 import { JadePool } from "services/GatewayConfig";
 import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
 import { JADE_COINS } from "stores/GatewayStore";
-const cybexRainbow = require("assets/cybex_rainbow.png");
-const insiders = require("assets/insiders.json");
-console.debug("insiders: ", insiders);
+
 class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
     last_path = null;
     static propTypes = {

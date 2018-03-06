@@ -1,6 +1,6 @@
 import React from "react";
 import FormattedAsset from "../Utility/FormattedAsset";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import classNames from "classnames";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -10,11 +10,22 @@ import LinkToAccountById from "../Utility/LinkToAccountById";
 import LinkToAssetById from "../Utility/LinkToAssetById";
 import BindToChainState from "../Utility/BindToChainState";
 import FormattedPrice from "../Utility/FormattedPrice";
-import {ChainStore, ChainTypes as grapheneChainTypes} from "cybexjs";
+import { ChainStore, ChainTypes as grapheneChainTypes } from "cybexjs";
 import account_constants from "chain/account_constants";
 import MemoText from "./MemoText";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
-const {operations} = grapheneChainTypes;
+import moment from "moment";
+
+const { operations } = grapheneChainTypes;
+
+function getVestingPeriodFromOp(op) {
+    if (
+        !op.extensions ||
+        !op.extensions.length ||
+        !op.extensions[0][0]
+    ) return 0;
+    return op.extensions[0][0]["vesting_period"] || 0;
+}
 
 require("./operations.scss");
 
@@ -55,13 +66,13 @@ class Row extends React.Component {
     }
 
     render() {
-        let {block, fee, color, type, hideDate, hideFee, hideOpLabel} = this.props;
+        let { block, fee, color, type, hideDate, hideFee, hideOpLabel } = this.props;
 
         fee.amount = parseInt(fee.amount, 10);
         let endDate = counterpart.localize(new Date(this.props.expiration), { format: 'short' });
 
         return (
-            <div style={{padding: "5px 0", textAlign: "left"}}>
+            <div style={{ padding: "5px 0", textAlign: "left" }}>
                 {hideOpLabel ? null : (
                     <span className="left-td">
                         <a href onClick={this.showDetails}>
@@ -76,7 +87,7 @@ class Row extends React.Component {
                         </span>)}
                 </span>
                 {this.props.expiration ? (
-                    <div style={{paddingTop: 5, fontSize: "0.85rem"}}>
+                    <div style={{ paddingTop: 5, fontSize: "0.85rem" }}>
                         <span>#{this.props.id} | </span>
                         <span><Translate content="proposal.expires" />: {endDate}</span>
 
@@ -112,21 +123,21 @@ class ProposedOperation extends React.Component {
     // }
 
     linkToAccount(name_or_id) {
-        if(!name_or_id) return <span>-</span>;
+        if (!name_or_id) return <span>-</span>;
         return utils.is_object_id(name_or_id) ?
-            <LinkToAccountById account={name_or_id}/> :
+            <LinkToAccountById account={name_or_id} /> :
             <Link to={`/account/${name_or_id}/overview`}>{name_or_id}</Link>;
     }
 
     linkToAsset(symbol_or_id) {
-        if(!symbol_or_id) return <span>-</span>;
+        if (!symbol_or_id) return <span>-</span>;
         return utils.is_object_id(symbol_or_id) ?
-            <LinkToAssetById asset={symbol_or_id}/> :
+            <LinkToAssetById asset={symbol_or_id} /> :
             <Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;
     }
 
     render() {
-        let {op, current, block} = this.props;
+        let { op, current, block } = this.props;
         let line = null, column = null, color = "info";
 
         switch (ops[op[0]]) { // For a list of trx types, see chain_types.coffee
@@ -135,10 +146,12 @@ class ProposedOperation extends React.Component {
 
                 let memoComponent = null;
 
-                if(op[1].memo) {
+                if (op[1].memo) {
                     memoComponent = <MemoText memo={op[1].memo} />
                 }
 
+                let vesting = getVestingPeriodFromOp(op[1]);
+                let vestingStr = !vesting ? "none" : moment.duration(vesting * 1000).humanize();
                 color = "success";
                 op[1].amount.amount = parseFloat(op[1].amount.amount);
 
@@ -147,9 +160,10 @@ class ProposedOperation extends React.Component {
                         <TranslateWithLinks
                             string="proposal.transfer"
                             keys={[
-                                {type: "account", value: op[1].from, arg: "from"},
-                                {type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null},
-                                {type: "account", value: op[1].to, arg: "to"}
+                                { type: "account", value: op[1].from, arg: "from" },
+                                { type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null },
+                                { type: "account", value: op[1].to, arg: "to" },
+                                { value: vestingStr, arg: "vesting"}
                             ]}
                         />
                         {memoComponent}
@@ -164,16 +178,16 @@ class ProposedOperation extends React.Component {
                 let isAsk = market_utils.isAskOp(op[1]);
 
                 column = (
-                        <span>
-                            <TranslateWithLinks
-                                string={isAsk ? "proposal.limit_order_sell" : "proposal.limit_order_buy"}
-                                keys={[
-                                    {type: "account", value: op[1].seller, arg: "account"},
-                                    {type: "amount", value: isAsk ? op[1].amount_to_sell : op[1].min_to_receive, arg: "amount"},
-                                    {type: "price", value: {base: isAsk ? op[1].min_to_receive : op[1].amount_to_sell, quote: isAsk ? op[1].amount_to_sell : op[1].min_to_receive}, arg: "price"}
-                                ]}
-                            />
-                        </span>
+                    <span>
+                        <TranslateWithLinks
+                            string={isAsk ? "proposal.limit_order_sell" : "proposal.limit_order_buy"}
+                            keys={[
+                                { type: "account", value: op[1].seller, arg: "account" },
+                                { type: "amount", value: isAsk ? op[1].amount_to_sell : op[1].min_to_receive, arg: "amount" },
+                                { type: "price", value: { base: isAsk ? op[1].min_to_receive : op[1].amount_to_sell, quote: isAsk ? op[1].amount_to_sell : op[1].min_to_receive }, arg: "price" }
+                            ]}
+                        />
+                    </span>
                 );
                 break;
 
@@ -206,10 +220,10 @@ class ProposedOperation extends React.Component {
                         <TranslateWithLinks
                             string="proposal.call_order_update"
                             keys={[
-                                {type: "account", value: op[1].funding_account, arg: "account"},
-                                {type: "asset", value: op[1].delta_debt.asset_id, arg: "debtSymbol"},
-                                {type: "amount", value: op[1].delta_debt, arg: "debt"},
-                                {type: "amount", value: op[1].delta_collateral, arg: "collateral"}
+                                { type: "account", value: op[1].funding_account, arg: "account" },
+                                { type: "asset", value: op[1].delta_debt.asset_id, arg: "debtSymbol" },
+                                { type: "amount", value: op[1].delta_debt, arg: "debt" },
+                                { type: "amount", value: op[1].delta_collateral, arg: "collateral" }
                             ]}
                         />
                     </span>
@@ -218,9 +232,9 @@ class ProposedOperation extends React.Component {
 
             case "key_create":
                 column = (
-                        <span>
-                            <Translate component="span" content="proposal.create_key" />
-                        </span>
+                    <span>
+                        <Translate component="span" content="proposal.create_key" />
+                    </span>
                 );
                 break;
 
@@ -250,7 +264,7 @@ class ProposedOperation extends React.Component {
                         <TranslateWithLinks
                             string="proposal.update_account"
                             keys={[
-                                {type: "account", value: op[1].account, arg: "account"},
+                                { type: "account", value: op[1].account, arg: "account" },
                             ]}
                         />
                     </span>
@@ -261,12 +275,12 @@ class ProposedOperation extends React.Component {
             case "account_whitelist":
 
                 let label = op[1].new_listing === listings.no_listing ? "unlisted_by" :
-                              op[1].new_listing === listings.white_listed ? "whitelisted_by" :
-                              "blacklisted_by";
+                    op[1].new_listing === listings.white_listed ? "whitelisted_by" :
+                        "blacklisted_by";
                 column = (
                     <span>
                         <BindToChainState.Wrapper lister={op[1].authorizing_account} listee={op[1].account_to_list}>
-                            { ({lister, listee}) =>
+                            {({ lister, listee }) =>
                                 <Translate
                                     component="span"
                                     content={"transaction." + label}
@@ -296,20 +310,20 @@ class ProposedOperation extends React.Component {
                 break;
 
             case "account_upgrade":
-                if( op[1].upgrade_to_lifetime_member ) {
-                   column = (
-                       <span>
-                       {this.linkToAccount(op[1].account_to_upgrade) } &nbsp;
+                if (op[1].upgrade_to_lifetime_member) {
+                    column = (
+                        <span>
+                            {this.linkToAccount(op[1].account_to_upgrade)} &nbsp;
                            <Translate component="span" content="proposal.lifetime_upgrade_account" />
-                       </span>
-                   );
+                        </span>
+                    );
                 } else {
-                   column = (
-                       <span>
-                       {this.linkToAccount(op[1].account_to_upgrade) } &nbsp;
+                    column = (
+                        <span>
+                            {this.linkToAccount(op[1].account_to_upgrade)} &nbsp;
                            <Translate component="span" content="proposal.annual_upgrade_account" />
-                       </span>
-                   );
+                        </span>
+                    );
 
                 }
                 break;
@@ -329,14 +343,14 @@ class ProposedOperation extends React.Component {
                 color = "warning";
                 column = (
                     <TranslateWithLinks
-                            string="proposal.asset_create"
-                            keys={[
-                                {type: "account", value: op[1].issuer, arg: "account"}
-                            ]}
-                            params={{
-                                asset: op[1].symbol
-                            }}
-                        />
+                        string="proposal.asset_create"
+                        keys={[
+                            { type: "account", value: op[1].issuer, arg: "account" }
+                        ]}
+                        params={{
+                            asset: op[1].symbol
+                        }}
+                    />
                 );
                 break;
 
@@ -345,12 +359,12 @@ class ProposedOperation extends React.Component {
                 color = "warning";
                 column = (
                     <TranslateWithLinks
-                            string="proposal.asset_update"
-                            keys={[
-                                {type: "account", value: op[1].issuer, arg: "account"},
-                                {type: "asset", value: op[1].asset_to_update, arg: "asset"}
-                            ]}
-                        />
+                        string="proposal.asset_update"
+                        keys={[
+                            { type: "account", value: op[1].issuer, arg: "account" },
+                            { type: "asset", value: op[1].asset_to_update, arg: "asset" }
+                        ]}
+                    />
                 );
                 break;
 
@@ -360,8 +374,8 @@ class ProposedOperation extends React.Component {
                     <TranslateWithLinks
                         string="proposal.feed_producer"
                         keys={[
-                            {type: "account", value: op[1].issuer, arg: "account"},
-                            {type: "asset", value: op[1].asset_to_update, arg: "asset"}
+                            { type: "account", value: op[1].issuer, arg: "account" },
+                            { type: "asset", value: op[1].asset_to_update, arg: "asset" }
                         ]}
                     />
                 );
@@ -370,7 +384,7 @@ class ProposedOperation extends React.Component {
             case "asset_issue":
                 color = "warning";
 
-                if(op[1].memo) {
+                if (op[1].memo) {
                     memoComponent = <MemoText memo={op[1].memo} />
                 }
 
@@ -380,9 +394,9 @@ class ProposedOperation extends React.Component {
                         <TranslateWithLinks
                             string="proposal.asset_issue"
                             keys={[
-                                {type: "account", value: op[1].issuer, arg: "account"},
-                                {type: "amount", value: op[1].asset_to_issue, arg: "amount"},
-                                {type: "account", value: op[1].issue_to_account, arg: "to"},
+                                { type: "account", value: op[1].issuer, arg: "account" },
+                                { type: "amount", value: op[1].asset_to_issue, arg: "amount" },
+                                { type: "account", value: op[1].issue_to_account, arg: "to" },
                             ]}
                         />
                         {memoComponent}
@@ -396,8 +410,8 @@ class ProposedOperation extends React.Component {
                         <TranslateWithLinks
                             string="proposal.asset_reserve"
                             keys={[
-                                {type: "account", value: op[1].payer, arg: "account"},
-                                {type: "amount", value: op[1].amount_to_reserve, arg: "amount"}
+                                { type: "account", value: op[1].payer, arg: "account" },
+                                { type: "amount", value: op[1].amount_to_reserve, arg: "amount" }
                             ]}
                         />
                     </span>
@@ -406,14 +420,14 @@ class ProposedOperation extends React.Component {
 
             case "asset_fund_fee_pool":
                 color = "warning";
-                let asset = ChainStore.getAsset( op[1].asset_id );
-                if( asset ) asset = asset.get( "symbol" );
+                let asset = ChainStore.getAsset(op[1].asset_id);
+                if (asset) asset = asset.get("symbol");
                 else asset = op[1].asset_id;
                 column = (
                     <span>
                         {this.linkToAccount(op[1].from_account)} &nbsp;
-                        <Translate component="span" content="proposal.fund_pool"  asset={asset} />
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset="1.3.0" />
+                        <Translate component="span" content="proposal.fund_pool" asset={asset} />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount} asset="1.3.0" />
                     </span>
                 );
                 break;
@@ -423,7 +437,7 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         <Translate component="span" content="proposal.asset_settle" />
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
                     </span>
                 );
                 break;
@@ -436,12 +450,12 @@ class ProposedOperation extends React.Component {
                         &nbsp;{this.linkToAsset(op[1].asset_to_settle)}
                         &nbsp;<Translate component="span" content="proposal.at" />
                         &nbsp;<FormattedPrice
-                                style={{fontWeight: "bold"}}
-                                quote_amount={op[1].settle_price.quote.amount}
-                                quote_asset={op[1].settle_price.quote.asset_id}
-                                base_asset={op[1].settle_price.base.asset_id}
-                                base_amount={op[1].settle_price.base.amount}
-                            />
+                            style={{ fontWeight: "bold" }}
+                            quote_amount={op[1].settle_price.quote.amount}
+                            quote_asset={op[1].settle_price.quote.asset_id}
+                            base_asset={op[1].settle_price.base.asset_id}
+                            base_amount={op[1].settle_price.base.amount}
+                        />
                     </span>
                 );
                 break;
@@ -487,7 +501,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.witness_pay" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={"1.3.0"} />
+                            &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount} asset={"1.3.0"} />
                             <Translate component="span" content="proposal.to" />
                             &nbsp;{this.linkToAccount(op[1].witness_account)}
                         </span>
@@ -496,7 +510,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.received" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount} asset={"1.3.0"} />
+                            &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount} asset={"1.3.0"} />
                             <Translate component="span" content="proposal.from" />
                             &nbsp;{this.linkToAccount(op[1].witness_account)}
                         </span>
@@ -576,16 +590,16 @@ class ProposedOperation extends React.Component {
                 color = "success";
                 o = op[1];
                 column = (
-                        <span>
-                            {this.linkToAccount(op[1].account_id)}&nbsp;
+                    <span>
+                        {this.linkToAccount(op[1].account_id)}&nbsp;
                             <Translate component="span" content="proposal.paid" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].pays.amount} asset={op[1].pays.asset_id} />
-                            &nbsp;<Translate component="span" content="proposal.obtain" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].receives.amount} asset={op[1].receives.asset_id} />
-                            &nbsp;<Translate component="span" content="proposal.at" />
-                            &nbsp;<FormattedPrice base_asset={o.pays.asset_id} base_amount={o.pays.amount}
-                                                  quote_asset={o.receives.asset_id} quote_amount={o.receives.amount}  />
-                        </span>
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].pays.amount} asset={op[1].pays.asset_id} />
+                        &nbsp;<Translate component="span" content="proposal.obtain" />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].receives.amount} asset={op[1].receives.asset_id} />
+                        &nbsp;<Translate component="span" content="proposal.at" />
+                        &nbsp;<FormattedPrice base_asset={o.pays.asset_id} base_amount={o.pays.amount}
+                            quote_asset={o.receives.asset_id} quote_amount={o.receives.amount} />
+                    </span>
                 );
                 break;
 
@@ -610,7 +624,7 @@ class ProposedOperation extends React.Component {
                     <span>
                         &nbsp;{this.linkToAccount(op[1].creator)}
                         <Translate component="span" content="proposal.vesting_balance_create" />
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
                         &nbsp;{this.linkToAccount(op[1].owner)}
                     </span>
                 );
@@ -621,8 +635,8 @@ class ProposedOperation extends React.Component {
                     <TranslateWithLinks
                         string={"proposal.vesting_balance_withdraw"}
                         keys={[
-                            {type: "account", value: op[1].owner, arg: "account"},
-                            {type: "amount", value: op[1].amount, arg: "amount"}
+                            { type: "account", value: op[1].owner, arg: "account" },
+                            { type: "amount", value: op[1].amount, arg: "amount" }
                         ]}
                     />
                 );
@@ -632,7 +646,7 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         <Translate component="span" content="proposal.bond_create_offer" />
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
                     </span>
                 );
                 break;
@@ -651,7 +665,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.bond_accept_offer" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount_borrowed.amount} asset={op[1].amount_borrowed.asset_id} />
+                            &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount_borrowed.amount} asset={op[1].amount_borrowed.asset_id} />
                             <Translate component="span" content="proposal.to" />
                             &nbsp;{this.linkToAccount(op[1].borrower)}
                         </span>
@@ -660,7 +674,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.bond_accept_offer" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount_borrowed.amount} asset={op[1].amount_borrowed.asset_id} />
+                            &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount_borrowed.amount} asset={op[1].amount_borrowed.asset_id} />
                             <Translate component="span" content="proposal.from" />
                             &nbsp;{this.linkToAccount(op[1].lender)}
                         </span>
@@ -673,7 +687,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.bond_pay_collateral" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].collateral_claimed.amount} asset={op[1].collateral_claimed.asset_id} />
+                            &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].collateral_claimed.amount} asset={op[1].collateral_claimed.asset_id} />
                             <Translate component="span" content="proposal.to" />
                             &nbsp;{this.linkToAccount(op[1].claimer)}
                         </span>
@@ -682,7 +696,7 @@ class ProposedOperation extends React.Component {
                     column = (
                         <span>
                             <Translate component="span" content="proposal.bond_claim_collateral" />
-                            &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].collateral_claimed.amount} asset={op[1].collateral_claimed.asset_id} />
+                            &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].collateral_claimed.amount} asset={op[1].collateral_claimed.asset_id} />
                             <Translate component="span" content="proposal.from" />
                             &nbsp;{this.linkToAccount(op[1].lender)}
                         </span>
@@ -694,7 +708,7 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         <Translate component="span" content="proposal.create_worker" />
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].daily_pay} asset={"1.3.0"} />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].daily_pay} asset={"1.3.0"} />
                     </span>
                 );
                 break;
@@ -707,15 +721,15 @@ class ProposedOperation extends React.Component {
                     <span>
                         {this.linkToAccount(op[1].deposit_to_account)}&nbsp;
                         <BindToChainState.Wrapper asset={op[1].total_claimed.asset_id}>
-                           { ({asset}) =>
-                                   <Translate
-                                       component="span"
-                                       content="proposal.balance_claim"
-                                       balance_amount={utils.format_asset(op[1].total_claimed.amount, asset)}
-                                       balance_id={op[1].balance_to_claim.substring(5)}
-                                   />
-                           }
-                       </BindToChainState.Wrapper>
+                            {({ asset }) =>
+                                <Translate
+                                    component="span"
+                                    content="proposal.balance_claim"
+                                    balance_amount={utils.format_asset(op[1].total_claimed.amount, asset)}
+                                    balance_id={op[1].balance_to_claim.substring(5)}
+                                />
+                            }
+                        </BindToChainState.Wrapper>
                     </span>
                 );
                 break;
@@ -733,8 +747,8 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         {this.linkToAccount(op[1].from)}
-                        &nbsp;<Translate component="span" content="proposal.sent"/>
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
+                        &nbsp;<Translate component="span" content="proposal.sent" />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
                     </span>
                 );
                 break;
@@ -743,8 +757,8 @@ class ProposedOperation extends React.Component {
                 column = (
                     <span>
                         {this.linkToAccount(op[1].to)}
-                        &nbsp;<Translate component="span" content="proposal.received"/>
-                        &nbsp;<FormattedAsset style={{fontWeight: "bold"}} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
+                        &nbsp;<Translate component="span" content="proposal.received" />
+                        &nbsp;<FormattedAsset style={{ fontWeight: "bold" }} amount={op[1].amount.amount} asset={op[1].amount.asset_id} />
                     </span>
                 );
                 break;
@@ -756,15 +770,15 @@ class ProposedOperation extends React.Component {
                     <span>
                         {this.linkToAccount(op[1].issuer)}&nbsp;
                         <BindToChainState.Wrapper asset={op[1].amount_to_claim.asset_id}>
-                           { ({asset}) =>
-                                   <Translate
-                                       component="span"
-                                       content="proposal.asset_claim_fees"
-                                       balance_amount={utils.format_asset(op[1].amount_to_claim.amount, asset)}
-                                       asset={asset.get("symbol")}
-                                   />
-                           }
-                       </BindToChainState.Wrapper>
+                            {({ asset }) =>
+                                <Translate
+                                    component="span"
+                                    content="proposal.asset_claim_fees"
+                                    balance_amount={utils.format_asset(op[1].amount_to_claim.amount, asset)}
+                                    asset={asset.get("symbol")}
+                                />
+                            }
+                        </BindToChainState.Wrapper>
                     </span>
                 );
                 break;
@@ -775,7 +789,7 @@ class ProposedOperation extends React.Component {
                         <TranslateWithLinks
                             string="proposal.committee_member_update_global_parameters"
                             keys={[
-                                {type: "account", value: "1.2.0", arg: "account"}
+                                { type: "account", value: "1.2.0", arg: "account" }
                             ]}
                         />
                     </span>
@@ -795,10 +809,10 @@ class ProposedOperation extends React.Component {
                     <TranslateWithLinks
                         string="proposal.override_transfer"
                         keys={[
-                            {type: "account", value: op[1].issuer, arg: "issuer"},
-                            {type: "account", value: op[1].from, arg: "from"},
-                            {type: "account", value: op[1].to, arg: "to"},
-                            {type: "amount", value: op[1].amount, arg: "amount"}
+                            { type: "account", value: op[1].issuer, arg: "issuer" },
+                            { type: "account", value: op[1].from, arg: "from" },
+                            { type: "account", value: op[1].to, arg: "to" },
+                            { type: "amount", value: op[1].amount, arg: "amount" }
                         ]}
                     />
                 );

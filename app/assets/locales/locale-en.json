@@ -533,7 +533,7 @@
     "withdraw_crowd": "{account} withdrawed a crowdfund investment"
   },
   "proposal": {
-    "transfer": "Transfer {amount} from {from} to {to}",
+    "transfer": "Transfer {amount} from {from} to {to}, with lockup period: {vesting}",
     "limit_order_create": "Place order to buy %(buy_amount)s for %(sell_amount)s for %(account)s",
     "limit_order_sell": "Place an order to sell {amount} at {price} for {account}",
     "limit_order_buy": "Place an order to buy {amount} at {price} for {account}",
@@ -1383,7 +1383,7 @@
     "website": "Visit the website",
     "deposit_to": "Please send your %(asset)s to the address below",
     "add_funds": "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Jadepool.<br>* The timeliness of this transfer cannot be promised. ",
-    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. <br>* Please make sure that your withdrawal address is correct, otherwise you may lose your tokens permanently. <br>* It may take some time for each transfer to confirm, please kindly be patient. <br>* For the withdrawal operation, please use your personal wallet address only. <br>Any smart contract address, exchange deposit address or ICO related address used for withdrawal could result in failed contract execution and transfer, and your funds would be sent back to your Cybex account, which may keep you waiting for longer time. Please kindly understand this.",
+    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. <br>* Please make sure that your withdrawal address is correct, otherwise you may lose your tokens permanently. <br>* It may take some time for each transfer to confirm, please kindly be patient. <br>* For the withdrawal operation, please use your personal wallet address only. <br>* Any smart contract address, exchange deposit address or ICO related address used for withdrawal could result in failed contract execution and transfer, and your funds would be sent back to your Cybex account, which may keep you waiting for longer time. Please kindly understand this.",
     "balance_asset": "Current %(asset)s balance",
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "balance": "Current balance",
@@ -1527,7 +1527,8 @@
   },
   "vesting": {
     "progress": "Unlock Progress",
-    "detail": "Detail"
+    "detail": "Detail",
+    "end_time": "End Time Of Locking"
   },
   "period": {
     "seconds": "Seconds",

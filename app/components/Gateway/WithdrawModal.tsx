@@ -346,8 +346,8 @@ class WithdrawModal extends React.Component<props, state> {
     return (
       <BaseModal modalId={modalId} >
         <div className="content-block">
-          <h3><Translate content={"gateway.withdraw"} />
-            {this.props.asset.get("symbol")}({this.props.receive_asset_symbol})
+          <h3><Translate content={"gateway.withdraw"} /> 
+            {" " + this.props.asset.get("symbol")}({this.props.receive_asset_symbol})
         </h3>
         </div>
         <div className="content-block">

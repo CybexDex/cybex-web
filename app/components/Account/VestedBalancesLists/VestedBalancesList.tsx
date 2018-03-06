@@ -36,6 +36,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
             <th>{ /* C H E C K B O X */}</th>
             <th style={{ textAlign: "center" }}><Translate content="account.asset" /></th>
             <th style={{ textAlign: "center" }}><Translate content="exchange.amount" /></th>
+            <th style={{ textAlign: "center" }}><Translate content="vesting.end_time" /></th>
             <th style={{ textAlign: "center" }}><Translate content="vesting.progress" /></th>
             <th style={{ textAlign: "center" }}><Translate content="vesting.detail" /></th>
           </tr>
@@ -72,6 +73,9 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
                       hide_asset />
                   </div> : null}
                 </td>
+                <td style={{ textAlign: "center" }}>
+                  {endDate.format("YYYY-MM-DD HH:mm:ss zZ")}
+                </td>
                 <td>
                   {vesting_policy.begin_timestamp && <progress value={progress} max={vesting_policy.vesting_cliff_seconds} />}
                 </td>
@@ -82,6 +86,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
           {
             !this.props.total_by_account_asset || this.props.total_by_account_asset.size === 0 &&
             <tr>
+              <td>-</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>

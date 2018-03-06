@@ -4,6 +4,11 @@ import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import Translate from "react-translate-component";
 import QRCode from "qrcode.react";
+import { getClassName } from "utils";
+
+
+const insiders = require("assets/insiders.json");
+console.debug("insiders: ", insiders);
 
 class AccountInfo extends React.Component {
 
@@ -31,7 +36,7 @@ class AccountInfo extends React.Component {
 
     render() {
         let { account, image_size } = this.props;
-
+        
         let isLTM = account.get("lifetime_referrer_name") === account.get("name");
 
         let QR = <div className="account-image"><QRCode size={image_size.width} value={account.get("name")} /></div>;
@@ -43,7 +48,12 @@ class AccountInfo extends React.Component {
                 {this.props.title ? <h4>{this.props.title}</h4> : null}
                 <AccountImage size={image_size} account={account.get("name")} custom_image={null} />
                 {/* <p><Translate content="account.deposit_address" />!</p> hidden for CYB temp */}
-                <p className={this.props.titleClass}><span className={isLTM ? "lifetime" : ""}>{account.get("name")}</span></p>
+                <p className={this.props.titleClass}>
+                    <span className={getClassName("", { "rainbow-cybex": account.get("name") in insiders })}></span>
+                    <span className={getClassName("", { "lifetime": isLTM })}>
+                        {account.get("name")}
+                    </span>
+                </p>
                 {/* <div className="secondary">
                     <span className="subheader">#{display_id}</span>
                     {this.props.my_account ? <span className="my-account-label"><Translate content="account.mine" /></span> : null}

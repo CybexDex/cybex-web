@@ -1493,7 +1493,7 @@
     "title": "费率表"
   },
   "proposal": {
-    "transfer": "从账户{from}发送{amount}到{to}",
+    "transfer": "从账户{from}发送{amount}到{to}, 锁定期为{vesting}",
     "limit_order_create": "为账户%(account)s下单，买入%(buy_amount)s，挂出%(sell_amount)s",
     "limit_order_sell": "为账户(account)下单，以价格{price}卖出(amount)",
     "limit_order_buy": "为账户(account)下单，以价格{price}买入(amount)",
@@ -1585,6 +1585,7 @@
   },
   "vesting": {
     "progress": "解锁进度",
+    "end_time": "锁定期到期时间",
     "detail": "详情"
   },
   "period": {
