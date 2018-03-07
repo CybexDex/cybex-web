@@ -24,7 +24,6 @@ function getVestingPeriodFromOp(op) {
         !op.extensions.length ||
         !op.extensions[0][1]
     ) return 0;
-    console.debug("Vesting: ", op.extensions[0][1]);
     return op.extensions[0][1]["vesting_period"] || 0;
 }
 
@@ -164,7 +163,7 @@ class ProposedOperation extends React.Component {
                                 { type: "account", value: op[1].from, arg: "from" },
                                 { type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null },
                                 { type: "account", value: op[1].to, arg: "to" },
-                                { value: vestingStr, arg: "vesting"}
+                                { value: vestingStr, arg: "vesting" }
                             ]}
                         />
                         {memoComponent}
