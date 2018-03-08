@@ -1013,7 +1013,7 @@
     "lowest_ask": "Lowest ask",
     "highest_bid": "Highest bid",
     "total": "Total",
-    "total_bidask": "Total",    
+    "total_bidask": "Total",
     "value": "Value",
     "price": "Price",
     "latest": "Latest",
@@ -1299,7 +1299,7 @@
       "amount": "Amount to Withdraw",
       "address": "Withdraw to Address",
       "submit": "Withdraw",
-      "cyb_fee": "Use CYB as the Cybex transfer fee for this operation"      
+      "cyb_fee": "Use CYB as the Cybex transfer fee for this operation"
     },
     "deposit": {
       "amount": "Amount to Deposit",
@@ -1346,7 +1346,7 @@
     "connected": "Connected",
     "not_connected": "Not connected",
     "browser": "Unsupported browser",
-    "browser_text": "The Browser you are using has not been fully tested to support the Cybex Wallet. We highly recommend that you backup your wallet and import it using the Chrome Browser until we have had more time to fully test your browser of choice. Use at your own risk.",
+    "browser_text": "The Browser you are using has not been fully tested to support the Cybex Wallet. We highly recommend that you backup your wallet and import it using the Chrome Browser or Firefox Browser until we have had more time to fully test your browser of choice. Use at your own risk.",
     "understand": "I understand"
   },
   "refcode": {
@@ -1528,6 +1528,8 @@
   "vesting": {
     "progress": "Unlock Progress",
     "detail": "Detail",
+    "pubkey": "Belongs to",    
+    "pubkey_tip": "Each vesting balance listed here belongs to a specific public that you owns. Once you lost the control of the that public, you'll not be able to claim that balance!",
     "end_time": "End Time Of Locking"
   },
   "period": {
@@ -1587,5 +1589,12 @@
     "telegram": "Telegram",
     "email": "Email",
     "email_tip": "Please send us the details of your question. <br/> The support team will reply your mail soon."
+  },
+  "cybex": {
+    "insider": "The user from bata test of CybexDEX!",
+    "game": {
+      "title": "Thanks From CybexDEX",
+      "content": " provided lots of supports from the beta test of CybexDEX. We call this guy 'Rainbow'"
+    }
   }
 }

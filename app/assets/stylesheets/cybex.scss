@@ -1,0 +1,13 @@
+.cybex-rainbow {
+  &::after {
+    content: "";
+    background-image: url("../cybex_rainbow.png");
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+    vertical-align: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 0.3em;
+  }
+}

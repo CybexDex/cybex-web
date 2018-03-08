@@ -11,7 +11,8 @@ $error-text-color: #E3745B;
 
 $bg-color: #232C36;
 $panel-bg-color: #28323F;
-$light-panel-bg-color: #353742;
+$light-panel-bg-color: rgba(53,55,60,0.89);
+// $light-panel-bg-color: #353742;
 $super-light-panel-bg-color: lighten($light-panel-bg-color, 8%);
 $button-bg-color: #4A90E2;
 $secondary-button-bg-color: #546979;

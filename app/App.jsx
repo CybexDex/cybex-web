@@ -293,6 +293,11 @@ class Root extends React.Component {
                 main.className = main.className + (main.className.length ? ' ' : '') + windowsClass;
             }
         }
+
+        const user_agent = navigator.userAgent.toLowerCase();
+        if (!(window.electron || user_agent.indexOf("firefox") > -1 || user_agent.indexOf("chrome") > -1 || user_agent.indexOf("edge") > -1)) {
+            this.refs.browser_modal.show();
+        }
     }
 
     getChildContext() {

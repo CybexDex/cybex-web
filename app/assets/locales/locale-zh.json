@@ -1372,7 +1372,7 @@
     "connected": "已连接",
     "not_connected": "未连接",
     "browser": "不支持的浏览器",
-    "browser_text": "你使用的浏览器(版本)未经过Cybex钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。请了解相关风险。",
+    "browser_text": "你使用的浏览器(版本)未经过Cybex钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome或火狐Firefox浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。继续使用当前浏览器可能会对你的操作造成风险。",
     "understand": "我理解"
   },
   "refcode": {
@@ -1586,7 +1586,9 @@
   "vesting": {
     "progress": "解锁进度",
     "end_time": "锁定期到期时间",
-    "detail": "详情"
+    "detail": "详情",
+    "pubkey_tip": "您的锁定资产与相应的公钥相关联，一旦失去对于此公钥的控制，则无法申领对应锁定资产",
+    "pubkey": "所属公钥"
   },
   "period": {
     "seconds": "秒",
@@ -1645,5 +1647,12 @@
     "telegram": "电报Telegram",
     "email": "电邮地址",
     "email_tip": "请将问题详细情况发送给我们，我们的支持人员将尽快答复您"
+  },
+  "cybex": {
+    "insider": "为CybexDEX测试提供了很多帮助的彩虹犀牛用户",
+    "game": {
+      "title": "来自CybexDEX的感谢",
+      "content": " 在CybexDEX测试时提供了很多帮助，在Cybex中，称之为“彩虹犀牛”"
+    }
   }
 }
