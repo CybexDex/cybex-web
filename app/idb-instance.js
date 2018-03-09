@@ -234,7 +234,7 @@ var iDB = (function () {
             })
         },
         restore: function(wallet_name, object) {
-            // console.debug("WalletName: ", wallet_name);
+            console.debug("WalletName: ", wallet_name, object);
             var database_name = getDatabaseName(wallet_name)
             return openDatabase(database_name).then( db => {
                 var store_names = Object.keys(object)

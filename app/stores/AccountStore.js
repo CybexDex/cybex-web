@@ -115,6 +115,7 @@ class AccountStore extends BaseStore {
     }
 
     setWallet(wallet_name) {
+        // If wallet is not the same as current wallet
         if (wallet_name !== this.state.wallet_name) {
             this.setState({
                 wallet_name: wallet_name,
@@ -128,6 +129,7 @@ class AccountStore extends BaseStore {
                 myIgnoredAccounts: Immutable.Set(),
                 unFollowedAccounts: Immutable.Set()
             });
+            console.debug("Wallet State: ", this.state);
             this.tryToSetCurrentAccount();
         }
     }
