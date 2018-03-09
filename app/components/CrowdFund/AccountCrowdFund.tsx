@@ -104,7 +104,6 @@ let CrowdFund = class extends React.Component<CrowdFundProps, { fund, tab }> {
 
 
   handlePartiCrowd = (fund) => {
-    console.debug("Parem: ", fund);
     this.setState({
       fund
     });

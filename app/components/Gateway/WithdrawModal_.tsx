@@ -54,7 +54,6 @@ class DepositModal extends React.Component<props, { fadeOut, withdraw_amount, wi
       amount: currentBalance ? currentBalance.get("balance") : 0
     });
     let assetName = asset.get("symbol");
-    console.debug(this.props, currentBalance, balance);
     return (
       <BaseModal modalId={modalId} >
         <h3><Translate content={"gateway.withdraw"} /> {assetName}</h3>
@@ -94,9 +93,7 @@ DepositModalWrapper = connect(DepositModalWrapper, {
     return [GatewayStore];
   },
   getProps(props) {
-    console.debug("Props: ", props);
     let { modalId } = props;
-    console.debug("PROPS: ", GatewayStore.getState());
     return {
       open: GatewayStore.getState().modals.get(modalId),
       depositInfo: GatewayStore.getState().depositInfo,

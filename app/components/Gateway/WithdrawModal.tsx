@@ -260,7 +260,6 @@ class WithdrawModal extends React.Component<props, state> {
 
   onSubmit = () => {
     let { useCybAsFee } = this.state;
-    console.debug("Use Cyb As Fee", useCybAsFee);
     let precision = this.props.asset.get("precision");
     let withdrawAmount = calcAmount(this.state.withdraw_amount, precision);
     let gatewayFeeAmount = calcAmount(this.props.withdrawInfo.fee, precision);

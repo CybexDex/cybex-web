@@ -27,8 +27,6 @@ import Nav from "./components/Layout/Nav";
 import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 
-console.debug("Test Env: ", __TEST__);
-console.debug("Test Env: ", Array.from(__TEST__));
 
 class App extends React.Component {
 

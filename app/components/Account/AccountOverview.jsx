@@ -221,7 +221,6 @@ class AccountOverview extends React.Component {
 
     _showDepositWithdraw(action, asset, fiatModal, e) {
         let { account } = this.props;
-        console.debug("AccountOverview: ", account, asset);
         GatewayActions.showDepositModal(account.get("name"), asset);
         // e.preventDefault();
         // this.setState({
@@ -234,7 +233,6 @@ class AccountOverview extends React.Component {
 
     _showWithdrawModal(action, asset, fiatModal, e) {
         let { account } = this.props;
-        console.debug("Asset: ", asset);
         GatewayActions.showWithdrawModal(asset);
     }
 

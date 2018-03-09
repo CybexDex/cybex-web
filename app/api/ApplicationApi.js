@@ -177,7 +177,6 @@ const ApplicationApi = {
                 //     }],
                 // ]
             };
-            console.debug("VESTING: ", toTransfer);
             if (vesting) {
                 toTransfer.extensions = [
                     [1, {

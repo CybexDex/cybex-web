@@ -7,9 +7,7 @@ import QRCode from "qrcode.react";
 import { getClassName } from "utils";
 import counterpart from "counterpart";
 import GameModal from "components/Modal/GameModal";
-import ModalActions from "actions/ModalActions";
 
-const insiders = require("assets/insiders.json");
 
 class AccountInfo extends React.Component<any, any> {
 
@@ -35,10 +33,6 @@ class AccountInfo extends React.Component<any, any> {
         };
     }
 
-    showThanks = (name) => {
-        let { account, image_size } = this.props;        
-        ModalActions.showModal("thanks_" + account.get("name"));
-    }
 
     render() {
         let { account, image_size } = this.props;
@@ -57,10 +51,6 @@ class AccountInfo extends React.Component<any, any> {
                 <p className={this.props.titleClass}>
                     <span title={counterpart.translate("account.member.lifetime")} className={getClassName("", { "lifetime": isLTM })}>
                         {account.get("name")}
-                        {
-                            account.get("name") in insiders &&
-                            <span onClick={() => this.showThanks(account.get("name"))} title={counterpart.translate("cybex.insider")} className="cybex-rainbow"></span>
-                        }
                     </span>
                 </p>
                 <GameModal modalId={"thanks_" + account.get("name")} accountName={account.get("name")} />

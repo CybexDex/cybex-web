@@ -76,7 +76,6 @@ class BuySell extends React.Component {
             feeAsset, feeAssets, hasFeeBalance, backedCoin } = this.props;
         let amount, price, total;
         let caret = this.props.isOpen ? <span>&#9660;</span> : <span>&#9650;</span>;
-        console.debug("Fee: ", feeAssets, feeAsset);
         if (this.props.amount) amount = this.props.amount;
         if (this.props.price) price = this.props.price;
         if (this.props.total) total = this.props.total;

@@ -36,7 +36,6 @@ class GameModal extends React.Component<props, { fadeOut?, neverShow?}> {
     this.setState({
       neverShow
     });
-    console.debug("new: ", neverShow);
     ModalActions.neverShow(this.props.modalId, neverShow);
     return e.target.value;
   }
