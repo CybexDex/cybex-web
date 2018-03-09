@@ -26,12 +26,12 @@ let ops = Object.keys(operations);
 let listings = account_constants.account_listing;
 
 class TransactionLabel extends React.Component {
-    shouldComponentUpdate(nextProps) {
-        return (
-            nextProps.color !== this.props.color ||
-            nextProps.type !== this.props.type
-        );
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return (
+    //         nextProps.color !== this.props.color ||
+    //         nextProps.type !== this.props.type
+    //     );
+    // }
     render() {
         let trxTypes = counterpart.translate("transaction.trxTypes");
         let labelClass = classNames("label", this.props.color || "info");
@@ -68,15 +68,15 @@ class Row extends React.Component {
     // }
 
     // 原有检测更新代码没有考虑i18n情况，会导致i18n更新后翻译未更新
-    shouldComponentUpdate(nextProps) {
-        let { block, dynGlobalObject } = this.props;
-        let last_irreversible_block_num = dynGlobalObject.get("last_irreversible_block_num");
-        if (nextProps.dynGlobalObject === this.props.dynGlobalObject) {
-            return false;
-        }
-        // console.debug("[Opeartion/Row]shouldComponentUpdate", this.props ,block > last_irreversible_block_num)
-        return block > last_irreversible_block_num;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     let { block, dynGlobalObject } = this.props;
+    //     let last_irreversible_block_num = dynGlobalObject.get("last_irreversible_block_num");
+    //     if (nextProps.dynGlobalObject === this.props.dynGlobalObject) {
+    //         return false;
+    //     }
+    //     // console.debug("[Opeartion/Row]shouldComponentUpdate", this.props ,block > last_irreversible_block_num)
+    //     return block > last_irreversible_block_num;
+    // }
 
     render() {
         let { block, fee, color, type, hideOpLabel } = this.props;
@@ -131,11 +131,11 @@ class Operation extends React.Component {
         csvExportMode: React.PropTypes.bool
     };
 
-    componentWillReceiveProps(np) {
-        if (np.marketDirections !== this.props.marketDirections) {
-            this.forceUpdate();
-        }
-    }
+    // componentWillReceiveProps(np) {
+    //     if (np.marketDirections !== this.props.marketDirections) {
+    //         this.forceUpdate();
+    //     }
+    // }
 
     linkToAccount(name_or_id) {
         if (!name_or_id) return <span>-</span>;
@@ -151,16 +151,16 @@ class Operation extends React.Component {
             <Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;
     }
 
-    shouldComponentUpdate(nextProps) {
-        // Todos 翻译bug
-        // console.debug("[Operation]shouldComponentUpdate")
-        // return true;
-        if (!this.props.op || !nextProps.op) {
-            return false;
-        }
-        return !utils.are_equal_shallow(nextProps.op[1], this.props.op[1]) ||
-            nextProps.marketDirections !== this.props.marketDirections;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     // Todos 翻译bug
+    //     // console.debug("[Operation]shouldComponentUpdate")
+    //     // return true;
+    //     if (!this.props.op || !nextProps.op) {
+    //         return false;
+    //     }
+    //     return !utils.are_equal_shallow(nextProps.op[1], this.props.op[1]) ||
+    //         nextProps.marketDirections !== this.props.marketDirections;
+    // }
 
     render() {
         let { op, current, block } = this.props;

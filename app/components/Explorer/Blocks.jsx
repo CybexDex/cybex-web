@@ -223,9 +223,9 @@ class Blocks extends React.Component {
 
             transactions = latestTransactions.take(20)
                 .map((trx) => {
-
                     let opIndex = 0;
                     return trx.operations.map(op => {
+                        console.debug("OP: ", op);
                         return (
                             <Operation
                                 key={trxIndex++}
