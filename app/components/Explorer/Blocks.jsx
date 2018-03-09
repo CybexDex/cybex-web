@@ -225,7 +225,6 @@ class Blocks extends React.Component {
                 .map((trx) => {
                     let opIndex = 0;
                     return trx.operations.map(op => {
-                        console.debug("OP: ", op);
                         return (
                             <Operation
                                 key={trxIndex++}
