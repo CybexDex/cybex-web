@@ -5,7 +5,6 @@
     transform: translate(-50%, -65%);
     background: #29323e;
     &::after {
-        content: "";
         background-image: url("../cybex_rainbow.png");
         height: 4.4em;
         width: 4.4em;
@@ -16,6 +15,14 @@
     }
 }
 
+.account-info {
+    .cybex-rainbow {
+        &::after {
+            content: "";
+        }
+    }
+}
+
 .account-image {
-  position: relative;
+    position: relative;
 }
