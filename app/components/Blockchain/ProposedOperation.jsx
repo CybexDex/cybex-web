@@ -14,9 +14,11 @@ import { ChainStore, ChainTypes as grapheneChainTypes } from "cybexjs";
 import account_constants from "chain/account_constants";
 import MemoText from "./MemoText";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
-import moment from "moment";
+import * as humanize from "humanize-duration";
+import IntlStore from "stores/IntlStore";
 
 const { operations } = grapheneChainTypes;
+const SECONDS_OF_ONE_DAY = 86400000;
 
 function getVestingPeriodFromOp(op) {
     if (
@@ -149,9 +151,22 @@ class ProposedOperation extends React.Component {
                 if (op[1].memo) {
                     memoComponent = <MemoText memo={op[1].memo} />
                 }
-
+                let humanizeLocals = {
+                    "zh": "zh_CN",
+                    "en": "en"
+                };
+                let locale = IntlStore.getState().currentLocale;
                 let vesting = getVestingPeriodFromOp(op[1]);
-                let vestingStr = !vesting ? "none" : moment.duration(vesting * 1000).humanize();
+                let vestingStr = !vesting ? "none" : humanize(vesting * 1000, {
+                    language: humanizeLocals[locale],
+                    unitMeasures: {
+                        y: 365 * SECONDS_OF_ONE_DAY,
+                        mo: 30 * SECONDS_OF_ONE_DAY,
+                        w: 7 * SECONDS_OF_ONE_DAY,
+                        d: SECONDS_OF_ONE_DAY
+                    }
+                });
+                // let vestingStr = !vesting ? "none" : moment.duration(vesting * 1000).humanize();
                 color = "success";
                 op[1].amount.amount = parseFloat(op[1].amount.amount);
 
