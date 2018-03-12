@@ -334,18 +334,19 @@ class WithdrawModal extends React.Component<props, state> {
       !withdraw_address_valid &&
       !withdraw_address_error;
 
+    let amountValid = Number(withdraw_amount) >= withdrawInfo.minValue;
     let disableSubmit =
       !withdraw_address ||
       withdraw_address_loading ||
       addressInvalid ||
       gatewayServiceInvalid ||
-      withdraw_amount <= 0;
+      !amountValid;
+      // withdraw_amount <= 0;
 
-    let amountValid = Number(withdraw_amount) >= withdrawInfo.minValue;
     return (
       <BaseModal modalId={modalId} >
         <div className="content-block">
-          <h3><Translate content={"gateway.withdraw"} /> 
+          <h3><Translate content={"gateway.withdraw"} />
             {" " + this.props.asset.get("symbol")}({this.props.receive_asset_symbol})
         </h3>
         </div>

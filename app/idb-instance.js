@@ -213,28 +213,31 @@ var iDB = (function () {
         },
 
         backup: function (store_names = WALLET_BACKUP_STORES) {
-            var promises = []
+            // console.debug("IDB-instance: ", store_names);
+            var promises = [];
             for (var store_name of store_names) {
-                promises.push(this.load_data(store_name))
+                promises.push(this.load_data(store_name));
             }
             //Add each store name
             return Promise.all(promises).then( results => {
-                var obj = {}
+                // console.debug("IDB-instance: ", results);
+                var obj = {};
                 for (let i = 0; i < store_names.length; i++) {
-                    var store_name = store_names[i]
+                    var store_name = store_names[i];
                     if( store_name === "wallet" ) {
-                        var wallet_array = results[i]
+                        // console.debug("IDB-instance: ", results[i]);
+                        var wallet_array = results[i];
                         // their should be only 1 wallet per database
                         for(let wallet of wallet_array)
-                            wallet.backup_date = new Date().toISOString()
+                            wallet.backup_date = new Date().toISOString();
                     }
-                    obj[store_name] = results[i]
+                    obj[store_name] = results[i];
                 }
-                return obj
-            })
+                return obj;
+            });
         },
         restore: function(wallet_name, object) {
-            console.debug("WalletName: ", wallet_name, object);
+            // console.debug("WalletName: ", wallet_name, object);
             var database_name = getDatabaseName(wallet_name)
             return openDatabase(database_name).then( db => {
                 var store_names = Object.keys(object)

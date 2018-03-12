@@ -80,7 +80,7 @@ class Row extends React.Component {
 
     render() {
         let { block, fee, color, type, hideOpLabel } = this.props;
-
+        // 待定区块数量
         let last_irreversible_block_num = this.props.dynGlobalObject.get("last_irreversible_block_num");
         let pending = null;
         if (block > last_irreversible_block_num) {
@@ -871,7 +871,6 @@ class Operation extends React.Component {
                 );
                 break;
             case "participate_crowdfund":
-                console.debug("Part: ", op);
                 column = (
                     <TranslateWithLinks
                         string="operation.part_crowd"

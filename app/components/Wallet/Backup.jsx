@@ -234,6 +234,7 @@ class Download extends Component {
     }
 
     onDownload() {
+        // console.debug("Content: ", this.props.backup.contents);
         let blob = new Blob([ this.props.backup.contents ], {
             type: "application/octet-stream; charset=us-ascii"})
 
@@ -295,11 +296,13 @@ class Create extends Component {
     }
 
     onCreateBackup() {
-        let backup_pubkey = WalletDb.getWallet().password_pubkey
+        let backup_pubkey = WalletDb.getWallet().password_pubkey;
+        // console.debug("PubKey: ", backup_pubkey);
         backup(backup_pubkey).then( contents => {
+            // console.debug("Wallet: ", contents);
             let name = this.getBackupName();
-            BackupActions.incommingBuffer({name, contents})
-        })
+            BackupActions.incommingBuffer({name, contents});
+        });
     }
 }
 Create = connect(Create, connectObject);
