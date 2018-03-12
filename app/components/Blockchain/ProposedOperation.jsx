@@ -14,7 +14,7 @@ import { ChainStore, ChainTypes as grapheneChainTypes } from "cybexjs";
 import account_constants from "chain/account_constants";
 import MemoText from "./MemoText";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
-import moment from "moment";
+import * as humanize from "humanize-duration";
 
 const { operations } = grapheneChainTypes;
 
@@ -151,7 +151,8 @@ class ProposedOperation extends React.Component {
                 }
 
                 let vesting = getVestingPeriodFromOp(op[1]);
-                let vestingStr = !vesting ? "none" : moment.duration(vesting * 1000).humanize();
+                let vestingStr = !vesting ? "none" : humanize(vesting * 1000);
+                // let vestingStr = !vesting ? "none" : moment.duration(vesting * 1000).humanize();
                 color = "success";
                 op[1].amount.amount = parseFloat(op[1].amount.amount);
 

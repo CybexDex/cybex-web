@@ -129,7 +129,7 @@ class AccountStore extends BaseStore {
                 myIgnoredAccounts: Immutable.Set(),
                 unFollowedAccounts: Immutable.Set()
             });
-            console.debug("Wallet State: ", this.state);
+            // console.debug("Wallet State: ", this.state);
             this.tryToSetCurrentAccount();
         }
     }

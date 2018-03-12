@@ -152,6 +152,7 @@
     "graphql": "^0.12.3",
     "graphql-tag": "^2.6.1",
     "highcharts": "4.2.6",
+    "humanize-duration": "^3.12.1",
     "immutable": "^3.8.1",
     "indexeddbshim": "^2.2.1",
     "intl": "^1.1.0",

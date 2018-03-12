@@ -4251,6 +4251,10 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+humanize-duration@^3.12.1:
+  version "3.12.1"
+  resolved "https://registry.yarnpkg.com/humanize-duration/-/humanize-duration-3.12.1.tgz#e9a531519d001ee600b6400fc353fed4fa3b235f"
+
 humps@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/humps/-/humps-2.0.1.tgz#dd02ea6081bd0568dc5d073184463957ba9ef9aa"
