@@ -36,7 +36,7 @@ export default BackupActionsWrapped;
 export function backup(backup_pubkey) {
     return new Promise( resolve => {
         resolve(createWalletObject().then( wallet_object => {
-            // console.debug("Wallet Object: ", wallet_object);
+            console.debug("Wallet Object: ", wallet_object);
             let compression = 1;
             return createWalletBackup(backup_pubkey, wallet_object, compression);
         }));

@@ -33,18 +33,18 @@ class WalletManagerStore extends BaseStore {
             new_wallet: undefined,// pending restore
             current_wallet: undefined,
             wallet_names: Immutable.Set()
-        }
+        };
     }
 
     /** This will change the current wallet the newly restored wallet. */
     onRestore({wallet_name, wallet_object}) {
         iDB.restore(wallet_name, wallet_object).then( () => {
             AccountStore.setWallet(wallet_name);
-            return this.onSetWallet({wallet_name})
+            return this.onSetWallet({wallet_name});
         }).catch( error => {
-            console.error(error)
-            return Promise.reject(error)
-        })
+            console.error(error);
+            return Promise.reject(error);
+        });
     }
 
     /** This may result in a new wallet name being added, only in this case

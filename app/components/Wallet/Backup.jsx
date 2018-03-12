@@ -297,9 +297,9 @@ class Create extends Component {
 
     onCreateBackup() {
         let backup_pubkey = WalletDb.getWallet().password_pubkey;
-        // console.debug("PubKey: ", backup_pubkey);
+        console.debug("PubKey: ", backup_pubkey);
         backup(backup_pubkey).then( contents => {
-            // console.debug("Wallet: ", contents);
+            console.debug("Wallet: ", contents);
             let name = this.getBackupName();
             BackupActions.incommingBuffer({name, contents});
         });
@@ -432,7 +432,7 @@ class DecryptBackup extends Component {
         let private_key = PrivateKey.fromSeed(this.state.backup_password || "")
         let contents = this.props.backup.contents
         decryptWalletBackup(private_key.toWif(), contents).then( wallet_object => {
-            // console.debug("Backup: ", wallet_object);
+            console.debug("Backup: ", wallet_object);
             this.setState({verified: true})
             if(this.props.saveWalletObject)
                 BackupStore.setWalletObjct(wallet_object)
