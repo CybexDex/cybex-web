@@ -65,9 +65,11 @@ class Footer extends React.Component {
             <div className="show-for-medium grid-block shrink footer">
                 <div className="align-justify grid-block">
                     <div className="grid-block">
-                        <div className="logo">
-                            <Translate content="footer.title" /><span className="version">{version}</span>
-                        </div>
+                        {/* <Translate component="div" className="logo" content="footer.title" /> */}
+                        {/* <span className="version">
+                                {version}
+                            </span> */}
+                        <Translate className="contact highlight link" content="footer.contact" component="div" onClick={this.onContact} />
                     </div>
                     {this.props.synced ?
                         null :
@@ -128,6 +130,10 @@ class Footer extends React.Component {
 
     onBackupBrainkey() {
         this.context.router.push("/wallet/backup/brainkey");
+    }
+
+    onContact = () => {
+        this.context.router.push("/contact");
     }
 
     onAccess() {

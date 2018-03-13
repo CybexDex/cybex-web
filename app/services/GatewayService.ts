@@ -1,4 +1,4 @@
-import { JadePool, CALLBACK_URL, JadeBody } from "./GatewayConfig";
+import { JadePool, CALLBACK_URL, JadeBody, GATEWAY_URI, GATEWAY_ID } from "./GatewayConfig";
 import { debugGen } from "utils";
 import gql from "graphql-tag";
 import { ApolloClient } from "apollo-client";
@@ -28,9 +28,8 @@ const genRequestInit: (body: any) => RequestInit =
     method: "POST",
     body
   });
-declare var __DEV__;
 // Configure Apollo
-const httpLink = new HttpLink({ uri: __DEV__ ? "http://localhost:5681/gateway" : "https://gateway.cybex.io/gateway" });
+const httpLink = new HttpLink({ uri: GATEWAY_URI });
 
 const client = new ApolloClient({
   link: httpLink,

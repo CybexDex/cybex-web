@@ -1,8 +1,8 @@
+declare var __DEV__;
 export const JadePool = {
   "CYBEX_ACCOUNT": "jadepool",
   "API_URLS": {
     "GET_NEW_ADDRESS": "http://localhost:5679/jade/getNewAddress"
-    // "GET_NEW_ADDRESS": "http://121.40.109.65:7001/api/v1/addresses/new"
   },
   // Cybex资产: 外部资产
   "ADDRESS_TYPES": {
@@ -11,6 +11,9 @@ export const JadePool = {
   }
 };
 
+export const GATEWAY_URI = __DEV__ ? "http://localhost:5681/gateway" : "https://gateway.cybex.io/gateway";
+
+export const GATEWAY_ID = __DEV__ ? "CybexGatewayDev" : "CybexGateway";
 
 export type JadeBody = {
   status: JadeStatus,

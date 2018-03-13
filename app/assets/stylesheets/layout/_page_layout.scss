@@ -407,6 +407,26 @@ div.bordered-header {
   }
 }
 
+.contact-wrapper {
+  margin: auto;
+  .contact-title {
+    margin-bottom: 1em;
+  }
+  table {
+    td {
+      padding: 0.6em 1.2em;
+      padding-bottom: 2em;
+      vertical-align: top;
+    }
+    p {
+      margin-bottom: 0.4em;
+    }
+  }
+  .bigger {
+    font-size: 1.4em;
+  }
+}
+
 .game-modal {
   p {
     text-align: justify;

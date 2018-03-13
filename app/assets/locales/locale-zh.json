@@ -8,10 +8,52 @@
       }
     },
     "names": {
-      "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      "abbreviated_days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      "abbreviated_months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      "days": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "abbreviated_days": [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "abbreviated_months": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
       "am": "AM",
       "pm": "PM"
     }
@@ -440,6 +482,7 @@
     "final": "转账后余额",
     "balances": "余额",
     "vesting_period": "带锁定期转账",
+    "public_key": "目标账户有多个有效权限，请选择一个权限作为锁定资产存贮池",
     "errors": {
       "req": "必填信息",
       "pos": "数量必须大于0",
@@ -941,6 +984,7 @@
   },
   "footer": {
     "title": "Cybex",
+    "contact": "联系我们",
     "update_available": "UPDATE AVAILABLE",
     "synced": "Synced",
     "unsynced": "Out of sync",
@@ -1524,7 +1568,7 @@
     "bazaar": "主要市场",
     "explorer": "区块浏览",
     "swap": "原子交换",
-    "logout": "登出账户",  
+    "logout": "登出账户",
     "help": "帮助文档"
   },
   "vesting": {
@@ -1582,5 +1626,11 @@
     "logout": "登出",
     "reload": "更新",
     "wallet_tip": "您当前正在使用本地钱包模式。您可以从下方的列表中选择需要登出的钱包文件，删除该钱包，并点击“更新”按钮, 页面将刷新并使用现存的其他钱包。在删除相应钱包文件之前，请您确认对应的钱包文件或脑钱包密钥已经被妥善备份并保存，否则请关闭本窗口并优先备份钱包文件。否则一旦确认删除该钱包，将没有任何途径可以找回。"
+  },
+  "contact": {
+    "title": "联系我们",
+    "telegram": "电报Telegram",
+    "email": "电邮地址",
+    "email_tip": "请将问题详细情况发送给我们，我们的支持人员将尽快答复您"
   }
 }

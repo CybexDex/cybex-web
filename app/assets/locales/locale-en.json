@@ -962,6 +962,7 @@
   },
   "footer": {
     "title": "Cybex",
+    "contact": "Contact Us",    
     "block": "Block",
     "loading": "Loading...",
     "backup": "A Backup is Required",
@@ -1572,5 +1573,11 @@
     "logout": "Logout",
     "reload": "Reload",
     "wallet_tip": "You're using the local wallet mode. If you haven't backup your wallet and save it appropriate, please close this modal and take the backup of your wallet. If you done the backup and confirm to logout. You can select the wallet you want to remove it and confirm the delete opearation. After the removing and clicking the 'Reload' button, this page will be reloaded and the wallet information you've deleted will be cleared."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "telegram": "Telegram",
+    "email": "Email",
+    "email_tip": "Please send us the details of your question. <br/> The support team will reply your mail soon."
   }
 }
