@@ -213,19 +213,19 @@ var iDB = (function () {
         },
 
         backup: function (store_names = WALLET_BACKUP_STORES) {
-            console.debug("IDB-instance: ", store_names);
+            // console.debug("IDB-instance: ", store_names);
             var promises = [];
             for (var store_name of store_names) {
                 promises.push(this.load_data(store_name));
             }
             //Add each store name
             return Promise.all(promises).then( results => {
-                console.debug("IDB-instance: ", results);
+                // console.debug("IDB-instance: ", results);
                 var obj = {};
                 for (let i = 0; i < store_names.length; i++) {
                     var store_name = store_names[i];
                     if( store_name === "wallet" ) {
-                        console.debug("IDB-instance: ", results[i]);
+                        // console.debug("IDB-instance: ", results[i]);
                         var wallet_array = results[i];
                         // their should be only 1 wallet per database
                         for(let wallet of wallet_array)

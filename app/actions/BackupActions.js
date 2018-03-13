@@ -3,6 +3,7 @@ import iDB from "idb-instance";
 import {compress, decompress} from "lzma";
 import {PrivateKey, PublicKey, Aes, key} from "cybexjs";
 import WalletActions from "actions/WalletActions";
+import AccountStore from "stores/AccountStore";
 
 class BackupActions {
 
@@ -24,6 +25,11 @@ class BackupActions {
         return params;
     }
 
+    updateMyAccounts() {
+        let myAccounts = AccountStore.getMyAccountsWithAuthState();
+        return myAccounts;
+    }
+
     reset() {
         return true;
     }
@@ -36,7 +42,6 @@ export default BackupActionsWrapped;
 export function backup(backup_pubkey) {
     return new Promise( resolve => {
         resolve(createWalletObject().then( wallet_object => {
-            console.debug("Wallet Object: ", wallet_object);
             let compression = 1;
             return createWalletBackup(backup_pubkey, wallet_object, compression);
         }));

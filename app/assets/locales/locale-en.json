@@ -1125,6 +1125,8 @@
     "console": "Local Wallet Management Console",
     "create_backup": "Create Backup",
     "backup_brainkey": "Backup Brainkey",
+    "backup_accounts": "Here is the list of accounts contained by the wallet. The 'Full' state means the wallet has the control of that account; the 'Partial' means the wallet has only some part of that account. Usually, that account maybe a multi-sig account, and the wallet has a part of the all thresholds",    
+    "account_state": "State",    
     "create_backup_of": "Create backup now",
     "import_backup": "Import Cybex backup (.bin file)",
     "import_backup_choose": "Please select your backup file in the dialog below. This is completely safe as the file is not uploaded anywhere and never leaves your browser.",

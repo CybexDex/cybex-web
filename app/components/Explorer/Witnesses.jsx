@@ -31,11 +31,11 @@ class WitnessCard extends React.Component {
     }
 
     render() {
-        let witness_data = ChainStore.getWitnessById(this.props.witness.get('id'))
+        let witness_data = ChainStore.getWitnessById(this.props.witness.get("id"));
         if (!witness_data) return null;
         let total_votes = witness_data.get("total_votes");
 
-        let witness_aslot = witness_data.get('last_aslot')
+        let witness_aslot = witness_data.get("last_aslot");
         let color = {};
         if (this.props.most_recent - witness_aslot > 100) {
             color = { borderLeft: "1px solid #FCAB53" };
@@ -48,10 +48,10 @@ class WitnessCard extends React.Component {
         return (
             <div className="grid-content account-card" onClick={this._onCardClick.bind(this)}>
                 <div className="card" style={color}>
-                    <h4 className="text-center">#{this.props.rank}: {this.props.witness.get('name')}</h4>
+                    <h4 className="text-center">#{this.props.rank}: {this.props.witness.get("name")}</h4>
                     <div className="card-content">
                         <div className="text-center">
-                            <AccountImage account={this.props.witness.get('name')} size={{ height: 64, width: 64 }} />
+                            <AccountImage account={this.props.witness.get("name")} size={{ height: 64, width: 64 }} />
                         </div>
                         <br />
                         <table className="table key-value-table">
@@ -66,7 +66,7 @@ class WitnessCard extends React.Component {
                                 </tr>
                                 <tr>
                                     <td>Missed</td>
-                                    <td>{witness_data.get('total_missed')}</td>
+                                    <td>{witness_data.get("total_missed")}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -99,11 +99,11 @@ class WitnessRow extends React.Component {
 
     render() {
         let { witness, isCurrent, rank } = this.props;
-        let witness_data = ChainStore.getWitnessById(this.props.witness.get('id'));
+        let witness_data = ChainStore.getWitnessById(this.props.witness.get("id"));
         if (!witness_data) return null;
         let total_votes = witness_data.get("total_votes");
 
-        let witness_aslot = witness_data.get('last_aslot')
+        let witness_aslot = witness_data.get("last_aslot");
         let color = {};
         if (this.props.most_recent - witness_aslot > 100) {
             color = { borderLeft: "1px solid #FCAB53" };
@@ -115,7 +115,7 @@ class WitnessRow extends React.Component {
 
         let currentClass = isCurrent ? "active-witness" : "";
 
-        let missed = witness_data.get('total_missed');
+        let missed = witness_data.get("total_missed");
         let missedClass = classNames("txtlabel",
             { "success": missed <= 500 },
             { "info": missed > 500 && missed <= 1250 },
@@ -128,11 +128,11 @@ class WitnessRow extends React.Component {
                 <td>{rank}</td>
                 <td style={color}>{witness.get("name")}</td>
                 <td><TimeAgo time={new Date(last_aslot_time)} /></td>
-                <td>{witness_data.get('last_confirmed_block_num')}</td>
+                <td>{witness_data.get("last_confirmed_block_num")}</td>
                 <td className={missedClass}>{missed}</td>
-                <td><FormattedAsset amount={witness_data.get('total_votes')} asset="1.3.0" decimalOffset={5} /></td>
+                <td><FormattedAsset amount={witness_data.get("total_votes")} asset="1.3.0" decimalOffset={5} /></td>
             </tr>
-        )
+        );
     }
 }
 WitnessRow = BindToChainState(WitnessRow, { keep_updating: true });
@@ -146,7 +146,7 @@ class WitnessList extends React.Component {
     constructor() {
         super();
         this.state = {
-            sortBy: 'rank',
+            sortBy: "rank",
             inverseSort: true
         };
     }
@@ -209,7 +209,7 @@ class WitnessList extends React.Component {
                     // console.log("a:", a.toJS());
 
                     switch (sortBy) {
-                        case 'name':
+                        case "name":
                             if (a_account.get("name") > b_account.get("name")) {
                                 return inverseSort ? 1 : -1;
                             } else if (a_account.get("name") < b_account.get("name")) {
@@ -251,12 +251,12 @@ class WitnessList extends React.Component {
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <th className="clickable" onClick={this._setSort.bind(this, 'rank')}><Translate content="explorer.witnesses.rank" /></th>
-                            <th className="clickable" onClick={this._setSort.bind(this, 'name')}><Translate content="account.votes.name" /></th>
-                            <th className="clickable" onClick={this._setSort.bind(this, 'last_aslot')}><Translate content="explorer.blocks.last_block" /></th>
-                            <th className="clickable" onClick={this._setSort.bind(this, 'last_confirmed_block_num')}><Translate content="explorer.witnesses.last_confirmed" /></th>
-                            <th className="clickable" onClick={this._setSort.bind(this, 'total_missed')}><Translate content="explorer.witnesses.missed" /></th>
-                            <th className="clickable" onClick={this._setSort.bind(this, 'total_votes')}><Translate content="account.votes.votes" /></th>
+                            <th className="clickable" onClick={this._setSort.bind(this, "rank")}><Translate content="explorer.witnesses.rank" /></th>
+                            <th className="clickable" onClick={this._setSort.bind(this, "name")}><Translate content="account.votes.name" /></th>
+                            <th className="clickable" onClick={this._setSort.bind(this, "last_aslot")}><Translate content="explorer.blocks.last_block" /></th>
+                            <th className="clickable" onClick={this._setSort.bind(this, "last_confirmed_block_num")}><Translate content="explorer.witnesses.last_confirmed" /></th>
+                            <th className="clickable" onClick={this._setSort.bind(this, "total_missed")}><Translate content="explorer.witnesses.missed" /></th>
+                            <th className="clickable" onClick={this._setSort.bind(this, "total_votes")}><Translate content="account.votes.votes" /></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -264,7 +264,7 @@ class WitnessList extends React.Component {
                     </tbody>
 
                 </table>
-            )
+            );
         }
         else {
             return (

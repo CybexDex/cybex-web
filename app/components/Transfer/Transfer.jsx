@@ -258,7 +258,7 @@ class Transfer extends React.Component {
         });
     }
     onPublicChange(public_key) {
-        console.debug("OnPublicKey: ", public_key);
+        // console.debug("OnPublicKey: ", public_key);
         this.setState({
             public_key
         });
