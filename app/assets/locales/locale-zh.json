@@ -1495,8 +1495,8 @@
   "proposal": {
     "transfer": "从账户{from}发送{amount}到{to}, 锁定期为{vesting}",
     "limit_order_create": "为账户%(account)s下单，买入%(buy_amount)s，挂出%(sell_amount)s",
-    "limit_order_sell": "为账户(account)下单，以价格{price}卖出(amount)",
-    "limit_order_buy": "为账户(account)下单，以价格{price}买入(amount)",
+    "limit_order_sell": "为账户%(account)s下单，以价格{price}卖出%(amount)s",
+    "limit_order_buy": "为账户%(account)s下单，以价格{price}买入%(amount)s",
     "committee_member_update_global_parameters": "{account}更新理事会全局参数",
     "action": "操作",
     "expires": "过期时间",
