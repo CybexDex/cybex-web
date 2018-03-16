@@ -12,6 +12,7 @@ import PubKeyInput from "../Forms/PubKeyInput";
 import { Tabs, Tab } from "../Utility/Tabs";
 import HelpContent from "../Utility/HelpContent";
 import { RecentTransactions } from "./RecentTransactions";
+import Warning from "components/Utility/Warning";
 
 class AccountPermissions extends React.Component {
 
@@ -216,6 +217,9 @@ class AccountPermissions extends React.Component {
     render() {
         let error1, error2;
 
+        let warningTitle = counterpart.translate("account.perm.warning_title");
+        let warningContent = counterpart.translate("account.perm.warning_content");
+
         let { active_accounts, active_keys, active_addresses, active_weights } = this.state;
         let { owner_accounts, owner_keys, owner_addresses, owner_weights } = this.state;
 
@@ -237,9 +241,10 @@ class AccountPermissions extends React.Component {
         return (
             <div className="grid-content">
                 <div className="generic-bordered-box">
+                    <Warning id="permissionWarning" title={warningTitle} contents={[warningContent]} />
                     <Tabs
                         setting="permissionsTabs"
-                        segmented={false} 
+                        segmented={false}
                         className="overview-tabs with-shadow" style={{ "width": "100%" }}
                         contentClass="grid-content no-overflow"
                         tabsClass="account-overview no-padding bordered-header content-block"

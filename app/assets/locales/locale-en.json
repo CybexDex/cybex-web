@@ -276,6 +276,8 @@
       "add_permission_label": "Enter account name/key and weight",
       "account_name_or_key": "Account name or key",
       "memo_public_key": "Memo Public Key",
+      "warning_title": "About the Permissions",
+      "warning_content": "The page you're visiting is about the permissions of your account. The functions on this page should not be used, expect that you really know what's the permission meaning and you really need to config it.",
       "warning1": "Active permissions weights total of %(weights_total)s should be equal or exceed threshold of %(threshold)s",
       "warning2": "Owner permissions weights total of %(weights_total)s should be equal or exceed threshold of %(threshold)s",
       "warning3": "Account is already in the list",
@@ -1125,8 +1127,8 @@
     "console": "Local Wallet Management Console",
     "create_backup": "Create Backup",
     "backup_brainkey": "Backup Brainkey",
-    "backup_accounts": "Here is the list of accounts contained by the wallet. The 'Full' state means the wallet has the control of that account; the 'Partial' means the wallet has only some part of that account. Usually, that account maybe a multi-sig account, and the wallet has a part of the all thresholds",    
-    "account_state": "State",    
+    "backup_accounts": "Here is the list of accounts contained by the wallet. The 'Full' state means the wallet has the control of that account; the 'Partial' means the wallet has only some part of that account. Usually, that account maybe a multi-sig account, and the wallet has a part of the all thresholds",
+    "account_state": "State",
     "create_backup_of": "Create backup now",
     "import_backup": "Import Cybex backup (.bin file)",
     "import_backup_choose": "Please select your backup file in the dialog below. This is completely safe as the file is not uploaded anywhere and never leaves your browser.",
@@ -1530,7 +1532,7 @@
   "vesting": {
     "progress": "Unlock Progress",
     "detail": "Detail",
-    "pubkey": "Belongs to",    
+    "pubkey": "Belongs to",
     "pubkey_tip": "Each vesting balance listed here belongs to a specific public that you owns. Once you lost the control of the that public, you'll not be able to claim that balance!",
     "end_time": "End Time Of Locking"
   },
