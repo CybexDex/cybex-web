@@ -146,7 +146,6 @@ class AccountNameInput extends React.Component {
                     <label className="left-label">{this.props.placeholder}</label>
                     <input
                         name="username"
-                        id="username"
                         type="text"
                         ref="input"
                         autoComplete="off"
