@@ -171,7 +171,7 @@ class Operation extends React.Component {
             case "transfer":
 
                 if (op[1].memo) {
-                    memoComponent = <MemoText memo={op[1].memo} />;
+                    memoComponent = <MemoText memo={op[1].memo} fullLength={true}/>;
                 }
 
                 color = "success";
@@ -183,7 +183,7 @@ class Operation extends React.Component {
                             string="operation.transfer"
                             keys={[
                                 { type: "account", value: op[1].from, arg: "from" },
-                                { type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null },
+                                { type: "amount", value: op[1].amount, arg: "amount" },
                                 { type: "account", value: op[1].to, arg: "to" }
                             ]}
                         />
