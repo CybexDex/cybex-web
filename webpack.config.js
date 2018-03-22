@@ -310,6 +310,7 @@ module.exports = function (env) {
                 "node_modules",
                 path.resolve(root_dir, "app"),
                 path.resolve(root_dir, "app/lib"),
+                path.resolve(root_dir, "app/cybex"),
             ],
             extensions: [
                 ".ts",

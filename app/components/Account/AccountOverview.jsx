@@ -270,6 +270,7 @@ class AccountOverview extends React.Component {
         const emptyCell = "-";
         balanceList.forEach(balance => {
             let balanceObject = ChainStore.getObject(balance);
+            if (!balanceObject) return;
             let asset_type = balanceObject.get("asset_type");
             let asset = ChainStore.getObject(asset_type);
 
@@ -837,6 +838,7 @@ class BalanceWrapper extends React.Component {
         }).filter(b => !!b);
 
         let ordersByAsset = this.props.orders.reduce((orders, o) => {
+            if (!o) return orders;
             let asset_id = o.getIn(["sell_price", "base", "asset_id"]);
             if (!orders[asset_id]) orders[asset_id] = 0;
             orders[asset_id] += parseInt(o.get("for_sale"), 10);

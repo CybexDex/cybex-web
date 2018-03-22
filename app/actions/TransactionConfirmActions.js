@@ -20,7 +20,7 @@ class TransactionConfirmActions {
                     closed: false
                 });
                 if (reject) reject();
-            }, ChainConfig.expire_in_secs * 2000);
+            }, ChainConfig.expire_in_secs * 4000);
 
             transaction.broadcast(() => {
                 dispatch({broadcasting: false, broadcast: true});

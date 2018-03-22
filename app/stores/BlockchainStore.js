@@ -66,6 +66,7 @@ class BlockchainStore {
     }
 
     onUpdateRpcConnectionStatus(status) {
+        console.debug("ConnectionStatus: ", status);
         let prev_status = this.rpc_connection_status;
         if (status === "reconnect") ChainStore.resetCache();
         else this.rpc_connection_status = status;

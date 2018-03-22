@@ -1319,6 +1319,12 @@
     .highlight {
         background: $info-color;
         color: $account-primarytext;
+        &.warning {
+            background: $warning-color;
+        }
+        &.error {
+            background: $alert-color;
+        }
     }
 }
 

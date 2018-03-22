@@ -71,17 +71,19 @@ class Footer extends React.Component {
                             </span> */}
                         <Translate className="contact highlight link" content="footer.contact" component="div" onClick={this.onContact} />
                     </div>
-                    {this.props.synced ?
+                    {/* {this.props.synced ?
                         null :
                         <div className="grid-block shrink txtlabel error">
                             <Translate content="footer.nosync" />&nbsp; &nbsp;
-                            </div>}
-                    {!connected ?
-                        <div className="grid-block shrink txtlabel error">
-                            <Translate content="footer.connection" />&nbsp; &nbsp;
-                            <Reconnect />
-                        </div> : null
+                            </div>} */}
+
+                    {
+                        // !connected ?
+                        //     <div className="grid-block shrink txtlabel error">
+                        //         <Translate content="footer.connection" />&nbsp; &nbsp;
+                        // </div> : null
                     }
+
                     {this.props.backup_recommended ? <span>
                         <div className="grid-block">
                             <a className="shrink txtlabel facolor-alert"
@@ -100,25 +102,14 @@ class Footer extends React.Component {
                     </span> : null}
                     {block_height ?
                         (<div className="grid-block shrink">
-                            <div className="tooltip" onClick={this.onAccess.bind(this)} data-tip={counterpart.translate(`tooltip.${!connected ? "disconnected" : synced ? "sync_yes" : "sync_no"}`) + " " + currentNode} data-place="top">
-                                <div className="footer-status">
-                                    {!connected ?
-                                        <span className="warning">
-                                            <Translate content="footer.disconnected" />
-                                        </span> :
-                                        <span className="success"><Translate content="footer.connected" /></span>}
-                                </div>
-                                <div className="footer-block">
-                                    <span>
-                                        <span className="footer-block-title"><Translate content="footer.latency" /></span>
-                                        &nbsp;{!connected ? "-" : !currentNodePing ? "-" : currentNodePing + "ms"}&nbsp;/&nbsp;
-                                    <span className="footer-block-title"><Translate content="footer.block" /></span>
-                                        &nbsp;#{block_height}
-                                    </span>
-                                </div>
-                            </div>
+
+                            <span>
+                                <span className="footer-block-title"><Translate content="footer.block" /></span>
+                                &nbsp;#{block_height}
+                            </span>
                         </div>) :
                         <div className="grid-block shrink"><Translate content="footer.loading" /></div>}
+                    <Reconnect synced={this.props.synced} connected={connected} currentNodePing={currentNodePing} />
                 </div>
             </div>
         );

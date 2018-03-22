@@ -1004,7 +1004,24 @@
     "connection": "无连接",
     "brainkey": "建议备份脑钱包密钥",
     "connected": "已连接",
-    "latency": "延迟"
+    "latency": "延迟",
+    "status": {
+      "status": "网络状况",
+      "toggle": "网络状况  %(status)s ",
+      "apiStatus": {
+        "online": "正常",
+        "offline": "断开",
+        "blocked": "阻塞"
+      },
+      "ok": "正常",
+      "nosync": "同步中...",
+      "api": "Cybex节点",
+      "network": "本地网络",
+      "api_offline": "API OFFLINE",
+      "net_offline": "NET OFFLINE",
+      "online": "Online",
+      "offline": "Offline"
+    }
   },
   "exchange": {
     "chart_options": {
@@ -1555,7 +1572,7 @@
     "telegram_link": "参与更加活跃的讨论，请加人 Cybex Telegram group: <a href='https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg' target='blank' rel='noopener noreferrer'>https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg</a>"
   },
   "trx_error": {
-    "expire": "你的交易账单确认超时，请稍后尝试。"
+    "expire": "你的交易账单确认超时，请检查您的网络链接。如果稍后仍未收到交易成功提示，请刷新当前页面更新区块信息，检查您的交易状态，并重新尝试执行交易。"
   },
   "backup": {
     "title": "您的钱包需要备份",

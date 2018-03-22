@@ -37,8 +37,10 @@ declare module "alt-instance" {
     static createActions(actionClass): Action<typeof actionClass>;
     static createStore(storeClass, storeName: string): Store<any>;
   }
-
-  export interface Store<S> {
+  interface BaseStore<S> {
+    listen?(cb: (state: S) => void): void;
+  }
+  export interface Store<S> extends BaseStore<S> {
     state: Readonly<S>;
     getState?(): S;
   }

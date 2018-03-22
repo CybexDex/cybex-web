@@ -30,7 +30,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
     //   return <div></div>;
     // console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
     let unclaimed = this.props.total_by_account_asset && this.props.total_by_account_asset.toArray()[0];
-    let balances = unclaimed && unclaimed.balances;
+    let balances = unclaimed && unclaimed.balances.sort((pre, next) => pre["id"] < next["id"] ? -1 : 1);
     return <div>
       <table className="table dashboard-table vest-table">
         <thead>
