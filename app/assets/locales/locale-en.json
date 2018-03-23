@@ -976,7 +976,24 @@
     "unsynced": "Out of sync",
     "disconnected": "Disconnected",
     "connected": "Connected",
-    "latency": "Latency"
+    "latency": "Latency",
+    "status": {
+      "status": "Network",
+      "toggle": "Network  %(status)s ",
+      "apiStatus": {
+        "online": "Online",
+        "offline": "Offline",
+        "blocked": "Blocked"
+      },
+      "ok": "OK",
+      "nosync": "Syncing...",
+      "api": "Cybex Node",
+      "network": "Local Network",
+      "api_offline": "API OFFLINE",
+      "net_offline": "NET OFFLINE",
+      "online": "Online",
+      "offline": "Offline"
+    }
   },
   "exchange": {
     "chart_options": {
