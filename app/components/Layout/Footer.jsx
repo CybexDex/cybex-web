@@ -62,7 +62,7 @@ class Footer extends React.Component {
         let logoProps = {};
 
         return (
-            <div className="show-for-medium grid-block shrink footer">
+            <div className="grid-block shrink footer">
                 <div className="align-justify grid-block">
                     <div className="grid-block">
                         {/* <Translate component="div" className="logo" content="footer.title" /> */}
