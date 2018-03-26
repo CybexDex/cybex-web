@@ -48,7 +48,7 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
     }
     if (
       ((nextProps.apiStatus !== this.props.apiStatus && (nextProps.apiStatus === "offline" || nextProps.apiStatus === "error") && this.props.online) ||
-        (nextProps.online !== this.props.online && this.props.apiStatus === "offline" && nextProps.online)) &&
+        (nextProps.online !== this.props.online && (this.props.apiStatus === "offline" || nextProps.apiStatus === "error") && nextProps.online)) &&
       !this.timer && this.props.initDone
     ) {
       console.debug("To Reconnect");
