@@ -1407,6 +1407,7 @@
   },
   "gateway": {
     "fee": "网关执行手续费",
+    "find_asset": "按资产名称筛选",
     "title": "充值&提现",
     "assets": {
       "open": "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Openledger 提供的网关服务进行充值提现。",
@@ -1601,6 +1602,7 @@
     "transfer": "转账中心",
     "exchange": "交易中心",
     "account": "账户配置",
+    "gateway": "充值提现",
     "bazaar": "主要市场",
     "explorer": "区块浏览",
     "swap": "原子交换",

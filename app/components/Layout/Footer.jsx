@@ -69,7 +69,8 @@ class Footer extends React.Component {
                         {/* <span className="version">
                                 {version}
                             </span> */}
-                        <Translate className="contact highlight link" content="footer.contact" component="div" onClick={this.onContact} />
+                        <Translate className="contact highlight link" content="nav.help" component="div" onClick={this.onHelp} />
+                        <Translate className="contact highlight link margin-left" content="footer.contact" component="div" onClick={this.onContact} />
                     </div>
                     {/* {this.props.synced ?
                         null :
@@ -125,6 +126,9 @@ class Footer extends React.Component {
 
     onContact = () => {
         this.context.router.push("/contact");
+    }
+    onHelp = () => {
+        this.context.router.push("/help/introduction/cybex");
     }
 
     onAccess() {

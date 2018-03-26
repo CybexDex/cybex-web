@@ -1385,6 +1385,7 @@
   },
   "gateway": {
     "fee": "Gateway fee",
+    "find_asset": "Find an asset",    
     "title": "Deposit & Withdraw",
     "assets": {
       "open": "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",
@@ -1412,7 +1413,7 @@
     "generate_new": "Get new address",
     "generate_new_memo": "Get new memo",
     "deposit": "Deposit",
-    "withdraw": "Withdrawal",
+    "withdraw": "Withdraw",
     "convert": "Internal conversion",
     "withdraw_now": "Withdraw now",
     "convert_now": "Convert now",
@@ -1540,6 +1541,7 @@
     "transfer": "TRANSFER",
     "exchange": "EXCHANGE",
     "account": "ACCOUNT",
+    "gateway": "GATEWAY",
     "bazaar": "BAZAAR",
     "explorer": "EXPLORER",
     "swap": "Atomic Swap",

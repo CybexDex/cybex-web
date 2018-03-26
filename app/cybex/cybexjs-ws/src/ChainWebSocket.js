@@ -1,6 +1,6 @@
 
 import { cloneDeep } from "lodash";
-import {NetworkStore} from "stores/NetworkStore";
+import { NetworkStore } from "stores/NetworkStore";
 
 let WebSocketClient = WebSocket;
 
@@ -40,7 +40,7 @@ class ChainWebSocket {
         this.subs = {};
         this.unsub = {};
         NetworkStore.updateApiStatus("connecting");
-        
+
         // For Dev
         window.closeWs = () => this.close();
 
@@ -84,7 +84,7 @@ class ChainWebSocket {
                     }
                     this.send_life--;
                     if (this.send_life == 0) {
-                        this.call([2,"get_objects",[["2.1.0"]]]);
+                        this.call([2, "get_objects", [["2.1.0"]]]);
                         // console.debug("SendLife: ", this.send_life);
                         if (this.keepAliveCb) {
                             // console.debug("SendList 0, Keepalive", this.keepAliveCb);
@@ -102,8 +102,8 @@ class ChainWebSocket {
                 }
                 clearTimeout(this.connectionTimeout);
                 if (this.statusCb) this.statusCb("error");
-                NetworkStore.updateApiStatus("error");                
-                
+                NetworkStore.updateApiStatus("error");
+
                 if (this.current_reject) {
                     this.current_reject(error);
                 }
@@ -123,7 +123,7 @@ class ChainWebSocket {
                     this.cbs[cbId].reject(err);
                 }
                 // console.debug("[CybexWebSocket]", "[WsOnClose]", "[SatusCB]", this.statusCb);
-                NetworkStore.updateApiStatus("offline");                
+                NetworkStore.updateApiStatus("offline");
                 if (this.statusCb) this.statusCb("closed");
                 if (this.closeCb) this.closeCb();
             };
@@ -154,8 +154,8 @@ class ChainWebSocket {
         // this.cbId += 1;
         this.cbId = cbId || this.updateId(this.cbId);
         let method = params[1];
-        // if (SOCKET_DEBUG)
-        console.log("[ChainWebSocket] >---- call ----->  \"id\":" + (this.cbId), JSON.stringify(params));
+        if (SOCKET_DEBUG)
+            console.log("[ChainWebSocket] >---- call ----->  \"id\":" + (this.cbId), JSON.stringify(params));
         // this.cbId += 1;
         pendingCalls[this.cbId] = params; // 暂存未完成请求
         if (method === "set_subscribe_callback" || method === "subscribe_to_market" ||

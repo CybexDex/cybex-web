@@ -780,33 +780,6 @@ class AccountOverview extends React.Component {
                     </div>
                 </div>
 
-                {/* Deposit Modal */}
-                {/* <DepositModal
-                    ref="deposit_modal"
-                    action="deposit"
-                    fiatModal={this.state.fiatModal}
-                    account={this.props.account.get("name")}
-                    sender={this.props.account.get("id")}
-                    asset={this.state.depositAsset}
-                    modalId="simple_deposit_modal"
-                    balances={this.props.balances}
-                    {...currentDepositAsset}
-                    isDown={this.props.gatewayDown.get("OPEN")}
-                /> */}
-
-                {/* Withdraw Modal */}
-                <SimpleDepositWithdraw
-                    ref="withdraw_modal"
-                    action="withdraw"
-                    fiatModal={this.state.fiatModal}
-                    account={this.props.account.get("name")}
-                    sender={this.props.account.get("id")}
-                    asset={this.state.withdrawAsset}
-                    modalId="simple_withdraw_modal"
-                    balances={this.props.balances}
-                    {...currentWithdrawAsset}
-                    isDown={this.props.gatewayDown.get("OPEN")}
-                />
 
             </div>
 

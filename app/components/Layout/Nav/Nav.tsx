@@ -53,6 +53,11 @@ const NavLinks: Array<NavItem> = [
     name: "Exchange",
     icon: "to-bit"
   }, {
+    id: "gateway",
+    routeTo: "/gateway",
+    name: "Gateway",
+    icon: "exchange"
+  },{
     id: "transfer",
     routeTo: "/transfer",
     name: "Transfer",
@@ -65,13 +70,13 @@ const NavLinks: Array<NavItem> = [
   //   icon: "exchange",
   //   displayOnlyWhen: "currentAccount"    
   // },
-  {
-    id: "help",
-    routeTo: "/help/introduction/cybex",
-    activeMatcher: /^\/help/,
-    name: "Help",
-    icon: "idea"
-  },
+  // {
+  //   id: "help",
+  //   routeTo: "/help/introduction/cybex",
+  //   activeMatcher: /^\/help/,
+  //   name: "Help",
+  //   icon: "idea"
+  // },
 ];
 
 const NavLink = ({ icon, name, isActive, id }: NavItem) => (
