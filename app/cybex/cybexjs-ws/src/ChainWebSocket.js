@@ -21,7 +21,7 @@ let max_recv_life = max_send_life * 4;
 class ChainWebSocket {
     constructor(ws_server, statusCb, connectTimeout = 5000, autoReconnect = true, keepAliveCb = null) {
         this.initParams = [ws_server, statusCb, connectTimeout, autoReconnect, keepAliveCb];
-        console.debug("[ChainWebSocket]", "New", ws_server, statusCb, connectTimeout = 5000, autoReconnect = true, keepAliveCb = null)
+        // console.debug("[ChainWebSocket]", "New", ws_server, statusCb, connectTimeout = 5000, autoReconnect = true, keepAliveCb = null)
         this.statusCb = statusCb;
         this.connectionTimeout = setTimeout(() => {
             if (this.current_reject) this.current_reject(new Error("Connection attempt timed out: " + ws_server));
@@ -59,7 +59,7 @@ class ChainWebSocket {
                 if (this.on_reconnect) this.on_reconnect();
                 this.keepalive_timer = setInterval(() => {
                     this.recv_life--;
-                    console.debug("RecvLife: ", this.recv_life);
+                    // console.debug("RecvLife: ", this.recv_life);
                     if (this.recv_life === max_recv_life - 1) {
                         NetworkStore.updateApiStatus("online");
                     }
@@ -85,9 +85,9 @@ class ChainWebSocket {
                     this.send_life--;
                     if (this.send_life == 0) {
                         this.call([2,"get_objects",[["2.1.0"]]]);
-                        console.debug("SendLife: ", this.send_life);
+                        // console.debug("SendLife: ", this.send_life);
                         if (this.keepAliveCb) {
-                            console.debug("SendList 0, Keepalive", this.keepAliveCb);
+                            // console.debug("SendList 0, Keepalive", this.keepAliveCb);
                             this.keepAliveCb();
                         }
                         this.send_life = max_send_life;
@@ -113,7 +113,7 @@ class ChainWebSocket {
                 this.listener(JSON.parse(message.data));
             };
             this.ws.onclose = () => {
-                console.debug("[CybexWebSocket]", "[WsOnClose]", this.subs, this);
+                // console.debug("[CybexWebSocket]", "[WsOnClose]", this.subs, this);
                 if (this.keepalive_timer) {
                     clearInterval(this.keepalive_timer);
                     this.keepalive_timer = undefined;
@@ -122,7 +122,7 @@ class ChainWebSocket {
                 for (var cbId = this.responseCbId + 1; cbId <= this.cbId; cbId += 1) {
                     this.cbs[cbId].reject(err);
                 }
-                console.debug("[CybexWebSocket]", "[WsOnClose]", "[SatusCB]", this.statusCb);
+                // console.debug("[CybexWebSocket]", "[WsOnClose]", "[SatusCB]", this.statusCb);
                 NetworkStore.updateApiStatus("offline");                
                 if (this.statusCb) this.statusCb("closed");
                 if (this.closeCb) this.closeCb();
@@ -252,7 +252,7 @@ class ChainWebSocket {
 
     close() {
         return new Promise((res) => {
-            console.debug("[CybexWebSocket]", "[OnClose]", this.subs);
+            // console.debug("[CybexWebSocket]", "[OnClose]", this.subs);
             this.closeCb = () => {
                 res();
                 this.closeCb = null;

@@ -11,7 +11,6 @@ import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";
 import { ChainStore, ChainTypes as grapheneChainTypes } from "cybexjs";
 import { ExplorerNav } from "../Explorer/ExplorerNav";
 
-
 const { operations } = grapheneChainTypes;
 let ops = Object.keys(operations);
 
@@ -43,7 +42,8 @@ class FeeGroup extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         return (
-            !Immutable.is(nextProps.globalObject, this.props.globalObject)
+            !Immutable.is(nextProps.globalObject, this.props.globalObject) || 
+            !Immutable.is(nextProps.settings, this.props.settings)
         );
     }
 

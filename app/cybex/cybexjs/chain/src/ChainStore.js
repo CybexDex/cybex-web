@@ -287,7 +287,7 @@ class ChainStore {
         if (this.subscribers.has(callback))
             return console.error("Subscribe callback already exists", callback);
         this.subscribers.add(callback);
-        console.debug("[ChainStore]", "Subscribe", callback);
+        // console.debug("[ChainStore]", "Subscribe", callback);
     }
 
     /**

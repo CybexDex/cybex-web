@@ -111,7 +111,7 @@ class ApisInstance {
                 });
             });
             this.ws_rpc.on_reconnect = () => {
-                console.debug("[ApiInstance]", "onReconnect");
+                // console.debug("[ApiInstance]", "onReconnect");
                 this.ws_rpc.login("", "").then(() => {
                     this._db.init().then(() => {
                         if (this.statusCb)

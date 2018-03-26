@@ -1,4 +1,3 @@
-console.debug = () => void (0);
 if (!window.Intl) { // Safari polyfill
     require.ensure(["intl"], require => {
         window.Intl = require("intl");
