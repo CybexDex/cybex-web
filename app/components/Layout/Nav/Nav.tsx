@@ -10,7 +10,7 @@ import { Apis } from "cybexjs-ws";
 import Translate from "react-translate-component";
 // For logout
 import { ModalActions } from "actions/ModalActions";
-import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
+import LogoutModal, { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 
 
 interface NavItem {
@@ -56,8 +56,9 @@ const NavLinks: Array<NavItem> = [
     id: "gateway",
     routeTo: "/gateway",
     name: "Gateway",
-    icon: "exchange"
-  },{
+    icon: "exchange",
+    displayOnlyWhen: "currentAccount"
+  }, {
     id: "transfer",
     routeTo: "/transfer",
     name: "Transfer",

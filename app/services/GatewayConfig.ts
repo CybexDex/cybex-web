@@ -36,7 +36,6 @@ export const JadePool = __TEST__ ?
     "GATEWAY_ACCOUNT": "cybex-jadegateway",
     // Cybex资产: 外部资产
     "ADDRESS_TYPES": {
-      "CYB": "CYB",
       "JADE.ETH": "ETH",
       "JADE.BTC": "BTC",
       "JADE.EOS": "EOS",
@@ -51,7 +50,6 @@ export const JadePool = __TEST__ ?
       "JADE.ENG": "ENG"
     },
     "ADDRESS_ASSETS": {
-      "CYB": "CYB",
       "ETH": "JADE.ETH",
       "BTC": "JADE.BTC",
       // ERC20

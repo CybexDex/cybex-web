@@ -220,6 +220,9 @@ const routes = (
         <Route path="create-worker" getComponent={(location, cb) => {
             System.import("components/Account/CreateWorker").then(loadRoute(cb)).catch(errorLoading);
         }} />
+        <Route path="gateway" getComponent={(location, cb) => {
+            System.import("components/Gateway/Gateway").then(loadRoute(cb)).catch(errorLoading);
+        }} />
         <Route path="/init-error" getComponent={(location, cb) => {
             System.import("components/InitError").then(loadRoute(cb)).catch(errorLoading);
         }} />
