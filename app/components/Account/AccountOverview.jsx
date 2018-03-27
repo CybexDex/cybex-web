@@ -37,6 +37,7 @@ import { HeadContextMenuId } from "components/Layout/Header";
 import { AccountVestedBalances } from "components/Account/AccountVestedBalances";
 import CrowdFund from "components/CrowdFund/AccountCrowdFund";
 import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
+import { JadePool } from "services/GatewayConfig";
 
 const sortFunctions = {
     alphabetic: function (a, b, force) {
@@ -306,8 +307,7 @@ class AccountOverview extends React.Component {
             const includeAsset = !hiddenAssets.includes(asset_type);
             const hasBalance = !!balanceObject.get("balance");
             const hasOnOrder = !!orders[asset_type];
-            const canDepositWithdraw =
-                !!this.props.backedCoins.get("JADE", []).find(a => a.symbol === asset.get("symbol"));
+            const canDepositWithdraw = !!JadePool.ADDRESS_TYPES[asset.get("symbol")];
             const canWithdraw = canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
             const canBuy = !!this.props.bridgeCoins.get(symbol);
 

@@ -8,6 +8,7 @@ import {
 import alt from "alt-instance";
 import { Store } from "alt-instance";
 import GatewayActions from "actions/GatewayActions";
+import { JadePool } from "services/GatewayConfig";
 import { debugGen } from "utils//Utils";
 
 import ls from "lib/common/localStorage";
@@ -26,18 +27,7 @@ type State = {
     withdrawInfo?,
 };
 declare const __TEST__;
-export const JADE_COINS = __TEST__ ?
-    [{
-        symbol: "TEST.BTC"
-    },
-    {
-        symbol: "TEST.ETH"
-    }] : [{
-        symbol: "JADE.BTC"
-    },
-    {
-        symbol: "JADE.ETH"
-    }];
+export const JADE_COINS = JadePool.ADDRESS_TYPES;
 
 
 class GatewayStore extends BaseStore implements Store<State>{
