@@ -98,7 +98,7 @@ class SettingsStore {
         };
 
         // this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
-        
+
         // TODO for Online
         this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
 
@@ -171,7 +171,9 @@ class SettingsStore {
                     "CYBX", "BTCX", "ETHX", "LTCX", "BCHX", "XRPX"
                 ],
                 markets_90be01e8: [ // Main Net
-                    "CYB", "JADE.ETH", "JADE.BTC"
+                    "CYB", "JADE.ETH", "JADE.BTC", "JADE.EOS",
+                    "JADE.BAT", "JADE.VEN", "JADE.OMG", "JADE.SNT", "JADE.NAS",
+                    "JADE.KNC", "JADE.PAY", "JADE.ENG"
                 ],
             };
 
@@ -189,7 +191,7 @@ class SettingsStore {
                     "TEST"
                 ],
                 markets_90be01e8: [ // Main Net
-                    "CYB", "JADE.ETH", "JADE.BTC"
+                    "CYB", "JADE.ETH", "JADE.BTC", "JADE.EOS"
                 ],
             };
 
