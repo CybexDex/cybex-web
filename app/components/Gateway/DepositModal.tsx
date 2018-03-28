@@ -60,7 +60,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       <BaseModal modalId={modalId} >
         <h3><Translate content={"gateway.deposit"} /> {asset.get("symbol")}({assetName})</h3>
         <p>
-          {<Translate unsafe content="gateway.add_funds" account={depositInfo.accountName} />}
+          {<Translate unsafe content="gateway.add_funds" type={assetName} account={depositInfo.accountName} />}
         </p>
         {currentBalance && <CurrentBalance currentBalance={balance} asset={asset} />}
         <div className="SimpleTrade__withdraw-row">

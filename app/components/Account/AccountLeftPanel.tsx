@@ -12,6 +12,8 @@ import { JadePool } from "services/GatewayConfig";
 import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
 import { JADE_COINS } from "stores/GatewayStore";
 
+const PrimaryCoin = Object.keys(JADE_COINS).slice(0, 2);
+
 class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
     last_path = null;
     static propTypes = {
@@ -75,7 +77,7 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
 
     _depositClick = (typeCode) => {
         let { account } = this.props;
-        return GatewayActions.showDepositModal(account.get("name"), JADE_COINS[typeCode].symbol);
+        return GatewayActions.showDepositModal(account.get("name"), PrimaryCoin[typeCode]);
     }
     _withdrawClick = (info) => {
         // this._toggleQR(true);
@@ -119,9 +121,9 @@ class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, acc
                             <div className="grid-container no-margin full-width-content" style={{ paddingTop: 20, maxWidth: imageSize.width }}>
                                 <div style={{ paddingBottom: 15 }}><Link to={`/transfer/?to=${account_name}`}><Translate className="button block-button no-margin" content="account.pay" /></Link></div>
                                 {linkBtn}
-                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="button" asset={JADE_COINS[1].symbol} onClick={() => this._depositClick(1)} />}
+                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="button" asset={PrimaryCoin[1]} onClick={() => this._depositClick(1)} />}
 
-                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="margin-top button" asset={JADE_COINS[0].symbol} onClick={() => this._depositClick(0)} />}
+                                {isMyAccount && <Translate component="button" content="wallet.link_deposit_asset" className="margin-top button" asset={PrimaryCoin[0]} onClick={() => this._depositClick(0)} />}
                             </div>
                         </div>
                         <section className="block-list">
