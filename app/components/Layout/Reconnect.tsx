@@ -9,13 +9,13 @@ import ReactTooltip from "react-tooltip";
 import { getClassName } from "utils";
 
 type ReconnectProps = {
-  online?: boolean,
-  connected: boolean,
-  synced?: boolean,
-  currentNodePing?: number,
-  apiStatus?: string,
-  initDone?: boolean,
-  router: any
+  online?: boolean;
+  connected: boolean;
+  synced?: boolean;
+  currentNodePing?: number;
+  apiStatus?: string;
+  initDone?: boolean;
+  router: any;
 };
 
 let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
@@ -34,7 +34,7 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
   }
 
   componentWillReceiveProps(nextProps: ReconnectProps) {
-    // console.debug("Recive: ", this.props, nextProps);
+    console.debug("Recive: ", this.props, nextProps);
     if (nextProps.apiStatus === "online") {
       clearTimeout(this.timer);
       this.timer = undefined;
@@ -47,9 +47,13 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
       });
     }
     if (
-      ((nextProps.apiStatus !== this.props.apiStatus && (nextProps.apiStatus === "offline" || nextProps.apiStatus === "error") && this.props.online) ||
-        (nextProps.online !== this.props.online && (this.props.apiStatus === "offline" || nextProps.apiStatus === "error") && nextProps.online)) &&
-      !this.timer && this.props.initDone
+      ((nextProps.apiStatus !== this.props.apiStatus &&
+        (nextProps.apiStatus === "offline" ||
+          nextProps.apiStatus === "error") &&
+        this.props.online) ||
+        (nextProps.online !== this.props.online && nextProps.online)) &&
+      !this.timer &&
+      this.props.initDone
     ) {
       console.debug("To Reconnect");
       // (NetworkStore as any).setInitDone(false);
@@ -57,8 +61,7 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
     }
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   reconnect() {
     this.setState({
@@ -67,20 +70,30 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
 
     ReactTooltip.show(findDOMNode(this.refs.toggle));
 
-    this.timer = setTimeout(() =>
-      willTransitionTo(this.props.router, this.props.router.replace, () => { }, false),
-      6000);
+    this.timer = setTimeout(
+      () =>
+        willTransitionTo(
+          this.props.router,
+          this.props.router.replace,
+          () => {},
+          false
+        ),
+      6000
+    );
   }
 
   get currentStatus() {
     let { reconnect } = this.state;
     let { connected, online, synced, apiStatus } = this.props;
-    return reconnect ?
-      "reconnect" : apiStatus === "online" && online && synced ?
-        "ok" : !online ?
-          "net_offline" : apiStatus === "offline" ?
-            "api_offline" : !synced || apiStatus === "blocked" ?
-              "nosync" : "unknown";
+    return reconnect
+      ? "reconnect"
+      : apiStatus === "online" && online && synced
+        ? "ok"
+        : !online
+          ? "net_offline"
+          : apiStatus === "offline"
+            ? "api_offline"
+            : !synced || apiStatus === "blocked" ? "nosync" : "unknown";
   }
 
   render() {
@@ -89,21 +102,44 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
     return (
       <div className="connect-wrapper">
         <Link to="/settings">
-          <Translate ref="toggle" className={getClassName("reconnect-toggle text-center highlight", { "error": !online || apiStatus === "offline", "warning": this.currentStatus !== "ok" })} data-tip data-for="connection" content="footer.status.toggle" status={`${this.currentStatus}`} />
+          <Translate
+            ref="toggle"
+            className={getClassName("reconnect-toggle text-center highlight", {
+              error: !online || apiStatus === "offline",
+              warning: this.currentStatus !== "ok"
+            })}
+            data-tip
+            data-for="connection"
+            content="footer.status.toggle"
+            status={`${this.currentStatus}`}
+          />
         </Link>
         <ReactTooltip id="connection" delayHide={1000} effect="solid">
           <table id="connectionStatus" className="status-table">
             <tr>
-              <Translate component="td" content="footer.status.status" className="status-title text-left">
-              </Translate>
-              <Translate component="td" content={`footer.status.${this.currentStatus}`} className="status-content text-right">
-              </Translate>
+              <Translate
+                component="td"
+                content="footer.status.status"
+                className="status-title text-left"
+              />
+              <Translate
+                component="td"
+                content={`footer.status.${this.currentStatus}`}
+                className="status-content text-right"
+              />
             </tr>
             <tr className="border-top">
-              <Translate rowSpan="2" component="td" content="footer.status.api" className="status-title text-left">
-              </Translate>
-              <Translate component="td" content={`footer.status.apiStatus.${apiStatus}`} className="status-content text-right">
-              </Translate>
+              <Translate
+                rowSpan="2"
+                component="td"
+                content="footer.status.api"
+                className="status-title text-left"
+              />
+              <Translate
+                component="td"
+                content={`footer.status.apiStatus.${apiStatus}`}
+                className="status-content text-right"
+              />
             </tr>
             <tr>
               <td className="status-content text-right">
@@ -111,23 +147,29 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
               </td>
             </tr>
             <tr className="border-top">
-              <Translate component="td" content="footer.status.network" className="status-title text-left">
-              </Translate>
-              <Translate component="td" content={`footer.status.${online ? "online" : "offline"}`} className="status-content text-right">
-              </Translate>
+              <Translate
+                component="td"
+                content="footer.status.network"
+                className="status-title text-left"
+              />
+              <Translate
+                component="td"
+                content={`footer.status.${online ? "online" : "offline"}`}
+                className="status-content text-right"
+              />
             </tr>
           </table>
         </ReactTooltip>
 
         {/* <Translate component="a" href="javascript:;" content="init_error.retry" onClick={this.reconnect.bind(this)} /> */}
       </div>
-    )
+    );
   }
-}
+};
 
 Reconnect = connect(Reconnect, {
   listenTo() {
-    return [NetworkStore]
+    return [NetworkStore];
   },
   getProps() {
     return {
