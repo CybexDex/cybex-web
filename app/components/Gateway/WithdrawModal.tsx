@@ -6,6 +6,7 @@ import { ChainStore } from "cybexjs";
 import GatewayStore from "stores/GatewayStore";
 import { GatewayActions } from "actions/GatewayActions";
 import { verifyAddress } from "services//GatewayService";
+import { GATEWAY_ID } from "services/GatewayConfig";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "components/Utility/BalanceComponent";
 import AmountSelector from "components/Utility/AmountSelector";
@@ -42,7 +43,7 @@ type state = {
   withdraw_address_loading,
   withdraw_address_error?,
   withdraw_address_valid,
-  error, balanceError, hasPoolBalance, hasBalance, memo, feeStatus, from_account, fee_asset_id?, feeAmount?, fadeOut, withdraw_amount, withdraw_address
+  error, balanceError, hasPoolBalance, hasBalance, memo, feeStatus, from_account, fee_asset_id?, feeAmount?, fadeOut, useCybAsFee?, withdraw_amount, withdraw_address
 };
 
 class WithdrawModal extends React.Component<props, state> {
@@ -71,6 +72,7 @@ class WithdrawModal extends React.Component<props, state> {
       hasBalance: null,
       balanceError: null,
       error: false,
+      useCybAsFee: true,
       withdraw_address_loading: false,
       withdraw_address_valid: false
     };
@@ -91,19 +93,24 @@ class WithdrawModal extends React.Component<props, state> {
   }
 
   _validateAddress = async (address: string) => {
-    let { error, valid } = await verifyAddress(address,
-      this.props.account.get("name"),
-      this.props.withdrawInfo.type
-    );
-    if (error) {
+    let valid;
+    try {
+      let res = await verifyAddress(address,
+        this.props.account.get("name"),
+        this.props.withdrawInfo.type
+      );
+      debug("Verify Res: ", res);
+      valid = res.valid;
+    } catch (e) {
       return this.setState({
         withdraw_address_loading: false,
         withdraw_address_valid: false,
         withdraw_address_error: true
-      })
+      });
     }
     this.setState({
       withdraw_address_loading: false,
+      withdraw_address_error: false,
       withdraw_address_valid: valid,
     })
     debug("Valid: ", valid);
@@ -190,7 +197,6 @@ class WithdrawModal extends React.Component<props, state> {
     fee_asset_types = fee_asset_types.filter(a => {
       return hasFeePoolBalance(a) && hasBalance(a);
     });
-
     return { fee_asset_types };
   }
 
@@ -209,7 +215,7 @@ class WithdrawModal extends React.Component<props, state> {
         options: ["price_per_kbyte"],
         data: {
           type: "memo",
-          content: "withdraw:" + this.props.asset + ":" + state.withdraw_address + (state.memo ? ":" + state.memo : "")
+          content: "withdraw:" + GATEWAY_ID + ":" + this.props.asset + ":" + state.withdraw_address + (state.memo ? ":" + state.memo : "")
         }
       }));
     });
@@ -232,6 +238,13 @@ class WithdrawModal extends React.Component<props, state> {
     this.nestedRef = ref;
   }
 
+  onFeeCheckboxChange(e) {
+    let useCybAsFee: boolean = e.target.checked;
+    this.setState({
+      useCybAsFee
+    });
+  }
+
   _checkBalance() {
     const { feeAmount, withdraw_amount } = this.state;
     const { asset } = this.props;
@@ -246,6 +259,7 @@ class WithdrawModal extends React.Component<props, state> {
   }
 
   onSubmit = () => {
+    let { useCybAsFee } = this.state;
     let precision = this.props.asset.get("precision");
     let withdrawAmount = calcAmount(this.state.withdraw_amount, precision);
     let gatewayFeeAmount = calcAmount(this.props.withdrawInfo.fee, precision);
@@ -254,9 +268,9 @@ class WithdrawModal extends React.Component<props, state> {
       this.props.withdrawInfo.gatewayAccount,
       withdrawAmount,
       this.props.asset.get("id"),
-      "withdraw:" + this.props.withdrawInfo.type + ":" + this.state.withdraw_address,
+      "withdraw:" + GATEWAY_ID + ":" + this.props.withdrawInfo.type + ":" + this.state.withdraw_address,
       null,
-      "1.3.0"
+      useCybAsFee ? "1.3.0" : this.props.asset.get("id")
     );
   }
 
@@ -280,6 +294,7 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_address_valid,
       withdraw_address_loading,
       withdraw_address_error,
+      useCybAsFee,
       memo
     } = this.state;
 
@@ -319,20 +334,26 @@ class WithdrawModal extends React.Component<props, state> {
       !withdraw_address_valid &&
       !withdraw_address_error;
 
+    let amountValid = Number(withdraw_amount) >= withdrawInfo.minValue;
     let disableSubmit =
       !withdraw_address ||
+      withdraw_address_loading ||
       addressInvalid ||
       gatewayServiceInvalid ||
-      withdraw_amount <= 0;
-
-    let amountValid = Number(withdraw_amount) >= 0;
+      !amountValid;
+      // withdraw_amount <= 0;
 
     return (
       <BaseModal modalId={modalId} >
         <div className="content-block">
           <h3><Translate content={"gateway.withdraw"} />
-            {this.props.receive_asset_name}({this.props.receive_asset_symbol})
+            {" " + this.props.asset.get("symbol")}({this.props.receive_asset_symbol})
         </h3>
+        </div>
+        <div className="content-block">
+          <p>
+            {<Translate unsafe content="gateway.withdraw_funds" type={this.props.receive_asset_symbol} asset={this.props.asset.get("symbol")} />}
+          </p>
         </div>
         <div className="content-block">
           <AmountSelector label="modal.withdraw.amount"
@@ -344,13 +365,17 @@ class WithdrawModal extends React.Component<props, state> {
             display_balance={balance}
           />
           <ErrorTipBox
-            isTranslation={true}
+            isI18n={true}
             tips={[
               {
                 name: "withdraw-amount",
-                isError: !amountValid,
-                isTranslation: true,
-                message: "transfer.errors.valid"
+                isError: !amountValid && Number(withdraw_amount) != 0,
+                isI18n: true,
+                message: "gateway.low_limit",
+                messageParams: {
+                  symbol: this.props.withdrawInfo.type,
+                  amount: this.props.withdrawInfo.minValue
+                }
               },
             ]}
             muiltTips={false}
@@ -387,6 +412,15 @@ class WithdrawModal extends React.Component<props, state> {
             </div>
           </div>) : null}
         <div className="content-block">
+          <div className="inline-label use-cyb">
+            <Translate className="left-label" component="lebel" content="modal.withdraw.cyb_fee" />
+            <div className="switch">
+              <input id="useCybAsFee" type="checkbox" value={useCybAsFee} defaultChecked={true} onChange={this.onFeeCheckboxChange.bind(this)} />
+              <label htmlFor="useCybAsFee" />
+            </div>
+          </div>
+        </div>
+        <div className="content-block">
           <label className="left-label">
             <Translate component="span" content="modal.withdraw.address" />
           </label>
@@ -398,12 +432,13 @@ class WithdrawModal extends React.Component<props, state> {
             </div>
           </div>
           <ErrorTipBox
-            isTranslation={true}
+            isI18n={true}
+            placeholder={true}
             tips={[
               {
                 name: "withdraw-address",
                 isError: addressInvalid,
-                isTranslation: true,
+                isI18n: true,
                 message: "gateway.valid_address",
                 messageParams: {
                   coin_type: this.props.withdrawInfo.type
@@ -412,8 +447,14 @@ class WithdrawModal extends React.Component<props, state> {
               {
                 name: "withdraw-gateway",
                 isError: gatewayServiceInvalid,
-                isTranslation: true,
+                isI18n: true,
                 message: "gateway.valid_service"
+              },
+              {
+                name: "withdraw-gateway",
+                isError: withdraw_address_loading,
+                isI18n: true,
+                message: "gateway.loading"
               },
             ]}
             muiltTips={false}

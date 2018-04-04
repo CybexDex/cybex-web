@@ -223,7 +223,6 @@ class Blocks extends React.Component {
 
             transactions = latestTransactions.take(20)
                 .map((trx) => {
-
                     let opIndex = 0;
                     return trx.operations.map(op => {
                         return (

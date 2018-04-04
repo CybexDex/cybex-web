@@ -16,11 +16,11 @@ class TransactionConfirmActions {
                 dispatch({
                     broadcast: false,
                     broadcasting: false,
-                    error: counterpart.translate("trx_error.expire"),
+                    error: counterpart.translate("gateway.find_asset"),
                     closed: false
                 });
                 if (reject) reject();
-            }, ChainConfig.expire_in_secs * 2000);
+            }, ChainConfig.expire_in_secs * 4000);
 
             transaction.broadcast(() => {
                 dispatch({broadcasting: false, broadcast: true});

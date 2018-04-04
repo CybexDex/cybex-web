@@ -1,0 +1,19 @@
+{
+  "name": "cybexjs-ws",
+  "version": "1.1.9",
+  "description": "the websocket utils for Cybex. Forked from bitsharesjs-ws, fit for Cybex.",
+  "main": "index-umd.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CybexDex/cybexjs-ws.git"
+  },
+  "author": "CybexDEX",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^3.10.0",
+    "ws": "^3.3.2"
+  }
+}

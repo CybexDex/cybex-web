@@ -651,7 +651,7 @@ class AccountAssetCreate extends React.Component {
                                 <div style={{ marginBottom: 10 }} className="txtlabel cancel">
                                     <Translate content="account.user_issued_assets.precision_warning" />
                                 </div>
-                                <div className="grid-block full-container switch-container">
+                                {/* <div className="grid-block full-container switch-container">
                                     <Translate component="div" className="small-3" content={"account.user_issued_assets.vesting"} />
                                     <div className="small-9 text-right">
                                         <div className="switch">
@@ -659,7 +659,7 @@ class AccountAssetCreate extends React.Component {
                                             <label htmlFor="isVestingAsset" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 {
                                     isVestingAsset &&
                                     <div className="form-group grid-block grid-x-padding full-container">

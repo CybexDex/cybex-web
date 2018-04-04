@@ -1,7 +1,7 @@
 import * as React from "react";
 import Card, { CardStatus } from "./../Utility/Card"
 import Translate from "react-translate-component";
-
+import { TimerButton } from "components/Utility/TimerButton";
 import QueueAnim from "rc-queue-anim";
 
 type CardListProps = {
@@ -43,10 +43,6 @@ type CardListState = {
   onlyOneCard?: boolean;
 };
 
-type TimerButtonProps = {
-  timeToCount: number;
-  onClick: any;
-};
 
 const ScrollTopWrapper = class extends React.Component {
   el: HTMLElement = null;
@@ -66,38 +62,7 @@ const ScrollTopWrapper = class extends React.Component {
   }
 }
 
-class TimerButton extends React.Component<TimerButtonProps, any> {
-  timer: any;
-  constructor(props: TimerButtonProps) {
-    super(props);
-    this.state = {
-      time: props.timeToCount
-    };
-  }
 
-  componentDidMount() {
-    this.timer = setInterval(() => {
-      this.setState(prev => ({
-        time: prev.time - 1
-      }));
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  render() {
-    let className = "button" + (this.state.time <= 0 ? "" : " disabled");
-    return (
-      <button className={className} disabled={this.state.time > 0} onClick={this.props.onClick} >
-        {this.state.time > 0 && (this.state.time + "s")}
-        &nbsp;
-        {this.props.children}
-      </button>
-    );
-  }
-}
 
 const AnimConfig = [
   {

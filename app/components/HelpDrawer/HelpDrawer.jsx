@@ -14,7 +14,6 @@ const HelpDrawer = class extends Component {
   }
 
   toggleDrawer() {
-    console.debug("ToggleDrawer: ");
     this.setState(prevState => ({
       isShowing: !prevState.isShowing
     }));

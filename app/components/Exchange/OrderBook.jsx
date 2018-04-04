@@ -392,7 +392,7 @@ class OrderBook extends React.Component {
                     <div className="exchange-content-header ask">
                         <Translate content="exchange.asks" />
                         <div className="float-right header-sub-title">
-                            <Translate content="exchange.total" />
+                            <Translate content="exchange.total_bidask" />
                             <span>: </span>
                             {utils.format_number(totalAsks, quote.get("precision"))}
                             <span> (<AssetName name={quoteSymbol} />)</span>
@@ -419,7 +419,7 @@ class OrderBook extends React.Component {
                     <div className="exchange-content-header bid">
                         <Translate content="exchange.bids" />
                         <div className="float-right header-sub-title">
-                            <Translate content="exchange.total" />
+                            <Translate content="exchange.total_bidask" />
                             <span>: </span>
                             {utils.format_number(totalBids, base.get("precision"))}
                             <span> (<AssetName name={baseSymbol} />)</span>

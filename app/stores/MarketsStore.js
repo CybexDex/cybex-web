@@ -207,6 +207,7 @@ class MarketsStore {
     }
 
     onSubscribeMarket(result) {
+        console.debug("Marketing: ", result);
         if (result.switchMarket) {
             this.marketReady = false;
             return this.emitChange();

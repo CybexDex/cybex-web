@@ -33,6 +33,9 @@ const routes = (
         <Route path="/dashboard" getComponent={(location, cb) => {
             System.import("components/Dashboard/DashboardContainer").then(loadRoute(cb)).catch(errorLoading);
         }} />
+        <Route path="contact" getComponent={(location, cb) => {
+            System.import("components/HelpDrawer/Contact").then(loadRoute(cb)).catch(errorLoading);
+        }} />
         <Route path="explorer" getComponent={(location, cb) => {
             System.import("components/Explorer/Explorer").then(loadRoute(cb)).catch(errorLoading);
         }} />
@@ -217,6 +220,9 @@ const routes = (
         <Route path="create-worker" getComponent={(location, cb) => {
             System.import("components/Account/CreateWorker").then(loadRoute(cb)).catch(errorLoading);
         }} />
+        <Route path="gateway" getComponent={(location, cb) => {
+            System.import("components/Gateway/Gateway").then(loadRoute(cb)).catch(errorLoading);
+        }} />
         <Route path="/init-error" getComponent={(location, cb) => {
             System.import("components/InitError").then(loadRoute(cb)).catch(errorLoading);
         }} />
@@ -235,7 +241,7 @@ const routes = (
                 </Route>
             </Route>
         </Route>
-        <Redirect from="*" to="/"/>
+        <Redirect from="*" to="/" />
     </Route>
 );
 

@@ -10,7 +10,7 @@ import { Apis } from "cybexjs-ws";
 import Translate from "react-translate-component";
 // For logout
 import { ModalActions } from "actions/ModalActions";
-import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
+import LogoutModal, { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 
 
 interface NavItem {
@@ -40,18 +40,24 @@ const NavLinks: Array<NavItem> = [
     name: "Explorer",
     icon: "diagram"
   },
-  {
-    id: "bazaar",
-    routeTo: "/bazaar",
-    name: "Bazaar",
-    icon: "go-up"
-  },
+  // {
+  //   id: "bazaar",
+  //   routeTo: "/bazaar",
+  //   name: "Bazaar",
+  //   icon: "go-up"
+  // },
   {
     id: "exchange",
     routeTo: lastMarket => `/market/${lastMarket}`,
     activeMatcher: /^\/market/,
     name: "Exchange",
     icon: "to-bit"
+  }, {
+    id: "gateway",
+    routeTo: "/gateway",
+    name: "Gateway",
+    icon: "exchange",
+    displayOnlyWhen: "currentAccount"
   }, {
     id: "transfer",
     routeTo: "/transfer",
@@ -65,13 +71,13 @@ const NavLinks: Array<NavItem> = [
   //   icon: "exchange",
   //   displayOnlyWhen: "currentAccount"    
   // },
-  {
-    id: "help",
-    routeTo: "/help/introduction/cybex",
-    activeMatcher: /^\/help/,
-    name: "Help",
-    icon: "idea"
-  },
+  // {
+  //   id: "help",
+  //   routeTo: "/help/introduction/cybex",
+  //   activeMatcher: /^\/help/,
+  //   name: "Help",
+  //   icon: "idea"
+  // },
 ];
 
 const NavLink = ({ icon, name, isActive, id }: NavItem) => (
@@ -104,7 +110,7 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
     let { settings, currentAccount, lastMarket } = this.props;
     let routerConfig = {
       account: currentAccount,
-      exchange: lastMarket || "CYB_BTS"
+      exchange: lastMarket || "CYB_JADE.ETH"
     };
     let isExpand = settings.get("navState");
     return (

@@ -1,4 +1,5 @@
 import alt from "alt-instance";
+import BackupActions from "actions/BackupActions";
 
 class WalletUnlockActions {
 
@@ -9,11 +10,12 @@ class WalletUnlockActions {
     */
     unlock() {
         return (dispatch) => {
-            return new Promise( (resolve, reject) => {
-                dispatch({resolve, reject});
-            }).then( was_unlocked => {
+            return new Promise((resolve, reject) => {
+                dispatch({ resolve, reject });
+            }).then(was_unlocked => {
                 //DEBUG  console.log('... WalletUnlockStore\tmodal unlock')
-                if(was_unlocked) WrappedWalletUnlockActions.change();
+                if (was_unlocked) WrappedWalletUnlockActions.change();
+                BackupActions.updateMyAccounts();
             });
         };
 
@@ -21,10 +23,10 @@ class WalletUnlockActions {
 
     lock() {
         return (dispatch) => {
-            return new Promise( resolve => {
-                dispatch({resolve});
-            }).then( was_unlocked => {
-                if(was_unlocked) WrappedWalletUnlockActions.change();
+            return new Promise(resolve => {
+                dispatch({ resolve });
+            }).then(was_unlocked => {
+                if (was_unlocked) WrappedWalletUnlockActions.change();
             });
         };
     }

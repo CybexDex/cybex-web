@@ -1,15 +1,19 @@
-var path = require("path");
-var webpack = require("webpack");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
-var Clean = require("clean-webpack-plugin");
-var git = require("git-rev-sync");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const Clean = require("clean-webpack-plugin");
+const git = require("git-rev-sync");
 require("es6-promise").polyfill();
 
 // BASE APP DIR
-var root_dir = path.resolve(__dirname);
+let root_dir = path.resolve(__dirname);
+let gitRevisionPlugin = new GitRevisionPlugin({
+    branch: true
+});
 
 module.exports = function (env) {
     if (!env) {
@@ -22,7 +26,8 @@ module.exports = function (env) {
     }
     // console.log(env.prod ? "Using PRODUCTION options\n" : "Using DEV options\n");
     // STYLE LOADERS
-    var cssLoaders = [{
+    var cssLoaders = [
+        {
             loader: "style-loader"
         },
         {
@@ -33,7 +38,8 @@ module.exports = function (env) {
         }
     ];
 
-    var scssLoaders = [{
+    var scssLoaders = [
+        {
             loader: "style-loader"
         },
         {
@@ -63,6 +69,7 @@ module.exports = function (env) {
         new webpack.DefinePlugin({
             // APP_VERSION: JSON.stringify("beta"),
             APP_VERSION: JSON.stringify(git.tag()),
+            __TEST__: JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1,
             __ELECTRON__: !!env.electron,
             __HASH_HISTORY__: !!env.hash,
             __BASE_URL__: JSON.stringify(baseUrl),
@@ -145,7 +152,7 @@ module.exports = function (env) {
         plugins.push(new webpack.DefinePlugin({
             "process.env": {
                 NODE_ENV: JSON.stringify("development"),
-            },
+            },         
             __DEV__: true
         }));
         plugins.push(new webpack.HotModuleReplacementPlugin());
@@ -174,7 +181,8 @@ module.exports = function (env) {
         },
         devtool: env.prod ? false : "cheap-module-eval-source-map",
         module: {
-            rules: [{
+            rules: [
+                {
                     test: /\.tsx|\.ts$/,
                     include: [
                         path.join(root_dir, "app")
@@ -273,7 +281,8 @@ module.exports = function (env) {
                 },
                 {
                     test: /\.md/,
-                    use: [{
+                    use: [
+                        {
                             loader: "html-loader",
                             options: {
                                 removeAttributeQuotes: false
@@ -301,6 +310,7 @@ module.exports = function (env) {
                 "node_modules",
                 path.resolve(root_dir, "app"),
                 path.resolve(root_dir, "app/lib"),
+                path.resolve(root_dir, "app/cybex"),
             ],
             extensions: [
                 ".ts",
@@ -318,7 +328,7 @@ module.exports = function (env) {
         },
         plugins: plugins,
         node: {
-            fs: 'empty'
+            fs: "empty"
         },
     };
 

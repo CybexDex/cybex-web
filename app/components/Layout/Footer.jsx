@@ -62,24 +62,29 @@ class Footer extends React.Component {
         let logoProps = {};
 
         return (
-            <div className="show-for-medium grid-block shrink footer">
+            <div className="grid-block shrink footer">
                 <div className="align-justify grid-block">
                     <div className="grid-block">
-                        <div className="logo">
-                            <Translate content="footer.title" /><span className="version">{version}</span>
-                        </div>
+                        {/* <Translate component="div" className="logo" content="footer.title" /> */}
+                        {/* <span className="version">
+                                {version}
+                            </span> */}
+                        <Translate className="contact highlight link" content="nav.help" component="div" onClick={this.onHelp} />
+                        <Translate className="contact highlight link margin-left" content="footer.contact" component="div" onClick={this.onContact} />
                     </div>
-                    {this.props.synced ?
+                    {/* {this.props.synced ?
                         null :
                         <div className="grid-block shrink txtlabel error">
                             <Translate content="footer.nosync" />&nbsp; &nbsp;
-                            </div>}
-                    {!connected ?
-                        <div className="grid-block shrink txtlabel error">
-                            <Translate content="footer.connection" />&nbsp; &nbsp;
-                            <Reconnect />
-                        </div> : null
+                            </div>} */}
+
+                    {
+                        // !connected ?
+                        //     <div className="grid-block shrink txtlabel error">
+                        //         <Translate content="footer.connection" />&nbsp; &nbsp;
+                        // </div> : null
                     }
+
                     {this.props.backup_recommended ? <span>
                         <div className="grid-block">
                             <a className="shrink txtlabel facolor-alert"
@@ -98,25 +103,14 @@ class Footer extends React.Component {
                     </span> : null}
                     {block_height ?
                         (<div className="grid-block shrink">
-                            <div className="tooltip" onClick={this.onAccess.bind(this)} data-tip={counterpart.translate(`tooltip.${!connected ? "disconnected" : synced ? "sync_yes" : "sync_no"}`) + " " + currentNode} data-place="top">
-                                <div className="footer-status">
-                                    {!connected ?
-                                        <span className="warning">
-                                            <Translate content="footer.disconnected" />
-                                        </span> :
-                                        <span className="success"><Translate content="footer.connected" /></span>}
-                                </div>
-                                <div className="footer-block">
-                                    <span>
-                                        <span className="footer-block-title"><Translate content="footer.latency" /></span>
-                                        &nbsp;{!connected ? "-" : !currentNodePing ? "-" : currentNodePing + "ms"}&nbsp;/&nbsp;
-                                    <span className="footer-block-title"><Translate content="footer.block" /></span>
-                                        &nbsp;#{block_height}
-                                    </span>
-                                </div>
-                            </div>
+
+                            <span>
+                                <span className="footer-block-title"><Translate content="footer.block" /></span>
+                                &nbsp;#{block_height}
+                            </span>
                         </div>) :
                         <div className="grid-block shrink"><Translate content="footer.loading" /></div>}
+                    <Reconnect synced={this.props.synced} connected={connected} currentNodePing={currentNodePing} />
                 </div>
             </div>
         );
@@ -128,6 +122,13 @@ class Footer extends React.Component {
 
     onBackupBrainkey() {
         this.context.router.push("/wallet/backup/brainkey");
+    }
+
+    onContact = () => {
+        this.context.router.push("/contact");
+    }
+    onHelp = () => {
+        this.context.router.push("/help/introduction/cybex");
     }
 
     onAccess() {

@@ -7,6 +7,9 @@ require("indexeddbshim");
 require("./asset-symbols/symbols.js");
 require("./language-dropdown/flags.js");
 require("./images/images.js");
+require("file-loader?name=insiders.json!./insiders.json");
+require("file-loader?name=cybex_rainbow.png!./cybex_rainbow.png");
+require("file-loader?name=cybex_rainbow_lg.png!./cybex_rainbow_lg.png");
 
 import locales from "assets/locales";
 for (let locale of locales) {

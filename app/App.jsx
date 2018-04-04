@@ -1,5 +1,4 @@
 import { ChainStore } from "cybexjs";
-import { Apis } from "cybexjs-ws";
 import React from "react";
 import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
@@ -25,9 +24,9 @@ import BackupModal from "components/Modal/BackupModal";
 import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
 import Nav from "./components/Layout/Nav";
-import GameModal from "./components/Modal/GameModal";
 import { ModalActions } from "./actions/ModalActions";
-import LogoutModal, {DEFAULT_LOGOUT_MODAL_ID} from "components/Modal/LogoutModal";
+import LogoutModal, { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
+
 
 class App extends React.Component {
 
@@ -237,7 +236,7 @@ class App extends React.Component {
                     <BackupModal ref={backup => { this.backupModal = backup; }} />
                     <WalletUnlockModal />
                     {/* Logout Modal*/}
-                    <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID}/>
+                    <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
                     <BrowserSupportModal ref="browser_modal" />
                 </div>
             </div>
@@ -291,6 +290,11 @@ class Root extends React.Component {
             if (main.className.indexOf('windows') === -1) {
                 main.className = main.className + (main.className.length ? ' ' : '') + windowsClass;
             }
+        }
+
+        const user_agent = navigator.userAgent.toLowerCase();
+        if (!(window.electron || user_agent.indexOf("firefox") > -1 || user_agent.indexOf("chrome") > -1 || user_agent.indexOf("edge") > -1)) {
+            this.refs.browser_modal.show();
         }
     }
 

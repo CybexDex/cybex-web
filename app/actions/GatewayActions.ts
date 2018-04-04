@@ -39,10 +39,11 @@ class GatewayActions {
     this.openModal(WITHDRAW_MODAL_ID);
   }
 
-  async updateDepositAddress(account, type) {
+  async updateDepositAddress(account, type, needNew = false) {
     let res;
+    debug("Update Deposit Address: ", account, type, needNew);
     try {
-      let { address } = res = await getDepositInfo(account, type);
+      let { address } = res = await getDepositInfo(account, type, needNew);
       debug("Address: ", address);
       // NotificationActions.info(address);
     } catch (e) {

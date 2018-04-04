@@ -4,7 +4,6 @@ import utils from "lib/common/utils";
 import LoadingIndicator from "../LoadingIndicator";
 
 export const CurrentBalance = ({ currentBalance, asset }) => {
-  console.debug("Asset: ", asset, currentBalance);
   const { name: assetName } = utils.replaceName(asset.get("symbol"), !!asset.get("bitasset"));
 
   const applyBalanceButton =

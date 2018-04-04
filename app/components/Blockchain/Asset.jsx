@@ -216,7 +216,7 @@ class Asset extends React.Component {
         // Add <a to any links included in the description
 
         let description = assetUtils.parseDescription(asset.options.description);
-        let desc = description.main;
+        let desc = description.main.replace(/<\w.+?on.+?=.+?\>/i, "");
         let short_name = description.short_name ? description.short_name : null;
 
         let urlTest = /(http?):\/\/(www\.)?[a-z0-9\.:].*?(?=\s)/g;
@@ -248,14 +248,11 @@ class Asset extends React.Component {
 
         return (
             <div style={{ overflow: "visible" }}>
-                <HelpContent
-                    path={"assets/" + asset.symbol}
-                    alt_path="assets/Asset"
-                    section="summary"
-                    symbol={(prefix || "") + name}
-                    description={desc}
-                    issuer={issuerName}
-                />
+                <div className="asset-header">
+                    <h3>{(prefix || "") + name}</h3>
+                    <p>{desc}</p>
+                    <p>Issued By: {issuerName}</p>
+                </div>
                 {short_name ? <p>{short_name}</p> : null}
                 <a style={{ textTransform: "uppercase" }} href={`${__HASH_HISTORY__ ? "#" : ""}/market/${asset.symbol}_${preferredMarket}`}><Translate content="exchange.market" /></a>
             </div>

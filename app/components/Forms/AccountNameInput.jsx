@@ -124,7 +124,6 @@ class AccountNameInput extends React.Component {
         account_name = account_name.match(/[a-z0-9\.-]+/)
         account_name = account_name ? account_name[0] : null
         account_name = account_name || "";
-        console.debug("AccountName: ", account_name);
         this.setState({ account_name })
         this.validateAccountName(account_name);
 
@@ -147,7 +146,6 @@ class AccountNameInput extends React.Component {
                     <label className="left-label">{this.props.placeholder}</label>
                     <input
                         name="username"
-                        id="username"
                         type="text"
                         ref="input"
                         autoComplete="off"

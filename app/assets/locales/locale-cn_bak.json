@@ -311,8 +311,8 @@
     "name_input": {
       "name_is_taken": "账户名已经被使用",
       "not_found": "账户未找到",
-      "premium_name_faucet": "你使用的是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母",
-      "premium_name_warning": "这是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母"
+      "premium_name_faucet": "你使用的是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠或数字或者不含元音字母",
+      "premium_name_warning": "这是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠或数字或者不含元音字母"
     },
     "propose_from": "发起账户",
     "percent": "供给占比",
@@ -405,8 +405,8 @@
     "publish_feed": "{account} 发布了喂价 {price}",
     "set_proxy": "{account} 设置 {proxy} 为他的投票代理",
     "update_account": "{account} 更新了它的账户信息",
-    "limit_order_sell": "{account} 提交卖单，以 {price} 的价格卖出 {amount} ",
-    "limit_order_buy": "{account} 提交买单，以 {price} 的价格买入 {amount} ",
+    "limit_order_sell": "{account} 提交卖单，以 {price} 的价格挂出 {amount} ",
+    "limit_order_buy": "{account} 提交买单，以 {price} 的价格挂出 {amount} ",
     "call_order_update": "{account} 调整了 {debtSymbol} 债务 {debt} ，以及抵押 {collateral}",
     "asset_reserve": "{account} 保留了 {amount}",
     "asset_issue": "{account} 发行了 {amount} 到 {to}",
@@ -1294,8 +1294,8 @@
   "proposal": {
     "transfer": "从账户{from}发送{amount}到{to}",
     "limit_order_create": "为账户%(account)s下单，买入%(buy_amount)s，卖出%(sell_amount)s",
-    "limit_order_sell": "为账户(account)下单，以价格{price}卖出(amount)",
-    "limit_order_buy": "为账户(account)下单，以价格{price}买入(amount)",
+    "limit_order_sell": "为账户(account)下单，以价格{price}挂出(amount)",
+    "limit_order_buy": "为账户(account)下单，以价格{price}挂出(amount)",
     "committee_member_update_global_parameters": "{account}更新理事会全局参数",
     "action": "操作",
     "expires": "过期时间",

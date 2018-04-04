@@ -1,58 +1,80 @@
 @import "./../base/mixins";
 .footer {
-  text-transform: lowercase;
-  font-variant: small-caps;
-  font-weight: bold;
-  @include shadow;
-  z-index: 1;
-  div.footer-status {
-    position: absolute;
-    right: 0;
-    >span {
-      position: relative;
-      top: -9px;
-    }
-  }
-  div.footer-block {
-    position: relative;
-    bottom: 0;
-    >span {
-      position: relative;
-      top: 7px;
-      >span:nth-of-type(2) {
-        font-size: 0.9rem;
-      }
-    }
-  }
-  pre {
-    font-size: 0.8rem;
-  }
-  background-color: #777;
-  height: 30px;
-  line-height: 30px;
-  vertical-align: middle;
-  color: #fff;
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-  a {
-    text-decoration: underline;
-  }
-  .logo {
-    padding-right: 0.5rem; // border-right: 1px solid $border-color;
+    text-transform: lowercase;
+    font-variant: small-caps;
     font-weight: bold;
-    font-size: 1.1rem;
-    line-height: 2rem;
-    .version {
-      font-size: 75%;
-      vertical-align: baseline;
+    @include shadow;
+    z-index: 1;
+    div.footer-status {
+        position: absolute;
+        right: 0;
+        >span {
+            position: relative;
+            top: -9px;
+        }
     }
-  }
-  >div>div:last-of-type {
-    padding-left: 0.5rem; // border-left: 1px solid $border-color;
-  }
+    div.footer-block {
+        position: relative;
+        bottom: 0;
+        >span {
+            position: relative;
+            top: 7px;
+            >span:nth-of-type(2) {
+                font-size: 0.9rem;
+            }
+        }
+    }
+    pre {
+        font-size: 0.8rem;
+    }
+    background-color: #777;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    color: #fff;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+    a {
+        text-decoration: underline;
+    }
+    .logo {
+        padding-right: 0.5rem; // border-right: 1px solid $border-color;
+        font-weight: bold;
+        font-size: 1.1rem;
+        line-height: 2rem;
+        .version {
+            font-size: 75%;
+            vertical-align: baseline;
+        }
+    }
+    >div>div:last-of-type {
+        padding-left: 0.5rem; // border-left: 1px solid $border-color;
+    }
+    .contact {
+        padding: 0 1em;
+    }
+}
+
+.reconnect-toggle {
+    display: inline-block;
+    min-width: 8em;
+    padding: 0 1em;
 }
 
 .logo svg {
-  width: 1.75rem !important;
-  height: 1.75rem !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+}
+
+.status-table {
+    td {
+        font-size: 0.8em;
+        min-width: 6em;
+        line-height: 2;
+    }
+    .border-top {
+        td {
+            border-top: 1px solid rgba(0, 0, 0, 0.8);
+        }
+    }
 }

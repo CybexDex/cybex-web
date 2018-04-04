@@ -9,6 +9,8 @@ import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
 import { GatewayActions } from "actions/GatewayActions"
 import * as moment from "moment";
+import counterpart from "counterpart";
+
 
 let VestedBalancesLists = class extends React.PureComponent<any> {
   constructor(props: any) {
@@ -28,7 +30,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
     //   return <div></div>;
     // console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
     let unclaimed = this.props.total_by_account_asset && this.props.total_by_account_asset.toArray()[0];
-    let balances = unclaimed && unclaimed.balances;
+    let balances = unclaimed && unclaimed.balances.sort((pre, next) => pre["id"] < next["id"] ? -1 : 1);
     return <div>
       <table className="table dashboard-table vest-table">
         <thead>
@@ -36,14 +38,15 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
             <th>{ /* C H E C K B O X */}</th>
             <th style={{ textAlign: "center" }}><Translate content="account.asset" /></th>
             <th style={{ textAlign: "center" }}><Translate content="exchange.amount" /></th>
+            <th style={{ textAlign: "center" }}><Translate content="vesting.end_time" /></th>
             <th style={{ textAlign: "center" }}><Translate content="vesting.progress" /></th>
-            <th style={{ textAlign: "center" }}><Translate content="vesting.detail" /></th>
+            <th style={{ textAlign: "center" }} title={counterpart.translate("vesting.pubkey_tip")} className="tooltip with-tooltip" data-place="bottom" data-tip={counterpart.translate("vesting.pubkey_tip")}><Translate content="vesting.pubkey" /></th>
           </tr>
         </thead>
         <tbody>
           {balances && balances.map(vestingItem => {
             let index = vestingItem["id"];
-            let { vesting_policy } = vestingItem;
+            let { vesting_policy, public_key_string } = vestingItem;
             let endDate = moment.utc(vesting_policy.begin_timestamp).add(vesting_policy.vesting_cliff_seconds, "s");
             let now = moment.utc();
             let progress = vesting_policy.vesting_cliff_seconds - (endDate.valueOf() - now.valueOf()) / 1000;
@@ -72,16 +75,20 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
                       hide_asset />
                   </div> : null}
                 </td>
+                <td style={{ textAlign: "center" }}>
+                  {endDate.format("YYYY-MM-DD HH:mm:ss zZ")}
+                </td>
                 <td>
                   {vesting_policy.begin_timestamp && <progress value={progress} max={vesting_policy.vesting_cliff_seconds} />}
                 </td>
-                <td>-</td>
+                <td>{public_key_string}</td>
               </tr>
             );
           }).toArray()}
           {
             !this.props.total_by_account_asset || this.props.total_by_account_asset.size === 0 &&
             <tr>
+              <td>-</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>

@@ -276,6 +276,8 @@
       "add_permission_label": "Enter account name/key and weight",
       "account_name_or_key": "Account name or key",
       "memo_public_key": "Memo Public Key",
+      "warning_title": "About the Permissions",
+      "warning_content": "The page you're visiting is about the permissions of your account. The functions on this page should not be used, expect that you really know what's the permission meaning and you really need to config it.",
       "warning1": "Active permissions weights total of %(weights_total)s should be equal or exceed threshold of %(threshold)s",
       "warning2": "Owner permissions weights total of %(weights_total)s should be equal or exceed threshold of %(threshold)s",
       "warning3": "Account is already in the list",
@@ -533,7 +535,7 @@
     "withdraw_crowd": "{account} withdrawed a crowdfund investment"
   },
   "proposal": {
-    "transfer": "Transfer {amount} from {from} to {to}",
+    "transfer": "Transfer {amount} from {from} to {to}, with lockup period: {vesting}",
     "limit_order_create": "Place order to buy %(buy_amount)s for %(sell_amount)s for %(account)s",
     "limit_order_sell": "Place an order to sell {amount} at {price} for {account}",
     "limit_order_buy": "Place an order to buy {amount} at {price} for {account}",
@@ -962,6 +964,7 @@
   },
   "footer": {
     "title": "Cybex",
+    "contact": "Contact Us",
     "block": "Block",
     "loading": "Loading...",
     "backup": "A Backup is Required",
@@ -973,7 +976,25 @@
     "unsynced": "Out of sync",
     "disconnected": "Disconnected",
     "connected": "Connected",
-    "latency": "Latency"
+    "latency": "Latency",
+    "status": {
+      "status": "Network",
+      "toggle": "Network  %(status)s ",
+      "apiStatus": {
+        "online": "Online",
+        "offline": "Offline",
+        "blocked": "Blocked"
+      },
+      "ok": "OK",
+      "nosync": "Syncing...",
+      "api": "Cybex Node",
+      "network": "Local Network",
+      "reconnect": "Reconnecting...",
+      "api_offline": "API OFFLINE",
+      "net_offline": "NET OFFLINE",
+      "online": "Online",
+      "offline": "Offline"
+    }
   },
   "exchange": {
     "chart_options": {
@@ -1012,6 +1033,7 @@
     "lowest_ask": "Lowest ask",
     "highest_bid": "Highest bid",
     "total": "Total",
+    "total_bidask": "Total",
     "value": "Value",
     "price": "Price",
     "latest": "Latest",
@@ -1123,6 +1145,8 @@
     "console": "Local Wallet Management Console",
     "create_backup": "Create Backup",
     "backup_brainkey": "Backup Brainkey",
+    "backup_accounts": "Here is the list of accounts contained by the wallet. The 'Full' state means the wallet has the control of that account; the 'Partial' means the wallet has only some part of that account. Usually, that account maybe a multi-sig account, and the wallet has a part of the all thresholds",
+    "account_state": "State",
     "create_backup_of": "Create backup now",
     "import_backup": "Import Cybex backup (.bin file)",
     "import_backup_choose": "Please select your backup file in the dialog below. This is completely safe as the file is not uploaded anywhere and never leaves your browser.",
@@ -1206,6 +1230,7 @@
     "wallet_lose_warning": "<strong>IMPORTANT: If you lose your local wallet or your pass phrase you will be unable to access any of your funds again. Make sure you store the backup somewhere safe, and memorize or write down your password!</strong>",
     "tips_deposit": "Make a deposit",
     "link_deposit": "Deposits",
+    "link_deposit_asset": "Deposit %(asset)s",
     "tips_dashboard": "See your dashboard",
     "tips_transfer": "Make a transfer",
     "link_transfer": "Transfers",
@@ -1295,7 +1320,8 @@
     "withdraw": {
       "amount": "Amount to Withdraw",
       "address": "Withdraw to Address",
-      "submit": "Withdraw"
+      "submit": "Withdraw",
+      "cyb_fee": "Use CYB as the Cybex transfer fee for this operation"
     },
     "deposit": {
       "amount": "Amount to Deposit",
@@ -1342,7 +1368,7 @@
     "connected": "Connected",
     "not_connected": "Not connected",
     "browser": "Unsupported browser",
-    "browser_text": "The Browser you are using has not been fully tested to support the Cybex Wallet. We highly recommend that you backup your wallet and import it using the Chrome Browser until we have had more time to fully test your browser of choice. Use at your own risk.",
+    "browser_text": "The Browser you are using has not been fully tested to support the Cybex Wallet. We highly recommend that you backup your wallet and import it using the Chrome Browser or Firefox Browser until we have had more time to fully test your browser of choice. Use at your own risk.",
     "understand": "I understand"
   },
   "refcode": {
@@ -1355,10 +1381,12 @@
     "review_period": "Review period begin",
     "expiration_time": "Expiration time",
     "proposed_operations": "Proposed operations",
-    "fee_paying_account": "Fee paying account"
+    "fee_paying_account": "Fee paying account",
+    "id": "Proposal object id"
   },
   "gateway": {
     "fee": "Gateway fee",
+    "find_asset": "Find an asset",
     "title": "Deposit & Withdraw",
     "assets": {
       "open": "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",
@@ -1377,8 +1405,8 @@
     "symbol": "Symbol",
     "website": "Visit the website",
     "deposit_to": "Please send your %(asset)s to the address below",
-    "add_funds": "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Jadepool.",
-    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(asset)s account.",
+    "add_funds": "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Jadepool.<br>* The timeliness of this transfer cannot be promised.<br> * The deposit address display on this page is only available for %(type)s, please don't deposit other asset into it, otherwise, it will be lost and cannot be found back",
+    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. <br>* Please make sure that your withdrawal address is correct, otherwise you may lose your tokens permanently. <br>* It may take some time for each transfer to confirm, please kindly be patient. <br>* For the withdrawal operation, please use your personal wallet address only. <br>* Any smart contract address, exchange deposit address or ICO related address used for withdrawal could result in failed contract execution and transfer, and your funds would be sent back to your Cybex account, which may keep you waiting for longer time. Please kindly understand this.",
     "balance_asset": "Current %(asset)s balance",
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "balance": "Current balance",
@@ -1386,7 +1414,7 @@
     "generate_new": "Get new address",
     "generate_new_memo": "Get new memo",
     "deposit": "Deposit",
-    "withdraw": "Withdrawal",
+    "withdraw": "Withdraw",
     "convert": "Internal conversion",
     "withdraw_now": "Withdraw now",
     "convert_now": "Convert now",
@@ -1409,9 +1437,12 @@
     "asset_to_withdraw": "Asset to withdraw:",
     "support_block": "For support, please contact Jadepool at:",
     "valid_address": "Please enter a valid %(coin_type)s address",
+    "valid_service": "Network error, check your network status, please.",
+    "loading": "Verifing the rule of address...",
     "withdraw_coin": "Withdraw %(coin)s (%(symbol)s)",
     "convert_coin": "Convert to %(coin)s (%(symbol)s)",
     "limit": "Limit: %(amount)s %(symbol)s",
+    "low_limit": "The value must be higher than %(amount)s %(symbol)s",
     "bridge_text": "A bridge lets you exchange an asset into another one, for example BTC to CYB.",
     "gateway_text": "Choose whether you want to make a deposit or withdrawal here",
     "fiat_text": "Fiat deposits and withdrawal are provided by CCEDK. In order to get started you need to complete the registration process. The following conversions are available:",
@@ -1511,6 +1542,7 @@
     "transfer": "TRANSFER",
     "exchange": "EXCHANGE",
     "account": "ACCOUNT",
+    "gateway": "GATEWAY",
     "bazaar": "BAZAAR",
     "explorer": "EXPLORER",
     "swap": "Atomic Swap",
@@ -1519,7 +1551,10 @@
   },
   "vesting": {
     "progress": "Unlock Progress",
-    "detail": "Detail"
+    "detail": "Detail",
+    "pubkey": "Belongs to",
+    "pubkey_tip": "Each vesting balance listed here belongs to a specific public that you owns. Once you lost the control of the that public, you'll not be able to claim that balance!",
+    "end_time": "End Time Of Locking"
   },
   "period": {
     "seconds": "Seconds",
@@ -1572,5 +1607,18 @@
     "logout": "Logout",
     "reload": "Reload",
     "wallet_tip": "You're using the local wallet mode. If you haven't backup your wallet and save it appropriate, please close this modal and take the backup of your wallet. If you done the backup and confirm to logout. You can select the wallet you want to remove it and confirm the delete opearation. After the removing and clicking the 'Reload' button, this page will be reloaded and the wallet information you've deleted will be cleared."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "telegram": "Telegram",
+    "email": "Email",
+    "email_tip": "Please send us the details of your question. <br/> The support team will reply your mail soon."
+  },
+  "cybex": {
+    "insider": "The user from bata test of CybexDEX!",
+    "game": {
+      "title": "Thanks From CybexDEX",
+      "content": " provided lots of supports from the beta test of CybexDEX. We call this guy 'Rainbow'"
+    }
   }
 }

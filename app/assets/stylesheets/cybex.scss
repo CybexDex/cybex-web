@@ -1,0 +1,28 @@
+.cybex-rainbow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+    background: #29323e;
+    &::after {
+        background-image: url("../cybex_rainbow.png");
+        height: 4.4em;
+        width: 4.4em;
+        display: inline-block;
+        vertical-align: bottom;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+}
+
+.account-info {
+    .cybex-rainbow {
+        &::after {
+            content: "";
+        }
+    }
+}
+
+.account-image {
+    position: relative;
+}

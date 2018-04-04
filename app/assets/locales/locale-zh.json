@@ -3,17 +3,65 @@
     "formats": {
       "date": {
         "short_custom": "%e %b '%y",
+        "default": "%Y年 %b %e日",
         "market_history": "%e/%m %H:%M:%S",
+        "market_history_us": "%m/%e %H:%M:%S"
+      },
+      "datetime": {
+        "short_custom": "%e %b '%y",
+        "short": "%e/%m %H:%M:%S",
         "market_history_us": "%m/%e %H:%M:%S"
       }
     },
     "names": {
-      "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      "abbreviated_days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      "abbreviated_months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      "am": "AM",
-      "pm": "PM"
+      "days": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "abbreviated_days": [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ],
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
+      "abbreviated_months": [
+        "一月",
+        "二月",
+        "三月",
+        "四月",
+        "五月",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
+      ],
+      "am": "上午",
+      "pm": "下午"
     }
   },
   "languages": {
@@ -93,7 +141,7 @@
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
     "disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
   },
-  "propose": "提交",
+  "propose": "提议",
   "cancel": "取消",
   "account": {
     "new_user": "新用户吗？",
@@ -242,6 +290,8 @@
       "add_permission_label": "输入账户名/公钥以及权重",
       "account_name_or_key": "账户名或公钥",
       "memo_public_key": "备注公钥",
+      "warning_title": "关于权限设置",
+      "warning_content": "您所访问的功能将能查阅并修改您的账户有效权限，该功能属于Cybex高级功能，除非您明确知晓该功能逻辑，并明确知道自己在做什么，否则请不要随意更改当前页面的信息",
       "warning1": "活跃权限权重总和 %(weights_total)s 应不小于阀值设定 %(threshold)s",
       "warning2": "账户权限权重总和 %(weights_total)s 应不小于阀值设定 %(threshold)s",
       "warning3": "账户名被授权",
@@ -254,7 +304,7 @@
       "show": "显示",
       "brain": "脑钱包位置",
       "from": "已从账户导入",
-      "sign_owner": "已所有者身份签名",
+      "sign_owner": "以所有者身份签名",
       "password_model": "云钱包",
       "password_model_1": "如果你仅使用密码就能从任何地方（包括不同浏览器，不同的钱包提供网站）登录自己的账户，而不需要迁移钱包文件的话，你可以在本页面中进行设置操作，新增密钥到账户的权限中去。如果你同时想移除原来的密钥，可以在账户的活跃/账户权限标签中进行。",
       "password_model_2": "添加由密码衍生的密钥",
@@ -440,6 +490,7 @@
     "final": "转账后余额",
     "balances": "余额",
     "vesting_period": "带锁定期转账",
+    "public_key": "目标账户有多个有效权限，请选择一个权限作为锁定资产存贮池",
     "errors": {
       "req": "必填信息",
       "pos": "数量必须大于0",
@@ -478,8 +529,8 @@
     "publish_feed": "{account} 发布了喂价 {price}",
     "set_proxy": "{account} 设置 {proxy} 为他的投票代理",
     "update_account": "{account} 更新了它的账户信息",
-    "limit_order_sell": "{account} 提交卖单，以 {price} 的价格卖出 {amount} ",
-    "limit_order_buy": "{account} 提交买单，以 {price} 的价格买入 {amount} ",
+    "limit_order_sell": "{account} 提交委托单， {price} / {amount} ",
+    "limit_order_buy": "{account} 提交委托单， {price} / {amount} ",
     "call_order_update": "{account} 调整了 {debtSymbol} 债务 {debt} ，以及抵押 {collateral}",
     "asset_reserve": "{account} 销毁了 {amount}",
     "asset_issue": "{account} 发行了 {amount} 到 {to}",
@@ -523,8 +574,8 @@
     "create_key": "创建一个公钥",
     "create_asset": "资产创建",
     "limit_order": "限价单",
-    "limit_order_buy": "提交限价买单 #%(num)s, 买入数量: %(buy_amount)s, 价格: ",
-    "limit_order_sell": "提交限价卖单 #%(num)s, 卖出数量: %(sell_amount)s, 价格: ",
+    "limit_order_buy": "提交限价单 #%(num)s, 数量: %(buy_amount)s, 价格: ",
+    "limit_order_sell": "提交限价单 #%(num)s, 数量: %(sell_amount)s, 价格: ",
     "limit_order_cancel": "取消限价单",
     "short_order": "空单",
     "short_order_cancel": "取消空单",
@@ -941,6 +992,7 @@
   },
   "footer": {
     "title": "Cybex",
+    "contact": "联系我们",
     "update_available": "UPDATE AVAILABLE",
     "synced": "Synced",
     "unsynced": "Out of sync",
@@ -952,7 +1004,25 @@
     "connection": "无连接",
     "brainkey": "建议备份脑钱包密钥",
     "connected": "已连接",
-    "latency": "延迟"
+    "latency": "延迟",
+    "status": {
+      "status": "网络状况",
+      "toggle": "网络状况  %(status)s ",
+      "apiStatus": {
+        "online": "正常",
+        "offline": "断开",
+        "blocked": "阻塞"
+      },
+      "ok": "正常",
+      "nosync": "同步中...",
+      "api": "Cybex节点",
+      "network": "本地网络",
+      "reconnect": "连接中...",      
+      "api_offline": "API OFFLINE",
+      "net_offline": "NET OFFLINE",
+      "online": "Online",
+      "offline": "Offline"
+    }
   },
   "exchange": {
     "chart_options": {
@@ -989,6 +1059,7 @@
     "lowest_ask": "最低卖价",
     "highest_bid": "最高买价",
     "total": "成交额",
+    "total_bidask": "总额",
     "value": "数量",
     "price": "价格",
     "latest": "最新成交价",
@@ -1123,6 +1194,11 @@
     "change": "切换到钱包 (%(name)s)",
     "balance_claims": "余额导入",
     "backup_brainkey": "备份脑钱包密钥",
+    "backup_accounts": "以下是该备份中包含的Cybex账户，其中Full状态代表该钱包可完整控制该账户，而Partial状态代表对于该账号只有部分控制权（通常代表该账户为多签账户，本钱包仅包含其中的部分权限）",
+    "backup_refresh": "请先检查钱包内账户以便正确备份",
+    "need_reset": "如果账户显示正确，请点击创建备份按钮进行备份。如果钱包内账户状态和您的预期不符，请尝试重置钱包，并更新页面",
+    "backup_check": "查看钱包内账户",
+    "account_state": "权限状态",
     "import_20_notice1": "请先导入你的CYB 2.0+ 钱包备份文件",
     "import_20_notice2": "(如果你有的话)",
     "loading_balances": "余额读取中",
@@ -1156,7 +1232,7 @@
     "create_account_text": "请输入你期望的账户名。这个账户名将在区块链上进行注册，并将作为你的身份标识。",
     "first_account_paid": "由于这是你的第一个账户，水龙头服务将免费为你支付账户在区块链上的注册费用。",
     "must_be_ltm": "费用的支付账户必须为一个终身会员账户。",
-    "backup_explain": "点击按钮将生成一个后缀名为 .bin 的备份文件。这个备份文件使用你的钱包密码进行加密。其中包含该钱包中的所有私钥。通过它可以恢复钱包，或者在不同浏览器或者计算机间进行钱包迁移。",
+    "backup_explain": "备份钱包文件将生成一个后缀名为 .bin 的二进制文件。这个备份文件使用你的钱包密码进行加密。其中包含该钱包中的所有私钥。通过它可以恢复钱包，或者在不同浏览器或者计算机间进行钱包迁移。",
     "backup_new_account": "恭喜，你已经创建了一个新账户。强烈建议你立即备份你的钱包。如果你的计算机/浏览器发生意外，而你又没有备份文件，你将永久丢失钱包及其包含的数据、数字资产。",
     "brainkey_not_backed_up": "该脑钱包密钥从未备份过。",
     "brainkey_backed_up": "该脑钱包密钥上次备份于",
@@ -1182,6 +1258,7 @@
     "wallet_lose_warning": "重要！如果你丢失了钱包或者忘记了钱包密码，你将无法访问钱包以及其中的私钥数据及相关数字资产。确保你已经创建了备份文件，并且备份文件放置在安全处，并且你的密码安全。",
     "tips_deposit": "进行充值",
     "link_deposit": "充值",
+    "link_deposit_asset": "充值 %(asset)s",
     "tips_dashboard": "查看仪表盘",
     "tips_transfer": "发起转账",
     "link_transfer": "转账",
@@ -1272,7 +1349,8 @@
     "withdraw": {
       "amount": "提现金额",
       "address": "提现到地址",
-      "submit": "提现"
+      "submit": "提现",
+      "cyb_fee": "使用CYB支付此次提现所需的Cybex内部转账手续费"
     },
     "ok": "确定",
     "settle": {
@@ -1319,7 +1397,7 @@
     "connected": "已连接",
     "not_connected": "未连接",
     "browser": "不支持的浏览器",
-    "browser_text": "你使用的浏览器(版本)未经过Cybex钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。请了解相关风险。",
+    "browser_text": "你使用的浏览器(版本)未经过Cybex钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome或火狐Firefox浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。继续使用当前浏览器可能会对你的操作造成风险。",
     "understand": "我理解"
   },
   "refcode": {
@@ -1329,7 +1407,8 @@
     "enter_refcode": "输入推荐码"
   },
   "gateway": {
-    "fee": "Gateway fee",
+    "fee": "网关执行手续费",
+    "find_asset": "按资产名称筛选",
     "title": "充值&提现",
     "assets": {
       "open": "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Openledger 提供的网关服务进行充值提现。",
@@ -1397,9 +1476,11 @@
     "asset_to_withdraw": "提现资产:",
     "support_block": "获得客户支持，请联络Jadepool:",
     "valid_address": "请输入合法的 %(coin_type)s 地址",
-    "valid_service": "网关功能错误，暂时无法有效验证提取地址，请稍后再试或联系客服人员",
+    "valid_service": "网关链接错误，暂时无法有效验证提取地址，请稍检查您的网络链接",
+    "loading": "地址规则验证中...",
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
+    "low_limit": "单次提现金额不可低于最低限额: %(amount)s %(symbol)s",
     "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
     "gateway_text": "网关能让你将Cybex中的资产与外部资产进行互换，比如OPEN.BTC到BTC。",
     "fiat_text": "法币的冲提现服务由CCEDK提供。你必须先行在CCEDK上进行账户注册。下面是支持的货币：",
@@ -1411,8 +1492,8 @@
     "bitkapital_withdraw": "You are withdrawing",
     "bitkapital_receive": "You will receive",
     "iban": "IBAN",
-    "add_funds": "您可以快速方便的充入资金到您的Cybex账号<strong>%(account)s</strong>中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> 注：同一账户同一资产充值地址每隔五分钟或该地址充值到账时可重新生成，该地址仅做为一次性充值有效，请勿重复向该地址充入资金",
-    "withdraw_funds": "You are going to withdraw funds from your Cybex account to your external %(asset)s account.",
+    "add_funds": "您可以快速方便的充入资金到您的Cybex账号<strong>%(account)s</strong>中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> 同一账户同一资产充值地址需间隔五分钟才可重新生成 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 您当前所获取的资产地址用于充入%(type)s，请勿充入其他资产，否则可能无法到账且不可找回",
+    "withdraw_funds": "您将提出您的 %(type)s 到外部账号中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> * 网关服务需要一定的手续费支持运行，其中需要执行一次Cybex内盘转账，该部分手续费您可选择使用CYB支付或%(asset)s支付 <br> * 网关执行手续费将以您希望取出的目标资产(%(type)s)支付，并从您提取金额中扣除 <br> * 请务必确认您的提币地址正确，一旦填写错误，您的提币将丢失 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 提币操作请使用您的个人钱包地址, 提币到合约地址、交易所地址、ICO项目地址可能会发生合约执行失败，将导致转账失败，资产将退回到您的Cybex账户，处理时间较长，请您谅解。",
     "balance_asset": "当前您 %(asset)s 资产的的可用余额为",
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "convert": "Internal conversion",
@@ -1438,10 +1519,10 @@
     "title": "费率表"
   },
   "proposal": {
-    "transfer": "从账户{from}发送{amount}到{to}",
-    "limit_order_create": "为账户%(account)s下单，买入%(buy_amount)s，卖出%(sell_amount)s",
-    "limit_order_sell": "为账户(account)下单，以价格{price}卖出(amount)",
-    "limit_order_buy": "为账户(account)下单，以价格{price}买入(amount)",
+    "transfer": "从账户{from}发送{amount}到{to}, 锁定期为{vesting}",
+    "limit_order_create": "为账户%(account)s下单，买入%(buy_amount)s，挂出%(sell_amount)s",
+    "limit_order_sell": "为账户%(account)s下单，以价格{price}卖出%(amount)s",
+    "limit_order_buy": "为账户%(account)s下单，以价格{price}买入%(amount)s",
     "committee_member_update_global_parameters": "{account}更新理事会全局参数",
     "action": "操作",
     "expires": "过期时间",
@@ -1472,7 +1553,8 @@
     "review_period": "复审期开始",
     "expiration_time": "过期时间",
     "proposed_operations": "提议的操作",
-    "fee_paying_account": "付费账户"
+    "fee_paying_account": "付费账户",
+    "id": "提议ID"
   },
   "chat": {
     "title": "聊天室",
@@ -1492,7 +1574,7 @@
     "telegram_link": "参与更加活跃的讨论，请加人 Cybex Telegram group: <a href='https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg' target='blank' rel='noopener noreferrer'>https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg</a>"
   },
   "trx_error": {
-    "expire": "你的交易账单确认超时，请稍后尝试。"
+    "expire": "你的交易账单确认超时，请检查您的网络链接。如果稍后仍未收到交易成功提示，请刷新当前页面更新区块信息，检查您的交易状态，并重新尝试执行交易。"
   },
   "backup": {
     "title": "您的钱包需要备份",
@@ -1521,15 +1603,19 @@
     "transfer": "转账中心",
     "exchange": "交易中心",
     "account": "账户配置",
+    "gateway": "充值提现",
     "bazaar": "主要市场",
     "explorer": "区块浏览",
     "swap": "原子交换",
-    "logout": "登出账户",  
+    "logout": "登出账户",
     "help": "帮助文档"
   },
   "vesting": {
     "progress": "解锁进度",
-    "detail": "详情"
+    "end_time": "锁定期到期时间",
+    "detail": "详情",
+    "pubkey_tip": "您的锁定资产与相应的公钥相关联，一旦失去对于此公钥的控制，则无法申领对应锁定资产",
+    "pubkey": "所属公钥"
   },
   "period": {
     "seconds": "秒",
@@ -1582,5 +1668,18 @@
     "logout": "登出",
     "reload": "更新",
     "wallet_tip": "您当前正在使用本地钱包模式。您可以从下方的列表中选择需要登出的钱包文件，删除该钱包，并点击“更新”按钮, 页面将刷新并使用现存的其他钱包。在删除相应钱包文件之前，请您确认对应的钱包文件或脑钱包密钥已经被妥善备份并保存，否则请关闭本窗口并优先备份钱包文件。否则一旦确认删除该钱包，将没有任何途径可以找回。"
+  },
+  "contact": {
+    "title": "联系我们",
+    "telegram": "电报Telegram",
+    "email": "电邮地址",
+    "email_tip": "请将问题详细情况发送给我们，我们的支持人员将尽快答复您"
+  },
+  "cybex": {
+    "insider": "为CybexDEX测试提供了很多帮助的彩虹犀牛用户",
+    "game": {
+      "title": "来自CybexDEX的感谢",
+      "content": " 在CybexDEX测试时提供了很多帮助，在Cybex中，称之为“彩虹犀牛”"
+    }
   }
 }

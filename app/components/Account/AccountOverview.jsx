@@ -37,6 +37,7 @@ import { HeadContextMenuId } from "components/Layout/Header";
 import { AccountVestedBalances } from "components/Account/AccountVestedBalances";
 import CrowdFund from "components/CrowdFund/AccountCrowdFund";
 import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
+import { JadePool } from "services/GatewayConfig";
 
 const sortFunctions = {
     alphabetic: function (a, b, force) {
@@ -221,7 +222,6 @@ class AccountOverview extends React.Component {
 
     _showDepositWithdraw(action, asset, fiatModal, e) {
         let { account } = this.props;
-        console.debug("AccountOverview: ", account, asset);
         GatewayActions.showDepositModal(account.get("name"), asset);
         // e.preventDefault();
         // this.setState({
@@ -234,7 +234,6 @@ class AccountOverview extends React.Component {
 
     _showWithdrawModal(action, asset, fiatModal, e) {
         let { account } = this.props;
-        console.debug("Asset: ", asset);
         GatewayActions.showWithdrawModal(asset);
     }
 
@@ -272,6 +271,7 @@ class AccountOverview extends React.Component {
         const emptyCell = "-";
         balanceList.forEach(balance => {
             let balanceObject = ChainStore.getObject(balance);
+            if (!balanceObject) return;
             let asset_type = balanceObject.get("asset_type");
             let asset = ChainStore.getObject(asset_type);
 
@@ -307,8 +307,7 @@ class AccountOverview extends React.Component {
             const includeAsset = !hiddenAssets.includes(asset_type);
             const hasBalance = !!balanceObject.get("balance");
             const hasOnOrder = !!orders[asset_type];
-            const canDepositWithdraw = false;
-            // const canDepositWithdraw = !!this.props.backedCoins.get("JADE", []).find(a => a.symbol === asset.get("symbol"));
+            const canDepositWithdraw = !!JadePool.ADDRESS_TYPES[asset.get("symbol")];
             const canWithdraw = canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
             const canBuy = !!this.props.bridgeCoins.get(symbol);
 
@@ -781,33 +780,6 @@ class AccountOverview extends React.Component {
                     </div>
                 </div>
 
-                {/* Deposit Modal */}
-                {/* <DepositModal
-                    ref="deposit_modal"
-                    action="deposit"
-                    fiatModal={this.state.fiatModal}
-                    account={this.props.account.get("name")}
-                    sender={this.props.account.get("id")}
-                    asset={this.state.depositAsset}
-                    modalId="simple_deposit_modal"
-                    balances={this.props.balances}
-                    {...currentDepositAsset}
-                    isDown={this.props.gatewayDown.get("OPEN")}
-                /> */}
-
-                {/* Withdraw Modal */}
-                <SimpleDepositWithdraw
-                    ref="withdraw_modal"
-                    action="withdraw"
-                    fiatModal={this.state.fiatModal}
-                    account={this.props.account.get("name")}
-                    sender={this.props.account.get("id")}
-                    asset={this.state.withdrawAsset}
-                    modalId="simple_withdraw_modal"
-                    balances={this.props.balances}
-                    {...currentWithdrawAsset}
-                    isDown={this.props.gatewayDown.get("OPEN")}
-                />
 
             </div>
 
@@ -839,6 +811,7 @@ class BalanceWrapper extends React.Component {
         }).filter(b => !!b);
 
         let ordersByAsset = this.props.orders.reduce((orders, o) => {
+            if (!o) return orders;
             let asset_id = o.getIn(["sell_price", "base", "asset_id"]);
             if (!orders[asset_id]) orders[asset_id] = 0;
             orders[asset_id] += parseInt(o.get("for_sale"), 10);

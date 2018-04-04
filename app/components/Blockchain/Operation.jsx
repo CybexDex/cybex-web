@@ -26,12 +26,12 @@ let ops = Object.keys(operations);
 let listings = account_constants.account_listing;
 
 class TransactionLabel extends React.Component {
-    shouldComponentUpdate(nextProps) {
-        return (
-            nextProps.color !== this.props.color ||
-            nextProps.type !== this.props.type
-        );
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     return (
+    //         nextProps.color !== this.props.color ||
+    //         nextProps.type !== this.props.type
+    //     );
+    // }
     render() {
         let trxTypes = counterpart.translate("transaction.trxTypes");
         let labelClass = classNames("label", this.props.color || "info");
@@ -68,19 +68,19 @@ class Row extends React.Component {
     // }
 
     // 原有检测更新代码没有考虑i18n情况，会导致i18n更新后翻译未更新
-    shouldComponentUpdate(nextProps) {
-        let { block, dynGlobalObject } = this.props;
-        let last_irreversible_block_num = dynGlobalObject.get("last_irreversible_block_num");
-        if (nextProps.dynGlobalObject === this.props.dynGlobalObject) {
-            return false;
-        }
-        // console.debug("[Opeartion/Row]shouldComponentUpdate", this.props ,block > last_irreversible_block_num)
-        return block > last_irreversible_block_num;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     let { block, dynGlobalObject } = this.props;
+    //     let last_irreversible_block_num = dynGlobalObject.get("last_irreversible_block_num");
+    //     if (nextProps.dynGlobalObject === this.props.dynGlobalObject) {
+    //         return false;
+    //     }
+    //     // console.debug("[Opeartion/Row]shouldComponentUpdate", this.props ,block > last_irreversible_block_num)
+    //     return block > last_irreversible_block_num;
+    // }
 
     render() {
         let { block, fee, color, type, hideOpLabel } = this.props;
-
+        // 待定区块数量
         let last_irreversible_block_num = this.props.dynGlobalObject.get("last_irreversible_block_num");
         let pending = null;
         if (block > last_irreversible_block_num) {
@@ -131,11 +131,11 @@ class Operation extends React.Component {
         csvExportMode: React.PropTypes.bool
     };
 
-    componentWillReceiveProps(np) {
-        if (np.marketDirections !== this.props.marketDirections) {
-            this.forceUpdate();
-        }
-    }
+    // componentWillReceiveProps(np) {
+    //     if (np.marketDirections !== this.props.marketDirections) {
+    //         this.forceUpdate();
+    //     }
+    // }
 
     linkToAccount(name_or_id) {
         if (!name_or_id) return <span>-</span>;
@@ -151,16 +151,16 @@ class Operation extends React.Component {
             <Link to={`/asset/${symbol_or_id}`}>{symbol_or_id}</Link>;
     }
 
-    shouldComponentUpdate(nextProps) {
-        // Todos 翻译bug
-        // console.debug("[Operation]shouldComponentUpdate")
-        // return true;
-        if (!this.props.op || !nextProps.op) {
-            return false;
-        }
-        return !utils.are_equal_shallow(nextProps.op[1], this.props.op[1]) ||
-            nextProps.marketDirections !== this.props.marketDirections;
-    }
+    // shouldComponentUpdate(nextProps) {
+    //     // Todos 翻译bug
+    //     // console.debug("[Operation]shouldComponentUpdate")
+    //     // return true;
+    //     if (!this.props.op || !nextProps.op) {
+    //         return false;
+    //     }
+    //     return !utils.are_equal_shallow(nextProps.op[1], this.props.op[1]) ||
+    //         nextProps.marketDirections !== this.props.marketDirections;
+    // }
 
     render() {
         let { op, current, block } = this.props;
@@ -171,7 +171,7 @@ class Operation extends React.Component {
             case "transfer":
 
                 if (op[1].memo) {
-                    memoComponent = <MemoText memo={op[1].memo} />;
+                    memoComponent = <MemoText memo={op[1].memo} fullLength={true}/>;
                 }
 
                 color = "success";
@@ -183,7 +183,7 @@ class Operation extends React.Component {
                             string="operation.transfer"
                             keys={[
                                 { type: "account", value: op[1].from, arg: "from" },
-                                { type: "amount", value: op[1].amount, arg: "amount", decimalOffset: op[1].amount.asset_id === "1.3.0" ? 5 : null },
+                                { type: "amount", value: op[1].amount, arg: "amount" },
                                 { type: "account", value: op[1].to, arg: "to" }
                             ]}
                         />
@@ -871,7 +871,6 @@ class Operation extends React.Component {
                 );
                 break;
             case "participate_crowdfund":
-                console.debug("Part: ", op);
                 column = (
                     <TranslateWithLinks
                         string="operation.part_crowd"

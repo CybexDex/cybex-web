@@ -3,6 +3,7 @@ import iDB from "idb-instance";
 import {compress, decompress} from "lzma";
 import {PrivateKey, PublicKey, Aes, key} from "cybexjs";
 import WalletActions from "actions/WalletActions";
+import AccountStore from "stores/AccountStore";
 
 class BackupActions {
 
@@ -22,6 +23,11 @@ class BackupActions {
 
     incommingBuffer(params) {
         return params;
+    }
+
+    updateMyAccounts() {
+        let myAccounts = AccountStore.getMyAccountsWithAuthState();
+        return myAccounts;
     }
 
     reset() {

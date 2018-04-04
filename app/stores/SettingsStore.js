@@ -11,6 +11,7 @@ const CORE_ASSET = "CYB"; // Setting this to CYB to prevent loading issues when 
 
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
+const SETTING_VERSION = "defaults_v2";
 
 class SettingsStore {
     constructor() {
@@ -41,7 +42,7 @@ class SettingsStore {
 
         this.initDone = false;
         this.defaultSettings = Immutable.Map({
-            locale: "cn",
+            locale: "zh",
             apiServer: settingsAPIs.DEFAULT_WS_NODE,
             faucet_address: settingsAPIs.DEFAULT_FAUCET,
             unit: CORE_ASSET,
@@ -60,8 +61,8 @@ class SettingsStore {
 
         let defaults = {
             locale: [
-                "en",
                 "zh",
+                "en",
             ],
             apiServer: [],
             unit: [
@@ -96,9 +97,12 @@ class SettingsStore {
             // ]
         };
 
+        // this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
+
+        // TODO for Online
         this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
 
-        let savedDefaults = ss.get("defaults_v1", {});
+        let savedDefaults = ss.get(SETTING_VERSION, {});
         /* Fix for old clients after changing cn to zh */
         if (savedDefaults && savedDefaults.locale) {
             let cnIdx = savedDefaults.locale.findIndex(a => a === "cn");
@@ -151,19 +155,10 @@ class SettingsStore {
     init() {
         return new Promise((resolve) => {
             if (this.initDone) resolve();
-            this.starredKey = "markets_game";
-            // this.starredKey = this._getChainKey("markets");
+            this.starredKey = this._getChainKey("markets");
             this.marketsKey = this._getChainKey("userMarkets");
             // Default markets setup
             let topMarkets = {
-                markets_4018d784: [ // CYB MAIN NET
-                    "OPEN.MKR", "CYB", "OPEN.ETH", "ICOO", "BTC", "OPEN.LISK", "BKT",
-                    "OPEN.STEEM", "OPEN.GAME", "OCT", "USD", "CNY", "BTSR", "OBITS",
-                    "OPEN.DGD", "EUR", "GOLD", "SILVER", "IOU.CNY", "OPEN.DASH",
-                    "OPEN.USDT", "OPEN.EURT", "OPEN.BTC", "CADASTRAL", "BLOCKPAY", "BTWTY",
-                    "OPEN.INCNT", "KAPITAL", "OPEN.MAID", "OPEN.SBD", "OPEN.GRC",
-                    "YOYOW", "HERO", "RUBLE", "SMOKE", "STEALTH", "BRIDGE.BCO",
-                ],
                 markets_c577bfd9: [ // CYBEX MAIN NET
                     "CYBX", "BTCX", "ETHX", "CYB", "BTS", "YAN", "IMLAB", "ICOO", "BTC", "ETH", "COLAB",
                     "OPEN.STEEM", "OPEN.GAME", "OCT", "USD", "CNY", "BTSR", "OBITS",
@@ -175,9 +170,11 @@ class SettingsStore {
                 markets_game: [
                     "CYBX", "BTCX", "ETHX", "LTCX", "BCHX", "XRPX"
                 ],
-                markets_39f5e2ed: [ // TESTNET
-                    "PEG.FAKEUSD", "BTWTY"
-                ]
+                markets_90be01e8: [ // Main Net
+                    "CYB", "JADE.ETH", "JADE.BTC", "JADE.EOS",
+                    "JADE.BAT", "JADE.VEN", "JADE.OMG", "JADE.SNT", "JADE.NAS",
+                    "JADE.KNC", "JADE.PAY", "JADE.ENG"
+                ],
             };
 
             let bases = {
@@ -192,7 +189,10 @@ class SettingsStore {
                 ],
                 markets_39f5e2ed: [ // TESTNET
                     "TEST"
-                ]
+                ],
+                markets_90be01e8: [ // Main Net
+                    "CYB", "JADE.ETH", "JADE.BTC", "JADE.EOS"
+                ],
             };
 
             let coreAssets = { markets_c577bfd9: "CYB", markets_4018d784: "CYB", markets_39f5e2ed: "TEST" };
@@ -332,13 +332,13 @@ class SettingsStore {
             ws = { url: ws, location: null };
         }
         this.defaults.apiServer.push(ws);
-        ss.set("defaults_v1", this.defaults);
+        ss.set(SETTING_VERSION, this.defaults);
     }
 
     onRemoveWS(index) {
         if (index !== 0) { // Prevent removing the default apiServer
             this.defaults.apiServer.splice(index, 1);
-            ss.set("defaults_v1", this.defaults);
+            ss.set(SETTING_VERSION, this.defaults);
         }
     }
 

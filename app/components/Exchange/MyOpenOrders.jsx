@@ -158,7 +158,6 @@ class MyOpenOrders extends React.Component {
 
     _getOrders() {
         const { currentAccount, base, quote } = this.props;
-        console.debug("CurrentOrders: ", currentAccount);
         const orders = currentAccount.get("orders"), call_orders = currentAccount.get("call_orders");
         const baseID = base.get("id"), quoteID = quote.get("id");
         const assets = {

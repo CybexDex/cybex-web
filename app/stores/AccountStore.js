@@ -50,6 +50,7 @@ class AccountStore extends BaseStore {
             "tryToSetCurrentAccount",
             "onCreateAccount",
             "getMyAccounts",
+            "getMyAccountsWithAuthState",
             "isMyAccount",
             "getMyAuthorityForAccount",
             "getCurrentAccountState",
@@ -115,6 +116,7 @@ class AccountStore extends BaseStore {
     }
 
     setWallet(wallet_name) {
+        // If wallet is not the same as current wallet
         if (wallet_name !== this.state.wallet_name) {
             this.setState({
                 wallet_name: wallet_name,
@@ -128,6 +130,7 @@ class AccountStore extends BaseStore {
                 myIgnoredAccounts: Immutable.Set(),
                 unFollowedAccounts: Immutable.Set()
             });
+            // console.debug("Wallet State: ", this.state);
             this.tryToSetCurrentAccount();
         }
     }
@@ -320,6 +323,42 @@ class AccountStore extends BaseStore {
         // console.log("accounts:", accounts, "linkedAccounts:", this.state.linkedAccounts && this.state.linkedAccounts.toJS());
         return accounts.sort();
     }
+    getMyAccountsWithAuthState() {
+        if (!this.state.subbed) {
+            return [];
+        }
+
+        let accounts = [];
+        for (let account_name of this.state.linkedAccounts) {
+            let account = ChainStore.getAccount(account_name);
+            if (account === undefined) {
+                // console.log(account_name, "account undefined");
+                continue;
+            }
+            if (account == null) {
+                console.log("WARN: non-chain account name in linkedAccounts", account_name);
+                continue;
+            }
+            let auth = this.getMyAuthorityForAccount(account);
+
+            if (auth === undefined) {
+                // console.log(account_name, "auth undefined");
+                continue;
+            }
+
+            if (auth === "full") {
+                accounts.push({ account_name, auth: "full" });
+            }
+            if (auth === "partial") {
+                accounts.push({ account_name, auth: "partial" });
+            }
+
+            // console.debug("account:", account.toJS(), "auth:", auth);
+        }
+        if (this.state.passwordAccount && accounts.indexOf(this.state.passwordAccount) === -1) accounts.push(this.state.passwordAccount);
+        // console.log("accounts:", accounts, "linkedAccounts:", this.state.linkedAccounts && this.state.linkedAccounts.toJS());
+        return accounts.sort((prev, next) => prev.auth < next.auto ? 1 : prev.auth == next.auto ? 0 : -1);
+    }
 
     /**
         @todo "partial"
@@ -380,9 +419,9 @@ class AccountStore extends BaseStore {
 
         return final.get("full") && final.size === 1 ? "full" :
             final.get("partial") && final.size === 1 ? "partial" :
-            final.get("none") && final.size === 1 ? "none" :
-            final.get("full") || final.get("partial") ? "partial" :
-            undefined;
+                final.get("none") && final.size === 1 ? "none" :
+                    final.get("full") || final.get("partial") ? "partial" :
+                        undefined;
     }
 
     isMyAccount(account) {

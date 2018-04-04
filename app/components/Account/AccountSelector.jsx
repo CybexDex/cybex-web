@@ -133,7 +133,6 @@ class AccountSelector extends React.Component {
                                     style={{textTransform: "lowercase", fontVariant: "initial", zIndex:"1"}}
                                     type="text"
                                     name="username"
-                                    id="username"
                                     value={this.props.accountName || ""}
                                     placeholder={this.props.placeholder || counterpart.translate("account.name")}
                                     ref="user_input"

@@ -1,5 +1,5 @@
-import {Apis, Manager} from "cybexjs-ws";
-import {ChainStore} from "cybexjs";
+import { Apis, Manager } from "cybexjs-ws";
+import { ChainStore } from "cybexjs";
 
 // Stores
 import iDB from "idb-instance";
@@ -8,6 +8,7 @@ import WalletManagerStore from "stores/WalletManagerStore";
 import WalletDb from "stores/WalletDb";
 import SettingsStore from "stores/SettingsStore";
 import AccountStore from "stores/AccountStore";
+import { NetworkStore } from "stores/NetworkStore";
 
 import ls from "common/localStorage";
 const STORAGE_KEY = "__graphene__";
@@ -28,35 +29,35 @@ let oldChain = "";
 
 const filterAndSortURLs = (count, latencies) => {
     let urls = SettingsStore.getState().defaults.apiServer
-    .filter(a => {
-        /*
-        * Since we don't want users accidentally connecting to the testnet,
-        * we filter out the testnet address from the fallback list
-        */
-        if (!__TESTNET__ && a.url.indexOf("testnet") !== -1) return false;
-        /* Also remove the automatic fallback dummy url */
-        if (a.url.indexOf("fake.automatic-selection") !== -1) return false;
-        /* Remove insecure websocket urls when using secure protocol */
-        if (window.location.protocol === "https:" && a.url.indexOf("ws://") !== -1) {
-            return false;
-        }
-        /* Use all the remaining urls if count = 0 */
-        if (!count) return true;
+        .filter(a => {
+            /*
+            * Since we don't want users accidentally connecting to the testnet,
+            * we filter out the testnet address from the fallback list
+            */
+            if (!__TESTNET__ && a.url.indexOf("testnet") !== -1) return false;
+            /* Also remove the automatic fallback dummy url */
+            if (a.url.indexOf("fake.automatic-selection") !== -1) return false;
+            /* Remove insecure websocket urls when using secure protocol */
+            if (window.location.protocol === "https:" && a.url.indexOf("ws://") !== -1) {
+                return false;
+            }
+            /* Use all the remaining urls if count = 0 */
+            if (!count) return true;
 
-        /* Only keep the nodes we were able to connect to */
-        return !!latencies[a.url];
-    })
-    .sort((a, b) => {
-        return latencies[a.url] - latencies[b.url];
-    }).map(a => a.url);
+            /* Only keep the nodes we were able to connect to */
+            return !!latencies[a.url];
+        })
+        .sort((a, b) => {
+            return latencies[a.url] - latencies[b.url];
+        }).map(a => a.url);
     return urls;
 };
 
 
 let _connectInProgress = false;
 let _connectionCheckPromise = null;
-const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { //appInit is true when called via router onEnter, and false when node is manually selected in access settings
-    console.debug("Transition: ", nextState);
+const willTransitionTo = (nextState, replaceState, callback, appInit = true) => { //appInit is true when called via router onEnter, and false when node is manually selected in access settings
+    // console.debug("Transition: ", nextState);
     const apiLatencies = SettingsStore.getState().apiLatencies;
     latencyChecks = ss.get("latencyChecks", 1);
     let apiLatenciesCount = Object.keys(apiLatencies).length;
@@ -90,8 +91,8 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
         _connectInProgress = true;
         if (Apis.instance()) {
             let currentUrl = Apis.instance().url;
-            SettingsActions.changeSetting({setting: "activeNode", value: currentUrl});
-            if (!autoSelection) SettingsActions.changeSetting({setting: "apiServer", value: currentUrl});
+            SettingsActions.changeSetting({ setting: "activeNode", value: currentUrl });
+            if (!autoSelection) SettingsActions.changeSetting({ setting: "apiServer", value: currentUrl });
             if (!(currentUrl in apiLatencies)) {
                 apiLatencies[currentUrl] = new Date().getTime() - connectionStart;
             }
@@ -103,7 +104,7 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
         try {
             iDB.close();
             db = iDB.init_instance(window.openDatabase ? (shimIndexedDB || indexedDB) : indexedDB).init_promise;
-        } catch(err) {
+        } catch (err) {
             console.log("db init error:", err);
             replaceState("/init-error");
             _connectInProgress = false;
@@ -113,7 +114,7 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
             let chainStoreResetPromise = chainChanged ? ChainStore.resetCache() : Promise.resolve();
             return chainStoreResetPromise.then(() => {
                 return Promise.all([
-                    PrivateKeyActions.loadDbData().then(()=> {
+                    PrivateKeyActions.loadDbData().then(() => {
                         return AccountRefsStore.loadDbData();
                     }),
                     WalletDb.loadDbData().then(() => {
@@ -135,14 +136,14 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
                             // });
                         }
                     })
-                    .catch((error) => {
-                        console.error("----- WalletDb.willTransitionTo error ----->", error);
-                        replaceState("/init-error");
-                    }),
+                        .catch((error) => {
+                            console.error("----- WalletDb.willTransitionTo error ----->", error);
+                            replaceState("/init-error");
+                        }),
                     WalletManagerStore.init()
-                ]).then(()=> {
+                ]).then(() => {
                     _connectInProgress = false;
-                    SettingsActions.changeSetting({setting: "activeNode", value: connectionManager.url});
+                    SettingsActions.changeSetting({ setting: "activeNode", value: connectionManager.url });
                     callback();
                 });
             });
@@ -159,7 +160,7 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
         oldChain = "old";
         connect = true;
         notify.addNotification({
-            message: counterpart.translate("settings.connection_error", {url: connectionString}),
+            message: counterpart.translate("settings.connection_error", { url: connectionString }),
             level: "error",
             autoDismiss: 10
         });
@@ -168,64 +169,72 @@ const willTransitionTo = (nextState, replaceState, callback, appInit=true) => { 
         });
     };
 
-    connectionManager = new Manager({url: connectionString, urls});
+    connectionManager = new Manager({ url: connectionString, urls });
     if (nextState.location.pathname === "/init-error") {
         return Apis.reset(connectionString, true).then(instance => {
             return instance.init_promise
-            .then(onConnect).catch(onResetError);
+                .then(onConnect).catch(onResetError);
         });
     }
     let connectionCheckPromise = !apiLatenciesCount ?
         _connectionCheckPromise ? _connectionCheckPromise :
-        connectionManager.checkConnections() : null;
+            connectionManager.checkConnections() : null;
     _connectionCheckPromise = connectionCheckPromise;
+    let implCounter = 0;
+    (function impl(counter) {
+        Promise.all([connectionCheckPromise]).then((res => {
+            _connectionCheckPromise = null;
+            if (connectionCheckPromise && res[0]) {
+                let [latencies] = res;
+                urls = filterAndSortURLs(Object.keys(latencies).length, latencies);
+                connectionManager.url = urls[0];
+                connectionManager.urls = urls;
+                /* Update the latencies object */
+                SettingsActions.updateLatencies(latencies);
+            }
+            // let latencies = ss.get("apiLatencies", {});
+            // let connectionStart = new Date().getTime();
+            connectionStart = new Date().getTime();
 
-    Promise.all([connectionCheckPromise]).then((res => {
-        _connectionCheckPromise = null;
-        if (connectionCheckPromise && res[0]) {
-            let [latencies] = res;
-            urls = filterAndSortURLs(Object.keys(latencies).length, latencies);
-            connectionManager.url = urls[0];
-            connectionManager.urls = urls;
-            /* Update the latencies object */
-            SettingsActions.updateLatencies(latencies);
-        }
-        // let latencies = ss.get("apiLatencies", {});
-        // let connectionStart = new Date().getTime();
-        connectionStart = new Date().getTime();
+            if (appInit) {
+                connectionManager.connectWithFallback(connect).then((res) => {
+                    if (!autoSelection) SettingsActions.changeSetting({ setting: "apiServer", value: connectionManager.url });
 
-        if(appInit){
-            connectionManager.connectWithFallback(connect).then((res) => {
-                if (!autoSelection) SettingsActions.changeSetting({setting: "apiServer", value: connectionManager.url});
-
-                onConnect(res);
-            }).catch( error => {
-                console.error("----- App.willTransitionTo error ----->", error, (new Error).stack);
-                if(error.name === "InvalidStateError") {
-                    if (__ELECTRON__) {
-                        replaceState("/dashboard");
+                    onConnect(res);
+                }).catch(error => {
+                    console.error("----- App.willTransitionTo error ----->", error, (new Error).stack);
+                    if (error.name === "InvalidStateError") {
+                        if (__ELECTRON__) {
+                            replaceState("/dashboard");
+                        } else {
+                            alert("Can't access local storage.\nPlease make sure your browser is not in private/incognito mode.");
+                        }
                     } else {
-                        alert("Can't access local storage.\nPlease make sure your browser is not in private/incognito mode.");
+                        replaceState("/init-error");
+                        callback();
                     }
-                } else {
-                    replaceState("/init-error");
-                    callback();
-                }
-            });
-        } else {
-            oldChain = "old";
-            Apis.reset(connectionManager.url, true).then(instance => {
-                instance.init_promise.then(onConnect).catch(onResetError);
-            });
-        }
+                });
+            } else {
+                oldChain = "old";
+                Apis.reset(connectionManager.url, true).then(instance => {
+                    instance.init_promise.then(onConnect).catch(onResetError);
+                });
+            }
 
-        /* Only try initialize the API with connect = true on the first onEnter */
-        connect = false;
-    })).catch(err => {
-        console.error(err);
-        replaceState("/init-error");
-        callback();
-    });
+            /* Only try initialize the API with connect = true on the first onEnter */
+            connect = false;
+        })).catch(err => {
+            if (counter < 2) {
+                console.warn("Router Transition Failed, try again");
+                impl(counter + 1);
+            } else {
+                console.error(err);
+                replaceState("/init-error");
+                callback();
+            }
+        });
+    }(implCounter));
+
 
 
     // Every 15 connections we check the latencies of the full list of nodes
