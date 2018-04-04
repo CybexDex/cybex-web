@@ -1,7 +1,5 @@
 import BaseStore from "./BaseStore";
-import {
-  Set
-} from "immutable";
+import { Set } from "immutable";
 import alt from "alt-instance";
 import { Store } from "alt-instance";
 import { debugGen } from "utils//Utils";
@@ -11,18 +9,27 @@ const debug = debugGen("NetworkStore");
 interface NetworkInformation extends EventTarget {
   readonly downlink: number;
   readonly downlinkMax: number;
-  readonly effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
+  readonly effectiveType: "slow-2g" | "2g" | "3g" | "4g";
   readonly rtt: number;
-  readonly type: "bluetooth" | "cellular" | "ethernet" | "none" | "wifi" | "wimax" | "other" | "unknown";
+  readonly type:
+    | "bluetooth"
+    | "cellular"
+    | "ethernet"
+    | "none"
+    | "wifi"
+    | "wimax"
+    | "other"
+    | "unknown";
   onchange: any;
 }
 
 const connect = <NetworkInformation>(navigator as any).connection;
-const win: Window & any = window || {};
 
 type ApiStatus = "online" | "blocked" | "offline";
 
-class NetworkStore extends BaseStore implements Store<{ online: boolean, apiStatus: ApiStatus, initDone: boolean }>{
+class NetworkStore extends BaseStore
+  implements
+    Store<{ online: boolean; apiStatus: ApiStatus; initDone: boolean }> {
   bindListeners;
   setState;
   state;
@@ -32,31 +39,33 @@ class NetworkStore extends BaseStore implements Store<{ online: boolean, apiStat
       online: navigator.onLine,
       apiStatus: "offline",
       initDone: false
-    }
-    if (window) {
-      win.ononline = this.onChangeHandler;
-      win.onoffline = this.onChangeHandler;
-    }
-    super._export("setInitDone", "updateApiStatus")    
+    };
+    try {
+      if (typeof window !== undefined) {
+        window.ononline = this.onChangeHandler;
+        window.onoffline = this.onChangeHandler;
+      }
+    } catch (e) {}
+    super._export("setInitDone", "updateApiStatus");
   }
   setInitDone = (initDone = true) => {
     this.setState({
       initDone
     });
-  }
-  updateApiStatus = (apiStatus) => {
+  };
+  updateApiStatus = apiStatus => {
     this.setState({
       apiStatus
     });
-  }
-  onChangeHandler = (online) => {
+  };
+  onChangeHandler = online => {
     debug("beforeStateChange", this.state);
     this.setState({
       online: navigator.onLine
     });
-  }
+  };
 }
 const StoreWrapper = alt.createStore(NetworkStore, "NetworkStore");
-export { StoreWrapper as NetworkStore }
+export { StoreWrapper as NetworkStore };
 
 export default StoreWrapper;
