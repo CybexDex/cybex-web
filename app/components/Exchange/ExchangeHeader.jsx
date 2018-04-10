@@ -25,10 +25,28 @@ export default class ExchangeHeader extends React.Component {
   }
 
   render() {
-    const { quoteAsset, baseAsset, starredMarkets, hasPrediction, feedPrice,
-      showCallLimit, lowestCallPrice, marketReady, latestPrice, currentPeriod,
-      marketStats, showDepthChart, buckets, bucketSize, showIndicators,
-      onBorrowBase, onBorrowQuote, indicators, indicatorSettings, currentMouseItem } = this.props;
+    const {
+      quoteAsset,
+      baseAsset,
+      starredMarkets,
+      hasPrediction,
+      feedPrice,
+      showCallLimit,
+      lowestCallPrice,
+      marketReady,
+      latestPrice,
+      currentPeriod,
+      marketStats,
+      showDepthChart,
+      buckets,
+      bucketSize,
+      showIndicators,
+      onBorrowBase,
+      onBorrowQuote,
+      indicators,
+      indicatorSettings,
+      currentMouseItem
+    } = this.props;
 
     const baseSymbol = baseAsset.get("symbol");
     const quoteSymbol = quoteAsset.get("symbol");
@@ -40,8 +58,14 @@ export default class ExchangeHeader extends React.Component {
     // Market stats
     const dayChange = marketStats.get("change");
 
-    const dayChangeClass = parseFloat(dayChange) === 0 ? "" : parseFloat(dayChange) < 0 ? "negative" : "positive";
-    const dayChangeArrow = dayChangeClass === "" ? "" : dayChangeClass === "positive" ? "change-up" : "change-down";
+    const dayChangeClass =
+      parseFloat(dayChange) === 0
+        ? ""
+        : parseFloat(dayChange) < 0 ? "negative" : "positive";
+    const dayChangeArrow =
+      dayChangeClass === ""
+        ? ""
+        : dayChangeClass === "positive" ? "change-up" : "change-down";
     const volumeBase = marketStats.get("volumeBase");
     const volumeQuote = marketStats.get("volumeQuote");
 
@@ -50,64 +74,116 @@ export default class ExchangeHeader extends React.Component {
         <div className="grid-block overflow-visible">
           <div className="grid-block shrink show-for-large">
             <div className="v-align">
-              <span style={{ paddingRight: 0 }} onClick={this._addMarket.bind(this, quoteSymbol, baseSymbol)} className="market-symbol">
+              <span
+                style={{ paddingRight: 0 }}
+                onClick={this._addMarket.bind(this, quoteSymbol, baseSymbol)}
+                className="market-symbol"
+              >
                 <Icon className={starClass} name="fi-star" />
               </span>
               {!hasPrediction ? (
-                <Link onClick={() => { MarketsActions.switchMarket(); }} className="market-symbol" to={`/market/${baseSymbol}_${quoteSymbol}`}>
-                  <span><AssetName name={quoteSymbol} replace={true} /> : <AssetName name={baseSymbol} replace={true} /></span>
-                </Link>) : (
-                  <a className="market-symbol">
-                    <span>{`${quoteSymbol} : ${baseSymbol}`}</span>
-                  </a>
-                )}
+                <Link
+                  onClick={() => {
+                    MarketsActions.switchMarket();
+                  }}
+                  className="market-symbol"
+                  to={`/market/${baseSymbol}_${quoteSymbol}`}
+                >
+                  <span>
+                    <AssetName name={quoteSymbol} replace={true} /> :{" "}
+                    <AssetName name={baseSymbol} replace={true} />
+                  </span>
+                </Link>
+              ) : (
+                <a className="market-symbol">
+                  <span>{`${quoteSymbol} : ${baseSymbol}`}</span>
+                </a>
+              )}
             </div>
           </div>
 
           <div className="grid-block vertical" style={{ overflow: "visible" }}>
             <div className="grid-block wrap market-stats-container">
               <ul className="market-stats stats top-stats medium-12">
-                {latestPrice ?
-                  <PriceStat ready={marketReady} price={latestPrice.full} quote={quoteAsset} base={baseAsset} content="exchange.latest" /> : null}
+                {latestPrice ? (
+                  <PriceStat
+                    ready={marketReady}
+                    price={latestPrice.full}
+                    quote={quoteAsset}
+                    base={baseAsset}
+                    content="exchange.latest"
+                  />
+                ) : null}
 
                 <li className="stat">
                   <span>
-                    <Translate component="span" content="account.hour_24" />
+                    <Translate className="nowrap" component="span" content="account.hour_24" />
                     <br />
-                    <b className={"value " + dayChangeClass}>{marketReady ? dayChange : 0}<span className={dayChangeArrow}>&nbsp;{dayChangeArrow === "" ? null : dayChangeArrow === "change-up" ? <span>&#8593;</span> : <span>&#8595;</span>}</span></b>
+                    <b className={"value " + dayChangeClass}>
+                      {marketReady ? dayChange : 0}
+                      <span className={dayChangeArrow}>
+                        &nbsp;{dayChangeArrow === "" ? null : dayChangeArrow ===
+                        "change-up" ? (
+                          <span>&#8593;</span>
+                        ) : (
+                          <span>&#8595;</span>
+                        )}
+                      </span>
+                    </b>
                     <span>%</span>
                   </span>
                 </li>
 
-                {(volumeBase >= 0) ? <PriceStat ready={marketReady} decimals={0} volume={true} price={volumeBase} className="column-hide-small" volume2={volumeQuote} base={baseAsset} quote={quoteAsset} content="exchange.volume_24" /> : null}
+                {volumeBase >= 0 ? (
+                  <PriceStat
+                    ready={marketReady}
+                    decimals={0}
+                    volume={true}
+                    price={volumeBase}
+                    className="column-hide-small"
+                    volume2={volumeQuote}
+                    base={baseAsset}
+                    quote={quoteAsset}
+                    content="exchange.volume_24"
+                  />
+                ) : null}
 
-                {!hasPrediction && feedPrice ?
-                  <PriceStat toolTip={counterpart.translate("tooltip.settle_price")} ready={marketReady} className="column-hide-small" price={feedPrice.toReal()} quote={quoteAsset} base={baseAsset} content="exchange.settle" /> : null}
+                {!hasPrediction && feedPrice ? (
+                  <PriceStat
+                    toolTip={counterpart.translate("tooltip.settle_price")}
+                    ready={marketReady}
+                    className="column-hide-small"
+                    price={feedPrice.toReal()}
+                    quote={quoteAsset}
+                    base={baseAsset}
+                    content="exchange.settle"
+                  />
+                ) : null}
 
-                {lowestCallPrice && showCallLimit ?
-                  <PriceStat toolTip={counterpart.translate("tooltip.call_limit")} ready={marketReady} className="column-hide-medium is-call" price={lowestCallPrice} quote={quoteAsset} base={baseAsset} content="explorer.block.call_limit" /> : null}
+                {lowestCallPrice && showCallLimit ? (
+                  <PriceStat
+                    toolTip={counterpart.translate("tooltip.call_limit")}
+                    ready={marketReady}
+                    className="column-hide-medium is-call"
+                    price={lowestCallPrice}
+                    quote={quoteAsset}
+                    base={baseAsset}
+                    content="explorer.block.call_limit"
+                  />
+                ) : null}
 
-                {feedPrice && showCallLimit ?
-                  <PriceStat toolTip={counterpart.translate("tooltip.margin_price")} ready={marketReady} className="column-hide-medium is-call" price={feedPrice.getSqueezePrice({ real: true })} quote={quoteAsset} base={baseAsset} content="exchange.squeeze" /> : null}
+                {feedPrice && showCallLimit ? (
+                  <PriceStat
+                    toolTip={counterpart.translate("tooltip.margin_price")}
+                    ready={marketReady}
+                    className="column-hide-medium is-call"
+                    price={feedPrice.getSqueezePrice({ real: true })}
+                    quote={quoteAsset}
+                    base={baseAsset}
+                    content="exchange.squeeze"
+                  />
+                ) : null}
               </ul>
-              {/* {currentMouseItem &&
-								<ul className="market-stats stats top-stats medium-12 xlarge-6 chart-tooltip">
-									{
-										["open", "high", "low", "close"]
-											.map(item =>
-												<li key={item} className="chart-tooltip-item">{
-													`${item[0].toUpperCase()}: ${currentMouseItem[item]}`
-												}</li>)
-									}
-								</ul>
-							} */}
-              {/* <ul className="market-stats stats top-stats">
-								<li className="stat input clickable v-align" style={{ borderRight: "none", padding: "3px 15px 0 15px" }} onClick={this.props.onToggleCharts}>
-									<div className="v-align indicators">
-										{!showDepthChart ? <Translate content="exchange.order_depth" /> : <Translate content="exchange.price_history" />}
-									</div>
-								</li>
-							</ul> */}
             </div>
           </div>
         </div>

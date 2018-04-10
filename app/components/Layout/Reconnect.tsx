@@ -34,7 +34,7 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
   }
 
   componentWillReceiveProps(nextProps: ReconnectProps) {
-    // console.debug("Recive: ", this.props, nextProps);
+    console.debug("Recive: ", this.props, nextProps);
     if (nextProps.apiStatus === "online") {
       clearTimeout(this.timer);
       this.timer = undefined;
