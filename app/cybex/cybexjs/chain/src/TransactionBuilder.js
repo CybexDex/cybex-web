@@ -112,8 +112,11 @@ class TransactionBuilder {
                         op[1].finalize();
                     }
                 }
+                console.debug("[Tx]");
+                console.debug(JSON.stringify(ops.transaction.toObject(this)));
                 this.tr_buffer = ops.transaction.toBuffer(this);
-
+                console.debug("[Tx Buffer]");
+                console.debug(this.tr_buffer);
             }));
 
         });

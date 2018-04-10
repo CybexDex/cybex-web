@@ -171,7 +171,7 @@ class SettingsStore {
                     "CYBX", "BTCX", "ETHX", "LTCX", "BCHX", "XRPX"
                 ],
                 markets_90be01e8: [ // Main Net
-                    "CYB", "JADE.ETH", "JADE.BTC", "JADE.EOS",
+                    "JAMES.DINNER","CYB", "JADE.ETH", "JADE.BTC", "JADE.EOS",
                     "JADE.BAT", "JADE.VEN", "JADE.OMG", "JADE.SNT", "JADE.NAS",
                     "JADE.KNC", "JADE.PAY", "JADE.ENG"
                 ],

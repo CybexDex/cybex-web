@@ -65,6 +65,7 @@ class MarketHistory extends React.Component {
 
     render() {
         let { history, myHistory, base, quote, baseSymbol, quoteSymbol, isNullAccount } = this.props;
+        console.debug("History: ", history);
         let { activeTab } = this.state;
         let historyRows = null;
 
@@ -124,6 +125,7 @@ class MarketHistory extends React.Component {
             historyRows = this.props.history
                 .filter(() => {
                     index++;
+                    console.debug("Filter: ", index, index % 2 === 0);
                     return index % 2 === 0;
                 })
                 .take(100)

@@ -125,7 +125,7 @@ class AssetActions {
         if (isBitAsset) {
             operationJSON.bitasset_opts = bitasset_opts;
         }
-
+        console.debug("BitAsset: ", bitasset_opts);
         tr.add_type_operation("asset_create", operationJSON);
         return (dispatch) => {
             return WalletDb.process_transaction(tr, null, true).then(result => {
@@ -217,7 +217,7 @@ class AssetActions {
                 issuer: issuer,
                 new_options: bitasset_opts
             };
-
+            console.debug("Update: ", bitAssetUpdateObject);
             tr.add_type_operation("asset_update_bitasset", bitAssetUpdateObject);
 
         }

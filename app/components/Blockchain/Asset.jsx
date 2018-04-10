@@ -228,8 +228,8 @@ class Asset extends React.Component {
         // Add market link
         const core_asset = ChainStore.getAsset("1.3.0");
         let preferredMarket = description.market ? description.market : core_asset ? core_asset.get("symbol") : "CYB";
+        preferredMarket = ChainStore.getAsset(asset.bitasset.options.short_backing_asset);
         if ("bitasset" in asset && asset.bitasset.is_prediction_market) {
-            preferredMarket = ChainStore.getAsset(asset.bitasset.options.short_backing_asset);
             if (preferredMarket) {
                 preferredMarket = preferredMarket.get("symbol");
             } else {
@@ -570,7 +570,7 @@ class Asset extends React.Component {
                     <div className="asset-card">
                         <Tabs defaultActiveTab={0} segmented={false} setting="bitassetDataTabs">
                             <Tab title="explorer.asset.price_feed_data.title">
-                                <table className=" table order-table table-hover" style={{ padding: "1.2rem" }}>
+                                <table className="table asset-table order-table table-hover" style={{ padding: "1.2rem" }}>
                                     {header}
                                     <tbody>
                                         {rows}
@@ -579,7 +579,7 @@ class Asset extends React.Component {
                             </Tab>
 
                             <Tab title="explorer.asset.margin_positions.title">
-                                <table className=" table order-table table-hover" style={{ padding: "1.2rem" }}>
+                                <table className="table asset-table order-table table-hover" style={{ padding: "1.2rem" }}>
                                     <thead>
                                         <tr>
                                             <th className="clickable" onClick={this._toggleSortOrder.bind(this, "name")} style={{ textAlign: "left" }}>

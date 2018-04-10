@@ -519,7 +519,7 @@ var Utils = {
             }
         }
 
-        let prefix = isBitAsset ? "bit" : toReplace[i] ? toReplace[i].toLowerCase() : null;
+        let prefix = isBitAsset ? "cyb." : toReplace[i] ? toReplace[i].toLowerCase() : null;
         // if (prefix === "open.") prefix = "";
 
         return {

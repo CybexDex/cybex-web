@@ -9,7 +9,7 @@ import "./scrollbar-helper";
 * synchronized between the two files
 */
 import routes from "./Routes";
-
+console.debug = () => null;
 require("./components/Utility/Prototypes"); // Adds a .equals method to Array for use in shouldComponentUpdate
 /*
 * Electron does not support browserHistory, so we need to use hashHistory.
