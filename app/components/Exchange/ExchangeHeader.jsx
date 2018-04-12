@@ -117,7 +117,11 @@ export default class ExchangeHeader extends React.Component {
 
                 <li className="stat">
                   <span>
-                    <Translate className="nowrap" component="span" content="account.hour_24" />
+                    <Translate
+                      className="nowrap"
+                      component="span"
+                      content="account.hour_24"
+                    />
                     <br />
                     <b className={"value " + dayChangeClass}>
                       {marketReady ? dayChange : 0}
