@@ -151,8 +151,6 @@ class SettingsStore {
       let topMarkets = {
         markets_90be01e8: [
           // Main Net
-          "JAMES.DINNER",
-          "JAMES.TSHIRT",
           "CYB",
           "JADE.ETH",
           "JADE.BTC",
@@ -164,15 +162,15 @@ class SettingsStore {
           "JADE.NAS",
           "JADE.KNC",
           "JADE.PAY",
-          "JADE.THM",
-          "JADE.LST",
+          "JADE.GET",
+          // "JADE.LST",
           "JADE.ENG"
         ]
       };
 
       let bases = {
         markets_4018d784: [
-          // CYB MAIN NET
+          // BTS MAIN NET
           "USD",
           "OPEN.BTC",
           "CNY",
