@@ -14,7 +14,7 @@ import counterpart from "counterpart";
 import utils from "lib/common/utils";
 import LoadingIndicator from "../LoadingIndicator";
 import NewDepositAddress from "./NewDepositAddress";
-
+import QRCode from "qrcode.react";
 import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
 import * as moment from "moment";
@@ -25,16 +25,22 @@ const style = {
   top: 0
 };
 
-type props = { modalId, depositInfo?, open?, className?, type, asset, balances?};
+type props = {
+  modalId;
+  depositInfo?;
+  open?;
+  className?;
+  type;
+  asset;
+  balances?;
+};
 
 class DepositModal extends React.Component<props, { fadeOut }> {
-
   static propTypes = {
     asset: ChainTypes.ChainAsset.isRequired,
     balances: ChainTypes.ChainObjectsList
     // assets: ChainTypes.ChainAssetsList.isRequired
   };
-
 
   constructor(props) {
     super(props);
@@ -42,8 +48,12 @@ class DepositModal extends React.Component<props, { fadeOut }> {
 
   getNewAddress = () => {
     let { depositInfo } = this.props;
-    GatewayActions.updateDepositAddress(depositInfo.accountName, depositInfo.type, true);
-  }
+    GatewayActions.updateDepositAddress(
+      depositInfo.accountName,
+      depositInfo.type,
+      true
+    );
+  };
 
   render() {
     let { asset, depositInfo, modalId, type } = this.props;
@@ -57,34 +67,79 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     });
     let assetName = type;
     return (
-      <BaseModal modalId={modalId} >
-        <h3><Translate content={"gateway.deposit"} /> {asset.get("symbol")}({assetName})</h3>
+      <BaseModal modalId={modalId}>
+        <h3>
+          <Translate content={"gateway.deposit"} /> {asset.get("symbol")}({
+            assetName
+          })
+        </h3>
         <p>
-          {<Translate unsafe content="gateway.add_funds" type={assetName} account={depositInfo.accountName} />}
+          {
+            <Translate
+              unsafe
+              content="gateway.add_funds"
+              type={assetName}
+              account={depositInfo.accountName}
+            />
+          }
         </p>
-        {currentBalance && <CurrentBalance currentBalance={balance} asset={asset} />}
+        {currentBalance && (
+          <CurrentBalance currentBalance={balance} asset={asset} />
+        )}
         <div className="SimpleTrade__withdraw-row">
-          <p style={{ marginBottom: 10 }}
+          <p
+            style={{ marginBottom: 10 }}
             data-place="right"
-            data-tip={counterpart.translate("tooltip.deposit_tip", { asset: assetName })}
+            data-tip={counterpart.translate("tooltip.deposit_tip", {
+              asset: assetName
+            })}
           >
             <span className="help-tooltip">
-              {counterpart.translate("gateway.deposit_to", { asset: assetName })}
+              {counterpart.translate("gateway.deposit_to", {
+                asset: assetName
+              })}
             </span>
           </p>
-          {!depositInfo ? <LoadingIndicator type="three-bounce" /> : <label>
-            <span className="inline-label">
-              <input id="depositAddress" readOnly type="text" value={depositInfo.address} />
-              <CopyButton
-                text={depositInfo.address}
-              />
-            </span>
-          </label>}
+          <section className="text-center">
+            <div
+              className="wrapper"
+              style={{
+                padding: "8px",
+                background: "white",
+                display: "inline-block"
+              }}
+            >
+              <QRCode level="L" size={140} value={depositInfo.address} />
+            </div>
+          </section>
+
+          {!depositInfo ? (
+            <LoadingIndicator type="three-bounce" />
+          ) : (
+            <label>
+              <span className="inline-label">
+                <input
+                  id="depositAddress"
+                  readOnly
+                  type="text"
+                  value={depositInfo.address}
+                />
+                <CopyButton text={depositInfo.address} />
+              </span>
+            </label>
+          )}
           <div className="SimpleTrade__withdraw-row">
-            <p>Current address is generated {moment(depositInfo.createAt).fromNow()}</p>
+            <p>
+              Current address is generated{" "}
+              {moment(depositInfo.createAt).fromNow()}
+            </p>
           </div>
           <div className="button-group SimpleTrade__withdraw-row">
-            <button className="button" onClick={this.getNewAddress} type="submit" >
+            <button
+              className="button"
+              onClick={this.getNewAddress}
+              type="submit"
+            >
               <Translate content="gateway.generate_new" />
             </button>
           </div>
@@ -93,7 +148,10 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     );
   }
 }
-let DepositModalWrapper = BindToChainState(DepositModal, { keep_updating: true, show_loader: true });
+let DepositModalWrapper = BindToChainState(DepositModal, {
+  keep_updating: true,
+  show_loader: true
+});
 
 DepositModalWrapper = connect(DepositModalWrapper, {
   listenTo() {
@@ -101,7 +159,7 @@ DepositModalWrapper = connect(DepositModalWrapper, {
   },
   getProps(props) {
     let { modalId } = props;
-    
+
     return {
       open: GatewayStore.getState().modals.get(modalId),
       depositInfo: GatewayStore.getState().depositInfo,
@@ -110,6 +168,5 @@ DepositModalWrapper = connect(DepositModalWrapper, {
     };
   }
 });
-
 
 export default DepositModalWrapper;
