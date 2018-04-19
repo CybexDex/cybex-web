@@ -24,8 +24,8 @@ import LoadingIndicator from "../LoadingIndicator";
 let lastLookup = new Date();
 
 // Tempoary for GET
-const SpecialMarkets = { "JADE.GET": { "JADE.ETH": 0, CYB: 1, "JADE.BTC": 2 } };
-const FixedMarkets = { CYB: { "JADE.GET": -1 } };
+const SpecialMarkets = { "JADE.MT": { "JADE.ETH": 0, CYB: 1, "JADE.BTC": 2 } };
+const FixedMarkets = { CYB: { "JADE.MT": -1 } };
 
 export class MarketGroup extends React.Component {
   static defaultProps = {
