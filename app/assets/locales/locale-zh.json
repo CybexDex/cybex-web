@@ -1051,6 +1051,9 @@
       "bidask": "买卖单",
       "depthChart": "深度图"
     },
+    "orders": {
+      "accumulation": "累计数量 %(amount)s<br>价格：%(price)s"
+    },
     "amount": "数量",
     "price_history": "价格历史",
     "order_depth": "市场深度",

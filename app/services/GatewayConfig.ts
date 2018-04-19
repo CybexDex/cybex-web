@@ -14,7 +14,10 @@ export const JadePool = __TEST__ ?
       "TEST.SNT": "SNT",
       "TEST.NAS": "NAS",
       "TEST.KNC": "KNC",
+      // "TEST.MT": "MT",
       "TEST.PAY": "PAY",
+      "TEST.GET": "GET",
+      // "TEST.LST": "LST",
       "TEST.ENG": "ENG"
     },
     "ADDRESS_ASSETS": {
@@ -30,6 +33,9 @@ export const JadePool = __TEST__ ?
       "NAS": "TEST.NAS",
       "KNC": "TEST.KNC",
       "PAY": "TEST.PAY",
+      // "MT": "TEST.MT",
+      "GET": "TEST.GET",
+      // "LST": "TEST.LST",
       "ENG": "TEST.ENG",
     }
   } : {
@@ -47,6 +53,9 @@ export const JadePool = __TEST__ ?
       "JADE.NAS": "NAS",
       "JADE.KNC": "KNC",
       "JADE.PAY": "PAY",
+      "JADE.GET": "GET",
+      // "JADE.MT": "MT",
+      // "JADE.LST": "LST",
       "JADE.ENG": "ENG"
     },
     "ADDRESS_ASSETS": {
@@ -62,6 +71,9 @@ export const JadePool = __TEST__ ?
       "NAS": "JADE.NAS",
       "KNC": "JADE.KNC",
       "PAY": "JADE.PAY",
+      "GET": "JADE.GET",
+      // "MT": "JADE.MT",
+      // "LST": "JADE.LST",
       "ENG": "JADE.ENG"
     }
   };
