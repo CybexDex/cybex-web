@@ -1511,7 +1511,6 @@
         "Please enter a password used to encrypt the QR code.<br />An empty password will show an unencrypted QR code."
     },
     "never": "Don't show me this tip again"
-    
   },
   "init_error": {
     "title": "Application initialization issues",
@@ -1809,8 +1808,9 @@
   "first": {
     "title": "Deposit ETH and Get Free MT&CYB Airdropped",
     "p1":
-      "From 14:00 19th.Apr to 14:00 23rd.Apr, if you deposit ETH for the first time, you will get FREE airdropped MT and CYB at the ratio of 1:200MT and 1:1CYB.",
-    "p2": "The TOP 3 ETH top-upers will get an extra 800, 600 and 500 CYB bonus.",
+      "From 14:00 19th.Apr to 14:00 23rd.Apr, if you deposit ETH, you will get FREE airdropped MT and CYB at the ratio of 1:200MT and 1:1CYB.",
+    "p2":
+      "The TOP 3 ETH top-upers will get an extra 800, 600 and 500 CYB bonus.",
     "p3": "TOP 3 shortlist will be announced on 26th.April."
   }
 }
