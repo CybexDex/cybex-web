@@ -14,6 +14,7 @@ export const JadePool = __TEST__ ?
       "TEST.SNT": "SNT",
       "TEST.NAS": "NAS",
       "TEST.KNC": "KNC",
+      "TEST.MT": "MT",
       "TEST.PAY": "PAY",
       "TEST.GET": "GET",
       // "TEST.LST": "LST",
@@ -32,6 +33,7 @@ export const JadePool = __TEST__ ?
       "NAS": "TEST.NAS",
       "KNC": "TEST.KNC",
       "PAY": "TEST.PAY",
+      "MT": "TEST.MT",
       "GET": "TEST.GET",
       // "LST": "TEST.LST",
       "ENG": "TEST.ENG",
@@ -52,6 +54,7 @@ export const JadePool = __TEST__ ?
       "JADE.KNC": "KNC",
       "JADE.PAY": "PAY",
       "JADE.GET": "GET",
+      "JADE.MT": "MT",
       // "JADE.LST": "LST",
       "JADE.ENG": "ENG"
     },
@@ -69,6 +72,7 @@ export const JadePool = __TEST__ ?
       "KNC": "JADE.KNC",
       "PAY": "JADE.PAY",
       "GET": "JADE.GET",
+      "MT": "JADE.MT",
       // "LST": "JADE.LST",
       "ENG": "JADE.ENG"
     }

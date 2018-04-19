@@ -180,6 +180,7 @@ class SettingsStore {
         markets_90be01e8: [
           // Main Net
           "CYB",
+          "JADE.GET",
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS"
