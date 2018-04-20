@@ -14,7 +14,7 @@ export const JadePool = __TEST__ ?
       "TEST.SNT": "SNT",
       "TEST.NAS": "NAS",
       "TEST.KNC": "KNC",
-      // "TEST.MT": "MT",
+      "TEST.MT": "MT",
       "TEST.PAY": "PAY",
       "TEST.GET": "GET",
       // "TEST.LST": "LST",

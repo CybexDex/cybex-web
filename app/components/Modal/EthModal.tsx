@@ -46,6 +46,7 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
         <BaseModal modalId={this.props.modalId}>
           <Translate
             className="text-center"
+            unsafe
             component="h3"
             content="first.title"
           />
@@ -53,19 +54,19 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
             <Translate
               className="text-center"
               unsafe
-              component="p"
+              component="section"
               content="first.p1"
             />
             <Translate
               className="text-center"
               unsafe
-              component="p"
+              component="section"
               content="first.p2"
             />
             <Translate
               className="text-center"
               unsafe
-              component="p"
+              component="section"
               content="first.p3"
             />
           </div>
