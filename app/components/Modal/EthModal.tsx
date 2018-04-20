@@ -52,23 +52,21 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
           <div className="modal-content game-modal">
             <Translate
               className="text-center"
+              unsafe
               component="p"
               content="first.p1"
             />
             <Translate
               className="text-center"
+              unsafe
               component="p"
               content="first.p2"
             />
             <Translate
               className="text-center"
+              unsafe
               component="p"
               content="first.p3"
-            />
-            <Translate
-              className="text-center"
-              component="p"
-              content="first.p4"
             />
           </div>
           <div className="modal-footer">
