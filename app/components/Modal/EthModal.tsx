@@ -65,6 +65,11 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
               component="p"
               content="first.p3"
             />
+            <Translate
+              className="text-center"
+              component="p"
+              content="first.p4"
+            />
           </div>
           <div className="modal-footer">
             <p className="text-center">
