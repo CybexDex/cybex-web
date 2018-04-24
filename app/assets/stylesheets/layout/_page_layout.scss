@@ -378,10 +378,10 @@ div.bordered-header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    .modal-content {
-      max-height: 70vh;
-      overflow-y: auto !important;
-    }
+    // .modal-content {
+    //   max-height: 70vh;
+    //   overflow-y: auto !important;
+    // }
   }
 }
 
@@ -400,6 +400,8 @@ div.bordered-header {
 }
 
 .modal {
+  max-height: 90vh;
+  overflow-y: auto;
   .error-wrapper {
     margin-top: 10px;
   }
