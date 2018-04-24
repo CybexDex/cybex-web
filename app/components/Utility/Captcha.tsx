@@ -7,7 +7,7 @@ import counterpart from "counterpart";
 let faucetAddress = SettingsStore.getSetting("faucet_address");
 
 export class Captcha extends React.Component<
-  any,
+  { onCapthaChange },
   {
     cap: string;
     captchaSvg: any;
@@ -36,6 +36,7 @@ export class Captcha extends React.Component<
       captcha
     });
     this.captcha = captcha;
+    this.props.onCapthaChange(captcha);
   };
 
   updateCaptcha = () => {

@@ -66,7 +66,7 @@ class CreateAccountPassword extends React.Component {
     return !utils.are_equal_shallow(nextState, this.state);
   }
 
-  isValid() {
+  isValid = () => {
     let firstAccount = AccountStore.getMyAccounts().length === 0;
     let valid = this.state.validAccountName;
     if (!WalletDb.getWallet()) {
@@ -75,6 +75,8 @@ class CreateAccountPassword extends React.Component {
     if (!firstAccount) {
       valid = valid && this.state.registrar_account;
     }
+    valid = valid && !!this.cap && !!this.cap.captcha;
+    console.debug("THis. cap: ", valid, this.cap);
     return (
       valid &&
       this.state.understand_1 &&
@@ -319,7 +321,10 @@ class CreateAccountPassword extends React.Component {
             </label>
           </div>
           <section>
-            <Captcha ref={cap => (this.cap = cap)} />
+            <label>
+              <Translate content="captcha.label" />
+            </label>
+            <Captcha ref={cap => (this.cap = cap)} onCapthaChange={() => this.forceUpdate()} />
           </section>
 
           {/* If this is not the first account, show dropdown for fee payment account */}

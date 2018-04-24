@@ -68,7 +68,7 @@ class CreateAccount extends React.Component {
     if (!firstAccount) {
       valid = valid && this.state.registrar_account;
     }
-    return valid;
+    return valid && !!this.cap && !!this.cap.captcha;
   }
 
   onAccountNameChange(e) {
@@ -282,7 +282,13 @@ class CreateAccount extends React.Component {
             className="full-width-content form-group"
             style={{ maxWidth: "30rem" }}
           >
-            <Captcha ref={cap => (this.cap = cap)} />
+            <label>
+              <Translate content="captcha.label" />
+            </label>
+            <Captcha
+              ref={cap => (this.cap = cap)}
+              onCapthaChange={() => this.forceUpdate()}
+            />
           </div>
         )}
         <div className="divider" />

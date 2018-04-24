@@ -1806,12 +1806,18 @@
     }
   },
   "first": {
-    "title": "Mytoken’s Grand Token - listing on CYBEX<br>with <strong>Storming Airdrops!</strong>",
+    "title":
+      "Mytoken’s Grand Token - listing on CYBEX<br>with <strong>Storming Airdrops!</strong>",
     "p1":
       "<h5><strong>Phase 1</strong></h5><p class=\"text-center\">Any user registered before 25th.Apr.2018 can get a bonus airdrop of 50 MT if you fill in the form through <a href=\"http://cn.mikecrm.com/B53wpLa\" target=\"_block\">http://cn.mikecrm.com/B53wpLa</a> by 22:00,25th.Apr.</p>",
     "p2":
       "<h5><strong>Phase 2 - 14:00 19th.Apr ~ 12:00 23rd.Apr</strong></h5><p class=\"text-center\">Every 1 ETH deposit will be airdropped 100 MT + 2CYB till the pool dries! <br/> Airdrop pool: 500,000 MT + 10,000 CYB；<br>Every 1000 MT deposit will be airdropped 100 MT + 2CYB till the pool dries!<br>Airdrop pool: 300,000 MT + 6,000 CYB；<br></p>",
     "p3":
       "<h5><strong>Phase 3 - 14:00 23rd.Apr ~ 22:00 25th.Apr</strong></h5><p class=\"text-center\">At any point in time from 14:00 to 22:00 on 23rd to 25th, any user who concludes a transaction with MT on one end of any trading pair will divide equally a daily airdrop of 500,000 MT + 20,000 CYB;<br>Airdrop pool: 1,500,000 MT + 60,000 CYB；<br>Airdrop of Phase 3 will be done by 23:59 28th.Apr.2018<br>Please kindly note that the personal size of airdropping in Phase 3 is immune to transaction sum and frequency. Each user delivering any MT transaction will get one airdrop per day.</p>"
+  },
+  "captcha": {
+    "error": "Cannot fetch captcha, check your faucet setting, please.",
+    "label": "Verify Code",
+    "click": "Refersh Code"
   }
 }
