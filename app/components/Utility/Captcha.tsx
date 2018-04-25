@@ -3,10 +3,11 @@ import SVGInline from "react-svg-inline";
 import SettingsStore from "stores/SettingsStore";
 import { NotificationActions } from "actions//NotificationActions";
 import counterpart from "counterpart";
+import { connect } from "alt-react";
 
 let faucetAddress = SettingsStore.getSetting("faucet_address");
 
-export class Captcha extends React.Component<
+export let Captcha = class extends React.Component<
   { onCapthaChange },
   {
     cap: string;
@@ -100,5 +101,16 @@ export class Captcha extends React.Component<
     );
   }
 }
+
+Captcha = connect(Captcha, {
+  listenTo() {
+    return [SettingsStore];
+  },
+  getProps() {
+    return {
+      ...SettingsStore.getState()
+    };
+  }
+});
 
 export default Captcha;
