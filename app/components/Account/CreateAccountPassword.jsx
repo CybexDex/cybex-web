@@ -23,7 +23,6 @@ import Captcha from "../Utility/Captcha";
 import PasswordInput from "./../Forms/PasswordInput";
 
 class CreateAccountPassword extends React.Component {
-  cap;
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   };
@@ -42,6 +41,11 @@ class CreateAccountPassword extends React.Component {
       showPass: false,
       generatedPassword: ("P" + key.get_random_key().toWif()).substr(0, 45),
       confirm_password: "",
+
+      cap: {
+        id: null,
+        captcha: null
+      },
       understand_1: false,
       understand_2: false,
       understand_3: false
@@ -75,15 +79,15 @@ class CreateAccountPassword extends React.Component {
     if (!firstAccount) {
       valid = valid && this.state.registrar_account;
     }
-    valid = valid && !!this.cap && !!this.cap.captcha;
-    console.debug("THis. cap: ", valid, this.cap);
+    valid = valid && !!this.state.cap && !!this.state.cap.captcha;
+    console.debug("THis. cap: ", valid, this.state.cap, this.state.cap.captcha);
     return (
       valid &&
       this.state.understand_1 &&
       this.state.understand_2 &&
       this.state.understand_3
     );
-  }
+  };
 
   onAccountNameChange(e) {
     const state = {};
@@ -118,10 +122,7 @@ class CreateAccountPassword extends React.Component {
     let refcode = this.refs.refcode ? this.refs.refcode.value() : null;
     let referralAccount = AccountStore.getState().referralAccount;
     this.setState({ loading: true });
-    let cap = {
-      id: this.cap.id,
-      captcha: this.cap.captcha
-    };
+    let { cap } = this.state;
     AccountActions.createAccountWithPassword(
       name,
       password,
@@ -203,6 +204,11 @@ class CreateAccountPassword extends React.Component {
     this.setState({
       [value]: value === "password" ? e.target.value : !this.state[value]
     });
+  }
+
+  setCaptcha = (cap) => {
+    console.debug("Set Cap:", cap);
+    this.setState({cap});
   }
 
   _renderAccountCreateForm() {
@@ -324,7 +330,7 @@ class CreateAccountPassword extends React.Component {
             <label>
               <Translate content="captcha.label" />
             </label>
-            <Captcha ref={cap => (this.cap = cap)} onCapthaChange={() => this.forceUpdate()} />
+            <Captcha onCapthaChange={this.setCaptcha} />
           </section>
 
           {/* If this is not the first account, show dropdown for fee payment account */}
