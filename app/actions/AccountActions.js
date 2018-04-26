@@ -89,7 +89,8 @@ class AccountActions {
         registrar,
         referrer,
         referrer_percent,
-        refcode
+        refcode,
+        cap
     ) {
         return (dispatch) => {
             return WalletActions.createAccount(
@@ -97,7 +98,8 @@ class AccountActions {
                 registrar,
                 referrer,
                 referrer_percent,
-                refcode
+                refcode,
+                cap
             ).then( () => {
                 dispatch(account_name);
                 return account_name;
@@ -111,7 +113,8 @@ class AccountActions {
         registrar,
         referrer,
         referrer_percent,
-        refcode
+        refcode,
+        cap
     ) {
         return (dispatch) => {
             return WalletActions.createAccountWithPassword(
@@ -120,7 +123,8 @@ class AccountActions {
                 registrar,
                 referrer,
                 referrer_percent,
-                refcode
+                refcode,
+                cap
             ).then( () => {
                 dispatch(account_name);
                 return account_name;
