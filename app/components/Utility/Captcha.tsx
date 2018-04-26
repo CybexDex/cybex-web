@@ -11,6 +11,7 @@ export let Captcha = class extends React.Component<
   { onCapthaChange },
   {
     cap: string;
+    capType: any;
     captchaSvg: any;
     captcha: string;
   }
@@ -22,6 +23,7 @@ export let Captcha = class extends React.Component<
     super(props);
     this.state = {
       cap: "",
+      capType: 0,
       captchaSvg: "<svg></svg>",
       captcha: ""
     };
@@ -37,24 +39,26 @@ export let Captcha = class extends React.Component<
       captcha
     });
     this.captcha = captcha;
-    this.props.onCapthaChange(captcha);
+    this.props.onCapthaChange({ id: this.state.cap, captcha });
   };
 
   updateCaptcha = () => {
     fetch(`${faucetAddress}/captcha`)
       .then(res => {
-        console.debug("Headers: ", res.headers);
         return res.json();
       })
       .then(res => {
+        let { data } = res;
         let s = {
           cap: res.id,
-          captchaSvg: res.data
+          capType: res.type,
+          captchaSvg: data
         };
         this.setState(s);
         this.id = res.id;
       })
       .catch(err => {
+        console.debug("Captcha: ", err);
         NotificationActions.error(counterpart.translate("captcha.error"));
         this.id = null;
         let s = {
@@ -91,7 +95,18 @@ export let Captcha = class extends React.Component<
           onChange={this.setCaptcha}
         />
         {this.state.cap && this.state.cap.length ? (
-          <SVGInline svg={this.state.captchaSvg} onClick={this.updateCaptcha} />
+          this.state.capType !== 1 ? (
+            <SVGInline
+              svg={this.state.captchaSvg}
+              onClick={this.updateCaptcha}
+            />
+          ) : (
+            <img
+              style={{ height: "34px" }}
+              onClick={this.updateCaptcha}
+              src={"data:image/png;base64," + this.state.captchaSvg}
+            />
+          )
         ) : (
           <label htmlFor="" onClick={this.updateCaptcha}>
             {counterpart.translate("captcha.click")}
@@ -100,7 +115,7 @@ export let Captcha = class extends React.Component<
       </div>
     );
   }
-}
+};
 
 Captcha = connect(Captcha, {
   listenTo() {
