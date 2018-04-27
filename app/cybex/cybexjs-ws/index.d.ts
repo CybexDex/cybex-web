@@ -12,16 +12,22 @@ declare module "cybexjs-ws" {
     history_api(): GrapheneApi;
     network_api(): GrapheneApi;
     crypto_api(): GrapheneApi;
-    init_promise: Promise<any>
+    init_promise: Promise<any>;
+    chain_id?: string;
     setRpcConnectionStatusCallback(handler: (status: any) => any): void;
   }
   const Apis: {
     setRpcConnectionStatusCallback(handler: (status: any) => any): void;
-    instance(cs?: string, connect?: boolean, connectTimeout?: number, enableCrypto?: boolean): ApisInstance;
-    close: Promise<any>
-    reset: Promise<any>
+    instance(
+      cs?: string,
+      connect?: boolean,
+      connectTimeout?: number,
+      enableCrypto?: boolean
+    ): ApisInstance;
+    close: Promise<any>;
+    reset: Promise<any>;
     setAutoReconnect(auto: boolean): void;
     chainId(): string;
-  }
+  };
   const ChainConfig: any;
 }
