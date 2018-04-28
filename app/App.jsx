@@ -279,7 +279,6 @@ class App extends React.Component {
           <WalletUnlockModal />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
-          <EthModal modalId={DEFAULT_ETH_MODAL_ID} />
           <BrowserSupportModal ref="browser_modal" />
         </div>
       </div>
