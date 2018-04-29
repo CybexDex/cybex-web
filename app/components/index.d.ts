@@ -1,19 +1,19 @@
 /// <reference types="react"/>
 declare module "react-translate-component" {
-  class Translate extends React.Component<any, any>{ }
+  class Translate extends React.Component<any, any> {}
   export default Translate;
 }
 
 declare module "rc-queue-anim" {
-  class QueueAnim extends React.Component<any, any>{ }
+  class QueueAnim extends React.Component<any, any> {}
   export default QueueAnim;
 }
 declare module "react-scroll-up" {
-  class QueueAnim extends React.Component<any, any>{ }
+  class QueueAnim extends React.Component<any, any> {}
   export default QueueAnim;
 }
 declare module "alt-container" {
-  class AltContainer extends React.Component<any, any>{ }
+  class AltContainer extends React.Component<any, any> {}
   export default AltContainer;
 }
 
@@ -21,7 +21,7 @@ declare module "alt-react" {
   function connect(Component, injector: any);
 }
 
-declare module CommonUtils {
+declare namespace CommonUtils {
   const price_text: (price: string, base: any, quote: any) => string;
   const format_volume: (amount: number) => string;
 }
@@ -37,13 +37,17 @@ declare module "alt-instance" {
     static createActions(actionClass): Action<typeof actionClass>;
     static createStore(storeClass, storeName: string): Store<any>;
   }
-  interface BaseStore<S> {
+  class BaseStore<S> {
     listen?(cb: (state: S) => void): void;
   }
-  export interface Store<S> extends BaseStore<S> {
-    state: Readonly<S>;
+  export interface Store<S> {
+    state: S;
     getState?(): S;
+    setState?(state: any): S;
+    bindListeners?(listenerBinder: { [method: string]: Function }): void;
   }
 
   export default alt;
 }
+
+declare var __ELECTRON__;

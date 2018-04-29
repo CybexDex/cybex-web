@@ -25,7 +25,6 @@ import RestoreWallet from "components/Account/RestoreWallet";
 import Captcha from "../Utility/Captcha";
 
 class CreateAccount extends React.Component {
-  cap;
   constructor() {
     super();
     this.state = {
@@ -37,7 +36,11 @@ class CreateAccount extends React.Component {
       loading: false,
       hide_refcode: true,
       show_identicon: false,
-      step: 1
+      step: 1,
+      cap: {
+        id: null,
+        captcha: null
+      }
     };
     this.onFinishConfirm = this.onFinishConfirm.bind(this);
 
@@ -68,7 +71,8 @@ class CreateAccount extends React.Component {
     if (!firstAccount) {
       valid = valid && this.state.registrar_account;
     }
-    return valid && !!this.cap && !!this.cap.captcha;
+    let { id, captcha } = this.state.cap;
+    return valid && !!id && !!captcha;
   }
 
   onAccountNameChange(e) {
@@ -83,6 +87,9 @@ class CreateAccount extends React.Component {
     this.setState({ validPassword: e.valid });
   }
 
+  setCaptcha = cap => {
+    this.setState({cap});
+  };
   onFinishConfirm(confirm_store_state) {
     if (
       confirm_store_state.included &&
@@ -101,10 +108,7 @@ class CreateAccount extends React.Component {
   }
 
   createAccount(name) {
-    let cap = {
-      id: this.cap.id,
-      captcha: this.cap.captcha
-    };
+    let { cap } = this.state;
     let refcode = this.refs.refcode ? this.refs.refcode.value() : null;
     let referralAccount = AccountStore.getState().referralAccount;
     WalletUnlockActions.unlock().then(() => {
@@ -285,10 +289,7 @@ class CreateAccount extends React.Component {
             <label>
               <Translate content="captcha.label" />
             </label>
-            <Captcha
-              ref={cap => (this.cap = cap)}
-              onCapthaChange={() => this.forceUpdate()}
-            />
+            <Captcha onCapthaChange={this.setCaptcha} />
           </div>
         )}
         <div className="divider" />
