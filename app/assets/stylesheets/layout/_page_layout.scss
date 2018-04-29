@@ -474,3 +474,7 @@ div.bordered-header {
 .captcha {
   display: flex;
 }
+
+a {
+  user-select: none;
+}

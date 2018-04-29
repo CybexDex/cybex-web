@@ -65,7 +65,7 @@ class Footer extends React.Component {
     return (
       <div className="grid-block shrink footer">
         <div className="align-justify grid-block">
-          <VolumnContainer />
+          {/* <VolumnContainer /> */}
 
           <div className="grid-block">
             {/* <Translate component="div" className="logo" content="footer.title" /> */}

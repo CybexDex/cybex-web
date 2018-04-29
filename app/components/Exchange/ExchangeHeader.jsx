@@ -61,11 +61,15 @@ export default class ExchangeHeader extends React.Component {
     const dayChangeClass =
       parseFloat(dayChange) === 0
         ? ""
-        : parseFloat(dayChange) < 0 ? "negative" : "positive";
+        : parseFloat(dayChange) < 0
+          ? "negative"
+          : "positive";
     const dayChangeArrow =
       dayChangeClass === ""
         ? ""
-        : dayChangeClass === "positive" ? "change-up" : "change-down";
+        : dayChangeClass === "positive"
+          ? "change-up"
+          : "change-down";
     const volumeBase = marketStats.get("volumeBase");
     const volumeQuote = marketStats.get("volumeQuote");
 
@@ -73,33 +77,17 @@ export default class ExchangeHeader extends React.Component {
       <div className="grid-block shrink no-padding overflow-visible top-bar bgcolor-primary with-shadow">
         <div className="grid-block overflow-visible">
           <div className="grid-block shrink show-for-large">
-            <div className="v-align">
-              <span
-                style={{ paddingRight: 0 }}
-                onClick={this._addMarket.bind(this, quoteSymbol, baseSymbol)}
-                className="market-symbol"
-              >
+            <a
+              className="v-align"
+              onClick={this._addMarket.bind(this, quoteSymbol, baseSymbol)}
+            >
+              <span style={{ paddingRight: 0 }} className="market-symbol">
                 <Icon className={starClass} name="fi-star" />
               </span>
-              {!hasPrediction ? (
-                <Link
-                  onClick={() => {
-                    MarketsActions.switchMarket();
-                  }}
-                  className="market-symbol"
-                  to={`/market/${baseSymbol}_${quoteSymbol}`}
-                >
-                  <span>
-                    <AssetName name={quoteSymbol} replace={true} /> :{" "}
-                    <AssetName name={baseSymbol} replace={true} />
-                  </span>
-                </Link>
-              ) : (
-                <a className="market-symbol">
-                  <span>{`${quoteSymbol} : ${baseSymbol}`}</span>
-                </a>
-              )}
-            </div>
+              <span className="market-symbol">
+                {`${quoteSymbol} : ${baseSymbol}`}
+              </span>
+            </a>
           </div>
 
           <div className="grid-block vertical" style={{ overflow: "visible" }}>

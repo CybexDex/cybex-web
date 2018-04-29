@@ -13,7 +13,10 @@ class MarketPair {
   constructor(public base?, public quote?) {}
 }
 
-const correctMarketPair = (symbolOfA, symbolOfB) => {
+const correctMarketPair = (
+  symbolOfA: string,
+  symbolOfB: string
+): MarketPair => {
   let indexOfA = SettingsStore.getState().preferredBases.indexOf(symbolOfA);
   let indexOfB = SettingsStore.getState().preferredBases.indexOf(symbolOfB);
   if (
@@ -21,6 +24,11 @@ const correctMarketPair = (symbolOfA, symbolOfB) => {
     (indexOfA === -1 && indexOfB !== -1)
   ) {
     return new MarketPair(symbolOfB, symbolOfA);
+  } else if (
+    (indexOfA < indexOfB && indexOfA > -1) ||
+    (indexOfA !== -1 && indexOfB === -1)
+  ) {
+    return new MarketPair(symbolOfA, symbolOfB);
   }
   return new MarketPair(...[symbolOfA, symbolOfB].sort());
 };

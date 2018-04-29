@@ -188,7 +188,7 @@ class ExchangeSubscriber extends React.Component {
       baseAsset.get("symbol"),
       quoteAsset.get("symbol")
     );
-    console.debug("Pair: ", pair);
+    // console.debug("Pair: ", pair);
     if (
       nextProps.baseAsset &&
       nextProps.baseAsset.getIn(["bitasset", "is_prediction_market"]) &&
@@ -206,7 +206,8 @@ class ExchangeSubscriber extends React.Component {
       !nextProps.baseAsset.getIn(["bitasset", "is_prediction_market"]) &&
       !nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
     ) {
-      return this.props.router.push(
+      // console.debug("SwapMarket: ", baseAsset, quoteAsset, pair);
+      this.props.router.push(
         `/market/${nextProps.baseAsset.get(
           "symbol"
         )}_${nextProps.quoteAsset.get("symbol")}`
