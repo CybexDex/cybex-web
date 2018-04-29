@@ -62,7 +62,7 @@ class SettingsStore {
     let defaults = {
       locale: ["zh", "en"],
       apiServer: [],
-      unit: [CORE_ASSET, "USD", "CNY", "BTC", "EUR", "CYBX"],
+      unit: [CORE_ASSET, "JADE.ETH", "USD", "CNY", "BTC", "EUR"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
       showAssetPercent: [{ translate: "yes" }, { translate: "no" }],
       themes: [
@@ -152,7 +152,7 @@ class SettingsStore {
         markets_90be01e8: [
           // Main Net
           "CYB",
-          "JADE.MT",          
+          "JADE.MT",
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
@@ -181,10 +181,10 @@ class SettingsStore {
         markets_90be01e8: [
           // Main Net
           "CYB",
-          "JADE.MT",
           "JADE.ETH",
           "JADE.BTC",
-          "JADE.EOS"
+          "JADE.EOS",
+          "JADE.MT"
         ]
       };
 

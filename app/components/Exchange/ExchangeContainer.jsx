@@ -10,6 +10,7 @@ import LoadingIndicator from "../LoadingIndicator";
 import { EmitterInstance } from "cybexjs";
 import BindToChainState from "../Utility/BindToChainState";
 import MarketsActions from "actions/MarketsActions";
+import { correctMarketPair } from "utils/Market";
 
 class ExchangeContainer extends React.Component {
   render() {
@@ -69,6 +70,9 @@ class ExchangeContainer extends React.Component {
           },
           settings: () => {
             return SettingsStore.getState().settings;
+          },
+          preferredBases: () => {
+            return SettingsStore.getState().preferredBases;
           },
           starredMarkets: () => {
             return SettingsStore.getState().starredMarkets;
@@ -179,14 +183,30 @@ class ExchangeSubscriber extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    /* Prediction markets should only be shown in one direction, if the link goes to the wrong one we flip it */
+    let { baseAsset, quoteAsset, preferredBases } = nextProps;
+    let pair = correctMarketPair(
+      baseAsset.get("symbol"),
+      quoteAsset.get("symbol")
+    );
+    console.debug("Pair: ", pair);
     if (
       nextProps.baseAsset &&
       nextProps.baseAsset.getIn(["bitasset", "is_prediction_market"]) &&
       !nextProps.quoteAsset &&
       nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
     ) {
+      /* Prediction markets should only be shown in one direction, if the link goes to the wrong one we flip it */
       this.props.router.push(
+        `/market/${nextProps.baseAsset.get(
+          "symbol"
+        )}_${nextProps.quoteAsset.get("symbol")}`
+      );
+    } else if (
+      baseAsset.get("symbol") !== pair.base &&
+      !nextProps.baseAsset.getIn(["bitasset", "is_prediction_market"]) &&
+      !nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
+    ) {
+      return this.props.router.push(
         `/market/${nextProps.baseAsset.get(
           "symbol"
         )}_${nextProps.quoteAsset.get("symbol")}`
