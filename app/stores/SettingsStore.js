@@ -164,6 +164,7 @@ class SettingsStore {
           "JADE.KNC",
           "JADE.PAY",
           "JADE.GET",
+          "JADE.MAD",
           // "JADE.LST",
           "JADE.ENG"
         ]
