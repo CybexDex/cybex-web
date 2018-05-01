@@ -7,7 +7,7 @@ import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
 
-class BalanceClaimByAsset extends Component {
+class BalanceClaimByAsset extends React.Component {
 
     constructor() {
         super()

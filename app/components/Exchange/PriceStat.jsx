@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import Translate from "react-translate-component";
 import AssetName from "../Utility/AssetName";
 import utils from "common/utils";

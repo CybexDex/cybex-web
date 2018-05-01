@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import ChainTypes from "components/Utility/ChainTypes";
 import AssetName from "components/Utility/AssetName";
 import MarketsActions from "actions/MarketsActions";
@@ -23,7 +23,7 @@ let CurrencyCard = class extends React.PureComponent<any, any> {
   static propTypes = {
     quote: ChainTypes.ChainAsset.isRequired,
     base: ChainTypes.ChainAsset.isRequired,
-    invert: React.PropTypes.bool
+    invert: PropTypes.bool
   };
 
   componentWillMount() {

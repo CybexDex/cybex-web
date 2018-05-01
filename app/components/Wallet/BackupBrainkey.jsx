@@ -5,7 +5,7 @@ import WalletActions from "actions/WalletActions";
 import WalletDb from "stores/WalletDb";
 import {hash} from "cybexjs";
 
-export default class BackupBrainkey extends Component {
+export default class BackupBrainkey extends React.Component {
 
     constructor() {
         super()

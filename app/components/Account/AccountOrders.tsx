@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { OrderRow, TableHeader } from "../Exchange/MyOpenOrders";
 import counterpart from "counterpart";
 import MarketsActions from "actions/MarketsActions";

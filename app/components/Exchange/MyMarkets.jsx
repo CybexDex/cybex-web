@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import Immutable from "immutable";
 import Ps from "perfect-scrollbar";
 import utils from "common/utils";
@@ -338,7 +338,7 @@ class MyMarkets extends React.Component {
   };
 
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
   };
 
   constructor(props) {

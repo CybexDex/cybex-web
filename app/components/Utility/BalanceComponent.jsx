@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import FormattedAsset from "./FormattedAsset";
 import ChainTypes from "./ChainTypes";
 import BindToChainState from "./BindToChainState";
@@ -10,32 +11,31 @@ import BindToChainState from "./BindToChainState";
  */
 
 class BalanceComponent extends React.Component {
+  static propTypes = {
+    balance: ChainTypes.ChainObject.isRequired,
+    assetInfo: PropTypes.node,
+    hide_asset: PropTypes.bool
+  };
 
-    static propTypes = {
-        balance: ChainTypes.ChainObject.isRequired,
-        assetInfo: React.PropTypes.node,
-        hide_asset: React.PropTypes.bool
-    };
+  static defaultProps = {
+    hide_asset: false
+  };
 
-    static defaultProps = {
-        hide_asset: false
-    };
-
-    render() {
-        let amount = Number(this.props.balance.get("balance"));
-        // console.debug("NUMBER: ", amount);
-        let type = this.props.balance.get("asset_type");
-        return (
-            <FormattedAsset
-                amount={amount}
-                asset={type}
-                asPercentage={this.props.asPercentage}
-                assetInfo={this.props.assetInfo}
-                replace={this.props.replace}
-                hide_asset={this.props.hide_asset}
-            />
-        );
-    }
+  render() {
+    let amount = Number(this.props.balance.get("balance"));
+    // console.debug("NUMBER: ", amount);
+    let type = this.props.balance.get("asset_type");
+    return (
+      <FormattedAsset
+        amount={amount}
+        asset={type}
+        asPercentage={this.props.asPercentage}
+        assetInfo={this.props.assetInfo}
+        replace={this.props.replace}
+        hide_asset={this.props.hide_asset}
+      />
+    );
+  }
 }
 
 export default BindToChainState(BalanceComponent, { keep_updating: true });

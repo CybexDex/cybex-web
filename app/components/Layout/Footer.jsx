@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import AltContainer from "alt-container";
 import Translate from "react-translate-component";
 import BindToChainState from "../Utility/BindToChainState";
@@ -17,7 +17,7 @@ import { VolumnContainer } from "components/Utility/Volume";
 class Footer extends React.Component {
   static propTypes = {
     dynGlobalObject: ChainTypes.ChainObject.isRequired,
-    synced: React.PropTypes.bool.isRequired
+    synced: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
@@ -25,7 +25,7 @@ class Footer extends React.Component {
   };
 
   static contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
   };
 
   constructor(props) {
@@ -172,7 +172,7 @@ class Footer extends React.Component {
 }
 Footer = BindToChainState(Footer, { keep_updating: true });
 
-class AltFooter extends Component {
+class AltFooter extends React.Component {
   render() {
     var wallet = WalletDb.getWallet();
     return (

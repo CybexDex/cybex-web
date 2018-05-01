@@ -4,7 +4,7 @@ import BalanceClaimActiveStore from "stores/BalanceClaimActiveStore";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
 
-class BalanceClaimAssetTotals extends Component {
+class BalanceClaimAssetTotals extends React.Component {
     render() {
 
         if( this.props.balances === undefined )

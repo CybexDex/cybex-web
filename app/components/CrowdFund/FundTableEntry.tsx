@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { getClassName } from "utils//ClassName";
 import { DATETIME_FORMAT_FULL } from "utils/Contansts";
 import * as moment from "moment";

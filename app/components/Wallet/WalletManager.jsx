@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import { connect } from "alt-react";
 import WalletActions from "actions/WalletActions";
@@ -17,7 +17,7 @@ const connectObject = {
     }
 };
 
-class WalletManager extends Component {
+class WalletManager extends React.Component {
 
     getTitle() {
 
@@ -78,7 +78,7 @@ class WalletManager extends Component {
 }
 WalletManager = connect(WalletManager, connectObject);
 
-class WalletOptions extends Component {
+class WalletOptions extends React.Component {
 
     render() {
         let has_wallet = !!this.props.current_wallet;
@@ -174,7 +174,7 @@ class WalletOptions extends Component {
 }
 WalletOptions = connect(WalletOptions, connectObject);
 
-class ChangeActiveWallet extends Component {
+class ChangeActiveWallet extends React.Component {
 
     constructor() {
         super();
@@ -253,7 +253,7 @@ class ChangeActiveWallet extends Component {
 }
 ChangeActiveWallet = connect(ChangeActiveWallet, connectObject);
 
-class WalletDelete extends Component {
+class WalletDelete extends React.Component {
 
     constructor() {
         super();

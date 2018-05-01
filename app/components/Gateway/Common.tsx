@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import counterpart from "counterpart";
 import utils from "lib/common/utils";
 import LoadingIndicator from "../LoadingIndicator";

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import FormattedAsset from "../Utility/FormattedAsset";
 import { Link } from "react-router";
 import classNames from "classnames";
@@ -41,7 +41,7 @@ class TransactionLabel extends React.Component {
 
 class Row extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
   };
 
   static propTypes = {
@@ -147,10 +147,10 @@ class Operation extends React.Component {
   };
 
   static propTypes = {
-    op: React.PropTypes.array.isRequired,
-    current: React.PropTypes.string,
-    block: React.PropTypes.number,
-    csvExportMode: React.PropTypes.bool
+    op: PropTypes.array.isRequired,
+    current: PropTypes.string,
+    block: PropTypes.number,
+    csvExportMode: PropTypes.bool
   };
 
   // componentWillReceiveProps(np) {

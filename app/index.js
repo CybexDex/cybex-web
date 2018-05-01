@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { Router, browserHistory, hashHistory } from "react-router";

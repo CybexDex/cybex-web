@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faTelegram } from '@fortawesome/fontawesome-free-brands';

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { connect } from "alt-react";
 import CrowdFundActions from "actions//CrowdFundActions";
 import CrowdFundStore from "stores/CrowdFundStore";
@@ -52,8 +52,8 @@ enum TABS {
 let CrowdFund = class extends React.Component<CrowdFundProps, { fund, tab }> {
 
   static propTypes = {
-    allFunds: React.PropTypes.object,
-    allPartedFunds: React.PropTypes.array,
+    allFunds: PropTypes.object,
+    allPartedFunds: PropTypes.array,
     account: ChainTypes.ChainAccount.isRequired
   }
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import AccountActions from "actions/AccountActions";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";

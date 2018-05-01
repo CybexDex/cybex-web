@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import BlockchainStore from "stores/BlockchainStore";
 import AltContainer from "alt-container";
 import Block from "./Block";

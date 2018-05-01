@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import { NetworkStore } from "stores/NetworkStore";
 import { withRouter, Link } from "react-router";

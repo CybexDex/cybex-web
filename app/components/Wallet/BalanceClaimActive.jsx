@@ -14,7 +14,7 @@ import WalletActions from "actions/WalletActions";
 import MyAccounts from "components/Forms/MyAccounts";
 import Translate from "react-translate-component";
 
-class BalanceClaimActive extends Component {
+class BalanceClaimActive extends React.Component {
     componentWillMount() {
         let keys = PrivateKeyStore.getState().keys;
         let keySeq = keys.keySeq();

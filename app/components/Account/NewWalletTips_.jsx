@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
 
@@ -24,7 +24,7 @@ const messy = ori => {
   return res;
 };
 
-const ScrollTopWrapper = class extends Component {
+const ScrollTopWrapper = class extends React.Component {
 
   componentDidMount() {
     this.el && this.el.scrollIntoView();
@@ -41,7 +41,7 @@ const ScrollTopWrapper = class extends Component {
   }
 }
 
-const NewWalletTips = class extends Component {
+const NewWalletTips = class extends React.Component {
   constructor(props) {
     super(props);
     this.messyOptions = messy(Options);

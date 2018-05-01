@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
 import * as Immutable from "immutable";
 import Translate from "react-translate-component";
 import BalanceComponent from "../Utility/BalanceComponent";

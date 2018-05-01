@@ -28,7 +28,7 @@ const KeyCount = ({key_count}) => {
     return <span>Found {key_count} private keys</span>;
 };
 
-class ImportKeys extends Component {
+class ImportKeys extends React.Component {
 
     constructor() {
         super();

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { Component } from "react";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
@@ -48,7 +48,7 @@ type NewWalletTipsProps = {
   onKnownWallet: any
 };
 
-const NewWalletTips = class extends Component<NewWalletTipsProps, any> {
+const NewWalletTips = class extends React.Component<NewWalletTipsProps, any> {
   messyOptions = messy(Options);
   constructor(props: NewWalletTipsProps) {
     super(props);

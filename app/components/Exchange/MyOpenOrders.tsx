@@ -1,5 +1,5 @@
-import * as React from "react";
-import { PropTypes } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
+
 import { Link } from "react-router";
 import { FormattedDate } from "react-intl";
 import Ps from "perfect-scrollbar";

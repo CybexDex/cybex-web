@@ -6,7 +6,7 @@ import BindToChainState from "components/Utility/BindToChainState";
 import AccountStore from "stores/AccountStore";
 import {pairs} from "lodash";
 
-class ResolveLinkedAccountsChainState extends Component {
+class ResolveLinkedAccountsChainState extends React.Component {
 
     static propTypes = {
         linkedAccounts: ChainTypes.ChainAccountsList.isRequired
@@ -28,7 +28,7 @@ class ResolveLinkedAccountsChainState extends Component {
 }
 ResolveLinkedAccountsChainState = BindToChainState(ResolveLinkedAccountsChainState);
 
-class ResolveLinkedAccounts extends Component {
+class ResolveLinkedAccounts extends React.Component {
     render() {
         return <ResolveLinkedAccountsChainState
             linkedAccounts={this.props.linkedAccounts}

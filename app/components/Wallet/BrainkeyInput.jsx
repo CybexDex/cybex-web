@@ -8,7 +8,7 @@ if (__ELECTRON__) {
     dictionary_set = new Set(require("json-loader!common/dictionary_en.json").en.split(","));
 }
 
-export default class BrainkeyInput extends Component {
+export default class BrainkeyInput extends React.Component {
 
     static propTypes = {
         onChange: PropTypes.func.isRequired
@@ -121,7 +121,7 @@ export default class BrainkeyInput extends Component {
     }
 }
 
-class MisspelledWord extends Component {
+class MisspelledWord extends React.Component {
     render() {
         return <span style={{borderBottom: '1px dotted #ff0000', padding: '1px', margin: '1px'}}>
             <span style={{borderBottom: '1px dotted #ff0000'}}>

@@ -1,5 +1,5 @@
 
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import WalletDb from "stores/WalletDb";

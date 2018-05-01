@@ -30,7 +30,7 @@ const connectObject = {
 };
 
 //The default component is WalletManager.jsx
-class BackupCreate extends Component {
+class BackupCreate extends React.Component {
     render() {
         return (
             <div style={{ maxWidth: "40rem" }}>
@@ -48,7 +48,7 @@ class BackupCreate extends Component {
 BackupCreate = connect(BackupCreate, connectObject);
 
 // layout is a small project
-// class WalletObjectInspector extends Component {
+// class WalletObjectInspector extends React.Component {
 //     static propTypes={ walletObject: PropTypes.object }
 //     render() {
 //         return <div style={{overflowY:'auto'}}>
@@ -59,7 +59,7 @@ BackupCreate = connect(BackupCreate, connectObject);
 //     }
 // }
 
-class BackupRestore extends Component {
+class BackupRestore extends React.Component {
 
     constructor() {
         super();
@@ -96,7 +96,7 @@ class BackupRestore extends Component {
 
 BackupRestore = connect(BackupRestore, connectObject);
 
-class Restore extends Component {
+class Restore extends React.Component {
 
     constructor() {
         super();
@@ -145,7 +145,7 @@ class Restore extends Component {
 }
 Restore = connect(Restore, connectObject);
 
-class NewWalletName extends Component {
+class NewWalletName extends React.Component {
 
     constructor() {
         super();
@@ -221,7 +221,7 @@ class NewWalletName extends Component {
 }
 NewWalletName = connect(NewWalletName, connectObject);
 
-class Download extends Component {
+class Download extends React.Component {
 
     componentWillMount() {
         try { this.isFileSaverSupported = !!new Blob; } catch (e) { }
@@ -255,7 +255,7 @@ class Download extends Component {
 }
 Download = connect(Download, connectObject);
 
-class Create extends Component {
+class Create extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -383,7 +383,7 @@ class Create extends Component {
 }
 Create = connect(Create, connectObject);
 
-class LastBackupDate extends Component {
+class LastBackupDate extends React.Component {
     render() {
         if (!WalletDb.getWallet()) {
             return null;
@@ -406,7 +406,7 @@ class LastBackupDate extends Component {
     }
 }
 
-class Upload extends Component {
+class Upload extends React.Component {
 
     reset() {
         // debugger;
@@ -454,7 +454,7 @@ class Upload extends Component {
 }
 Upload = connect(Upload, connectObject);
 
-class NameSizeModified extends Component {
+class NameSizeModified extends React.Component {
     render() {
         return <span>
             <h5><b>{this.props.backup.name}</b> ({this.props.backup.size} bytes)</h5>
@@ -466,7 +466,7 @@ class NameSizeModified extends Component {
 }
 NameSizeModified = connect(NameSizeModified, connectObject);
 
-class DecryptBackup extends Component {
+class DecryptBackup extends React.Component {
 
     static propTypes = {
         saveWalletObject: PropTypes.bool
@@ -532,7 +532,7 @@ class DecryptBackup extends Component {
 }
 DecryptBackup = connect(DecryptBackup, connectObject);
 
-class Sha1 extends Component {
+class Sha1 extends React.Component {
     render() {
         return <div>
             <pre className="no-overflow">{this.props.backup.sha1} * SHA1</pre>

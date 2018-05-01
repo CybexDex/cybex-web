@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import { connect } from "alt-react";
 import ActionSheet from "react-foundation-apps/src/action-sheet";
@@ -40,8 +40,8 @@ export const HeadContextMenuId = "$headerContext";
 class Header extends React.Component<any, any> {
   unlisten = null;
   static contextTypes = {
-    location: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
   };
 
   constructor(props, context) {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import * as ReactDOM from "react-dom";
 
 export const HEADER_PORTAL_ID = "headerPortal";
