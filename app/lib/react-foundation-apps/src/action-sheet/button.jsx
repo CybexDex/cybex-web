@@ -1,18 +1,18 @@
-var React = require('react');
+var React = require("react");
 
 var ActionSheetButton = React.createClass({
   displayName: "ActionSheetButton",
-  toggle: function () {
+  toggle: function() {
     this.props.setActiveState(!this.props.active);
   },
-  render: function () {
+  render: function() {
     var Title = null;
     if (this.props.title.length > 0) {
-      Title = <a className='button'>{this.props.title}</a>;
+      Title = <a className="button">{this.props.title}</a>;
     }
     return (
       <div onClick={this.toggle}>
-        { Title }
+        {Title}
         <div>{this.props.children}</div>
       </div>
     );

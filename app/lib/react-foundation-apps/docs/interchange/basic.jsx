@@ -1,11 +1,11 @@
-var React = require('react');
-var Interchange = require('../../lib/interchange');
+var React = require("react");
+var Interchange = require("../../lib/interchange");
 
 var BasicInterchange = React.createClass({
-  render: function () {
-    var baseUrl = '';
-    if (process.env.NODE_ENV === 'production') {
-      baseUrl = 'http://static.webrafter.com';
+  render: function() {
+    var baseUrl = "";
+    if (process.env.NODE_ENV === "production") {
+      baseUrl = "http://static.webrafter.com";
     }
     return (
       <div>

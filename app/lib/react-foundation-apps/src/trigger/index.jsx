@@ -1,10 +1,10 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var foundationApi = require('../utils/foundation-api');
-var PopupToggle = require('../popup/toggle');
+var React = require("react");
+var ReactDOM = require("react-dom");
+var foundationApi = require("../utils/foundation-api");
+var PopupToggle = require("../popup/toggle");
 
 var Trigger = React.createClass({
-  getDefaultProps: function () {
+  getDefaultProps: function() {
     return {
       open: null,
       close: null,
@@ -14,36 +14,39 @@ var Trigger = React.createClass({
       notify: null
     };
   },
-  getCloseId: function () {
+  getCloseId: function() {
     if (this.props.close) {
       return this.props.close;
     } else {
-      var parentElement= false;
+      var parentElement = false;
       var tempElement = ReactDOM.findDOMNode(this).parentNode;
-      while(parentElement === false) {
-        if(tempElement.nodeName == 'BODY') {
-          parentElement = '';
+      while (parentElement === false) {
+        if (tempElement.nodeName == "BODY") {
+          parentElement = "";
         }
-        if(typeof tempElement.getAttribute('data-closable') !== 'undefined' && tempElement.getAttribute('data-closable') !== false) {
+        if (
+          typeof tempElement.getAttribute("data-closable") !== "undefined" &&
+          tempElement.getAttribute("data-closable") !== false
+        ) {
           parentElement = tempElement;
         }
 
         tempElement = tempElement.parentNode;
       }
-      return parentElement.getAttribute('id');
+      return parentElement.getAttribute("id");
     }
   },
-  clickHandler: function (e) {
+  clickHandler: function(e) {
     e.preventDefault();
     if (this.props.open) {
-      foundationApi.publish(this.props.open, 'open');
+      foundationApi.publish(this.props.open, "open");
     } else if (this.props.close !== null) {
-      foundationApi.publish(this.getCloseId(), 'close');
+      foundationApi.publish(this.getCloseId(), "close");
     } else if (this.props.toggle) {
-      foundationApi.publish(this.props.toggle, 'toggle');
+      foundationApi.publish(this.props.toggle, "toggle");
     } else if (this.props.hardToggle) {
-      foundationApi.closeActiveElements({exclude: this.props.hardToggle});
-      foundationApi.publish(this.props.hardToggle, 'toggle');
+      foundationApi.closeActiveElements({ exclude: this.props.hardToggle });
+      foundationApi.publish(this.props.hardToggle, "toggle");
     } else if (this.props.notify) {
       foundationApi.publish(this.props.notify, {
         title: this.props.title,
@@ -54,7 +57,7 @@ var Trigger = React.createClass({
       });
     }
   },
-  render: function () {
+  render: function() {
     if (this.props.popupToggle) {
       return <PopupToggle {...this.props} />;
     } else {

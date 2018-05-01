@@ -1,18 +1,17 @@
-var React = require('react');
-var classnames = require('classnames');
+var React = require("react");
+var classnames = require("classnames");
 
 var Tab = React.createClass({
-
-  select: function () {
+  select: function() {
     var options = {
       selectedTab: this.props.index
     };
     this.props.selectTab(options);
   },
-  render: function () {
+  render: function() {
     var classes = {
-      'tab-item': true,
-      'is-active': this.props.active
+      "tab-item": true,
+      "is-active": this.props.active
     };
     return (
       <div className={classnames(classes)} onClick={this.select}>

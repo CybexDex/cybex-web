@@ -1,21 +1,21 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ExecutionEnvironment = require('react/lib/ExecutionEnvironment');
-var IconicJs = ExecutionEnvironment.canUseDOM && require('../vendor/iconic.min');
-
+var React = require("react");
+var ReactDOM = require("react-dom");
+var ExecutionEnvironment = require("react/lib/ExecutionEnvironment");
+var IconicJs =
+  ExecutionEnvironment.canUseDOM && require("../vendor/iconic.min");
 
 var Iconic = React.createClass({
-  inject: function () {
+  inject: function() {
     var ico = IconicJs();
     ico.inject(ReactDOM.findDOMNode(this));
   },
-  componentDidMount: function () {
+  componentDidMount: function() {
     this.inject();
   },
-  componentDidUpdate: function () {
+  componentDidUpdate: function() {
     this.inject();
   },
-  render: function () {
+  render: function() {
     return React.Children.only(this.props.children);
   }
 });

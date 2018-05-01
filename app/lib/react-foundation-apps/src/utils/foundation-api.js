@@ -1,9 +1,9 @@
 //From https://github.com/zurb/foundation-apps/blob/master/js/angular/common/common.services.js
-var PubSub = require('pubsub-js');
-var assign = require('object-assign');
+var PubSub = require("pubsub-js");
+var assign = require("object-assign");
 
 var listeners = [];
-var settings  = {};
+var settings = {};
 var uniqueIds = [];
 
 var foundationApi = {
@@ -13,10 +13,10 @@ var foundationApi = {
   closeActiveElements: function(options) {
     var self = this;
     options = options || {};
-    var activeElements = document.querySelectorAll('.is-active[data-closable]');
-    Array.prototype.forEach.call(activeElements, function (el) {
+    var activeElements = document.querySelectorAll(".is-active[data-closable]");
+    Array.prototype.forEach.call(activeElements, function(el) {
       if (options.exclude !== el.id) {
-        self.publish(el.id, 'close');
+        self.publish(el.id, "close");
       }
     });
   },
@@ -28,19 +28,19 @@ var foundationApi = {
     return settings;
   },
   generateUuid: function() {
-    var uuid = '';
+    var uuid = "";
 
     //little trick to produce semi-random IDs
     do {
-      uuid += 'zf-uuid-';
-      for (var i=0; i<15; i++) {
-        uuid += Math.floor(Math.random()*16).toString(16);
+      uuid += "zf-uuid-";
+      for (var i = 0; i < 15; i++) {
+        uuid += Math.floor(Math.random() * 16).toString(16);
       }
-    } while(!uniqueIds.indexOf(uuid));
+    } while (!uniqueIds.indexOf(uuid));
 
     uniqueIds.push(uuid);
     return uuid;
-  }, 
+  }
 };
 
 module.exports = foundationApi;

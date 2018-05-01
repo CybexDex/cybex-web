@@ -1,10 +1,12 @@
-var React = require('react');
-var Interchange = require('../../lib/interchange');
+var React = require("react");
+var Interchange = require("../../lib/interchange");
 
 var Content = React.createClass({
-  render: function () {
+  render: function() {
     return (
-      <div><Interchange /></div>
+      <div>
+        <Interchange />
+      </div>
     );
   }
 });
