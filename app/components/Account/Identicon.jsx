@@ -1,6 +1,5 @@
-import * as React from "react"; 
+import * as React from "react";
 import * as PropTypes from "prop-types";
-
 
 import sha256 from "js-sha256";
 import jdenticon from "jdenticon";
