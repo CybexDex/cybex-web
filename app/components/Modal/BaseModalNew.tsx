@@ -11,12 +11,21 @@ import Translate from "react-translate-component";
 import CopyButton from "../Utility/CopyButton";
 import Icon from "../Icon/Icon";
 
-type props = { fade?, modalId, className?};
+type props = {
+  overlayClose?: boolean;
+  overlay?: boolean;
+  noCloseBtn?: boolean;
+  fade?;
+  modalId;
+  className?;
+};
 
 export class BaseModal extends React.Component<props, { fadeOut }> {
-
   static defaultProps = {
-    fade: true
+    fade: true,
+    overlayClose: false,
+    overlay: true,
+    noCloseBtn: false
   };
 
   constructor(props) {
@@ -33,16 +42,30 @@ export class BaseModal extends React.Component<props, { fadeOut }> {
     setTimeout(() => {
       ModalActions.hideModal(this.props.modalId);
     }, 300);
-  }
-
+  };
 
   render() {
-    let { fade } = this.props;
+    let { fade, overlay, noCloseBtn, overlayClose } = this.props;
     let { fadeOut } = this.state;
     return (
-      <div className={getClassName("overlay", { "fade-in": fade, "fade-out": fadeOut })}>
+      <div
+        className={getClassName("", {
+          overlay,
+          "fade-in": fade,
+          "fade-out": fadeOut
+        })}
+        onClick={() => overlayClose && this.onClose()}
+      >
         <div id={this.props.modalId} className="modal with-shadow">
-          <a href="javascript:;" className="close-button" onClick={this.onClose}>&times;</a>
+          {!noCloseBtn && (
+            <a
+              href="javascript:;"
+              className="close-button"
+              onClick={this.onClose}
+            >
+              &times;
+            </a>
+          )}
           {this.props.children}
         </div>
       </div>
