@@ -1226,14 +1226,14 @@ class MarketsStore {
 
     if (history.length) {
       let first;
-      console.debug("Bucket: ", history);
+      // console.debug("Bucket: ", history);
       history.forEach((bucket, i) => {
         if (!/Z$/.test(bucket.key.open)) {
           bucket.key.open += "Z";
         }
         let date = new Date(bucket.key.open).getTime();
         if (date > yesterday) {
-          console.debug("Date: ", bucket.key.open, date, yesterday);
+          // console.debug("Date: ", bucket.key.open, date, yesterday);
           noTrades = false;
           if (!first) {
             first = history[i > 0 ? i - 1 : i];

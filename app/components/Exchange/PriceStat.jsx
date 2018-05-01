@@ -41,6 +41,7 @@ export default class PriceStat extends React.Component {
     let {
       base,
       quote,
+      hideQuote,
       price,
       content,
       ready,
@@ -85,7 +86,7 @@ export default class PriceStat extends React.Component {
           </b>
           <span className="symbol-text">
             <AssetName name={base.get("symbol")} />
-            {quote && !volume ? (
+            {!hideQuote && quote && !volume ? (
               <span>
                 /<AssetName name={quote.get("symbol")} />
               </span>

@@ -188,7 +188,7 @@ class OrderRow extends React.Component<any, any> {
           <Link to={`/asset/${quote.get("symbol")}`}>
             <AssetName noTip name={quote.get("symbol")} />
           </Link>
-          :
+          /
           <Link to={`/asset/${base.get("symbol")}`}>
             <AssetName noTip name={base.get("symbol")} />
           </Link>

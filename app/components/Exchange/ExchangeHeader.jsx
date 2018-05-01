@@ -85,7 +85,8 @@ export default class ExchangeHeader extends React.Component {
                 <Icon className={starClass} name="fi-star" />
               </span>
               <span className="market-symbol">
-                {`${quoteSymbol} : ${baseSymbol}`}
+                <span style={{ fontSize: "1.2em" }}>{quoteSymbol}</span>
+                {` / ${baseSymbol}`}
               </span>
             </a>
           </div>
@@ -99,6 +100,7 @@ export default class ExchangeHeader extends React.Component {
                     price={latestPrice.full}
                     quote={quoteAsset}
                     base={baseAsset}
+                    hideQuote={true}
                     content="exchange.latest"
                   />
                 ) : null}
