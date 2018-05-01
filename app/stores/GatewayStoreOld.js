@@ -54,8 +54,8 @@ class GatewayStore {
             coins.forEach(coin_type => coins_by_type[coin_type.coinType] = coin_type);
             bridgeCoins = bridgeCoins.filter(a => {
                 return a && coins_by_type[a.outputCoinType] && (
-                    coins_by_type[a.outputCoinType].walletType === "Cybex2" && // Only use Cybex2 wallet types
-                    this.bridgeInputs.indexOf(a.inputCoinType) !== -1 // Only use coin types defined in bridgeInputs
+                    (// Only use Cybex2 wallet types
+                    (coins_by_type[a.outputCoinType].walletType === "Cybex2" && this.bridgeInputs.indexOf(a.inputCoinType) !== -1)) // Only use coin types defined in bridgeInputs
                 );
             }).forEach(coin => {
                 coin.isAvailable = wallets.indexOf(coins_by_type[coin.outputCoinType].walletType) !== -1;

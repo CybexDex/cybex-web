@@ -1,5 +1,5 @@
 var React = require("react");
-var Animation = require("../utils/animation");
+import Animation from "../utils/animation";
 var foundationApi = require("../utils/foundation-api");
 
 var Modal = React.createClass({
@@ -90,4 +90,5 @@ var Modal = React.createClass({
   }
 });
 
-module.exports = Modal;
+export default Modal;
+export { Modal };

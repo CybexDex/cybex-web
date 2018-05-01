@@ -326,6 +326,7 @@ module.exports = function(env) {
         iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
         assets: path.resolve(root_dir, "app/assets"),
         counterpart: path.resolve(root_dir, "app/lib/counterpart"),
+        "alt-react": path.resolve(root_dir, "app/lib/alt-react"),
         "react-foundation-apps": path.resolve(root_dir, "app/lib/react-foundation-apps"),
         app: path.resolve(root_dir, "app")
       },

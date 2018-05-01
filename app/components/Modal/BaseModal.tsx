@@ -5,10 +5,11 @@ import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Modal from "react-foundation-apps/src/modal";
 import Trigger from "react-foundation-apps/src/trigger";
 
-class BaseModal extends React.Component {
-  constructor() {
-    super();
+class BaseModal extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
   }
+  modalEscapeListener;
 
   componentDidMount() {
     this.modalEscapeListener = function(e) {

@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import MarketsActions from "actions/MarketsActions";
 import { MyOpenOrders } from "./MyOpenOrders";
@@ -317,13 +318,13 @@ class Exchange extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.resizeSubscription) {
-      this.resizeSubscription.unsubscribe();
-    }
-    window.removeEventListener("resize", this._getWindowSize);
-    if (this.settingListener) {
-      this.settingListener();
-    }
+    // if (this.resizeSubscription) {
+    //   this.resizeSubscription.unsubscribe();
+    // }
+    // window.removeEventListener("resize", this._getWindowSize);
+    // if (this.settingListener) {
+    //   this.settingListener();
+    // }
   }
 
   _getFeeAssets(quote, base, coreAsset) {
@@ -1618,7 +1619,7 @@ class Exchange extends React.Component {
                     !smallScreen && !leftOrderBook
                       ? "medium-6 xlarge-4 order-12"
                       : "",
-                    `small-12 medium-6 no-padding align-spaced ps-container middle-content order-12`
+                    "small-12 medium-6 no-padding align-spaced ps-container middle-content order-12"
                   )}
                   orders={marketSettleOrders}
                   base={base}
