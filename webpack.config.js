@@ -221,23 +221,10 @@ module.exports = function(env) {
           ]
         },
         {
-          test: /\.jsx$/,
+          test: /\.js$|\.jsx$/,
           include: [
             path.join(root_dir, "app"),
-            path.join(root_dir, "node_modules/react-foundation-apps"),
-            "/home/sigve/Dev/graphene/react-foundation-apps"
           ],
-          use: [
-            {
-              loader: "babel-loader",
-              options: {
-                cacheDirectory: env.prod ? false : true
-              }
-            }
-          ]
-        },
-        {
-          test: /\.js$/,
           exclude: [/node_modules/],
           loader: "babel-loader",
           options: {
@@ -339,6 +326,7 @@ module.exports = function(env) {
         iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
         assets: path.resolve(root_dir, "app/assets"),
         counterpart: path.resolve(root_dir, "app/lib/counterpart"),
+        "react-foundation-apps": path.resolve(root_dir, "app/lib/react-foundation-apps"),
         app: path.resolve(root_dir, "app")
       },
       modules: [

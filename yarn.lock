@@ -6039,7 +6039,7 @@ object-assign@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-2.0.0.tgz#f8309b09083b01261ece3ef7373f2b57b8dd7042"
 
-object-assign@>=4.0.*, object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
+object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
@@ -6798,9 +6798,9 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pubsub-js@^1.5.x:
-  version "1.5.7"
-  resolved "https://registry.yarnpkg.com/pubsub-js/-/pubsub-js-1.5.7.tgz#a9f386ac141b0905b19cbb2dd57256265f975744"
+pubsub-js@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/pubsub-js/-/pubsub-js-1.6.0.tgz#232d36485ce7905a54629ec5783d9f6f4c638026"
 
 pump@^1.0.0, pump@^1.0.1:
   version "1.0.2"
@@ -6977,16 +6977,6 @@ react-dom@^15.6.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "^15.5.10"
-
-"react-foundation-apps@git+https://github.com/valzav/react-foundation-apps.git":
-  version "0.7.0"
-  resolved "git+https://github.com/valzav/react-foundation-apps.git#2ab78c9f80a8dcc0ea8a8f8008c8341e92a2079b"
-  dependencies:
-    classnames "^2.2.1"
-    foundation-apps "git+https://github.com/zurb/foundation-apps.git"
-    object-assign ">=4.0.*"
-    pubsub-js "^1.5.x"
-    tether "^0.6.5"
 
 react-highcharts@^12.0.0:
   version "12.0.0"
@@ -8321,10 +8311,6 @@ test-exclude@^3.3.0:
     object-assign "^4.1.0"
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
-
-tether@^0.6.5:
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/tether/-/tether-0.6.5.tgz#bb3cd4be15f95ac2b9b4a9952b3b1a95cf5c1242"
 
 text-table@~0.2.0:
   version "0.2.0"

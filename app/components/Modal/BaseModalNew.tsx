@@ -15,6 +15,7 @@ type props = {
   overlayClose?: boolean;
   overlay?: boolean;
   noCloseBtn?: boolean;
+  onClose?;
   fade?;
   modalId;
   className?;
@@ -42,6 +43,9 @@ export class BaseModal extends React.Component<props, { fadeOut }> {
     setTimeout(() => {
       ModalActions.hideModal(this.props.modalId);
     }, 300);
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
   };
 
   render() {
