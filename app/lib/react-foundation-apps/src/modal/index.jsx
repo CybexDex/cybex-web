@@ -1,4 +1,4 @@
-var React = require("react");
+import * as React from "react";
 import Animation from "../utils/animation";
 var foundationApi = require("../utils/foundation-api");
 

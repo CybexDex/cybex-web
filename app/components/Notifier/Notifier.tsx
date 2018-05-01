@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import Notification from "react-foundation-apps/src/notification";
+import { Static } from "react-foundation-apps/src/notification";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Operation from "../Blockchain/Operation";
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import { ChainTypes as GraphChainTypes } from "cybexjs";
@@ -11,7 +11,7 @@ let { operations } = GraphChainTypes;
 
 let ops = Object.keys(operations);
 
-class Notifier extends React.Component {
+let Notifier = class extends React.Component<any, any> {
   static propTypes = {
     account: ChainTypes.ChainAccount.isRequired
   };
@@ -95,19 +95,14 @@ class Notifier extends React.Component {
     }
 
     return (
-      <Notification.Static
-        id="account-notify"
-        title={null}
-        image=""
-        wrapperElement="div"
-      >
+      <Static id="account-notify" title={null} image="" wrapperElement="div">
         <table className="table">
           <tbody>{info}</tbody>
         </table>
-      </Notification.Static>
+      </Static>
     );
   }
-}
+};
 Notifier = BindToChainState(Notifier, { keep_updating: true });
 
 export default Notifier;

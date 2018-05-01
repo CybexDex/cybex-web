@@ -1,4 +1,2 @@
-module.exports = {
-  Set: require('./set'),
-  Static: require('./static')
-};
+export { Set } from "./set";
+export { NotificationStatic as Static } from "./static";

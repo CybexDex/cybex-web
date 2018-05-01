@@ -48,7 +48,7 @@ class AccountsSettings extends React.Component {
             let isIgnored = ignoredAccounts.has(account);
             let hideLink = (
               <a
-                href
+                href="javascript:;"
                 onClick={
                   isIgnored
                     ? this.onLinkAccount.bind(this, account)
