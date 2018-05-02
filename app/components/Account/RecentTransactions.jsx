@@ -236,8 +236,8 @@ class RecentTransactions extends React.Component {
     // console.debug("History: ", history);
 
     style = style ? style : {};
-    style.width = "100%";
-    style.height = "100%";
+    // style.width = "100%";
+    // style.height = "100%";
 
     let options = null;
     if (true || this.props.showFilters) {
