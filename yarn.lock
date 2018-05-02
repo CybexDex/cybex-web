@@ -2201,7 +2201,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.1, create-react-class@^15.5.3, create-react-class@^15.6.0:
+create-react-class@^15.5.1, create-react-class@^15.6.0:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.2.tgz#cf1ed15f12aad7f14ef5f2dfe05e6c42f91ef02a"
   dependencies:
@@ -6984,10 +6984,6 @@ react-deep-force-update@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.1.1.tgz#8ea4263cd6455a050b37445b3f08fd839d86e909"
 
-react-dom-factories@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-dom-factories/-/react-dom-factories-1.0.2.tgz#eb7705c4db36fb501b3aa38ff759616aa0ff96e0"
-
 react-dom@^16.3.2:
   version "16.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.2.tgz#cb90f107e09536d683d84ed5d4888e9640e0e4df"
@@ -7048,16 +7044,14 @@ react-notification-system@^0.2.16:
     object-assign "^4.0.1"
     prop-types "^15.5.6"
 
-react-popover@^0.4.6:
-  version "0.4.18"
-  resolved "https://registry.yarnpkg.com/react-popover/-/react-popover-0.4.18.tgz#c8a5aacdddf5a883068368ea1f589dfd3bdd4943"
+react-popover@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/react-popover/-/react-popover-0.5.5.tgz#71fe97c243f8c0cb327bfa491e83e9c855e42d46"
   dependencies:
-    create-react-class "^15.5.3"
     css-vendor "^0.3.1"
     debug "^2.6.8"
     lodash.throttle "^3.0.3"
     prop-types "^15.5.10"
-    react-dom-factories "^1.0.0"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
