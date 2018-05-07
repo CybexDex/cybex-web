@@ -21,8 +21,25 @@ const correctMarketPair = (symbolOfA?, symbolOfB?) => {
     (indexOfA === -1 && indexOfB !== -1)
   ) {
     return new MarketPair(symbolOfB, symbolOfA);
+  } else if (
+    (indexOfA < indexOfB && indexOfA > -1) ||
+    (indexOfA !== -1 && indexOfB === -1)
+  ) {
+    return new MarketPair(symbolOfA, symbolOfB);
   }
   return new MarketPair(...[symbolOfA, symbolOfB].sort());
+};
+
+const correctMarketPairMap = (
+  assetA: Map<string, any>,
+  assetB: Map<string, any>
+) => {
+  let [base, quote] =
+    correctMarketPair(assetA.get("symbol"), assetB.get("symbol")).base ===
+    assetA.get("symbol")
+      ? [assetA, assetB]
+      : [assetB, assetA];
+  return { base, quote };
 };
 
 const getMarketWithId: (quote: string, base: string) => Market = (
@@ -71,6 +88,7 @@ const getGroupedMarketsFromMap: (
   );
 export {
   correctMarketPair,
+  correctMarketPairMap,
   getMarketFromId,
   getMarketWithId,
   getGroupedMarkets,
@@ -78,6 +96,7 @@ export {
 };
 export default {
   correctMarketPair,
+  correctMarketPairMap,
   getMarketFromId,
   getMarketWithId,
   getGroupedMarkets,

@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import Identicon from "./Identicon";
-import { PropTypes, Component } from "react";
+
 const insiders = require("assets/insiders.json");
 import ModalActions from "actions/ModalActions";
 import counterpart from "counterpart";
 
-class AccountImage extends Component<any, any> {
+class AccountImage extends React.Component<any, any> {
     static defaultProps = {
         src: "",
         account: "",

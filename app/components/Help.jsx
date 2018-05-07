@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import HelpContent from "./Utility/HelpContent";
 import {pairs} from "lodash";
 

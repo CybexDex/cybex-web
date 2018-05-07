@@ -3,7 +3,7 @@ import Translate from "react-translate-component";
 import Immutable from "immutable";
 import cname from "classnames";
 
-export default class PasswordConfirm extends Component {
+export default class PasswordConfirm extends React.Component {
 
     static propTypes = {
         // Called everytime a valid password is provided and matches a confirmed password

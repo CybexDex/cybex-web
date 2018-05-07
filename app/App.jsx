@@ -1,5 +1,5 @@
 import { ChainStore } from "cybexjs";
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
@@ -245,7 +245,7 @@ class App extends React.Component {
           <ReactTooltip
             ref="tooltip"
             place="top"
-            type={theme === "lightTheme" ? "dark" : "light"}
+            // type={theme === "lightTheme" ? "dark" : "light"}
             effect="solid"
           />
         </div>
@@ -319,8 +319,8 @@ RootIntl = connect(RootIntl, {
 
 class Root extends React.Component {
   static childContextTypes = {
-    router: React.PropTypes.object,
-    location: React.PropTypes.object
+    router: PropTypes.object,
+    location: PropTypes.object
   };
 
   componentDidMount() {

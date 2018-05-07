@@ -1,38 +1,37 @@
-import React from "react";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import SettingsStore from "stores/SettingsStore";
 import IntlStore from "stores/IntlStore";
 import AltContainer from "alt-container";
 import Settings from "./Settings";
 
 class SettingsContainer extends React.Component {
-
-    render() {
-
-        return (
-            <AltContainer
-                stores={[SettingsStore]}
-                inject={{
-                    settings: () => {
-                        return SettingsStore.getState().settings;
-                    },
-                    viewSettings: () => {
-                        return SettingsStore.getState().viewSettings;
-                    },
-                    defaults: () => {
-                        return SettingsStore.getState().defaults;
-                    },
-                    localesObject: () => {
-                        return IntlStore.getState().localesObject;
-                    },
-                    apiLatencies: () => {
-                        return SettingsStore.getState().apiLatencies;
-                    }
-                }}
-                >
-                <Settings/>
-            </AltContainer>
-        );
-    }
+  render() {
+    return (
+      <AltContainer
+        stores={[SettingsStore]}
+        inject={{
+          settings: () => {
+            return SettingsStore.getState().settings;
+          },
+          viewSettings: () => {
+            return SettingsStore.getState().viewSettings;
+          },
+          defaults: () => {
+            return SettingsStore.getState().defaults;
+          },
+          localesObject: () => {
+            return IntlStore.getState().localesObject;
+          },
+          apiLatencies: () => {
+            return SettingsStore.getState().apiLatencies;
+          }
+        }}
+      >
+        <Settings />
+      </AltContainer>
+    );
+  }
 }
 
 export default SettingsContainer;

@@ -26,7 +26,7 @@ var keyCode = {
 
 var cmd_history = [""], cmd_history_position = 0
 
-export default class Console extends Component {
+export default class Console extends React.Component {
 
     constructor() {
         super()

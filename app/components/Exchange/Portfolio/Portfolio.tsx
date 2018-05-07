@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import marketUtil, { GroupedMarkets } from "utils/Market";
 import { connect } from "alt-react";
 import MarketsStore from "stores/MarketsStore";

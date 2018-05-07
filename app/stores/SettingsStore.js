@@ -181,11 +181,11 @@ class SettingsStore {
         ],
         markets_90be01e8: [
           // Main Net
-          "CYB",
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          "JADE.MT"
+          "JADE.MT",
+          "CYB"
         ]
       };
 
@@ -200,15 +200,19 @@ class SettingsStore {
       let chainBases = bases[this.starredKey] || bases.markets_90be01e8;
       this.preferredBases = Immutable.List(chainBases);
 
-      function addMarkets(target, base, markets) {
+      const addMarkets = (target, base, markets) => {
         markets
-          .filter(a => {
-            return a !== base;
+          .filter((a, i, all) => {
+            return (
+              a !== base &&
+              (this.preferredBases.indexOf(a) > this.preferredBases.indexOf(base) ||
+                this.preferredBases.indexOf(a) === -1)
+            );
           })
           .forEach(market => {
             target.push([`${market}_${base}`, { quote: market, base: base }]);
           });
-      }
+      };
 
       let defaultMarkets = [];
       let chainMarkets = topMarkets[this.starredKey] || [];

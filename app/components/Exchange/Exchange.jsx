@@ -1,5 +1,5 @@
-import React from "react";
-import { PropTypes } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
+
 import MarketsActions from "actions/MarketsActions";
 import { MyOpenOrders } from "./MyOpenOrders";
 import OrderBook from "./OrderBook";

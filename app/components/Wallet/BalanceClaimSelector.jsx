@@ -8,7 +8,7 @@ import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
 
-class BalanceClaimSelector extends Component {
+class BalanceClaimSelector extends React.Component {
     componentWillReceiveProps(nextProps) {
         if(nextProps.claim_account_name) this.onClaimAccount(nextProps.claim_account_name, nextProps.checked);
     }

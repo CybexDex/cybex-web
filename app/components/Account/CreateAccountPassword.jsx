@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 import { connect } from "alt-react";
 import classNames from "classnames";
 import AccountActions from "actions/AccountActions";
@@ -24,7 +24,7 @@ import PasswordInput from "./../Forms/PasswordInput";
 
 class CreateAccountPassword extends React.Component {
   static contextTypes = {
-    router: React.PropTypes.object.isRequired
+    router: PropTypes.object.isRequired
   };
 
   constructor() {

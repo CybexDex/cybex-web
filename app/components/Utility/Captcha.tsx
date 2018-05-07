@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import SVGInline from "react-svg-inline";
 import SettingsStore from "stores/SettingsStore";
 import { NotificationActions } from "actions//NotificationActions";

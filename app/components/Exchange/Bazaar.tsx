@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { CurrencyList } from "./CurrencyList/CurrencyList";
 import { Portfolio } from "./Portfolio/Portfolio";
 import { Map } from "immutable";

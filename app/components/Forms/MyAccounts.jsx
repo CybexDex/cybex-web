@@ -1,29 +1,35 @@
-import React, {Component} from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import AccountStore from "stores/AccountStore";
 import ChainTypes from "components/Utility/ChainTypes";
 import AccountSelect from "components/Forms/AccountSelect";
 import BindToChainState from "components/Utility/BindToChainState";
 
-class MyAccounts extends Component {
+class MyAccounts extends React.Component {
+  static propTypes = {
+    accounts: ChainTypes.ChainAccountsList.isRequired,
+    onChange: PropTypes.func.isRequired
+  };
 
-    static propTypes = {
-        accounts: ChainTypes.ChainAccountsList.isRequired,
-        onChange: React.PropTypes.func.isRequired
-    }
+  render() {
+    var account_names = this.props.accounts
+      .filter(account => !!account)
+      .filter(account => AccountStore.isMyAccount(account))
+      .map(account => account.get("name"))
+      .sort();
+    let className = this.props.className;
+    return (
+      <AccountSelect
+        className
+        onChange={this.onAccountSelect.bind(this)}
+        account_names={account_names}
+        center={true}
+      />
+    );
+  }
 
-    render() {
-        var account_names = this.props.accounts
-            .filter( account => !!account )
-            .filter( account => AccountStore.isMyAccount(account) )
-            .map( account => account.get("name") ).sort();
-        let className = this.props.className;
-        return <AccountSelect className onChange={this.onAccountSelect.bind(this)}
-                account_names={account_names} center={true}/>;
-    }
-
-    onAccountSelect(account_name) {
-        this.props.onChange(account_name);
-    }
+  onAccountSelect(account_name) {
+    this.props.onChange(account_name);
+  }
 }
 
-export default BindToChainState(MyAccounts, {keep_updating: true});
+export default BindToChainState(MyAccounts, { keep_updating: true });

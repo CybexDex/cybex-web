@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 
 import { getClassName } from "utils//ClassName";
 import { connect } from "alt-react";

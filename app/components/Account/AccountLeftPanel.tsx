@@ -1,5 +1,5 @@
-import * as React from "react";
-import { PropTypes } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
+
 import { Link } from "react-router";
 import ReactTooltip from "react-tooltip";
 import AccountInfo from "./AccountInfo";
@@ -17,7 +17,7 @@ const PrimaryCoin = Object.keys(JADE_COINS).slice(0, 2);
 class AccountLeftPanel extends React.Component<{ myAccounts?, viewSettings?, account, linkedAccounts, isMyAccount, passwordLogin }, any> {
     last_path = null;
     static propTypes = {
-        account: React.PropTypes.object.isRequired,
+        account: PropTypes.object.isRequired,
         linkedAccounts: PropTypes.object,
     };
 

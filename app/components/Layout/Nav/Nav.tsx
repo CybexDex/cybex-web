@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { Link, withRouter, WithRouterProps } from "react-router";
 import { getClassName } from "utils/ClassName";
 import Icon from "components/Icon/Icon";

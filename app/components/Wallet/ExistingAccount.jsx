@@ -15,7 +15,7 @@ const connectObject = {
     }
 };
 
-class ExistingAccount extends Component {
+class ExistingAccount extends React.Component {
     render() {
         const has_wallet = this.props.wallet.wallet_names.count() != 0;
         return (
@@ -39,7 +39,7 @@ class ExistingAccount extends Component {
 }
 ExistingAccount = connect(ExistingAccount, connectObject);
 
-class ExistingAccountOptions extends Component {
+class ExistingAccountOptions extends React.Component {
 
     render() {
         const has_wallet = this.props.wallet.wallet_names.count() != 0;

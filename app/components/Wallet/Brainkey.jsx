@@ -20,7 +20,7 @@ const connectObject = {
     }
 };
 
-class Brainkey extends Component {
+class Brainkey extends React.Component {
     componentWillUnmount() {
         BrainkeyStoreFactory.closeInstance("wmc");
     }
@@ -38,7 +38,7 @@ class Brainkey extends Component {
 Brainkey = connect(Brainkey, connectObject);
 export default Brainkey;
 
-class ViewBrainkey extends Component {
+class ViewBrainkey extends React.Component {
     render() {
         let short_brnkey = this.props.brnkey.substring(0, 10);
         // console.log("this.props.account_ids.toArray()", this.props.account_ids.toArray())
@@ -70,7 +70,7 @@ class BrainkeyAccounts {
 }
 BrainkeyAccounts = BindToChainState(BrainkeyAccounts, {keep_updating: true});
 
-export class BrainkeyInputAccept extends Component {
+export class BrainkeyInputAccept extends React.Component {
 
     constructor() {
         super();

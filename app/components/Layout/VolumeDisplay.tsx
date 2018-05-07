@@ -37,7 +37,7 @@ export class VolumeDisplay extends React.Component<any, any> {
           data-tip
           data-for="volumeDetails"
           data-place="bottom"
-          data-type="light"
+          // data-type="light"
         >
           <Translate content="header.volume" />
           <a href="javascript:;">{vol.sum.toFixed(6) + " ETH"}</a>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import Chart from "chart.js";
 import { HistoryDatum } from "./HistoryDatum";
 import { MarketColor } from "utils/ColorUtils";

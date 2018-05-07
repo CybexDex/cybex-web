@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import DrawerToggle from "./DrawerToggle";
 import HelpWindow from "./HelpWindow";
 
-const HelpDrawer = class extends Component {
+const HelpDrawer = class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

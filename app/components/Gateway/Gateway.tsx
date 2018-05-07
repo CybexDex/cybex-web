@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import GatewayActions, { DEPOSIT_MODAL_ID, WITHDRAW_MODAL_ID } from "actions/GatewayActions";
 import GatewayStore from "stores/GatewayStore";
 import AccountStore from "stores/AccountStore";

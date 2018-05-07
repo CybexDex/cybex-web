@@ -1,4 +1,5 @@
-import React from "react";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import TimeAgo from "../Utility/TimeAgo";
@@ -12,53 +13,58 @@ import utils from "common/utils";
  **/
 
 class BlockTime extends React.Component {
+  static propTypes = {
+    block_number: PropTypes.number.isRequired,
+    globalObject: ChainTypes.ChainObject.isRequired,
+    dynGlobalObject: ChainTypes.ChainObject.isRequired
+  };
 
-    static propTypes = {
-        block_number: React.PropTypes.number.isRequired,
-        globalObject: ChainTypes.ChainObject.isRequired,
-        dynGlobalObject: ChainTypes.ChainObject.isRequired
-    };
+  static defaultProps = {
+    globalObject: "2.0.0",
+    dynGlobalObject: "2.1.0"
+  };
 
-    static defaultProps = {
-        globalObject: "2.0.0",
-        dynGlobalObject: "2.1.0"
-    };
+  constructor(props) {
+    super(props);
+    this.state = { time: null };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {time: null};
+  componentDidMount() {
+    this.calcTime(this.props.block_number);
+  }
+
+  calcTime(block_number) {
+    this.setState({
+      time: utils.calc_block_time(
+        block_number,
+        this.props.globalObject,
+        this.props.dynGlobalObject
+      )
+    });
+  }
+
+  componentWillReceiveProps(next_props) {
+    if (next_props.block_number !== this.props.block_number) {
+      this.calcTime(next_props.block_number);
     }
+  }
 
-    componentDidMount() {
-        this.calcTime(this.props.block_number);
-    }
-
-    calcTime(block_number) {
-        this.setState({time: utils.calc_block_time(block_number, this.props.globalObject, this.props.dynGlobalObject)});
-    }
-
-    componentWillReceiveProps(next_props) {
-        if(next_props.block_number !== this.props.block_number) {
-            this.calcTime(next_props.block_number);
-        }
-    }
-
-    /*
+  /*
     shouldComponentUpdate(next_props, next_state) {
         return next_props.block_number !== this.props.block_number || next_state.time !== this.state.time;
     }
     */
 
-                //{this.state.time ?  <FormattedDate value={this.state.time} format="short"/> : null}
-    render() {
-        // console.debug("Block Height: ", this.props);        
-        return (
-            <span className="time" key={this.props.block_number}>
-                {this.state.time ? <TimeAgo time={this.state.time} /> : null }
-            </span>
-        );
-    }
+  //{this.state.time ?  <FormattedDate value={this.state.time} format="short"/> : null}
+  render() {
+    // console.debug("Block Height: ", this.props);
+    return (
+      <span className="time" key={this.props.block_number}>
+        {this.state.time ? <TimeAgo time={this.state.time} /> : null}
+      </span>
+    );
+  }
 }
-BlockTime = BindToChainState(BlockTime, {keep_updating: true});
+BlockTime = BindToChainState(BlockTime, { keep_updating: true });
 
 export default BlockTime;

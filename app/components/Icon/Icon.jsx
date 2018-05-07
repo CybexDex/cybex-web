@@ -1,6 +1,6 @@
 // look for more icons here https://linearicons.com/free or here http://hawcons.com/preview/
 
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types"; 
 
 let icons = ["user", "trash", "chevron-down", "menu", "database", "download", "search",
     "plus-circle", "question-circle", "cross-circle", "cog", "layers", "users", "wand", "b-logo",
@@ -28,10 +28,10 @@ class Icon extends React.Component {
 }
 
 Icon.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    size: React.PropTypes.oneOf(["1x", "2x", "3x", "4x", "5x", "10x"]),
-    inverse: React.PropTypes.bool,
-    className: React.PropTypes.string
+    name: PropTypes.string.isRequired,
+    size: PropTypes.oneOf(["1x", "2x", "3x", "4x", "5x", "10x"]),
+    inverse: PropTypes.bool,
+    className: PropTypes.string
 };
 
 export default Icon;

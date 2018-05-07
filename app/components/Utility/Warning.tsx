@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
 import { BaseModal } from "./../Modal/BaseModalNew";
 import { ModalActions } from "actions/ModalActions";
 import { connect } from "alt-react";

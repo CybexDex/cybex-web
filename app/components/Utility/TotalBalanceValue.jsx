@@ -1,4 +1,6 @@
-import React from "react";
+import * as React from "react"; import * as PropTypes from "prop-types";
+
+
 import FormattedAsset from "./FormattedAsset";
 import ChainTypes from "./ChainTypes";
 import BindToChainState from "./BindToChainState";
@@ -27,8 +29,8 @@ class TotalValue extends MarketStatsCheck {
     fromAssets: ChainTypes.ChainAssetsList.isRequired,
     toAsset: ChainTypes.ChainAsset.isRequired,
     coreAsset: ChainTypes.ChainAsset.isRequired,
-    inHeader: React.PropTypes.bool,
-    label: React.PropTypes.string
+    inHeader: PropTypes.bool,
+    label: PropTypes.string
   };
 
   static defaultProps = {
