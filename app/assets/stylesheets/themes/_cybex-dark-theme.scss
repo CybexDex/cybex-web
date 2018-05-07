@@ -1,45 +1,96 @@
 @import "theme-template";
 
+// Colors
+$color-white: #ffffff;
+$color-orange: #ff9143;
+$color-orange-light: #ffc478;
+$color-crimson: #d2323e;
+$color-grass: #6dbb49;
+$color-blue: #2e5be2;
+$color-light: #f7f8fa;
+$color-grey-light: rgba(120, 129, 154, 0.3);
+$color-grey: #78819a;
+$color-dark: #171d2a;
+// Sub Colors
+$color-rosset: #c87b41;
+$color-Bronze: #c86443;
+$color-flame: #d24632;
+//
+$color-warn: #c12121;
+$color-mahogany: #502d2d;
+$color-blush: #ff787c;
+//
+$color-cyan: #2b756c;
+$color-pine: #2d4134;
+//
+$color-aegean: #356da4;
+$color-cobalt: #2e51b0;
+$color-lapis: #3d5bb2;
+$color-purple: #7b44ae;
+$color-porcelain: #eff1f4;
+//
+$color-lilac: #8f9ab9;
+$color-fossil: #707481;
+//
+$color-lead: #1b2230;
+$color-anchor: #212939;
+$color-independence: #293246;
+$color-noir: #111621;
+
+//
+$color-gradient-foilex: linear-gradient(-135deg, #e7ac5f, #e76536);
+$color-gradient-goldex: linear-gradient(-131deg, #ffc478, #ff9143);
+$color-gradient-silvex: linear-gradient(
+  48deg,
+  rgba(255, 255, 255, 50),
+  rgba(255, 255, 255, 100)
+);
+$color-gradient-greyex: linear-gradient(
+  48deg,
+  rgba(120, 129, 154, 50),
+  rgba(120, 129, 154, 100)
+);
+
 // variables
 
 $primary-text-color: #fff;
 $dark-text-color: #444;
 $light-text-color: #e0e0e0;
 $secondary-text-color: darken($primary-text-color, 20%);
-$link-text-color: #36BCC7;
-$error-text-color: #E3745B;
+$link-text-color: #36bcc7;
+$error-text-color: #e3745b;
 
-$bg-color: #232C36;
-$panel-bg-color: #28323F;
-$light-panel-bg-color: rgba(53,55,60,0.89);
+$bg-color: #171d2a;
+$panel-bg-color: #171d2a;
+$light-panel-bg-color: rgba(53, 55, 60, 0.89);
 // $light-panel-bg-color: #353742;
 $super-light-panel-bg-color: lighten($light-panel-bg-color, 8%);
-$button-bg-color: #4A90E2;
+$button-bg-color: #4a90e2;
 $secondary-button-bg-color: #546979;
 $input-background: lighten($bg-color, 8%);
 
 $alert-color: $error-text-color;
-$info-color: #4A90E2;
-$success-color: #18BC9C;
-$warning-color: #FF7F00;
+$info-color: #4a90e2;
+$success-color: #18bc9c;
+$warning-color: #ff7f00;
 $fee-color: $secondary-text-color;
 
 // Exchange colors
-$bid-color: #50D2C2;
-$ask-color: #E3745B;
-$call-color: #BBBF2B;
-$positive-color: #04B528;
-$negative-color: #DD0000;
-$row-accent-color: #3C3C3C;
+$bid-color: #50d2c2;
+$ask-color: #e3745b;
+$call-color: #bbbf2b;
+$positive-color: #04b528;
+$negative-color: #dd0000;
+$row-accent-color: #3c3c3c;
 $header-color: #484848;
 
 // Chat colors
-$chat-text-color: #191A1F;
+$chat-text-color: #191a1f;
 
 // Account table view colors
 $account-header: $header-color;
 $account-cells: #4b5158;
-$account-green: #7ED321;
+$account-green: #7ed321;
 $account-primarytext: white;
 $account-dimmed: #afafaf;
 $account-border: #323131;
@@ -89,13 +140,13 @@ $account-background: $panel-bg-color;
   .account-left-panel {
     margin: -1px;
     margin-right: 1px;
-    box-shadow: 1px 0 1px rgba(0,0,0,0.65);
+    box-shadow: 1px 0 1px rgba(0, 0, 0, 0.65);
   }
 
   select {
     background-color: $input-background;
     color: $light-text-color;
-    border:0;
+    border: 0;
     &:disabled {
       background-color: transparent;
     }

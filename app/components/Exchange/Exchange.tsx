@@ -39,6 +39,8 @@ import "rxjs/add/observable/merge";
 import "rxjs/add/operator/debounceTime";
 import { Tabs } from "./Tabs/Tabs";
 
+import { Button } from "components/Common";
+
 Highcharts.setOptions({
   global: {
     useUTC: false
@@ -80,7 +82,10 @@ const InfoTabs = [
   }
 ];
 
-class Exchange extends React.Component {
+class Exchange extends React.Component<any, any> {
+  resizeSubscription;
+  resizeSubject;
+  psInit;
   static propTypes = {
     marketCallOrders: PropTypes.object.isRequired,
     activeMarketHistory: PropTypes.object.isRequired,
@@ -98,7 +103,7 @@ class Exchange extends React.Component {
   };
 
   constructor(props) {
-    super();
+    super(props);
     this.resizeSubscription = null;
     this.resizeSubject = new Subject();
     this.state = this._initialState(props);
@@ -120,7 +125,8 @@ class Exchange extends React.Component {
       to_receive: new Asset({
         asset_id: props.quoteAsset.get("id"),
         precision: props.quoteAsset.get("precision")
-      })
+      }),
+      price: null
     };
     bid.price = new Price({ base: bid.for_sale, quote: bid.to_receive });
     let ask = {
@@ -134,7 +140,8 @@ class Exchange extends React.Component {
       to_receive: new Asset({
         asset_id: props.baseAsset.get("id"),
         precision: props.baseAsset.get("precision")
-      })
+      }),
+      price: null
     };
     ask.price = new Price({ base: ask.for_sale, quote: ask.to_receive });
 
@@ -199,13 +206,13 @@ class Exchange extends React.Component {
 
   componentWillMount() {
     if (Apis.instance().chain_id.substr(0, 8) === "4018d784") {
-      GatewayActions.fetchCoins.defer();
-      GatewayActions.fetchBridgeCoins.defer();
+      (GatewayActions as any).fetchCoins.defer();
+      (GatewayActions as any).fetchBridgeCoins.defer();
     }
 
     this._checkFeeStatus();
   }
-
+  settingListener;
   componentDidMount() {
     SettingsActions.changeViewSetting.defer({
       [this._getLastMarketKey()]:
@@ -494,7 +501,7 @@ class Exchange extends React.Component {
     if (type === "buy" && lowestAsk) {
       let diff = this.state.bid.price.toReal() / lowestAsk.getPrice();
       if (diff > 1.2) {
-        this.refs.buy.show();
+        (this.refs.buy as any).show();
         return this.setState({
           buyDiff: diff
         });
@@ -502,7 +509,7 @@ class Exchange extends React.Component {
     } else if (type === "sell" && highestBid) {
       let diff = 1 / (this.state.ask.price.toReal() / highestBid.getPrice());
       if (diff > 1.2) {
-        this.refs.sell.show();
+        (this.refs.sell as any).show();
         return this.setState({
           sellDiff: diff
         });
@@ -696,7 +703,7 @@ class Exchange extends React.Component {
     );
   }
 
-  _changeBucketSize(size, e) {
+  _changeBucketSize(size, e?) {
     if (e) e.preventDefault();
     if (size !== this.props.bucketSize) {
       MarketsActions.changeBucketSize.defer(size);
@@ -835,15 +842,15 @@ class Exchange extends React.Component {
   }
 
   _borrowQuote() {
-    this.refs.borrowQuote.show();
+    (this.refs.borrowQuote as any).show();
   }
 
   _borrowBase() {
-    this.refs.borrowBase.show();
+    (this.refs.borrowBase as any).show();
   }
 
   _onSelectIndicators() {
-    this.refs.indicators.show();
+    (this.refs.indicators as any).show();
   }
 
   _getSettlementInfo() {
@@ -939,7 +946,7 @@ class Exchange extends React.Component {
     });
   }
 
-  _setReceive(state, isBid) {
+  _setReceive(state, isBid?) {
     if (state.price.isValid() && state.for_sale.hasAmount()) {
       state.to_receive = state.for_sale.times(state.price);
       state.toReceiveText = state.to_receive
@@ -950,7 +957,7 @@ class Exchange extends React.Component {
     return false;
   }
 
-  _setForSale(state, isBid) {
+  _setForSale(state, isBid?) {
     if (state.price.isValid() && state.to_receive.hasAmount()) {
       state.for_sale = state.to_receive.times(state.price, true);
       state.forSaleText = state.for_sale.getAmount({ real: true }).toString();
@@ -1467,6 +1474,7 @@ class Exchange extends React.Component {
             "grid-block center-block medium-4 small-12 vertical no-overflow"
           )}
         >
+          <Button type="primary">Hello</Button>
           {/* Top bar with info */}
           <ExchangeHeader
             quoteAsset={quoteAsset}

@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 import Translate from "react-translate-component";
@@ -15,50 +14,94 @@ import {
   helper,
   interactive
 } from "react-stockcharts";
+import { handleStockData } from "utils/Chart";
 
-const {
+import { XAxis, YAxis } from "react-stockcharts/lib/axes";
+import { fitWidth } from "react-stockcharts/lib/helper";
+import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
+import {
+  ema,
+  wma,
+  sma,
+  tma,
+  macd,
+  bollingerBand
+} from "react-stockcharts/es/lib/indicator";
+import {
   CandlestickSeries,
   BarSeries,
   LineSeries,
   AreaSeries,
   BollingerSeries,
   MACDSeries
-} = series;
-const { XAxis, YAxis } = axes;
-const { fitWidth } = helper;
-const { discontinuousTimeScaleProvider } = scale;
-const { EdgeIndicator } = coordinates;
-const { ema, sma, macd, bollingerBand } = indicator;
-const {
+} from "react-stockcharts/es/lib/series";
+
+import {
   CrossHairCursor,
   MouseCoordinateX,
   MouseCoordinateY,
-  CurrentCoordinate
-} = coordinates;
-const { FibonacciRetracement, TrendLine } = interactive;
-const {
+  CurrentCoordinate,
+  EdgeIndicator
+} from "react-stockcharts/es/lib/coordinates";
+import {
+  FibonacciRetracement,
+  TrendLine
+} from "react-stockcharts/es/lib/interactive";
+import {
   OHLCTooltip,
   MovingAverageTooltip,
   BollingerBandTooltip,
   MACDTooltip
-} = tooltip;
+} from "react-stockcharts/lib/tooltip";
 import colors from "assets/colors";
 import { cloneDeep } from "lodash";
 import utils from "common/utils";
 import cnames from "classnames";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
+import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
 
-class CandleStickChartWithZoomPan extends React.Component {
+const bbStroke = {
+  top: "#964B00",
+  middle: "#000000",
+  bottom: "#964B00"
+};
+
+const bbFill = "#4682B4";
+const ohlcStyle = {
+  fontSize: 12,
+  textFill: "rgba(255,255,255,0.8)",
+  labelFill: "rgba(255,255,255,0.3)"
+};
+const labelStyle = {
+  opacity: 0.3,
+  // stroke: "rgba(255,255,255,0.3)",
+  textFill: "rgba(255,255,255,0.3)"
+};
+const axisStyle = {
+  ...labelStyle,
+  fontSize: 10
+};
+const arrowStyle = (isRight = true) => ({
+  fontSize: 10,
+  rectWidth: 34,
+  rectHeight: 12,
+  arrowWidth: 4,
+  dx: isRight ? -4 : 4,
+  opacity: 1
+});
+
+let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
   constructor(props) {
-    super();
+    super(props);
 
     const pricePrecision = props.base.get("precision");
     const volumePrecision = props.quote.get("precision");
 
     const priceFormat = format(`.${pricePrecision}f`);
     const timeFormatter = timeFormat("%Y-%m-%d %H:%M");
-    const volumeFormat = format(`.${volumePrecision}r`);
+    const volumeFormat = format(`.2s`);
+    // const volumeFormat = format(`.${volumePrecision}r`);
 
     this.state = {
       enableTrendLine: false,
@@ -67,7 +110,8 @@ class CandleStickChartWithZoomPan extends React.Component {
       priceFormat,
       timeFormatter,
       volumeFormat,
-      margin: { left: 75, right: 75, top: 20, bottom: 30 },
+      margin: { left: 10, right: 20, top: 30, bottom: 20 },
+      // margin: { left: 10, right: 10 * pricePrecision, top: 30, bottom: 20 },
       calculators: this._getCalculators(props)
     };
 
@@ -154,64 +198,70 @@ class CandleStickChartWithZoomPan extends React.Component {
   _getCalculators(props = this.props) {
     const { positiveColor, negativeColor } = this._getThemeColors(props);
     const { indicatorSettings } = props;
-    const calculators = {};
-
-    calculators.sma = sma()
-      .windowSize(parseInt(indicatorSettings["sma"], 10))
-      .sourcePath("close")
-      .stroke("#1f77b4")
-      .fill("#1f77b4")
-      .merge((d, c) => {
-        d.sma = c;
-      })
-      .accessor(d => d.sma);
-
-    calculators.ema1 = ema()
-      .windowSize(parseInt(indicatorSettings["ema1"], 10))
-      .merge((d, c) => {
-        d.ema1 = c;
-      })
-      .accessor(d => d.ema1);
-
-    calculators.ema2 = ema()
-      .windowSize(parseInt(indicatorSettings["ema2"], 10))
-      .merge((d, c) => {
-        d.ema2 = c;
-      })
-      .accessor(d => d.ema2);
-
-    calculators.smaVolume = sma()
-      .windowSize(parseInt(indicatorSettings["smaVolume"], 10))
-      .sourcePath("volume")
-      .merge((d, c) => {
-        d.smaVolume = c;
-      })
-      .stroke("#1f77b4")
-      .fill("#1f77b4")
-      .accessor(d => d.smaVolume);
-
-    calculators.bb = bollingerBand()
-      .merge((d, c) => {
-        d.bb = c;
-      })
-      .accessor(d => d.bb);
-
-    calculators.macd = macd()
-      .fast(12)
-      .slow(26)
-      .signal(9)
-      .stroke({ macd: negativeColor, signal: positiveColor })
-      .merge((d, c) => {
-        d.macd = c;
-      })
-      .accessor(d => d.macd);
+    const calculators = {
+      sma: sma()
+        .options({
+          windowSize: parseInt(indicatorSettings["sma"], 10), // optional will default to 10
+          sourcePath: "close" // optional will default to close as the source
+        })
+        .stroke("#1f77b4")
+        .fill("#1f77b4")
+        .merge((d, c) => {
+          d.sma = c;
+        })
+        .accessor(d => d.sma),
+      ema1: ema()
+        .options({
+          windowSize: parseInt(indicatorSettings["ema1"], 10) // optional will default to 10
+        })
+        .merge((d, c) => {
+          d.ema1 = c;
+        })
+        .accessor(d => d.ema1),
+      ema2: ema()
+        .options({
+          windowSize: parseInt(indicatorSettings["ema2"], 10) // optional will default to 10
+        })
+        .merge((d, c) => {
+          d.ema2 = c;
+        })
+        .accessor(d => d.ema2),
+      smaVolume: sma()
+        .options({
+          windowSize: parseInt(indicatorSettings["smaVolume"], 10), // optional will default to 10
+          sourcePath: "volume" // optional will default to close as the source
+        })
+        .merge((d, c) => {
+          d.smaVolume = c;
+        })
+        .stroke("#1f77b4")
+        .fill("#1f77b4")
+        .accessor(d => d.smaVolume),
+      bb: bollingerBand()
+        .merge((d, c) => {
+          d.bb = c;
+        })
+        .accessor(d => d.bb),
+      macd: macd()
+        .options({
+          fast: 12,
+          slow: 26,
+          signal: 9
+        })
+        .stroke({ macd: negativeColor, signal: positiveColor })
+        .fill({ macd: negativeColor, signal: positiveColor })
+        .merge((d, c) => {
+          d.macd = c;
+        })
+        .accessor(d => d.macd)
+    };
 
     return calculators;
   }
 
   _renderVolumeChart(chartMultiplier) {
-    const { height, indicators } = this.props;
-    const { timeFormatter, volumeFormat, calculators } = this.state;
+    const { height, indicators, width } = this.props;
+    const { timeFormatter, volumeFormat, calculators, margin } = this.state;
     const {
       axisLineColor,
       volumeColor,
@@ -219,59 +269,81 @@ class CandleStickChartWithZoomPan extends React.Component {
       negativeColor,
       positiveColor
     } = this._getThemeColors();
+    let gridHeight = height - margin.top - margin.bottom;
+    let gridWidth = width - margin.left - margin.right;
+
+    let showGrid = true;
+    let yGrid = showGrid
+      ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.1 }
+      : {};
 
     return (
       <Chart
         id={2}
         yExtents={[d => d.volume, calculators.smaVolume.accessor()]}
-        height={height * 0.2}
-        origin={(w, h) => [0, h - chartMultiplier * height * 0.2]}
+        height={60}
+        origin={(w, h) => [0, h - 60]}
       >
         {indicators.macd ? null : (
           <XAxis
             tickStroke={axisLineColor}
             stroke={axisLineColor}
+            {...axisStyle}
             axisAt="bottom"
             orient="bottom"
             opacity={0.5}
+            // tickFormat={timeFormatter}
+            ticks={10}
           />
         )}
         <YAxis
           tickStroke={axisLineColor}
+          showDomain={false}
+          stroke={axisLineColor}
+          axisAt="right"
+          orient="left"
+          {...axisStyle}
+          ticks={4}
+          tickPadding={0}
+          innerTickSize={0}
+          tickFormat={volumeFormat}
+        />
+        <YAxis
+          tickStroke={axisLineColor}
+          showDomain={false}
           stroke={axisLineColor}
           axisAt="left"
           orient="left"
+          showTickLabel={false}
+          {...axisStyle}
+          {...yGrid}
           ticks={4}
+          tickPadding={0}
           tickFormat={volumeFormat}
         />
 
         {indicators.macd ? null : (
           <MouseCoordinateX
             id={1}
-            rectWidth={125}
+            rectWidth={65}
             at="bottom"
             orient="bottom"
             displayFormat={timeFormatter}
           />
         )}
-
-        <MouseCoordinateY
-          id={1}
-          rectWidth={65}
-          at="left"
-          orient="left"
-          displayFormat={volumeFormat}
-        />
         <MouseCoordinateY
           id={0}
-          rectWidth={65}
+          {...arrowStyle()}
           at="right"
-          orient="right"
+          orient="left"
           displayFormat={volumeFormat}
         />
 
         <BarSeries
           yAccessor={d => d.volume}
+          rectRadius={[40, 40, 40, 40, 0, 0, 0, 0]}
+          stroke={0}
+          opacity={0.5}
           fill={d => (d.close > d.open ? positiveColor : negativeColor)}
         />
         {indicators.smaVolume ? (
@@ -290,50 +362,50 @@ class CandleStickChartWithZoomPan extends React.Component {
         ) : null}
         <CurrentCoordinate yAccessor={d => d.volume} fill={volumeColor} />
 
-        <EdgeIndicator
+        {/* <EdgeIndicator
           lineStroke={indicatorLineColor}
-          rectWidth={65}
+          rectWidth={30}
           itemType="first"
           orient="left"
-          edgeAt="left"
-          yAccessor={d => d.volume}
-          displayFormat={volumeFormat}
-          fill="#0F0F0F"
-        />
-        <EdgeIndicator
-          lineStroke={indicatorLineColor}
-          rectWidth={65}
-          itemType="last"
-          orient="right"
           edgeAt="right"
           yAccessor={d => d.volume}
           displayFormat={volumeFormat}
           fill="#0F0F0F"
         />
-        {indicators.smaVolume ? (
+        <EdgeIndicator
+          lineStroke={indicatorLineColor}
+          rectWidth={30}
+          itemType="last"
+          orient="left"
+          edgeAt="right"
+          yAccessor={d => d.volume}
+          displayFormat={volumeFormat}
+          fill="#0F0F0F"
+        /> */}
+        {/* {indicators.smaVolume ? (
           <EdgeIndicator
             lineStroke={indicatorLineColor}
-            rectWidth={65}
+            rectWidth={30}
             itemType="first"
-            orient="left"
+            orient="right"
             edgeAt="left"
             yAccessor={calculators.smaVolume.accessor()}
             displayFormat={volumeFormat}
             fill={calculators.smaVolume.fill()}
           />
-        ) : null}
-        {indicators.smaVolume ? (
+        ) : null} */}
+        {/* {indicators.smaVolume ? (
           <EdgeIndicator
             lineStroke={indicatorLineColor}
-            rectWidth={65}
+            rectWidth={30}
             itemType="last"
-            orient="right"
+            orient="left"
             edgeAt="right"
             yAccessor={calculators.smaVolume.accessor()}
             displayFormat={volumeFormat}
             fill={calculators.smaVolume.fill()}
           />
-        ) : null}
+        ) : null} */}
       </Chart>
     );
   }
@@ -366,20 +438,14 @@ class CandleStickChartWithZoomPan extends React.Component {
     let gridHeight = height - margin.top - margin.bottom;
     let gridWidth = width - margin.left - margin.right;
 
-    let showGrid = false;
+    let showGrid = true;
     let yGrid = showGrid
       ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.1 }
       : {};
-    let xGrid = showGrid
-      ? { innerTickSize: -1 * gridHeight, tickStrokeOpacity: 0.1 }
-      : {};
-
     return (
       <Chart
         id={1}
-        height={
-          height * ((chartMultiplier ? 0.92 : 0.9) - 0.2 * chartMultiplier)
-        }
+        height={224}
         yExtents={[
           d => [d.high, d.low],
           calculators.ema1.accessor(),
@@ -388,20 +454,38 @@ class CandleStickChartWithZoomPan extends React.Component {
         ]}
         padding={{ top: 10, bottom: 20 }}
       >
-        {indicators.macd || showVolumeChart ? null : (
-          <XAxis
-            tickStroke={axisLineColor}
-            stroke={axisLineColor}
-            axisAt="bottom"
-            orient="bottom"
-            opacity={0.5}
-          />
-        )}
+        <XAxis
+          tickStroke={axisLineColor}
+          showTicks={false}
+          showTickLabel={false}
+          stroke={axisLineColor}
+          {...axisStyle}
+          axisAt="bottom"
+          orient="bottom"
+          opacity={0.8}
+        />
         <YAxis
           axisAt="right"
-          orient="right"
+          orient="left"
+          tickPadding={0}
+          showDomain={false}
+          zoomEnabled={false}
+          {...axisStyle}
+          ticks={8}
+          innerTickSize={0}
+          tickStroke={axisLineColor}
+          stroke={axisLineColor}
+        />
+        <YAxis
+          axisAt="left"
+          orient="left"
+          tickPadding={0}
+          showDomain={false}
+          showTickLabel={false}
+          zoomEnabled={false}
           {...yGrid}
-          ticks={5}
+          {...axisStyle}
+          ticks={8}
           tickStroke={axisLineColor}
           stroke={axisLineColor}
         />
@@ -409,36 +493,35 @@ class CandleStickChartWithZoomPan extends React.Component {
         {indicators.macd || showVolumeChart ? null : (
           <MouseCoordinateX
             id={1}
-            rectWidth={125}
+            rectWidth={65}
             at="bottom"
             orient="bottom"
             displayFormat={timeFormatter}
           />
         )}
-
         <MouseCoordinateY
-          id={1}
-          rectWidth={65}
-          at="left"
-          orient="left"
-          displayFormat={priceFormat}
-        />
-
-        <MouseCoordinateY
+          {...arrowStyle()}
           id={0}
-          rectWidth={65}
+          // dx={-50}
           at="right"
-          orient="right"
+          orient="left"
           displayFormat={priceFormat}
         />
 
         <CandlestickSeries
           wickStroke={d => (d.close > d.open ? positiveColor : negativeColor)}
           stroke={d => (d.close > d.open ? positiveColor : negativeColor)}
-          fill={d => (d.close > d.open ? "transparent" : negativeColor)}
-          opacity={0.8}
+          fill={d => (d.close > d.open ? positiveColor : negativeColor)}
+          opacity={1}
+          rectRadius={40}
         />
-        {indicators.bb ? <BollingerSeries calculator={calculators.bb} /> : null}
+        {indicators.bb && (
+          <BollingerSeries
+            yAccessor={d => d.bb}
+            stroke={bbStroke}
+            fill={bbFill}
+          />
+        )}
 
         {indicators.sma ? (
           <LineSeries
@@ -478,9 +561,12 @@ class CandleStickChartWithZoomPan extends React.Component {
           />
         ) : null}
 
-        <EdgeIndicator
+        {/* <EdgeIndicator
+          {...arrowStyle()}
+          rectHeight={10}
           lineStroke={indicatorLineColor}
-          rectWidth={65}
+          dx={-50}
+          
           itemType="last"
           orient="right"
           edgeAt="right"
@@ -489,34 +575,47 @@ class CandleStickChartWithZoomPan extends React.Component {
           fill={d => (d.close > d.open ? positiveColor : negativeColor)}
         />
         <EdgeIndicator
+          {...arrowStyle(false)}
           lineStroke={indicatorLineColor}
-          rectWidth={65}
           itemType="first"
           orient="left"
           edgeAt="left"
+          dx={50}
           yAccessor={d => d.close}
           displayFormat={priceFormat}
           fill={d => (d.close > d.open ? positiveColor : negativeColor)}
-        />
+        /> */}
 
         <OHLCTooltip
+          {...ohlcStyle}
           className="tooltip-hide-no"
           xDisplayFormat={timeFormatter}
           volumeFormat={volumeFormat}
           ohlcFormat={priceFormat}
-          origin={[-40, -10]}
+          origin={[-8, -10]}
         />
 
         {maCalcs.length ? (
-          <MovingAverageTooltip origin={[-40, 0]} calculators={maCalcs} />
-        ) : null}
-
-        {indicators.bb ? (
-          <BollingerBandTooltip
-            origin={[-40, 40]}
-            calculator={calculators.bb}
+          <MovingAverageTooltip
+            origin={[0, 0]}
+            displayFormat={priceFormat}
+            options={maCalcs.map(s => ({
+              yAccessor: s.accessor(),
+              type: s.type(),
+              stroke: s.stroke(),
+              windowSize: s.options().windowSize,
+              echo: "some echo here"
+            }))}
           />
         ) : null}
+
+        {indicators.bb && (
+          <BollingerBandTooltip
+            origin={[-40, 40]}
+            yAccessor={d => d.bb}
+            options={calculators.bb.options()}
+          />
+        )}
 
         <TrendLine
           ref="enableTrendLine"
@@ -590,33 +689,52 @@ class CandleStickChartWithZoomPan extends React.Component {
       zoom === "all"
         ? priceData
         : priceData.filter(a => {
-          return a.date > filterDate;
-        });
+            return a.date > filterDate;
+          });
 
+    const initialData = handleStockData(filteredData);
+    const dataWithIndicator = Object.getOwnPropertyNames(calculators).reduce(
+      (data, calc) => calculators[calc](data),
+      initialData
+    );
+    const xScaleProvider = discontinuousTimeScaleProvider.inputDateAccessor(
+      d => d.date
+    );
+    const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
+      dataWithIndicator
+    );
+    const xExtents = [xAccessor(data[data.length - 1]), xAccessor(data[0])];
+
+    const macdAppearance = {
+      stroke: {
+        macd: "#FF0000",
+        signal: "#00F300"
+      },
+      fill: {
+        divergence: "#4682B4"
+      }
+    };
     return (
       <ChartCanvas
         ratio={ratio}
-        width={width - 12}
-        height={height}
+        width={width}
+        height={346}
         seriesName="PriceChart"
         margin={margin}
+        // clamp={false}
         clamp={enableChartClamp}
-        data={filteredData}
-        calculator={calc}
-        xAccessor={d => d.date}
-        xScaleProvider={discontinuousTimeScaleProvider}
-        xExtents={[
-          filteredData[0].date,
-          filteredData[filteredData.length - 1].date
-        ]}
+        data={data}
+        xAccessor={xAccessor}
+        displayXAccessor={displayXAccessor}
+        xScale={xScale}
+        xExtents={xExtents}
         type="hybrid"
         className="chart-main ps-child no-overflow Stockcharts__wrapper ps-must-propagate"
         drawMode={enableTrendLine || enableFib}
       >
-        >
-        {showVolumeChart ? this._renderVolumeChart(chartMultiplier) : <span />}
+        {showVolumeChart && this._renderVolumeChart(chartMultiplier)}
         {this._renderCandleStickChart(chartMultiplier, maCalcs)}
-        {indicators.macd ? (
+        {indicators.macd && (
           <Chart
             id={3}
             height={height * 0.2}
@@ -630,15 +748,18 @@ class CandleStickChartWithZoomPan extends React.Component {
             <XAxis
               tickStroke={axisLineColor}
               stroke={axisLineColor}
+              {...axisStyle}
+              ticks={8}
               axisAt="bottom"
               orient="bottom"
             />
             <YAxis
               tickStroke={axisLineColor}
               stroke={axisLineColor}
+              {...axisStyle}
               axisAt="right"
               orient="right"
-              ticks={2}
+              ticks={4}
             />
 
             <MouseCoordinateX
@@ -653,22 +774,26 @@ class CandleStickChartWithZoomPan extends React.Component {
               displayFormat={format(".2f")}
             />
 
-            <MACDSeries calculator={calculators.macd} />
-            <MACDTooltip origin={[-40, 35]} calculator={calculators.macd} />
+            <MACDSeries yAccessor={d => d.macd} {...macdAppearance} />
+            <MACDTooltip
+              yAccessor={d => d.macd}
+              options={calculators.macd.options()}
+              appearance={macdAppearance}
+              // origin={[-40, 35]} calculator={calculators.macd}
+            />
           </Chart>
-        ) : (
-          <span />
-        ) /* Need to return an empty element here, null triggers an error */}
+        )}
+        {/* Need to return an empty element here, null triggers an error */}
         <CrossHairCursor stroke={indicatorLineColor} />
       </ChartCanvas>
     );
   }
-}
+};
 
 CandleStickChartWithZoomPan = fitWidth(CandleStickChartWithZoomPan);
-export default class Wrapper extends React.Component {
-  constructor() {
-    super();
+export default class Wrapper extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       dropdowns: {
