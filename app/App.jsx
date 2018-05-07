@@ -245,7 +245,7 @@ class App extends React.Component {
           <ReactTooltip
             ref="tooltip"
             place="top"
-            type={theme === "lightTheme" ? "dark" : "light"}
+            // type={theme === "lightTheme" ? "dark" : "light"}
             effect="solid"
           />
         </div>

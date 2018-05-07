@@ -87,6 +87,7 @@
     "payments": "转账",
     "logout": "注销",
     "settings": "设置",
+    "volume": "24小时交易总量: ",
     "current": "当前账户",
     "create_account": "创建账户",
     "create_asset": "创建资产",

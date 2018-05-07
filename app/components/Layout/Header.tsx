@@ -4,6 +4,7 @@ import { connect } from "alt-react";
 import ActionSheet from "react-foundation-apps/src/action-sheet";
 import AccountActions from "actions/AccountActions";
 import AccountStore from "stores/AccountStore";
+import MarketsStore from "stores/MarketsStore";
 import SettingsStore from "stores/SettingsStore";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Icon from "../Icon/Icon";
@@ -21,6 +22,8 @@ import notify from "actions/NotificationActions";
 import IntlActions from "actions/IntlActions";
 import AccountImage from "../Account/AccountImage";
 import ContextMenuStore from "stores/ContextMenuStore";
+import { VolumnStore } from "stores/VolumeStore";
+import { VolumeDisplay } from "./VolumeDisplay";
 
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
@@ -461,6 +464,7 @@ class Header extends React.Component<any, any> {
         ) : null}
         <div className="grid-block show-for-medium">
           {dashboard}
+          <VolumeDisplay vol={this.props.vol} />
           <div id="context-hub" />
         </div>
         <div className="grid-block show-for-medium shrink">
@@ -509,7 +513,9 @@ export default connect(Header, {
       WalletUnlockStore,
       WalletManagerStore,
       SettingsStore,
-      ContextMenuStore
+      MarketsStore,
+      ContextMenuStore,
+      VolumnStore
     ];
   },
   getProps() {
@@ -525,6 +531,7 @@ export default connect(Header, {
       lastMarket: SettingsStore.getState().viewSettings.get(
         `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
       ),
+      vol: VolumnStore.getState(),
       starredAccounts: AccountStore.getState().starredAccounts,
       passwordLogin: SettingsStore.getState().settings.get("passwordLogin"),
       currentLocale: SettingsStore.getState().settings.get("locale"),

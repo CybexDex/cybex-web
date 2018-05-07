@@ -41,7 +41,6 @@ class Dashboard extends React.Component {
   constructor(props) {
     super();
     let marketsByChain = {
-      //   "90be01e8": [["CYB", "JADE.ETH"],["CYB", "JADE.MT"],["CYB", "JADE.GET"],["CYB", "JADE.SAT"]],
       "90be01e8": [["JADE.ETH", "CYB"]],
       "59e27e38": [["JADE.ETH", "CYB"]]
     };
