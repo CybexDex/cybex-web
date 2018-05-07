@@ -13,7 +13,7 @@ class MarketPair {
   constructor(public base?, public quote?) {}
 }
 
-const correctMarketPair = (symbolOfA, symbolOfB) => {
+const correctMarketPair = (symbolOfA?, symbolOfB?) => {
   let indexOfA = SettingsStore.getState().preferredBases.indexOf(symbolOfA);
   let indexOfB = SettingsStore.getState().preferredBases.indexOf(symbolOfB);
   if (

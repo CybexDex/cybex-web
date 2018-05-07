@@ -2,15 +2,23 @@ import { Set } from "immutable";
 import alt from "alt-instance";
 import { debugGen } from "utils//Utils";
 import { AbstractStore } from "./AbstractStore";
+import VolumeActions from "actions/VolumeActions";
 interface VolumnState {
   totalVolumn: number;
 }
 
 class VolumnStore extends AbstractStore<VolumnState> {
-  state = { totalVolumn: 0 };
+  state = { details: [], sum: 0, totalVolumn: 0 };
   constructor(props) {
     super();
-    this.bindListeners({});
+    this.bindListeners({
+      handleVolUpdate: VolumeActions.updateVol
+    });
+  }
+  handleVolUpdate(volState) {
+    if (volState) {
+      this.setState(volState);
+    }
   }
   handleAddMarket() {}
   handleRemoveMarket() {}
