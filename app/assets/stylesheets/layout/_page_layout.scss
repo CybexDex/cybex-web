@@ -175,10 +175,10 @@ div.bordered-header {
 
 // Main Nav on the left
 .nav {
-  font-size: 85%;
-  padding: 1.4em 1em;
+  // font-size: 85%;
+  // padding: 1.4em 1em;
   @include display-flex($flex-wrap: nowrap);
-  @include flex(0, 0, $flex-basis: $width-nav);
+  // @include flex(0, 0, $flex-basis: $width-nav);
   @media screen and (max-width: $size-medium) {
     display: none;
   }

@@ -17,7 +17,6 @@ export class VolumeDisplay extends React.Component<any, any> {
     }
   }
   render() {
-    console.debug("Display: ", this.props);
     let { vol } = this.props;
     return (
       <div

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_check_box_active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="1.69403699%" y1="1.50892141%" x2="100%" y2="89.0725184%" id="linearGradient-1">
+            <stop stop-color="#FFC478" offset="0%"></stop>
+            <stop stop-color="#FF9143" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/ic_check_box_active">
+            <g id="ic_check_box_active">
+                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M19,3 C20.11,3 21,3.9 21,5 L21,19 C21,20.1 20.11,21 19,21 L5,21 C3.89,21 3,20.1 3,19 L3,5 C3,3.9 3.89,3 5,3 L19,3 Z M10,17 L18.2953874,8.70461259 C18.6849363,8.3150637 18.6860516,7.68382497 18.2978816,7.29290203 L18.295,7.29 L18.2925132,7.28750442 C17.9031476,6.8981388 17.2718612,6.8981388 16.8824956,7.28750442 L10,14.17 L7.11598258,11.2940161 C6.72591999,10.90504 6.0945197,10.9054803 5.705,11.295 C5.31563925,11.6843607 5.31563925,12.3156393 5.705,12.705 L10,17 Z" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

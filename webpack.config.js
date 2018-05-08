@@ -222,9 +222,7 @@ module.exports = function(env) {
         },
         {
           test: /\.js$|\.jsx$/,
-          include: [
-            path.join(root_dir, "app"),
-          ],
+          include: [path.join(root_dir, "app")],
           exclude: [/node_modules/],
           loader: "babel-loader",
           options: {
@@ -269,6 +267,18 @@ module.exports = function(env) {
           ]
         },
         {
+          test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)$/,
+          include: [path.resolve(root_dir, "app/components/Common")],
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                limit: 8192
+              }
+            }
+          ]
+        },
+        {
           test: /\.png$/,
           exclude: [
             path.resolve(root_dir, "app/assets/asset-symbols"),
@@ -299,6 +309,7 @@ module.exports = function(env) {
         },
         {
           test: /.*\.svg$/,
+          exclude: [path.resolve(root_dir, "app/components/Common")],
           loaders: ["svg-inline-loader", "svgo-loader"]
         },
         {
@@ -327,7 +338,10 @@ module.exports = function(env) {
         assets: path.resolve(root_dir, "app/assets"),
         counterpart: path.resolve(root_dir, "app/lib/counterpart"),
         "alt-react": path.resolve(root_dir, "app/lib/alt-react"),
-        "react-foundation-apps": path.resolve(root_dir, "app/lib/react-foundation-apps"),
+        "react-foundation-apps": path.resolve(
+          root_dir,
+          "app/lib/react-foundation-apps"
+        ),
         app: path.resolve(root_dir, "app")
       },
       modules: [

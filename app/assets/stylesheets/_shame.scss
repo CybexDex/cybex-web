@@ -91,7 +91,7 @@ a>.label {
 
 button,
 .button {
-  transition: all 0.3s ease 0s !important;
+  // transition: all 0.3s ease 0s !important;
   border: 1px solid transparent; //margin: 2px 5px 2px 5px;
   vertical-align: middle;
   &.outline {
@@ -498,4 +498,14 @@ textarea {
 
 .link {
   cursor: pointer;
+}
+
+:focus {
+  outline: none;
+}
+
+.no-appearance {
+  -webkit-appearance: none;
+  appearance: none;
+  -moz-appearance: none;
 }

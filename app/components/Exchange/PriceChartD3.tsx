@@ -342,7 +342,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         <BarSeries
           yAccessor={d => d.volume}
           rectRadius={[40, 40, 40, 40, 0, 0, 0, 0]}
-          stroke={0}
+          stroke={false}
           opacity={0.5}
           fill={d => (d.close > d.open ? positiveColor : negativeColor)}
         />

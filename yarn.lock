@@ -7179,9 +7179,27 @@ react-router@^3.0.2:
     prop-types "^15.5.6"
     warning "^3.0.0"
 
-react-stockcharts@^0.7.5:
+"react-stockcharts@file:../react-stockcharts/build":
   version "0.7.5"
-  resolved "https://registry.yarnpkg.com/react-stockcharts/-/react-stockcharts-0.7.5.tgz#3cbe88d0d0b2eac704fde35e4866254584c88db3"
+  dependencies:
+    d3-array "^1.2.1"
+    d3-collection "^1.0.4"
+    d3-force "^1.1.0"
+    d3-format "^1.2.1"
+    d3-interpolate "^1.1.6"
+    d3-path "^1.0.5"
+    d3-scale "^1.0.7"
+    d3-selection "^1.2.0"
+    d3-shape "^1.2.0"
+    d3-time "^1.0.8"
+    d3-time-format "^2.1.1"
+    debug "^3.1.0"
+    lodash.flattendeep "^4.4.0"
+    prop-types "^15.6.0"
+    save-svg-as-png "^1.2.0"
+
+"react-stockcharts@file:///Users/cy-work/projects/react-stockcharts/build":
+  version "0.7.5"
   dependencies:
     d3-array "^1.2.1"
     d3-collection "^1.0.4"

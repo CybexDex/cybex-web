@@ -191,7 +191,7 @@
     "react-popover": "^0.5.5",
     "react-responsive-mixin": "^0.4.0",
     "react-router": "^3.0.2",
-    "react-stockcharts": "^0.7.5",
+    "react-stockcharts": "file:///Users/cy-work/projects/react-stockcharts/build",
     "react-svg": "^2.2.18",
     "react-svg-inline": "^2.1.0",
     "react-tooltip": "^3.2.2",

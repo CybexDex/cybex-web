@@ -40,6 +40,8 @@ import "rxjs/add/operator/debounceTime";
 import { Tabs } from "./Tabs/Tabs";
 
 import { Button } from "components/Common";
+import { Icon } from "components/Common";
+import { Checkbox, Radio, getId } from "components/Common";
 
 Highcharts.setOptions({
   global: {
@@ -1474,8 +1476,7 @@ class Exchange extends React.Component<any, any> {
             "grid-block center-block medium-4 small-12 vertical no-overflow"
           )}
         >
-          <Button type="primary">Hello</Button>
-          {/* Top bar with info */}
+         {/* Top bar with info */}
           <ExchangeHeader
             quoteAsset={quoteAsset}
             baseAsset={baseAsset}

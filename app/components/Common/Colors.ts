@@ -1,6 +1,8 @@
 export const Colors = {
   // Colors
   $colorWhite: "#ffffff",
+  $colorWhiteOp8: "rgba(255, 255, 255, 0.8)",  
+  $colorWhiteOp3: "rgba(255, 255, 255, 0.3)",  
   $colorOrange: "#ff9143",
   $colorOrangeLight: "#ffc478",
   $colorCrimson: "#d2323e",
@@ -8,7 +10,8 @@ export const Colors = {
   $colorBlue: "#2e5be2",
   $colorLight: "#f7f8fa",
   $colorGrey: "#78819a",
-  $colorGreyLight: "rgba(120, 129, 154, 0.3)",
+  $colorGreyLightWhite: "rgba(120, 129, 154, 0.3)",
+  $colorGreyLight: "rgba(216, 216, 216, 0.3)",
   $colorDark: "#171d2a",
   // Sub Colors
   $colorRosset: "#c87b41",
@@ -40,9 +43,9 @@ export const Colors = {
   $colorGradientFoilex: "linear-gradient(-135deg, #e7ac5f, #e76536)",
   $colorGradientGoldex: "linear-gradient(-131deg, #ffc478, #ff9143)",
   $colorGradientSilvex:
-    "linearGradient(48deg,rgba(255, 255, 255, 50),rgba(255, 255, 255, 100))",
+    "linear-gradient(48deg,rgba(255, 255, 255, 50),rgba(255, 255, 255, 100))",
   $colorGradientGreyex:
-    "linearGradient(48deg,rgba(120, 129, 154, 50),rgba(120, 129, 154, 100))"
+    "linear-gradient(48deg,rgba(120, 129, 154, 50),rgba(120, 129, 154, 100))"
 };
 
 export default Colors;

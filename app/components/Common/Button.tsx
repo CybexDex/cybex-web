@@ -2,21 +2,25 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import Radium from "radium";
 import Colors from "./Colors";
-
 let Button = class extends React.Component<
   {
     children?;
+    disabled?: boolean;
     size?: "normal" | "small" | "big";
     type?: "primary" | "secondary";
+    onClick?;
   },
   any
 > {
   static defaultProps = {
     type: "secondary",
-    size: "normal"
+    size: "normal",
+    disabled: false
   };
 
   static propTypes = {
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
     type: PropTypes.oneOf(["primary", "secondary"]).isRequired,
     size: PropTypes.oneOf(["normal", "small", "big"]).isRequired
   };
@@ -25,20 +29,20 @@ let Button = class extends React.Component<
     base: {
       borderRadius: "5px",
       display: "inline-block",
-      transition: "unset"
+      ":disabled": {
+        background: Colors.$colorGreyLightWhite,
+        cursor: "not-allowed",
+        color: Colors.$colorGreyLight
+      }
     },
     primary: {
       background: Colors.$colorGradientGoldex,
       color: Colors.$colorWhite,
       ":hover": {
-        background: Colors.$colorOrangeLight,
+        background: Colors.$colorOrangeLight
       },
       ":active": {
-        background: Colors.$colorOrange,
-      },
-      ":disabled": {
-        background: Colors.$colorGrey,
-        color: Colors.$colorGreyLight
+        background: Colors.$colorOrange
       }
     },
     secondary: {
@@ -46,15 +50,11 @@ let Button = class extends React.Component<
       color: Colors["$colorGrey"],
       ":hover": {
         backgroundColor: Colors["$colorIndependence"],
-        color: Colors["$colorWhite"]
+        color: Colors.$colorWhite
       },
       ":active": {
         backgroundColor: Colors["$colorAnchor"],
-        color: Colors["$colorWhite"]
-      },
-      ":disabled": {
-        backgroundColor: Colors["$colorGrey"],
-        color: Colors["$colorFreyLight"]
+        color: Colors.$colorWhite
       }
     },
     small: {
@@ -72,16 +72,19 @@ let Button = class extends React.Component<
   });
 
   render() {
-    let { children, size, type } = this.props;
+    let { children, size, type, disabled } = this.props;
     let styles = this.getStyles();
     return (
-      <button style={[styles.base, styles[type], styles[size]] as any}>
+      <button
+        disabled={disabled}
+        style={[styles.base, styles[type], styles[size]] as any}
+        onClick={this.props.onClick ? this.props.onClick : () => void 0}
+      >
         {children}
       </button>
     );
   }
 };
-
 Button = Radium(Button);
 
 export { Button };

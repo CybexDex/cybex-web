@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_arrow_forward_white</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/ic_arrow_forward_white">
+            <g id="ic_arrow_forward_white">
+                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M8.29271092,7.70604425 L12.8393776,12.2527109 L8.29271092,16.7993776 C7.90242969,17.1896588 7.90242969,17.8224297 8.29271092,18.2127109 L8.29271092,18.2127109 C8.68299214,18.6029921 9.31576303,18.6029921 9.70604425,18.2127109 L15.6660443,12.2527109 L9.70604425,6.29271092 C9.31576303,5.90242969 8.68299214,5.90242969 8.29271092,6.29271092 L8.29271092,6.29271092 C7.90242969,6.68299214 7.90242969,7.31576303 8.29271092,7.70604425 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
