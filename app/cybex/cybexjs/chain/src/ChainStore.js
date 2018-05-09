@@ -336,7 +336,7 @@ class ChainStore {
     *  @return object if the id_or_symbol exists
     */
     getAsset(id_or_symbol) {
-        if (!id_or_symbol)
+        if (!id_or_symbol || typeof id_or_symbol !== "string")
             return null;
 
         if (ChainValidation.is_object_id(id_or_symbol)) {
