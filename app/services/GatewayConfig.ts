@@ -18,6 +18,7 @@ export const JadePool = __TEST__ ?
       "TEST.PAY": "PAY",
       "TEST.GET": "GET",
       "TEST.MAD": "MAD",
+      "TEST.GNX": "GNX",
       // "TEST.LST": "LST",
       "TEST.ENG": "ENG"
     },
@@ -37,6 +38,7 @@ export const JadePool = __TEST__ ?
       "MT": "TEST.MT",
       "GET": "TEST.GET",
       "MAD": "TEST.MAD",
+      "GNX": "TEST.GNX",
       // "LST": "TEST.LST",
       "ENG": "TEST.ENG",
     }
@@ -57,6 +59,7 @@ export const JadePool = __TEST__ ?
       "JADE.PAY": "PAY",
       "JADE.GET": "GET",
       "JADE.MAD": "MAD",
+      "JADE.GNX": "GNX",
       "JADE.MT": "MT",
       // "JADE.LST": "LST",
       "JADE.ENG": "ENG"
@@ -76,6 +79,7 @@ export const JadePool = __TEST__ ?
       "PAY": "JADE.PAY",
       "GET": "JADE.GET",
       "MAD": "JADE.MAD",
+      "GNX": "JADE.GNX",
       "MT": "JADE.MT",
       // "LST": "JADE.LST",
       "ENG": "JADE.ENG"
