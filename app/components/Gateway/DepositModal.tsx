@@ -71,7 +71,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       <BaseModal modalId={modalId}>
         <h3>
           <Translate content={"gateway.deposit"} />{" "}
-          {utils.replaceName(asset.get("symbol")).name}({assetName})
+          {utils.replaceName(asset.get("symbol"), false).name}({assetName})
         </h3>
         <p>
           {

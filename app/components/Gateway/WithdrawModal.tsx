@@ -392,6 +392,7 @@ class WithdrawModal extends React.Component<props, state> {
       !amountValid;
     // withdraw_amount <= 0;
     let assetName =  utils.replaceName(this.props.asset.get("symbol")).name;
+    console.debug("AssetName: ", assetName);
     return (
       <BaseModal modalId={modalId}>
         <div className="content-block">

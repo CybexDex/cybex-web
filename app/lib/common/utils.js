@@ -6,6 +6,8 @@ import { Apis } from "cybexjs-ws";
 import { ChainTypes } from "cybexjs";
 var { object_type, operations } = ChainTypes;
 
+let replacedName = {};
+
 var Utils = {
   get_object_id: obj_id => {
     let id_regex_res = id_regex.exec(obj_id);
@@ -591,16 +593,21 @@ var Utils = {
     return Math.round(a / b * 100) + "%";
   },
 
-  replaceName(name, isBitAsset = false) {
-    let toReplace = ["JADE.", "TRADE.", "OPEN.", "METAEX.", "BRIDGE.", "RUDEX."];
+  replaceName(_name, isBitAsset = false) {
+    if (replacedName[_name]) {
+      return replacedName[_name];
+    }
+    let toReplace = ["JADE.", "TEST.", "TRADE.", "OPEN.", "METAEX.", "BRIDGE.", "RUDEX."];
     const toHidden = {
-      "JADE.": true
+      "JADE.": true,
+      "TEST.": true
     };
     let suffix = "";
     let i;
+    let name = _name;
     for (i = 0; i < toReplace.length; i++) {
-      if (name.indexOf(toReplace[i]) !== -1) {
-        name = name.replace(toReplace[i], "") + suffix;
+      if (_name.indexOf(toReplace[i]) !== -1) {
+        name = _name.replace(toReplace[i], "") + suffix;
         break;
       }
     }
@@ -611,11 +618,12 @@ var Utils = {
         ? toReplace[i].toLowerCase()
         : null;
     // if (prefix === "open.") prefix = "";
-
-    return {
+    let res = {
       name,
       prefix
     };
+    replacedName[_name] = res;
+    return res;
   }
 };
 
