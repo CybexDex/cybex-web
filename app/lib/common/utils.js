@@ -592,7 +592,10 @@ var Utils = {
   },
 
   replaceName(name, isBitAsset = false) {
-    let toReplace = ["TRADE.", "OPEN.", "METAEX.", "BRIDGE.", "RUDEX."];
+    let toReplace = ["JADE.", "TRADE.", "OPEN.", "METAEX.", "BRIDGE.", "RUDEX."];
+    const toHidden = {
+      "JADE.": true
+    };
     let suffix = "";
     let i;
     for (i = 0; i < toReplace.length; i++) {
@@ -604,7 +607,7 @@ var Utils = {
 
     let prefix = isBitAsset
       ? "cyb."
-      : toReplace[i]
+      : toReplace[i] && !toHidden[toReplace[i]]
         ? toReplace[i].toLowerCase()
         : null;
     // if (prefix === "open.") prefix = "";

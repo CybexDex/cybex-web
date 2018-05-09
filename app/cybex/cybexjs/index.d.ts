@@ -41,7 +41,7 @@ declare module "cybexjs" {
     is_account_name_error: (value, allow_too_short?) => boolean;
     is_cheap_name: (value, allow_too_short?) => boolean;
     is_empty_user_input: (value) => boolean;
-    is_valid_symbol_error: (value) => boolean;
+    is_valid_symbol_error: (value, arg?) => boolean;
     required: (value, field_name?) => boolean;
   };
   const key: {

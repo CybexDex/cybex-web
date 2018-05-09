@@ -23,7 +23,12 @@ declare module "alt-react" {
 
 declare namespace CommonUtils {
   const price_text: (price: string, base: any, quote: any) => string;
+  const replaceName: (name: string, isBitAsset?:boolean) => {
+    name: string,
+    prefix: string
+  };
   const format_volume: (amount: number) => string;
+  const are_equal_shallow: (...args) => boolean;
 }
 
 declare module "common/utils" {

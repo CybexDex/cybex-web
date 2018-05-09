@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { getClassName } from "utils//ClassName";
 import { connect } from "alt-react";
@@ -11,7 +12,7 @@ import Translate from "react-translate-component";
 import CopyButton from "../Utility/CopyButton";
 import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
-import utils from "lib/common/utils";
+import utils from "common/utils";
 import LoadingIndicator from "../LoadingIndicator";
 import NewDepositAddress from "./NewDepositAddress";
 import QRCode from "qrcode.react";
@@ -69,9 +70,8 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     return (
       <BaseModal modalId={modalId}>
         <h3>
-          <Translate content={"gateway.deposit"} /> {asset.get("symbol")}({
-            assetName
-          })
+          <Translate content={"gateway.deposit"} />{" "}
+          {utils.replaceName(asset.get("symbol")).name}({assetName})
         </h3>
         <p>
           {
