@@ -185,7 +185,7 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          "JADE.MT",
+          // "JADE.MT",
           "CYB"
         ]
       };
