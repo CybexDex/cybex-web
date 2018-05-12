@@ -33,7 +33,7 @@
   "header": {
     "title": "Cybex UI",
     "account": "Account",
-    "volume": "Total vol of last 24hr: ",
+    "volume": "Vol of 24hr: ",
     "dashboard": "Dashboard",
     "explorer": "Explore",
     "exchange": "Exchange",
