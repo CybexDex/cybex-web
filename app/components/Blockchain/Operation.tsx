@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import FormattedAsset from "../Utility/FormattedAsset";
 import { Link } from "react-router";
 import classNames from "classnames";
@@ -25,7 +26,7 @@ require("./operations.scss");
 let ops = Object.keys(operations);
 let listings = account_constants.account_listing;
 
-class TransactionLabel extends React.Component {
+class TransactionLabel extends React.PureComponent<any, any> {
   // shouldComponentUpdate(nextProps) {
   //     return (
   //         nextProps.color !== this.props.color ||
@@ -39,7 +40,7 @@ class TransactionLabel extends React.Component {
   }
 }
 
-class Row extends React.Component {
+let Row = class extends React.PureComponent<any, any> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
@@ -134,10 +135,10 @@ class Row extends React.Component {
       </tr>
     );
   }
-}
-Row = BindToChainState(Row, { keep_updating: true });
+};
+Row = BindToChainState(Row, { keep_updating: false });
 
-class Operation extends React.Component {
+class Operation extends React.PureComponent<any, any> {
   static defaultProps = {
     op: [],
     current: "",
