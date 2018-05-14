@@ -39,48 +39,25 @@
 }
 
 .market-layout {
-  // flex-wrap: wrap;
-  padding-bottom: 10px;
-  margin-left: 8px;
-  margin-top: $space-between;
-  > .grid-block {
-    // padding: 0.25rem 0.25rem 0.25rem 0.25rem !important;
+  display: grid;
+  grid-template-rows: [r1-s] auto [r1-e r2-s] 1fr [r2-e];
+  grid-template-columns: auto 532px auto;
+  grid-template-areas: "markets main orderbook" "orders main orderbook";
+  grid-column-gap: 1rem;
+  height: 100%;
+  .market-markets {
+    grid-area: markets;
   }
-  > .left-column {
-    border-right: 1px solid $border-color;
-    border-top: none;
+  .market-orders {
+    grid-area: orders;
   }
-  .right-column {
-    // border-left: 1px solid $border-color;
-    width: 620px;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    border-top: none;
-    margin-left: $space-between;
-    margin-right: $space-between + 2;
-    > .grid-block + .grid-block {
-      margin-top: $space-between;
-    }
+  .market-orderbook {
+    grid-area: orderbook;
   }
-  .center-block {
-    flex-grow: 10;
-    max-width: unset;
-    .top-bar {
-      // border-bottom: 1px solid $border-color;
-      margin-bottom: $space-between;
-    }
-    > div + div {
-      margin-top: $space-between - 2px;
-    }
-  }
-  @media screen and (max-width: $size-verticle) {
-    @include smallHorizontal();
-  }
-  @media screen and (max-aspect-ratio: 1/1) {
-    @include vertical();
+  .market-main {
+    grid-area: main;
   }
 }
-
 .market-content {
   padding-left: 5px !important;
   padding-right: 5px !important;
@@ -186,9 +163,7 @@ form.order-form {
       padding-top: 0.1rem;
     }
   }
-  .chart-main {
-    margin: 0 $space-between;
-  }
+
   .chart-tools {
     padding: $space-between;
     > ul {
@@ -746,7 +721,7 @@ tbody.orderbook > tr.my-order > td {
       //   text-align: left;
       // }
       &:last-child {
-          padding-right: 10px;
+        padding-right: 10px;
       }
     }
     @media screen and (max-width: $size-medium) {

@@ -15,6 +15,7 @@ import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
 import { NavItem } from "components/Common";
+import { Colors } from "components/Common/Colors";
 
 interface NavLink {
   id: string;
@@ -25,6 +26,7 @@ interface NavLink {
   activeMatcher?: RegExp;
   beFilter?: boolean;
   displayOnlyWhen?: string;
+  down?: boolean;
 }
 
 const NavLinks: Array<NavLink> = [
@@ -62,9 +64,36 @@ const NavLinks: Array<NavLink> = [
     routeTo: "/transfer",
     name: "Transfer",
     icon: "transfer"
+  },
+  {
+    id: "settings",
+    routeTo: "/settings",
+    name: "Settings",
+    icon: "settings",
+    down: true
   }
 ];
 
+let logoutItem = {
+  id: "logout",
+  // routeTo: "/transfer",
+  name: "logout",
+  icon: "logout"
+};
+
+let sideStyles = {
+  base: {
+    position: "absolute",
+    top: "-50%",
+    left: 0,
+    transition: "top 0.3s",
+    transform: "translateY(-50%)",
+    height: "3.334rem",
+    width: "0.3334rem",
+    borderRadius: "0 4px 4px 0",
+    background: Colors.$colorGradientFoilex
+  }
+};
 // const NavLink = ({ icon, name, isActive, id }: NavItem) => (
 //   <div className={getClassName("nav-item transition", { active: isActive })}>
 //     <i className={`icon-${icon}`} />
@@ -79,17 +108,28 @@ type NavProps = WithRouterProps & {
   currentAccount: string;
   [x: string]: string;
 };
-export class Nav extends React.Component<NavProps, { isExpand }> {
+
+const getNavId = id => `$nav__${id}`;
+
+export class Nav extends React.Component<NavProps, { isExpand; siderTop }> {
   constructor(props: NavProps) {
     super(props);
     this.state = {
-      isExpand: true
+      isExpand: true,
+      siderTop: -100
     };
   }
 
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+
+  componentDidMount() {
+    let active = NavLinks.filter(this.isActive)[0];
+    if (!active) return;
+    let id = getNavId(active.id);
+    this.updateSide(id);
+  }
 
   toggleNav() {
     SettingsActions.toggleNav(true);
@@ -99,13 +139,41 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
     ModalActions.showModal(DEFAULT_LOGOUT_MODAL_ID);
   };
 
-  render() {
-    let { settings, currentAccount, lastMarket } = this.props;
+  updateSide = id => {
+    let target = document.getElementById(id);
+    let siderTop = target.offsetTop + target.offsetHeight / 2;
+    this.setState({
+      siderTop
+    });
+  };
+
+  isActive = (link: NavLink) =>
+    link.activeMatcher
+      ? link.activeMatcher.test(this.props.location.pathname)
+      : this.props.location.pathname.search(this.getRoute(link)) !== -1;
+
+  getRoute = (link: NavLink) => {
+    let routerConfig = this.getRouterConfig();
+    return typeof link.routeTo === "function"
+      ? link.routeTo.call(this, routerConfig[link.id])
+      : link.routeTo;
+  };
+
+  getRouterConfig = () => {
+    let { currentAccount, lastMarket } = this.props;
     let routerConfig = {
       account: currentAccount,
       exchange: lastMarket || "CYB_JADE.ETH"
     };
+    return routerConfig;
+  };
+
+  render() {
+    let { settings, currentAccount, lastMarket } = this.props;
+    let routerConfig = this.getRouterConfig();
     let isExpand = settings.get("navState");
+    let sideStyle = { ...sideStyles.base };
+    sideStyle.top = this.state.siderTop + "px";
     return (
       <nav
         id="mainNav"
@@ -116,44 +184,41 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
             link =>
               link.displayOnlyWhen ? !!this.props[link.displayOnlyWhen] : true
           ).map(link => {
-            let routeTo =
-              typeof link.routeTo === "function"
-                ? link.routeTo.call(this, routerConfig[link.id])
-                : link.routeTo;
-            return (
+            let routeTo = this.getRoute(link);
+
+            let id = getNavId(link.id);
+            return [
+              link.down ? (
+                <div key="$nav__divider" style={{ flexGrow: 1 }} />
+              ) : null,
               <NavItem
-                key={link.id}
-                id={link.id}
-                onClick={() => this.context.router.push(link.routeTo)}
+                {...link}
+                key={id}
+                id={id}
+                onClick={e => {
+                  this.context.router.push(routeTo);
+                  this.updateSide(id);
+                }}
                 active={
                   link.activeMatcher
                     ? link.activeMatcher.test(this.props.location.pathname)
                     : this.props.location.pathname.search(routeTo) !== -1
                 }
-                linkTo={link.routeTo}
-                {...link}
+                linkTo={routeTo}
               />
-            );
+            ];
           })}
           {/* Logout Button */}
-          {/* {currentAccount && (
-            <a className="nav-link" href="javascript:;" onClick={this.logout}>
-              <NavLink icon="safe-vault" id="logout" name="logout" />
-            </a>
-          )} */}
+          {currentAccount && (
+            <NavItem
+              {...logoutItem}
+              key={getNavId(logoutItem.id)}
+              id={getNavId(logoutItem.id)}
+              onClick={this.logout}
+            />
+          )}
         </div>
-        <a
-          href="javascript:;"
-          className="nav-toggle"
-          onClick={this.toggleNav.bind(this)}
-        >
-          <i
-            className={getClassName("", {
-              "icon-lock-open": !isExpand,
-              "icon-lock-lock": isExpand
-            })}
-          />
-        </a>
+        <i style={sideStyle as any} />
       </nav>
     );
   }

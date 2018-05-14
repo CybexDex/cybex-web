@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import MarketsStore from "stores/MarketsStore";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
@@ -11,8 +12,10 @@ import { EmitterInstance } from "cybexjs";
 import BindToChainState from "../Utility/BindToChainState";
 import MarketsActions from "actions/MarketsActions";
 import { correctMarketPair } from "utils/Market";
+import market_utils from "common/utils";
+import market_utils_ori from "common/market_utils";
 
-class ExchangeContainer extends React.Component {
+class ExchangeContainer extends React.Component<any, any> {
   render() {
     let symbols = this.props.params.marketID.split("_");
 
@@ -117,7 +120,7 @@ let callListener,
   feedUpdateListener,
   settleOrderListener;
 
-class ExchangeSubscriber extends React.Component {
+let ExchangeSubscriber = class extends React.Component<any, any> {
   static propTypes = {
     currentAccount: ChainTypes.ChainAccount.isRequired,
     quoteAsset: ChainTypes.ChainAsset.isRequired,
@@ -130,8 +133,8 @@ class ExchangeSubscriber extends React.Component {
     coreAsset: "1.3.0"
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { sub: null };
 
     this._subToMarket = this._subToMarket.bind(this);
@@ -162,7 +165,7 @@ class ExchangeSubscriber extends React.Component {
     emitter.on(
       "settle-order-update",
       (settleOrderListener = object => {
-        let { isMarketAsset, marketAsset } = market_utils.isMarketAsset(
+        let { isMarketAsset, marketAsset } = market_utils_ori.isMarketAsset(
           this.props.quoteAsset,
           this.props.baseAsset
         );
@@ -243,7 +246,7 @@ class ExchangeSubscriber extends React.Component {
     }
   }
 
-  _subToMarket(props, newBucketSize) {
+  _subToMarket(props, newBucketSize?) {
     let { quoteAsset, baseAsset, bucketSize } = props;
     if (newBucketSize) {
       bucketSize = newBucketSize;
@@ -256,17 +259,17 @@ class ExchangeSubscriber extends React.Component {
 
   render() {
     return (
-      <div className="grid-block vertical">
+      <>
         {!this.props.marketReady ? <LoadingIndicator /> : null}
         <Exchange
           {...this.props}
           sub={this.state.sub}
           subToMarket={this._subToMarket}
         />
-      </div>
+      </>
     );
   }
-}
+};
 
 ExchangeSubscriber = BindToChainState(ExchangeSubscriber, {
   keep_updating: true,

@@ -13,16 +13,19 @@ const styles = {
     justifyContent: "center",
     width: "5.334rem",
     height: "5.334rem",
-    margin: 0
+    margin: 0,
+    position: "relative"
   },
   active: {
     opacity: "1"
   }
 };
 
+
+
 const iconStyles = {
   base: {
-    fontSize: "2.4rem"
+    fontSize: "2rem"
   }
 };
 
@@ -36,13 +39,15 @@ let NavItem = ({
 }) => {
   return (
     <a
+      id={id}
       href={linkTo || "javascript:;"}
       style={[styles.base, active && styles.active] as any}
       onClick={e => {
         e.preventDefault();
-        onClick();
+        onClick(e);
       }}
     >
+      
       <Icon style={iconStyles.base} icon={icon} active={active} />
     </a>
   );

@@ -17,6 +17,10 @@ const icons = {
     base: require("./icons/ic_gateway.svg"),
     active: require("./icons/ic_gateway_active.svg"),
   },
+  settings: {
+    base: require("./icons/ic_settings.svg"),
+    active: require("./icons/ic_settings_active.svg"),
+  },
   faq: {
     base: require("./icons/ic_faq.svg"),
     active: require("./icons/ic_faq_active.svg"),

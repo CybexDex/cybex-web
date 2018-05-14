@@ -1,6 +1,6 @@
 /// <reference types="react"/>
 declare module "react-translate-component" {
-  class Translate extends React.Component<any, any> {}
+  const Translate: React.ComponentFactory<any, any>;
   export default Translate;
 }
 
@@ -13,7 +13,7 @@ declare module "react-scroll-up" {
   export default QueueAnim;
 }
 declare module "alt-container" {
-  class AltContainer extends React.Component<any, any> {}
+  const AltContainer: React.ClassicFactory<any>;
   export default AltContainer;
 }
 
@@ -26,9 +26,9 @@ declare namespace CommonUtils {
   const format_volume: (amount: number) => string;
 }
 
-declare module "common/utils" {
-  export default CommonUtils;
-}
+// declare module "common/utils" {
+//   export default CommonUtils;
+// }
 
 type Action<T> = {} | T;
 

@@ -26,8 +26,8 @@ let Icon = class extends React.Component<
     icon: PropTypes.string
   };
 
-  getStyles = icon => {
-    let url = getIcon(icon);
+  getStyles = (icon, type = "base") => {
+    let url = getIcon(icon, type);
     return {
       base: {
         display: "inline-block",
@@ -43,7 +43,7 @@ let Icon = class extends React.Component<
 
   render() {
     let { icon, active, style } = this.props;
-    let styles = this.getStyles(icon);
+    let styles = this.getStyles(icon, active ? "active" : "base");
     return <i style={[styles.base, style] as any} />;
   }
 };

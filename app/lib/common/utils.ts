@@ -303,7 +303,7 @@ var Utils = {
       return value;
     } else if (value.length) {
       // console.log( "before: ",value )
-      let n = Number(value);
+      let n: number | string = Number(value);
       if (isNaN(n)) return;
       let parts = value.split(".");
       // console.log( "split: ", parts )
@@ -390,7 +390,7 @@ var Utils = {
     coreAsset,
     balances
   }) {
-    let coreFee = { asset: "1.3.0" };
+    let coreFee: { [a: string]: any } = { asset: "1.3.0" };
     coreFee.amount = this.estimateFee(opType, options, globalObject) || 0;
 
     if (!asset || asset.get("id") === "1.3.0") return coreFee; // Desired fee is in core asset
@@ -557,9 +557,11 @@ var Utils = {
     if (!globalObject || !dynGlobalObject) return null;
     const block_interval = globalObject.get("parameters").get("block_interval");
     const head_block = dynGlobalObject.get("head_block_number");
-    const head_block_time = new Date(dynGlobalObject.get("time") + "Z");
+    const head_block_time: Date | number = new Date(
+      dynGlobalObject.get("time") + "Z"
+    );
     const seconds_below = (head_block - block_number) * block_interval;
-    return new Date(head_block_time - seconds_below * 1000);
+    return new Date((head_block_time as any) - seconds_below * 1000);
   },
 
   get_translation_parts(str) {
@@ -615,5 +617,6 @@ var Utils = {
     };
   }
 };
+
 
 export default Utils;

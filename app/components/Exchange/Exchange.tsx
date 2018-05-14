@@ -327,13 +327,9 @@ class Exchange extends React.Component<any, any> {
   }
 
   componentWillUnmount() {
-    // if (this.resizeSubscription) {
-    //   this.resizeSubscription.unsubscribe();
-    // }
-    // window.removeEventListener("resize", this._getWindowSize);
-    // if (this.settingListener) {
-    //   this.settingListener();
-    // }
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
   }
 
   _getFeeAssets(quote, base, coreAsset) {
@@ -1448,35 +1444,21 @@ class Exchange extends React.Component<any, any> {
         quote={quote}
         baseSymbol={baseSymbol}
         quoteSymbol={quoteSymbol}
+        height={height}
+        width={width}
         onClick={this._orderbookClick.bind(this)}
-        horizontal={true}
+        horizontal={false}
         moveOrderBook={this._moveOrderBook.bind(this)}
         flipOrderBook={this.props.viewSettings.get("flipOrderBook")}
         marketReady={marketReady}
-        wrapperClass={`order-${buySellTop ? 3 : 1} xlarge-order-${
-          buySellTop ? 4 : 1
-        }`}
         currentAccount={this.props.currentAccount.get("id")}
       />
     );
     return (
-      <div className="grid-block page-layout market-layout">
+      <div className="market-layout">
         <AccountNotifications />
-        {/* Main vertical block with content */}
-
-        {/* Left Column - Open Orders */}
-        {/* {leftOrderBook ? (
-                    <div className="grid-block left-column shrink no-overflow">
-                        {orderBook}
-                    </div>) : null} */}
-
-        {/* Center Column */}
-        <div
-          className={cnames(
-            "grid-block center-block medium-4 small-12 vertical no-overflow"
-          )}
-        >
-         {/* Top bar with info */}
+        <div className="market-main">
+          {/* Top bar with info */}
           <ExchangeHeader
             quoteAsset={quoteAsset}
             baseAsset={baseAsset}
@@ -1572,128 +1554,6 @@ class Exchange extends React.Component<any, any> {
               <div className="grid-block vertical no-padding shrink" />
             )}
           </div>
-          {/* end CenterContent */}
-        </div>
-        {/* End of Main Content Column */}
-        {/* Right Column - Market History */}
-        <div className="grid-block shrink right-column small-12 no-overflow vertical">
-          {/* Market History */}
-          <div className="grid-block no-padding vertical orders-wrapper with-shadow">
-            <Tabs
-              className={"tab-list-horizontal"}
-              tabs={InfoTabs}
-              currentTab={currentInfoTab}
-              onTabClick={this._handleTabClick.bind(this)}
-            />
-            {currentInfoTab.key === INFO_TAB_MARKET_HISTORY && (
-              <MarketHistory
-                className={"no-padding no-overflow middle-content small-12"}
-                headerStyle={{ paddingTop: 0 }}
-                history={activeMarketHistory}
-                currentAccount={currentAccount}
-                myHistory={currentAccount.get("history")}
-                base={base}
-                quote={quote}
-                baseSymbol={baseSymbol}
-                quoteSymbol={quoteSymbol}
-                isNullAccount={isNullAccount}
-              />
-            )}
-            {currentInfoTab.key === INFO_TAB_MYMARKET && (
-              <MyMarkets
-                className="left-order-book no-padding no-overflow"
-                headerStyle={{ paddingTop: 0 }}
-                columns={[
-                  { name: "star", index: 1 },
-                  { name: "market", index: 2 },
-                  { name: "vol", index: 3 },
-                  { name: "price", index: 4 },
-                  { name: "change", index: 5 }
-                ]}
-                findColumns={[
-                  { name: "market", index: 1 },
-                  { name: "issuer", index: 2 },
-                  { name: "vol", index: 3 },
-                  { name: "add", index: 4 }
-                ]}
-                current={`${quoteSymbol}_${baseSymbol}`}
-              />
-            )}
-            {currentInfoTab.key === INFO_TAB_OPEN_SETTLE_ORDERS &&
-              (base.get("id") === "1.3.0" || quote.get("id") === "1.3.0") && (
-                <OpenSettleOrders
-                  withHeader={false}
-                  key="settle_orders"
-                  className={cnames(
-                    !smallScreen && !leftOrderBook
-                      ? "medium-6 xlarge-4 order-12"
-                      : "",
-                    "small-12 medium-6 no-padding align-spaced ps-container middle-content order-12"
-                  )}
-                  orders={marketSettleOrders}
-                  base={base}
-                  quote={quote}
-                  baseSymbol={baseSymbol}
-                  quoteSymbol={quoteSymbol}
-                />
-              )}
-            {currentInfoTab.key === INFO_TAB_MYORDER &&
-              marketLimitOrders.size > 0 &&
-              base &&
-              quote && (
-                <MyOpenOrders
-                  smallScreen={this.props.smallScreen}
-                  className={cnames(
-                    { disabled: isNullAccount },
-                    `align-spaced ps-container middle-content order-${
-                      buySellTop ? 6 : 6
-                    }`
-                  )}
-                  key="open_orders"
-                  orders={marketLimitOrders}
-                  currentAccount={currentAccount}
-                  base={base}
-                  quote={quote}
-                  baseSymbol={baseSymbol}
-                  quoteSymbol={quoteSymbol}
-                  onCancel={this._cancelLimitOrder.bind(this)}
-                  flipMyOrders={this.props.viewSettings.get("flipMyOrders")}
-                />
-              )}
-            {currentInfoTab.key === INFO_TAB_ORDER_BOOK_BUY && orderBook}
-            {currentInfoTab.key === INFO_TAB_DEPTH_CHART && (
-              <DepthHighChart
-                marketReady={marketReady}
-                orders={marketLimitOrders}
-                showCallLimit={showCallLimit}
-                call_orders={marketCallOrders}
-                flat_asks={flatAsks}
-                flat_bids={flatBids}
-                flat_calls={showCallLimit ? flatCalls : []}
-                flat_settles={
-                  this.props.settings.get("showSettles") && flatSettles
-                }
-                settles={marketSettleOrders}
-                invertedCalls={invertedCalls}
-                totalBids={totals.bid}
-                totalAsks={totals.ask}
-                base={base}
-                quote={quote}
-                height={height}
-                onClick={this._depthChartClick.bind(this, base, quote)}
-                settlementPrice={
-                  !hasPrediction && feedPrice && feedPrice.toReal()
-                }
-                spread={spread}
-                LCP={showCallLimit ? lowestCallPrice : null}
-                leftOrderBook={leftOrderBook}
-                hasPrediction={hasPrediction}
-                noFrame={false}
-                verticalOrderbook={leftOrderBook}
-                theme={this.props.settings.get("themes")}
-              />
-            )}
-          </div>
           <div className="grid-block no-padding exchange-forms">
             {buyForm}
             {sellForm}
@@ -1725,7 +1585,79 @@ class Exchange extends React.Component<any, any> {
               hasOrders={combinedBids.length > 0}
             />
           </div>
+          <MarketHistory
+            className={"no-padding no-overflow middle-content small-12"}
+            headerStyle={{ paddingTop: 0 }}
+            history={activeMarketHistory}
+            currentAccount={currentAccount}
+            myHistory={currentAccount.get("history")}
+            base={base}
+            quote={quote}
+            baseSymbol={baseSymbol}
+            quoteSymbol={quoteSymbol}
+            isNullAccount={isNullAccount}
+          />
+          {/* end CenterContent */}
         </div>
+        {/* End of Main Content Column */}
+        {/* Right Column - Market History */}
+        <div className="market-markets">
+          <MyMarkets
+            className="left-order-book no-padding no-overflow"
+            headerStyle={{ paddingTop: 0 }}
+            columns={[
+              { name: "star", index: 1 },
+              { name: "market", index: 2 },
+              { name: "vol", index: 3 },
+              { name: "price", index: 4 },
+              { name: "change", index: 5 }
+            ]}
+            findColumns={[
+              { name: "market", index: 1 },
+              { name: "issuer", index: 2 },
+              { name: "vol", index: 3 },
+              { name: "add", index: 4 }
+            ]}
+            current={`${quoteSymbol}_${baseSymbol}`}
+          />
+        </div>
+        <div className="market-orders">
+          <MyOpenOrders
+            smallScreen={this.props.smallScreen}
+            className={cnames(
+              { disabled: isNullAccount },
+              `align-spaced ps-container middle-content order-${
+                buySellTop ? 6 : 6
+              }`
+            )}
+            key="open_orders"
+            orders={marketLimitOrders}
+            currentAccount={currentAccount}
+            base={base}
+            quote={quote}
+            baseSymbol={baseSymbol}
+            quoteSymbol={quoteSymbol}
+            onCancel={this._cancelLimitOrder.bind(this)}
+            flipMyOrders={this.props.viewSettings.get("flipMyOrders")}
+          />
+          <OpenSettleOrders
+            withHeader={false}
+            key="settle_orders"
+            className={cnames(
+              !smallScreen && !leftOrderBook
+                ? "medium-6 xlarge-4 order-12"
+                : "",
+              "small-12 medium-6 no-padding align-spaced ps-container middle-content order-12"
+            )}
+            orders={marketSettleOrders}
+            base={base}
+            quote={quote}
+            baseSymbol={baseSymbol}
+            quoteSymbol={quoteSymbol}
+          />
+        </div>
+        <div className="market-orderbook" id="orderBook">{orderBook}</div>
+        <div>{/* Market History */}</div>
 
         {!isNullAccount && quoteIsBitAsset ? (
           <BorrowModal

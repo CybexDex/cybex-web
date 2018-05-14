@@ -161,14 +161,6 @@ div.bordered-header {
   max-width: 54em;
 }
 
-// a wrapper containing nav & main block
-.main-body {
-  @include display-flex(row, $align-items: stretch, $flex-wrap: nowrap);
-  flex-grow: 1; // padding-top: $space-between;
-  // padding-bottom: $space-between;
-  overflow-y: hidden;
-}
-
 .left-panel {
   box-shadow: 1px 0 rgba(0, 0, 0, 0.5);
 }
@@ -477,4 +469,25 @@ div.bordered-header {
 
 a {
   user-select: none;
+}
+
+.cybex-layout {
+  display: grid;
+  grid-template-rows: 4.6667rem 1fr 2.5rem;
+  grid-template-columns: 5.3334rem 1fr;
+  grid-template-areas: "header header" "nav main" "footer footer";
+  height: 100vh;
+  & > .header {
+    grid-area: header;
+  }
+  & > .main-body {
+    grid-area: main;
+    overflow-y: auto;
+  }
+  & > .nav {
+    grid-area: nav;
+  }
+  & > .footer {
+    grid-area: footer;
+  }
 }

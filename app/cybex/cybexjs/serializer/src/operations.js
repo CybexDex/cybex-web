@@ -126,7 +126,10 @@ export const call_order_update_operation_fee_parameters = new Serializer(
 );
 
 export const fill_order_operation_fee_parameters = new Serializer(
-  "fill_order_operation_fee_parameters"
+  "fill_order_operation_fee_parameters",
+  {
+    fee: uint64
+  }
 );
 
 export const account_create_operation_fee_parameters = new Serializer(

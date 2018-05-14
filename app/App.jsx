@@ -1,5 +1,6 @@
 import { ChainStore } from "cybexjs";
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
@@ -232,16 +233,12 @@ class App extends React.Component {
       );
     } else {
       content = (
-        <div className="grid-frame vertical">
+        <div className="cybex-layout">
           <Header />
           <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
-          <div className="main-body">
-            <Nav />
-            <div className="grid-block">
-              <div className="grid-block vertical">{this.props.children}</div>
-            </div>
-          </div>
-          {showFooter ? <Footer synced={this.state.synced} /> : null}
+          <Nav />
+          <div className="main-body">{this.props.children}</div>
+          <Footer synced={this.state.synced} />
           <ReactTooltip
             ref="tooltip"
             place="top"
