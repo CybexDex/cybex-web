@@ -61,6 +61,6 @@ class ChainStore extends AbstractStore<ChainData> {
   }
 }
 
-const StoreWrapper = alt.createStore(ChainStore, "VolumnStore") as ChainStore;
+const StoreWrapper = alt.createStore(ChainStore, "ChainStore") as ChainStore;
 export { StoreWrapper as ChainStore };
 export default StoreWrapper;

@@ -1,5 +1,5 @@
 import alt from "alt-instance";
-import { ChainStore } from "Stores/ChainStore";
+import { ChainStore } from "stores/ChainStore";
 import { Apis } from "cybexjs-ws";
 import { debugGen } from "utils//Utils";
 import { correctMarketPair } from "utils/Market";
