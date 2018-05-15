@@ -165,6 +165,8 @@ class SettingsStore {
           "JADE.PAY",
           "JADE.GET",
           "JADE.MAD",
+          "JADE.GNX",
+          "JADE.KEY",
           // "JADE.LST",
           "JADE.ENG"
         ]
@@ -184,7 +186,7 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          "JADE.MT",
+          // "JADE.MT",
           "CYB"
         ]
       };

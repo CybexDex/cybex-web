@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import Immutable from "immutable";
 import Ps from "perfect-scrollbar";
 import utils from "common/utils";
@@ -25,7 +26,12 @@ let lastLookup = new Date();
 
 // Tempoary for GET
 const SpecialMarkets = { "JADE.MT": { "JADE.ETH": 0, CYB: 1, "JADE.BTC": 2 } };
-const FixedMarkets = { CYB: { "JADE.MT": -1 } };
+const FixedMarkets = {
+  // CYB: { "JADE.GNX": -1 },
+  // "JADE.ETH": { "JADE.KEY": -1 },
+  // "JADE.BTC": { "JADE.GNX": -1 },
+  // "JADE.EOS": { "JADE.GNX": -1 }
+};
 
 export class MarketGroup extends React.Component {
   static defaultProps = {
