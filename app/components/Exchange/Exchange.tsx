@@ -1320,7 +1320,7 @@ class Exchange extends React.Component<any, any> {
         isOpen={this.state.buySellOpen}
         onToggleOpen={this._toggleOpenBuySell.bind(this)}
         className={cnames(
-          "with-shadow bgcolor-primary small-12 medium-6 no-padding",
+          "bgcolor-primary small-12 medium-6 no-padding",
           {
             disabled: isNullAccount
           },
@@ -1382,7 +1382,7 @@ class Exchange extends React.Component<any, any> {
         isOpen={this.state.buySellOpen}
         onToggleOpen={this._toggleOpenBuySell.bind(this)}
         className={cnames(
-          "with-shadow bgcolor-primary small-12 medium-6 no-padding",
+          "bgcolor-primary small-12 medium-6 no-padding",
           {
             disabled: isNullAccount
           },
@@ -1479,7 +1479,7 @@ class Exchange extends React.Component<any, any> {
           />
 
           <div
-            className="grid-block vertical no-padding bgcolor-primary with-shadow"
+            className="grid-block vertical no-padding bgcolor-primary"
             id="CenterContent"
             ref="center"
           >

@@ -107,6 +107,7 @@ let OrderBookRowVertical = class extends React.PureComponent<any, any> {
       <div
         onClick={this.props.onClick}
         className={classnames(
+          "link",
           { "final-row": final },
           { "my-order": order.isMine(this.props.currentAccount) }
         )}

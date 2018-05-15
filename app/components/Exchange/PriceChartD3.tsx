@@ -703,7 +703,14 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     const { data, xScale, xAccessor, displayXAccessor } = xScaleProvider(
       dataWithIndicator
     );
-    const xExtents = [xAccessor(data[data.length - 1]), xAccessor(data[0])];
+
+    const defaultXExtents = 80;
+    const xExtents = [
+      xAccessor(data[data.length - 1]),
+      data.length > defaultXExtents
+        ? xAccessor(data[data.length - defaultXExtents])
+        : xAccessor(data[0])
+    ];
 
     const macdAppearance = {
       stroke: {
@@ -721,7 +728,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         height={346}
         seriesName="PriceChart"
         margin={margin}
-        // clamp={false}
+        // zoomEvent={false}
         clamp={enableChartClamp}
         data={data}
         xAccessor={xAccessor}
@@ -729,7 +736,8 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         xScale={xScale}
         xExtents={xExtents}
         type="hybrid"
-        className="chart-main ps-child no-overflow Stockcharts__wrapper ps-must-propagate"
+        // className="chart-main ps-child no-overflow Stockcharts__wrapper ps-must-propagate"
+        className="chart-main no-overflow Stockcharts__wrapper"
         drawMode={enableTrendLine || enableFib}
       >
         {showVolumeChart && this._renderVolumeChart(chartMultiplier)}

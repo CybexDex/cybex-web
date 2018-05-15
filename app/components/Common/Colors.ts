@@ -1,8 +1,8 @@
 export const Colors = {
   // Colors
   $colorWhite: "#ffffff",
-  $colorWhiteOp8: "rgba(255, 255, 255, 0.8)",  
-  $colorWhiteOp3: "rgba(255, 255, 255, 0.3)",  
+  $colorWhiteOp8: "rgba(255, 255, 255, 0.8)",
+  $colorWhiteOp3: "rgba(255, 255, 255, 0.3)",
   $colorOrange: "#ff9143",
   $colorOrangeLight: "#ffc478",
   $colorCrimson: "#d2323e",
@@ -47,5 +47,10 @@ export const Colors = {
   $colorGradientGreyex:
     "linear-gradient(48deg,rgba(120, 129, 154, 50),rgba(120, 129, 154, 100))"
 };
+
+export enum CommonType {
+  Primary,
+  Secondary
+}
 
 export default Colors;
