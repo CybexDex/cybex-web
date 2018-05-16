@@ -1,5 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import Translate from "react-translate-component";
 import { ChainValidation } from "cybexjs";
@@ -8,11 +8,12 @@ import BindToChainState from "../Utility/BindToChainState";
 import counterpart from "counterpart";
 import FloatingDropdown from "./FloatingDropdown";
 import FormattedAsset from "./FormattedAsset";
-import Immutable from "immutable";
+import AssetName from "./AssetName";
+import * as Immutable from "immutable";
 import utils from "common/utils";
 import classnames from "classnames";
 
-class AssetDropdown extends React.Component {
+let AssetDropdown = class extends React.Component<any, any> {
   static propTypes = {
     assets: ChainTypes.ChainAssetsList,
     value: PropTypes.string, // asset id
@@ -24,6 +25,7 @@ class AssetDropdown extends React.Component {
 
     return (
       <FloatingDropdown
+        isAsset={true}
         entries={this.props.assets
           .map(a => a && a.get("symbol"))
           .filter(a => !!a)}
@@ -45,7 +47,7 @@ class AssetDropdown extends React.Component {
       />
     );
   }
-}
+};
 
 AssetDropdown = BindToChainState(AssetDropdown);
 
@@ -57,7 +59,7 @@ AssetDropdown = BindToChainState(AssetDropdown);
  *
  */
 
-class AssetSelector extends React.Component {
+class AssetSelector extends React.Component<any, any> {
   static propTypes = {
     label: PropTypes.string, // a translation key for the label
     error: PropTypes.string, // the error message override

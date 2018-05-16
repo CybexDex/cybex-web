@@ -86,8 +86,11 @@ export default class ExchangeHeader extends React.Component {
                 <Icon className={starClass} name="fi-star" />
               </span>
               <span className="market-symbol">
-                <span style={{ fontSize: "1.2em" }}>{quoteSymbol}</span>
-                {` / ${baseSymbol}`}
+                <span style={{ fontSize: "1.2em" }}>
+                  <AssetName name={quoteSymbol} />
+                </span>
+                {" / "}
+                <AssetName name={baseSymbol} />
               </span>
             </a>
           </div>

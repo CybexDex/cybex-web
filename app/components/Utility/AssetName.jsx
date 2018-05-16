@@ -1,5 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import utils from "common/utils";
 import asset_utils from "common/asset_utils";
@@ -30,7 +30,7 @@ class AssetName extends React.Component {
   }
 
   render() {
-    let { name, replace, asset, noPrefix } = this.props;
+    let { name, replace, asset, noPrefix, withDescription } = this.props;
     let isBitAsset = asset.has("bitasset");
     let isPredMarket =
       isBitAsset && asset.getIn(["bitasset", "is_prediction_market"]);
@@ -50,16 +50,22 @@ class AssetName extends React.Component {
       "DRAGON",
       "TESTME"
     ];
+
     let includeBitAssetDescription =
       isBitAsset && !isPredMarket && excludeList.indexOf(name) === -1;
-
-    if ((replace && replacedName !== this.props.name) || isBitAsset) {
+    // 如果名称发生了变化，则显示该资产
+    if (
+      (replace &&
+        replacedName !== this.props.name &&
+        this.props.withDescription) ||
+      isBitAsset
+    ) {
       let desc = asset_utils.parseDescription(
         asset.getIn(["options", "description"])
       );
       let realPrefix = name.split(".");
       realPrefix = realPrefix.length > 1 ? realPrefix[0] : null;
-      if (realPrefix) realPrefix += ".";
+      if (realPrefix && hideList) realPrefix += ".";
       let optional = "";
       try {
         optional =

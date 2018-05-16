@@ -2,6 +2,7 @@ import * as React from "react";
 import { VolumnActions } from "actions/VolumeActions";
 import ReactTooltip from "react-tooltip";
 import Translate from "react-translate-component";
+import AssetName from "components/Utility/AssetName";
 
 export class VolumeDisplay extends React.Component<any, any> {
   subscription;
@@ -45,7 +46,9 @@ export class VolumeDisplay extends React.Component<any, any> {
           <table id="" className="status-table">
             {vol.details.filter(vol => vol.volByEther > 0).map(vol => (
               <tr key={vol.asset}>
-                <td className="status-title text-left">{vol.asset}</td>
+                <td className="status-title text-left">
+                  <AssetName name={vol.asset} />
+                </td>
                 <td className="status-content text-right">
                   {vol.volByEther.toFixed(6)}
                 </td>

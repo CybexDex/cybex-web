@@ -1,16 +1,32 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-
-
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import utils from "common/utils";
 
-class Dropdown extends React.Component {
+class Dropdown extends React.PureComponent<
+  {
+    isAsset?;
+    id?;
+    value?;
+    values?;
+    entries;
+    onChange?;
+    upperCase?;
+    singleEntry?;
+  },
+  any
+> {
+  listener = false;
+
+  static defaultProps = {
+    isAsset: true
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       active: false
     };
 
-    this.listener = false;
     this.onBodyClick = this.onBodyClick.bind(this);
   }
 
@@ -91,8 +107,10 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { entries, value } = this.props;
+    const { entries, value, isAsset } = this.props;
     let { active } = this.state;
+    console.debug("isAsset: ", isAsset);
+
     if (entries.length === 0) return null;
     if (entries.length == 1) {
       return (
@@ -115,7 +133,11 @@ class Dropdown extends React.Component {
             key={value}
             onClick={this.onChange.bind(this, this.props.values[value])}
           >
-            <span>{value}</span>
+            {isAsset ? (
+              <span>{utils.replaceName(value).name}</span>
+            ) : (
+              <span>{value}</span>
+            )}
           </li>
         );
       });

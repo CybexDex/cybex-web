@@ -1,5 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import FormattedAsset from "./FormattedAsset";
 import ChainTypes from "./ChainTypes";
@@ -231,7 +231,7 @@ class TotalValue extends MarketStatsCheck {
     let totalsTip = "<table><tbody>";
     for (let asset in assetValues) {
       if (assets[asset] && assetValues[asset]) {
-        let symbol = assets[asset].get("symbol");
+        let symbol = utils.replaceName(assets[asset].get("symbol")).name;
         let amount = utils.get_asset_amount(assetValues[asset], toAsset);
         if (amount) {
           if (amount < minValue && amount > -minValue) {
