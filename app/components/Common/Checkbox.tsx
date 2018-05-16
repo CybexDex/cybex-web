@@ -10,11 +10,11 @@ let Checkbox = class extends React.Component<
     id?: string;
     disabled?: boolean;
     isMaster?: boolean;
+    active: boolean;
+    children: any;
     onChange?;
   },
-  {
-    active: boolean;
-  }
+  any
 > {
   static defaultProps = {
     isMaster: false,
@@ -28,6 +28,7 @@ let Checkbox = class extends React.Component<
     onChange: PropTypes.func,
     label: PropTypes.string,
     isMaster: PropTypes.bool,
+    active: PropTypes.bool,
     id: PropTypes.string
   };
 
@@ -89,9 +90,6 @@ let Checkbox = class extends React.Component<
   id: string;
   constructor(props) {
     super(props);
-    this.state = {
-      active: false
-    };
     this.id = this.props.id || getId("checkbox");
   }
 
@@ -103,8 +101,7 @@ let Checkbox = class extends React.Component<
   };
 
   render() {
-    let { label, isMaster, disabled } = this.props;
-    let { active } = this.state;
+    let { label, isMaster, disabled, active, children } = this.props;
     let labelStyles = Checkbox.styles.label;
     let inputStyles = Checkbox.styles.input;
     return (
@@ -142,7 +139,7 @@ let Checkbox = class extends React.Component<
             ] as any
           }
         />
-        {label}
+        {label || children}
       </label>
     );
   }

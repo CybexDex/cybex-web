@@ -167,7 +167,8 @@ form.order-form {
   }
 
   .chart-tools {
-    padding: $space-between;
+    padding: 2px;
+    margin: 4px;
     > ul {
       justify-content: flex-start;
     }

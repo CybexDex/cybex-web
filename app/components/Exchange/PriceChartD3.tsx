@@ -60,6 +60,7 @@ import cnames from "classnames";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
+import { Checkbox, Button, LabelOption } from "components/Common";
 
 const bbStroke = {
   top: "#964B00",
@@ -934,15 +935,20 @@ export default class Wrapper extends React.Component<any, any> {
       })
       .map(bucket => {
         return (
-          <div
+          <LabelOption
             key={bucket}
-            className={cnames("label bucket-option", {
-              "active-bucket": bucketSize === bucket
-            })}
+            active={bucketSize === bucket}
+            size="smaller"
+            type="white-primary"
             onClick={this.props.changeBucketSize.bind(this, bucket)}
+            style={
+              {
+                marginRight: "4px"
+              }
+            }
           >
             {bucketText(bucket)}
-          </div>
+          </LabelOption>
         );
       });
 
@@ -996,7 +1002,14 @@ export default class Wrapper extends React.Component<any, any> {
           if (!this.props.showVolumeChart) return null;
           indicatorOptionsVolume.push(
             <li className="indicator" key={i}>
-              <input
+              <Checkbox
+                active={indicators[i]}
+                value={i}
+                onChange={this.props.onChangeIndicators.bind(null, i)}
+              >
+                <Translate content={`exchange.chart_options.${i}`} />{" "}
+              </Checkbox>
+              {/* <input
                 className="clickable"
                 type="checkbox"
                 checked={indicators[i]}
@@ -1005,27 +1018,20 @@ export default class Wrapper extends React.Component<any, any> {
               <div
                 onClick={this.props.onChangeIndicators.bind(null, i)}
                 className="clickable"
-              >
-                <Translate content={`exchange.chart_options.${i}`} />
-              </div>
+              /> */}
               {settingInput}
             </li>
           );
         } else {
           return (
             <li className="indicator" key={i}>
-              <input
-                className="clickable"
-                type="checkbox"
-                checked={indicators[i]}
-                onClick={this.props.onChangeIndicators.bind(null, i)}
-              />
-              <div className="clickable">
-                <Translate
-                  content={`exchange.chart_options.${i}`}
-                  onClick={this.props.onChangeIndicators.bind(null, i)}
-                />
-              </div>
+              <Checkbox
+                active={indicators[i]}
+                value={i}
+                onChange={this.props.onChangeIndicators.bind(null, i)}
+              >
+                <Translate content={`exchange.chart_options.${i}`} />
+              </Checkbox>
               {settingInput}
             </li>
           );
@@ -1130,6 +1136,7 @@ export default class Wrapper extends React.Component<any, any> {
         <div className="chart-tools">
           <ul className="market-stats stats bottom-stats">
             {/* Chart controls */}
+            {/* Hide Zoom
             <li className="stat">
               <span>
                 <span>
@@ -1137,7 +1144,7 @@ export default class Wrapper extends React.Component<any, any> {
                 </span>
                 <span>{zoomOptions}</span>
               </span>
-            </li>
+            </li> */}
             <li className="stat">
               <span>
                 <span>

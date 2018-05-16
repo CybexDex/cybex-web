@@ -676,7 +676,8 @@
   }
   #market-charts {
     .chart-tools {
-      border-bottom: 1px solid $color-panel-divider;
+      background-color: $panel-bg-color;
+      // border-bottom: 1px solid $color-panel-divider;
     }
   }
   .remove {
@@ -843,10 +844,10 @@
     }
   }
   .bid {
-    background-color: $bid-color !important;
+    background-color: $bid-color;
   }
   .ask {
-    background-color: $ask-color !important;
+    background-color: $ask-color;
   }
   .orderbook-latest-price {
     > div {

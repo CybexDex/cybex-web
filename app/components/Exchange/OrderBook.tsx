@@ -10,7 +10,9 @@ import TransitionWrapper from "../Utility/TransitionWrapper";
 import AssetName from "../Utility/AssetName";
 import PriceStat from "./PriceStat";
 import Radium from "radium";
+import { Colors } from "components/Common";
 import QueueAnim from "rc-queue-anim";
+import counterpart from "counterpart";
 
 // import ReactTooltip from "react-tooltip";
 
@@ -81,14 +83,14 @@ const cellStyle = width => ({
 });
 
 let OrderBookRowVertical = class extends React.PureComponent<any, any> {
-  // shouldComponentUpdate(np) {
-  //   if (np.order.market_base !== this.props.order.market_base) return false;
-  //   return (
-  //     np.order.ne(this.props.order) ||
-  //     np.index !== this.props.index ||
-  //     np.currentAccount !== this.props.currentAccount
-  //   );
-  // }
+  shouldComponentUpdate(np) {
+    if (np.order.market_base !== this.props.order.market_base) return false;
+    return (
+      np.order.ne(this.props.order) ||
+      np.index !== this.props.index ||
+      np.currentAccount !== this.props.currentAccount
+    );
+  }
 
   render() {
     let { order, quote, base, final } = this.props;
@@ -113,7 +115,15 @@ let OrderBookRowVertical = class extends React.PureComponent<any, any> {
         )}
         style={[rowStyles.base, rowHeight] as any}
       >
-        <span className="text-left" style={cellStyle("30%")}>
+        <span
+          className="text-left"
+          style={
+            [
+              cellStyle("30%"),
+              { color: isBid ? Colors.$colorGrass : Colors.$colorFlame }
+            ] as any
+          }
+        >
           {price}
         </span>
         <span className="text-right" style={cellStyle("30%")}>
@@ -323,18 +333,17 @@ let OrderBook = class extends React.Component<any, any> {
 
     let leftHeader = (
       <div key="top-header" style={headerStyles} className="top-header">
-        <Translate
-          className={
-            (this.state.flip ? "ask-total" : "bid-total") + " header-sub-title"
-          }
-          style={{ width: "30%" }}
-          content="exchange.price"
-        />
+        <span className="header-sub-title text-left" style={{ width: "30%" }}>
+          {counterpart.translate("exchange.price")}
+          (<AssetName dataPlace="top" name={baseSymbol} />)
+        </span>
         <span className="header-sub-title text-right" style={{ width: "30%" }}>
-          <AssetName dataPlace="top" name={quoteSymbol} />
+          {counterpart.translate("exchange.quantity")}
+          (<AssetName dataPlace="top" name={quoteSymbol} />)
         </span>
         <span className="header-sub-title text-right" style={{ width: "40%" }}>
-          <AssetName dataPlace="top" name={baseSymbol} />
+          {counterpart.translate("exchange.total_bidask")}
+          (<AssetName dataPlace="top" name={baseSymbol} />)
         </span>
       </div>
     );

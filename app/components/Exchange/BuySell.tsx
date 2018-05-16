@@ -15,8 +15,10 @@ import { Asset } from "common/MarketClasses";
 import ExchangeInput from "./ExchangeInput";
 import assetUtils from "common/asset_utils";
 import Icon from "../Icon/Icon";
+import { Colors, Button } from "components/Common";
+import Radium from "radium";
 
-class BuySell extends React.Component {
+let BuySell = class extends React.Component<any, any> {
   static propTypes = {
     balance: ChainTypes.ChainObject,
     type: PropTypes.string,
@@ -253,7 +255,7 @@ class BuySell extends React.Component {
 
     let disabled = noBalance || invalidPrice || invalidAmount;
 
-    let buttonClass = classNames("button buySellButton", type, {
+    let buttonClass = classNames({
       disabled: disabled
     });
     let balanceSymbol = isBid ? base.get("symbol") : quote.get("symbol");
@@ -269,18 +271,12 @@ class BuySell extends React.Component {
     // Fee asset selection
     if (
       feeAssets[1] &&
-      feeAssets[1].getIn([
-        "options",
-        "core_exchange_rate",
-        "quote",
-        "asset_id"
-      ]) === "1.3.0" &&
-      feeAssets[1].getIn([
-        "options",
-        "core_exchange_rate",
-        "base",
-        "asset_id"
-      ]) === "1.3.0"
+      feeAssets[1].getIn(
+        ["options", "core_exchange_rate", "quote", "asset_id"]
+      ) === "1.3.0" &&
+      feeAssets[1].getIn(
+        ["options", "core_exchange_rate", "base", "asset_id"]
+      ) === "1.3.0"
     ) {
       feeAsset = feeAssets[0];
       feeAssets.splice(1, 1);
@@ -507,30 +503,16 @@ class BuySell extends React.Component {
                 </table>
                 <div className="buysell-buttons-wrapper">
                   {/* BUY/SELL button */}
-                  {disabledText ? (
-                    <div
-                      className=""
-                      data-tip={disabledText}
-                      data-place="right"
+                  <div className="full-width-content" data-tip={disabledText && ""}>
+                    <Button
+                      className={buttonClass}
+                      onClick={onSubmit.bind(this, true)}
+                      type={type}
+                      disabled={disabled}
                     >
-                      <input
-                        className={buttonClass}
-                        type="submit"
-                        onClick={onSubmit.bind(this, true)}
-                        value={buttonText}
-                      />
-                    </div>
-                  ) : (
-                    <div className="" data-tip={""}>
-                      <input
-                        className={buttonClass}
-                        type="submit"
-                        onClick={onSubmit.bind(this, true)}
-                        value={buttonText}
-                      />
-                    </div>
-                  )}
-
+                      {buttonText}
+                    </Button>
+                  </div>
                   {/* SHORT button */}
                   {disabledText && isPredictionMarket ? (
                     <div
@@ -593,6 +575,6 @@ class BuySell extends React.Component {
       </div>
     );
   }
-}
-
+};
+BuySell = Radium(BuySell);
 export default BindToChainState(BuySell, { keep_updating: true });

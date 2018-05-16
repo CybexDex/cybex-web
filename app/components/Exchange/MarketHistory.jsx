@@ -38,15 +38,15 @@ class MarketHistory extends React.Component {
     );
   }
 
-  componentDidMount() {
-    let historyContainer = this.refs.history;
-    Ps.initialize(historyContainer);
-  }
+  // componentDidMount() {
+  //   let historyContainer = this.refs.history;
+  //   Ps.initialize(historyContainer);
+  // }
 
-  componentDidUpdate() {
-    let historyContainer = this.refs.history;
-    Ps.update(historyContainer);
-  }
+  // componentDidUpdate() {
+  //   let historyContainer = this.refs.history;
+  //   Ps.update(historyContainer);
+  // }
 
   _changeTab(tab) {
     SettingsActions.changeViewSetting({
@@ -59,7 +59,7 @@ class MarketHistory extends React.Component {
     // Ensure that focus goes back to top of scrollable container when tab is changed
     let historyNode = this.refs.history;
     historyNode.scrollTop = 0;
-    Ps.update(historyNode);
+    // Ps.update(historyNode);
 
     setTimeout(ReactTooltip.rebuild, 1000);
   }

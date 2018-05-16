@@ -1,4 +1,4 @@
-export const Colors = {
+export const BaseColors = {
   // Colors
   $colorWhite: "#ffffff",
   $colorWhiteOp8: "rgba(255, 255, 255, 0.8)",
@@ -7,6 +7,7 @@ export const Colors = {
   $colorOrangeLight: "#ffc478",
   $colorCrimson: "#d2323e",
   $colorGrass: "#6dbb49",
+  $colorGrassLight: "#A9E06E",
   $colorBlue: "#2e5be2",
   $colorLight: "#f7f8fa",
   $colorGrey: "#78819a",
@@ -17,6 +18,8 @@ export const Colors = {
   $colorRosset: "#c87b41",
   $colorBronze: "#c86443",
   $colorFlame: "#d24632",
+  $colorFlameLight: "#d96250",
+
   //
   $colorWarn: "#c12121",
   $colorMahogany: "#502d2d",
@@ -37,15 +40,29 @@ export const Colors = {
   $colorLead: "#1b2230",
   $colorAnchor: "#212939",
   $colorIndependence: "#293246",
-  $colorNoir: "#111621",
+  $colorNoir: "#111621"
 
   //
+};
+
+export const GridentColors = {
   $colorGradientFoilex: "linear-gradient(-135deg, #e7ac5f, #e76536)",
   $colorGradientGoldex: "linear-gradient(-131deg, #ffc478, #ff9143)",
+  $colorGradientFlame: `linear-gradient(90deg, ${BaseColors.$colorFlameLight}, ${
+    BaseColors.$colorFlame
+  })`,
+  $colorGradientGrass: `linear-gradient(90deg, ${BaseColors.$colorGrassLight}, ${
+    BaseColors.$colorGrass
+  })`,
   $colorGradientSilvex:
     "linear-gradient(48deg,rgba(255, 255, 255, 50),rgba(255, 255, 255, 100))",
   $colorGradientGreyex:
     "linear-gradient(48deg,rgba(120, 129, 154, 50),rgba(120, 129, 154, 100))"
+};
+
+export const Colors = {
+  ...BaseColors,
+  ...GridentColors
 };
 
 export enum CommonType {
