@@ -70,4 +70,5 @@ export enum CommonType {
   Secondary
 }
 
+
 export default Colors;

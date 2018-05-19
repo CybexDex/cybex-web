@@ -859,6 +859,12 @@
       font-size: 13px;
     }
   }
+  .order-row {
+    &:hover {
+      // background-color: $panel-bg-color;
+      opacity: 0.8;
+    }
+  }
   .order-table {
     > tbody > tr:nth-of-type(odd) {
       background-color: $bg-color;

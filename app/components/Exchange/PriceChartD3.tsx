@@ -283,7 +283,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         id={2}
         yExtents={[d => d.volume, calculators.smaVolume.accessor()]}
         height={60}
-        origin={(w, h) => [0, h - 60]}
+        origin={(w, h) => [0, h - 80]}
       >
         {indicators.macd ? null : (
           <XAxis
@@ -726,7 +726,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       <ChartCanvas
         ratio={ratio}
         width={width}
-        height={346}
+        height={366}
         seriesName="PriceChart"
         margin={margin}
         // zoomEvent={false}
@@ -801,6 +801,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
 
 CandleStickChartWithZoomPan = fitWidth(CandleStickChartWithZoomPan);
 export default class Wrapper extends React.Component<any, any> {
+  mainChart: React.RefObject<any> = React.createRef();
   constructor(props) {
     super(props);
 
@@ -811,7 +812,6 @@ export default class Wrapper extends React.Component<any, any> {
         settings: false
       }
     };
-
     this._onInputHeight = this._onInputHeight.bind(this);
     this._listener = this._listener.bind(this);
   }
@@ -836,12 +836,6 @@ export default class Wrapper extends React.Component<any, any> {
       np.showVolumeChart !== this.props.showVolumeChart ||
       np.enableChartClamp !== this.props.enableChartClamp
     );
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.leftOrderBook !== this.props.leftOrderBook) {
-      if (this.refs.FitWidth) this.refs.FitWidth.handleWindowResize();
-    }
   }
 
   componentWillUnmount() {
@@ -900,6 +894,19 @@ export default class Wrapper extends React.Component<any, any> {
     this.setState({ dropdowns });
   }
 
+  componentDidMount() {
+    if (this.mainChart) {
+      console.debug("3D: ", this.mainChart);
+      (this.mainChart.current as HTMLElement).addEventListener(
+        "wheel",
+        e => {
+          e.stopPropagation();
+        },
+        true
+      );
+    }
+  }
+
   render() {
     const {
       currentPeriod,
@@ -941,11 +948,9 @@ export default class Wrapper extends React.Component<any, any> {
             size="smaller"
             type="white-primary"
             onClick={this.props.changeBucketSize.bind(this, bucket)}
-            style={
-              {
-                marginRight: "4px"
-              }
-            }
+            style={{
+              marginRight: "4px"
+            }}
           >
             {bucketText(bucket)}
           </LabelOption>
@@ -1132,6 +1137,7 @@ export default class Wrapper extends React.Component<any, any> {
       <div
         className="no-margin no-padding"
         style={{ overflow: "visible", width: "100%" }}
+        ref={this.mainChart}
       >
         <div className="chart-tools">
           <ul className="market-stats stats bottom-stats">
@@ -1214,7 +1220,7 @@ export default class Wrapper extends React.Component<any, any> {
           </ul>
         </div>
         {this.props.priceData.length ? (
-          <CandleStickChartWithZoomPan ref="FitWidth" {...this.props} />
+          <CandleStickChartWithZoomPan ref={this.mainChart} {...this.props} />
         ) : (
           <div className="grid-content text-center">
             <div

@@ -1493,13 +1493,7 @@ class Exchange extends React.Component<any, any> {
                   quote={quote}
                   baseSymbol={baseSymbol}
                   quoteSymbol={quoteSymbol}
-                  height={
-                    this.state.width > 848
-                      ? this.refs.center
-                        ? this.refs.center.clientHeight - 75
-                        : chartHeight
-                      : chartHeight - 125
-                  }
+                  height={400}
                   leftOrderBook={leftOrderBook}
                   marketReady={marketReady}
                   indicators={indicators}
@@ -1656,7 +1650,9 @@ class Exchange extends React.Component<any, any> {
             quoteSymbol={quoteSymbol}
           />
         </div>
-        <div className="market-orderbook" id="orderBook">{orderBook}</div>
+        <div className="market-orderbook" id="orderBook">
+          {orderBook}
+        </div>
         <div>{/* Market History */}</div>
 
         {!isNullAccount && quoteIsBitAsset ? (

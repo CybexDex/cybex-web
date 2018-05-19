@@ -212,6 +212,14 @@ module.exports = function(env) {
           include: [path.join(root_dir, "app")],
           use: [
             {
+              loader: "babel-loader",
+              options: {
+                compact: false,
+                cacheDirectory: true,
+                plugins: ["react-hot-loader/babel"]
+              }
+            },
+            {
               loader: "awesome-typescript-loader",
               options: {
                 useCache: true,
@@ -227,7 +235,8 @@ module.exports = function(env) {
           loader: "babel-loader",
           options: {
             compact: false,
-            cacheDirectory: true
+            cacheDirectory: true,
+            plugins: ["react-hot-loader/babel"]
           }
         },
         {

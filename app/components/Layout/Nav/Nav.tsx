@@ -111,7 +111,7 @@ type NavProps = WithRouterProps & {
 
 const getNavId = id => `$nav__${id}`;
 
-export class Nav extends React.Component<NavProps, { isExpand; siderTop }> {
+export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
   constructor(props: NavProps) {
     super(props);
     this.state = {

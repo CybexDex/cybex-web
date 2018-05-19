@@ -4,20 +4,38 @@ import Radium from "radium";
 import Colors from "./Colors";
 import { Button, ButtonSize, ButtonType } from "./Button";
 
-let LabelOption = class extends React.Component<
+let TabLink = class extends React.Component<
   {
     children?;
     disabled?: boolean;
     active?: boolean;
-    size?: ButtonSize;
-    type?: ButtonType;
+    size?: "normal" | "small" | "large";
+    type?: "primary" | "secondary";
     style?: React.CSSProperties;
     onClick?;
   },
   any
 > {
+  static Styles = {
+    base: {
+      color: Colors.$colorGrey
+    },
+    primary: {
+      ":hover": {
+        color: Colors.$colorOrangeLight
+      },
+      ":active": {
+        color: Colors.$colorOrange,
+        borderBottom: "1px solid"
+      }
+    },
+    normal: {
+      fontSize: "1rem"
+    }
+  };
+
   static defaultProps = {
-    type: "secondary",
+    type: "primary",
     size: "normal",
     disabled: false,
     active: false
@@ -33,7 +51,7 @@ let LabelOption = class extends React.Component<
 
   render() {
     let { children, size, type, disabled, active, style } = this.props;
-    let styles = Button.Styles;
+    let styles = TabLink.Styles;
     return (
       <span
         className="clickable"
@@ -53,7 +71,7 @@ let LabelOption = class extends React.Component<
     );
   }
 };
-LabelOption = Radium(LabelOption);
+TabLink = Radium(TabLink);
 
-export { LabelOption };
-export default LabelOption;
+export { TabLink };
+export default TabLink;

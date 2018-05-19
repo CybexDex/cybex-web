@@ -267,6 +267,7 @@ div.bordered-header {
 }
 
 .scroll-bar-for-win {
+  ::-moz-scrollbar,
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -275,21 +276,21 @@ div.bordered-header {
     }
   }
   /* Track */
+  ::-moz-scrollbar-track,
   ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
-    -webkit-border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
   }
   /* Handle */
-  ::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
+  ::-moz-scrollbar-thumb::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: rgba(0, 0, 0, 0.6);
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
     &:hover {
       background-color: rgba(0, 0, 0, 0.8);
     }
   }
+  ::-moz-scrollbar-thumb:window-inactive,
   ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.1);
   }

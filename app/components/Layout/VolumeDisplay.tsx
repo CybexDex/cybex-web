@@ -4,7 +4,7 @@ import ReactTooltip from "react-tooltip";
 import Translate from "react-translate-component";
 import AssetName from "components/Utility/AssetName";
 
-export class VolumeDisplay extends React.Component<any, any> {
+export class VolumeDisplay extends React.PureComponent<any, any> {
   subscription;
   componentDidMount() {
     VolumnActions.queryVol();
@@ -44,18 +44,20 @@ export class VolumeDisplay extends React.Component<any, any> {
         </div>
         <ReactTooltip id="volumeDetails" delayHide={500} effect="solid">
           <table id="" className="status-table">
-            {vol.details.filter(vol => vol.volByEther > 0).map(vol => (
-              <tr key={vol.asset}>
-                <td className="status-title text-left">
-                  <AssetName name={vol.asset} />
-                </td>
-                <td className="status-content text-right">
-                  {vol.volByEther.toFixed(6)}
-                </td>
-              </tr>
-            ))}
+            <tbody>
+              {vol.details.filter(vol => vol.volByEther > 0).map(vol => (
+                <tr key={vol.asset}>
+                  <td className="status-title text-left">
+                    <AssetName name={vol.asset} />
+                  </td>
+                  <td className="status-content text-right">
+                    {vol.volByEther.toFixed(6)}
+                  </td>
+                </tr>
+              ))}
 
-            <tr className="border-top" />
+              <tr className="border-top" />
+            </tbody>
           </table>
         </ReactTooltip>
       </div>

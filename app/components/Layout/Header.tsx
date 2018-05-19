@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import { connect } from "alt-react";
 import ActionSheet from "react-foundation-apps/src/action-sheet";
@@ -38,6 +39,57 @@ const FlagImage = ({ flag, width = 20, height = 20 }) => {
   );
 };
 
+const AccountName = ({ account_display_name }) => (
+  <span className="table-cell" style={{ paddingLeft: 5 }}>
+    <div className="inline-block">
+      <span className="text-raw">{account_display_name}</span>
+    </div>
+  </span>
+);
+
+const FlagDropdown = class extends React.PureComponent<{
+  currentLocale;
+  locales;
+}> {
+  render() {
+    let { currentLocale, locales } = this.props;
+    return (
+      <ActionSheet>
+        <ActionSheet.Button title="">
+          <a style={{ padding: "1rem", border: "none" }} className="button">
+            <FlagImage flag={currentLocale} />
+          </a>
+        </ActionSheet.Button>
+        <ActionSheet.Content>
+          <ul className="no-first-element-top-border">
+            {locales.map(locale => {
+              return (
+                <li key={locale}>
+                  {/* <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale);  location.reload(false) }}> */}
+                  <a
+                    href="javascript:;"
+                    onClick={e => {
+                      e.preventDefault();
+                      IntlActions.switchLocale(locale);
+                    }}
+                  >
+                    <span className="table-cell">
+                      <FlagImage flag={locale} />
+                    </span>
+                    <span className="table-cell" style={{ paddingLeft: 10 }}>
+                      <Translate content={"languages." + locale} />
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </ActionSheet.Content>
+      </ActionSheet>
+    );
+  }
+};
+
 export const HeadContextMenuId = "$headerContext";
 
 class Header extends React.Component<any, any> {
@@ -48,7 +100,7 @@ class Header extends React.Component<any, any> {
   };
 
   constructor(props, context) {
-    super();
+    super(props);
     this.state = {
       active: context.location.pathname
     };
@@ -81,18 +133,6 @@ class Header extends React.Component<any, any> {
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
-    // return (
-    //     nextProps.linkedAccounts !== this.props.linkedAccounts ||
-    //     nextProps.currentAccount !== this.props.currentAccount ||
-    //     nextProps.contextMenu !== this.props.contextMenu ||
-    //     nextProps.passwordLogin !== this.props.passwordLogin ||
-    //     nextProps.locked !== this.props.locked ||
-    //     nextProps.current_wallet !== this.props.current_wallet ||
-    //     nextProps.lastMarket !== this.props.lastMarket ||
-    //     nextProps.starredAccounts !== this.props.starredAccounts ||
-    //     nextProps.currentLocale !== this.props.currentLocale ||
-    //     nextState.active !== this.state.active
-    // );
   }
 
   _triggerMenu(e) {
@@ -320,14 +360,6 @@ class Header extends React.Component<any, any> {
       }
     }
 
-    let AccountName = ({ account_display_name }) => (
-      <span className="table-cell" style={{ paddingLeft: 5 }}>
-        <div className="inline-block">
-          <span className="text-raw">{account_display_name}</span>
-        </div>
-      </span>
-    );
-
     accountsDropDown = createAccountLink ? (
       createAccountLink
     ) : tradingAccounts.length === 1 ? (
@@ -378,41 +410,6 @@ class Header extends React.Component<any, any> {
       >
         <Icon className="icon-14px" name="cog" />
       </a>
-    );
-
-    const flagDropdown = (
-      <ActionSheet>
-        <ActionSheet.Button title="">
-          <a style={{ padding: "1rem", border: "none" }} className="button">
-            <FlagImage flag={this.props.currentLocale} />
-          </a>
-        </ActionSheet.Button>
-        <ActionSheet.Content>
-          <ul className="no-first-element-top-border">
-            {this.props.locales.map(locale => {
-              return (
-                <li key={locale}>
-                  {/* <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale);  location.reload(false) }}> */}
-                  <a
-                    href="javascript:;"
-                    onClick={e => {
-                      e.preventDefault();
-                      IntlActions.switchLocale(locale);
-                    }}
-                  >
-                    <span className="table-cell">
-                      <FlagImage flag={locale} />
-                    </span>
-                    <span className="table-cell" style={{ paddingLeft: 10 }}>
-                      <Translate content={"languages." + locale} />
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </ActionSheet.Content>
-      </ActionSheet>
     );
 
     // const enableDepositWithdraw = Apis.instance().chain_id.substr(0, 8) === "4018d784";
@@ -479,7 +476,12 @@ class Header extends React.Component<any, any> {
 
             {myAccountCount !== 0 ? null : (
               <div className="grp-menu-item overflow-visible">
-                {flagDropdown}
+                {
+                  <FlagDropdown
+                    locales={this.props.locales}
+                    currentLocale={this.props.currentLocale}
+                  />
+                }
               </div>
             )}
 
@@ -489,7 +491,12 @@ class Header extends React.Component<any, any> {
 
             {!myAccountCount ? null : (
               <div className="grp-menu-item overflow-visible account-drop-down">
-                {flagDropdown}
+                {
+                  <FlagDropdown
+                    locales={this.props.locales}
+                    currentLocale={this.props.currentLocale}
+                  />
+                }
               </div>
             )}
 

@@ -10,9 +10,10 @@ import TransitionWrapper from "../Utility/TransitionWrapper";
 import AssetName from "../Utility/AssetName";
 import PriceStat from "./PriceStat";
 import Radium from "radium";
-import { Colors } from "components/Common";
-import QueueAnim from "rc-queue-anim";
+import { Colors, TabLink, $styleSelect } from "components/Common";
 import counterpart from "counterpart";
+import Select from "react-select";
+import { LimitOrder } from "common/MarketClasses";
 
 // import ReactTooltip from "react-tooltip";
 
@@ -27,17 +28,21 @@ const heightRowHeight = 32;
 const rowStyles = {
   base: {
     display: "flex",
-    flexGrow: 1,
-    flexShrink: 0
+    flexShrink: 0,
+    position: "relative",
+    padding: "0 0.5rem",
+    margin: "0 -0.5em",    
   }
 };
 
 const wrapperStyle = {
   base: {
     ...rowStyles.base,
+    flexGrow: 1,
     flexFlow: "column",
     transition: "all 0.4s ease-in-out",
     overflowY: "hidden",
+    justifyContent: "space-between",
     flex: "1"
   },
   expand: {
@@ -68,32 +73,43 @@ const bodyStyle = {
 };
 
 const rowHeight = {
-  flexBasis: priceRowHeight + "px"
+  flexBasis: priceRowHeight + "px",
+  lineHeight: priceRowHeight + "px"
 };
 
 const headerStyles = {
   height: `${heightRowHeight}px`,
   display: "flex",
-  lineHeight: "32px"
+  alignItems: "center"
+};
+
+const fixArray = (list, cutCondition, fixedLength, filler) => {
+  return !cutCondition || !list || !Array.isArray(list) || !fixedLength
+    ? list
+    : list.length > fixedLength
+      ? list.slice(0, fixedLength)
+      : [...list, ...new Array(fixedLength - list.length).fill(filler)];
 };
 
 const cellStyle = width => ({
+  zIndex: 2,
   lineHeight: priceRowHeight + "px",
   width
 });
 
-let OrderBookRowVertical = class extends React.PureComponent<any, any> {
+let OrderBookRowVertical = class extends React.Component<any, any> {
   shouldComponentUpdate(np) {
     if (np.order.market_base !== this.props.order.market_base) return false;
     return (
       np.order.ne(this.props.order) ||
       np.index !== this.props.index ||
+      np.digits !== this.props.digits ||
       np.currentAccount !== this.props.currentAccount
     );
   }
 
   render() {
-    let { order, quote, base, final } = this.props;
+    let { order, quote, base, final, digits } = this.props;
     const isBid = order.isBid();
     const isCall = order.isCall();
     let integerClass = isCall
@@ -103,18 +119,41 @@ let OrderBookRowVertical = class extends React.PureComponent<any, any> {
         : "orderHistoryAsk";
 
     let price = (
-      <PriceText price={order.getPrice()} quote={quote} base={base} />
+      <PriceText
+        price={order.getPrice(order.sell_price, digits)}
+        quote={quote}
+        base={base}
+        precision={digits}
+      />
     );
+    let bgWidth =
+      (order
+        ? (((order.for_sale as any) / order.init_for_sale) as any).toFixed(4) *
+          100
+        : 0) + "%";
     return (
       <div
         onClick={this.props.onClick}
         className={classnames(
           "link",
-          { "final-row": final },
+          "order-row",
+          // { "final-row": final },
           { "my-order": order.isMine(this.props.currentAccount) }
         )}
         style={[rowStyles.base, rowHeight] as any}
       >
+        <i
+          className="bg"
+          style={{
+            position: "absolute",
+            zIndex: 1,
+            width: bgWidth,
+            height: "100%",
+            margin: "0 -0.5em",
+            backgroundColor: isBid ? Colors.$colorGrass : Colors.$colorFlame,
+            opacity: 0.1
+          }}
+        />
         <span
           className="text-left"
           style={
@@ -149,8 +188,176 @@ let OrderBookRowVertical = class extends React.PureComponent<any, any> {
 
 OrderBookRowVertical = Radium(OrderBookRowVertical);
 
+let OrderBookHeader = class extends React.PureComponent<
+  { type; onTypeChange?; basePrecision?; onDepthChange },
+  any
+> {
+  combineOptions = [];
+  constructor(props) {
+    super(props);
+    let availablePrecision = Math.max(
+      props.basePrecision,
+      OrderBook.PRECISION_SIZE
+    );
+
+    let combineOptions = (this.combineOptions = new Array(
+      OrderBook.PRECISION_SIZE
+    )
+      .fill(1)
+      .map((v, i) => ({
+        label: counterpart.translate("exchange.depth", {
+          depth: availablePrecision - i
+        }),
+        value: availablePrecision - i
+      })));
+    this.state = {
+      depth: combineOptions[0]
+    };
+  }
+
+  handleDepthChange = depth => {
+    this.setState({ depth });
+    let { onDepthChange } = this.props;
+    if (onDepthChange) {
+      onDepthChange(depth);
+    }
+  };
+
+  render() {
+    let { type, onTypeChange, onDepthChange, basePrecision = 8 } = this.props;
+
+    return (
+      <>
+        <TabLink
+          active={type === OrderType.All}
+          onClick={onTypeChange.bind(this, OrderType.All)}
+          style={OrderBook.Styles.tab}
+        >
+          All
+        </TabLink>
+        <TabLink
+          active={type === OrderType.Ask}
+          onClick={onTypeChange.bind(this, OrderType.Ask)}
+          style={OrderBook.Styles.tab}
+        >
+          Ask
+        </TabLink>
+        <TabLink
+          active={type === OrderType.Bid}
+          onClick={onTypeChange.bind(this, OrderType.Bid)}
+          style={OrderBook.Styles.tab}
+        >
+          Bid
+        </TabLink>
+        <i style={{ flexGrow: 1 }} />
+        <Select
+          onChange={this.handleDepthChange}
+          styles={$styleSelect("orderbook")}
+          options={this.combineOptions}
+          value={this.state.depth}
+        />
+      </>
+    );
+  }
+};
+
+const OrderBookRowEmpty = class extends React.PureComponent<any> {
+  render() {
+    return (
+      <div style={rowStyles.base}>
+        <span className="text-left" style={cellStyle("30%")}>
+          ---
+        </span>
+        <span className="text-right" style={cellStyle("30%")}>
+          ---
+        </span>
+        <span className="text-right" style={cellStyle("40%")}>
+          ---
+        </span>
+      </div>
+    );
+  }
+};
+
+let OrderBookTableHeader = class extends React.PureComponent<
+  { baseSymbol; quoteSymbol },
+  any
+> {
+  render() {
+    let { baseSymbol, quoteSymbol } = this.props;
+    return (
+      <div key="top-header" style={headerStyles} className="top-header">
+        <span className="header-sub-title text-left" style={{ width: "30%" }}>
+          {counterpart.translate("exchange.price")}
+          (<AssetName dataPlace="top" name={baseSymbol} />)
+        </span>
+        <span className="header-sub-title text-right" style={{ width: "30%" }}>
+          {counterpart.translate("exchange.quantity")}
+          (<AssetName dataPlace="top" name={quoteSymbol} />)
+        </span>
+        <span className="header-sub-title text-right" style={{ width: "40%" }}>
+          {counterpart.translate("exchange.total_bidask")}
+          (<AssetName dataPlace="top" name={baseSymbol} />)
+        </span>
+      </div>
+    );
+  }
+};
+
+let OrderBookParitalWrapper = class extends React.Component<
+  {
+    orders;
+    type;
+    countOfRow;
+    base;
+    quote;
+    digits;
+    onOrderClick;
+    currentAccount;
+    displayType;
+  },
+  any
+> {
+  render() {
+    let {
+      orders,
+      displayType,
+      type,
+      countOfRow,
+      base,
+      quote,
+      onOrderClick,
+      currentAccount,
+      digits
+    } = this.props;
+    orders =
+      displayType === type
+        ? fixArray(orders, orders.length < countOfRow * 2, countOfRow * 2, null)
+        : fixArray(orders, true, countOfRow, null);
+    let toDispalyOrders = type === OrderType.Ask ? orders.reverse() : orders;
+    return toDispalyOrders.map((order, index) => {
+      return order === null ? (
+        <OrderBookRowEmpty key={"$nullOrder" + index} />
+      ) : (
+        <OrderBookRowVertical
+          index={index}
+          key={order.getPrice() + (order.isCall() ? "_call" : "")}
+          order={order}
+          onClick={onOrderClick.bind(this, order)}
+          digits={digits}
+          base={base}
+          quote={quote}
+          final={index === 0}
+          currentAccount={currentAccount}
+        />
+      );
+    });
+  }
+};
+
 let OrderBook = class extends React.Component<any, any> {
   askWrapper: HTMLDivElement;
+  static PRECISION_SIZE = 4;
   static defaultProps = {
     bids: [],
     asks: [],
@@ -163,6 +370,14 @@ let OrderBook = class extends React.Component<any, any> {
     orders: PropTypes.object.isRequired
   };
 
+  static Styles = {
+    tab: {
+      marginRight: "1rem",
+      lineHeight: priceRowHeight + "px",
+      height: priceRowHeight + "px"
+    }
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -171,6 +386,8 @@ let OrderBook = class extends React.Component<any, any> {
       showAllBids: true,
       showAllAsks: true,
       rowCount: 20,
+      digits: 8,
+      // digits: props.base.get("precision", 8),
       type: OrderType.All
     };
   }
@@ -196,47 +413,20 @@ let OrderBook = class extends React.Component<any, any> {
   };
 
   componentDidUpdate() {
-    this.fixPos();
+    // this.fixPos();
   }
   componentDidMount() {
     this.fixPos();
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.marketReady) {
-      this.setState({
-        scrollToBottom: true
-      });
-    }
-
-    // Change of market or direction
-    if (
-      nextProps.base.get("id") !== this.props.base.get("id") ||
-      nextProps.quote.get("id") !== this.props.quote.get("id")
-    ) {
-      this.setState({
-        scrollToBottom: true
-      });
-
-      if (this.refs.askTransition) {
-        this.refs.askTransition.resetAnimation();
-        if (this.refs.hor_asks) this.refs.hor_asks.scrollTop = 0;
-        if (this.refs.hor_bids) this.refs.hor_bids.scrollTop = 0;
-      }
-
-      if (this.refs.bidTransition) {
-        this.refs.bidTransition.resetAnimation();
-      }
-
-      if (this.refs.vert_bids) this.refs.vert_bids.scrollTop = 0;
-    }
-
-    if (
-      nextProps.height !== this.props.height ||
-      nextProps.width !== this.props.width
-    ) {
-    }
+  componentDidCatch() {
+    return <h1>Opps</h1>;
   }
+
+  onDepthChange = ({ value: digits }) => {
+    this.setState({
+      digits
+    });
+  };
 
   render() {
     let {
@@ -254,105 +444,41 @@ let OrderBook = class extends React.Component<any, any> {
       marketReady,
       latest
     } = this.props;
-    let { showAllAsks, showAllBids, rowCount, type } = this.state;
+    let { showAllAsks, showAllBids, rowCount, type, digits } = this.state;
     // let countOfRow = 16;
     let countOfRow = document.getElementById("orderBook")
-      ? (Math.floor(
-          document.getElementById("orderBook").offsetHeight / priceRowHeight
-        ) -
-          3) /
-        2
+      ? Math.floor(
+          (document.getElementById("orderBook").offsetHeight / priceRowHeight -
+            3) /
+            2
+        )
       : 24;
-    let bidRows = null,
-      askRows = null;
-
-    if (base && quote) {
-      bidRows = combinedBids.filter(a => {
-        if (this.state.showAllBids || combinedBids.length <= rowCount) {
-          return true;
-        }
-        return a.getPrice() >= highestBid.getPrice() / 5;
-      });
-      bidRows = type !== OrderType.Bid ? bidRows.slice(0, countOfRow) : bidRows;
-      bidRows = bidRows.map((order, index) => {
-        return (
-          <OrderBookRowVertical
-            index={index}
-            key={order.getPrice() + (order.isCall() ? "_call" : "")}
-            order={order}
-            onClick={this.props.onClick.bind(this, order)}
-            base={base}
-            quote={quote}
-            final={index === 0}
-            currentAccount={this.props.currentAccount}
-          />
-        );
-      });
-
-      let tempAsks = combinedAsks.filter(a => {
-        if (this.state.showAllAsks || combinedBids.length <= rowCount) {
-          return true;
-        }
-        return a.getPrice() <= lowestAsk.getPrice() * 5;
-      });
-      if (!horizontal) {
-        tempAsks.sort((a, b) => {
-          return b.getPrice() - a.getPrice();
-        });
-      }
-      tempAsks =
-        type !== OrderType.Ask ? tempAsks.slice(-countOfRow) : tempAsks;
-
-      askRows = tempAsks.map((order, index) => {
-        return (
-          <OrderBookRowVertical
-            index={index}
-            key={order.getPrice() + (order.isCall() ? "_call" : "")}
-            order={order}
-            onClick={this.props.onClick.bind(this, order)}
-            base={base}
-            quote={quote}
-            type={order.type}
-            final={0 === index}
-            currentAccount={this.props.currentAccount}
-          />
-        );
-      });
+    if (!base || !quote) {
+      return null;
     }
-
-    let totalBidsLength = bidRows.length;
-    let totalAsksLength = askRows.length;
-
-    if (!showAllBids) {
-      bidRows.splice(rowCount, bidRows.length);
-    }
-
-    if (!showAllAsks) {
-      askRows.splice(rowCount, askRows.length);
-    }
-
-    let leftHeader = (
-      <div key="top-header" style={headerStyles} className="top-header">
-        <span className="header-sub-title text-left" style={{ width: "30%" }}>
-          {counterpart.translate("exchange.price")}
-          (<AssetName dataPlace="top" name={baseSymbol} />)
-        </span>
-        <span className="header-sub-title text-right" style={{ width: "30%" }}>
-          {counterpart.translate("exchange.quantity")}
-          (<AssetName dataPlace="top" name={quoteSymbol} />)
-        </span>
-        <span className="header-sub-title text-right" style={{ width: "40%" }}>
-          {counterpart.translate("exchange.total_bidask")}
-          (<AssetName dataPlace="top" name={baseSymbol} />)
-        </span>
-      </div>
+    let [bidRows, askRows] = [combinedBids, combinedAsks].map(
+      (orders: LimitOrder[]) =>
+        Array.from(
+          orders
+            .reduce((orderSet: Map<string, LimitOrder>, order) => {
+              let orderPrice = order.getPrice(order.sell_price, digits);
+              let oriOrder = orderSet[orderPrice];
+              if (!orderSet.has(orderPrice)) {
+                orderSet.set(orderPrice, order);
+              } else {
+                orderSet.set(orderPrice, orderSet.get(orderPrice).sum(order));
+              }
+              return orderSet;
+            }, new Map<string, LimitOrder>())
+            .values()
+        )
     );
 
     let priceRow = (
       <div style={[rowHeight] as any} className="text-center">
         <PriceStat
           ready={marketReady}
-          price={latest.full}
+          price={(latest && latest.full) || {}}
           quote={quote}
           base={base}
           hideQuote={true}
@@ -363,27 +489,19 @@ let OrderBook = class extends React.Component<any, any> {
     return (
       <>
         <div className="order-book-title" style={headerStyles}>
-          <button
-            className="button"
-            onClick={this.setType.bind(this, OrderType.Ask)}
-          >
-            Sell
-          </button>
-          <button
-            className="button"
-            onClick={this.setType.bind(this, OrderType.Bid)}
-          >
-            Buy
-          </button>
-          <button
-            className="button"
-            onClick={this.setType.bind(this, OrderType.All)}
-          >
-            All
-          </button>
+          <OrderBookHeader
+            type={this.state.type}
+            onTypeChange={this.setType}
+            basePrecision={8}
+            // basePrecision={base.get("precision")}
+            onDepthChange={this.onDepthChange}
+          />
         </div>
         <div className="order-book-wrapper" style={headerUnderStyle}>
-          {leftHeader}
+          <OrderBookTableHeader
+            baseSymbol={base.get("symbol")}
+            quoteSymbol={quote.get("symbol")}
+          />
           <div className="order-book-body" style={[bodyStyle] as any}>
             <div
               ref={askWrapper => (this.askWrapper = askWrapper)}
@@ -394,10 +512,23 @@ let OrderBook = class extends React.Component<any, any> {
                   type === OrderType.All && wrapperStyle.expand,
                   type === OrderType.Ask && wrapperStyle.scroll,
                   type === OrderType.Bid && wrapperStyle.hidden
+                  // {
+                  //   flexFlow: "column-reverse"
+                  // }
                 ] as any
               }
             >
-              {askRows}
+              <OrderBookParitalWrapper
+                displayType={this.state.type}
+                type={OrderType.Ask}
+                currentAccount={this.props.currentAccount}
+                countOfRow={countOfRow}
+                digits={digits}
+                base={base}
+                quote={quote}
+                orders={askRows}
+                onOrderClick={this.props.onClick.bind(this)}
+              />
             </div>
             {priceRow}
             <div
@@ -411,7 +542,17 @@ let OrderBook = class extends React.Component<any, any> {
                 ] as any
               }
             >
-              {bidRows}
+              <OrderBookParitalWrapper
+                displayType={this.state.type}
+                type={OrderType.Bid}
+                currentAccount={this.props.currentAccount}
+                countOfRow={countOfRow}
+                digits={digits}
+                base={base}
+                quote={quote}
+                orders={bidRows}
+                onOrderClick={this.props.onClick.bind(this)}
+              />
             </div>
           </div>
         </div>

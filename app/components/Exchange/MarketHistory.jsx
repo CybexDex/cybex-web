@@ -38,16 +38,6 @@ class MarketHistory extends React.Component {
     );
   }
 
-  // componentDidMount() {
-  //   let historyContainer = this.refs.history;
-  //   Ps.initialize(historyContainer);
-  // }
-
-  // componentDidUpdate() {
-  //   let historyContainer = this.refs.history;
-  //   Ps.update(historyContainer);
-  // }
-
   _changeTab(tab) {
     SettingsActions.changeViewSetting({
       historyTab: tab
@@ -74,7 +64,7 @@ class MarketHistory extends React.Component {
       quoteSymbol,
       isNullAccount
     } = this.props;
-    console.debug("History: ", history);
+    // console.debug("History: ", history);
     let { activeTab } = this.state;
     let historyRows = null;
 
@@ -146,7 +136,6 @@ class MarketHistory extends React.Component {
       historyRows = this.props.history
         .filter(() => {
           index++;
-          console.debug("Filter: ", index, index % 2 === 0);
           return index % 2 === 0;
         })
         .take(100)
@@ -202,7 +191,7 @@ class MarketHistory extends React.Component {
       <div className={this.props.className}>
         <div
           className="flex-wrapper flex-wrapper-main flex-column small-12 "
-          style={{ height: "100%", maxHeight: 720 }}
+          style={{ height: "100%" }}
         >
           <div
             style={this.props.headerStyle}
@@ -252,9 +241,9 @@ class MarketHistory extends React.Component {
             </table>
           </div>
           <div
-            className="table-container flex-wrapper flex-column grid-block market-right-padding-only no-overflow"
+            className="table-container flex-wrapper flex-column grid-block market-right-padding-only"
             ref="history"
-            style={{ maxHeight: 720, overflow: "hidden" }}
+            style={{ maxHeight: 420 }}
           >
             <table className="table table-4 flex-wrapper-main order-table text-right fixed-table market-right-padding">
               <TransitionWrapper component="tbody" transitionName="newrow">

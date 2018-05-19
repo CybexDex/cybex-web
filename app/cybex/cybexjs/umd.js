@@ -6505,6 +6505,9 @@ class Address {
     }
 
     toString(address_prefix = __WEBPACK_IMPORTED_MODULE_1_cybexjs_ws__["ChainConfig"].address_prefix) {
+
+        console.log("AddY:");
+        console.log(this.addy);
         var checksum = Object(__WEBPACK_IMPORTED_MODULE_2__hash__["ripemd160"])(this.addy);
         var addy = Buffer.concat([this.addy, checksum.slice(0, 4)]);
         return address_prefix + Object(__WEBPACK_IMPORTED_MODULE_3_bs58__["encode"])(addy);

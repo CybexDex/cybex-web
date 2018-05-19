@@ -1127,6 +1127,7 @@
     "highest_bid": "Highest bid",
     "total": "Total",
     "total_bidask": "Total",
+    "depth": " %(depth)% digits",
     "value": "Value",
     "price": "Price",
     "latest": "Latest",

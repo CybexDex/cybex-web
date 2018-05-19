@@ -30,9 +30,8 @@ let Button = class extends React.Component<ButtonProps, any> {
   static propTypes = {
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
-    type: PropTypes.oneOf(["primary", "secondary"]).isRequired,
-    size: PropTypes.oneOf(["normal", "small", "smaller", "xsmall", "big"])
-      .isRequired
+    type: PropTypes.string.isRequired,
+    size: PropTypes.string.isRequired
   };
 
   static Styles = {

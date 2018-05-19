@@ -1100,6 +1100,7 @@
     "highest_bid": "最高买价",
     "total": "成交额",
     "total_bidask": "成交金额",
+    "depth": " %(depth)s 位小数",
     "value": "数量",
     "price": "价格",
     "latest": "最新成交价",
