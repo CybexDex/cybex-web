@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { getClassName } from "utils//ClassName";
 import { connect } from "alt-react";
@@ -68,6 +69,36 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
               unsafe
               component="section"
               content="first.p3"
+            />
+            <Translate
+              className="text-center"
+              unsafe
+              component="section"
+              content="first.p4"
+            />
+            <Translate
+              className="text-center"
+              unsafe
+              component="section"
+              content="first.p5"
+            />
+            <Translate
+              className="text-center"
+              unsafe
+              component="section"
+              content="first.p6"
+            />
+            <Translate
+              className="text-center"
+              unsafe
+              component="section"
+              content="first.p7"
+            />
+            <Translate
+              className="text-center"
+              unsafe
+              component="section"
+              content="first.footer"
             />
           </div>
           <div className="modal-footer">

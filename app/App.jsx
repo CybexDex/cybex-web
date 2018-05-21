@@ -128,8 +128,7 @@ class App extends React.Component {
       loadingMask.classList.add("fade-out");
       setTimeout(() => loadingMask.remove(), 500);
     }
-    ModalActions.showModal("gameModal", true);
-    ModalActions.showModal(DEFAULT_ETH_MODAL_ID, true);
+    ModalActions.showModal("REMOVE_JADE", true);
   }
 
   _onIgnoreIncognitoWarning() {
@@ -278,6 +277,7 @@ class App extends React.Component {
             }}
           />
           <WalletUnlockModal />
+          <EthModal modalId={"REMOVE_JADE"} />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal ref="browser_modal" />
@@ -362,7 +362,7 @@ class Root extends React.Component {
 
 const zd = document.createElement("script");
 zd.innerHTML =
-  '/*<![CDATA[*/window.zE || (function (e, t, s) { var n = window.zE = window.zEmbed = function () { n._.push(arguments) }, a = n.s = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.set = function (e) { n.set._.push(e) }, n._ = [], n.set._ = [], a.async = true, a.setAttribute("charset", "utf-8"), a.src = "https://static.zdassets.com/ekr/asset_composer.js?key=" + s, n.t = +new Date, a.type = "text/javascript", r.parentNode.insertBefore(a, r) })(document, "script", "4a299e55-8cd6-491a-86dc-ad6e256b4ada");/*]]>*/';
+  'window.zE || (function (e, t, s) { var n = window.zE = window.zEmbed = function () { n._.push(arguments) }, a = n.s = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.set = function (e) { n.set._.push(e) }, n._ = [], n.set._ = [], a.async = true, a.setAttribute("charset", "utf-8"), a.src = "https://static.zdassets.com/ekr/asset_composer.js?key=" + s, n.t = +new Date, a.type = "text/javascript", r.parentNode.insertBefore(a, r) })(document, "script", "4a299e55-8cd6-491a-86dc-ad6e256b4ada");';
 window.document.head.appendChild(zd);
 
 IntlStore.listen(e => {
