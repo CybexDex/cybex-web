@@ -12,6 +12,7 @@ let Checkbox = class extends React.Component<
     isMaster?: boolean;
     active: boolean;
     children: any;
+    size: string;
     onChange?;
   },
   any
@@ -19,6 +20,7 @@ let Checkbox = class extends React.Component<
   static defaultProps = {
     isMaster: false,
     disabled: false,
+    size: "normal",
     label: "",
     onChange: () => void 0
   };
@@ -27,6 +29,7 @@ let Checkbox = class extends React.Component<
     disabled: PropTypes.bool,
     onChange: PropTypes.func,
     label: PropTypes.string,
+    size: PropTypes.string,
     isMaster: PropTypes.bool,
     active: PropTypes.bool,
     id: PropTypes.string
@@ -35,7 +38,7 @@ let Checkbox = class extends React.Component<
   static styles = {
     label: {
       base: {
-        fontSize: "1.4rem",
+        fontSize: "1em",
         display: "flex",
         alignItems: "center",
         opacity: "0.8",
@@ -55,19 +58,29 @@ let Checkbox = class extends React.Component<
         ":hover": {
           opacity: "0.3"
         }
+      },
+      size: {
+        small: {
+          fontSize: "0.8em"
+        },
+        large: {
+          fontSize: "1.2em"
+        },
+        xlarge: {
+          fontSize: "1.4em"
+        }
       }
     },
     input: {
       base: {
-        margin: 0,
+        margin: "0 0.5em 0 0",
         backgroundImage: `url(${getIcon("checkbox")})`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
         appearance: "none",
-        width: "1.4em",
-        height: "1.4em",
-        marginRight: "0.5em"
+        width: "1.2em",
+        height: "1.2em"
       },
       active: {
         backgroundImage: `url(${getIcon("checkbox", "active")})`
@@ -83,6 +96,18 @@ let Checkbox = class extends React.Component<
       },
       disabledMaster: {
         backgroundImage: `url(${getIcon("checkbox", "disabledAcitve")})`
+      },
+      size: {
+        small: {
+          width: "0.8em",
+          height: "0.8em"
+        },
+        largr: {
+          fontSize: "1.2em"
+        },
+        xlargr: {
+          fontSize: "1.4em"
+        },
       }
     }
   };
@@ -101,7 +126,7 @@ let Checkbox = class extends React.Component<
   };
 
   render() {
-    let { label, isMaster, disabled, active, children } = this.props;
+    let { label, isMaster, disabled, active, children, size } = this.props;
     let labelStyles = Checkbox.styles.label;
     let inputStyles = Checkbox.styles.input;
     return (
@@ -111,7 +136,8 @@ let Checkbox = class extends React.Component<
           [
             labelStyles.base,
             active && labelStyles.active,
-            disabled && labelStyles.disabled
+            disabled && labelStyles.disabled,
+            labelStyles.size[size]            
           ] as any
         }
       >
@@ -119,12 +145,12 @@ let Checkbox = class extends React.Component<
           id={this.id}
           // className="no-appearance"
           type="checkbox"
+          checked={active}
           disabled={disabled}
           onChange={this.handleOnChange}
           style={
             [
               inputStyles.base,
-
               active
                 ? isMaster
                   ? inputStyles.master
@@ -135,7 +161,8 @@ let Checkbox = class extends React.Component<
                   ? inputStyles.disabledMaster
                   : inputStyles.disabledAcitve
                 : {},
-              disabled ? inputStyles.disabled : {}
+              disabled ? inputStyles.disabled : {},
+              inputStyles.size[size]
             ] as any
           }
         />

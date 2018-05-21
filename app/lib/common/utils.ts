@@ -432,7 +432,7 @@ var Utils = {
     return useCoreFee ? coreFee : fee;
   },
 
-  convertPrice: function(fromRate, toRate, fromID, toID) {
+  convertPrice: function(fromRate, toRate, fromID?, toID?) {
     if (!fromRate || !toRate) {
       return null;
     }

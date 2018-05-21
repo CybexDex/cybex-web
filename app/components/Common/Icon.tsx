@@ -9,7 +9,7 @@ let Icon = class extends React.Component<
     disabled?: boolean;
     active?: boolean;
     icon: string;
-    style: any;
+    style?: any;
     onClick?;
   },
   any

@@ -19,14 +19,24 @@ export const $styleSelect = (type = "base") => ({
     ...styles,
     zIndex: 5
   }), 
+  valueContainer: styles => ({
+    ...styles,
+    height: "100%",
+    padding: 0,
+  }), 
+  dropdownIndicator: styles => ({
+    ...styles,
+    padding: "0 8px",
+  }), 
   control: (styles, { data, isDisabled, isFocused, isSelected }) => ({
     ...styles,
     ...TypedStyles[type].control,
     color: Colors.$colorWhite,
-    height: "2rem",
-    minHeight: "2rem",
+    height: "2em",
+    minHeight: "2em",
     minWidth: "5rem",
     width: "10rem",
+    alignSelf: "flex-start",
     borderWidth: 0,
     opacity: isDisabled ? 0.04 : 1
   }),

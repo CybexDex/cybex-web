@@ -8,8 +8,29 @@ import utils from "common/utils";
 import Icon from "../Icon/Icon";
 import MarketsActions from "actions/MarketsActions";
 import SettingsActions from "actions/SettingsActions";
+import Radium from "radium";
+import { Colors } from "components/Common";
 
-class MarketRow extends React.Component {
+const Styles = {
+  row: {
+    base: {
+      width: "100%"
+    },
+    active: {
+      backgroundColor: Colors.$colorGreyLightWhite,
+      opacity: 0.8
+    }
+  },
+  cell: {
+    active: {
+      color: Colors.$colorOrange
+    }
+  }
+};
+
+let MarketRow = class extends React.Component<any, any> {
+  statsInterval;
+  statsChecked;
   static propTypes = {
     quote: ChainTypes.ChainAsset.isRequired,
     base: ChainTypes.ChainAsset.isRequired
@@ -24,8 +45,8 @@ class MarketRow extends React.Component {
     router: PropTypes.object.isRequired
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.statsInterval = null;
   }
@@ -82,11 +103,6 @@ class MarketRow extends React.Component {
 
     let price = utils.convertPrice(quote, base);
 
-    let rowStyles = {};
-    if (this.props.leftAlign) {
-      rowStyles.textAlign = "left";
-    }
-
     let buttonClass = "button outline";
     let buttonStyle = null;
     if (this.props.compact) {
@@ -106,7 +122,7 @@ class MarketRow extends React.Component {
           case "star":
             let starClass = starred ? "gold-star" : "grey-star";
             return (
-              <td
+              <span
                 onClick={this._onStar.bind(
                   this,
                   quote.get("symbol"),
@@ -115,19 +131,19 @@ class MarketRow extends React.Component {
                 key={column.index}
               >
                 <Icon className={starClass} name="fi-star" />
-              </td>
+              </span>
             );
 
           case "vol":
             let amount = stats ? stats.volumeBase : 0;
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 className="text-right"
                 key={column.index}
               >
                 {utils.format_volume(amount)}
-              </td>
+              </span>
             );
 
           case "change":
@@ -139,35 +155,36 @@ class MarketRow extends React.Component {
               change === "0.00" ? "" : change > 0 ? "change-up" : "change-down";
 
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 className={"text-right " + changeClass}
                 key={column.index}
               >
                 {change + "%"}
-              </td>
+              </span>
             );
 
           case "marketName":
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 key={column.index}
               >
                 <div className={buttonClass} style={buttonStyle}>
                   {marketName}
                 </div>
-              </td>
+              </span>
             );
 
           case "market":
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 key={column.index}
+                style={[this.props.current && Styles.cell.active] as any}
               >
                 {this.props.name}
-              </td>
+              </span>
             );
 
           case "price":
@@ -205,7 +222,7 @@ class MarketRow extends React.Component {
             }
 
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 className="text-right"
                 key={column.index}
@@ -214,12 +231,12 @@ class MarketRow extends React.Component {
                   finalPrice,
                   finalPrice > 1000 ? 0 : finalPrice > 10 ? 2 : precision
                 )}
-              </td>
+              </span>
             );
 
           case "quoteSupply":
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 key={column.index}
               >
@@ -230,12 +247,12 @@ class MarketRow extends React.Component {
                     asset={quote.get("id")}
                   />
                 ) : null}
-              </td>
+              </span>
             );
 
           case "baseSupply":
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 key={column.index}
               >
@@ -249,22 +266,22 @@ class MarketRow extends React.Component {
                     asset={base.get("id")}
                   />
                 ) : null}
-              </td>
+              </span>
             );
 
           case "issuer":
             return (
-              <td
+              <span
                 onClick={this._onClick.bind(this, marketID)}
                 key={column.index}
               >
                 <AccountName account={quote.get("issuer")} />
-              </td>
+              </span>
             );
 
           case "add":
             return (
-              <td
+              <span
                 style={{ textAlign: "right" }}
                 key={column.index}
                 onClick={this.props.onCheckMarket.bind(this, marketID)}
@@ -279,12 +296,12 @@ class MarketRow extends React.Component {
                       : null
                   }
                 />
-              </td>
+              </span>
             );
 
           case "remove":
             return (
-              <td
+              <span
                 key={column.index}
                 className="clickable"
                 onClick={this.props.removeMarket}
@@ -299,7 +316,7 @@ class MarketRow extends React.Component {
                 >
                   –
                 </span>
-              </td>
+              </span>
             );
 
           default:
@@ -316,11 +333,18 @@ class MarketRow extends React.Component {
     }
 
     return (
-      <tr className={className} style={rowStyles}>
+      <div
+        className="table-row clickable"
+        style={
+          [Styles.row.base, this.props.current && Styles.row.active] as any
+        }
+      >
         {columns}
-      </tr>
+      </div>
     );
   }
-}
+};
+
+MarketRow = Radium(MarketRow);
 
 export default BindToChainState(MarketRow);

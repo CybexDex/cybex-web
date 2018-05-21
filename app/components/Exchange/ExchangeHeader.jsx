@@ -75,11 +75,11 @@ export default class ExchangeHeader extends React.Component {
     const volumeQuote = marketStats.get("volumeQuote");
 
     return (
-      <div className="grid-block shrink no-padding overflow-visible top-bar bgcolor-primary with-shadow">
+      <div className="grid-block shrink no-padding overflow-visible top-bar bgcolor-primary">
         <div className="grid-block overflow-visible">
           <div className="grid-block shrink show-for-large">
-            <a
-              className="v-align"
+            <span
+              className="v-align clickable"
               onClick={this._addMarket.bind(this, quoteSymbol, baseSymbol)}
             >
               <span style={{ paddingRight: 0 }} className="market-symbol">
@@ -92,7 +92,7 @@ export default class ExchangeHeader extends React.Component {
                 {" / "}
                 <AssetName name={baseSymbol} />
               </span>
-            </a>
+            </span>
           </div>
 
           <div className="grid-block vertical" style={{ overflow: "visible" }}>

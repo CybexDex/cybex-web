@@ -39,9 +39,9 @@ import "rxjs/add/observable/merge";
 import "rxjs/add/operator/debounceTime";
 import { Tabs } from "./Tabs/Tabs";
 
-import { Button } from "components/Common";
+import { Button, Colors } from "components/Common";
 import { Icon } from "components/Common";
-import { Checkbox, Radio, getId } from "components/Common";
+import { Checkbox, Radio, getId, BaseColors } from "components/Common";
 
 Highcharts.setOptions({
   global: {
@@ -1457,7 +1457,10 @@ class Exchange extends React.Component<any, any> {
     return (
       <div className="market-layout">
         <AccountNotifications />
-        <div className="market-main">
+        <div
+          className="market-main _scroll-bar"
+          style={{ boxShadow: `0 0 2px 2px ${BaseColors.$colorNoir}` }}
+        >
           {/* Top bar with info */}
           <ExchangeHeader
             quoteAsset={quoteAsset}
@@ -1579,43 +1582,6 @@ class Exchange extends React.Component<any, any> {
               hasOrders={combinedBids.length > 0}
             />
           </div>
-          <MarketHistory
-            className={"no-padding no-overflow middle-content small-12"}
-            headerStyle={{ paddingTop: 0 }}
-            history={activeMarketHistory}
-            currentAccount={currentAccount}
-            myHistory={currentAccount.get("history")}
-            base={base}
-            quote={quote}
-            baseSymbol={baseSymbol}
-            quoteSymbol={quoteSymbol}
-            isNullAccount={isNullAccount}
-          />
-          {/* end CenterContent */}
-        </div>
-        {/* End of Main Content Column */}
-        {/* Right Column - Market History */}
-        <div className="market-markets">
-          <MyMarkets
-            className="left-order-book no-padding no-overflow"
-            headerStyle={{ paddingTop: 0 }}
-            columns={[
-              { name: "star", index: 1 },
-              { name: "market", index: 2 },
-              { name: "vol", index: 3 },
-              { name: "price", index: 4 },
-              { name: "change", index: 5 }
-            ]}
-            findColumns={[
-              { name: "market", index: 1 },
-              { name: "issuer", index: 2 },
-              { name: "vol", index: 3 },
-              { name: "add", index: 4 }
-            ]}
-            current={`${quoteSymbol}_${baseSymbol}`}
-          />
-        </div>
-        <div className="market-orders">
           <MyOpenOrders
             smallScreen={this.props.smallScreen}
             className={cnames(
@@ -1648,6 +1614,46 @@ class Exchange extends React.Component<any, any> {
             quote={quote}
             baseSymbol={baseSymbol}
             quoteSymbol={quoteSymbol}
+          />
+          {/* end CenterContent */}
+        </div>
+        {/* End of Main Content Column */}
+        {/* Right Column - Market History */}
+        <div className="market-markets">
+          <MyMarkets
+            className="left-order-book no-padding no-overflow"
+            headerStyle={{ paddingTop: 0 }}
+            columns={[
+              { name: "star", index: 1 },
+              { name: "market", index: 2 },
+              { name: "vol", index: 3 },
+              { name: "price", index: 4 },
+              { name: "change", index: 5 }
+            ]}
+            findColumns={[
+              { name: "market", index: 1 },
+              { name: "issuer", index: 2 },
+              { name: "vol", index: 3 },
+              { name: "add", index: 4 }
+            ]}
+            current={`${quoteSymbol}_${baseSymbol}`}
+          />
+        </div>
+        <div
+          className="market-orders"
+          style={{ borderTop: `1px solid ${Colors.$colorDark}` }}
+        >
+          <MarketHistory
+            className={"no-padding no-overflow middle-content small-12"}
+            headerStyle={{ paddingTop: 0 }}
+            history={activeMarketHistory}
+            currentAccount={currentAccount}
+            myHistory={currentAccount.get("history")}
+            base={base}
+            quote={quote}
+            baseSymbol={baseSymbol}
+            quoteSymbol={quoteSymbol}
+            isNullAccount={isNullAccount}
           />
         </div>
         <div className="market-orderbook" id="orderBook">

@@ -412,38 +412,32 @@ class MyOpenOrders extends React.Component<any, any> {
     });
 
     return (
-      <div key="open_orders" className={this.props.className}>
-        <div
-          className="small-12 flex-wrapper flex-wrapper-main flex-column"
-          style={{ maxHeight: 720 }}
-        >
-          <div className="exchange-content-header">
-            <Translate content="exchange.my_orders" />
-          </div>
-          <table className="table order-table table-hover">
-            <TableHeader
-              type="sell"
-              baseSymbol={baseSymbol}
-              quoteSymbol={quoteSymbol}
-            />
-          </table>
-
-          <div
-            className="grid-block no-padding market-right-padding"
-            ref="asks"
-            style={{ overflow: "hidden", height: "100%", maxHeight: 720 }}
-          >
-            <table
-              style={{ paddingBottom: 5 }}
-              className="table order-table table-hover"
-            >
-              <TransitionWrapper component="tbody" transitionName="newrow">
-                {rows.length ? rows : emptyRow}
-              </TransitionWrapper>
-            </table>
-          </div>
+      <>
+        <div className="exchange-content-header">
+          <Translate content="exchange.my_orders" />
         </div>
-      </div>
+        <table className="table order-table table-hover">
+          <TableHeader
+            type="sell"
+            baseSymbol={baseSymbol}
+            quoteSymbol={quoteSymbol}
+          />
+        </table>
+        <div
+          className="grid-block no-padding market-right-padding _scroll-bar"
+          ref="asks"
+          style={{ overflow: "auto",  maxHeight: 720 }}
+        >
+          <table
+            style={{ paddingBottom: 5 }}
+            className="table order-table table-hover"
+          >
+            <TransitionWrapper component="tbody" transitionName="newrow">
+              {rows.length ? rows : emptyRow}
+            </TransitionWrapper>
+          </table>
+        </div>
+      </>
     );
   }
 }

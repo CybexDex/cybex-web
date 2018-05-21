@@ -1,5 +1,9 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-import GatewayActions, { DEPOSIT_MODAL_ID, WITHDRAW_MODAL_ID } from "actions/GatewayActions";
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import GatewayActions, {
+  DEPOSIT_MODAL_ID,
+  WITHDRAW_MODAL_ID
+} from "actions/GatewayActions";
 import GatewayStore from "stores/GatewayStore";
 import AccountStore from "stores/AccountStore";
 import { JadePool } from "services//GatewayConfig";
@@ -18,17 +22,15 @@ import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
 
-
 const { ADDRESS_TYPES } = JadePool;
 
 const oriAssets = Object.keys(ADDRESS_TYPES);
 
 let AssetRow = class extends React.Component<any, any> {
-
-  _showWithdrawModal = (asset) => {
+  _showWithdrawModal = asset => {
     let { account } = this.props;
     GatewayActions.showWithdrawModal(asset);
-  }
+  };
   _showDepositWithdraw(asset) {
     let { account } = this.props;
     GatewayActions.showDepositModal(account.get("name"), asset);
@@ -40,38 +42,64 @@ let AssetRow = class extends React.Component<any, any> {
     let canWithdraw = !!asset.get("balance");
     return (
       <tr>
-        <td><LinkToAssetById asset={asset.get("id")} /></td>
-        <td>{canWithdraw ? <BalanceComponent balance={asset.get("balance")} hide_asset={true} /> : "-"}</td>
         <td>
-          <a onClick={this._showDepositWithdraw.bind(this, asset.get("symbol"), false)}>
+          <LinkToAssetById asset={asset.get("id")} />
+        </td>
+        <td>
+          {canWithdraw ? (
+            <BalanceComponent
+              balance={asset.get("balance")}
+              hide_asset={true}
+            />
+          ) : (
+            "-"
+          )}
+        </td>
+        <td>
+          <a
+            onClick={this._showDepositWithdraw.bind(
+              this,
+              asset.get("symbol"),
+              false
+            )}
+          >
             <Icon name="deposit" className="icon-14px" />
           </a>
         </td>
         <td>
-          {
-            canWithdraw &&
-            <a className={!canWithdraw ? "disabled" : ""} onClick={canWithdraw ? this._showWithdrawModal.bind(this, asset.get("symbol"), false) : () => { }}>
+          {(canWithdraw && (
+            <a
+              className={!canWithdraw ? "disabled" : ""}
+              onClick={
+                canWithdraw
+                  ? this._showWithdrawModal.bind(
+                      this,
+                      asset.get("symbol"),
+                      false
+                    )
+                  : () => {}
+              }
+            >
               <Icon name="withdraw" className="icon-14px" />
-            </a> ||
-            "-"
-          }
+            </a>
+          )) ||
+            "-"}
         </td>
-      </tr >
+      </tr>
     );
   }
-}
+};
 
 AssetRow = BindToChainState(AssetRow);
 
-
 let GatewayTable = class extends React.Component<any, any> {
   static propTypes = {
-    assets: ChainTypes.ChainAssetsList.isRequired,
+    assets: ChainTypes.ChainAssetsList.isRequired
   };
 
   static defaultProps = {
-    assets: List(),
-  }
+    assets: List()
+  };
 
   render() {
     let { assets, balances, filter, account } = this.props;
@@ -80,31 +108,28 @@ let GatewayTable = class extends React.Component<any, any> {
       return a;
     });
     return (
-      <table className="table dashboard-table with-shadow">
+      <table className="table gateway-table dashboard-table with-shadow">
         <thead>
           <tr>
-            <Translate component="th" content="account.asset"></Translate>
-            <Translate component="th" content="account.qty"></Translate>
+            <Translate component="th" content="account.asset" />
+            <Translate component="th" content="account.qty" />
             {/* <Translate component="th" content="account.eq_value_header"></Translate> */}
-            <Translate component="th" content="gateway.deposit"></Translate>
-            <Translate component="th" content="gateway.withdraw"></Translate>
+            <Translate component="th" content="gateway.deposit" />
+            <Translate component="th" content="gateway.withdraw" />
           </tr>
         </thead>
         <tbody>
-          {
-            assetRows.map(asset =>
-              <AssetRow key={asset.get("id")} asset={asset} account={account} />
-            )
-          }
+          {assetRows.map(asset => (
+            <AssetRow key={asset.get("id")} asset={asset} account={account} />
+          ))}
         </tbody>
-      </table>);
+      </table>
+    );
   }
-
-}
+};
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
 let GatewayContainer = class extends React.Component<any, any> {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -116,22 +141,21 @@ let GatewayContainer = class extends React.Component<any, any> {
   static propTypes = {
     account: ChainTypes.ChainAccount.isRequired
   };
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
-  onNameFilterChange = (e) => {
+  onNameFilterChange = e => {
     let nameFilter = e.target.value.toUpperCase();
     this.setState({
       nameFilter
     });
-  }
+  };
 
-  onWithdrawFilterChange = (e) => {
+  onWithdrawFilterChange = e => {
     let onlyCanWithdraw = e.target.checked;
     this.setState({
       onlyCanWithdraw
     });
-  }
+  };
 
   render() {
     let { depositModal, withdrawModal, account } = this.props;
@@ -156,25 +180,34 @@ let GatewayContainer = class extends React.Component<any, any> {
                 <Translate content="account.asset" />
               </label> */}
             </div>
-            <GatewayTable filter={this.state} assets={assets} account={account} balances={account.get("balances", null)} />
-
-            {depositModal && <DepositModal
-              balances={account.get("balances", null)}
-              modalId={DEPOSIT_MODAL_ID}
-              fade={true}
-            />}
-            {withdrawModal && <WithdrawModal
-              balances={account.get("balances", null)}
+            <GatewayTable
+              filter={this.state}
+              assets={assets}
               account={account}
-              issuer={account.get("id")}
-              modalId={WITHDRAW_MODAL_ID}
-            />}
+              balances={account.get("balances", null)}
+            />
+
+            {depositModal && (
+              <DepositModal
+                balances={account.get("balances", null)}
+                modalId={DEPOSIT_MODAL_ID}
+                fade={true}
+              />
+            )}
+            {withdrawModal && (
+              <WithdrawModal
+                balances={account.get("balances", null)}
+                account={account}
+                issuer={account.get("id")}
+                modalId={WITHDRAW_MODAL_ID}
+              />
+            )}
           </div>
         </div>
       </div>
     );
   }
-}
+};
 
 GatewayContainer = BindToChainState(GatewayContainer);
 GatewayContainer = connect(GatewayContainer, {
@@ -190,5 +223,5 @@ GatewayContainer = connect(GatewayContainer, {
   }
 });
 
-export { GatewayContainer as Gateway }
+export { GatewayContainer as Gateway };
 export default GatewayContainer;

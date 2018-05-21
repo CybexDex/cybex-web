@@ -503,7 +503,10 @@ let BuySell = class extends React.Component<any, any> {
                 </table>
                 <div className="buysell-buttons-wrapper">
                   {/* BUY/SELL button */}
-                  <div className="full-width-content" data-tip={disabledText && ""}>
+                  <div
+                    className="full-width-content"
+                    data-tip={disabledText && ""}
+                  >
                     <Button
                       className={buttonClass}
                       onClick={onSubmit.bind(this, true)}
@@ -511,6 +514,15 @@ let BuySell = class extends React.Component<any, any> {
                       disabled={disabled}
                     >
                       {buttonText}
+                      （
+                      <AssetName
+                        name={isBid ? base.get("symbol") : quote.get("symbol")}
+                      />{" "}
+                      {" => "}
+                      <AssetName
+                        name={isBid ? quote.get("symbol") : base.get("symbol")}
+                      />
+                      ）
                     </Button>
                   </div>
                   {/* SHORT button */}

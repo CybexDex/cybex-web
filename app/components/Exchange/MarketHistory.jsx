@@ -241,7 +241,7 @@ class MarketHistory extends React.Component {
             </table>
           </div>
           <div
-            className="table-container flex-wrapper flex-column grid-block market-right-padding-only"
+            className="table-container flex-wrapper flex-column grid-block market-right-padding-only _scroll-bar"
             ref="history"
             style={{ maxHeight: 420 }}
           >

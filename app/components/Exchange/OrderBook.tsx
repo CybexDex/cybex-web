@@ -69,6 +69,7 @@ const bodyStyle = {
   ...headerUnderStyle,
   ...wrapperStyle,
   display: "flex",
+  padding: "0 0.5rem",
   flexFlow: "column"
 };
 
@@ -475,7 +476,7 @@ let OrderBook = class extends React.Component<any, any> {
     );
 
     let priceRow = (
-      <div style={[rowHeight] as any} className="text-center">
+      <div style={[rowHeight, {backgroundColor: Colors.$colorAnchor, margin: "0 -0.5rem"}] as any} className="text-center">
         <PriceStat
           ready={marketReady}
           price={(latest && latest.full) || {}}
@@ -502,7 +503,7 @@ let OrderBook = class extends React.Component<any, any> {
             baseSymbol={base.get("symbol")}
             quoteSymbol={quote.get("symbol")}
           />
-          <div className="order-book-body" style={[bodyStyle] as any}>
+          <div className="order-book-body _scroll-bar" style={[bodyStyle] as any}>
             <div
               ref={askWrapper => (this.askWrapper = askWrapper)}
               className="ask-wrapper"

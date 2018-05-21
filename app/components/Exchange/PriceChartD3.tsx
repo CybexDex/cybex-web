@@ -990,17 +990,17 @@ export default class Wrapper extends React.Component<any, any> {
       .map(i => {
         let hasSetting = i in indicatorSettings;
         let settingInput = hasSetting ? (
-          <div style={{ float: "right", clear: "both" }}>
+          <>
             <div className="inline-block" style={{ paddingRight: 5 }}>
               <Translate content="exchange.chart_options.period" />:
+              <input
+                style={{ margin: 0 }}
+                type="number"
+                value={indicatorSettings[i]}
+                onChange={this.props.onChangeIndicatorSetting.bind(null, i)}
+              />
             </div>
-            <input
-              style={{ margin: 0 }}
-              type="number"
-              value={indicatorSettings[i]}
-              onChange={this.props.onChangeIndicatorSetting.bind(null, i)}
-            />
-          </div>
+          </>
         ) : null;
 
         if (i.toLowerCase().indexOf("volume") !== -1) {
