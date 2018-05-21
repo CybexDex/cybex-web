@@ -414,7 +414,7 @@ class Witnesses extends React.Component {
 
     return (
       <div className="grid-block">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <div className="grid-block page-layout">
           <div className="grid-block vertical small-5 medium-3">
             <div className="grid-content">

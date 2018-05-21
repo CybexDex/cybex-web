@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_check_circle_white</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/ic_check_circle_white">
+            <g id="ic_check_circle_white">
+                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M9.29289322,16.2928932 L5.705,12.705 C5.31563925,12.3156393 5.31563925,11.6843607 5.705,11.295 L5.705,11.295 C6.0945197,10.9054803 6.72591999,10.90504 7.11598258,11.2940161 L9.29289459,13.4648642 C9.68357755,13.854459 10.3159821,13.8540179 10.7061213,13.4638787 L16.8824956,7.28750442 C17.2718612,6.8981388 17.9031476,6.8981388 18.2925132,7.28750442 C18.2933436,7.28833481 18.2941725,7.28916668 18.295,7.29 L18.2978816,7.29290203 C18.6860516,7.68382497 18.6849363,8.3150637 18.2953874,8.70461259 L10.7071068,16.2928932 C10.3165825,16.6834175 9.68341751,16.6834175 9.29289322,16.2928932 Z" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

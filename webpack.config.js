@@ -212,6 +212,14 @@ module.exports = function(env) {
           include: [path.join(root_dir, "app")],
           use: [
             {
+              loader: "babel-loader",
+              options: {
+                compact: false,
+                cacheDirectory: true,
+                plugins: ["react-hot-loader/babel"]
+              }
+            },
+            {
               loader: "awesome-typescript-loader",
               options: {
                 useCache: true,
@@ -221,28 +229,14 @@ module.exports = function(env) {
           ]
         },
         {
-          test: /\.jsx$/,
-          include: [
-            path.join(root_dir, "app"),
-            path.join(root_dir, "node_modules/react-foundation-apps"),
-            "/home/sigve/Dev/graphene/react-foundation-apps"
-          ],
-          use: [
-            {
-              loader: "babel-loader",
-              options: {
-                cacheDirectory: env.prod ? false : true
-              }
-            }
-          ]
-        },
-        {
-          test: /\.js$/,
+          test: /\.js$|\.jsx$/,
+          include: [path.join(root_dir, "app")],
           exclude: [/node_modules/],
           loader: "babel-loader",
           options: {
             compact: false,
-            cacheDirectory: true
+            cacheDirectory: true,
+            plugins: ["react-hot-loader/babel"]
           }
         },
         {
@@ -272,6 +266,18 @@ module.exports = function(env) {
         {
           test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
           include: [path.resolve(root_dir, "app/assets/")],
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                limit: 8192
+              }
+            }
+          ]
+        },
+        {
+          test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)$/,
+          include: [path.resolve(root_dir, "app/components/Common")],
           use: [
             {
               loader: "url-loader",
@@ -312,6 +318,7 @@ module.exports = function(env) {
         },
         {
           test: /.*\.svg$/,
+          exclude: [path.resolve(root_dir, "app/components/Common")],
           loaders: ["svg-inline-loader", "svgo-loader"]
         },
         {
@@ -339,6 +346,11 @@ module.exports = function(env) {
         iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
         assets: path.resolve(root_dir, "app/assets"),
         counterpart: path.resolve(root_dir, "app/lib/counterpart"),
+        "alt-react": path.resolve(root_dir, "app/lib/alt-react"),
+        "react-foundation-apps": path.resolve(
+          root_dir,
+          "app/lib/react-foundation-apps"
+        ),
         app: path.resolve(root_dir, "app")
       },
       modules: [

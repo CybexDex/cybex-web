@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
 import AssetName from "../Utility/AssetName";
 import utils from "common/utils";
@@ -79,7 +80,7 @@ export default class PriceStat extends React.Component {
       >
         <span>
           {content && <Translate content={content} />}
-          <br />
+          {content && <br />}
           <b className="value stat-primary">
             {!ready ? 0 : value}&nbsp;
             {changeComp}

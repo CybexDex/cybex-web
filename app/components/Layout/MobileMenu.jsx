@@ -97,7 +97,7 @@ class MobileMenu extends React.Component {
 
     return (
       <Panel id={id} position="left">
-        <div className="grid-content" style={{ zIndex: 200 }}>
+        <div className="grid-content">
           <Trigger close={id}>
             <a className="close-button">&times;</a>
           </Trigger>

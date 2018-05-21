@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_arrow_drop_down_orange</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/arrow_drop_down_orange">
+            <g id="ic_arrow_drop_down_orange">
+                <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M7.70710678,10.7071068 L12,15 L16.2928932,10.7071068 C16.6834175,10.3165825 16.6834175,9.68341751 16.2928932,9.29289322 C16.1053568,9.10535684 15.8510029,9 15.5857864,9 L8.41421356,9 C7.86192881,9 7.41421356,9.44771525 7.41421356,10 C7.41421356,10.2652165 7.5195704,10.5195704 7.70710678,10.7071068 Z" fill="#FF9143" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

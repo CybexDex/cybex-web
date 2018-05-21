@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
 import Icon from "../Icon/Icon";

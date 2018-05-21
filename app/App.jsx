@@ -29,7 +29,7 @@ import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
-import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
+// import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
 
 class App extends React.Component {
   constructor() {
@@ -112,8 +112,10 @@ class App extends React.Component {
         window.electron ||
         user_agent.indexOf("firefox") > -1 ||
         user_agent.indexOf("chrome") > -1 ||
-        user_agent.indexOf("edge") > -1
-      )
+        user_agent.indexOf("edge") > -1 ||
+        user_agent.indexOf("safari") > -1
+      ) &&
+      this.refs.browser_modal
     ) {
       this.refs.browser_modal.show();
     }
@@ -128,7 +130,6 @@ class App extends React.Component {
       loadingMask.classList.add("fade-out");
       setTimeout(() => loadingMask.remove(), 500);
     }
-    ModalActions.showModal("REMOVE_JADE", true);
   }
 
   _onIgnoreIncognitoWarning() {
@@ -232,16 +233,12 @@ class App extends React.Component {
       );
     } else {
       content = (
-        <div className="grid-frame vertical">
+        <div className="cybex-layout">
           <Header />
           <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
-          <div className="main-body">
-            <Nav />
-            <div className="grid-block">
-              <div className="grid-block vertical">{this.props.children}</div>
-            </div>
-          </div>
-          {showFooter ? <Footer synced={this.state.synced} /> : null}
+          {/* <Nav isVertical={true} hideLabel={true} /> */}
+          <div className="main-body">{this.props.children}</div>
+          <Footer synced={this.state.synced} />
           <ReactTooltip
             ref="tooltip"
             place="top"
@@ -277,7 +274,6 @@ class App extends React.Component {
             }}
           />
           <WalletUnlockModal />
-          <EthModal modalId={"REMOVE_JADE"} />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal ref="browser_modal" />
@@ -335,17 +331,17 @@ class Root extends React.Component {
       }
     }
 
-    const user_agent = navigator.userAgent.toLowerCase();
-    if (
-      !(
-        window.electron ||
-        user_agent.indexOf("firefox") > -1 ||
-        user_agent.indexOf("chrome") > -1 ||
-        user_agent.indexOf("edge") > -1
-      )
-    ) {
-      this.refs.browser_modal.show();
-    }
+    // const user_agent = navigator.userAgent.toLowerCase();
+    // if (
+    //   !(
+    //     window.electron ||
+    //     user_agent.indexOf("firefox") > -1 ||
+    //     user_agent.indexOf("chrome") > -1 ||
+    //     user_agent.indexOf("edge") > -1
+    //   )
+    // ) {
+    //   this.refs.browser_modal.show();
+    // }
   }
 
   getChildContext() {
@@ -360,10 +356,10 @@ class Root extends React.Component {
   }
 }
 
-const zd = document.createElement("script");
-zd.innerHTML =
-  'window.zE || (function (e, t, s) { var n = window.zE = window.zEmbed = function () { n._.push(arguments) }, a = n.s = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.set = function (e) { n.set._.push(e) }, n._ = [], n.set._ = [], a.async = true, a.setAttribute("charset", "utf-8"), a.src = "https://static.zdassets.com/ekr/asset_composer.js?key=" + s, n.t = +new Date, a.type = "text/javascript", r.parentNode.insertBefore(a, r) })(document, "script", "4a299e55-8cd6-491a-86dc-ad6e256b4ada");';
-window.document.head.appendChild(zd);
+// const zd = document.createElement("script");
+// zd.innerHTML =
+//   '/*<![CDATA[*/window.zE || (function (e, t, s) { var n = window.zE = window.zEmbed = function () { n._.push(arguments) }, a = n.s = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.set = function (e) { n.set._.push(e) }, n._ = [], n.set._ = [], a.async = true, a.setAttribute("charset", "utf-8"), a.src = "https://static.zdassets.com/ekr/asset_composer.js?key=" + s, n.t = +new Date, a.type = "text/javascript", r.parentNode.insertBefore(a, r) })(document, "script", "4a299e55-8cd6-491a-86dc-ad6e256b4ada");/*]]>*/';
+// window.document.head.appendChild(zd);
 
 IntlStore.listen(e => {
   let luncher = document.getElementById("launcher");

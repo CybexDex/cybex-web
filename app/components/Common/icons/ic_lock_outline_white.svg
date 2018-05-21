@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_lock_outline_white</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0 24 0 24 24 0 24"></polygon>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/lock_outline_red">
+            <g id="ic_lock_outline_white">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g></g>
+                <path d="M12,16.5 C13.1,16.5 14,15.6 14,14.5 C14,13.4 13.1,12.5 12,12.5 C10.9,12.5 10,13.4 10,14.5 C10,15.6 10.9,16.5 12,16.5 Z M17,9 L17,8 C17,5.24 14.76,3 12,3 C9.24,3 7,5.24 7,8 L7,9 C5.9,9 5,9.9 5,11 L5,18 C5,19.1 5.9,20 7,20 L17,20 C18.1,20 19,19.1 19,18 L19,11 C19,9.9 18.1,9 17,9 Z M8.9,8 C8.9,6.29 10.29,4.9 12,4.9 C13.71,4.9 15.1,6.29 15.1,8 L15.1,9 L8.9,9 L8.9,8 Z M17,18 L7,18 L7,11 L17,11 L17,18 Z" fill="#D2323E" fill-rule="nonzero" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -15,7 +15,6 @@ import utils from "common/utils";
 import Immutable from "immutable";
 import TimeAgo from "../Utility/TimeAgo";
 import FormattedAsset from "../Utility/FormattedAsset";
-import Ps from "perfect-scrollbar";
 import TransitionWrapper from "../Utility/TransitionWrapper";
 import { ExplorerNav } from "./ExplorerNav";
 
@@ -117,11 +116,6 @@ class Blocks extends React.Component {
 
   componentDidMount() {
     this._getInitialBlocks();
-    let oc = this.refs.operations;
-    Ps.initialize(oc);
-    let blocks = this.refs.blocks;
-    Ps.initialize(blocks);
-    this._updateHeight();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -170,13 +164,6 @@ class Blocks extends React.Component {
       },
       this.psUpdate
     );
-  }
-
-  psUpdate() {
-    let oc = this.refs.operations;
-    Ps.update(oc);
-    let blocks = this.refs.blocks;
-    Ps.update(blocks);
   }
 
   render() {
@@ -252,18 +239,15 @@ class Blocks extends React.Component {
         })
         .toArray();
 
-      let trxIndex = 0;
-
       transactions = latestTransactions
-        .take(20)
+        .take(15)
         .map(trx => {
-          let opIndex = 0;
-          return trx.operations.map(op => {
+          return trx.operations.map((op, nounce) => {
             return (
               <Operation
-                key={trxIndex++}
+                key={`trx_${trx.block_num}_${nounce}`}
                 op={op}
-                result={trx.operation_results[opIndex++]}
+                result={trx.operation_results[nounce]}
                 block={trx.block_num}
                 hideFee={true}
                 hideOpLabel={false}
@@ -284,7 +268,7 @@ class Blocks extends React.Component {
 
     return (
       <div ref="outerWrapper" className="block-wrapper grid-block page-layout">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <div className="block-left bgcolor-primary with-shadow">
           {/* First row of stats */}
           <div className="grid-block text-center small-6">
@@ -477,7 +461,7 @@ class Blocks extends React.Component {
                 className="grid-block"
                 style={{
                   maxHeight: operationsHeight || "400px",
-                  overflow: "hidden"
+                  overflow: "auto"
                 }}
                 ref="operations"
               >
@@ -501,7 +485,7 @@ class Blocks extends React.Component {
                 className="grid-block vertical"
                 style={{
                   maxHeight: blocksHeight || "438px",
-                  overflow: "hidden"
+                  overflow: "auto"
                 }}
                 ref="blocks"
               >

@@ -65,7 +65,7 @@ class AssetName extends React.Component {
       );
       let realPrefix = name.split(".");
       realPrefix = realPrefix.length > 1 ? realPrefix[0] : null;
-      if (realPrefix && hideList) realPrefix += ".";
+      if (realPrefix) realPrefix += ".";
       let optional = "";
       try {
         optional =

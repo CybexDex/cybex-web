@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import { connect } from "alt-react";
 import ActionSheet from "react-foundation-apps/src/action-sheet";
@@ -24,7 +25,12 @@ import AccountImage from "../Account/AccountImage";
 import ContextMenuStore from "stores/ContextMenuStore";
 import { VolumnStore } from "stores/VolumeStore";
 import { VolumeDisplay } from "./VolumeDisplay";
-
+import Nav from "components/Layout/Nav";
+import { Icon as NewIcon } from "components/Common";
+import { ModalActions } from "actions/ModalActions";
+import LogoutModal, {
+  DEFAULT_LOGOUT_MODAL_ID
+} from "components/Modal/LogoutModal";
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
 
@@ -38,6 +44,57 @@ const FlagImage = ({ flag, width = 20, height = 20 }) => {
   );
 };
 
+const AccountName = ({ account_display_name }) => (
+  <span className="table-cell" style={{ paddingLeft: 5 }}>
+    <div className="inline-block">
+      <span className="text-raw">{account_display_name}</span>
+    </div>
+  </span>
+);
+
+const FlagDropdown = class extends React.PureComponent<{
+  currentLocale;
+  locales;
+}> {
+  render() {
+    let { currentLocale, locales } = this.props;
+    return (
+      <ActionSheet>
+        <ActionSheet.Button title="">
+          <a style={{ padding: "1rem", border: "none" }} className="button">
+            <FlagImage flag={currentLocale} />
+          </a>
+        </ActionSheet.Button>
+        <ActionSheet.Content>
+          <ul className="no-first-element-top-border">
+            {locales.map(locale => {
+              return (
+                <li key={locale}>
+                  {/* <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale);  location.reload(false) }}> */}
+                  <a
+                    href="javascript:;"
+                    onClick={e => {
+                      e.preventDefault();
+                      IntlActions.switchLocale(locale);
+                    }}
+                  >
+                    <span className="table-cell">
+                      <FlagImage flag={locale} />
+                    </span>
+                    <span className="table-cell" style={{ paddingLeft: 10 }}>
+                      <Translate content={"languages." + locale} />
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </ActionSheet.Content>
+      </ActionSheet>
+    );
+  }
+};
+
 export const HeadContextMenuId = "$headerContext";
 
 class Header extends React.Component<any, any> {
@@ -48,7 +105,7 @@ class Header extends React.Component<any, any> {
   };
 
   constructor(props, context) {
-    super();
+    super(props);
     this.state = {
       active: context.location.pathname
     };
@@ -81,20 +138,11 @@ class Header extends React.Component<any, any> {
 
   shouldComponentUpdate(nextProps, nextState) {
     return true;
-    // return (
-    //     nextProps.linkedAccounts !== this.props.linkedAccounts ||
-    //     nextProps.currentAccount !== this.props.currentAccount ||
-    //     nextProps.contextMenu !== this.props.contextMenu ||
-    //     nextProps.passwordLogin !== this.props.passwordLogin ||
-    //     nextProps.locked !== this.props.locked ||
-    //     nextProps.current_wallet !== this.props.current_wallet ||
-    //     nextProps.lastMarket !== this.props.lastMarket ||
-    //     nextProps.starredAccounts !== this.props.starredAccounts ||
-    //     nextProps.currentLocale !== this.props.currentLocale ||
-    //     nextState.active !== this.state.active
-    // );
   }
 
+  logout = () => {
+    ModalActions.showModal(DEFAULT_LOGOUT_MODAL_ID);
+  };
   _triggerMenu(e) {
     e.preventDefault();
     ZfApi.publish("mobile-menu", "toggle");
@@ -164,6 +212,7 @@ class Header extends React.Component<any, any> {
     } = this.props;
     let locked_tip = counterpart.translate("header.locked_tip");
     let unlocked_tip = counterpart.translate("header.unlocked_tip");
+    let logout_tip = counterpart.translate("header.logout_tip");
 
     let tradingAccounts = AccountStore.getMyAccounts();
 
@@ -234,10 +283,10 @@ class Header extends React.Component<any, any> {
           {this.props.locked ? (
             <a
               style={{ padding: "1rem" }}
+              className="button"
               href="javascript:;"
               onClick={this._toggleLock.bind(this)}
               data-class="unlock-tooltip"
-              data-offset="{'left': 50}"
               data-tip={locked_tip}
               data-place="bottom"
               data-html
@@ -248,9 +297,9 @@ class Header extends React.Component<any, any> {
             <a
               style={{ padding: "1rem" }}
               href="javascript:;"
+              className="button"
               onClick={this._toggleLock.bind(this)}
               data-class="unlock-tooltip"
-              data-offset="{'left': 50}"
               data-tip={unlocked_tip}
               data-place="bottom"
               data-html
@@ -320,14 +369,6 @@ class Header extends React.Component<any, any> {
       }
     }
 
-    let AccountName = ({ account_display_name }) => (
-      <span className="table-cell" style={{ paddingLeft: 5 }}>
-        <div className="inline-block">
-          <span className="text-raw">{account_display_name}</span>
-        </div>
-      </span>
-    );
-
     accountsDropDown = createAccountLink ? (
       createAccountLink
     ) : tradingAccounts.length === 1 ? (
@@ -380,41 +421,6 @@ class Header extends React.Component<any, any> {
       </a>
     );
 
-    const flagDropdown = (
-      <ActionSheet>
-        <ActionSheet.Button title="">
-          <a style={{ padding: "1rem", border: "none" }} className="button">
-            <FlagImage flag={this.props.currentLocale} />
-          </a>
-        </ActionSheet.Button>
-        <ActionSheet.Content>
-          <ul className="no-first-element-top-border">
-            {this.props.locales.map(locale => {
-              return (
-                <li key={locale}>
-                  {/* <a href onClick={(e) => { e.preventDefault(); IntlActions.switchLocale(locale);  location.reload(false) }}> */}
-                  <a
-                    href="javascript:;"
-                    onClick={e => {
-                      e.preventDefault();
-                      IntlActions.switchLocale(locale);
-                    }}
-                  >
-                    <span className="table-cell">
-                      <FlagImage flag={locale} />
-                    </span>
-                    <span className="table-cell" style={{ paddingLeft: 10 }}>
-                      <Translate content={"languages." + locale} />
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </ActionSheet.Content>
-      </ActionSheet>
-    );
-
     // const enableDepositWithdraw = Apis.instance().chain_id.substr(0, 8) === "4018d784";
     const enableDepositWithdraw = false;
     return (
@@ -428,44 +434,14 @@ class Header extends React.Component<any, any> {
             </li>
           </ul>
         </div>
-        {__ELECTRON__ ? (
-          <div className="grid-block show-for-medium shrink electron-navigation">
-            <ul className="menu-bar">
-              <li>
-                <div style={{ marginLeft: "1rem", height: "3rem" }}>
-                  <div
-                    style={{ marginTop: "0.5rem" }}
-                    onClick={this._onGoBack.bind(this)}
-                    className="button outline small"
-                  >
-                    {"<"}
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div
-                  style={{
-                    height: "3rem",
-                    marginLeft: "0.5rem",
-                    marginRight: "0.75rem"
-                  }}
-                >
-                  <div
-                    style={{ marginTop: "0.5rem" }}
-                    onClick={this._onGoForward.bind(this)}
-                    className="button outline small"
-                  >
-                    >
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ) : null}
-        <div className="grid-block show-for-medium">
+        <div
+          className="grid-block show-for-medium"
+          style={{ overflow: "visible" }}
+        >
           {dashboard}
           <VolumeDisplay vol={this.props.vol} />
-          <div id="context-hub" />
+          <Nav hideIcon={true} isVertical={false} />
+          {/* <div id="context-hub" /> */}
         </div>
         <div className="grid-block show-for-medium shrink">
           <div className="grp-menu-items-group header-right-menu">
@@ -479,7 +455,12 @@ class Header extends React.Component<any, any> {
 
             {myAccountCount !== 0 ? null : (
               <div className="grp-menu-item overflow-visible">
-                {flagDropdown}
+                {
+                  <FlagDropdown
+                    locales={this.props.locales}
+                    currentLocale={this.props.currentLocale}
+                  />
+                }
               </div>
             )}
 
@@ -489,7 +470,12 @@ class Header extends React.Component<any, any> {
 
             {!myAccountCount ? null : (
               <div className="grp-menu-item overflow-visible account-drop-down">
-                {flagDropdown}
+                {
+                  <FlagDropdown
+                    locales={this.props.locales}
+                    currentLocale={this.props.currentLocale}
+                  />
+                }
               </div>
             )}
 
@@ -499,6 +485,23 @@ class Header extends React.Component<any, any> {
               </div>
             )}
             {lock_unlock}
+            {currentAccount && (
+              <div className="grp-menu-item">
+                <a
+                  style={{ padding: "1rem" }}
+                  className="button"
+                  href="javascript:;"
+                  onClick={this.logout}
+                  data-tip={logout_tip}
+                  data-place="bottom"
+                >
+                  <NewIcon
+                    style={{ width: "16px", height: "16px" }}
+                    icon="logout"
+                  />
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

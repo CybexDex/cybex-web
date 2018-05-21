@@ -49,6 +49,7 @@
     "unlock_password": "Cloud Wallet Login",
     "unlock_short": "Login",
     "help": "Help",
+    "logout_tip": "Logout",
     "locked_tip":
       "<br/>Click to login by unlocking your wallet.<br/><br/>Closing the browser window will also log you out.",
     "unlocked_tip":
@@ -1116,6 +1117,11 @@
       "bidask": "Bid/Ask",
       "depthChart": "Market Depth"
     },
+    "orderbook": {
+      "all": "All",
+      "bid": "Bid", 
+      "ask": "Ask"
+    },
     "amount": "Amount",
     "market": "Market",
     "price_history": "Price Chart",
@@ -1127,6 +1133,7 @@
     "highest_bid": "Highest bid",
     "total": "Total",
     "total_bidask": "Total",
+    "depth": " %(depth)s digits",
     "value": "Value",
     "price": "Price",
     "latest": "Latest",
@@ -1541,6 +1548,7 @@
     "fee": "Gateway fee",
     "find_asset": "Find an asset",
     "title": "Deposit & Withdraw",
+    "no_balance": "No enough balance",    
     "assets": {
       "open":
         "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",

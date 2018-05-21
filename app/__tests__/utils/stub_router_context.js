@@ -24,23 +24,23 @@ let stubRouterContext = (Component, props, stubs) => {
     stubs
   );
 
-  return React.createClass({
-    childContextTypes: {
+  return class extends React.Component {
+    static childContextTypes = {
       router: PropTypes.func,
       routeDepth: PropTypes.number
-    },
+    };
 
     getChildContext() {
       return {
         router: RouterStub,
         routeDepth: 0
       };
-    },
+    }
 
     render() {
       return <Component {...props} />;
     }
-  });
+  };
 };
 
 export default stubRouterContext;

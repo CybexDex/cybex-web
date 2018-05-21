@@ -676,7 +676,8 @@
   }
   #market-charts {
     .chart-tools {
-      border-bottom: 1px solid $color-panel-divider;
+      background-color: $panel-bg-color;
+      // border-bottom: 1px solid $color-panel-divider;
     }
   }
   .remove {
@@ -843,10 +844,10 @@
     }
   }
   .bid {
-    background-color: $bid-color !important;
+    background-color: $bid-color;
   }
   .ask {
-    background-color: $ask-color !important;
+    background-color: $ask-color;
   }
   .orderbook-latest-price {
     > div {
@@ -856,6 +857,12 @@
       padding: 10px 0 !important;
       font-weight: bold;
       font-size: 13px;
+    }
+  }
+  .order-row {
+    &:hover {
+      // background-color: $panel-bg-color;
+      opacity: 0.8;
     }
   }
   .order-table {
@@ -918,7 +925,7 @@
     color: $negative-color !important;
   }
   .header-sub-title {
-    font-size: 80%;
+    // font-size: 80%;
     color: $light-text-color;
   }
   .label {
@@ -1247,9 +1254,9 @@
     box-shadow: 0 0 2px darken($panel-bg-color, 15%);
   }
   .nav {
-    background-color: $bg-color;
+    // background-color: $bg-color;
     .nav-toggle {
-      background-color: $bg-color;
+      // background-color: $bg-color;
     }
     .nav-item,
     a {

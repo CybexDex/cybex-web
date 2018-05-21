@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link, withRouter, WithRouterProps } from "react-router";
 import { getClassName } from "utils/ClassName";
 import Icon from "components/Icon/Icon";
@@ -10,10 +11,14 @@ import { Apis } from "cybexjs-ws";
 import Translate from "react-translate-component";
 // For logout
 import { ModalActions } from "actions/ModalActions";
-import LogoutModal, { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
+import LogoutModal, {
+  DEFAULT_LOGOUT_MODAL_ID
+} from "components/Modal/LogoutModal";
+import { NavItem } from "components/Common";
+import { Colors } from "components/Common/Colors";
+import { ExplorerNav } from "components/Explorer/ExplorerNav";
 
-
-interface NavItem {
+interface NavLink {
   id: string;
   routeTo?: ((...args: any[]) => string) | string;
   name: string;
@@ -21,82 +26,125 @@ interface NavItem {
   isActive?: boolean;
   activeMatcher?: RegExp;
   beFilter?: boolean;
-  displayOnlyWhen?: string
-};
+  displayOnlyWhen?: string;
+  down?: boolean;
+  children?;
+}
 
-const NavLinks: Array<NavItem> = [
+const NavLinks: Array<NavLink> = [
   {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
     activeMatcher: /^\/account/,
-    name: "Account",
+    name: "account",
     icon: "wallet",
     displayOnlyWhen: "currentAccount"
+  },
+
+  {
+    id: "exchange",
+    routeTo: lastMarket => `/market/${lastMarket}`,
+    activeMatcher: /^\/market/,
+    name: "exchange",
+    icon: "exchange"
+  },
+  {
+    id: "gateway",
+    routeTo: "/gateway",
+    name: "gateway",
+    icon: "gateway",
+    displayOnlyWhen: "currentAccount"
+  },
+  {
+    id: "transfer",
+    routeTo: "/transfer",
+    name: "transfer",
+    icon: "transfer"
   },
   {
     id: "explorer",
     routeTo: "/ledger",
     activeMatcher: /^\/ledger|explorer/,
-    name: "Explorer",
-    icon: "diagram"
-  },
+    name: "explorer",
+    icon: "explorer",
+    children: <ExplorerNav />
+  }
   // {
-  //   id: "bazaar",
-  //   routeTo: "/bazaar",
-  //   name: "Bazaar",
-  //   icon: "go-up"
-  // },
-  {
-    id: "exchange",
-    routeTo: lastMarket => `/market/${lastMarket}`,
-    activeMatcher: /^\/market/,
-    name: "Exchange",
-    icon: "to-bit"
-  }, {
-    id: "gateway",
-    routeTo: "/gateway",
-    name: "Gateway",
-    icon: "exchange",
-    displayOnlyWhen: "currentAccount"
-  }, {
-    id: "transfer",
-    routeTo: "/transfer",
-    name: "Transfer",
-    icon: "transfer"
-  },
-  // {
-  //   id: "swap",
-  //   routeTo: "/swap",
-  //   name: "SwapTest",
-  //   icon: "exchange",
-  //   displayOnlyWhen: "currentAccount"    
-  // },
-  // {
-  //   id: "help",
-  //   routeTo: "/help/introduction/cybex",
-  //   activeMatcher: /^\/help/,
-  //   name: "Help",
-  //   icon: "idea"
-  // },
+  //   id: "settings",
+  //   routeTo: "/settings",
+  //   name: "Settings",
+  //   icon: "settings",
+  //   down: true
+  // }
 ];
 
-const NavLink = ({ icon, name, isActive, id }: NavItem) => (
-  <div className={getClassName("nav-item transition", { active: isActive })}>
-    <i className={`icon-${icon}`}></i>
-    <div className="nav-title">
-      <Translate content={`nav.${id}`} />
-    </div>
-  </div>
-);
+let logoutItem = {
+  id: "logout",
+  // routeTo: "/transfer",
+  name: "logout",
+  icon: "logout"
+};
 
-type NavProps = WithRouterProps & { settings: any, currentAccount: string, [x: string]: string };
-export class Nav extends React.Component<NavProps, { isExpand }> {
+let sideStyles = {
+  base: {
+    position: "absolute",
+    transition: "all 0.3s",
+    background: Colors.$colorGradientFoilex
+  },
+  horizontal: {
+    bottom: 0,
+    left: 0,
+    transform: "translateX(-50%)",
+    height: "0.334rem",
+    width: "6.3334rem",
+    borderRadius: "4px 4px 0 0"
+  },
+  vertical: {
+    top: "-50%",
+    left: 0,
+    transform: "translateY(-50%)",
+    height: "3.334rem",
+    width: "0.3334rem",
+    borderRadius: "0 4px 4px 0"
+  }
+};
+
+type NavProps = WithRouterProps & {
+  settings: any;
+  isVertical?;
+  currentAccount: string;
+  [x: string]: string;
+};
+
+const getNavId = id => `$nav__${id}`;
+
+export class Nav extends React.PureComponent<
+  NavProps,
+  { isExpand; siderTop; siderLeft }
+> {
   constructor(props: NavProps) {
     super(props);
     this.state = {
-      isExpand: true
+      isExpand: true,
+      siderTop: -100,
+      siderLeft: 0
     };
   }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+
+  static defaultProps = {
+    isVertical: false
+  };
+
+  componentDidMount() {
+    // this._updateSide();
+  }
+  // componentDidUpdate() {
+  //   this._updateSide();
+  // }
 
   toggleNav() {
     SettingsActions.toggleNav(true);
@@ -104,51 +152,92 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
 
   logout = () => {
     ModalActions.showModal(DEFAULT_LOGOUT_MODAL_ID);
-  }
+  };
 
-  render() {
-    let { settings, currentAccount, lastMarket } = this.props;
+  isActive = (link: NavLink) =>
+    link.activeMatcher
+      ? link.activeMatcher.test(this.props.location.pathname)
+      : this.props.location.pathname.search(this.getRoute(link)) !== -1;
+
+  getRoute = (link: NavLink) => {
+    let routerConfig = this.getRouterConfig();
+    return typeof link.routeTo === "function"
+      ? link.routeTo.call(this, routerConfig[link.id])
+      : link.routeTo;
+  };
+
+  getRouterConfig = () => {
+    let { currentAccount, lastMarket } = this.props;
     let routerConfig = {
       account: currentAccount,
       exchange: lastMarket || "CYB_JADE.ETH"
     };
+    return routerConfig;
+  };
+
+  render() {
+    let { settings, currentAccount, lastMarket, isVertical } = this.props;
+    let routerConfig = this.getRouterConfig();
     let isExpand = settings.get("navState");
+    let sideStyle: any = {
+      ...sideStyles.base,
+      ...(isVertical ? sideStyles.vertical : sideStyles.horizontal)
+    };
+    if (isVertical) {
+      sideStyle.top = this.state.siderTop + "px";
+    } else {
+      sideStyle.left = this.state.siderLeft + "px";
+    }
     return (
-      <nav id="mainNav" className={getClassName("nav transition", { expand: isExpand })}>
+      <nav
+        id="mainNav"
+        className={getClassName("nav transition", {
+          expand: isExpand,
+          "nav-hor": !isVertical
+        })}
+      >
         <div className="nav-items">
-          {
-            NavLinks.filter(link =>
+          {NavLinks.filter(
+            link =>
               link.displayOnlyWhen ? !!this.props[link.displayOnlyWhen] : true
-            ).map(link => {
-              let routeTo = typeof link.routeTo === "function" ?
-                link.routeTo.call(this, routerConfig[link.id]) :
-                link.routeTo;
-              return (
-                <Link
-                  key={link.id}
-                  to={routeTo}
-                  className="nav-link"
-                  title={link.name}>
-                  <NavLink isActive={
-                    link.activeMatcher ?
-                      link.activeMatcher.test(this.props.location.pathname) :
-                      this.props.location.pathname.search(routeTo) !== -1
-                  } {...link} />
-                </Link>
-              );
-            })
-          }
+          ).map(link => {
+            let routeTo = this.getRoute(link);
+
+            let id = getNavId(link.id);
+            return [
+              link.down && isVertical ? (
+                <div key="$nav__divider" style={{ flexGrow: 1 }} />
+              ) : null,
+              <NavItem
+                {...link}
+                {...this.props}
+                key={id}
+                id={id}
+                onClick={e => {
+                  this.context.router.push(routeTo);
+                }}
+                active={
+                  link.activeMatcher
+                    ? link.activeMatcher.test(this.props.location.pathname)
+                    : this.props.location.pathname.search(routeTo) !== -1
+                }
+                linkTo={routeTo}
+              />
+            ];
+          })}
           {/* Logout Button */}
-          {currentAccount && <a className="nav-link" href="javascript:;" onClick={this.logout}>
-            <NavLink icon="safe-vault" id="logout" name="logout" />
-          </a>}
+          {/* {currentAccount && (
+            <NavItem
+              {...logoutItem}
+              key={getNavId(logoutItem.id)}
+              id={getNavId(logoutItem.id)}
+              hideIcon={!isVertical}
+              hideLabel={isVertical}
+              onClick={this.logout}
+            />
+          )} */}
         </div>
-        <a href="javascript:;" className="nav-toggle" onClick={this.toggleNav.bind(this)}>
-          <i className={getClassName("", {
-            "icon-lock-open": !isExpand,
-            "icon-lock-lock": isExpand
-          })}></i>
-        </a>
+        {/* <i style={sideStyle as any} /> */}
       </nav>
     );
   }
@@ -156,14 +245,18 @@ export class Nav extends React.Component<NavProps, { isExpand }> {
 
 const NavWithProps = connect(Nav, {
   listenTo() {
-    return [AccountStore, SettingsStore]
+    return [AccountStore, SettingsStore];
   },
   getProps() {
     const chainID = Apis.instance().chain_id;
     return {
       settings: SettingsStore.getState().settings,
-      currentAccount: AccountStore.getState().currentAccount || AccountStore.getState().passwordAccount,
-      lastMarket: SettingsStore.getState().viewSettings.get(`lastMarket${chainID ? ("_" + chainID.substr(0, 8)) : ""}`),
+      currentAccount:
+        AccountStore.getState().currentAccount ||
+        AccountStore.getState().passwordAccount,
+      lastMarket: SettingsStore.getState().viewSettings.get(
+        `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
+      )
     };
   }
 });

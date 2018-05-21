@@ -277,7 +277,7 @@ class Assets extends React.Component {
 
     return (
       <div className="grid-block vertical">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <div className="grid-block page-layout vertical">
           <div className="grid-block main-content small-12 medium-10 medium-offset-1 main-content vertical">
             <div className="generic-bordered-box">

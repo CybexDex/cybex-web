@@ -1,4 +1,6 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import "create-react-class";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import { Router, browserHistory, hashHistory } from "react-router";
@@ -19,11 +21,11 @@ const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
 const rootEl = document.getElementById("content");
 const render = () => {
-    ReactDOM.render(
-        <AppContainer>
-            <Router history={history} routes={routes} />
-        </AppContainer>,
-        rootEl
-    );
+  ReactDOM.render(
+    <AppContainer>
+      <Router history={history} routes={routes} />
+    </AppContainer>,
+    rootEl
+  );
 };
 render();

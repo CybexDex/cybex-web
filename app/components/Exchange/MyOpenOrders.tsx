@@ -1,8 +1,9 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { Link } from "react-router";
 import { FormattedDate } from "react-intl";
-import Ps from "perfect-scrollbar";
+// import Ps from "perfect-scrollbar";
 import utils from "common/utils";
 import Translate from "react-translate-component";
 import PriceText from "../Utility/PriceText";
@@ -11,10 +12,14 @@ import AssetName from "../Utility/AssetName";
 import Icon from "../Icon/Icon";
 import { ChainStore } from "cybexjs";
 import { LimitOrder, CallOrder } from "common/MarketClasses";
-const rightAlign = { textAlign: "right" };
+const rightAlign: any = { textAlign: "right" };
 import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";
 
 class TableHeader extends React.Component<any, any> {
+  static defaultProps = {
+    quoteSymbol: null,
+    baseSymbol: null
+  };
   render() {
     let {
       baseSymbol,
@@ -96,12 +101,10 @@ class TableHeader extends React.Component<any, any> {
   }
 }
 
-TableHeader.defaultProps = {
-  quoteSymbol: null,
-  baseSymbol: null
-};
-
 class OrderRow extends React.Component<any, any> {
+  static defaultProps = {
+    showSymbols: false
+  };
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.order.for_sale !== this.props.order.for_sale ||
@@ -254,25 +257,37 @@ class OrderRow extends React.Component<any, any> {
   }
 }
 
-OrderRow.defaultProps = {
-  showSymbols: false
-};
+class MyOpenOrders extends React.Component<any, any> {
+  static defaultProps = {
+    base: {},
+    quote: {},
+    orders: {},
+    quoteSymbol: "",
+    baseSymbol: ""
+  };
 
-class MyOpenOrders extends React.Component {
-  constructor() {
-    super();
+  static propTypes = {
+    base: PropTypes.object.isRequired,
+    quote: PropTypes.object.isRequired,
+    orders: PropTypes.object.isRequired,
+    quoteSymbol: PropTypes.string.isRequired,
+    baseSymbol: PropTypes.string.isRequired
+  };
+
+  constructor(props) {
+    super(props);
 
     this._getOrders = this._getOrders.bind(this);
   }
 
   componentDidMount() {
-    let asksContainer = this.refs.asks;
-    if (asksContainer) Ps.initialize(asksContainer);
+    // let asksContainer = this.refs.asks;
+    // if (asksContainer) Ps.initialize(asksContainer);
   }
 
   componentDidUpdate() {
-    let asksContainer = this.refs.asks;
-    if (asksContainer) Ps.update(asksContainer);
+    // let asksContainer = this.refs.asks;
+    // if (asksContainer) Ps.update(asksContainer);
   }
 
   _getOrders() {
@@ -334,7 +349,7 @@ class MyOpenOrders extends React.Component {
     const orders = this._getOrders();
     let emptyRow = (
       <tr>
-        <td style={{ textAlign: "center" }} colSpan="5">
+        <td style={{ textAlign: "center" }} colSpan={5}>
           <Translate content="account.no_orders" />
         </td>
       </tr>
@@ -397,56 +412,34 @@ class MyOpenOrders extends React.Component {
     });
 
     return (
-      <div key="open_orders" className={this.props.className}>
-        <div
-          className="small-12 flex-wrapper flex-wrapper-main flex-column"
-          style={{ maxHeight: 720 }}
-        >
-          <div className="exchange-content-header">
-            <Translate content="exchange.my_orders" />
-          </div>
-          <table className="table order-table table-hover">
-            <TableHeader
-              type="sell"
-              baseSymbol={baseSymbol}
-              quoteSymbol={quoteSymbol}
-            />
-          </table>
-
-          <div
-            className="grid-block no-padding market-right-padding"
-            ref="asks"
-            style={{ overflow: "hidden", height: "100%", maxHeight: 720 }}
-          >
-            <table
-              style={{ paddingBottom: 5 }}
-              className="table order-table table-hover"
-            >
-              <TransitionWrapper component="tbody" transitionName="newrow">
-                {rows.length ? rows : emptyRow}
-              </TransitionWrapper>
-            </table>
-          </div>
+      <>
+        <div className="exchange-content-header">
+          <Translate content="exchange.my_orders" />
         </div>
-      </div>
+        <table className="table order-table table-hover">
+          <TableHeader
+            type="sell"
+            baseSymbol={baseSymbol}
+            quoteSymbol={quoteSymbol}
+          />
+        </table>
+        <div
+          className="grid-block no-padding market-right-padding _scroll-bar"
+          ref="asks"
+          style={{ overflow: "auto",  maxHeight: 720 }}
+        >
+          <table
+            style={{ paddingBottom: 5 }}
+            className="table order-table table-hover"
+          >
+            <TransitionWrapper component="tbody" transitionName="newrow">
+              {rows.length ? rows : emptyRow}
+            </TransitionWrapper>
+          </table>
+        </div>
+      </>
     );
   }
 }
-
-MyOpenOrders.defaultProps = {
-  base: {},
-  quote: {},
-  orders: {},
-  quoteSymbol: "",
-  baseSymbol: ""
-};
-
-MyOpenOrders.propTypes = {
-  base: PropTypes.object.isRequired,
-  quote: PropTypes.object.isRequired,
-  orders: PropTypes.object.isRequired,
-  quoteSymbol: PropTypes.string.isRequired,
-  baseSymbol: PropTypes.string.isRequired
-};
 
 export { OrderRow, TableHeader, MyOpenOrders };

@@ -99,6 +99,7 @@
     "help": "帮助",
     "locked_tip": "钱包已锁定，点击解锁。",
     "unlocked_tip": "钱包已解锁，点击锁定。",
+    "logout_tip": "登出账户",    
     "account_notify": "当前活跃账户为 %(account)s",
     "account_value": "账户价值"
   },
@@ -1093,6 +1094,11 @@
     "orders": {
       "accumulation": "累计数量 %(amount)s<br>价格：%(price)s"
     },
+    "orderbook": {
+      "all": "全部",
+      "bid": "买单", 
+      "ask": "卖单"
+    },
     "amount": "数量",
     "price_history": "价格历史",
     "order_depth": "市场深度",
@@ -1101,7 +1107,8 @@
     "lowest_ask": "最低卖价",
     "highest_bid": "最高买价",
     "total": "成交额",
-    "total_bidask": "总额",
+    "total_bidask": "成交金额",
+    "depth": " %(depth)s 位小数",
     "value": "数量",
     "price": "价格",
     "latest": "最新成交价",
@@ -1489,6 +1496,7 @@
   "gateway": {
     "fee": "网关执行手续费",
     "find_asset": "按资产名称筛选",
+    "no_balance": "对应资产余额不足，无法提现",
     "title": "充值&提现",
     "assets": {
       "open":

@@ -36,7 +36,7 @@ class IntlActions {
                     return (dispatch) => {
                         // Translate: 异常返回
                         // dispatch({locale: ""});
-                        dispatch({locale: "cn"});
+                        dispatch({locale: "zh"});
                     };
                 });
             };
