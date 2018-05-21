@@ -9,6 +9,7 @@ import AccountStore from "stores/AccountStore";
 import { JadePool } from "services//GatewayConfig";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
+import ReactTooltip from "react-tooltip";
 
 import counterpart from "counterpart";
 import { List } from "immutable";
@@ -26,6 +27,8 @@ const { ADDRESS_TYPES } = JadePool;
 
 const oriAssets = Object.keys(ADDRESS_TYPES);
 
+const noBalanceTip = counterpart.translate("gateway.no_balance");
+
 let AssetRow = class extends React.Component<any, any> {
   _showWithdrawModal = asset => {
     let { account } = this.props;
@@ -41,51 +44,66 @@ let AssetRow = class extends React.Component<any, any> {
     // console.debug("Asset: ", asset && asset.toJS(), balance);
     let canWithdraw = !!asset.get("balance");
     return (
-      <tr>
-        <td>
-          <LinkToAssetById asset={asset.get("id")} />
-        </td>
-        <td>
-          {canWithdraw ? (
-            <BalanceComponent
-              balance={asset.get("balance")}
-              hide_asset={true}
-            />
-          ) : (
-            "-"
-          )}
-        </td>
-        <td>
-          <a
-            onClick={this._showDepositWithdraw.bind(
-              this,
-              asset.get("symbol"),
-              false
+      <>
+        <tr>
+          <td>
+            <LinkToAssetById asset={asset.get("id")} />
+          </td>
+          <td>
+            {canWithdraw ? (
+              <BalanceComponent
+                balance={asset.get("balance")}
+                hide_asset={true}
+              />
+            ) : (
+              "-"
             )}
-          >
-            <Icon name="deposit" className="icon-14px" />
-          </a>
-        </td>
-        <td>
-          {(canWithdraw && (
+          </td>
+          <td>
             <a
-              className={!canWithdraw ? "disabled" : ""}
-              onClick={
-                canWithdraw
-                  ? this._showWithdrawModal.bind(
-                      this,
-                      asset.get("symbol"),
-                      false
-                    )
-                  : () => {}
-              }
+              onClick={this._showDepositWithdraw.bind(
+                this,
+                asset.get("symbol"),
+                false
+              )}
             >
-              <Icon name="withdraw" className="icon-14px" />
+              <Icon name="deposit" className="icon-14px" />
             </a>
-          )) ||
-            "-"}
-        </td>
-      </tr>
+          </td>
+          <td>
+            {(canWithdraw && (
+              <a
+                className={!canWithdraw ? "disabled" : ""}
+                onClick={
+                  canWithdraw
+                    ? this._showWithdrawModal.bind(
+                        this,
+                        asset.get("symbol"),
+                        false
+                      )
+                    : () => {}
+                }
+              >
+                <Icon name="withdraw" className="icon-14px" />
+              </a>
+            )) || (
+              <a
+                href="javascript:;"
+                data-for="noBalance"
+                data-place="right"
+                data-offset="{ 'left': -6 }"
+                style={{ opacity: 0.3 }}
+                data-tip
+              >
+                <Icon name="withdraw" className="icon-14px" />
+              </a>
+            )}
+          </td>
+        </tr>
+        <ReactTooltip id="noBalance" effect="solid">
+          {noBalanceTip}
+        </ReactTooltip>
+      </>
     );
   }
 };

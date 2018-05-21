@@ -1,13 +1,13 @@
 // some parts of code from react/lib/ReactCSSTransitionGroupChild.js
-var React = require("react");
-var ReactDOM = require("react-dom");
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import ReactTransitionEvents from "./transaction-events";
 var CSSCore = require("./csscore");
 
 var classnames = require("classnames");
 var TICK = 17;
 
-class Animation extends React.Component {
+class Animation extends React.Component<any, any> {
   static defaultProps = {
     active: false,
     animationIn: "",

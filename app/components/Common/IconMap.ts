@@ -25,6 +25,9 @@ const icons = {
     base: require("./icons/ic_faq.svg"),
     active: require("./icons/ic_faq_active.svg"),
   },
+  logout: {
+    base: require("./icons/ic_logout.svg"),
+  },
   checkbox: {
     base: require("./icons/ic_check_box.svg"),
     active: require("./icons/ic_check_box_active.svg"),

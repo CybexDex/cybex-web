@@ -5,6 +5,8 @@ import Colors from "./Colors";
 import { getId } from "./utils";
 import { getIcon } from "./IconMap";
 import { Icon } from "./Icon";
+import Translate from "react-translate-component";
+import { getClassName } from "utils";
 
 const styles = {
   base: {
@@ -18,10 +20,11 @@ const styles = {
   },
   active: {
     opacity: "1"
+  },
+  toggle: {
+    position: "relative"
   }
 };
-
-
 
 const iconStyles = {
   base: {
@@ -30,10 +33,13 @@ const iconStyles = {
 };
 
 let NavItem = ({
-  label = "",
+  name = "",
   id = getId("navItem"),
+  hideIcon = false,
+  hideLabel = false,
   active = false,
   icon = "exchange",
+  children = null,
   linkTo = "",
   onClick = (...any) => void 0
 }) => {
@@ -41,14 +47,18 @@ let NavItem = ({
     <a
       id={id}
       href={linkTo || "javascript:;"}
-      style={[styles.base, active && styles.active] as any}
+      className={getClassName("", { active })}
+      style={[active && styles.active, !!children && styles.toggle] as any}
       onClick={e => {
         e.preventDefault();
         onClick(e);
       }}
     >
-      
-      <Icon style={iconStyles.base} icon={icon} active={active} />
+      {!hideIcon && (
+        <Icon style={iconStyles.base} icon={icon} active={active} />
+      )}
+      {!hideLabel && <Translate content={`nav.${name}`} />}
+      {children}
     </a>
   );
 };

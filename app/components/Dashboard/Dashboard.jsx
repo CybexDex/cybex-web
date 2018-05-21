@@ -190,7 +190,7 @@ class Dashboard extends React.Component {
 
     if (!accountCount) {
       return (
-        <div ref="wrapper" className="grid-block page-layout vertical welcome">
+        <div ref="wrapper" style={{height: "100%"}} className="grid-block page-layout vertical welcome">
           <div className="home-slide slide-1">
             <div className="title-wrapper">
               <Translate
@@ -229,37 +229,6 @@ class Dashboard extends React.Component {
         </div>
       );
     }
-    // if (!accountCount) {
-    //     return (
-    //         <div ref="wrapper" className="grid-block page-layout vertical">
-    //             <div ref="container" className="grid-block vertical medium-horizontal">
-    //                 <div className="welcome-page">
-    //                     <div className="bg">
-    //                         <div className="logo-wrapper">
-    //                             <img src={logo} alt="CybexLogo" />
-    //                         </div>
-    //                         <div className="slogan">
-    //                             <Translate content="home.slogan" unsafe />
-    //                         </div>
-    //                         <Link to="/help">
-    //                             <button className="button hollow warning">
-    //                                 <Translate content="home.find_more" />
-    //                             </button>
-    //                         </Link>
-    //                     </div>
-    //                     <div className="bottom-zone">
-    //                         {
-    //                             cardList.map(card => (
-    //                                 <Card key={card.image} card={card} />
-    //                             ))
-    //                         }
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     );
-    // }
-
     const entries = ["accounts", "recent"];
     const activeIndex = entries.indexOf(currentEntry);
 

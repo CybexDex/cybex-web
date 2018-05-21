@@ -1,5 +1,5 @@
-
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
 import Icon from "../Icon/Icon";
@@ -13,18 +13,17 @@ export class ExplorerNav extends React.Component {
   componentWillUnmount() {
     let hub = document.getElementById("context-hub");
     if (hub) {
-      hub.removeChild(this.nav)
+      hub.removeChild(this.nav);
     }
-
   }
 
-  componentDidMount() {
-    let hub = document.getElementById("context-hub");
-    if (hub.children.length) {
-      hub.removeChild(hub.children[0]);
-    }
-    hub.appendChild(this.nav);
-  }
+  // componentDidMount() {
+  //   let hub = document.getElementById("context-hub");
+  //   if (hub.children.length) {
+  //     hub.removeChild(hub.children[0]);
+  //   }
+  //   hub.appendChild(this.nav);
+  // }
 
   // getClass = (pathFragment: string) => {
   //   return location.pathname.indexOf(pathFragment) === -1 ? "" : "active";
@@ -32,7 +31,11 @@ export class ExplorerNav extends React.Component {
 
   render() {
     return (
-      <div className="explorer-nav" ref={nav => this.nav = nav}>
+      <div
+        className="explorer-nav with-shadow"
+        ref={nav => (this.nav = nav)}
+        onClick={e => e.stopPropagation()}
+      >
         <Link activeClassName="active" to="ledger">
           <Translate component="span" content="explorer.blocks.title" />
         </Link>
@@ -46,11 +49,14 @@ export class ExplorerNav extends React.Component {
           <Translate component="span" content="explorer.witnesses.title" />
         </Link>
         <Link activeClassName="active" to="explorer/committee-members">
-          <Translate component="span" content="explorer.committee_members.title" />
+          <Translate
+            component="span"
+            content="explorer.committee_members.title"
+          />
         </Link>
-        <Link activeClassName="active" to="explorer/markets">
+        {/* <Link activeClassName="active" to="explorer/markets">
           <Translate component="span" content="markets.title" />
-        </Link>
+        </Link> */}
         <Link activeClassName="active" to="explorer/fees">
           <Translate component="span" content="fees.title" />
         </Link>

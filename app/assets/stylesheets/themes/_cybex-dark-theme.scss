@@ -157,4 +157,15 @@ $account-background: $panel-bg-color;
       background-color: transparent;
     }
   }
+  
+  .nav {
+    .nav-items {
+      a::after {
+        background: $color-gradient-foilex;
+      }
+    }
+    .explorer-nav {
+      background-color: $color-dark;
+    }
+  }
 }

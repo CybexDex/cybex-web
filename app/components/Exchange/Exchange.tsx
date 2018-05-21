@@ -155,7 +155,7 @@ class Exchange extends React.Component<any, any> {
       ["ema1", false],
       ["ema2", false],
       ["smaVolume", true],
-      ["macd", false],
+      // ["macd", false],
       ["bb", false]
     ].forEach(i => {
       indicators[i[0]] = i[0] in savedIndicators ? savedIndicators[i[0]] : i[1];
@@ -223,12 +223,6 @@ class Exchange extends React.Component<any, any> {
         this.props.baseAsset.get("symbol")
     });
 
-    this.settingListener = SettingsStore.listen(state => {
-      this.setState({
-        navState: state.settings.get("navState"),
-        leftOrderBook: state.settings.get("navState")
-      });
-    });
     this.resizeSubscription = Observable.merge(
       Observable.fromEvent(window, "resize", { capture: false, passive: true }),
       // .debounceTime(500),
@@ -1177,7 +1171,7 @@ class Exchange extends React.Component<any, any> {
     );
     const enableChartClamp = this.props.viewSettings.get(
       "enableChartClamp",
-      true
+      false
     );
 
     if (quoteAsset.size && baseAsset.size && currentAccount.size) {
@@ -1459,7 +1453,7 @@ class Exchange extends React.Component<any, any> {
         <AccountNotifications />
         <div
           className="market-main _scroll-bar"
-          style={{ boxShadow: `0 0 2px 2px ${BaseColors.$colorNoir}` }}
+          style={{ overflowX: "hidden" ,boxShadow: `0 0 2px 2px ${BaseColors.$colorNoir}` }}
         >
           {/* Top bar with info */}
           <ExchangeHeader
@@ -1481,75 +1475,63 @@ class Exchange extends React.Component<any, any> {
             showVolumeChart={showVolumeChart}
           />
 
-          <div
-            className="grid-block vertical no-padding bgcolor-primary"
-            id="CenterContent"
-            ref="center"
-          >
-            {!showDepthChart ? (
-              <div className="grid-block shrink no-overflow" id="market-charts">
-                {/* Price history chart */}
-                <PriceChartD3
-                  priceData={this.props.priceData}
-                  volumeData={this.props.volumeData}
-                  base={base}
-                  quote={quote}
-                  baseSymbol={baseSymbol}
-                  quoteSymbol={quoteSymbol}
-                  height={400}
-                  leftOrderBook={leftOrderBook}
-                  marketReady={marketReady}
-                  indicators={indicators}
-                  indicatorSettings={indicatorSettings}
-                  latest={latestPrice}
-                  theme={this.props.settings.get("themes")}
-                  zoom={this.state.currentPeriod}
-                  tools={tools}
-                  showVolumeChart={showVolumeChart}
-                  enableChartClamp={enableChartClamp}
-                  buckets={buckets}
-                  bucketSize={bucketSize}
-                  currentPeriod={this.state.currentPeriod}
-                  changeBucketSize={this._changeBucketSize.bind(this)}
-                  changeZoomPeriod={this._changeZoomPeriod.bind(this)}
-                  onSelectIndicators={this._onSelectIndicators.bind(this)}
-                  onChangeIndicators={this._changeIndicator.bind(this)}
-                  onChangeTool={key => {
-                    let tools = cloneDeep(this.state.tools);
-                    for (let k in tools) {
-                      if (k === key) {
-                        tools[k] = !tools[k];
-                      } else {
-                        tools[k] = false;
-                      }
-                    }
-                    this.setState({ tools }, () => {
-                      this.setState({
-                        tools: { fib: false, trendline: false }
-                      });
-                    });
-                  }}
-                  onChangeChartHeight={this.onChangeChartHeight.bind(this)}
-                  chartHeight={chartHeight}
-                  onToggleVolume={() => {
-                    SettingsActions.changeViewSetting({
-                      showVolumeChart: !showVolumeChart
-                    });
-                  }}
-                  onToggleChartClamp={() => {
-                    SettingsActions.changeViewSetting({
-                      enableChartClamp: !enableChartClamp
-                    });
-                  }}
-                  onChangeIndicatorSetting={this._changeIndicatorSetting.bind(
-                    this
-                  )}
-                  onMouseMove={this._handleMouseMove.bind(this)}
-                />
-              </div>
-            ) : (
-              <div className="grid-block vertical no-padding shrink" />
-            )}
+          <div className="grid-block shrink no-overflow" id="market-charts">
+            {/* Price history chart */}
+            <PriceChartD3
+              priceData={this.props.priceData}
+              volumeData={this.props.volumeData}
+              base={base}
+              quote={quote}
+              baseSymbol={baseSymbol}
+              quoteSymbol={quoteSymbol}
+              height={400}
+              leftOrderBook={leftOrderBook}
+              marketReady={marketReady}
+              indicators={indicators}
+              indicatorSettings={indicatorSettings}
+              latest={latestPrice}
+              theme={this.props.settings.get("themes")}
+              zoom={this.state.currentPeriod}
+              tools={tools}
+              showVolumeChart={showVolumeChart}
+              enableChartClamp={enableChartClamp}
+              buckets={buckets}
+              bucketSize={bucketSize}
+              currentPeriod={this.state.currentPeriod}
+              changeBucketSize={this._changeBucketSize.bind(this)}
+              changeZoomPeriod={this._changeZoomPeriod.bind(this)}
+              onSelectIndicators={this._onSelectIndicators.bind(this)}
+              onChangeIndicators={this._changeIndicator.bind(this)}
+              onChangeTool={key => {
+                let tools = cloneDeep(this.state.tools);
+                for (let k in tools) {
+                  if (k === key) {
+                    tools[k] = !tools[k];
+                  } else {
+                    tools[k] = false;
+                  }
+                }
+                this.setState({ tools }, () => {
+                  this.setState({
+                    tools: { fib: false, trendline: false }
+                  });
+                });
+              }}
+              onChangeChartHeight={this.onChangeChartHeight.bind(this)}
+              chartHeight={chartHeight}
+              onToggleVolume={() => {
+                SettingsActions.changeViewSetting({
+                  showVolumeChart: !showVolumeChart
+                });
+              }}
+              onToggleChartClamp={() => {
+                SettingsActions.changeViewSetting({
+                  enableChartClamp: !enableChartClamp
+                });
+              }}
+              onChangeIndicatorSetting={this._changeIndicatorSetting.bind(this)}
+              onMouseMove={this._handleMouseMove.bind(this)}
+            />
           </div>
           <div className="grid-block no-padding exchange-forms">
             {buyForm}

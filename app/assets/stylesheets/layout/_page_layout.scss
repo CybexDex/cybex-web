@@ -174,7 +174,67 @@ div.bordered-header {
   @media screen and (max-width: $size-medium) {
     display: none;
   }
-  @include shadow(5px);
+
+  &.nav-hor {
+    &,
+    .nav-items {
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      justify-content: space-around;
+      align-items: center;
+      & > a {
+        height: 56px;
+        position: relative;
+        text-align: center;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &::after {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          transition: opacity 0.3s;
+          height: 0.3334rem;
+          width: 5.3334rem;
+          content: "";
+          opacity: 0;
+          border-radius: 4px 4px 0 0;
+        }
+        &.active::after {
+          opacity: 1;
+        }
+        .explorer-nav {
+          grid-template: repeat(3, 2em) / repeat(2, minmax(9em, 12em));
+          padding: 1em;
+          display: none;
+          position: absolute;
+          top: 95%;
+          left: 50%;
+          transform: translateX(-50%);
+          white-space: nowrap;
+          align-items: center;
+
+          opacity: 0.8;
+          &:hover {
+            opacity: 1;
+          }
+          a {
+            line-height: 1;
+          }
+        }
+        // Sub
+        &:hover {
+          .explorer-nav {
+            display: grid;
+          }
+        }
+      }
+    }
+  }
   margin: 2px;
   margin-left: 0;
   &:not(.expand) {
@@ -184,7 +244,6 @@ div.bordered-header {
     height: 100%;
     display: flex;
     flex-direction: column; // @media screen and (max-aspect-ratio: 1/1) {
-    overflow-y: auto; // }
   }
   .nav-link {
     & + .nav-link {
@@ -213,7 +272,6 @@ div.bordered-header {
     position: relative;
     left: 0;
     top: 0;
-    box-shadow: 2px 0 2px rgba(0, 0, 0, 0.29);
     margin: 1px;
     .nav-toggle {
       margin-left: -20px;
@@ -304,6 +362,11 @@ div.bordered-header {
     justify-content: space-around;
     padding: 0 10px;
     box-shadow: 0 -2px 1px rgba(0, 0, 0, 0.8);
+  }
+}
+
+.explorer-nav {
+  & > a {
   }
 }
 
@@ -445,12 +508,13 @@ a {
   display: grid;
   grid-template-rows: 4.6667rem 1fr 2.5rem;
   grid-template-columns: 5.3334rem 1fr;
-  grid-template-areas: "header header" "nav main" "footer footer";
+  grid-template-areas: "header header" "main main" "footer footer";
   height: 100vh;
   & > .header {
     grid-area: header;
   }
   & > .main-body {
+    padding: 2px;
     grid-area: main;
     overflow-y: auto;
   }
@@ -466,4 +530,17 @@ a {
   th {
     border: 0;
   }
+}
+
+.page-layout {
+  height: 100%;
+}
+.volume-wrapper {
+  @media screen and (max-width: 75em) {
+    display: none !important;
+  }
+}
+
+#mobile-menu {
+  z-index: 300;
 }

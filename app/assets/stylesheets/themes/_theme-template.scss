@@ -1145,84 +1145,107 @@
         background-color: $account-header;
         border: none;
         &:hover {
-          @include button-focus($primary-text-color, $panel-bg-color, 10);
+          background-color: $account-header;
+          color: $account-primarytext;
+        }
+        > div.tab-subtext {
+          color: $account-green;
         }
       }
-      .active-bucket {
-        @include button-focus($primary-text-color, $panel-bg-color, 10);
-      }
-      .indicators,
-      li.stat.clickable {
-        color: $secondary-text-color; // &:hover{
-        //   @include button-focus($primary-text-color, $panel-bg-color, 10);
-        // }
-      }
-      .mymarkets-tabs {
-        > li {
-          @include button-focus($secondary-text-color, $panel-bg-color, 0);
-          &:hover {
-            @include button-focus($primary-text-color, $panel-bg-color, 10);
-          }
-          &.active {
-            @include button-focus($primary-text-color, $panel-bg-color, 10);
-          }
+      &.is-active {
+        background-color: lighten($account-header, 4%);
+        > a {
+          color: $account-primarytext;
+          background-color: lighten($account-header, 4%);
         }
       }
-      .mymarkets-list {
-        border-top: 2px solid $panel-bg-color;
-      }
-      select.cyb-select,
-      select.native-coin-types,
-      select.external-coin-types {
-        color: $secondary-text-color;
-        background-color: $input-background;
-        border: 0;
-        &:hover,
-        &:focus,
-        &:active {
-          background-color: $input-background;
-        }
-      }
-      div.fm-container:hover {
-        background-color: darken($light-panel-bg-color, 5%);
-        cursor: pointer;
-      } // Settings
-      .settings-menu {
-        > li {
-          &:hover {
-            background-color: darken($light-panel-bg-color, 5%);
-          }
-          &.active {
-            color: $link-text-color;
+      &.total-value {
+        > a {
+          background-color: $account-cells;
+          &:hover > span.tab-title {
+            color: $account-dimmed;
           }
         }
+        .icon.locked > svg > path {
+          fill: $button-bg-color;
+        }
       }
-      a {
-        &.order-cancel > .icon > svg {
-          > path {
-            fill: $negative-color;
+    }
+  }
+  .table.dashboard-table {
+    > thead > tr > th {
+      background-color: $account-header;
+      color: $account-primarytext;
+      border-color: $account-border !important;
+      &:first-of-type {
+        border-left: $account-border;
+      }
+      &:last-of-type {
+        border-right: $account-border;
+      }
+    }
+    > tbody > tr {
+      > td {
+        background-color: $account-cells;
+        color: $account-primarytext;
+        border-color: $account-border !important;
+        .icon > svg > path {
+          fill: $account-primarytext;
+        }
+        .icon.locked > svg > path {
+          fill: $button-bg-color;
+        }
+      }
+      &.total-value {
+        td {
+          background-color: $account-header;
+        }
+        td:nth-child(n + 2) {
+          color: $account-green;
+          text-align: right;
+        }
+      }
+      &.unsupported {
+        > td {
+          color: grey;
+          > a {
+            color: grey;
+          }
+          svg > path {
+            fill: grey;
           }
         }
-        &.action-plus > .icon > svg {
-          > path {
-            fill: $positive-color;
-          }
+      }
+    }
+  }
+  .card-list {
+    .card-custom {
+      color: $light-panel-bg-color;
+      &.active {
+        background-color: darken($bg-color, 5%);
+        color: darken($warning-color, 20%);
+      }
+    }
+    .card-important {
+      .card-custom {
+        &,
+        &.active {
+          color: darken($error-text-color, 20%);
+        }
+        .icon.locked > svg > path {
+          fill: $button-bg-color;
         }
       }
-      tr.margin-row {
-        > td.danger {
-          background-color: darken($alert-color, 15%) !important;
-          color: $dark-text-color;
-          font-weight: bold;
-        }
-        > td.warning {
-          background-color: darken($warning-color, 15%) !important;
-          color: $dark-text-color;
-          font-weight: bold;
-        }
-      }
-      div.custom-dropdown-content {
-        background: $panel-bg-color;
+    }
+  }
+  .bgcolor-primary {
+    background-color: $panel-bg-color;
+  }
+  .orders-wrapper {
+    background-color: $panel-bg-color;
+    .tab-list-item {
+      color: $light-text-color;
+      &.active {
         color: $primary-text-color;
       }
     }
@@ -1231,9 +1254,9 @@
     box-shadow: 0 0 2px darken($panel-bg-color, 15%);
   }
   .nav {
-    background-color: $bg-color;
+    // background-color: $bg-color;
     .nav-toggle {
-      background-color: $bg-color;
+      // background-color: $bg-color;
     }
     .nav-item,
     a {

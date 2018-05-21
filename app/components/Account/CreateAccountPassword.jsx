@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { connect } from "alt-react";
 import classNames from "classnames";
 import AccountActions from "actions/AccountActions";
@@ -206,10 +207,10 @@ class CreateAccountPassword extends React.Component {
     });
   }
 
-  setCaptcha = (cap) => {
+  setCaptcha = cap => {
     console.debug("Set Cap:", cap);
-    this.setState({cap});
-  }
+    this.setState({ cap });
+  };
 
   _renderAccountCreateForm() {
     let { registrar_account } = this.state;
@@ -563,7 +564,7 @@ class CreateAccountPassword extends React.Component {
     // let firstAccount = my_accounts.length === 0;
     return (
       <div
-        className="grid-block wrap vertical readable create-password"
+        className="grid-block wrap vertical create-password"
         style={{ alignSelf: "center" }}
       >
         {step === 2 ? (

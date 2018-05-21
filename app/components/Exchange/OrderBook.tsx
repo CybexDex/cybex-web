@@ -31,7 +31,7 @@ const rowStyles = {
     flexShrink: 0,
     position: "relative",
     padding: "0 0.5rem",
-    margin: "0 -0.5em",    
+    margin: "0 -0.5em"
   }
 };
 
@@ -234,21 +234,21 @@ let OrderBookHeader = class extends React.PureComponent<
           onClick={onTypeChange.bind(this, OrderType.All)}
           style={OrderBook.Styles.tab}
         >
-          All
+          <Translate content="exchange.orderbook.all" />
         </TabLink>
         <TabLink
           active={type === OrderType.Ask}
           onClick={onTypeChange.bind(this, OrderType.Ask)}
           style={OrderBook.Styles.tab}
         >
-          Ask
+          <Translate content="exchange.orderbook.ask" />
         </TabLink>
         <TabLink
           active={type === OrderType.Bid}
           onClick={onTypeChange.bind(this, OrderType.Bid)}
           style={OrderBook.Styles.tab}
         >
-          Bid
+          <Translate content="exchange.orderbook.bid" />
         </TabLink>
         <i style={{ flexGrow: 1 }} />
         <Select
@@ -476,7 +476,15 @@ let OrderBook = class extends React.Component<any, any> {
     );
 
     let priceRow = (
-      <div style={[rowHeight, {backgroundColor: Colors.$colorAnchor, margin: "0 -0.5rem"}] as any} className="text-center">
+      <div
+        style={
+          [
+            rowHeight,
+            { backgroundColor: Colors.$colorAnchor, margin: "0 -0.5rem" }
+          ] as any
+        }
+        className="text-center"
+      >
         <PriceStat
           ready={marketReady}
           price={(latest && latest.full) || {}}
@@ -503,7 +511,10 @@ let OrderBook = class extends React.Component<any, any> {
             baseSymbol={base.get("symbol")}
             quoteSymbol={quote.get("symbol")}
           />
-          <div className="order-book-body _scroll-bar" style={[bodyStyle] as any}>
+          <div
+            className="order-book-body _scroll-bar"
+            style={[bodyStyle] as any}
+          >
             <div
               ref={askWrapper => (this.askWrapper = askWrapper)}
               className="ask-wrapper"

@@ -268,7 +268,7 @@ class Blocks extends React.Component {
 
     return (
       <div ref="outerWrapper" className="block-wrapper grid-block page-layout">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <div className="block-left bgcolor-primary with-shadow">
           {/* First row of stats */}
           <div className="grid-block text-center small-6">

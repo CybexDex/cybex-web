@@ -47,7 +47,7 @@
     );
   grid-template-areas: "markets main orderbook" "orders main orderbook";
   grid-column-gap: 1rem;
-  padding-right: 8px;
+  padding: 0 8px;
   @media screen and (orientation: portrait) {
     grid-template-rows: auto 460px auto 360px;
     grid-template-columns: 1fr;

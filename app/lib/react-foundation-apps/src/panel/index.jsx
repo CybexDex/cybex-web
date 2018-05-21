@@ -1,6 +1,6 @@
-var React = require("react");
+import * as React from "react";
+import Animation from "../utils/animation";
 var classnames = require("classnames");
-var Animation = require("../utils/animation");
 var foundationApi = require("../utils/foundation-api");
 
 var Panel = React.createClass({
@@ -62,4 +62,6 @@ var Panel = React.createClass({
   }
 });
 
-module.exports = Panel;
+// module.exports = Panel;
+export default Panel;
+export { Panel };

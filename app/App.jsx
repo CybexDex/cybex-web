@@ -29,7 +29,7 @@ import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
-import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
+// import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
 
 class App extends React.Component {
   constructor() {
@@ -112,8 +112,10 @@ class App extends React.Component {
         window.electron ||
         user_agent.indexOf("firefox") > -1 ||
         user_agent.indexOf("chrome") > -1 ||
-        user_agent.indexOf("edge") > -1
-      )
+        user_agent.indexOf("edge") > -1 ||
+        user_agent.indexOf("safari") > -1
+      ) &&
+      this.refs.browser_modal
     ) {
       this.refs.browser_modal.show();
     }
@@ -129,7 +131,7 @@ class App extends React.Component {
       setTimeout(() => loadingMask.remove(), 500);
     }
     ModalActions.showModal("gameModal", true);
-    ModalActions.showModal(DEFAULT_ETH_MODAL_ID, true);
+    // ModalActions.showModal(DEFAULT_ETH_MODAL_ID, true);
   }
 
   _onIgnoreIncognitoWarning() {
@@ -235,8 +237,8 @@ class App extends React.Component {
       content = (
         <div className="cybex-layout">
           <Header />
-          {/* <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" /> */}
-          <Nav />
+          <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
+          {/* <Nav isVertical={true} hideLabel={true} /> */}
           <div className="main-body">{this.props.children}</div>
           <Footer synced={this.state.synced} />
           <ReactTooltip
@@ -331,17 +333,17 @@ class Root extends React.Component {
       }
     }
 
-    const user_agent = navigator.userAgent.toLowerCase();
-    if (
-      !(
-        window.electron ||
-        user_agent.indexOf("firefox") > -1 ||
-        user_agent.indexOf("chrome") > -1 ||
-        user_agent.indexOf("edge") > -1
-      )
-    ) {
-      this.refs.browser_modal.show();
-    }
+    // const user_agent = navigator.userAgent.toLowerCase();
+    // if (
+    //   !(
+    //     window.electron ||
+    //     user_agent.indexOf("firefox") > -1 ||
+    //     user_agent.indexOf("chrome") > -1 ||
+    //     user_agent.indexOf("edge") > -1
+    //   )
+    // ) {
+    //   this.refs.browser_modal.show();
+    // }
   }
 
   getChildContext() {

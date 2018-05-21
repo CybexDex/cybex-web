@@ -25,7 +25,12 @@ import AccountImage from "../Account/AccountImage";
 import ContextMenuStore from "stores/ContextMenuStore";
 import { VolumnStore } from "stores/VolumeStore";
 import { VolumeDisplay } from "./VolumeDisplay";
-
+import Nav from "components/Layout/Nav";
+import { Icon as NewIcon } from "components/Common";
+import { ModalActions } from "actions/ModalActions";
+import LogoutModal, {
+  DEFAULT_LOGOUT_MODAL_ID
+} from "components/Modal/LogoutModal";
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
 
@@ -135,6 +140,9 @@ class Header extends React.Component<any, any> {
     return true;
   }
 
+  logout = () => {
+    ModalActions.showModal(DEFAULT_LOGOUT_MODAL_ID);
+  };
   _triggerMenu(e) {
     e.preventDefault();
     ZfApi.publish("mobile-menu", "toggle");
@@ -204,6 +212,7 @@ class Header extends React.Component<any, any> {
     } = this.props;
     let locked_tip = counterpart.translate("header.locked_tip");
     let unlocked_tip = counterpart.translate("header.unlocked_tip");
+    let logout_tip = counterpart.translate("header.logout_tip");
 
     let tradingAccounts = AccountStore.getMyAccounts();
 
@@ -274,10 +283,10 @@ class Header extends React.Component<any, any> {
           {this.props.locked ? (
             <a
               style={{ padding: "1rem" }}
+              className="button"
               href="javascript:;"
               onClick={this._toggleLock.bind(this)}
               data-class="unlock-tooltip"
-              data-offset="{'left': 50}"
               data-tip={locked_tip}
               data-place="bottom"
               data-html
@@ -288,9 +297,9 @@ class Header extends React.Component<any, any> {
             <a
               style={{ padding: "1rem" }}
               href="javascript:;"
+              className="button"
               onClick={this._toggleLock.bind(this)}
               data-class="unlock-tooltip"
-              data-offset="{'left': 50}"
               data-tip={unlocked_tip}
               data-place="bottom"
               data-html
@@ -425,44 +434,14 @@ class Header extends React.Component<any, any> {
             </li>
           </ul>
         </div>
-        {__ELECTRON__ ? (
-          <div className="grid-block show-for-medium shrink electron-navigation">
-            <ul className="menu-bar">
-              <li>
-                <div style={{ marginLeft: "1rem", height: "3rem" }}>
-                  <div
-                    style={{ marginTop: "0.5rem" }}
-                    onClick={this._onGoBack.bind(this)}
-                    className="button outline small"
-                  >
-                    {"<"}
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div
-                  style={{
-                    height: "3rem",
-                    marginLeft: "0.5rem",
-                    marginRight: "0.75rem"
-                  }}
-                >
-                  <div
-                    style={{ marginTop: "0.5rem" }}
-                    onClick={this._onGoForward.bind(this)}
-                    className="button outline small"
-                  >
-                    >
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        ) : null}
-        <div className="grid-block show-for-medium">
+        <div
+          className="grid-block show-for-medium"
+          style={{ overflow: "visible" }}
+        >
           {dashboard}
           <VolumeDisplay vol={this.props.vol} />
-          <div id="context-hub" />
+          <Nav hideIcon={true} isVertical={false} />
+          {/* <div id="context-hub" /> */}
         </div>
         <div className="grid-block show-for-medium shrink">
           <div className="grp-menu-items-group header-right-menu">
@@ -506,6 +485,23 @@ class Header extends React.Component<any, any> {
               </div>
             )}
             {lock_unlock}
+            {currentAccount && (
+              <div className="grp-menu-item">
+                <a
+                  style={{ padding: "1rem" }}
+                  className="button"
+                  href="javascript:;"
+                  onClick={this.logout}
+                  data-tip={logout_tip}
+                  data-place="bottom"
+                >
+                  <NewIcon
+                    style={{ width: "16px", height: "16px" }}
+                    icon="logout"
+                  />
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

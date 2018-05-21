@@ -352,7 +352,7 @@ class CommitteeMembers extends React.Component {
 
     return (
       <div className="grid-block">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <div className="grid-block page-layout vertical medium-horizontal">
           {/* <div className="grid-block shrink">
                         <div className="grid-content">

@@ -16,6 +16,7 @@ import LogoutModal, {
 } from "components/Modal/LogoutModal";
 import { NavItem } from "components/Common";
 import { Colors } from "components/Common/Colors";
+import { ExplorerNav } from "components/Explorer/ExplorerNav";
 
 interface NavLink {
   id: string;
@@ -27,51 +28,54 @@ interface NavLink {
   beFilter?: boolean;
   displayOnlyWhen?: string;
   down?: boolean;
+  children?;
 }
 
 const NavLinks: Array<NavLink> = [
-  // {
-  //   id: "account",
-  //   routeTo: accountName => `/account/${accountName}/dashboard`,
-  //   activeMatcher: /^\/account/,
-  //   name: "Account",
-  //   icon: "wallet",
-  //   displayOnlyWhen: "currentAccount"
-  // },
   {
-    id: "explorer",
-    routeTo: "/ledger",
-    activeMatcher: /^\/ledger|explorer/,
-    name: "Explorer",
-    icon: "explorer"
+    id: "account",
+    routeTo: accountName => `/account/${accountName}/dashboard`,
+    activeMatcher: /^\/account/,
+    name: "account",
+    icon: "wallet",
+    displayOnlyWhen: "currentAccount"
   },
+
   {
     id: "exchange",
     routeTo: lastMarket => `/market/${lastMarket}`,
     activeMatcher: /^\/market/,
-    name: "Exchange",
+    name: "exchange",
     icon: "exchange"
   },
   {
     id: "gateway",
     routeTo: "/gateway",
-    name: "Gateway",
+    name: "gateway",
     icon: "gateway",
     displayOnlyWhen: "currentAccount"
   },
   {
     id: "transfer",
     routeTo: "/transfer",
-    name: "Transfer",
+    name: "transfer",
     icon: "transfer"
   },
   {
-    id: "settings",
-    routeTo: "/settings",
-    name: "Settings",
-    icon: "settings",
-    down: true
+    id: "explorer",
+    routeTo: "/ledger",
+    activeMatcher: /^\/ledger|explorer/,
+    name: "explorer",
+    icon: "explorer",
+    children: <ExplorerNav />
   }
+  // {
+  //   id: "settings",
+  //   routeTo: "/settings",
+  //   name: "Settings",
+  //   icon: "settings",
+  //   down: true
+  // }
 ];
 
 let logoutItem = {
@@ -84,39 +88,46 @@ let logoutItem = {
 let sideStyles = {
   base: {
     position: "absolute",
+    transition: "all 0.3s",
+    background: Colors.$colorGradientFoilex
+  },
+  horizontal: {
+    bottom: 0,
+    left: 0,
+    transform: "translateX(-50%)",
+    height: "0.334rem",
+    width: "6.3334rem",
+    borderRadius: "4px 4px 0 0"
+  },
+  vertical: {
     top: "-50%",
     left: 0,
-    transition: "top 0.3s",
     transform: "translateY(-50%)",
     height: "3.334rem",
     width: "0.3334rem",
-    borderRadius: "0 4px 4px 0",
-    background: Colors.$colorGradientFoilex
+    borderRadius: "0 4px 4px 0"
   }
 };
-// const NavLink = ({ icon, name, isActive, id }: NavItem) => (
-//   <div className={getClassName("nav-item transition", { active: isActive })}>
-//     <i className={`icon-${icon}`} />
-//     <div className="nav-title">
-//       <Translate content={`nav.${id}`} />
-//     </div>
-//   </div>
-// );
 
 type NavProps = WithRouterProps & {
   settings: any;
+  isVertical?;
   currentAccount: string;
   [x: string]: string;
 };
 
 const getNavId = id => `$nav__${id}`;
 
-export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
+export class Nav extends React.PureComponent<
+  NavProps,
+  { isExpand; siderTop; siderLeft }
+> {
   constructor(props: NavProps) {
     super(props);
     this.state = {
       isExpand: true,
-      siderTop: -100
+      siderTop: -100,
+      siderLeft: 0
     };
   }
 
@@ -124,12 +135,16 @@ export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
     router: PropTypes.object.isRequired
   };
 
+  static defaultProps = {
+    isVertical: false
+  };
+
   componentDidMount() {
-    let active = NavLinks.filter(this.isActive)[0];
-    if (!active) return;
-    let id = getNavId(active.id);
-    this.updateSide(id);
+    // this._updateSide();
   }
+  // componentDidUpdate() {
+  //   this._updateSide();
+  // }
 
   toggleNav() {
     SettingsActions.toggleNav(true);
@@ -137,14 +152,6 @@ export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
 
   logout = () => {
     ModalActions.showModal(DEFAULT_LOGOUT_MODAL_ID);
-  };
-
-  updateSide = id => {
-    let target = document.getElementById(id);
-    let siderTop = target.offsetTop + target.offsetHeight / 2;
-    this.setState({
-      siderTop
-    });
   };
 
   isActive = (link: NavLink) =>
@@ -169,15 +176,25 @@ export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
   };
 
   render() {
-    let { settings, currentAccount, lastMarket } = this.props;
+    let { settings, currentAccount, lastMarket, isVertical } = this.props;
     let routerConfig = this.getRouterConfig();
     let isExpand = settings.get("navState");
-    let sideStyle = { ...sideStyles.base };
-    sideStyle.top = this.state.siderTop + "px";
+    let sideStyle: any = {
+      ...sideStyles.base,
+      ...(isVertical ? sideStyles.vertical : sideStyles.horizontal)
+    };
+    if (isVertical) {
+      sideStyle.top = this.state.siderTop + "px";
+    } else {
+      sideStyle.left = this.state.siderLeft + "px";
+    }
     return (
       <nav
         id="mainNav"
-        className={getClassName("nav transition", { expand: isExpand })}
+        className={getClassName("nav transition", {
+          expand: isExpand,
+          "nav-hor": !isVertical
+        })}
       >
         <div className="nav-items">
           {NavLinks.filter(
@@ -188,16 +205,16 @@ export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
 
             let id = getNavId(link.id);
             return [
-              link.down ? (
+              link.down && isVertical ? (
                 <div key="$nav__divider" style={{ flexGrow: 1 }} />
               ) : null,
               <NavItem
                 {...link}
+                {...this.props}
                 key={id}
                 id={id}
                 onClick={e => {
                   this.context.router.push(routeTo);
-                  this.updateSide(id);
                 }}
                 active={
                   link.activeMatcher
@@ -209,16 +226,18 @@ export class Nav extends React.PureComponent<NavProps, { isExpand; siderTop }> {
             ];
           })}
           {/* Logout Button */}
-          {currentAccount && (
+          {/* {currentAccount && (
             <NavItem
               {...logoutItem}
               key={getNavId(logoutItem.id)}
               id={getNavId(logoutItem.id)}
+              hideIcon={!isVertical}
+              hideLabel={isVertical}
               onClick={this.logout}
             />
-          )}
+          )} */}
         </div>
-        <i style={sideStyle as any} />
+        {/* <i style={sideStyle as any} /> */}
       </nav>
     );
   }

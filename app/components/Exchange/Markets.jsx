@@ -39,7 +39,7 @@ class Markets extends React.Component {
   render() {
     return (
       <div ref="wrapper" className="grid-block page-layout no-overflow">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <MyMarkets
           style={{ width: "100%", padding: 20 }}
           listHeight={this.state.height ? this.state.height - 82 : null}

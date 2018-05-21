@@ -69,4 +69,5 @@ var Trigger = React.createClass({
   }
 });
 
-module.exports = Trigger;
+export default Trigger;
+export { Trigger };

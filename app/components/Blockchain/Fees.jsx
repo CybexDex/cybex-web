@@ -202,7 +202,7 @@ class Fees extends React.Component {
 
     return (
       <div className="grid-block page-layout">
-        <ExplorerNav />
+        {/* <ExplorerNav /> */}
         <div className="grid-block vertical" style={{ overflow: "visible" }}>
           <div
             className="grid-block small-12 shrink"
