@@ -26,8 +26,8 @@ let lastLookup = new Date();
 // Tempoary for GET
 const SpecialMarkets = { "JADE.MT": { "JADE.ETH": 0, CYB: 1, "JADE.BTC": 2 } };
 const FixedMarkets = {
-  CYB: { "JADE.TCT": -1 },
-  "JADE.ETH": { "JADE.TCT": -1 },
+  CYB: { "JADE.DPY": -1 },
+  "JADE.ETH": { "JADE.DPY": -1 },
   // "JADE.BTC": { "JADE.GNX": -1 },
   // "JADE.EOS": { "JADE.GNX": -1 }
 };

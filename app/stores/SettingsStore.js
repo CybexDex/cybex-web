@@ -168,6 +168,7 @@ class SettingsStore {
           "JADE.GNX",
           "JADE.KEY",
           "JADE.TCT",
+          "JADE.DPY",
           // "JADE.LST",
           "JADE.ENG"
         ]
