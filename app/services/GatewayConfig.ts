@@ -6,7 +6,7 @@ export const JadePool = __TEST__ ?
     "ADDRESS_TYPES": {
       "TEST.ETH": "ETH",
       "TEST.BTC": "BTC",
-      "TEST.EOS": "EOS",
+      // "TEST.EOS": "EOS",
       "TEST.USDT": "USDT",
       "TEST.BAT": "BAT",
       "TEST.VEN": "VEN",
@@ -29,7 +29,7 @@ export const JadePool = __TEST__ ?
       "ETH": "TEST.ETH",
       "BTC": "TEST.BTC",
       // ERC20
-      "EOS": "TEST.EOS",
+      // "EOS": "TEST.EOS",
       "USDT": "TEST.USDT",
       "BAT": "TEST.BAT",
       "VEN": "TEST.VEN",
@@ -54,7 +54,7 @@ export const JadePool = __TEST__ ?
     "ADDRESS_TYPES": {
       "JADE.ETH": "ETH",
       "JADE.BTC": "BTC",
-      "JADE.EOS": "EOS",
+      // "JADE.EOS": "EOS",
       "JADE.USDT": "USDT",
       "JADE.BAT": "BAT",
       "JADE.VEN": "VEN",
@@ -77,7 +77,7 @@ export const JadePool = __TEST__ ?
       "ETH": "JADE.ETH",
       "BTC": "JADE.BTC",
       // ERC20
-      "EOS": "JADE.EOS",
+      // "EOS": "JADE.EOS",
       "USDT": "JADE.USDT",
       "BAT": "JADE.BAT",
       "VEN": "JADE.VEN",
