@@ -8,5 +8,6 @@ export * from "./NavItem";
 export * from "./Colors";
 export * from "./Styles";
 export * from "./FlexGrowDivider";
+export * from "./Input";
 
 export * from "./utils";

@@ -146,14 +146,6 @@ class Dashboard extends React.Component {
     if (!accountsReady) {
       return <LoadingIndicator />;
     }
-    const slideSettings = {
-      dots: false,
-      arrows: false,
-      infinite: true,
-      speed: 1500,
-      fade: true,
-      autoplay: true
-    };
 
     let validMarkets = 0;
 
@@ -190,7 +182,11 @@ class Dashboard extends React.Component {
 
     if (!accountCount) {
       return (
-        <div ref="wrapper" style={{height: "100%"}} className="grid-block page-layout vertical welcome">
+        <div
+          ref="wrapper"
+          style={{ height: "100%" }}
+          className="grid-block page-layout vertical welcome"
+        >
           <div className="home-slide slide-1">
             <div className="title-wrapper">
               <Translate

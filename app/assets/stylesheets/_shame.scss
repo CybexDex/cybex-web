@@ -218,10 +218,13 @@ div.modal {
   border: 1px solid #008cba;
 }
 
-div.disabled * {
-  opacity: 0.8 !important;
-  cursor: default !important;
-  pointer-events: none !important;
+div.disabled {
+  &,
+  * {
+    opacity: 0.8 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+  }
 }
 
 div.disabled input {
@@ -369,6 +372,10 @@ select.cyb-select {
 
 .dashed {
   text-decoration: dashed;
+}
+
+.round-corner {
+  border-radius: 0.3334em;
 }
 
 .windows select.cyb-select {
@@ -607,12 +614,17 @@ body:not(.native-scroll) {
       /* Add a thumb */
     }
 
-    &,* {
-      &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
+    &,
+    * {
+      &::-webkit-scrollbar,
+      &::-webkit-scrollbar-thumb,
+      &::-webkit-scrollbar-track {
         display: none;
       }
       &:hover {
-        &::-webkit-scrollbar, &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-track {
+        &::-webkit-scrollbar,
+        &::-webkit-scrollbar-thumb,
+        &::-webkit-scrollbar-track {
           display: unset;
         }
       }
