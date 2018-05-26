@@ -116,7 +116,7 @@ let LeftSlide = class extends React.Component<any, { slideIndex }> {
           width: "42.8125%",
           maxWidth: "648px",
           height: "100%",
-          background: `url(${require("./login_mask.svg")})`,
+          backgroundImage: `url(${require("./login_mask.svg")})`,
           backgroundSize: "cover",
           padding: "2rem",
           position: "relative",

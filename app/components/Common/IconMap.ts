@@ -38,7 +38,22 @@ const icons = {
     base: require("./icons/ic_radio.svg"),
     active: require("./icons/ic_radio_active.svg"),
     disabledAcitve: require("./icons/ic_radio_active_disabled.svg"),
-  }
+  },
+  lock: {
+    base: require("./icons/ic_lock_outline.svg"),
+  },
+  avatarWhite: {
+    base: require("./icons/ic_avatar_white.svg"),
+    error: require("./icons/ic_avatar_red.svg"),    
+  },
+  avatar: {
+    base: require("./icons/ic_avatar_24px.svg"),
+    error: require("./icons/ic_avatar_red.svg"),
+  },
+  visibility: {
+    base: require("./icons/ic_visibility_on.svg"),
+    off: require("./icons/ic_visibility_off.svg"),
+  },
 };
 
 export const getIcon = (icon, type = "base") =>

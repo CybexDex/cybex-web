@@ -18,16 +18,16 @@ export const $styleSelect = (type = "base") => ({
   container: styles => ({
     ...styles,
     zIndex: 5
-  }), 
+  }),
   valueContainer: styles => ({
     ...styles,
     height: "100%",
-    padding: 0,
-  }), 
+    padding: 0
+  }),
   dropdownIndicator: styles => ({
     ...styles,
-    padding: "0 8px",
-  }), 
+    padding: "0 8px"
+  }),
   control: (styles, { data, isDisabled, isFocused, isSelected }) => ({
     ...styles,
     ...TypedStyles[type].control,
@@ -76,4 +76,31 @@ export const $styleSelect = (type = "base") => ({
       cursor: isDisabled ? "not-allowed" : "default"
     };
   }
+});
+
+type FlexLayout = "stretch" | "center" | "flex-start" | "flex-end";
+type FlexParams = number | "auto";
+
+export const $styleFlexContainer = (
+  flexDirection: "row" | "column" = "row",
+  justifyContent: FlexLayout = "stretch",
+  alignItems: FlexLayout = "stretch"
+) => ({
+  display: "flex",
+  flexDirection,
+  justifyContent,
+  alignItems
+});
+
+
+export const $styleFlexItem = (
+  flexGrow: FlexParams = "auto",
+  flexShrink: FlexParams = "auto",
+  flexBasis = "auto",
+  alignSelf: FlexLayout = "stretch"
+) => ({
+  flexGrow,
+  flexShrink,
+  flexBasis,
+  alignSelf
 });

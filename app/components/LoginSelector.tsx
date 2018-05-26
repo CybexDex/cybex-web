@@ -6,7 +6,93 @@ import RestoreWallet from "components/Account/RestoreWallet";
 import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { LeftSlide } from "components/Common/LeftSlide";
-import { Input } from "components/Common";
+import {
+  Input,
+  Button,
+  ButtonSize,
+  ButtonType,
+  LoginAccountInput
+} from "components/Common";
+import { $styleFlexContainer, $styleFlexItem } from "components/Common/Styles";
+import Radium from "Radium";
+
+import WalletDb from "stores/WalletDb";
+import WalletUnlockStore from "stores/WalletUnlockStore";
+import AccountStore from "stores/AccountStore";
+import AccountActions from "actions/AccountActions";
+let LoginMain = Radium(
+  class extends React.PureComponent<any, any> {
+    onPasswordEnter = e => {
+      const { passwordLogin } = this.props;
+      e.preventDefault();
+      const password = passwordLogin
+        ? this.refs.password_input.value
+        : this.refs.password_input.value();
+      const account = passwordLogin
+        ? this.state.account && this.state.account.get("name")
+        : null;
+      this.setState({ password_error: null });
+      WalletDb.validatePassword(
+        password || "",
+        true, //unlock
+        account
+      );
+      if (WalletDb.isLocked()) {
+        this.setState({ password_error: true });
+        return false;
+      } else {
+        AccountActions.setPasswordAccount(account);
+        this.props.resolve();
+        WalletUnlockActions.change();
+        this.setState({
+          password_input_reset: Date.now(),
+          password_error: false
+        });
+      }
+      return false;
+    };
+
+    handleFieldChange = (field, value) => {};
+
+    render() {
+      return (
+        <div
+          style={
+            [
+              $styleFlexContainer("column", "center", "center"),
+              $styleFlexItem(1, 1)
+            ] as any
+          }
+          className="right"
+        >
+          <form
+            style={
+              [
+                {
+                  width: "400px"
+                },
+                $styleFlexContainer("column")
+              ] as any
+            }
+            onSubmit={this.onPasswordEnter}
+          >
+            <Translate component="h1" content="account.welcome" />
+            <LoginAccountInput />
+            <Input
+              placeholder="Password"
+              icon="lock"
+              type="password"
+              keepPlaceholder
+            />
+            <Button type="primary" size="large" style={{ marginTop: "1.5em" }}>
+              Login
+            </Button>
+          </form>
+        </div>
+      );
+    }
+  }
+);
 
 export default class LoginSelector extends React.Component<any, any> {
   onSelect(route) {
@@ -23,10 +109,7 @@ export default class LoginSelector extends React.Component<any, any> {
         style={{ width: "100%", display: "flex", height: "100%" }}
       >
         <LeftSlide />
-        <div>
-          <Input placeholder="Account Name" icon="star" type="text" />
-          <Input placeholder="Account Name" icon="star" type="text" disabled />
-        </div>
+        <LoginMain />
         {false && (
           <div className="grid-content" style={{ paddingTop: 30 }}>
             <h2 className="text-center">

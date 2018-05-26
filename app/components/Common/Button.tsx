@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import Radium from "radium";
 import Colors from "./Colors";
 
-export type ButtonSize = "xsmall" | "normal" | "smaller" | "small" | "big";
+export type ButtonSize = "xsmall" | "normal" | "smaller" | "small" | "large";
 export type ButtonType =
   | "primary"
   | "secondary"
@@ -49,6 +49,9 @@ let Button = class extends React.Component<ButtonProps, any> {
       background: Colors.$colorGradientGoldex,
       color: Colors.$colorWhite,
       ":hover": {
+        background: Colors.$colorOrangeLight
+      },
+      ":focus": {
         background: Colors.$colorOrangeLight
       },
       ":active": {
@@ -125,7 +128,7 @@ let Button = class extends React.Component<ButtonProps, any> {
       fontSize: "14px",
       height: "40px"
     },
-    big: {
+    large: {
       fontSize: "16px",
       height: "56px"
     }

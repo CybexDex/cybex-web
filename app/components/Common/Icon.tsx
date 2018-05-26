@@ -9,6 +9,7 @@ let Icon = class extends React.Component<
     disabled?: boolean;
     active?: boolean;
     icon: string;
+    type?: string;
     style?: any;
     onClick?;
   },
@@ -17,12 +18,14 @@ let Icon = class extends React.Component<
   static defaultProps = {
     icon: "add",
     active: false,
+    type: "base",
     style: {}
   };
 
   static propTypes = {
     active: PropTypes.bool,
     style: PropTypes.object,
+    type: PropTypes.string,
     icon: PropTypes.string
   };
 
@@ -32,18 +35,20 @@ let Icon = class extends React.Component<
       base: {
         display: "inline-block",
         width: "1em",
+        minWidth: "1em",
         height: "1em",
+        minHeight: "1em",
         backgroundImage: `url(${url})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundSize: "contain"
+        backgroundSize: "cover"
       }
     };
   };
 
   render() {
-    let { icon, active, style } = this.props;
-    let styles = this.getStyles(icon, active ? "active" : "base");
+    let { icon, active, style, type } = this.props;
+    let styles = this.getStyles(icon, active ? "active" : type);
     return <i style={[styles.base, style] as any} />;
   }
 };
