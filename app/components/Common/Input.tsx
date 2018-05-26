@@ -4,7 +4,7 @@ import Radium from "radium";
 import { Colors } from "components/Common/Colors";
 import { getId } from "./utils";
 import classnames from "classnames";
-import { ChainStore, PublicKey, ChainValidation } from "cybexjs";
+import { Apis } from "cybexjs-ws";
 
 let Input = Radium(
   class extends React.PureComponent<
@@ -28,8 +28,9 @@ let Input = Radium(
       active?;
       onValid?;
       formatter?;
+      validator?;
     },
-    { value; focused; type }
+    { value; focused; type; valid }
   > {
     static defaultProps = {
       size: "normal"
@@ -133,6 +134,7 @@ let Input = Radium(
       this.state = {
         value: "",
         focused: false,
+        valid: false,
         type: props.type
       };
       this.key = getId(this.props.id || this.props.name);
@@ -140,12 +142,22 @@ let Input = Radium(
 
     onChange = e => {
       let value = e.target.value;
+      let valid = false;
       if (this.props.formatter) {
         value = this.props.formatter(this.state.value, value);
       }
-      this.setState({ value });
+      if (this.props.validator) {
+        valid = this.props.validator(value);
+      }
+      this.setState({ value, valid });
       if (this.props.onChange) {
         this.props.onChange(value);
+      }
+      if (this.props.onValid && valid) {
+        this.props.onValid(value);
+      }
+      if (this.props.onInvalid && !valid) {
+        this.props.onInvalid(value);
       }
     };
     onFocus = e => {
@@ -264,28 +276,92 @@ let Input = Radium(
 
 let InputValidator = props => {};
 
-let LoginAccountInput = class extends React.PureComponent<any, any> {
+const ACCOUNT_NAME_SET = /^[a-z0-9\-]*$/;
+
+let LoginAccountInput = class extends React.PureComponent<{onValidChange}, any> {
+  valid = false;
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      account: "",
+      valid: false
+    };
   }
 
-  handleNameChange = async name => {};
+  handleNameChange = async name => {
+    let account = await Apis.instance()
+      .db_api()
+      .exec("get_account_by_name", [name]);
+    let valid = false;
+    if (account) {
+      valid = true;
+      this.setState({ account, valid: true });
+      this.valid = true;
+    } else {
+      this.setState({ account: null, valid: false });
+    }
+    if (this.props.onValidChange) {
+      this.props.onValidChange(valid, account);
+    }
+  };
 
   render() {
+    let { valid } = this.state;
     return (
       <Input
         placeholder="Account Name"
-        icon="avatar"
+        icon={valid ? "avatarWhite" : "avatar"}
         type="text"
-        formatter={(prevValue: string, nextValue: string) =>
-          nextValue.toLowerCase()
-        }
+        onChange={this.handleNameChange}
+        tip={this.state.account && "#" + this.state.account.id}
+        formatter={(prevValue: string, nextValue: string) => {
+          if (!ACCOUNT_NAME_SET.test(nextValue)) {
+            return prevValue;
+          }
+          return nextValue.toLowerCase();
+        }}
+        keepPlaceholder
+      />
+    );
+  }
+};
+let LoginPasswordInput = class extends React.PureComponent<{onValidChange}, any> {
+  valid = false;
+  constructor(props) {
+    super(props);
+    this.state = {
+      password: "",
+      valid: false
+    };
+  }
+
+  handleChange = async password => {
+    let valid = false;
+    if (password) {
+      this.setState({ password, valid: true });
+      valid = true;
+      this.valid = true;
+    } else {
+      this.setState({ password: null, valid: false });
+    }
+    if (this.props.onValidChange) {
+      this.props.onValidChange(valid, password);
+    }
+  };
+
+  render() {
+    let { valid } = this.state;
+    return (
+      <Input
+        placeholder="Password"
+        icon="lock"
+        type="password"
+        onChange={this.handleChange}
         keepPlaceholder
       />
     );
   }
 };
 
-export { Input, LoginAccountInput };
+export { Input, LoginAccountInput, LoginPasswordInput };
 export default Input;

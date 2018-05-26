@@ -71,6 +71,7 @@ import Bazaar from "./components/Exchange/Bazaar";
 import { SwapContainer } from "./components/Swap/SwapContainer";
 import { Gateway } from "./components/Gateway/Gateway";
 import { Contact } from "./components/HelpDrawer/Contact";
+import Login from "./components/Login";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -85,6 +86,7 @@ const routes = (
     <IndexRoute to="/dashboard" />
     <Route path="/auth/:data" component={Auth} />
     <Route path="/dashboard" component={DashboardContainer} />
+    <Route path="/login" component={Login} />
     <Route path="/ledger" component={BlocksContainer} />
     <Route path="/bazaar" component={Bazaar} />
     <Route path="/contact" component={Contact} />

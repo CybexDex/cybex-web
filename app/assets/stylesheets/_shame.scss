@@ -631,3 +631,11 @@ body:not(.native-scroll) {
     }
   }
 }
+
+.switch-wrapper {
+  position: relative;
+}
+
+.switch-wrapper > div {
+  position: absolute;
+}

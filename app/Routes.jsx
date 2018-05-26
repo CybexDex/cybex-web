@@ -47,6 +47,14 @@ const routes = (
       }}
     />
     <Route
+      path="/login"
+      getComponent={(location, cb) => {
+        System.import("components/Login")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    />
+    <Route
       path="contact"
       getComponent={(location, cb) => {
         System.import("components/HelpDrawer/Contact")
