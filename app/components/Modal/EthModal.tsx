@@ -76,7 +76,7 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
               component="section"
               content="first.p4"
             />
-            <Translate
+            {/* <Translate
               className="text-center"
               unsafe
               component="section"
@@ -93,7 +93,7 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
               unsafe
               component="section"
               content="first.p7"
-            />
+            /> */}
             <Translate
               className="text-center"
               unsafe

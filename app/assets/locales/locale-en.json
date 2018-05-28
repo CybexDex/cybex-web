@@ -1848,19 +1848,15 @@
     }
   },
   "first": {
-    "title": "About removing the prefix of assets' name in Cybex",
-    "p1": "<p>Dear CYBEX users,</p>",
+    "title": "The Announcement on <br>CYBEX Exchange Supporting the Mapping of EOS",
+    "p1": "<p>Dear CYBEX Users,</p>",
     "p2":
-      "<p>CYBEX Exchange hereby extends heartfelt appreciation for all feedbacks and suggestions from fellow users and community members since operation.</p>",
+      "<p>In order to collaborate on the mapping of EOS, CYBEX Exchange will suspend the deposit and withdraw of EOS starting from the last week before the launch of the EOS main network(i.e. after 20:00, May 25 2018). The restoration of said functions is expected to happen from the second week after the launch of the main network.</p>",
     "p3":
-      "<p>Among varying feedbacks, voices on the prefix to assets stand out, i.e. many concerned about the prefix JADE in front of any cryptos, rendering them different namely to that outside the Exchange. That stands as a barrier for using and understanding CYBEX.</p>",
+      "<p>During the mapping process, a differing set of sophisticated options are involved, which may bring about risks to personal actions. If there is any EOS in your account, we will immediately conduct snapshot and mapping transfer for your account. Therefore, after the mapping, you will be able to freely withdraw your EOS stored on the main network from CYBEX Exchange after the main network is launched without any extra action or any interruption to your transaction behaviors. </p>",
     "p4":
-      "<p>o address this problem and better adapt to user habits, CYBEX determines to make a blanket removal to all assets issued by JADE, the sole acceptance dealer so far within CYBEX. Synchronous changes will be made in token browsing applications such as MyToken. When altered, assets in/out CYBEX will be consistently shown.</p>",
-    "p5":
-      "<p>It is a change to name display, hence there is no need to worry about affecting transaction activities. We want to underline that all assets in CYBEX will not be prefixed henceforth.</p>",
-    "p6": "<br/>",
-    "p7": "<p>Good luck trading.</p>",
-    "footer": "<p class='text-right'>CYBEX Operation Team</p>"
+      "<p>Click here to check the official announcement made by EOS on the mapping proposal: <a target=\"_blank\" href=\"https://medium.com/eosio/eos-io-dawn-2-0-released-development-update-c19348eac3c7\" >https://medium.com/eosio/eos-io-dawn-2-0-released-development-update-c19348eac3c7</a></p>",
+    "footer": "<p class='text-right'>CYBEX Exchange<br> May/25th/2018</p>"
   },
   "captcha": {
     "error": "Cannot fetch captcha, check your faucet setting, please.",
