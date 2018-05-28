@@ -1,6 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-
-
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { Route, IndexRoute, Redirect } from "react-router";
 import willTransitionTo from "./routerTransition";
@@ -49,7 +48,7 @@ const routes = (
     <Route
       path="/login"
       getComponent={(location, cb) => {
-        System.import("components/Login")
+        System.import("components/Login/Login")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}
@@ -319,7 +318,7 @@ const routes = (
     <Route
       path="create-account"
       getComponent={(location, cb) => {
-        System.import("components/CreateSelector")
+        System.import("components/Login/CreateSelector")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}

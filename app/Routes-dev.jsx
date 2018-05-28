@@ -65,13 +65,13 @@ import BackupBrainkey from "./components/Wallet/BackupBrainkey";
 import Brainkey from "./components/Wallet/Brainkey";
 import Help from "./components/Help";
 import InitError from "./components/InitError";
-import CreateSelector from "./components/Login/CreateSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
 import { SwapContainer } from "./components/Swap/SwapContainer";
 import { Gateway } from "./components/Gateway/Gateway";
 import { Contact } from "./components/HelpDrawer/Contact";
 import Login from "./components/Login/Login";
+import CreateSelector from "./components/Login/CreateSelector";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 

@@ -25,9 +25,15 @@ let lastLookup = new Date();
 
 // Tempoary for GET
 const SpecialMarkets = { "JADE.MT": { "JADE.ETH": 0, CYB: 1, "JADE.BTC": 2 } };
+const FilteredMarkets = {
+  "JADE.BTC": new Set(["JADE.LTC"]),
+  "JADE.ETH": new Set(["JADE.LTC"]),
+  "JADE.EOS": new Set(["JADE.LTC"]),
+  "JADE.USDT": new Set(["JADE.LTC"])
+};
 const FixedMarkets = {
   CYB: { "JADE.DPY": -1 },
-  "JADE.ETH": { "JADE.DPY": -1 },
+  "JADE.ETH": { "JADE.DPY": -1 }
   // "JADE.BTC": { "JADE.GNX": -1 },
   // "JADE.EOS": { "JADE.GNX": -1 }
 };
@@ -249,6 +255,11 @@ export class MarketGroup extends React.Component<any, any> {
         return a !== null;
       })
       .filter(a => {
+        return a.props.base in FilteredMarkets
+          ? !FilteredMarkets[a.props.base].has(a.props.quote)
+          : a;
+      })
+      .filter(a => {
         return a.props.base in SpecialMarkets
           ? a.props.quote in SpecialMarkets[a.props.base]
           : a;
@@ -317,9 +328,14 @@ export class MarketGroup extends React.Component<any, any> {
     return open ? (
       <>
         <div className="table table-hover">
-          <div className="table-row" style={{paddingRight: "10px"}}>{headers}</div>
+          <div className="table-row" style={{ paddingRight: "10px" }}>
+            {headers}
+          </div>
         </div>
-        <div className="table table-hover _scroll-bar" style={{ overflowY: "auto", paddingRight: "4px" }}>
+        <div
+          className="table table-hover _scroll-bar"
+          style={{ overflowY: "auto", paddingRight: "4px" }}
+        >
           {marketRows && marketRows.length && <>{marketRows}</>}
         </div>
       </>

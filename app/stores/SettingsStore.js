@@ -62,7 +62,7 @@ class SettingsStore {
     let defaults = {
       locale: ["zh", "en"],
       apiServer: [],
-      unit: [CORE_ASSET, "JADE.ETH", "USD", "CNY", "BTC", "EUR"],
+      unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "CNY", "BTC", "EUR"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
       showAssetPercent: [{ translate: "yes" }, { translate: "no" }],
       themes: [
@@ -156,6 +156,7 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
+          "JADE.LTC",
           "JADE.BAT",
           "JADE.VEN",
           "JADE.OMG",
@@ -188,7 +189,7 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          // "JADE.MT",
+          "JADE.USDT",
           "CYB"
         ]
       };

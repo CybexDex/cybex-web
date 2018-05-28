@@ -54,6 +54,7 @@ export const JadePool = __TEST__ ?
     "ADDRESS_TYPES": {
       "JADE.ETH": "ETH",
       "JADE.BTC": "BTC",
+      "JADE.LTC": "LTC",
       // "JADE.EOS": "EOS",
       "JADE.USDT": "USDT",
       "JADE.BAT": "BAT",
