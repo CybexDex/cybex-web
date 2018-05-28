@@ -8,8 +8,9 @@ import { ChainValidation } from "cybexjs";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import AltContainer from "alt-container";
+import { Input } from "components/Common";
 
-class AccountNameInput extends React.Component {
+class AccountNameInput extends React.Component<any, any> {
   static propTypes = {
     id: PropTypes.string,
     placeholder: PropTypes.string,
@@ -26,8 +27,10 @@ class AccountNameInput extends React.Component {
     noLabel: false
   };
 
-  constructor() {
-    super();
+  accountInput = null
+
+  constructor(props) {
+    super(props);
     this.state = {
       value: null,
       error: null,
@@ -65,7 +68,7 @@ class AccountNameInput extends React.Component {
   }
 
   focus() {
-    this.refs.input.focus();
+    this.accountInput.focus();
   }
 
   valid() {
@@ -132,11 +135,12 @@ class AccountNameInput extends React.Component {
       AccountActions.accountSearch(value);
   }
 
-  handleChange(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  handleChange(accoutnName) {
+    // e.preventDefault();
+    // e.stopPropagation();
     // Simplify the rules (prevent typing of invalid characters)
-    var account_name = e.target.value.toLowerCase();
+    var account_name = accoutnName;
+    // var account_name = e.target.value.toLowerCase();
     account_name = account_name.match(/[a-z0-9\.-]+/);
     account_name = account_name ? account_name[0] : null;
     account_name = account_name || "";
@@ -144,8 +148,10 @@ class AccountNameInput extends React.Component {
     this.validateAccountName(account_name);
   }
 
-  onKeyDown(e) {
-    if (this.props.onEnter && event.keyCode === 13) this.props.onEnter(e);
+  onKeyDown(e: any) {
+    if (this.props.onEnter && e.keyCode === 13) {
+      this.props.onEnter(e);
+    }
   }
 
   render() {
@@ -161,7 +167,10 @@ class AccountNameInput extends React.Component {
         {/* {noLabel ? null : <label><Translate content="account.name" /></label>} */}
         <section>
           <label className="left-label">{this.props.placeholder}</label>
-          <input
+          <Input
+            icon="avatar"
+            iconStyle={{transform: "scale(0.8)"}}  
+            inputRef={input => this.accountInput = input}          
             name="username"
             type="text"
             ref="input"
@@ -169,6 +178,8 @@ class AccountNameInput extends React.Component {
             placeholder={null}
             onChange={this.handleChange}
             onKeyDown={this.onKeyDown}
+            valueFromOuter
+            style={{fontSize: "1.25rem", height: "3.66667em"}}
             value={this.state.account_name || this.props.initial_value}
           />
         </section>

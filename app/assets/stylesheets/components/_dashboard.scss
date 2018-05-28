@@ -1,167 +1,167 @@
 div.fm-outer-container {
-    border-left: 1px solid $border-color;
-    border-top: 1px solid $border-color;
-    margin-bottom: 20px;
+  border-left: 1px solid $border-color;
+  border-top: 1px solid $border-color;
+  margin-bottom: 20px;
 }
 
 @include breakpoint(large) {
-    div.fm-container {
-        >div:first-child() {
-            padding-right: 15px;
-        }
-        >div:last-child() {
-            padding-right: 15px;
-        }
+  div.fm-container {
+    > div:first-child() {
+      padding-right: 15px;
     }
+    > div:last-child() {
+      padding-right: 15px;
+    }
+  }
 }
 
 div.fm-container {
-    border: 1px solid $border-color;
-    border-top: none;
-    border-left: none;
-    padding: 1rem 0.5rem;
-    min-width: 13rem;
-    &:hover {
-        background-color: #D8D8D8;
-        cursor: pointer;
-    }
-    .fm-title,
-    .fm-volume,
-    .fm-change {
-        font-size: 0.85rem;
-    }
-    .fm-name {
-        font-weight: bold;
-        padding-bottom: 10px;
-    }
-    .fm-volume,
-    .fm-change {
-        text-transform: lowercase;
-        font-variant: small-caps;
-        padding-top: 6px;
-    }
+  border: 1px solid $border-color;
+  border-top: none;
+  border-left: none;
+  padding: 1rem 0.5rem;
+  min-width: 13rem;
+  &:hover {
+    background-color: #d8d8d8;
+    cursor: pointer;
+  }
+  .fm-title,
+  .fm-volume,
+  .fm-change {
+    font-size: 0.85rem;
+  }
+  .fm-name {
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+  .fm-volume,
+  .fm-change {
+    text-transform: lowercase;
+    font-variant: small-caps;
+    padding-top: 6px;
+  }
 }
 
 .Dashboard__intro-text {
-    padding: 20px;
-    >p:nth-of-type(2) {
-        padding-bottom: 1.25rem;
-        border-bottom: 1px solid $border-color;
-    }
+  padding: 20px;
+  > p:nth-of-type(2) {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid $border-color;
+  }
 }
 
 .SimpleTrade__modal {
-    // overflow: auto;
-    .Modal__header {
-        padding: 1rem;
+  // overflow: auto;
+  .Modal__header {
+    padding: 1rem;
+  }
+  .Modal__divider {
+    margin: 0px;
+  }
+  .SimpleTrade__hide-zero {
+    position: relative;
+    top: -3px;
+    cursor: pointer;
+  }
+  .SimpleTrade__withdraw-row {
+    padding: 10px 0;
+    > div > div.small-6 {
+      display: inline-block;
+      padding-bottom: 10px;
     }
-    .Modal__divider {
-        margin: 0px;
+  }
+  .SimpleTrade__QR {
+    > canvas {
+      background: white;
+      padding: 0.5rem;
+      margin-bottom: 1.5rem;
     }
-    .SimpleTrade__hide-zero {
-        position: relative;
-        top: -3px;
-        cursor: pointer;
+  }
+  /* Buttons */
+  .ActionButton_Close {
+    padding: 10px 40px 10px 40px;
+    border-radius: 5px 5px 5px 5px;
+    color: rgb(242, 242, 242);
+    background-color: rgb(245, 27, 27);
+  }
+  .SimpleTrade__copyIcon {
+    padding: 0.5rem;
+    margin-right: 15px;
+    background-color: rgb(65, 116, 184);
+  }
+  .SimpleTrade__msg {
+    text-align: right;
+    font-size: 0.8rem;
+  }
+  .SimpleTrade__msg-error {
+    > Icon {
+      position: "relative";
+      top: 0;
     }
-    .SimpleTrade__withdraw-row {
-        padding: 10px 0;
-        >div>div.small-6 {
-            display: inline-block;
-            padding-bottom: 10px;
-        }
+  }
+  .error-msg {
+    font-style: normal;
+    text-transform: uppercase;
+    text-align: right;
+    font-size: 90%;
+    width: 100%;
+    color: #ff3633;
+    font-weight: bold;
+    > span {
+      vertical-align: top;
+      top: 0px;
     }
-    .SimpleTrade__QR {
-        >canvas {
-            background: white;
-            padding: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
+    > svg {
+      position: "relative";
+      top: 0px;
     }
-    /* Buttons */
-    .ActionButton_Close {
-        padding: 10px 40px 10px 40px;
-        border-radius: 5px 5px 5px 5px;
-        color: rgb(242, 242, 242);
-        background-color: rgb(245, 27, 27);
+  }
+  .SimpleTrade__deposit-info {
+    margin-left: 0.2rem;
+    overflow: "hidden";
+    > .copyIcon {
+      vertical-align: middle;
     }
-    .SimpleTrade__copyIcon {
-        padding: 0.5rem;
-        margin-right: 15px;
-        background-color: rgb(65, 116, 184);
+    > .deposit-details {
+      text-align: left;
+      > div:nth-of-type(1) {
+        font-size: 0.75rem;
+        margin-bottom: 0.25rem;
+      }
+      > div:nth-of-type(2) {
+        font-size: 1rem;
+        color: lightblue;
+      }
     }
-    .SimpleTrade__msg {
-        text-align: right;
-        font-size: 0.8rem;
-    }
-    .SimpleTrade__msg-error {
-        >Icon {
-            position: "relative";
-            top: 0;
-        }
-    }
-    .error-msg {
-        font-style: normal;
-        text-transform: uppercase;
-        text-align: right;
-        font-size: 90%;
-        width: 100%;
-        color: #ff3633;
-        font-weight: bold;
-        >span {
-            vertical-align: top;
-            top: 0px;
-        }
-        >svg {
-            position: "relative";
-            top: 0px;
-        }
-    }
-    .SimpleTrade__deposit-info {
-        margin-left: 0.2rem;
-        overflow: "hidden";
-        >.copyIcon {
-            vertical-align: middle;
-        }
-        >.deposit-details {
-            text-align: left;
-            >div:nth-of-type(1) {
-                font-size: 0.75rem;
-                margin-bottom: 0.25rem;
-            }
-            >div:nth-of-type(2) {
-                font-size: 1rem;
-                color: lightblue;
-            }
-        }
-    }
+  }
 }
 
 .balance-row.active {
-    background-color: #3C3C3C;
+  background-color: #3c3c3c;
 }
 
 .balance-row:hover {
-    background-color: #3C3C3C;
+  background-color: #3c3c3c;
 }
 
 .balance-row {
-    margin-left: -10px;
-    margin-right: -10px;
-    padding: 10px 20px;
+  margin-left: -10px;
+  margin-right: -10px;
+  padding: 10px 20px;
 }
 
 .balance-row:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .SimpleTrade__help-text {
-    font-style: italic;
-    padding-top: 5px;
-    font-size: 95%;
+  font-style: italic;
+  padding-top: 5px;
+  font-size: 95%;
 }
 
 #simple_transfer_modal {
-    max-width: 650px;
+  max-width: 650px;
 }
 
 #simple_transfer_modal,
@@ -170,7 +170,7 @@ div.fm-container {
 #simple_withdraw_modal,
 #simple_bridge_modal,
 #simple_bridge_modal_ask {
-    padding: 0;
+  padding: 0;
 }
 
 #simple_deposit_modal,
@@ -178,8 +178,8 @@ div.fm-container {
 #simple_withdraw_modal,
 #simple_bridge_modal,
 #simple_bridge_modal_ask {
-    overflow: auto !important;
-    max-width: 500px;
+  overflow: auto !important;
+  max-width: 500px;
 }
 
 #simple_deposit_modal label,
@@ -187,114 +187,153 @@ div.fm-container {
 #simple_withdraw_modal label,
 #simple_bridge_modal label,
 #simple_bridge_modal_ask label {
-    text-transform: none !important;
+  text-transform: none !important;
 }
 
 #simple_buy_modal,
 #simple_sell_modal {
-    overflow: auto !important;
-    padding: 0;
+  overflow: auto !important;
+  padding: 0;
 }
 
 div.button.create-account {
-    display: block;
-    font-size: 1.2rem;
+  display: block;
+  font-size: 1.2rem;
 }
 
 div.input-wrapper {
-    >div.input-right-symbol {
-        font-size: 0.9rem;
-        font-weight: bold;
-        position: absolute;
-        top: 12px;
-        right: 8px;
-    }
+  > div.input-right-symbol {
+    font-size: 0.9rem;
+    font-weight: bold;
+    position: absolute;
+    top: 12px;
+    right: 8px;
+  }
 }
 
 .SimpleDepositBridge__info-row {
-    >div {
-        padding-bottom: 5px;
-        >div.float-right {
-            clear: both;
-            font-weight: bold;
-        }
+  > div {
+    padding-bottom: 5px;
+    > div.float-right {
+      clear: both;
+      font-weight: bold;
     }
+  }
 }
 
 .welcome {
-    user-select: none;
-    .home-slide {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        background-size: cover;
-        background-position: center top;
-        animation-iteration-count: infinite;
-        animation-duration: 8s;
-        animation-timing-function: linear;
-        animation-direction: reverse;
-        .slogan {
-            font-family: "'Roboto-Regular', arial, sans-serif";
-            font-weight: 900;
-            // white-space: nowrap;
-        }
-        .slogan-main {
-            font-size: 3.6rem;
-        }
-        .slogan-sub {
-            font-size: 1.6rem;
-            margin-top: 5%;
-            width: 100%;
-        }
+  user-select: none;
+  .home-slide {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center top;
+    animation-iteration-count: infinite;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+    .slogan {
+      font-family: "'Roboto-Regular', arial, sans-serif";
+      font-weight: 900;
+      // white-space: nowrap;
     }
-    .title-wrapper {
-        position: absolute;
-        top: 52%;
-        left: 50%;
-        width: 100%;
-        transform: translate(-50%);
-        text-align: center;
+    .slogan-main {
+      font-size: 3.6rem;
     }
-    .slide-2 {
-        animation-name: fade;
+    .slogan-sub {
+      font-size: 1.6rem;
+      margin-top: 5%;
+      width: 100%;
     }
-    a.home-button {
-        z-index: 1;
-        width: auto;
-        height: auto;
-        padding: 10px 20px;
-        background: rgba(255, 255, 255, 0.7);
-        display: inline-block;
-        border: 1px solid #ededed;
-        border-radius: 0;
-        color: #111;
-        font-size: 14px;
-        position: absolute;
-        top: 80%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.8);
-            color: #f8f8f8;
-        }
+  }
+  .title-wrapper {
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%);
+    text-align: center;
+  }
+  .slide-2 {
+    animation-name: fade;
+  }
+  a.home-button {
+    z-index: 1;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    border: 1px solid #ededed;
+    border-radius: 0;
+    color: #111;
+    font-size: 14px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      color: #f8f8f8;
     }
-    @keyframes fade {
-        0% {
-            opacity: 1;
-        }
-        15% {
-            opacity: 0;
-        }
-        60% {
-            opacity: 0;
-        }
-        75% {
-            opacity: 1;
-        }
+  }
+  @keyframes fade {
+    0% {
+      opacity: 1;
     }
-    @for $i from 1 through 2 {
-        .slide-#{$i} {
-            background-image: url("../images/home_#{$i}.jpg");
-        }
+    15% {
+      opacity: 0;
     }
+    60% {
+      opacity: 0;
+    }
+    75% {
+      opacity: 1;
+    }
+  }
+  @for $i from 1 through 2 {
+    .slide-#{$i} {
+      background-image: url("../images/home_#{$i}.jpg");
+    }
+  }
 }
+
+/// Login
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anim-fade {
+  animation: fadeIn 0.3s ease-in-out 0s 1;
+}
+
+@keyframes spark {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+button {
+  &.loading {
+    pointer-events: none;
+    animation: spark 0.6s ease-in-out 0s infinite alternate-reverse;
+  }
+}
+
+.left-slide-wrapper {
+  display: none !important;
+  @include breakpoint(medium) {
+    display: flex !important;
+  }
+}
+
+

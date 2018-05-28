@@ -29,6 +29,7 @@ import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
+import { StyleRoot } from "radium";
 // import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
 
 class App extends React.Component {
@@ -297,7 +298,9 @@ class RootIntl extends React.Component {
         formats={intlData.formats}
         initialNow={Date.now()}
       >
-        <App {...this.props} />
+        <StyleRoot>
+          <App {...this.props} />
+        </StyleRoot>
       </IntlProvider>
     );
   }

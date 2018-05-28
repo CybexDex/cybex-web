@@ -1054,6 +1054,7 @@ class PublicKey {
         var addy = Object(__WEBPACK_IMPORTED_MODULE_3__hash__["ripemd160"])(pub_sha);
         var checksum = Object(__WEBPACK_IMPORTED_MODULE_3__hash__["ripemd160"])(addy);
         addy = Buffer.concat([addy, checksum.slice(0, 4)]);
+        console.debug("ADDY: ", addy);
         return address_prefix + Object(__WEBPACK_IMPORTED_MODULE_2_bs58__["encode"])(addy);
     }
 

@@ -4,8 +4,9 @@ import { Component } from "react";
 import cname from "classnames";
 import Translate from "react-translate-component";
 import pw from "zxcvbn";
+import { Input } from "components/Common";
 
-class PasswordInput extends React.Component {
+class PasswordInput extends React.Component<any, any> {
   static propTypes = {
     onChange: PropTypes.func,
     onEnter: PropTypes.func,
@@ -26,25 +27,30 @@ class PasswordInput extends React.Component {
     checkStrength: false
   };
 
-  constructor() {
-    super();
+  passwordInput: HTMLInputElement;
+  confirmationInput: HTMLInputElement;
+
+  constructor(props) {
+    super(props);
     this.handleChange = this.handleChange.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.state = { value: "", error: null, wrong: false, doesnt_match: false };
   }
 
   value() {
-    let node = this.refs.password;
+    let node = this.passwordInput;
     return node ? node.value : "";
   }
 
   clear() {
-    this.refs.password.value = "";
-    if (this.props.confirmation) this.refs.confirm_password.value = "";
+    this.passwordInput.value = "";
+    if (this.props.confirmation) {
+      this.confirmationInput.value = "";
+    }
   }
 
   focus() {
-    this.refs.password.focus();
+    this.passwordInput.focus();
   }
 
   valid() {
@@ -55,12 +61,10 @@ class PasswordInput extends React.Component {
   }
 
   handleChange(e) {
-    e.preventDefault();
-    e.stopPropagation();
     const confirmation = this.props.confirmation
-      ? this.refs.confirm_password.value
+      ? this.confirmationInput.value
       : true;
-    const password = this.refs.password.value;
+    const password = this.passwordInput.value;
     const doesnt_match = this.props.confirmation
       ? confirmation && password !== confirmation
       : false;
@@ -122,14 +126,14 @@ class PasswordInput extends React.Component {
 
     let confirmMatch = false;
     if (
-      this.refs.confirm_password &&
-      this.refs.confirm_password.value &&
+      this.confirmationInput &&
+      (this.confirmationInput as any).value &&
       !this.state.doesnt_match
     ) {
       confirmMatch = true;
     }
 
-    let strength = 0,
+    let strength: any = 0,
       score;
     if (this.props.checkStrength) {
       strength =
@@ -150,31 +154,33 @@ class PasswordInput extends React.Component {
       <div className="account-selector">
         <div className={password_class_name}>
           {/* {noLabel ? null : <Translate component="label" content="wallet.password" />} */}
-          <section>
-            <label className="left-label">
-              <Translate content="wallet.enter_password" />
-            </label>
-            <input
-              style={{ marginBottom: this.props.checkStrength ? 0 : null }}
-              name="password"
-              type="password"
-              ref="password"
-              autoComplete="off"
-              onChange={this.handleChange}
-              onKeyDown={this.onKeyDown}
+          <label className="left-label">
+            <Translate content="wallet.enter_password" />
+          </label>
+          <Input
+            style={{
+              fontSize: "1.25rem",
+              height: "3.66667em",
+              marginBottom: this.props.checkStrength ? 0 : null
+            }}
+            icon="lock"
+            iconStyle={{ transform: "scale(0.8)" }}
+            name="password"
+            type="password"
+            inputRef={input => (this.passwordInput = input)}
+            autoComplete="off"
+            onChange={this.handleChange}
+            onKeyDown={this.onKeyDown}
+          />
+          {this.props.checkStrength ? (
+            <progress
+              style={{ height: 10, width: "100%" }}
+              className={score === 5 ? "high" : score === 4 ? "medium" : "low"}
+              value={score}
+              max="5"
+              // min="0"
             />
-            {this.props.checkStrength ? (
-              <progress
-                style={{ height: 10 }}
-                className={
-                  score === 5 ? "high" : score === 4 ? "medium" : "low"
-                }
-                value={score}
-                max="5"
-                min="0"
-              />
-            ) : null}
-          </section>
+          ) : null}
 
           {password_error}
         </div>
@@ -184,18 +190,19 @@ class PasswordInput extends React.Component {
             <label className="left-label">
               <Translate content="wallet.confirm_password" />
             </label>
-            <section style={{ position: "relative", maxWidth: "30rem" }}>
-              <input
-                name="confirm_password"
-                type="password"
-                ref="confirm_password"
-                autoComplete="off"
-                onChange={this.handleChange}
-              />
-              {confirmMatch ? (
-                <div className={"ok-indicator success"}>OK</div>
-              ) : null}
-            </section>
+            <Input
+              icon="lock"
+              name="confirm_password"
+              type="password"
+              inputRef={input => (this.confirmationInput = input)}
+              iconStyle={{ transform: "scale(0.8)" }}
+              style={{ fontSize: "1.25rem", height: "3.66667em" }}
+              autoComplete="off"
+              onChange={this.handleChange}
+            />
+            {confirmMatch ? (
+              <div className={"ok-indicator success"}>OK</div>
+            ) : null}
             {confirmation_error}
           </div>
         ) : null}

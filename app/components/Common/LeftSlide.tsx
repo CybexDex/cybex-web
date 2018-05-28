@@ -120,6 +120,7 @@ let LeftSlide = class extends React.Component<any, { slideIndex }> {
           backgroundSize: "cover",
           padding: "2rem",
           position: "relative",
+          overflow: "hidden",
           justifyContent: "flex-end"
         }}
         {...this.props}

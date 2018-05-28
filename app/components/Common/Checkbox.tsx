@@ -40,7 +40,7 @@ let Checkbox = class extends React.Component<
       base: {
         fontSize: "1em",
         display: "flex",
-        alignItems: "center",
+        alignItems: "flex-start",
         opacity: "0.8",
         color: Colors.$colorWhite,
         cursor: "pointer",
@@ -80,7 +80,8 @@ let Checkbox = class extends React.Component<
         backgroundSize: "contain",
         appearance: "none",
         width: "1.2em",
-        height: "1.2em"
+        height: "1.2em",
+        flex: "0 0 1.2em"
       },
       active: {
         backgroundImage: `url(${getIcon("checkbox", "active")})`

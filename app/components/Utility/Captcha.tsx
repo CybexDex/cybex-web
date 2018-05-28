@@ -1,9 +1,11 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import SVGInline from "react-svg-inline";
 import SettingsStore from "stores/SettingsStore";
 import { NotificationActions } from "actions//NotificationActions";
 import counterpart from "counterpart";
 import { connect } from "alt-react";
+import { Input } from "components/Common";
 
 let faucetAddress = SettingsStore.getSetting("faucet_address");
 
@@ -33,8 +35,7 @@ export let Captcha = class extends React.Component<
     this.updateCaptcha();
   }
 
-  setCaptcha = e => {
-    let captcha = e.target.value;
+  setCaptcha = captcha => {
     this.setState({
       captcha
     });
@@ -89,11 +90,12 @@ export let Captcha = class extends React.Component<
   render() {
     return (
       <div className="captcha">
-        <input
+        <Input
           type="text"
           value={this.state.captcha}
           onChange={this.setCaptcha}
-        />
+          style={{width: "100%", padding: "0.6667em 0 0.6667em 0.6667em"}}
+        >
         {this.state.cap && this.state.cap.length ? (
           this.state.capType !== 1 ? (
             <SVGInline
@@ -112,6 +114,7 @@ export let Captcha = class extends React.Component<
             {counterpart.translate("captcha.click")}
           </label>
         )}
+        </Input>
       </div>
     );
   }

@@ -6,7 +6,7 @@ $color-orange: #ff9143;
 $color-orange-light: #ffc478;
 $color-crimson: #d2323e;
 $color-grass: #6dbb49;
-$color-grass-light: #A9E06E;
+$color-grass-light: #a9e06e;
 $color-blue: #2e5be2;
 $color-light: #f7f8fa;
 $color-grey-light: rgba(120, 129, 154, 0.3);
@@ -62,7 +62,7 @@ $primary-text-color: #fff;
 $dark-text-color: #444;
 $light-text-color: #e0e0e0;
 $secondary-text-color: darken($primary-text-color, 20%);
-$link-text-color: #36bcc7;
+$link-text-color: $color-grey;
 $error-text-color: #e3745b;
 
 $bg-color: #171d2a;
@@ -157,7 +157,12 @@ $account-background: $panel-bg-color;
       background-color: transparent;
     }
   }
+
+  p {
+    font-size: 1em;
+  }
   
+
   .nav {
     .nav-items {
       a::after {

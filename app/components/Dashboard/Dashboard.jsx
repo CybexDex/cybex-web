@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import Immutable from "immutable";
 import DashboardList from "./DashboardList";
 import { RecentTransactions } from "../Account/RecentTransactions";
@@ -7,35 +6,10 @@ import Translate from "react-translate-component";
 import MarketCard from "./MarketCard";
 import utils from "common/utils";
 import { Apis } from "cybexjs-ws";
-let logo = require("assets/logo-main.png");
 // let home1 = require("assets/images/home_1.jpg");
 // let home2 = require("assets/images/home_2.jpg");
 import LoadingIndicator from "../LoadingIndicator";
-import LoginSelector from "../LoginSelector";
-import cnames from "classnames";
 import SettingsActions from "actions/SettingsActions";
-import WalletUnlockActions from "actions/WalletUnlockActions";
-import Card from "components/Utility/Card";
-import { Link } from "react-router";
-
-const cardList = [
-  {
-    section: "home.icon-1",
-    image: "images/icon_home_1.png"
-  },
-  {
-    section: "home.icon-2",
-    image: "images/icon_home_2.png"
-  },
-  {
-    section: "home.icon-3",
-    image: "images/icon_home_3.png"
-  },
-  {
-    section: "home.icon-4",
-    image: "images/icon_home_4.png"
-  }
-];
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -57,6 +31,16 @@ class Dashboard extends React.Component {
 
     this._setDimensions = this._setDimensions.bind(this);
     // this._sortMarketsByVolume = this._sortMarketsByVolume.bind(this);
+  }
+
+  componentWillMount() {
+    let { linkedAccounts, myIgnoredAccounts, passwordAccount } = this.props;
+
+    let accountCount =
+      linkedAccounts.size + myIgnoredAccounts.size + (passwordAccount ? 1 : 0);
+    if (!accountCount) {
+      this.props.router.push("/login");
+    }
   }
 
   componentDidMount() {
@@ -180,56 +164,11 @@ class Dashboard extends React.Component {
           .filter(a => !!a)
       : null;
 
-    if (!accountCount) {
-      return (
-        <div
-          ref="wrapper"
-          style={{ height: "100%" }}
-          className="grid-block page-layout vertical welcome"
-        >
-          <div className="home-slide slide-1">
-            <div className="title-wrapper">
-              <Translate
-                component="div"
-                className="slogan slogan-main"
-                content="dashboard.title1"
-              />
-              <Translate
-                component="div"
-                className="slogan slogan-sub"
-                content="dashboard.subtitle1"
-              />
-            </div>
-          </div>
-          <div className="home-slide slide-2">
-            <div className="title-wrapper">
-              <Translate
-                component="div"
-                className="slogan slogan-main"
-                content="dashboard.title2"
-              />
-              <Translate
-                component="div"
-                className="slogan slogan-sub"
-                content="dashboard.subtitle2"
-              />
-            </div>
-          </div>
-          <Translate
-            component="a"
-            href="//cybex.io#about"
-            target="_blank"
-            className="home-button"
-            content="dashboard.button"
-          />
-        </div>
-      );
-    }
     const entries = ["accounts", "recent"];
     const activeIndex = entries.indexOf(currentEntry);
 
     return (
-      <div ref="wrapper" className="grid-block page-layout vertical">
+      <div ref="wrapper" className="grid-block page-layout vertical anim-fade">
         <div
           ref="container"
           className="grid-container"

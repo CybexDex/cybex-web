@@ -26,7 +26,7 @@ import BlockContainer from "./components/Blockchain/BlockContainer";
 import Asset from "./components/Blockchain/Asset";
 import CreateAccount from "./components/Account/CreateAccount";
 import CreateAccountPassword from "./components/Account/CreateAccountPassword";
-import LoginSelector from "./components/LoginSelector";
+import CreateSelector from "./components/CreateSelector";
 import {ExistingAccount, ExistingAccountOptions} from "./components/Wallet/ExistingAccount";
 import { WalletCreate, CreateWalletFromBrainkey } from "./components/Wallet/WalletCreate";
 import ImportKeys from "./components/Wallet/ImportKeys";

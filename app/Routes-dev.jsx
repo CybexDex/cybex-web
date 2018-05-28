@@ -65,13 +65,13 @@ import BackupBrainkey from "./components/Wallet/BackupBrainkey";
 import Brainkey from "./components/Wallet/Brainkey";
 import Help from "./components/Help";
 import InitError from "./components/InitError";
-import LoginSelector from "./components/LoginSelector";
+import CreateSelector from "./components/Login/CreateSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
 import { SwapContainer } from "./components/Swap/SwapContainer";
 import { Gateway } from "./components/Gateway/Gateway";
 import { Contact } from "./components/HelpDrawer/Contact";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -124,7 +124,7 @@ const routes = (
     <Route path="settings" component={SettingsContainer} />
     <Route path="block/:height" component={BlockContainer} />
     <Route path="asset/:symbol" component={AssetContainer} />
-    <Route path="create-account" component={LoginSelector}>
+    <Route path="create-account" component={CreateSelector}>
       <Route path="wallet" component={CreateAccount} />
       <Route path="password" component={CreateAccountPassword} />
     </Route>

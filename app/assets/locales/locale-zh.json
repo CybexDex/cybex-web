@@ -99,7 +99,7 @@
     "help": "帮助",
     "locked_tip": "钱包已锁定，点击解锁。",
     "unlocked_tip": "钱包已解锁，点击锁定。",
-    "logout_tip": "登出账户",    
+    "logout_tip": "登出账户",
     "account_notify": "当前活跃账户为 %(account)s",
     "account_value": "账户价值"
   },
@@ -142,7 +142,7 @@
     "memo_tip":
       "您可以在memo里留下任何信息. Memo不是必须的，但通常将资产转账到交易所时，需要填写。",
     "generate":
-      "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 若需要使用改密码，可直接复制并粘贴到密码输入框，并在其他地方备份好该密码。",
+      "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 若需要使用该密码，可直接复制并粘贴到密码输入框，并在其他地方备份好该密码。",
     "copy_password": "点这里将您的密码复制到粘贴板上",
     "sync_yes": "当前节点已与区块链同步",
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
@@ -170,7 +170,10 @@
       "这是你所有资产的估值， 包含了在界面中设置了隐藏的资产、委单中的资产、债仓及抵押物。估值采用实时获得的区块链上的价格，可能并不那么精确。",
     "see_open": "查看委单",
     "trade": "交易",
-    "welcome": "欢迎使用 Cybex (石墨烯)系统",
+    "welcome": "欢迎使用 CybexDEX",
+    "login_prefix": "登录或",
+    "login_create": "注册新账户",
+    "login_suffix": "即可开始交易",
     "assets": "资产",
     "market_value": "市值",
     "hour_24": "日涨跌幅%",
@@ -1096,7 +1099,7 @@
     },
     "orderbook": {
       "all": "全部",
-      "bid": "买单", 
+      "bid": "买单",
       "ask": "卖单"
     },
     "amount": "数量",
@@ -1195,6 +1198,24 @@
     "base": "基准资产",
     "market_search": "交易对市场搜索",
     "preferred": "我收藏的市场"
+  },
+  "login": {
+    "error_name": "未找到此用户名，请检查后再试",
+    "error_password": "您输入的密码不正确，请检查后重新尝试",
+    "has_wallet": "已经拥有本地钱包文件备份? ",
+    "has_brainkey": "已经拥有脑钱包密钥? ",
+    "has_account": "已经拥有 Cybex 账户?",
+    "login_here": "登录账户",
+    "backup_your_wallet": "请务必备份您的本地钱包",    
+    "restore_here": "恢复钱包文件",
+    "restore_brainkey_here": "恢复脑钱包",
+    "create_local": "创建本地钱包账户",
+    "create_cloud": "创建云账户",
+    "can_also": "您还可以",
+    "switch_to_cloud": "想注册云钱包?",
+    "switch_to_local": "想注册本地钱包?",
+    "click_to_restore_wallet": "点击这里恢复钱包文件",
+    "click_to_restore_brainkey": "点击这里恢复脑钱包"
   },
   "wallet": {
     "title": "钱包",
@@ -1364,25 +1385,32 @@
       "新账户的相关密钥将从你的密码衍生出来。<strong>敏感信息不保存在浏览器的缓存或者是中央服务器上，你必须确保能记住或妥善保管好密码！！</strong>",
     "create_password": "使用密码创建一个账户",
     "login_type": "选择登录模式",
-    "login_create_type": "选择登录/创建模式",
-    "wallet_model": "钱包模式",
-    "password_model": "云钱包模式",
+    "login_create_type": "创建Cybex账户",
+    "wallet_model": "本地钱包",
+    "wallet_model_about": "关于本地钱包",
+    "password_model": "Cybex云钱包",
+    "password_model_about": "关于Cybex云钱包",
     "wallet_model_1":
       "钱包模式下，使用你的密码对钱包文件进行加密后保存在浏览器的存储区域中。并可以通过脑秘钥或者加密的二进制文件进行备份，其中包含了账户中所有的私钥。",
     "wallet_model_2":
       "钱包模式的安全性最高，但在当期电脑及当前浏览器下使用。从其他电脑或者其他浏览器中使用的话，需要迁移钱包步骤，即先备份钱包，然后在目的地浏览器中导入该备份钱包或者导入脑秘钥进行恢复后才可使用。",
+    "wallet_model_4":
+      "钱包模式的安全性最高，并可以容纳多个账户。但如要在不同浏览器中使用，需要进行备份和恢复工作。",
     "wallet_model_3":
       "<li>多账户</li><li>要求钱包文件备份</li><li>安全性：高</li>",
-    "password_model_1": "云钱包模式使用密码和账户名衍生出私钥。",
+    "password_model_1":
+      "云钱包模式在创建和登录时将即时使用你所提供的密码和账户名衍生出私钥，因此在同一时间只可登录一个Cybex账户并加以使用。这种模式与传统的应用体验相近，一般用户推荐使用该模式。",
     "password_model_2":
-      "这使你可以从任何地方登录自己的账户，包括了不同的电脑、不同的浏览器，只需要账户名和密码。但这将有一定暴露在暴力破解的黑客攻击风险中。所以，这种模式下，使用长密码很重要！",
+      "<strong>但这将有一定暴露在暴力破解的黑客攻击风险中。所以，这种模式下，使用长密码很重要！推荐您使用20位以上的长密码。</strong>",
+    "password_model_4":
+      "你可以从任何地方登录自己的账户，包括了不同的电脑、不同的浏览器，只需要账户名和密码。但请务必使用一个较为安全的密码",
     "password_model_3": "<li>单一账户</li><li>简易登录</li><li>安全性：中</li>",
     "already_have_wallet": "如果您已有钱包，您可以：",
     "already_have_account": "如果您已有云钱包账户，您可以：",
     "use_wallet": "使用钱包模式",
     "use_wallet_create": "创建钱包模式账户",
     "use_password": "使用云钱包模式",
-    "use_password_create": "创建云钱包模式账户",
+    "use_password_create": "创建云钱包账户",
     "pass_length":
       "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母。",
     "switch_model_wallet": "切换到钱包模式",

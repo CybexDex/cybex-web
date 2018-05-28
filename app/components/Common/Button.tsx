@@ -16,6 +16,7 @@ export interface ButtonProps {
   disabled?: boolean;
   size?: ButtonSize;
   type?: ButtonType;
+  loading: boolean;
   style?: React.CSSProperties;
   onClick?;
 }
@@ -38,6 +39,7 @@ let Button = class extends React.Component<ButtonProps, any> {
     base: {
       borderRadius: "4px",
       display: "inline-block",
+      transition: "opacity 0.3s",
       ":disabled": {
         // background: Colors.$colorGreyLightWhite,
         cursor: "not-allowed",
@@ -135,12 +137,13 @@ let Button = class extends React.Component<ButtonProps, any> {
   };
 
   render() {
-    let { children, size, type, disabled, style } = this.props;
+    let { children, size, type, disabled, style, loading } = this.props;
     let styles = Button.Styles;
     return (
       <button
         {...this.props}
         disabled={disabled}
+        className={loading ? "loading" : ""}
         style={[styles.base, styles[type], styles[size], style] as any}
         onClick={this.props.onClick ? this.props.onClick : () => void 0}
       >

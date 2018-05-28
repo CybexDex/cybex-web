@@ -158,7 +158,7 @@ div.bordered-header {
 }
 
 .readable {
-  max-width: 54em;
+  max-width: 70em;
 }
 
 .left-panel {
@@ -498,6 +498,10 @@ div.bordered-header {
 }
 .captcha {
   display: flex;
+  .SVGInline,
+  svg {
+    height: 40px;
+  }
 }
 
 a {

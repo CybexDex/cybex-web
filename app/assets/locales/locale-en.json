@@ -148,6 +148,9 @@
       "This is the estimated value of all your assets, including any hidden assets, open orders, debt and collateral. The estimate is done using only live blockchain data and may not be perfectly accurate.",
     "trade": "Trade",
     "welcome": "Welcome to CYBEX",
+    "login_prefix": "Login or ",
+    "login_create": "Create New Account ",
+    "login_suffix": "to Start Trading",
     "asset": "Asset",
     "market_value": "Market Value",
     "hour_24": "24hr Change",
@@ -1119,7 +1122,7 @@
     },
     "orderbook": {
       "all": "All",
-      "bid": "Bid", 
+      "bid": "Bid",
       "ask": "Ask"
     },
     "amount": "Amount",
@@ -1224,6 +1227,27 @@
     "search": "Search",
     "preferred": "My Favorite Markets"
   },
+  "login": {
+    "error_name":
+      "We can’t find this account name. Please, make sure its correct.",
+    "error_password":
+      "Your password is incorrect. Please check it and try again.",
+    "has_wallet": "Alreay has a local wallet file? ",
+    "has_brainkey": "Alreay has a brainkey? ",
+    "login_here": "Login",
+    "backup_your_wallet": "Backup Your Local Wallet",
+    "restore_here": "Restore Local Wallet",
+    "restore_brainkey_here": "Restore Brainkey",
+    "click_to_restore_wallet": "Click here to restore local wallet",
+    "click_to_restore_brainkey": "Click here to restore brainkey",
+    "click_to_restore": "Click here to restore. ",
+    "create_local": "create local wallet account",
+    "create_cloud": "create cloud account",
+    "can_also": "You can also ",
+    "switch_to_cloud": "Switch to cloud account?",
+    "switch_to_local": "Switch to local wallet?",
+    "has_account": "Already have an account?"
+  },
   "wallet": {
     "title": "Wallet",
     "confirm": "Wallet password (confirm)",
@@ -1256,6 +1280,8 @@
     "backup_accounts":
       "Here is the list of accounts contained by the wallet. The 'Full' state means the wallet has the control of that account; the 'Partial' means the wallet has only some part of that account. Usually, that account maybe a multi-sig account, and the wallet has a part of the all thresholds",
     "account_state": "State",
+    "backup_refresh":
+      "In order to impl the correct backup, please check the account list first.",
     "create_backup_of": "Create backup now",
     "import_backup": "Import Cybex backup (.bin file)",
     "import_backup_choose":
@@ -1288,6 +1314,7 @@
     "restore_wallet_of": "Restore (%(name)s Wallet)",
     "restore_success": "Successfully restored (%(name)s) wallet",
     "change": "Change to %(name)s",
+    "backup_check": "Check out accounts in wallet",
     "import_20_notice1": "Import your CYB 2.0+ BACKUP first",
     "import_20_notice2": "(if you have one)",
     "loading_balances": "Looking for unclaimed balances",
@@ -1398,23 +1425,29 @@
       "The keys for this new account will be derived using your password. <strong>Nothing is stored in the browser or in a central server, so you will need to ensure you remember this password!!</strong> Store it using a password manager or by writing it down manually.",
     "create_password": "Create a new account using a password",
     "login_type": "Login type selection",
-    "login_create_type": "Create/Login type selection",
+    "login_create_type": "Create Cybex Account",
     "already_have_wallet":
       "If you have the wallet account already, you may want to:",
     "already_have_account":
       "If you have the password account already, you may want to:",
     "wallet_model": "Local Wallet",
+    "wallet_model_about": "About Local Wallet",
     "password_model": "Cloud Wallet",
+    "password_model_about": "About Cloud Wallet",
     "wallet_model_1":
       "The local wallet stores the wallet in your browser. It is encrypted with a password that you choose, and can be backed up using either a brainkey or an encrypted binary file that contains all the private keys. The local wallet lets you use multiple accounts at the same time.",
     "wallet_model_2":
       "The local wallet has the best security, but is restricted to your current browser and computer. To migrate the wallet to another browser or computer, you may use the backup file or brainkey.",
     "wallet_model_3":
       "<li>Multiple accounts</li><li>Wallet file backup required</li><li>High security</li>",
+    "wallet_model_4":
+      "The local wallet has the best security, multiple accounts can be contained in a local wallet. If you want to use a local wallet in the different browser, extra backup/restore opeartions are required.",
     "password_model_1":
       "The cloud wallet uses a password in combination with your account name to generate your private keys on the fly. It restricts you to only logging in with one account at a time, in return for ease of use and convenience.",
     "password_model_2":
-      "The cloud wallet lets you login to your wallet from anywhere using only your account name and password, but <strong> your password is vulnerable to brute-force attacks which means it is important to use a very long password, ideally 20+ characters!</strong>",
+      "But <strong> your password is vulnerable to brute-force attacks which means it is important to use a very long password, ideally 20+ characters!</strong>",
+    "password_model_4":
+      "The cloud wallet lets you login to your wallet from anywhere using only your account name and password, but a strong password is required!",
     "password_model_3":
       "<li>Single account</li><li>Easy login</li><li>Moderate security</li>",
     "use_wallet": "Use a local wallet",
@@ -1548,7 +1581,7 @@
     "fee": "Gateway fee",
     "find_asset": "Find an asset",
     "title": "Deposit & Withdraw",
-    "no_balance": "No enough balance",    
+    "no_balance": "No enough balance",
     "assets": {
       "open":
         "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",
@@ -1825,8 +1858,7 @@
       "<p>o address this problem and better adapt to user habits, CYBEX determines to make a blanket removal to all assets issued by JADE, the sole acceptance dealer so far within CYBEX. Synchronous changes will be made in token browsing applications such as MyToken. When altered, assets in/out CYBEX will be consistently shown.</p>",
     "p5":
       "<p>It is a change to name display, hence there is no need to worry about affecting transaction activities. We want to underline that all assets in CYBEX will not be prefixed henceforth.</p>",
-    "p6":
-      "<br/>",
+    "p6": "<br/>",
     "p7": "<p>Good luck trading.</p>",
     "footer": "<p class='text-right'>CYBEX Operation Team</p>"
   },

@@ -268,7 +268,7 @@ class Header extends React.Component<any, any> {
         <ActionSheet.Button title="" setActiveState={() => {}}>
           <a
             className="button create-account"
-            onClick={this._onNavigate.bind(this, "/create-account")}
+            onClick={this._onNavigate.bind(this, "/login")}
             style={{ padding: "1rem", border: "none" }}
           >
             <Icon className="icon-14px" name="user" />{" "}

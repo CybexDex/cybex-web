@@ -46,6 +46,7 @@ declare module "cybexjs" {
   };
   const key: {
     addresses(pubkey: any): string[];
+    get_random_key: any;
   };
   const EmitterInstance: any;
 }

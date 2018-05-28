@@ -118,10 +118,18 @@ class PublicKey {
 
   toAddressString(address_prefix = ChainConfig.address_prefix) {
     var pub_buf = this.toBuffer();
+    // console.debug("[Pub]", "PUB BUFFER: ", pub_buf);
     var pub_sha = sha512(pub_buf);
+    // console.debug("[Pub]", "SHA: ", pub_sha);
     var addy = ripemd160(pub_sha);
+    // console.debug("[Pub]", "MD160: ", addy);
     var checksum = ripemd160(addy);
+    // console.debug("[Pub]", "CHECKSUM MD160: ", checksum);
     addy = Buffer.concat([addy, checksum.slice(0, 4)]);
+    // console.debug("[Pub]", "ADDY: ", addy);
+    // console.debug("[Pub]", "ADDRESS: ", address_prefix + encode(addy));
+
+
     return address_prefix + encode(addy);
   }
 

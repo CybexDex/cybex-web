@@ -1,5 +1,7 @@
 import { Colors } from "./Colors";
 import chroma from "chroma-js";
+import { GlobalsString, GlobalsNumber } from "csstype";
+import {$breakpointSmall} from "./Breakpoints";
 
 const TypedStyles = {
   base: {
@@ -78,8 +80,8 @@ export const $styleSelect = (type = "base") => ({
   }
 });
 
-type FlexLayout = "stretch" | "center" | "flex-start" | "flex-end";
-type FlexParams = number | "auto";
+type FlexLayout = "stretch" | "center" | "flex-start" | "flex-end" | "space-between";
+type FlexParams = number | "auto" | GlobalsNumber;
 
 export const $styleFlexContainer = (
   flexDirection: "row" | "column" = "row",
@@ -91,6 +93,13 @@ export const $styleFlexContainer = (
   justifyContent,
   alignItems
 });
+
+export const $styleFlexAutoWrap = ({
+  [`@media (max-width: ${$breakpointSmall})`] {
+
+    flexWrap: "wrap"
+  }
+})
 
 
 export const $styleFlexItem = (
@@ -104,3 +113,7 @@ export const $styleFlexItem = (
   flexBasis,
   alignSelf
 });
+
+export const $styleSecondaryText = {
+  color: Colors.$colorWhiteOp8
+}

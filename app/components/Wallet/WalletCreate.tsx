@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
 import BrainkeyInput from "components/Wallet/BrainkeyInput";
@@ -9,14 +10,16 @@ import WalletActions from "actions/WalletActions";
 import { connect } from "alt-react";
 import cname from "classnames";
 import SettingsActions from "actions/SettingsActions";
+import { Button } from "components/Common";
+import counterpart from "counterpart";
 
-class CreateNewWallet extends React.Component {
+let CreateNewWallet = class extends React.Component<any, any> {
   static propTypes = {
     hideTitle: PropTypes.bool
   };
 
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       wallet_public_name: "default",
@@ -202,18 +205,17 @@ class CreateNewWallet extends React.Component {
               </div>
             ) : null}
 
-            <button
-              className={cname("button", { disabled: !this.state.isValid })}
-            >
-              <Translate content="wallet.create_wallet" />
-            </button>
+            <Button type="primary" size="small" disabled={!this.state.isValid} style={{marginRight: "1em"}}>
+              {counterpart.translate("wallet.create_wallet")}
+            </Button>
 
-            <button
-              className="button secondary"
+            <Button
+              type="secondary"
+              size="small"
               onClick={this.onBack.bind(this)}
             >
-              <Translate content="wallet.cancel" />
-            </button>
+              {counterpart.translate("wallet.cancel")}
+            </Button>
           </div>
 
           {!this.state.custom_brainkey ? (
@@ -229,7 +231,7 @@ class CreateNewWallet extends React.Component {
       </div>
     );
   }
-}
+};
 
 CreateNewWallet = connect(CreateNewWallet, {
   listenTo() {
@@ -252,14 +254,28 @@ class WalletCreate extends React.Component {
 const CreateWalletFromBrainkey = props => {
   if (!props.nested) {
     return (
-      <div className="grid-container" style={{ paddingTop: 30 }}>
-        <Translate content="settings.backup_brainkey" component="h3" />
-        <Translate
-          content="settings.restore_brainkey_text"
-          component="p"
-          style={{ maxWidth: "40rem", paddingBottom: 10 }}
-        />
-        <WalletCreate restoreBrainkey {...props} />
+      <div
+        className="grid-container"
+        style={{
+          paddingTop: 30,
+          textAlign: "center"
+        }}
+      >
+        <div
+          className="wrapper readable"
+          style={{
+            display: "inline-block",
+            margin: "auto"
+          }}
+        >
+          <Translate content="settings.backup_brainkey" component="h3" />
+          <Translate
+            content="settings.restore_brainkey_text"
+            component="p"
+            style={{ maxWidth: "40rem", paddingBottom: 10 }}
+          />
+          <WalletCreate restoreBrainkey {...props} />
+        </div>
       </div>
     );
   }

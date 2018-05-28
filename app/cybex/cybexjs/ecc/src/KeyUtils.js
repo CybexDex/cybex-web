@@ -171,6 +171,7 @@ const key = {
     addresses(pubkey, address_prefix = ChainConfig.address_prefix) {
         var public_key = PublicKey.fromPublicKeyString(pubkey, address_prefix);
         // S L O W
+        console.debug("Addresses");
         var address_string = [
             Address.fromPublic(public_key, false, 0).toString(address_prefix), // btc_uncompressed
             Address.fromPublic(public_key, true, 0).toString(address_prefix),  // btc_compressed

@@ -319,7 +319,7 @@ const routes = (
     <Route
       path="create-account"
       getComponent={(location, cb) => {
-        System.import("components/LoginSelector")
+        System.import("components/CreateSelector")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}

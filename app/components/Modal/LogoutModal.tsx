@@ -56,7 +56,7 @@ class LogoutModal extends React.Component<props, { fadeOut?, neverShow?, known1,
     KEYS_TO_REMOVE.forEach(key => {
       ss.remove(Utils.getChainKey(key));
     });
-    location.reload(true);
+    location.href = "/dashboard";
   }
 
   _renderWalletLogout = () => (
