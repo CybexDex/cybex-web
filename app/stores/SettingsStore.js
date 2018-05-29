@@ -156,7 +156,8 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          "JADE.LTC",
+          // "JADE.LTC",
+          "JADE.INK",
           "JADE.BAT",
           "JADE.VEN",
           "JADE.OMG",
@@ -189,7 +190,7 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          "JADE.USDT",
+          // "JADE.USDT",
           "CYB"
         ]
       };
