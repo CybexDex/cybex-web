@@ -1100,7 +1100,9 @@
     "orderbook": {
       "all": "全部",
       "bid": "买单",
-      "ask": "卖单"
+      "ask": "卖单",
+      "compare_depth": "比较深度",
+      "accum_depth": "累计深度"
     },
     "amount": "数量",
     "price_history": "价格历史",
@@ -1206,7 +1208,7 @@
     "has_brainkey": "已经拥有脑钱包密钥? ",
     "has_account": "已经拥有 Cybex 账户?",
     "login_here": "登录账户",
-    "backup_your_wallet": "请务必备份您的本地钱包",    
+    "backup_your_wallet": "请务必备份您的本地钱包",
     "restore_here": "恢复钱包文件",
     "restore_brainkey_here": "恢复脑钱包",
     "create_local": "创建本地钱包账户",

@@ -1123,7 +1123,9 @@
     "orderbook": {
       "all": "All",
       "bid": "Bid",
-      "ask": "Ask"
+      "ask": "Ask",
+      "compare_depth": "Depth C",
+      "accum_depth": "Depth A"
     },
     "amount": "Amount",
     "market": "Market",
@@ -1848,7 +1850,8 @@
     }
   },
   "first": {
-    "title": "The Announcement on <br>CYBEX Exchange Supporting the Mapping of EOS",
+    "title":
+      "The Announcement on <br>CYBEX Exchange Supporting the Mapping of EOS",
     "p1": "<p>Dear CYBEX Users,</p>",
     "p2":
       "<p>In order to collaborate on the mapping of EOS, CYBEX Exchange will suspend the deposit and withdraw of EOS starting from the last week before the launch of the EOS main network(i.e. after 20:00, May 25 2018). The restoration of said functions is expected to happen from the second week after the launch of the main network.</p>",

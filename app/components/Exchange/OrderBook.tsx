@@ -114,6 +114,7 @@ let OrderBookRowVertical = class extends React.Component<
     depthType?;
     onClick?;
     total;
+    max?;
   },
   any
 > {
@@ -133,7 +134,16 @@ let OrderBookRowVertical = class extends React.Component<
   }
 
   render() {
-    let { order, quote, base, final, digits, depthType, total } = this.props;
+    let {
+      order,
+      quote,
+      base,
+      final,
+      digits,
+      depthType,
+      total,
+      max
+    } = this.props;
     const isBid = order.isBid();
     const isCall = order.isCall();
     let integerClass = isCall
@@ -154,9 +164,9 @@ let OrderBookRowVertical = class extends React.Component<
     let bgWidth =
       (order
         ? depthType === DepthType.Interval
-          ? (((order.for_sale as any) / order.init_for_sale) as any).toFixed(
-              4
-            ) * 100
+          ? (((isBid
+              ? order.amountToReceive().amount
+              : order.amountForSale().amount) / max) as any).toFixed(4) * 100
           : ((order.accum / total)
               // (isBid
               //   ? // ? order.totalToReceive().amount
@@ -303,7 +313,7 @@ let OrderBookHeader = class extends React.PureComponent<
           onClick={onDepthTypeChange.bind(this, DepthType.Interval)}
           style={OrderBook.Styles.tab}
         >
-          <Translate content="exchange.orderbook.bid" />
+          <Translate content="exchange.orderbook.compare_depth" />
         </TabLink>
         <TabLink
           type="secondary"
@@ -311,7 +321,7 @@ let OrderBookHeader = class extends React.PureComponent<
           onClick={onDepthTypeChange.bind(this, DepthType.Accum)}
           style={OrderBook.Styles.tab}
         >
-          <Translate content="exchange.orderbook.bid" />
+          <Translate content="exchange.orderbook.accum_depth" />
         </TabLink>
         <i style={{ flexGrow: 1 }} />
         <Select
@@ -380,6 +390,7 @@ let OrderBookParitalWrapper = class extends React.Component<
     onOrderClick;
     currentAccount;
     total?;
+    max?;
     displayType;
   },
   any
@@ -396,7 +407,8 @@ let OrderBookParitalWrapper = class extends React.Component<
       currentAccount,
       depthType,
       total,
-      digits
+      digits,
+      max
     } = this.props;
     // orders =
     //   displayType === type
@@ -426,6 +438,7 @@ let OrderBookParitalWrapper = class extends React.Component<
           quote={quote}
           final={index === 0}
           depthType={depthType}
+          max={max}
           total={total}
           currentAccount={currentAccount}
         />
@@ -451,7 +464,7 @@ let OrderBook = class extends React.Component<any, any> {
 
   static Styles = {
     tab: {
-      marginRight: "1rem",
+      marginRight: "0.5rem",
       lineHeight: priceRowHeight + "px",
       height: priceRowHeight + "px"
     }
@@ -593,20 +606,28 @@ let OrderBook = class extends React.Component<any, any> {
             null
           )
         : fixArray(bidRows, true, countOfRow, null);
+    // For accumulate depth
     let accum = 0;
+    let maxBid = 0;
+    let maxAsk = 0;
     bidRows.filter(b => b).forEach(order => {
-      accum += order.isBid()
-        ? order.totalToReceive().amount
-        : order.totalForSale().amount;
+      let amount = order.isBid()
+        ? order.amountToReceive().amount
+        : order.amountForSale().amount;
+      maxBid = Math.max(maxBid, amount);
+      accum += amount;
       order["accum"] = accum;
     });
     accum = 0;
     askRows.filter(a => a).forEach(order => {
-      accum += order.isBid()
-        ? order.totalToReceive().amount
-        : order.totalForSale().amount;
+      let amount = order.isBid()
+        ? order.amountToReceive().amount
+        : order.amountForSale().amount;
+      maxAsk = Math.max(maxAsk, amount);
+      accum += amount;
       order["accum"] = accum;
     });
+    console.debug("MAX: ", maxAsk, maxBid);
     let total = Math.max(
       (bidRows as any).lastOne().accum || 0,
       (askRows as any).lastOne().accum || 0
@@ -679,6 +700,7 @@ let OrderBook = class extends React.Component<any, any> {
                 base={base}
                 quote={quote}
                 orders={askRows}
+                max={maxAsk}
                 depthType={depthType}
                 onOrderClick={this.props.onClick.bind(this)}
               />
@@ -705,6 +727,7 @@ let OrderBook = class extends React.Component<any, any> {
                 total={total}
                 quote={quote}
                 depthType={depthType}
+                max={maxBid}
                 orders={bidRows}
                 onOrderClick={this.props.onClick.bind(this)}
               />

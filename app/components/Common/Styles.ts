@@ -37,7 +37,7 @@ export const $styleSelect = (type = "base") => ({
     height: "2em",
     minHeight: "2em",
     minWidth: "5rem",
-    width: "10rem",
+    width: "8rem",
     alignSelf: "flex-start",
     borderWidth: 0,
     opacity: isDisabled ? 0.04 : 1

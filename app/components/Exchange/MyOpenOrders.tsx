@@ -426,7 +426,7 @@ class MyOpenOrders extends React.Component<any, any> {
         <div
           className="grid-block no-padding market-right-padding _scroll-bar"
           ref="asks"
-          style={{ overflow: "auto",  maxHeight: 720 }}
+          style={{ overflow: "auto", maxHeight: 720 }}
         >
           <table
             style={{ paddingBottom: 5 }}
