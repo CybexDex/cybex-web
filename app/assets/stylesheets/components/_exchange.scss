@@ -656,11 +656,12 @@ form.hide-container {
       margin: 0;
       list-style: none;
       text-align: left;
-      font-size: 0.75rem;
+      // font-size: 0.75rem;
       input {
-        font-size: 0.8rem;
-        height: 1.25rem;
+        // font-size: 0.8rem;
+        height: 1.5rem;
         max-width: 40px;
+        padding: 4px;
         display: inline-block;
       }
       > li {
@@ -672,6 +673,10 @@ form.hide-container {
         min-width: 5rem;
         border: none;
         &.indicator {
+          > label {
+            align-items: "center";
+            flex: 1;
+          }
           display: flex;
           justify-content: space-between;
           &:hover {

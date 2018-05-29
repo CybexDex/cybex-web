@@ -13,6 +13,7 @@ let Checkbox = class extends React.Component<
     active: boolean;
     children: any;
     size: string;
+    labelStyle?;
     onChange?;
   },
   any
@@ -78,6 +79,7 @@ let Checkbox = class extends React.Component<
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
+        MozAppearance: "none",
         appearance: "none",
         width: "1.2em",
         height: "1.2em",
@@ -108,7 +110,7 @@ let Checkbox = class extends React.Component<
         },
         xlargr: {
           fontSize: "1.4em"
-        },
+        }
       }
     }
   };
@@ -127,7 +129,15 @@ let Checkbox = class extends React.Component<
   };
 
   render() {
-    let { label, isMaster, disabled, active, children, size } = this.props;
+    let {
+      label,
+      isMaster,
+      disabled,
+      active,
+      children,
+      size,
+      labelStyle
+    } = this.props;
     let labelStyles = Checkbox.styles.label;
     let inputStyles = Checkbox.styles.input;
     return (
@@ -138,13 +148,14 @@ let Checkbox = class extends React.Component<
             labelStyles.base,
             active && labelStyles.active,
             disabled && labelStyles.disabled,
-            labelStyles.size[size]            
+            labelStyles.size[size],
+            labelStyle
           ] as any
         }
       >
         <input
           id={this.id}
-          // className="no-appearance"
+          className="no-appearance"
           type="checkbox"
           checked={active}
           disabled={disabled}

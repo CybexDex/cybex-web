@@ -15,7 +15,7 @@ import {
   interactive
 } from "react-stockcharts";
 import { handleStockData } from "utils/Chart";
-
+import Radium from "radium";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
@@ -825,221 +825,223 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
 };
 
 CandleStickChartWithZoomPan = fitWidth(CandleStickChartWithZoomPan);
-export default class Wrapper extends React.Component<any, any> {
-  mainChart: React.RefObject<any> = React.createRef();
-  constructor(props) {
-    super(props);
+export default Radium(
+  class Wrapper extends React.Component<any, any> {
+    mainChart: React.RefObject<any> = React.createRef();
+    constructor(props) {
+      super(props);
 
-    this.state = {
-      dropdowns: {
-        indicators: false,
-        tools: false,
-        settings: false
-      }
-    };
-    this._onInputHeight = this._onInputHeight.bind(this);
-    this._listener = this._listener.bind(this);
-  }
-
-  shouldComponentUpdate(np, ns) {
-    if (!np.marketReady && !this.props.marketReady) return false;
-    if (!np.priceData.length && !this.props.priceData.length) return false;
-    return (
-      !utils.are_equal_shallow(np.priceData, this.props.priceData) ||
-      !utils.are_equal_shallow(np.indicators, this.props.indicators) ||
-      !utils.are_equal_shallow(
-        np.indicatorSettings,
-        this.props.indicatorSettings
-      ) ||
-      !utils.are_equal_shallow(np.tools, this.props.tools) ||
-      !utils.are_equal_shallow(ns, this.state) ||
-      np.height !== this.props.height ||
-      np.chartHeight !== this.props.chartHeight ||
-      np.width !== this.props.width ||
-      np.leftOrderBook !== this.props.leftOrderBook ||
-      np.zoom !== this.props.zoom ||
-      np.showVolumeChart !== this.props.showVolumeChart ||
-      np.enableChartClamp !== this.props.enableChartClamp
-    );
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("click", this._listener);
-  }
-
-  _toggleTools(key) {
-    this._resetDropdowns();
-    this.props.onChangeTool(key);
-    this.forceUpdate();
-  }
-
-  _changeSettings(payload, e) {
-    e.persist();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-  }
-
-  _onInputHeight(e) {
-    const val = e.target.value;
-    this.props.onChangeChartHeight({ value: parseInt(val, 10) });
-  }
-
-  _toggleDropdown(key, e) {
-    e.stopPropagation();
-    const { dropdowns } = this.state;
-    let newState = {};
-    for (let k in this.state.dropdowns) {
-      if (k === key) newState[k] = !dropdowns[k];
-      else newState[k] = false;
+      this.state = {
+        dropdowns: {
+          indicators: false,
+          tools: false,
+          settings: false
+        }
+      };
+      this._onInputHeight = this._onInputHeight.bind(this);
+      this._listener = this._listener.bind(this);
     }
-    if (newState[key]) {
-      document.addEventListener("click", this._listener, {
-        capture: false,
-        passive: true
-      });
-    }
-    this.setState({ dropdowns: newState });
-  }
 
-  _listener() {
-    this._resetDropdowns();
-    document.removeEventListener("click", this._listener);
-  }
-
-  _stopPropagation(e) {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-  }
-
-  _resetDropdowns() {
-    let dropdowns = {};
-    for (let key in this.state.dropdowns) {
-      dropdowns[key] = false;
-    }
-    this.setState({ dropdowns });
-  }
-
-  componentDidMount() {
-    if (this.mainChart) {
-      console.debug("3D: ", this.mainChart);
-      (this.mainChart.current as HTMLElement).addEventListener(
-        "wheel",
-        e => {
-          e.stopPropagation();
-        },
-        true
+    shouldComponentUpdate(np, ns) {
+      if (!np.marketReady && !this.props.marketReady) return false;
+      if (!np.priceData.length && !this.props.priceData.length) return false;
+      return (
+        !utils.are_equal_shallow(np.priceData, this.props.priceData) ||
+        !utils.are_equal_shallow(np.indicators, this.props.indicators) ||
+        !utils.are_equal_shallow(
+          np.indicatorSettings,
+          this.props.indicatorSettings
+        ) ||
+        !utils.are_equal_shallow(np.tools, this.props.tools) ||
+        !utils.are_equal_shallow(ns, this.state) ||
+        np.height !== this.props.height ||
+        np.chartHeight !== this.props.chartHeight ||
+        np.width !== this.props.width ||
+        np.leftOrderBook !== this.props.leftOrderBook ||
+        np.zoom !== this.props.zoom ||
+        np.showVolumeChart !== this.props.showVolumeChart ||
+        np.enableChartClamp !== this.props.enableChartClamp
       );
     }
-  }
 
-  render() {
-    const {
-      currentPeriod,
-      buckets,
-      bucketSize,
-      indicators,
-      indicatorSettings
-    } = this.props;
-    const { dropdowns } = this.state;
+    componentWillUnmount() {
+      document.removeEventListener("click", this._listener);
+    }
 
-    // Lower bar
-    let bucketText = function(size) {
-      if (size === "all") {
-        return counterpart.translate("exchange.zoom_all");
-      } else if (size < 60) {
-        return size + "s";
-      } else if (size < 3600) {
-        return size / 60 + "m";
-      } else if (size < 86400) {
-        return size / 3600 + "h";
-      } else if (size < 604800) {
-        return size / 86400 + "d";
-      } else if (size < 2592000) {
-        return size / 604800 + "w";
-      } else {
-        return size / 2592000 + "m";
+    _toggleTools(key) {
+      this._resetDropdowns();
+      this.props.onChangeTool(key);
+      this.forceUpdate();
+    }
+
+    _changeSettings(payload, e) {
+      e.persist();
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+    }
+
+    _onInputHeight(e) {
+      const val = e.target.value;
+      this.props.onChangeChartHeight({ value: parseInt(val, 10) });
+    }
+
+    _toggleDropdown(key, e) {
+      e.stopPropagation();
+      const { dropdowns } = this.state;
+      let newState = {};
+      for (let k in this.state.dropdowns) {
+        if (k === key) newState[k] = !dropdowns[k];
+        else newState[k] = false;
       }
-    };
+      if (newState[key]) {
+        document.addEventListener("click", this._listener, {
+          capture: false,
+          passive: true
+        });
+      }
+      this.setState({ dropdowns: newState });
+    }
 
-    let bucketOptions = buckets
-      .filter(bucket => {
-        return bucket > 60 * 4;
-      })
-      .map(bucket => {
+    _listener() {
+      this._resetDropdowns();
+      document.removeEventListener("click", this._listener);
+    }
+
+    _stopPropagation(e) {
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+    }
+
+    _resetDropdowns() {
+      let dropdowns = {};
+      for (let key in this.state.dropdowns) {
+        dropdowns[key] = false;
+      }
+      this.setState({ dropdowns });
+    }
+
+    componentDidMount() {
+      if (this.mainChart) {
+        console.debug("3D: ", this.mainChart);
+        (this.mainChart.current as HTMLElement).addEventListener(
+          "wheel",
+          e => {
+            e.stopPropagation();
+          },
+          true
+        );
+      }
+    }
+
+    render() {
+      const {
+        currentPeriod,
+        buckets,
+        bucketSize,
+        indicators,
+        indicatorSettings
+      } = this.props;
+      const { dropdowns } = this.state;
+
+      // Lower bar
+      let bucketText = function(size) {
+        if (size === "all") {
+          return counterpart.translate("exchange.zoom_all");
+        } else if (size < 60) {
+          return size + "s";
+        } else if (size < 3600) {
+          return size / 60 + "m";
+        } else if (size < 86400) {
+          return size / 3600 + "h";
+        } else if (size < 604800) {
+          return size / 86400 + "d";
+        } else if (size < 2592000) {
+          return size / 604800 + "w";
+        } else {
+          return size / 2592000 + "m";
+        }
+      };
+
+      let bucketOptions = buckets
+        .filter(bucket => {
+          return bucket > 60 * 4;
+        })
+        .map(bucket => {
+          return (
+            <LabelOption
+              key={bucket}
+              active={bucketSize === bucket}
+              size="smaller"
+              type="white-primary"
+              onClick={this.props.changeBucketSize.bind(this, bucket)}
+              style={{
+                marginRight: "4px"
+              }}
+            >
+              {bucketText(bucket)}
+            </LabelOption>
+          );
+        });
+
+      let oneHour = 3600,
+        oneDay = oneHour * 24;
+      let zoomPeriods = [
+        oneHour * 6,
+        oneHour * 48,
+        oneHour * 48 * 2,
+        oneHour * 24 * 7,
+        oneDay * 14,
+        oneDay * 30,
+        oneDay * 30 * 3,
+        "all"
+      ];
+
+      let zoomOptions = zoomPeriods.map(period => {
         return (
-          <LabelOption
-            key={bucket}
-            active={bucketSize === bucket}
-            size="smaller"
-            type="white-primary"
-            onClick={this.props.changeBucketSize.bind(this, bucket)}
-            style={{
-              marginRight: "4px"
-            }}
+          <div
+            key={period}
+            className={cnames("label bucket-option", {
+              "active-bucket": currentPeriod === period
+            })}
+            onClick={this.props.changeZoomPeriod.bind(this, period)}
           >
-            {bucketText(bucket)}
-          </LabelOption>
+            {bucketText(period)}
+          </div>
         );
       });
 
-    let oneHour = 3600,
-      oneDay = oneHour * 24;
-    let zoomPeriods = [
-      oneHour * 6,
-      oneHour * 48,
-      oneHour * 48 * 2,
-      oneHour * 24 * 7,
-      oneDay * 14,
-      oneDay * 30,
-      oneDay * 30 * 3,
-      "all"
-    ];
+      /* Indicators dropdown */
+      const indicatorOptionsVolume = [];
+      const indicatorOptionsPrice = Object.keys(indicators)
+        .map(i => {
+          let hasSetting = i in indicatorSettings;
+          let settingInput = hasSetting ? (
+            <>
+              <div className="inline-block" style={{ paddingRight: 5 }}>
+                <Translate content="exchange.chart_options.period" />:
+                <input
+                  style={{ margin: 0 }}
+                  type="number"
+                  value={indicatorSettings[i]}
+                  onChange={this.props.onChangeIndicatorSetting.bind(null, i)}
+                />
+              </div>
+            </>
+          ) : null;
 
-    let zoomOptions = zoomPeriods.map(period => {
-      return (
-        <div
-          key={period}
-          className={cnames("label bucket-option", {
-            "active-bucket": currentPeriod === period
-          })}
-          onClick={this.props.changeZoomPeriod.bind(this, period)}
-        >
-          {bucketText(period)}
-        </div>
-      );
-    });
-
-    /* Indicators dropdown */
-    const indicatorOptionsVolume = [];
-    const indicatorOptionsPrice = Object.keys(indicators)
-      .map(i => {
-        let hasSetting = i in indicatorSettings;
-        let settingInput = hasSetting ? (
-          <>
-            <div className="inline-block" style={{ paddingRight: 5 }}>
-              <Translate content="exchange.chart_options.period" />:
-              <input
-                style={{ margin: 0 }}
-                type="number"
-                value={indicatorSettings[i]}
-                onChange={this.props.onChangeIndicatorSetting.bind(null, i)}
-              />
-            </div>
-          </>
-        ) : null;
-
-        if (i.toLowerCase().indexOf("volume") !== -1) {
-          if (!this.props.showVolumeChart) return null;
-          indicatorOptionsVolume.push(
-            <li className="indicator" key={i}>
-              <Checkbox
-                active={indicators[i]}
-                value={i}
-                onChange={this.props.onChangeIndicators.bind(null, i)}
-              >
-                <Translate content={`exchange.chart_options.${i}`} />{" "}
-              </Checkbox>
-              {/* <input
+          if (i.toLowerCase().indexOf("volume") !== -1) {
+            if (!this.props.showVolumeChart) return null;
+            indicatorOptionsVolume.push(
+              <li className="indicator" key={i}>
+                <Checkbox
+                  active={indicators[i]}
+                  value={i}
+                  onChange={this.props.onChangeIndicators.bind(null, i)}
+                  labelStyle={{ alignItems: "center" }}
+                >
+                  <Translate content={`exchange.chart_options.${i}`} />{" "}
+                </Checkbox>
+                {/* <input
                 className="clickable"
                 type="checkbox"
                 checked={indicators[i]}
@@ -1049,125 +1051,126 @@ export default class Wrapper extends React.Component<any, any> {
                 onClick={this.props.onChangeIndicators.bind(null, i)}
                 className="clickable"
               /> */}
-              {settingInput}
-            </li>
-          );
-        } else {
-          return (
-            <li className="indicator" key={i}>
-              <Checkbox
-                active={indicators[i]}
-                value={i}
-                onChange={this.props.onChangeIndicators.bind(null, i)}
-              >
-                <Translate content={`exchange.chart_options.${i}`} />
-              </Checkbox>
-              {settingInput}
-            </li>
-          );
-        }
-      })
-      .filter(a => !!a);
+                {settingInput}
+              </li>
+            );
+          } else {
+            return (
+              <li className="indicator" key={i}>
+                <Checkbox
+                  active={indicators[i]}
+                  value={i}
+                  onChange={this.props.onChangeIndicators.bind(null, i)}
+                  labelStyle={{ alignItems: "center" }}                  
+                >
+                  <Translate content={`exchange.chart_options.${i}`} />
+                </Checkbox>
+                {settingInput}
+              </li>
+            );
+          }
+        })
+        .filter(a => !!a);
 
-    /* Tools dropdown */
-    const toolsOptions = Object.keys(this.props.tools).map(i => {
-      return (
-        <li
-          className="clickable"
-          key={i}
-          onClick={this._toggleTools.bind(this, i)}
-        >
-          <div style={{ marginLeft: 5 }} className="inline-block">
-            <Translate content={`exchange.chart_options.${i}`} />
-          </div>
-        </li>
-      );
-    });
+      /* Tools dropdown */
+      const toolsOptions = Object.keys(this.props.tools).map(i => {
+        return (
+          <li
+            className="clickable"
+            key={i}
+            onClick={this._toggleTools.bind(this, i)}
+          >
+            <div style={{ marginLeft: 5 }} className="inline-block">
+              <Translate content={`exchange.chart_options.${i}`} />
+            </div>
+          </li>
+        );
+      });
 
-    /* Tools dropdown */
-    const settingsOptions = ["volume", "height", "clamp_chart"].map(i => {
-      let content;
-      switch (i) {
-        case "height": {
-          content = (
-            <li className="indicator" key={i}>
-              <div style={{ marginLeft: 0, paddingRight: 10 }}>
-                <div>
-                  <Translate content="exchange.chart_options.height" />:
+      /* Tools dropdown */
+      const settingsOptions = ["volume", "height", "clamp_chart"].map(i => {
+        let content;
+        switch (i) {
+          case "height": {
+            content = (
+              <li className="indicator" key={i}>
+                <div style={{ marginLeft: 0, paddingRight: 10 }}>
+                  <div>
+                    <Translate content="exchange.chart_options.height" />:
+                  </div>
                 </div>
-              </div>
-              <div>
-                <input
-                  style={{ margin: 0, textAlign: "right", maxWidth: 75 }}
-                  value={this.props.chartHeight}
-                  type="number"
-                  onChange={this._onInputHeight}
-                />
-              </div>
-            </li>
-          );
-          break;
+                <div>
+                  <input
+                    style={{ margin: 0, textAlign: "right", maxWidth: 75 }}
+                    value={this.props.chartHeight}
+                    type="number"
+                    onChange={this._onInputHeight}
+                  />
+                </div>
+              </li>
+            );
+            break;
+          }
+
+          case "volume": {
+            content = (
+              <li
+                className="clickable indicator"
+                key={i}
+                onClick={this.props.onToggleVolume}
+              >
+                <input type="checkbox" checked={this.props.showVolumeChart} />
+                <div>
+                  <Translate content={`exchange.chart_options.${i}`} />
+                </div>
+              </li>
+            );
+            break;
+          }
+
+          case "clamp_chart": {
+            content = (
+              <li
+                className="clickable indicator"
+                key={i}
+                onClick={this.props.onToggleChartClamp}
+              >
+                <input type="checkbox" checked={this.props.enableChartClamp} />
+                <div>
+                  <Translate content={`exchange.chart_options.${i}`} />
+                </div>
+              </li>
+            );
+            break;
+          }
+
+          default: {
+            content = <li key={i}>TBD</li>;
+          }
         }
+        return content;
+      });
 
-        case "volume": {
-          content = (
-            <li
-              className="clickable indicator"
-              key={i}
-              onClick={this.props.onToggleVolume}
-            >
-              <input type="checkbox" checked={this.props.showVolumeChart} />
-              <div>
-                <Translate content={`exchange.chart_options.${i}`} />
-              </div>
-            </li>
-          );
-          break;
-        }
+      // if (!this.props.priceData.length) {
+      //     return (
+      //         <div className="grid-content text-center">
+      //             <div style={{ paddingTop: this.props.height / 2, height: this.props.height }}>
+      //                 <Translate content="exchange.no_data" component="h2" />
+      //             </div>
+      //         </div>
+      //     );
+      // }
 
-        case "clamp_chart": {
-          content = (
-            <li
-              className="clickable indicator"
-              key={i}
-              onClick={this.props.onToggleChartClamp}
-            >
-              <input type="checkbox" checked={this.props.enableChartClamp} />
-              <div>
-                <Translate content={`exchange.chart_options.${i}`} />
-              </div>
-            </li>
-          );
-          break;
-        }
-
-        default: {
-          content = <li key={i}>TBD</li>;
-        }
-      }
-      return content;
-    });
-
-    // if (!this.props.priceData.length) {
-    //     return (
-    //         <div className="grid-content text-center">
-    //             <div style={{ paddingTop: this.props.height / 2, height: this.props.height }}>
-    //                 <Translate content="exchange.no_data" component="h2" />
-    //             </div>
-    //         </div>
-    //     );
-    // }
-
-    return (
-      <div
-        className="no-margin no-padding"
-        style={{ overflow: "visible", width: "100%" }}
-        ref={this.mainChart}
-      >
-        <div className="chart-tools">
-          <ul className="market-stats stats bottom-stats">
-            {/* Chart controls */}
-            {/* Hide Zoom
+      return (
+        <div
+          className="no-margin no-padding"
+          style={{ overflow: "visible", width: "100%" }}
+          ref={this.mainChart}
+        >
+          <div className="chart-tools">
+            <ul className="market-stats stats bottom-stats">
+              {/* Chart controls */}
+              {/* Hide Zoom
             <li className="stat">
               <span>
                 <span>
@@ -1176,62 +1179,62 @@ export default class Wrapper extends React.Component<any, any> {
                 <span>{zoomOptions}</span>
               </span>
             </li> */}
-            <li className="stat">
-              <span>
+              <li className="stat">
                 <span>
-                  <Translate content="exchange.time" />:
+                  <span>
+                    <Translate content="exchange.time" />:
+                  </span>
+                  <span>{bucketOptions}</span>
                 </span>
-                <span>{bucketOptions}</span>
-              </span>
-            </li>
+              </li>
 
-            <li className="stat input custom-dropdown">
-              <div
-                className="v-align indicators clickable"
-                onClick={this._toggleDropdown.bind(this, "indicators")}
-              >
-                <Translate content="exchange.chart_options.title" />
-              </div>
-              {dropdowns.indicators ? (
+              <li className="stat input custom-dropdown">
                 <div
-                  className="custom-dropdown-content"
-                  onClick={this._stopPropagation}
+                  className="v-align indicators clickable"
+                  onClick={this._toggleDropdown.bind(this, "indicators")}
                 >
-                  <ul>
-                    <li className="indicator-title">
-                      <Translate content="exchange.chart_options.price_title" />
-                    </li>
-                    {indicatorOptionsPrice}
-
-                    {indicatorOptionsVolume.length ? (
+                  <Translate content="exchange.chart_options.title" />
+                </div>
+                {dropdowns.indicators ? (
+                  <div
+                    className="custom-dropdown-content"
+                    onClick={this._stopPropagation}
+                  >
+                    <ul>
                       <li className="indicator-title">
-                        <Translate content="exchange.chart_options.volume_title" />
+                        <Translate content="exchange.chart_options.price_title" />
                       </li>
-                    ) : null}
-                    {indicatorOptionsVolume}
-                  </ul>
-                </div>
-              ) : null}
-            </li>
+                      {indicatorOptionsPrice}
 
-            <li className="stat input custom-dropdown">
-              <div
-                className="v-align indicators clickable"
-                onClick={this._toggleDropdown.bind(this, "tools")}
-              >
-                <Translate content="exchange.chart_options.tools" />
-              </div>
-              {dropdowns.tools ? (
+                      {indicatorOptionsVolume.length ? (
+                        <li className="indicator-title">
+                          <Translate content="exchange.chart_options.volume_title" />
+                        </li>
+                      ) : null}
+                      {indicatorOptionsVolume}
+                    </ul>
+                  </div>
+                ) : null}
+              </li>
+
+              <li className="stat input custom-dropdown">
                 <div
-                  className="custom-dropdown-content"
-                  onClick={this._stopPropagation}
+                  className="v-align indicators clickable"
+                  onClick={this._toggleDropdown.bind(this, "tools")}
                 >
-                  <ul>{toolsOptions}</ul>
+                  <Translate content="exchange.chart_options.tools" />
                 </div>
-              ) : null}
-            </li>
+                {dropdowns.tools ? (
+                  <div
+                    className="custom-dropdown-content"
+                    onClick={this._stopPropagation}
+                  >
+                    <ul>{toolsOptions}</ul>
+                  </div>
+                ) : null}
+              </li>
 
-            {/* <li className="stat input custom-dropdown">
+              {/* <li className="stat input custom-dropdown">
                             <div className="indicators clickable" onClick={this._toggleDropdown.bind(this, "settings")}>
                                 <Icon className="icon-14px settings-cog" name="cog" />
                             </div>
@@ -1242,24 +1245,25 @@ export default class Wrapper extends React.Component<any, any> {
                                     </ul>
                                 </div> : null}
                         </li> */}
-          </ul>
-        </div>
-        {this.props.priceData.length ? (
-          <CandleStickChartWithZoomPan ref={this.mainChart} {...this.props} />
-        ) : (
-          <div className="grid-content text-center">
-            <div
-              style={{
-                paddingTop: this.props.height / 2,
-                height: this.props.height
-              }}
-            >
-              <Translate content="exchange.no_data" component="h2" />
-            </div>
+            </ul>
           </div>
-        )}
-        {/* <CandleStickChartWithZoomPan ref="FitWidth" {...this.props} /> */}
-      </div>
-    );
+          {this.props.priceData.length ? (
+            <CandleStickChartWithZoomPan ref={this.mainChart} {...this.props} />
+          ) : (
+            <div className="grid-content text-center">
+              <div
+                style={{
+                  paddingTop: this.props.height / 2,
+                  height: this.props.height
+                }}
+              >
+                <Translate content="exchange.no_data" component="h2" />
+              </div>
+            </div>
+          )}
+          {/* <CandleStickChartWithZoomPan ref="FitWidth" {...this.props} /> */}
+        </div>
+      );
+    }
   }
-}
+);

@@ -38,6 +38,7 @@ const styles = {
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
       appearance: "none",
+      MozAppearance: "none",
       width: "1.4em",
       height: "1.4em",
       marginRight: "0.5em"
@@ -75,7 +76,7 @@ let Radio = ({
     >
       <input
         id={id}
-        // className="no-appearance"
+        className="no-appearance"
         type="radio"
         disabled={disabled}
         onClick={() => onClick(value)}
