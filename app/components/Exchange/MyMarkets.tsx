@@ -32,8 +32,8 @@ const FilteredMarkets = {
   "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
-  CYB: { "JADE.DPY": -1 },
-  "JADE.ETH": { "JADE.DPY": -1 }
+  // CYB: { "JADE.DPY": -1 },
+  // "JADE.ETH": { "JADE.DPY": -1 }
   // "JADE.BTC": { "JADE.GNX": -1 },
   // "JADE.EOS": { "JADE.GNX": -1 }
 };
