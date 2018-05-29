@@ -102,19 +102,38 @@ const cellStyle = width => ({
   width
 });
 
-let OrderBookRowVertical = class extends React.Component<any, any> {
+let OrderBookRowVertical = class extends React.Component<
+  {
+    index?;
+    currentAccount;
+    order;
+    quote;
+    base;
+    final;
+    digits;
+    depthType?;
+    onClick?;
+    total;
+  },
+  any
+> {
+  static defaultProps = {
+    depthType: DepthType.Interval
+  };
+
   shouldComponentUpdate(np) {
     if (np.order.market_base !== this.props.order.market_base) return false;
     return (
       np.order.ne(this.props.order) ||
       np.index !== this.props.index ||
       np.digits !== this.props.digits ||
+      np.depthType !== this.props.depthType ||
       np.currentAccount !== this.props.currentAccount
     );
   }
 
   render() {
-    let { order, quote, base, final, digits } = this.props;
+    let { order, quote, base, final, digits, depthType, total } = this.props;
     const isBid = order.isBid();
     const isCall = order.isCall();
     let integerClass = isCall
@@ -131,10 +150,19 @@ let OrderBookRowVertical = class extends React.Component<any, any> {
         precision={digits}
       />
     );
+    console.debug("ORDER: ", total, order, order.totalToReceive());
     let bgWidth =
       (order
-        ? (((order.for_sale as any) / order.init_for_sale) as any).toFixed(4) *
-          100
+        ? depthType === DepthType.Interval
+          ? (((order.for_sale as any) / order.init_for_sale) as any).toFixed(
+              4
+            ) * 100
+          : ((order.accum / total)
+              // (isBid
+              //   ? // ? order.totalToReceive().amount
+              //     order.totalForSale().amount
+              //   : order.totalForSale().amount) / total
+              .toFixed(4) as any) * 100
         : 0) + "%";
     return (
       <div
@@ -348,8 +376,10 @@ let OrderBookParitalWrapper = class extends React.Component<
     base;
     quote;
     digits;
+    depthType;
     onOrderClick;
     currentAccount;
+    total?;
     displayType;
   },
   any
@@ -364,12 +394,23 @@ let OrderBookParitalWrapper = class extends React.Component<
       quote,
       onOrderClick,
       currentAccount,
+      depthType,
+      total,
       digits
     } = this.props;
-    orders =
-      displayType === type
-        ? fixArray(orders, orders.length < countOfRow * 2, countOfRow * 2, null)
-        : fixArray(orders, true, countOfRow, null);
+    // orders =
+    //   displayType === type
+    //     ? fixArray(orders, orders.length < countOfRow * 2, countOfRow * 2, null)
+    //     : fixArray(orders, true, countOfRow, null);
+    // Calculate Depth
+    // let accum = 0;
+    // orders = orders.map(order => {
+    //   accum += order.isBid()
+    //     ? order.totalToReceive().amount
+    //     : order.totalForSale().amount;
+    //   order.accum = accum;
+    //   return order;
+    // });
     let toDispalyOrders = type === OrderType.Ask ? orders.reverse() : orders;
     return toDispalyOrders.map((order, index) => {
       return order === null ? (
@@ -384,6 +425,8 @@ let OrderBookParitalWrapper = class extends React.Component<
           base={base}
           quote={quote}
           final={index === 0}
+          depthType={depthType}
+          total={total}
           currentAccount={currentAccount}
         />
       );
@@ -487,7 +530,14 @@ let OrderBook = class extends React.Component<any, any> {
       marketReady,
       latest
     } = this.props;
-    let { showAllAsks, showAllBids, rowCount, type, digits } = this.state;
+    let {
+      showAllAsks,
+      showAllBids,
+      rowCount,
+      type,
+      digits,
+      depthType
+    } = this.state;
     // let countOfRow = 16;
     let countOfRow = document.getElementById("orderBook")
       ? Math.floor(
@@ -515,6 +565,51 @@ let OrderBook = class extends React.Component<any, any> {
             }, new Map<string, LimitOrder>())
             .values()
         )
+    );
+    Array.prototype["lastOne"] = function() {
+      if (this.length) {
+        return this.filter(a => a).slice(-1)[0];
+      } else {
+        return null;
+      }
+    };
+
+    askRows =
+      OrderType.Ask === type
+        ? fixArray(
+            askRows,
+            askRows.length < countOfRow * 2,
+            countOfRow * 2,
+            null
+          )
+        : fixArray(askRows, true, countOfRow, null);
+
+    bidRows =
+      OrderType.Bid === type
+        ? fixArray(
+            bidRows,
+            bidRows.length < countOfRow * 2,
+            countOfRow * 2,
+            null
+          )
+        : fixArray(bidRows, true, countOfRow, null);
+    let accum = 0;
+    bidRows.filter(b => b).forEach(order => {
+      accum += order.isBid()
+        ? order.totalToReceive().amount
+        : order.totalForSale().amount;
+      order["accum"] = accum;
+    });
+    accum = 0;
+    askRows.filter(a => a).forEach(order => {
+      accum += order.isBid()
+        ? order.totalToReceive().amount
+        : order.totalForSale().amount;
+      order["accum"] = accum;
+    });
+    let total = Math.max(
+      (bidRows as any).lastOne().accum || 0,
+      (askRows as any).lastOne().accum || 0
     );
 
     let priceRow = (
@@ -579,10 +674,12 @@ let OrderBook = class extends React.Component<any, any> {
                 type={OrderType.Ask}
                 currentAccount={this.props.currentAccount}
                 countOfRow={countOfRow}
+                total={total}
                 digits={digits}
                 base={base}
                 quote={quote}
                 orders={askRows}
+                depthType={depthType}
                 onOrderClick={this.props.onClick.bind(this)}
               />
             </div>
@@ -605,7 +702,9 @@ let OrderBook = class extends React.Component<any, any> {
                 countOfRow={countOfRow}
                 digits={digits}
                 base={base}
+                total={total}
                 quote={quote}
+                depthType={depthType}
                 orders={bidRows}
                 onOrderClick={this.props.onClick.bind(this)}
               />
