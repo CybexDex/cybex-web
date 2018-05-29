@@ -29,6 +29,15 @@ let TabLink = class extends React.Component<
         borderBottom: "1px solid"
       }
     },
+    secondary: {
+      ":hover": {
+        color: Colors.$colorGrey
+      },
+      ":active": {
+        color: Colors.$colorWhiteOp8,
+        borderBottom: "1px solid"
+      }
+    },
     normal: {
       fontSize: "1rem"
     }

@@ -210,7 +210,7 @@ class MarketHistory extends React.Component {
               <Translate content="exchange.history" />
             </div>
           </div>
-          <div className="grid-block shrink left-orderbook-header market-right-padding-only">
+          <div className="grid-block shrink left-orderbook-header ">
             <table className="table table-4 order-table fixed-table market-right-padding">
               <thead>
                 <tr>
@@ -241,7 +241,7 @@ class MarketHistory extends React.Component {
             </table>
           </div>
           <div
-            className="table-container flex-wrapper flex-column grid-block market-right-padding-only _scroll-bar"
+            className="table-container flex-wrapper flex-column grid-block _scroll-bar"
             ref="history"
             style={{ maxHeight: 420 }}
           >

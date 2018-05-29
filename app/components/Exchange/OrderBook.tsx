@@ -22,6 +22,10 @@ enum OrderType {
   Bid,
   All
 }
+enum DepthType {
+  Accum,
+  Interval
+}
 
 const priceRowHeight = 24;
 const heightRowHeight = 32;
@@ -190,7 +194,14 @@ let OrderBookRowVertical = class extends React.Component<any, any> {
 OrderBookRowVertical = Radium(OrderBookRowVertical);
 
 let OrderBookHeader = class extends React.PureComponent<
-  { type; onTypeChange?; basePrecision?; onDepthChange },
+  {
+    type;
+    depthType;
+    onDepthTypeChange?;
+    onTypeChange?;
+    basePrecision?;
+    onDepthChange;
+  },
   any
 > {
   combineOptions = [];
@@ -225,7 +236,14 @@ let OrderBookHeader = class extends React.PureComponent<
   };
 
   render() {
-    let { type, onTypeChange, onDepthChange, basePrecision = 8 } = this.props;
+    let {
+      type,
+      depthType,
+      onTypeChange,
+      onDepthTypeChange,
+      onDepthChange,
+      basePrecision = 8
+    } = this.props;
 
     return (
       <>
@@ -251,6 +269,23 @@ let OrderBookHeader = class extends React.PureComponent<
           <Translate content="exchange.orderbook.bid" />
         </TabLink>
         <i style={{ flexGrow: 1 }} />
+        <TabLink
+          type="secondary"
+          active={depthType === DepthType.Interval}
+          onClick={onDepthTypeChange.bind(this, DepthType.Interval)}
+          style={OrderBook.Styles.tab}
+        >
+          <Translate content="exchange.orderbook.bid" />
+        </TabLink>
+        <TabLink
+          type="secondary"
+          active={depthType === DepthType.Accum}
+          onClick={onDepthTypeChange.bind(this, DepthType.Accum)}
+          style={OrderBook.Styles.tab}
+        >
+          <Translate content="exchange.orderbook.bid" />
+        </TabLink>
+        <i style={{ flexGrow: 1 }} />
         <Select
           onChange={this.handleDepthChange}
           styles={$styleSelect("orderbook")}
@@ -265,7 +300,7 @@ let OrderBookHeader = class extends React.PureComponent<
 const OrderBookRowEmpty = class extends React.PureComponent<any> {
   render() {
     return (
-      <div style={rowStyles.base}>
+      <div style={rowStyles.base as any}>
         <span className="text-left" style={cellStyle("30%")}>
           ---
         </span>
@@ -389,6 +424,7 @@ let OrderBook = class extends React.Component<any, any> {
       rowCount: 20,
       digits: 8,
       // digits: props.base.get("precision", 8),
+      depthType: DepthType.Interval,
       type: OrderType.All
     };
   }
@@ -398,6 +434,11 @@ let OrderBook = class extends React.Component<any, any> {
       type
     });
     this.fixPos();
+  };
+  setDepthType = depthType => {
+    this.setState({
+      depthType
+    });
   };
 
   fixPos = () => {
@@ -428,6 +469,7 @@ let OrderBook = class extends React.Component<any, any> {
       digits
     });
   };
+  onDepthTypeChange = {};
 
   render() {
     let {
@@ -502,6 +544,8 @@ let OrderBook = class extends React.Component<any, any> {
             type={this.state.type}
             onTypeChange={this.setType}
             basePrecision={8}
+            depthType={this.state.depthType}
+            onDepthTypeChange={this.setDepthType}
             // basePrecision={base.get("precision")}
             onDepthChange={this.onDepthChange}
           />

@@ -1449,7 +1449,6 @@ class Exchange extends React.Component<any, any> {
       />
     );
 
-    console.debug("In: ", indicators);
     return (
       <div className="market-layout">
         <AccountNotifications />
