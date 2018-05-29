@@ -283,7 +283,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         id={2}
         yExtents={[d => d.volume, calculators.smaVolume.accessor()]}
         height={60}
-        origin={(w, h) => [0, h - 80]}
+        origin={(w, h) => [0, indicators.macd ? h - 180 : h - 80]}
       >
         {indicators.macd ? null : (
           <XAxis
@@ -470,7 +470,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           orient="left"
           tickPadding={0}
           showDomain={false}
-          zoomEnabled={false}
+          // zoomEnabled={false}
           {...axisStyle}
           ticks={8}
           innerTickSize={0}
@@ -657,6 +657,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       timeFormatter,
       enableFib,
       enableTrendLine,
+      priceFormat,
       margin,
       calculators
     } = this.state;
@@ -713,10 +714,19 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         : xAccessor(data[0])
     ];
 
+    let gridHeight = height - margin.top - margin.bottom;
+    let gridWidth = width - margin.left - margin.right;
+
+    let showGrid = true;
+    let yGrid = showGrid
+      ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.1 }
+      : {};
+    const { positiveColor, negativeColor } = this._getThemeColors();
+
     const macdAppearance = {
       stroke: {
-        macd: "#FF0000",
-        signal: "#00F300"
+        macd: positiveColor,
+        signal: negativeColor
       },
       fill: {
         divergence: "#4682B4"
@@ -726,7 +736,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       <ChartCanvas
         ratio={ratio}
         width={width}
-        height={366}
+        height={height}
         seriesName="PriceChart"
         margin={margin}
         // zoomEvent={false}
@@ -746,13 +756,9 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         {indicators.macd && (
           <Chart
             id={3}
-            height={height * 0.2}
+            height={80}
             yExtents={calculators.macd.accessor()}
-            origin={(w, h) => [
-              0,
-              h - (chartMultiplier - (showVolumeChart ? 1 : 0)) * height * 0.2
-            ]}
-            padding={{ top: 40, bottom: 10 }}
+            origin={(w, h) => [0, h - 100]}
           >
             <XAxis
               tickStroke={axisLineColor}
@@ -766,9 +772,26 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
               tickStroke={axisLineColor}
               stroke={axisLineColor}
               {...axisStyle}
+              tickPadding={0}
+              showDomain={false}
+              innerTickSize={0}
+              // zoomEnabled={false}
               axisAt="right"
-              orient="right"
-              ticks={4}
+              orient="left"
+              ticks={3}
+            />
+            <YAxis
+              axisAt="left"
+              orient="left"
+              tickPadding={0}
+              showDomain={false}
+              showTickLabel={false}
+              zoomEnabled={false}
+              {...yGrid}
+              {...axisStyle}
+              ticks={3}
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
             />
 
             <MouseCoordinateX
@@ -778,9 +801,11 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
               displayFormat={timeFormatter}
             />
             <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
               at="right"
-              orient="right"
-              displayFormat={format(".2f")}
+              orient="left"
+              displayFormat={priceFormat}
             />
 
             <MACDSeries yAccessor={d => d.macd} {...macdAppearance} />
@@ -788,7 +813,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
               yAccessor={d => d.macd}
               options={calculators.macd.options()}
               appearance={macdAppearance}
-              // origin={[-40, 35]} calculator={calculators.macd}
+              origin={[0, -6]}
             />
           </Chart>
         )}

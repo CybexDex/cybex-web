@@ -155,7 +155,7 @@ class Exchange extends React.Component<any, any> {
       ["ema1", false],
       ["ema2", false],
       ["smaVolume", true],
-      // ["macd", false],
+      ["macd", false],
       ["bb", false]
     ].forEach(i => {
       indicators[i[0]] = i[0] in savedIndicators ? savedIndicators[i[0]] : i[1];
@@ -1448,6 +1448,8 @@ class Exchange extends React.Component<any, any> {
         currentAccount={this.props.currentAccount.get("id")}
       />
     );
+
+    console.debug("In: ", indicators);
     return (
       <div className="market-layout">
         <AccountNotifications />
@@ -1484,7 +1486,7 @@ class Exchange extends React.Component<any, any> {
               quote={quote}
               baseSymbol={baseSymbol}
               quoteSymbol={quoteSymbol}
-              height={400}
+              height={indicators.macd ? 466 : 366}
               leftOrderBook={leftOrderBook}
               marketReady={marketReady}
               indicators={indicators}

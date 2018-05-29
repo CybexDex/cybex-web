@@ -15,7 +15,6 @@ import {
   Price
 } from "common/MarketClasses";
 
-
 // import {
 //     SettleOrder
 // }
@@ -97,7 +96,6 @@ class MarketsStore {
       precision: 5
     };
 
-
     this.bindListeners({
       onSubscribeMarket: MarketsActions.subscribeMarket,
       onUnSubscribeMarket: MarketsActions.unSubscribeMarket,
@@ -114,7 +112,6 @@ class MarketsStore {
       onToggleStars: MarketsActions.toggleStars
     });
   }
-
 
   onGetCollateralPositions(payload) {
     this.borrowMarketState = {
@@ -1328,15 +1325,15 @@ class MarketsStore {
     let close =
       last.close_base && last.close_quote
         ? {
-            quote: {
-              amount: invert ? last.close_quote : last.close_base,
-              asset_id: invert ? last.key.quote : last.key.base
-            },
-            base: {
-              amount: invert ? last.close_base : last.close_quote,
-              asset_id: invert ? last.key.base : last.key.quote
-            }
+          quote: {
+            amount: invert ? last.close_quote : last.close_base,
+            asset_id: invert ? last.key.quote : last.key.base
+          },
+          base: {
+            amount: invert ? last.close_base : last.close_quote,
+            asset_id: invert ? last.key.base : last.key.quote
           }
+        }
         : null;
     let volumeBaseAsset = new Asset({
       amount: volumeBase,
@@ -1354,23 +1351,23 @@ class MarketsStore {
     let coreVolume =
       volumeBaseAsset.asset_id === "1.3.0"
         ? volumeBaseAsset.getAmount({
-            real: true
-          })
+          real: true
+        })
         : volumeQuoteAsset.asset_id === "1.3.0"
           ? volumeQuoteAsset.getAmount({
-              real: true
-            })
+            real: true
+          })
           : null;
     let usdVolume = !!coreVolume
       ? null
       : volumeBaseAsset.asset_id === "1.3.121"
         ? volumeBaseAsset.getAmount({
-            real: true
-          })
+          real: true
+        })
         : volumeQuoteAsset.asset_id === "1.3.121"
           ? volumeQuoteAsset.getAmount({
-              real: true
-            })
+            real: true
+          })
           : null;
     let btcVolume =
       !!coreVolume || !!usdVolume
@@ -1378,13 +1375,13 @@ class MarketsStore {
         : volumeBaseAsset.asset_id === "1.3.861" ||
           volumeBaseAsset.asset_id === "1.3.103"
           ? volumeBaseAsset.getAmount({
-              real: true
-            })
+            real: true
+          })
           : volumeQuoteAsset.asset_id === "1.3.861" ||
             volumeQuoteAsset.asset_id === "1.3.103"
             ? volumeQuoteAsset.getAmount({
-                real: true
-              })
+              real: true
+            })
             : null;
 
     if (market) {
