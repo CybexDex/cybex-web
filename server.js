@@ -8,45 +8,49 @@ const https = require("https");
 const fs = require("fs");
 
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
-var config = require("./webpack.config.js")({
-    prod: false
-});
+var config = require("./config/webpack.dev.js");
 
 var app = express();
 var compiler = webpack(config);
 
-compiler.apply(new ProgressPlugin(function (percentage, msg) {
-    process.stdout.write((percentage * 100).toFixed(2) + '% ' + msg + '                 \033[0G');
-}));
+compiler.apply(
+  new ProgressPlugin(function(percentage, msg) {
+    process.stdout.write(
+      (percentage * 100).toFixed(2) + "% " + msg + "                 \033[0G"
+    );
+  })
+);
 
-app.use(devMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-}));
+app.use(
+  devMiddleware(compiler, {
+    publicPath: config.output.publicPath
+  })
+);
 
 app.use(hotMiddleware(compiler));
 
-app.use('*', function (req, res, next) {
-    var filename = path.join(compiler.outputPath, 'index.html');
-    compiler.outputFileSystem.readFile(filename, function (err, result) {
-        if (err) {
-            return next(err);
-        }
-        res.set('content-type', 'text/html');
-        res.send(result);
-        res.end();
-    });
+app.use("*", function(req, res, next) {
+  var filename = path.join(compiler.outputPath, "index.html");
+  compiler.outputFileSystem.readFile(filename, function(err, result) {
+    if (err) {
+      return next(err);
+    }
+    res.set("content-type", "text/html");
+    res.send(result);
+    res.end();
+  });
 });
 
-app.listen(8080, function (err) {
-    if (err) {
-        return console.error(err);
-    }
+app.listen(8080, function(err) {
+  if (err) {
+    return console.error(err);
+  }
 
-    console.log("Listening at http://localhost:8080/");
+  console.log("Listening at http://localhost:8080/");
 });
 const options = {
-    key: fs.readFileSync(path.resolve(__dirname, 'ssl/private.pem')),
-    cert: fs.readFileSync(path.resolve(__dirname, 'ssl/cert.crt'))
+  key: fs.readFileSync(path.resolve(__dirname, "ssl/private.pem")),
+  cert: fs.readFileSync(path.resolve(__dirname, "ssl/cert.crt"))
 };
 
 const httpsServer = https.createServer(options, app);
