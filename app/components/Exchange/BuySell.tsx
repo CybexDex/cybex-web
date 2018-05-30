@@ -16,7 +16,7 @@ import ExchangeInput from "./ExchangeInput";
 import assetUtils from "common/asset_utils";
 import Icon from "../Icon/Icon";
 import { Colors, Button } from "components/Common";
-import Radium from "Radium";
+import Radium from "radium";
 
 let BuySell = class extends React.Component<any, any> {
   static propTypes = {

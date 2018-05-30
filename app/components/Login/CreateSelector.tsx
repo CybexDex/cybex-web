@@ -23,7 +23,7 @@ import {
   $styleSecondaryText
 } from "components/Common/Styles";
 import { $breakpointSmall } from "components/Common/Breakpoints";
-import Radium from "Radium";
+import Radium from "radium";
 
 import WalletDb from "stores/WalletDb";
 import WalletUnlockStore from "stores/WalletUnlockStore";

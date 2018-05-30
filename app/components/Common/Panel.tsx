@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import Radium from "Radium";
+import Radium from "radium";
 import { Icon } from "./Icon";
 import { Colors } from "./Colors";
 import { $styleFlexContainer } from "./Styles";

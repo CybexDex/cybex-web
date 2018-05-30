@@ -9,7 +9,7 @@ import PriceText from "../Utility/PriceText";
 import TransitionWrapper from "../Utility/TransitionWrapper";
 import AssetName from "../Utility/AssetName";
 import PriceStat from "./PriceStat";
-import Radium from "Radium";
+import Radium from "radium";
 import { Colors, TabLink, $styleSelect } from "components/Common";
 import counterpart from "counterpart";
 import Select from "react-select";

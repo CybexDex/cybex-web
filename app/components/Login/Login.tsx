@@ -18,7 +18,7 @@ import {
   $styleSecondaryText
 } from "components/Common";
 import { $styleFlexContainer, $styleFlexItem } from "components/Common/Styles";
-import Radium from "Radium";
+import Radium from "radium";
 import WalletDb from "stores/WalletDb";
 import WalletUnlockStore from "stores/WalletUnlockStore";
 import AccountStore from "stores/AccountStore";

@@ -31,7 +31,7 @@ import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
-import { StyleRoot } from "Radium";
+import { StyleRoot } from "radium";
 // import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
 import EthModal from "components/Modal/EthModal";
 

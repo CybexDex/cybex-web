@@ -31,7 +31,7 @@ import {
   $styleFlexAutoWrap
 } from "components/Common/Styles";
 import { $breakpointSmall } from "components/Common/Breakpoints";
-import Radium from "Radium";
+import Radium from "radium";
 
 let CreateAccountPassword = class extends React.Component<any, any> {
   static contextTypes = {

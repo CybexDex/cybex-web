@@ -33,7 +33,7 @@ import {
 import { WalletInfo } from "components/Login/CreateSelector";
 import { LoginSelector } from "components/Login/LoginSelector";
 import { CreateSwitcher } from "components/Login/CreateSwitcher";
-import Radium from "Radium";
+import Radium from "radium";
 
 let CreateAccount = Radium(
   class extends React.Component<any, any> {
