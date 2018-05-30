@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Icon } from "./Icon";
-import Radium from "radium";
+import Radium from "Radium";
 import { Colors } from "components/Common/Colors";
 import { getId } from "./utils";
 import classnames from "classnames";

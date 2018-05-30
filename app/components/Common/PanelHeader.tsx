@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Colors, CommonType } from "./Colors";
-import Radium from "radium";
+import Radium from "Radium";
 import { Clickable } from "./CommonStyles";
 
 const Styles = {

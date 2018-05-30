@@ -1451,7 +1451,6 @@ class Exchange extends React.Component<any, any> {
 
     return (
       <div className="market-layout">
-        <AccountNotifications />
         <div
           className="market-main _scroll-bar"
           style={{ overflowX: "hidden" ,boxShadow: `0 0 2px 2px ${BaseColors.$colorNoir}` }}
@@ -1669,6 +1668,8 @@ class Exchange extends React.Component<any, any> {
           />
         ) : null}
         {/* End of Second Vertical Block */}
+        <AccountNotifications />
+        
       </div>
     );
   }

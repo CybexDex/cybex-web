@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
 import { Colors } from "components/Common";
-import Radium from "radium";
+import Radium from "Radium";
 
 export const LoginSelector = Radium(
   class extends React.PureComponent<any, any> {

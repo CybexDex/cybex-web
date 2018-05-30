@@ -18,7 +18,9 @@ import ReactTooltip from "react-tooltip";
 import NotificationSystem from "react-notification-system";
 import TransactionConfirm from "./components/Blockchain/TransactionConfirm";
 import WalletUnlockModal from "./components/Wallet/WalletUnlockModal";
-import BrowserSupportModal from "./components/Modal/BrowserSupportModal";
+import BrowserSupportModal, {
+  DEFAULT_SUPPORT_MODAL
+} from "./components/Modal/BrowserSupportModal";
 import WalletDb from "stores/WalletDb";
 import CachedPropertyStore from "stores/CachedPropertyStore";
 import BackupModal from "components/Modal/BackupModal";
@@ -29,9 +31,21 @@ import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
-import { StyleRoot } from "radium";
+import { StyleRoot } from "Radium";
 // import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
 import EthModal from "components/Modal/EthModal";
+
+(function(window) {
+  if (window) {
+    let agent = window.navigator.userAgent;
+    // Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36"
+    let version = /Chrome\/(.+)(?=\s)/i.exec(agent);
+    if (version && version[1] && parseInt(version[1]) < 60) {
+      import("assets/stylesheets/patch.scss");
+      // console.debug("Patch: ", patch);
+    }
+  }
+})(window);
 
 class App extends React.Component {
   constructor() {
@@ -109,6 +123,9 @@ class App extends React.Component {
     this._setListeners();
     this.syncCheckInterval = setInterval(this._syncStatus, 5000);
     const user_agent = navigator.userAgent.toLowerCase();
+    let version = /Chrome\/(.+)(?=\s)/i.exec(user_agent);
+    let lower = version && parseInt(version[1]) < 60;
+
     if (
       !(
         window.electron ||
@@ -116,10 +133,12 @@ class App extends React.Component {
         user_agent.indexOf("chrome") > -1 ||
         user_agent.indexOf("edge") > -1 ||
         user_agent.indexOf("safari") > -1
-      ) &&
-      this.refs.browser_modal
+      ) ||
+      lower
     ) {
-      this.refs.browser_modal.show();
+      // this.refs.browser_modal.show();
+      console.debug("Show Support Modal");
+      ModalActions.showModal(DEFAULT_SUPPORT_MODAL, true);
     }
 
     this.props.router.listen(this._rebuildTooltips);
@@ -277,10 +296,10 @@ class App extends React.Component {
             }}
           />
           <WalletUnlockModal />
-          <EthModal modalId={"EOS_MAPPING"}  />
+          <EthModal modalId={"EOS_MAPPING"} />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
-          <BrowserSupportModal ref="browser_modal" />
+          <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />
         </div>
       </div>
     );

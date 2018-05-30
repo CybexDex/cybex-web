@@ -15,7 +15,7 @@ import {
   interactive
 } from "react-stockcharts";
 import { handleStockData } from "utils/Chart";
-import Radium from "radium";
+import Radium from "Radium";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";

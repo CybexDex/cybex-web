@@ -1,7 +1,7 @@
 import * as React from "react";
 import SVGInline from "react-svg-inline";
 import Translate from "react-translate-component";
-import Radium from "radium";
+import Radium from "Radium";
 import { BaseColors } from "components/Common/Colors";
 
 const spotStyles = {

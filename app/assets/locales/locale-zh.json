@@ -1512,9 +1512,10 @@
     "retry": "重试",
     "connected": "已连接",
     "not_connected": "未连接",
-    "browser": "不支持的浏览器",
+    "browser": "不推荐的浏览器",
+    "browser_version": "您当前使用的是Chrome内核浏览器，但版本过低：%(version)s，推荐您使用Chrome最新版",
     "browser_text":
-      "你使用的浏览器(版本)未经过Cybex钱包软件的充分测试。强烈建议你备份钱包，并将其导入谷歌Chrome或火狐Firefox浏览器。今后进过我们充分测试后，你或许可以继续使用现在的浏览器。继续使用当前浏览器可能会对你的操作造成风险。",
+      "你使用的浏览器(版本)过于陈旧，可能存在安全或功能缺陷。Cybex强烈建议你备份钱包，并将其导入谷歌Chrome或火狐Firefox浏览器。您当前的浏览器或许可以正常使用Cybex功能，但可能会对你的操作造成风险。",
     "understand": "我理解"
   },
   "refcode": {

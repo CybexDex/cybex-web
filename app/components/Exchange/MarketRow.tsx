@@ -8,7 +8,7 @@ import utils from "common/utils";
 import Icon from "../Icon/Icon";
 import MarketsActions from "actions/MarketsActions";
 import SettingsActions from "actions/SettingsActions";
-import Radium from "radium";
+import Radium from "Radium";
 import { Colors } from "components/Common";
 
 const Styles = {

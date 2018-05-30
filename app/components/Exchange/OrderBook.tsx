@@ -9,7 +9,7 @@ import PriceText from "../Utility/PriceText";
 import TransitionWrapper from "../Utility/TransitionWrapper";
 import AssetName from "../Utility/AssetName";
 import PriceStat from "./PriceStat";
-import Radium from "radium";
+import Radium from "Radium";
 import { Colors, TabLink, $styleSelect } from "components/Common";
 import counterpart from "counterpart";
 import Select from "react-select";
@@ -160,7 +160,7 @@ let OrderBookRowVertical = class extends React.Component<
         precision={digits}
       />
     );
-    console.debug("ORDER: ", total, order, order.totalToReceive());
+    // console.debug("ORDER: ", total, order, order.totalToReceive());
     let bgWidth =
       (order
         ? depthType === DepthType.Interval
@@ -627,10 +627,10 @@ let OrderBook = class extends React.Component<any, any> {
       accum += amount;
       order["accum"] = accum;
     });
-    console.debug("MAX: ", maxAsk, maxBid);
+    // console.debug("MAX: ", maxAsk, maxBid);
     let total = Math.max(
-      (bidRows as any).lastOne().accum || 0,
-      (askRows as any).lastOne().accum || 0
+      (bidRows as any).lastOne() && (bidRows as any).lastOne().accum || 0,
+      (askRows as any).lastOne() && (askRows as any).lastOne().accum || 0
     );
 
     let priceRow = (

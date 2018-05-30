@@ -32,10 +32,10 @@ const FilteredMarkets = {
   "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
-  // CYB: { "JADE.DPY": -1 },
-  // "JADE.ETH": { "JADE.DPY": -1 }
-  // "JADE.BTC": { "JADE.GNX": -1 },
-  // "JADE.EOS": { "JADE.GNX": -1 }
+  CYB: { "JADE.INK": -1 },
+  "JADE.ETH": { "JADE.INK": -1 },
+  "JADE.BTC": { "JADE.INK": -1 },
+  "JADE.EOS": { "JADE.INK": -1 }
 };
 
 export class MarketGroup extends React.Component<any, any> {
