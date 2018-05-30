@@ -156,7 +156,7 @@ class SettingsStore {
           "JADE.ETH",
           "JADE.BTC",
           "JADE.EOS",
-          // "JADE.LTC",
+          "JADE.LTC",
           "JADE.INK",
           "JADE.BAT",
           "JADE.VEN",
@@ -187,10 +187,10 @@ class SettingsStore {
         ],
         markets_90be01e8: [
           // Main Net
+          "JADE.USDT",
           "JADE.ETH",
           "JADE.BTC",
-          "JADE.EOS",
-          // "JADE.USDT",
+          // "JADE.EOS",
           "CYB"
         ]
       };

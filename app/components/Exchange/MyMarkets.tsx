@@ -24,12 +24,20 @@ import { Checkbox, Icon, FlexGrowDivider, TabLink } from "components/Common";
 let lastLookup = new Date();
 
 // Tempoary for GET
-const SpecialMarkets = { "JADE.MT": { "JADE.ETH": 0, CYB: 1, "JADE.BTC": 2 } };
+const SpecialMarkets = {
+  "JADE.USDT": {
+    CYB: 0,
+    "JADE.ETH": 1,
+    "JADE.BTC": 2,
+    "JADE.EOS": 3,
+    "JADE.LTC": 4
+  }
+};
 const FilteredMarkets = {
   "JADE.BTC": new Set(["JADE.LTC"]),
   "JADE.ETH": new Set(["JADE.LTC"]),
-  "JADE.EOS": new Set(["JADE.LTC"]),
-  "JADE.USDT": new Set(["JADE.LTC"])
+  "JADE.EOS": new Set(["JADE.LTC"])
+  // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
   CYB: { "JADE.INK": -1 },
