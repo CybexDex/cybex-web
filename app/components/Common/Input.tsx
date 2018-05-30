@@ -247,7 +247,13 @@ let Input = Radium(
           {!iconComponent &&
             icon && (
               <Icon
-                style={[Input.styles.icon, Input.styles.size[size].icon, iconStyle] as any}
+                style={
+                  [
+                    Input.styles.icon,
+                    Input.styles.size[size].icon,
+                    iconStyle
+                  ] as any
+                }
                 icon={icon}
                 type={error ? "error" : "base"}
               />
@@ -295,7 +301,11 @@ let Input = Radium(
             {tip && <span style={[Input.styles.inputTip] as any}>{tip}</span>}
             {this.props.type === "password" &&
               (this.state.focused || this.state.value) && (
-                <a tabIndex={-1} href="javascript:;" onClick={this.togglePassword}>
+                <a
+                  tabIndex={-1}
+                  href="javascript:;"
+                  onClick={this.togglePassword}
+                >
                   <Icon
                     style={
                       [
@@ -343,7 +353,7 @@ let LoginAccountInput = class extends React.PureComponent<
     let valid = false;
     if (account) {
       valid = true;
-      this.setState({ account, valid: true });
+      this.setState({ account, valid: true, onError: false });
       this.valid = true;
     } else {
       this.setState({ account: name, valid: false });
@@ -363,6 +373,10 @@ let LoginAccountInput = class extends React.PureComponent<
     if (!this.state.valid && this.state.account && this.state.account.length) {
       this.setState({
         onError: true
+      });
+    } else {
+      this.setState({
+        onError: false
       });
     }
   };
