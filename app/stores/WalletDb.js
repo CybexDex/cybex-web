@@ -22,11 +22,7 @@ let _passwordKey = null;
 
 let TRACE = false;
 
-let dictJson, AesWorker;
-if (__ELECTRON__) {
-  AesWorker = require("worker-loader?inline!workers/AesWorker");
-  dictJson = require("json-loader!common/dictionary_en.json");
-}
+let AesWorker;
 
 /** Represents a single wallet and related indexedDb database operations. */
 class WalletDb extends BaseStore {
@@ -321,22 +317,18 @@ class WalletDb extends BaseStore {
       });
     };
 
-    if (__ELECTRON__) {
-      return walletCreateFct(dictJson);
-    } else {
-      let dictionaryPromise = brainkey_plaintext
-        ? null
-        : fetch(`${__BASE_URL__}dictionary.json`);
-      return Promise.all([dictionaryPromise])
-        .then(res => {
-          return brainkey_plaintext
-            ? walletCreateFct(null)
-            : res[0].json().then(walletCreateFct);
-        })
-        .catch(err => {
-          console.log("unable to fetch dictionary.json", err);
-        });
-    }
+    let dictionaryPromise = brainkey_plaintext
+      ? null
+      : require("common/dictionary.json");
+    return Promise.all([dictionaryPromise])
+      .then(res => {
+        return brainkey_plaintext
+          ? walletCreateFct(null)
+          : res[0].json().then(walletCreateFct);
+      })
+      .catch(err => {
+        console.log("unable to fetch dictionary.json", err);
+      });
   }
 
   generateKeyFromPassword(accountName, role, password) {
@@ -580,9 +572,9 @@ class WalletDb extends BaseStore {
       for (let private_key_obj of private_key_objs) {
         private_plainhex_array.push(private_key_obj.private_plainhex);
       }
-      if (!__ELECTRON__) {
-        AesWorker = require("worker-loader!workers/AesWorker");
-      }
+      // if (!__ELECTRON__) {
+      AesWorker = require("worker-loader!workers/AesWorker");
+      // }
       let worker = new AesWorker();
       worker.postMessage({
         private_plainhex_array,

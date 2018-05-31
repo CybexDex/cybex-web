@@ -1,11 +1,12 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { zipObject } from "lodash";
 import counterpart from "counterpart";
 import utils from "common/utils";
 import { withRouter } from "react-router";
 
-let req = require.context("../../help", true, /\.md/);
+// let req = require.context("../../help", true, /\.md/);
 let HelpData = {};
 
 function endsWith(str, suffix) {
@@ -29,14 +30,12 @@ function split_into_sections(str) {
 
 function adjust_links(str) {
   return str.replace(/\<a\shref\=\"(.+?)\"/gi, (match, text) => {
-    if (text.indexOf((__HASH_HISTORY__ ? "#" : "") + "/") === 0)
+    if (text.indexOf("/") === 0)
       return `<a href="${text}" onclick="_onClickLink(event)"`;
     if (text.indexOf("http") === 0)
       return `<a href="${text}" rel="noopener noreferrer" target="_blank"`;
     let page = endsWith(text, ".md") ? text.substr(0, text.length - 3) : text;
-    let res = `<a href="${
-      __HASH_HISTORY__ ? "#" : ""
-    }/help/${page}" onclick="_onClickLink(event)"`;
+    let res = `<a href="/help/${page}" onclick="_onClickLink(event)"`;
     return res;
   });
 }
@@ -58,27 +57,25 @@ class HelpContent extends React.Component {
     let locale = this.props.locale || counterpart.getLocale() || "en";
 
     // Only load helpData for the current locale as well as the fallback 'en'
-    req
-      .keys()
-      .filter(a => {
-        return a.indexOf(`/${locale}/`) !== -1 || a.indexOf("/en/") !== -1;
-      })
-      .forEach(function(filename) {
-        var res = filename.match(/\/(.+?)\/(.+)\./);
-        let locale = res[1];
-        let key = res[2];
-        let help_locale = HelpData[locale];
-        if (!help_locale) HelpData[locale] = help_locale = {};
-        let content = req(filename);
-        help_locale[key] = split_into_sections(adjust_links(content));
-      });
+    // req
+    //   .keys()
+    //   .filter(a => {
+    //     return a.indexOf(`/${locale}/`) !== -1 || a.indexOf("/en/") !== -1;
+    //   })
+    //   .forEach(function(filename) {
+    //     var res = filename.match(/\/(.+?)\/(.+)\./);
+    //     let locale = res[1];
+    //     let key = res[2];
+    //     let help_locale = HelpData[locale];
+    //     if (!help_locale) HelpData[locale] = help_locale = {};
+    //     let content = req(filename);
+    //     help_locale[key] = split_into_sections(adjust_links(content));
+    //   });
   }
 
   onClickLink(e) {
     e.preventDefault();
-    let path = (__HASH_HISTORY__ ? e.target.hash : e.target.pathname)
-      .split("/")
-      .filter(p => p && p !== "#");
+    let path = e.target.pathname.split("/").filter(p => p && p !== "#");
     if (path.length === 0) return false;
     let route = "/" + path.join("/");
     this.props.router.push(route);

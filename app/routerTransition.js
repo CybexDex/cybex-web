@@ -34,7 +34,7 @@ const filterAndSortURLs = (count, latencies) => {
             * Since we don't want users accidentally connecting to the testnet,
             * we filter out the testnet address from the fallback list
             */
-      if (!__TESTNET__ && a.url.indexOf("testnet") !== -1) return false;
+      if (a.url.indexOf("test") !== -1) return false;
       /* Also remove the automatic fallback dummy url */
       if (a.url.indexOf("fake.automatic-selection") !== -1) return false;
       /* Remove insecure websocket urls when using secure protocol */
@@ -253,13 +253,9 @@ const willTransitionTo = (
                 new Error().stack
               );
               if (error.name === "InvalidStateError") {
-                if (__ELECTRON__) {
-                  replaceState("/dashboard");
-                } else {
-                  alert(
-                    "Can't access local storage.\nPlease make sure your browser is not in private/incognito mode."
-                  );
-                }
+                alert(
+                  "Can't access local storage.\nPlease make sure your browser is not in private/incognito mode."
+                );
               } else {
                 replaceState("/init-error");
                 callback();

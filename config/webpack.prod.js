@@ -1,8 +1,22 @@
+const {
+  loaders,
+  resolve,
+  plugins,
+  BASE_URL,
+  outputPath,
+  defines
+} = require("./webpack.config");
+const Clean = require("clean-webpack-plugin");
 const path = require("path");
-const LOADERS = {
-  cssLoaders: ExtractTextPlugin.extract({
-    fallback: "style-loader",
+console.log("Webpack Config for Dev");
+const webpack = require("webpack");
+const PreloadWebpackPlugin = require("preload-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const cssLoaders = [
+  {
+    test: /\.css$/,
     use: [
+      MiniCssExtractPlugin.loader,
       {
         loader: "css-loader"
       },
@@ -13,10 +27,11 @@ const LOADERS = {
         }
       }
     ]
-  }),
-  scssLoaders: ExtractTextPlugin.extract({
-    fallback: "style-loader",
+  },
+  {
+    test: /\.scss$/,
     use: [
+      MiniCssExtractPlugin.loader,
       {
         loader: "css-loader"
       },
@@ -33,233 +48,77 @@ const LOADERS = {
         }
       }
     ]
-  })
-};
-const extractCSS = new ExtractTextPlugin("[name].[hash:7].css");
-
+  }
+];
 
 // PROD OUTPUT PATH
 let outputDir = "dist";
-outputPath = path.join(root_dir, outputDir);
+// outputPath =
 
 // DIRECTORY CLEANER
 var cleanDirectories = [outputDir];
-const PLUGINS = [
+const prodPlugins = [
   new Clean(cleanDirectories, {
-    root: root_dir
+    root: BASE_URL
   }),
-  new PreloadWebpackPlugin({
-    rel: "prefetch"
-  }),
+  // new PreloadWebpackPlugin({
+  //   rel: "prefetch"
+  // }),
   new webpack.DefinePlugin({
     "process.env": {
       NODE_ENV: JSON.stringify("production")
     },
-    __DEV__: false
+    __DEV__: false,
+    ...defines
   }),
-  extractCSS,
-  new webpack.LoaderOptionsPlugin({
-    minimize: true,
-    debug: false
-  }),
-  new webpack.optimize.ModuleConcatenationPlugin(),
-  new UglifyWebpackPlugin()
-]
+  new MiniCssExtractPlugin({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: "[name].css",
+    chunkFilename: "[id].css"
+  })
+  // new webpack.LoaderOptionsPlugin({
+  //   minimize: true,
+  //   debug: false
+  // })
+  // new webpack.optimize.ModuleConcatenationPlugin(),
+].concat(plugins);
 
-const config = var config = {
+const config = {
   entry: {
-    vendor: ["react", "react-dom", "highcharts/highstock", "lodash"],
-    styles: path.resolve(root_dir, "app/assets/style-loader.js"),
-    assets: env.prod
-      ? path.resolve(root_dir, "app/assets/loader")
-      : path.resolve(root_dir, "app/assets/loader-dev"),
-    app: env.prod
-      ? path.resolve(root_dir, "app/Main.js")
-      : [
-        "react-hot-loader/patch",
-        "webpack-hot-middleware/client",
-        path.resolve(root_dir, "app/Main-dev.js")
-      ]
+    styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
+    assets: path.resolve(BASE_URL, "app/assets/loader"),
+    app: path.resolve(BASE_URL, "app/Main.js")
   },
+  context: path.resolve(BASE_URL, "app"),
   output: {
-    publicPath: env.prod ? "" : "/",
-    path: outputPath,
+    publicPath: "/",
+    path: path.join(BASE_URL, outputDir),
     filename: "[name]-[hash:7].js",
-    pathinfo: !env.prod,
+    pathinfo: true,
     sourceMapFilename: "[name].js.map"
   },
-  devtool: env.prod ? false : "cheap-module-eval-source-map",
+  mode: "production",
+  devtool: false,
   module: {
-    rules: [
-      {
-        test: /\.tsx|\.ts$/,
-        include: [path.join(root_dir, "app")],
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              compact: false,
-              cacheDirectory: true,
-              plugins: ["react-hot-loader/babel"]
-            }
-          },
-          {
-            loader: "awesome-typescript-loader",
-            options: {
-              useCache: true,
-              transpileOnly: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.js$|\.jsx$/,
-        include: [path.join(root_dir, "app")],
-        exclude: [/node_modules/],
-        loader: "babel-loader",
-        options: {
-          compact: false,
-          cacheDirectory: true,
-          plugins: ["react-hot-loader/babel"]
-        }
-      },
-      {
-        test: /\.json/,
-        loader: "json-loader",
-        exclude: [
-          path.resolve(root_dir, "app/lib/common"),
-          path.resolve(root_dir, "app/assets/locales")
-        ]
-      },
-      {
-        test: /\.coffee$/,
-        loader: "coffee-loader"
-      },
-      {
-        test: /\.(coffee\.md|litcoffee)$/,
-        loader: "coffee-loader?literate"
-      },
-      {
-        test: /\.css$/,
-        use: cssLoaders
-      },
-      {
-        test: /\.scss$/,
-        use: scssLoaders
-      },
-      {
-        test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
-        include: [path.resolve(root_dir, "app/assets/")],
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 8192
-            }
-          }
-        ]
-      },
-      {
-        test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)$/,
-        include: [path.resolve(root_dir, "app/components/Common")],
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 8192
-            }
-          }
-        ]
-      },
-      {
-        test: /\.png$/,
-        exclude: [
-          path.resolve(root_dir, "app/assets/asset-symbols"),
-          path.resolve(root_dir, "app/assets/images"),
-          path.resolve(root_dir, "app/assets/language-dropdown/img")
-        ],
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 8192
-            }
-          }
-        ]
-      },
-
-      {
-        test: /\.woff$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 100000,
-              mimetype: "application/font-woff"
-            }
-          }
-        ]
-      },
-      {
-        test: /.*\.svg$/,
-        exclude: [path.resolve(root_dir, "app/components/Common")],
-        loaders: ["svg-inline-loader", "svgo-loader"]
-      },
-      {
-        test: /\.md/,
-        use: [
-          {
-            loader: "html-loader",
-            options: {
-              removeAttributeQuotes: false
-            }
-          },
-          {
-            loader: "remarkable-loader",
-            options: {
-              preset: "full",
-              typographer: true
-            }
-          }
-        ]
-      }
-    ]
+    rules: loaders.concat(cssLoaders)
   },
-  resolve: {
-    alias: {
-      iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
-      assets: path.resolve(root_dir, "app/assets"),
-      counterpart: path.resolve(root_dir, "app/lib/counterpart"),
-      "alt-react": path.resolve(root_dir, "app/lib/alt-react"),
-      "react-foundation-apps": path.resolve(
-        root_dir,
-        "app/lib/react-foundation-apps"
-      ),
-      app: path.resolve(root_dir, "app")
-    },
-    modules: [
-      "node_modules",
-      path.resolve(root_dir, "app"),
-      path.resolve(root_dir, "app/lib"),
-      path.resolve(root_dir, "app/cybex")
-    ],
-    extensions: [
-      ".ts",
-      ".tsx",
-      ".js",
-      ".jsx",
-      ".coffee",
-      ".json",
-      ".scss",
-      ".ttf",
-      ".eot",
-      ".woff",
-      ".woff2"
-    ]
-  },
-  plugins: plugins,
+  resolve,
+  plugins: prodPlugins,
   node: {
     fs: "empty"
   },
-  optimization: {}
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "commons",
+          chunks: "initial",
+          minChunks: 2
+        }
+      }
+    }
+  }
 };
+
+module.exports = config;

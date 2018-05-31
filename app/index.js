@@ -17,7 +17,7 @@ require("./components/Utility/Prototypes"); // Adds a .equals method to Array fo
 * Electron does not support browserHistory, so we need to use hashHistory.
 * The same is true for servers without configuration options, such as Github Pages
 */
-const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
+const history = browserHistory;
 
 const rootEl = document.getElementById("content");
 const render = () => {

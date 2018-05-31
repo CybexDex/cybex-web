@@ -9,9 +9,6 @@ import App from "./App";
 * Electron does not support async loading of components via System.import,
 * so we make sure they're bundled already by including them here
 */
-if (__ELECTRON__ || __HASH_HISTORY__) {
-  require("./electron_imports");
-}
 
 class Auth extends React.Component {
   render() {

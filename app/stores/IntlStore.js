@@ -2,8 +2,8 @@ import alt from "alt-instance";
 import IntlActions from "actions/IntlActions";
 import SettingsActions from "actions/SettingsActions";
 import counterpart from "counterpart";
-var locale_en = require("json-loader!assets/locales/locale-en");
-var locale_cn = require("json-loader!assets/locales/locale-zh");
+var locale_en = require("assets/locales/locale-en.json");
+var locale_cn = require("assets/locales/locale-zh.json");
 import ls from "common/localStorage";
 let ss = new ls("__graphene__");
 

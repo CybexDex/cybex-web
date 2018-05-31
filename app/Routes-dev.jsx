@@ -63,7 +63,7 @@ import {
 import BalanceClaimActive from "./components/Wallet/BalanceClaimActive";
 import BackupBrainkey from "./components/Wallet/BackupBrainkey";
 import Brainkey from "./components/Wallet/Brainkey";
-import Help from "./components/Help";
+// import Help from "./components/Help";
 import InitError from "./components/InitError";
 import CreateWorker from "./components/Account/CreateWorker";
 import Bazaar from "./components/Exchange/Bazaar";
@@ -73,7 +73,7 @@ import { Contact } from "./components/HelpDrawer/Contact";
 import Login from "./components/Login/Login";
 import CreateSelector from "./components/Login/CreateSelector";
 
-const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
+const history = browserHistory;
 
 class Auth extends React.Component {
   render() {
@@ -158,13 +158,13 @@ const routes = (
     <Route path="gateway" component={Gateway} />
     <Route path="create-worker" component={CreateWorker} />
     <Route path="/init-error" component={InitError} />
-    <Route path="/help" component={Help}>
+    {/* <Route path="/help" component={Help}>
       <Route path=":path1" component={Help}>
         <Route path=":path2" component={Help}>
           <Route path=":path3" component={Help} />
         </Route>
       </Route>
-    </Route>
+    </Route> */}
     <Redirect from="*" to="/" />
   </Route>
 );

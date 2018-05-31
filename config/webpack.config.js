@@ -16,6 +16,7 @@ let gitRevisionPlugin = new GitRevisionPlugin({
 
 const BASE_URL = path.resolve(__dirname, "./..");
 let root_dir = BASE_URL;
+console.log("ROOT: ", root_dir);
 const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
   __TEST__: JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1,
@@ -25,11 +26,10 @@ const defines = {
 var outputPath = path.join(BASE_URL, "assets");
 
 var plugins = [
-  new webpack.optimize.OccurrenceOrderPlugin(),
-  new webpack.DefinePlugin(),
+  // new webpack.optimize.OccurrenceOrderPlugin(),
   new HtmlWebpackPlugin({
     filename: "index.html",
-    template: path.resolve(root_dir, "app/assets/index.html")
+    template: path.resolve(root_dir, "app/assets/index-dev.html")
   })
 ];
 
@@ -69,11 +69,24 @@ const loaders = [
   {
     test: /\.json/,
     loader: "json-loader",
-    exclude: [
-      path.resolve(root_dir, "app/lib/common"),
-      path.resolve(root_dir, "app/assets/locales")
-    ]
+    type: "javascript/auto"
   },
+  // {
+  //   test: /\.json$/,
+  //   type: "javascript/auto",
+  //   include: [
+  //     path.resolve(root_dir, "app/lib/common"),
+  //     path.resolve(root_dir, "app/assets/locales")
+  //   ],
+  //   use: [
+  //     {
+  //       loader: "file-loader",
+  //       options: {
+  //         name: "./[name].[ext]"
+  //       }
+  //     }
+  //   ]
+  // },
   {
     test: /\.coffee$/,
     loader: "coffee-loader"
@@ -190,6 +203,7 @@ const resolve = {
     ".ttf",
     ".eot",
     ".woff",
+    ".json",
     ".woff2"
   ]
 };

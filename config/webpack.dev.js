@@ -61,8 +61,7 @@ const def = {
 console.log("DEF: ", def);
 const devPlugins = [
   new webpack.DefinePlugin(def),
-  new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoEmitOnErrorsPlugin()
+  new webpack.HotModuleReplacementPlugin()
 ].concat(plugins);
 
 const config = {
@@ -76,6 +75,7 @@ const config = {
       path.resolve(BASE_URL, "app/Main-dev.js")
     ]
   },
+  context: path.resolve(BASE_URL, "app"),
   output: {
     publicPath: "/",
     path: outputPath,
@@ -83,6 +83,7 @@ const config = {
     pathinfo: true,
     sourceMapFilename: "[name].js.map"
   },
+  mode: "development",
   devtool: "cheap-module-eval-source-map",
   module: {
     rules: loaders.concat(cssLoaders)

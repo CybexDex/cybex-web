@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link } from "react-router";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";
@@ -291,9 +292,7 @@ class Asset extends React.Component {
         {short_name ? <p>{short_name}</p> : null}
         <a
           style={{ textTransform: "uppercase" }}
-          href={`${__HASH_HISTORY__ ? "#" : ""}/market/${
-            asset.symbol
-          }_${preferredMarket}`}
+          href={`/market/${asset.symbol}_${preferredMarket}`}
         >
           <Translate content="exchange.market" />
         </a>
