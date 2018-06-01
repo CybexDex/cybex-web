@@ -13,7 +13,6 @@ import { GatewayActions, DEPOSIT_MODAL_ID } from "actions/GatewayActions";
 import { JADE_COINS } from "stores/GatewayStore";
 import utils from "common/utils";
 
-
 const PrimaryCoin = Object.keys(JADE_COINS).slice(0, 2);
 
 class AccountLeftPanel extends React.Component<
@@ -104,7 +103,7 @@ class AccountLeftPanel extends React.Component<
   };
 
   render() {
-    let { account, linkedAccounts, isMyAccount } = this.props;
+    let { account, linkedAccounts, isMyAccount, passwordLogin } = this.props;
     let account_name = account.get("name");
     let linkBtn = null;
 
@@ -277,19 +276,20 @@ class AccountLeftPanel extends React.Component<
               ) : null}
             </section>
 
-            {isMyAccount ? (
-              <div className="regular-padding vertical-center">
-                <div className="button block-button create-account-button">
-                  <Link
-                    to={`/create-account/${
-                      this.props.passwordLogin ? "password" : "wallet"
-                    }`}
-                  >
-                    <Translate content="account.create_new" />
-                  </Link>
+            {isMyAccount &&
+              !passwordLogin && (
+                <div className="regular-padding vertical-center">
+                  <div className="button block-button create-account-button">
+                    <Link
+                      to={`/create-account/${
+                        this.props.passwordLogin ? "password" : "wallet"
+                      }`}
+                    >
+                      <Translate content="account.create_new" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ) : null}
+              )}
           </div>
         </div>
       </div>

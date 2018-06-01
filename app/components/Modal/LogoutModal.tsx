@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { getClassName } from "utils//ClassName";
 import { connect } from "alt-react";
@@ -11,6 +12,7 @@ import Translate from "react-translate-component";
 import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
 import utils from "lib/common/utils";
+import { Button } from "components/Common/Button";
 
 import { WalletDelete } from "components/Wallet/WalletManager";
 
@@ -25,9 +27,15 @@ let ss = new ls(STORAGE_KEY);
 
 export const DEFAULT_LOGOUT_MODAL_ID = "cybexLogoutModal";
 
-type props = { locale, modalId, open?, walletMode?, current };
+type props = { locale; modalId; open?; walletMode?; current; walletState? };
 
-class LogoutModal extends React.Component<props, { fadeOut?, neverShow?, known1, known2, known3, walletMode?}> {
+class LogoutModal extends React.Component<
+  props,
+  { fadeOut?; neverShow?; known1; known2; known3; walletMode? }
+> {
+  static defaultProps = {
+    walletState: {}
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +50,7 @@ class LogoutModal extends React.Component<props, { fadeOut?, neverShow?, known1,
     return this.state.known1 && this.state.known2 && this.state.known3;
   }
 
-  handleKnown = (e) => {
+  handleKnown = e => {
     let name = e.target.name;
     let value = e.target.checked;
     console.debug("Name: ", name, value);
@@ -50,26 +58,32 @@ class LogoutModal extends React.Component<props, { fadeOut?, neverShow?, known1,
       [name]: value
     });
     return e.target.value;
-  }
+  };
 
   passwordLogout = () => {
     KEYS_TO_REMOVE.forEach(key => {
       ss.remove(Utils.getChainKey(key));
     });
     location.href = "/dashboard";
-  }
+  };
 
   _renderWalletLogout = () => (
     <div className="modal-content">
-      <h5 style={{textAlign: "justify"}} >
-        <Translate content="logout.wallet_tip"/>
+      <h5 style={{ textAlign: "justify" }}>
+        <Translate content="logout.wallet_tip" />
       </h5>
       <div className="form-group">
         <WalletDelete />
       </div>
       <div className="modal-footer">
         <div className="text-center">
-          <Translate content="logout.reload" component="button" onClick={this.passwordLogout} className={getClassName("button")} />
+          <Translate
+            style={{ marginTop: "1em" }}
+            content="logout.reload"
+            component="button"
+            onClick={this.passwordLogout}
+            className={getClassName("button")}
+          />
         </div>
       </div>
     </div>
@@ -83,62 +97,109 @@ class LogoutModal extends React.Component<props, { fadeOut?, neverShow?, known1,
       <div className="form-group">
         <div>
           <label htmlFor={this.props.modalId + "_never"}>
-            <input name="known1" id={this.props.modalId + "_know1"} autoFocus checked={this.state.known1} type="checkbox" className="" onChange={this.handleKnown} />
+            <input
+              name="known1"
+              id={this.props.modalId + "_know1"}
+              autoFocus
+              checked={this.state.known1}
+              type="checkbox"
+              className=""
+              onChange={this.handleKnown}
+            />
             <Translate content="logout.password_s1" />
           </label>
         </div>
         <div>
           <label htmlFor={this.props.modalId + "_know2"}>
-            <input name="known2" id={this.props.modalId + "_know2"} checked={this.state.known2} type="checkbox" className="" onChange={this.handleKnown} />
+            <input
+              name="known2"
+              id={this.props.modalId + "_know2"}
+              checked={this.state.known2}
+              type="checkbox"
+              className=""
+              onChange={this.handleKnown}
+            />
             <Translate content="logout.password_s2" />
           </label>
         </div>
         <div>
           <label htmlFor={this.props.modalId + "_know3"}>
-            <input name="known3" id={this.props.modalId + "_know3"} checked={this.state.known3} type="checkbox" className="" onChange={this.handleKnown} />
+            <input
+              name="known3"
+              id={this.props.modalId + "_know3"}
+              checked={this.state.known3}
+              type="checkbox"
+              className=""
+              onChange={this.handleKnown}
+            />
             <Translate content="logout.password_s3" />
           </label>
         </div>
       </div>
+      {this.props.walletState.current_wallet && (
+        <div id="clogout_with_wallet">
+          <Translate
+            content="logout.clogout_with_wallet"
+            component="p"
+            disabled={!canLogout}
+          />
+          <div className="form-group">
+            <WalletDelete />
+          </div>
+        </div>
+      )}
       <div className="modal-footer">
         <div className="text-center">
-          <Translate content="logout.logout" component="button" onClick={this.passwordLogout} className={getClassName("button", { "disabled": !canLogout })} disabled={!canLogout} />
+          <Translate
+            content="logout.logout"
+            style={{ marginTop: "1em" }}
+            component="button"
+            onClick={this.passwordLogout}
+            className={getClassName("button", { disabled: !canLogout })}
+            disabled={!canLogout}
+          />
         </div>
       </div>
-    </div>)
+    </div>
+  );
 
   render() {
     let { modalId, open, locale, current, walletMode } = this.props;
     let canLogout = this._canLogout();
-    return (open &&
-      <BaseModal modalId={this.props.modalId}>
-        <h3 className="text-center">
-          <Translate content="logout.title" />
-        </h3>
-        {
-          walletMode ?
-            this._renderWalletLogout() :
-            this._renderPasswordLogout(canLogout)
-        }
-      </BaseModal>);
+    return (
+      open && (
+        <BaseModal modalId={this.props.modalId}>
+          <h3 className="text-center">
+            <Translate content="logout.title" />
+          </h3>
+          {walletMode
+            ? this._renderWalletLogout()
+            : this._renderPasswordLogout(canLogout)}
+        </BaseModal>
+      )
+    );
   }
 }
 
-const LogoutModalWapper = connect(LogoutModal, {
-  listenTo() {
-    return [ModalStore, IntlStore, WalletManagerStore];
-  },
-  getProps(props) {
-    let { modalId } = props;
-    return {
-      walletMode: !SettingsStore.getState().settings.get("passwordLogin"),
-      locale: IntlStore.getState().currentLocale,
-      open: ModalStore.getState().showingModals.has(modalId)
-    };
+const LogoutModalWapper = connect(
+  LogoutModal,
+  {
+    listenTo() {
+      return [ModalStore, IntlStore, WalletManagerStore];
+    },
+    getProps(props) {
+      let { modalId } = props;
+      console.debug("WalletManagerStore: ", WalletManagerStore.getState());
+      return {
+        walletMode: !SettingsStore.getState().settings.get("passwordLogin"),
+        walletState: WalletManagerStore.getState(),
+        locale: IntlStore.getState().currentLocale,
+        open: ModalStore.getState().showingModals.has(modalId)
+      };
+    }
   }
-});
+);
 
-
-export { LogoutModalWapper as LogoutModal }
+export { LogoutModalWapper as LogoutModal };
 
 export default LogoutModalWapper;
