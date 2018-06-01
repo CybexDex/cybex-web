@@ -104,6 +104,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     const volumeFormat = format(`.2s`);
     // const volumeFormat = format(`.${volumePrecision}r`);
 
+    let { digits, marginRight } = this.calcDigits(props);
     this.state = {
       enableTrendLine: false,
       enableFib: false,
@@ -112,7 +113,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       timeFormatter,
       volumeFormat,
       margin: { left: 10, right: 20, top: 30, bottom: 20 },
-      // margin: { left: 10, right: 10 * pricePrecision, top: 30, bottom: 20 },
       calculators: this._getCalculators(props)
     };
 
@@ -169,7 +169,20 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     }
   }
 
+  calcDigits = props => {
+    let [digits, marginRight] = [2, 30];
+    try {
+      digits = props.latest.int.length > 1 ? 2 : 6;
+      marginRight = (props.latest.int.length + digits) * 6 + 12;
+    } catch (e) {}
+    return {
+      digits,
+      marginRight
+    };
+  };
+
   componentWillReceiveProps(np) {
+    console.debug("NP: ", np);
     let tools = cloneDeep(this.state.tools);
     if (np.tools && np.tools.trendline) {
       this.setState({ enableTrendLine: true });
@@ -178,6 +191,17 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     if (np.tools && np.tools.fib) {
       this.setState({ enableFib: true });
       tools.push("enableFib");
+    }
+    // 判断是否极小价格变化
+    let { digits, marginRight } = this.calcDigits(np);
+    if (this.state.margin.right !== marginRight) {
+      this.setState({
+        digits,
+        margin: {
+          ...this.state.margin,
+          right: marginRight
+        }
+      });
     }
     this.setState({ tools });
 
@@ -302,10 +326,10 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           showDomain={false}
           stroke={axisLineColor}
           axisAt="right"
-          orient="left"
+          orient="right"
           {...axisStyle}
           ticks={4}
-          tickPadding={0}
+          tickPadding={4}
           innerTickSize={0}
           tickFormat={volumeFormat}
         />
@@ -418,17 +442,25 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       showVolumeChart,
       indicators,
       enableChartClamp,
-      onMouseMove
+      onMouseMove,
+      lasest
     } = this.props;
+
+    let { marginRight, digits } = this.calcDigits(this.props);
+
     const {
       timeFormatter,
       volumeFormat,
       priceFormat,
-      margin,
+      
       enableTrendLine,
       enableFib,
       calculators
     } = this.state;
+    let margin = {
+      ...this.state.margin,
+      right: marginRight
+    };
     const {
       positiveColor,
       negativeColor,
@@ -467,8 +499,9 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         />
         <YAxis
           axisAt="right"
-          orient="left"
-          tickPadding={0}
+          orient="right"
+          tickPadding={4}
+          tickFormat={format(`.${digits}f`)}
           showDomain={false}
           // zoomEnabled={false}
           {...axisStyle}
@@ -593,7 +626,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           xDisplayFormat={timeFormatter}
           volumeFormat={volumeFormat}
           ohlcFormat={priceFormat}
-          origin={[-8, -10]}
+          origin={[0, -10]}
         />
 
         {maCalcs.length ? (
@@ -772,12 +805,12 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
               tickStroke={axisLineColor}
               stroke={axisLineColor}
               {...axisStyle}
-              tickPadding={0}
+              tickPadding={4}
               showDomain={false}
               innerTickSize={0}
               // zoomEnabled={false}
               axisAt="right"
-              orient="left"
+              orient="right"
               ticks={3}
             />
             <YAxis
@@ -1061,7 +1094,7 @@ export default Radium(
                   active={indicators[i]}
                   value={i}
                   onChange={this.props.onChangeIndicators.bind(null, i)}
-                  labelStyle={{ alignItems: "center" }}                  
+                  labelStyle={{ alignItems: "center" }}
                 >
                   <Translate content={`exchange.chart_options.${i}`} />
                 </Checkbox>

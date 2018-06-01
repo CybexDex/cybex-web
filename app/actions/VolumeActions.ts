@@ -3,6 +3,20 @@ import { ChainStore } from "stores/ChainStore";
 import { Apis } from "cybexjs-ws";
 import { debugGen } from "utils//Utils";
 import { correctMarketPair } from "utils/Market";
+import { PRICE_API } from "api/apiConfig";
+
+type OuterPrice = {
+  name: string;
+  value: number;
+  time: number;
+};
+export type PriceSetByYuan = {
+  [asset: string]: number;
+};
+type OuterPriceData = {
+  code: number;
+  prices: OuterPrice[];
+};
 
 const debug = debugGen("VolActions");
 
@@ -10,7 +24,7 @@ const isId = str => /[12]\..+\..+/.test(str);
 
 async function getObject(id = "1.1.1") {
   console.log(`Get object ${id}`);
-  return await this.daemon.Apis.instance()
+  return await Apis.instance()
     .db_api()
     .exec("get_objects", [[id]]);
 }
@@ -32,8 +46,8 @@ async function getLatestPrice(_base = "1.3.0", _quote = "1.3.2") {
     .exec(
       "get_trade_history",
       [
-        base.id,
-        quote.id,
+        base.id || _base,
+        quote.id || _quote,
         d,
         // start,
         `2018-02-24T00:00:00`,
@@ -41,6 +55,8 @@ async function getLatestPrice(_base = "1.3.0", _quote = "1.3.2") {
         1
       ]
     ))[0] || { price: 0 };
+  // console.debug("Get Latest Price: ", base.id, quote.id);
+
   return latestTrade.price;
 }
 
@@ -119,6 +135,41 @@ class VolumnActions {
     Apis.instance()
       .db_api()
       .exec("subscribe_to_market", [this.updateHandler, base.id, quote.id]);
+  }
+
+  async fetchPriceData() {
+    console.debug("Start To Fetch");
+    let data: PriceSetByYuan = await fetch(PRICE_API)
+      .then(res => res.json())
+      .then(async (outer: OuterPriceData) => {
+        console.debug("Fetchd: ", outer);
+
+        if (outer.code !== 0) {
+          throw Error("Price Api Error!" + JSON.stringify(outer));
+        } else {
+          let priceSet = {};
+          for (let price of outer.prices) {
+            priceSet[price.name] = parseFloat(price.value.toFixed(2));
+            if (price.name.toUpperCase() === "ETH") {
+              let realPrice =
+                (await getLatestPrice("1.3.2", "1.3.0")) * price.value;
+              priceSet["CYB"] = parseFloat(realPrice.toFixed(2));
+            }
+          }
+          console.debug("Final: ", priceSet);
+          return priceSet;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        return {};
+      });
+
+    this.updatePriceData(data);
+  }
+
+  updatePriceData(data: PriceSetByYuan) {
+    return data;
   }
 
   async unSubMarket(_base, _quote) {

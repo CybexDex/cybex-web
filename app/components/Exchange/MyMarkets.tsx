@@ -33,10 +33,33 @@ const SpecialMarkets = {
     "JADE.LTC": 4
   }
 };
+
+const BTC_MARKETS = [
+  "JADE.MT",
+  "JADE.ETH",
+  "JADE.BTC",
+  "JADE.EOS",
+  "JADE.INK",
+  "JADE.BAT",
+  "JADE.VEN",
+  "JADE.OMG",
+  "JADE.SNT",
+  "JADE.NAS",
+  "JADE.KNC",
+  "JADE.PAY",
+  "JADE.GET",
+  "JADE.MAD",
+  "JADE.GNX",
+  "JADE.KEY",
+  "JADE.TCT",
+  "JADE.DPY",
+  "JADE.ENG"
+];
 const FilteredMarkets = {
-  "JADE.BTC": new Set(["JADE.LTC"]),
+  // "JADE.BTC": new Set(["JADE.LTC"]),
   "JADE.ETH": new Set(["JADE.LTC"]),
-  "JADE.EOS": new Set(["JADE.LTC"])
+  "JADE.EOS": new Set(["JADE.LTC"]),
+  "JADE.BTC": new Set(BTC_MARKETS),
   // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
@@ -230,6 +253,7 @@ export class MarketGroup extends React.Component<any, any> {
         return (
           <MarketRow
             key={market.id}
+            withYuan
             name={
               base === "others" ? (
                 <span>
@@ -943,21 +967,24 @@ class MyMarketsWrapper extends React.Component {
   }
 }
 
-export default connect(MyMarketsWrapper, {
-  listenTo() {
-    return [SettingsStore, MarketsStore, AssetStore];
-  },
-  getProps() {
-    return {
-      starredMarkets: SettingsStore.getState().starredMarkets,
-      defaultMarkets: SettingsStore.getState().defaultMarkets,
-      viewSettings: SettingsStore.getState().viewSettings,
-      preferredBases: SettingsStore.getState().preferredBases,
-      marketStats: MarketsStore.getState().allMarketStats,
-      userMarkets: SettingsStore.getState().userMarkets,
-      searchAssets: AssetStore.getState().assets,
-      onlyStars: MarketsStore.getState().onlyStars,
-      assetsLoading: AssetStore.getState().assetsLoading
-    };
+export default connect(
+  MyMarketsWrapper,
+  {
+    listenTo() {
+      return [SettingsStore, MarketsStore, AssetStore];
+    },
+    getProps() {
+      return {
+        starredMarkets: SettingsStore.getState().starredMarkets,
+        defaultMarkets: SettingsStore.getState().defaultMarkets,
+        viewSettings: SettingsStore.getState().viewSettings,
+        preferredBases: SettingsStore.getState().preferredBases,
+        marketStats: MarketsStore.getState().allMarketStats,
+        userMarkets: SettingsStore.getState().userMarkets,
+        searchAssets: AssetStore.getState().assets,
+        onlyStars: MarketsStore.getState().onlyStars,
+        assetsLoading: AssetStore.getState().assetsLoading
+      };
+    }
   }
-});
+);

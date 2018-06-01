@@ -1,11 +1,6 @@
 const path = require("path");
-const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const PreloadWebpackPlugin = require("preload-webpack-plugin");
-const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
-const Clean = require("clean-webpack-plugin");
 const git = require("git-rev-sync");
 require("es6-promise").polyfill();
 
@@ -164,10 +159,10 @@ const loaders = [
         }
       },
       {
-        loader: "remarkable-loader",
+        loader: "markdown-loader",
         options: {
-          preset: "full",
-          typographer: true
+          // preset: "full",
+          // typographer: true
         }
       }
     ]

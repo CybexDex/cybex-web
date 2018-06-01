@@ -5,6 +5,7 @@ import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
 import IntlActions from "actions/IntlActions";
+import VolumeActions from "actions/VolumeActions";
 import NotificationStore from "stores/NotificationStore";
 import intlData from "./components/Utility/intlData";
 import alt from "alt-instance";
@@ -28,10 +29,12 @@ import { withRouter } from "react-router";
 import Footer from "./components/Layout/Footer";
 import Nav from "./components/Layout/Nav";
 import { ModalActions } from "./actions/ModalActions";
+import { VolumnActions } from "./actions/VolumeActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
-import { StyleRoot } from "radium";
+import Radium from "radium";
+let { StyleRoot } = Radium;
 // import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
 import EthModal from "components/Modal/EthModal";
 
@@ -47,9 +50,12 @@ import EthModal from "components/Modal/EthModal";
   }
 })(window);
 
-class App extends React.Component {
-  constructor() {
-    super();
+let App = class extends React.Component<any, any> {
+  syncCheckInterval;
+  backupModal;
+  priceSubscription;
+  constructor(props) {
+    super(props);
 
     // Check for mobile device to disable chat
     const user_agent = navigator.userAgent.toLowerCase();
@@ -72,6 +78,11 @@ class App extends React.Component {
       incognito: false,
       incognitoWarningDismissed: false
     };
+    VolumeActions.fetchPriceData();
+
+    this.priceSubscription = setInterval(() => {
+      VolumeActions.fetchPriceData();
+    }, 180 * 1000);
 
     this._rebuildTooltips = this._rebuildTooltips.bind(this);
     this._onSettingsChange = this._onSettingsChange.bind(this);
@@ -84,6 +95,7 @@ class App extends React.Component {
     SettingsStore.unlisten(this._onSettingsChange);
     ChainStore.unsubscribe(this._chainStoreSub);
     clearInterval(this.syncCheckInterval);
+    clearInterval(this.priceSubscription);
   }
 
   _syncStatus(setState = false) {
@@ -128,7 +140,6 @@ class App extends React.Component {
 
     if (
       !(
-        window.electron ||
         user_agent.indexOf("firefox") > -1 ||
         user_agent.indexOf("chrome") > -1 ||
         user_agent.indexOf("edge") > -1 ||
@@ -176,7 +187,7 @@ class App extends React.Component {
 
     setTimeout(() => {
       if (this.refs.tooltip) {
-        this.refs.tooltip.globalRebuild();
+        (this.refs.tooltip as any).globalRebuild();
       }
     }, 1500);
   }
@@ -211,7 +222,7 @@ class App extends React.Component {
       notification.autoDismiss = 10;
     }
     if (this.refs.notificationSystem)
-      this.refs.notificationSystem.addNotification(notification);
+      (this.refs.notificationSystem as any).addNotification(notification);
   }
 
   _onSettingsChange() {
@@ -304,11 +315,11 @@ class App extends React.Component {
       </div>
     );
   }
-}
+};
 
-App = withRouter(App);
+App = withRouter(App as any);
 
-class RootIntl extends React.Component {
+let RootIntl = class extends React.Component<any, any> {
   componentWillMount() {
     IntlActions.switchLocale(this.props.locale);
   }
@@ -326,20 +337,23 @@ class RootIntl extends React.Component {
       </IntlProvider>
     );
   }
-}
+};
 
-RootIntl = connect(RootIntl, {
-  listenTo() {
-    return [IntlStore];
-  },
-  getProps() {
-    return {
-      locale: IntlStore.getState().currentLocale
-    };
+RootIntl = connect(
+  RootIntl,
+  {
+    listenTo() {
+      return [IntlStore];
+    },
+    getProps() {
+      return {
+        locale: IntlStore.getState().currentLocale
+      };
+    }
   }
-});
+);
 
-class Root extends React.Component {
+class Root extends React.Component<any, any> {
   static childContextTypes = {
     router: PropTypes.object,
     location: PropTypes.object

@@ -8,6 +8,9 @@ import utils from "common/utils";
 import Icon from "../Icon/Icon";
 import MarketsActions from "actions/MarketsActions";
 import SettingsActions from "actions/SettingsActions";
+import { VolumnStore } from "stores/VolumeStore";
+import ReactTooltip from "react-tooltip";
+import { connect } from "alt-react";
 import Radium from "radium";
 import { Colors } from "components/Common";
 
@@ -28,7 +31,27 @@ const Styles = {
   }
 };
 
-let MarketRow = class extends React.Component<any, any> {
+let MarketRow = class extends React.Component<
+  {
+    quote;
+    base;
+    noSymbols?;
+    stats?;
+    starred?;
+    compact?;
+    columns;
+    current?;
+    name?;
+    isChecked?;
+    isDefault?;
+    onCheckMarket?;
+    removeMarket?;
+    withYuan?;
+    unitYuan?;
+    tooltipPosition?;
+  },
+  any
+> {
   statsInterval;
   statsChecked;
   static propTypes = {
@@ -38,7 +61,9 @@ let MarketRow = class extends React.Component<any, any> {
 
   static defaultProps = {
     noSymbols: false,
-    tempComponent: "tr"
+    withYuan: false,
+    tempComponent: "tr",
+    tooltipPosition: "right"
   };
 
   static contextTypes = {
@@ -90,7 +115,16 @@ let MarketRow = class extends React.Component<any, any> {
   }
 
   render() {
-    let { quote, base, noSymbols, stats, starred } = this.props;
+    let {
+      quote,
+      base,
+      noSymbols,
+      stats,
+      starred,
+      unitYuan,
+      tooltipPosition,
+      withYuan
+    } = this.props;
 
     if (!quote || !base) {
       return null;
@@ -102,7 +136,27 @@ let MarketRow = class extends React.Component<any, any> {
     let base_dynamic_data = base.get("dynamic");
 
     let price = utils.convertPrice(quote, base);
-
+    let finalPrice =
+      stats && stats.price
+        ? stats.price.toReal()
+        : stats &&
+          stats.close &&
+          (stats.close.quote.amount && stats.close.base.amount)
+          ? utils.get_asset_price(
+              stats.close.quote.amount,
+              quote,
+              stats.close.base.amount,
+              base,
+              true
+            )
+          : utils.get_asset_price(
+              price.quote.amount,
+              quote,
+              price.base.amount,
+              base,
+              true
+            );
+    let priceByYuan = parseFloat((unitYuan * finalPrice).toFixed(2));
     let buttonClass = "button outline";
     let buttonStyle = null;
     if (this.props.compact) {
@@ -152,8 +206,12 @@ let MarketRow = class extends React.Component<any, any> {
               2
             );
             let changeClass =
-              change === "0.00" ? "" : change > 0 ? "change-up" : "change-down";
-
+              change === "0.00"
+                ? ""
+                : parseFloat(change) > 0
+                  ? "change-up"
+                  : "change-down";
+            // console.debug("ChangeClass: ", change, changeClass);
             return (
               <span
                 onClick={this._onClick.bind(this, marketID)}
@@ -188,27 +246,6 @@ let MarketRow = class extends React.Component<any, any> {
             );
 
           case "price":
-            let finalPrice =
-              stats && stats.price
-                ? stats.price.toReal()
-                : stats &&
-                  stats.close &&
-                  (stats.close.quote.amount && stats.close.base.amount)
-                  ? utils.get_asset_price(
-                      stats.close.quote.amount,
-                      quote,
-                      stats.close.base.amount,
-                      base,
-                      true
-                    )
-                  : utils.get_asset_price(
-                      price.quote.amount,
-                      quote,
-                      price.base.amount,
-                      base,
-                      true
-                    );
-
             let highPrecisionAssets = [
               "BTC",
               "OPEN.BTC",
@@ -333,18 +370,42 @@ let MarketRow = class extends React.Component<any, any> {
     }
 
     return (
-      <div
-        className="table-row clickable"
-        style={
-          [Styles.row.base, this.props.current && Styles.row.active] as any
-        }
-      >
-        {columns}
-      </div>
+      <>
+        <div
+          className="table-row clickable"
+          style={
+            [Styles.row.base, this.props.current && Styles.row.active] as any
+          }
+          data-tip={withYuan && !isNaN(priceByYuan) ? `¥ ${priceByYuan}` : null}
+          data-place={tooltipPosition}
+          data-offset="{'right': 6}"
+        >
+          {columns}
+        </div>
+        {/* <ReactTooltip /> */}
+      </>
     );
   }
 };
-
 MarketRow = Radium(MarketRow);
 
-export default BindToChainState(MarketRow);
+MarketRow = BindToChainState(MarketRow);
+MarketRow = connect(
+  MarketRow,
+  {
+    listenTo() {
+      return [VolumnStore];
+    },
+    getProps(props) {
+      let { base } = props;
+      let symbolName = utils.replaceName(base, false).name;
+      let unitYuan = VolumnStore.getState().priceState[symbolName] || NaN;
+      return {
+        unitYuan
+      };
+    }
+  }
+);
+
+
+export default MarketRow;

@@ -25,7 +25,7 @@ export class VolumeDisplay extends React.PureComponent<any, any> {
         style={{
           display: "flex",
           alignItems: "center",
-          marginLeft: "1em",
+          marginLeft: "1em"
         }}
       >
         <div

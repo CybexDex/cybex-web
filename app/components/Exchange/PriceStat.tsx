@@ -2,13 +2,33 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
 import AssetName from "../Utility/AssetName";
+import { VolumnStore } from "stores/VolumeStore";
 import utils from "common/utils";
 import cnames from "classnames";
 import ReactTooltip from "react-tooltip";
+import { connect } from "alt-react";
 
-export default class PriceStat extends React.Component {
-  constructor() {
-    super();
+let PriceStat = class extends React.Component<
+  {
+    base;
+    quote;
+    hideQuote?;
+    hideBase?;
+    price;
+    content?;
+    ready;
+    value?;
+    valueByYuan?;
+    withYuan?;
+    volume?;
+    volume2?;
+    toolTip?;
+    className?;
+  },
+  { change }
+> {
+  constructor(props) {
+    super(props);
     this.state = {
       change: null
     };
@@ -43,11 +63,15 @@ export default class PriceStat extends React.Component {
       base,
       quote,
       hideQuote,
+      hideBase,
       price,
       content,
       ready,
+      value,
+      valueByYuan,
       volume,
       volume2,
+      withYuan,
       toolTip
     } = this.props;
     let { change } = this.state;
@@ -55,10 +79,6 @@ export default class PriceStat extends React.Component {
     if (change && change !== null) {
       changeClass = change > 0 ? "change-up" : "change-down";
     }
-
-    let value = !volume
-      ? utils.price_text(price, quote, base)
-      : utils.format_volume(price);
 
     let value2 = volume2 ? utils.format_volume(volume2) : null;
 
@@ -81,12 +101,12 @@ export default class PriceStat extends React.Component {
         <span>
           {content && <Translate content={content} />}
           {content && <br />}
-          <b className="value stat-primary">
+          <b className={`value stat-primary ${hideBase ? changeClass : ""}`}>
             {!ready ? 0 : value}&nbsp;
-            {changeComp}
+            {!hideBase && changeComp}
           </b>
           <span className="symbol-text">
-            <AssetName name={base.get("symbol")} />
+            {!hideBase && <AssetName name={base.get("symbol")} />}
             {!hideQuote && quote && !volume ? (
               <span>
                 /<AssetName name={quote.get("symbol")} />
@@ -106,7 +126,45 @@ export default class PriceStat extends React.Component {
             </span>
           </span>
         ) : null}
+        {withYuan &&
+          !isNaN(valueByYuan) && (
+            <span>
+              <span />
+              {!hideBase && " / "}
+              <b className="value stat-primary">
+                <span className="symbol-text">¥</span>
+                {!ready ? 0 : <span> {valueByYuan}</span>}&nbsp;
+              </b>
+            </span>
+          )}
       </li>
     );
   }
-}
+};
+
+PriceStat: PriceStat = connect(
+  PriceStat,
+  {
+    listenTo() {
+      return [VolumnStore];
+    },
+    getProps(props) {
+      let { volume, price, quote, base } = props;
+      let value = !volume
+        ? utils.price_text(price, quote, base)
+        : utils.format_volume(price);
+      let symbolName = utils.replaceName(base.get("symbol"), false).name;
+      let unitYuan = VolumnStore.getState().priceState[symbolName];
+      let valueByYuan = unitYuan
+        ? parseFloat((value * unitYuan).toFixed(2))
+        : NaN;
+      return {
+        value,
+        valueByYuan
+      };
+    }
+  }
+);
+
+export { PriceStat };
+export default PriceStat;

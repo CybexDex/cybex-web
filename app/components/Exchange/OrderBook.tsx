@@ -14,8 +14,9 @@ import { Colors, TabLink, $styleSelect } from "components/Common";
 import counterpart from "counterpart";
 import Select from "react-select";
 import { LimitOrder } from "common/MarketClasses";
-
-// import ReactTooltip from "react-tooltip";
+import { VolumnStore } from "stores/VolumeStore";
+import ReactTooltip from "react-tooltip";
+import { connect } from "alt-react";
 
 enum OrderType {
   Ask,
@@ -115,6 +116,8 @@ let OrderBookRowVertical = class extends React.Component<
     onClick?;
     total;
     max?;
+    withYuan?;
+    unitYuan?;
   },
   any
 > {
@@ -142,6 +145,8 @@ let OrderBookRowVertical = class extends React.Component<
       digits,
       depthType,
       total,
+      withYuan,
+      unitYuan,
       max
     } = this.props;
     const isBid = order.isBid();
@@ -160,6 +165,11 @@ let OrderBookRowVertical = class extends React.Component<
         precision={digits}
       />
     );
+    let yuanPrice = withYuan
+      ? parseFloat(
+          (unitYuan * order.getPrice(order.sell_price, digits)).toFixed(digits - 3)
+        )
+      : NaN;
     // console.debug("ORDER: ", total, order, order.totalToReceive());
     let bgWidth =
       (order
@@ -184,6 +194,8 @@ let OrderBookRowVertical = class extends React.Component<
           { "my-order": order.isMine(this.props.currentAccount) }
         )}
         style={[rowStyles.base, rowHeight] as any}
+        data-tip={withYuan && !isNaN(yuanPrice) ? `¥ ${yuanPrice}` : null}
+        data-place="left"
       >
         <i
           className="bg"
@@ -194,7 +206,7 @@ let OrderBookRowVertical = class extends React.Component<
             height: "100%",
             margin: "0 -0.5em",
             backgroundColor: isBid ? Colors.$colorGrass : Colors.$colorFlame,
-            opacity: 0.1
+            opacity: 0.25
           }}
         />
         <span
@@ -228,8 +240,24 @@ let OrderBookRowVertical = class extends React.Component<
     );
   }
 };
-
 OrderBookRowVertical = Radium(OrderBookRowVertical);
+
+OrderBookRowVertical = connect(
+  OrderBookRowVertical,
+  {
+    listenTo() {
+      return [VolumnStore];
+    },
+    getProps(props) {
+      let { base } = props;
+      let symbolName = utils.replaceName(base.get("symbol"), false).name;
+      let unitYuan = VolumnStore.getState().priceState[symbolName] || NaN;
+      return {
+        unitYuan
+      };
+    }
+  }
+);
 
 let OrderBookHeader = class extends React.PureComponent<
   {
@@ -434,6 +462,7 @@ let OrderBookParitalWrapper = class extends React.Component<
           order={order}
           onClick={onOrderClick.bind(this, order)}
           digits={digits}
+          withYuan
           base={base}
           quote={quote}
           final={index === 0}
@@ -629,8 +658,8 @@ let OrderBook = class extends React.Component<any, any> {
     });
     // console.debug("MAX: ", maxAsk, maxBid);
     let total = Math.max(
-      (bidRows as any).lastOne() && (bidRows as any).lastOne().accum || 0,
-      (askRows as any).lastOne() && (askRows as any).lastOne().accum || 0
+      ((bidRows as any).lastOne() && (bidRows as any).lastOne().accum) || 0,
+      ((askRows as any).lastOne() && (askRows as any).lastOne().accum) || 0
     );
 
     let priceRow = (
@@ -647,6 +676,7 @@ let OrderBook = class extends React.Component<any, any> {
           ready={marketReady}
           price={(latest && latest.full) || {}}
           quote={quote}
+          withYuan
           base={base}
           hideQuote={true}
         />

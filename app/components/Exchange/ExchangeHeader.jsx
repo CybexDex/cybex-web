@@ -101,6 +101,8 @@ export default class ExchangeHeader extends React.Component {
                 <PriceStat
                   ready={marketReady}
                   price={latestPrice.full}
+                  hideBase
+                  withYuan
                   quote={quoteAsset}
                   base={baseAsset}
                   hideQuote={true}

@@ -21,6 +21,9 @@ declare module "cybexjs" {
     subscribe(handler: (obj: object) => any): void;
     unsubscribe(handler: (obj: object) => any): void;
     fetchFullAccount: any;
+    getEstimatedChainTimeOffset: any;
+    subError: any;
+    subscribed: any;
     getObject(id: string): any;
     getAsset(symbolOrId: string): any;
     getBalanceObjects(id: string | string[]): any;

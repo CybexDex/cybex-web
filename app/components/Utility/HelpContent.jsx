@@ -6,7 +6,8 @@ import counterpart from "counterpart";
 import utils from "common/utils";
 import { withRouter } from "react-router";
 
-// let req = require.context("../../help", true, /\.md/);
+let req = require.context("help", true, /\.md/);
+console.debug("REQ: ", req);
 let HelpData = {};
 
 function endsWith(str, suffix) {
@@ -57,20 +58,20 @@ class HelpContent extends React.Component {
     let locale = this.props.locale || counterpart.getLocale() || "en";
 
     // Only load helpData for the current locale as well as the fallback 'en'
-    // req
-    //   .keys()
-    //   .filter(a => {
-    //     return a.indexOf(`/${locale}/`) !== -1 || a.indexOf("/en/") !== -1;
-    //   })
-    //   .forEach(function(filename) {
-    //     var res = filename.match(/\/(.+?)\/(.+)\./);
-    //     let locale = res[1];
-    //     let key = res[2];
-    //     let help_locale = HelpData[locale];
-    //     if (!help_locale) HelpData[locale] = help_locale = {};
-    //     let content = req(filename);
-    //     help_locale[key] = split_into_sections(adjust_links(content));
-    //   });
+    req
+      .keys()
+      .filter(a => {
+        return a.indexOf(`/${locale}/`) !== -1 || a.indexOf("/en/") !== -1;
+      })
+      .forEach(function(filename) {
+        var res = filename.match(/\/(.+?)\/(.+)\./);
+        let locale = res[1];
+        let key = res[2];
+        let help_locale = HelpData[locale];
+        if (!help_locale) HelpData[locale] = help_locale = {};
+        let content = require(`./../../help${filename.slice(1)}`);
+        help_locale[key] = split_into_sections(adjust_links(content));
+      });
   }
 
   onClickLink(e) {

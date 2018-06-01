@@ -49,23 +49,23 @@ class Address {
       version
     );
     var sha2 = sha256(public_key.toBuffer(compressed));
-    console.debug("Address", "SHA256", sha2);
+    // console.debug("Address", "SHA256", sha2);
     var rep = ripemd160(sha2);
-    console.debug("Address", "MD160", rep);
+    // console.debug("Address", "MD160", rep);
     var versionBuffer = new Buffer(1);
-    console.debug("Address", "VERSION_BUFFER", versionBuffer);
+    // console.debug("Address", "VERSION_BUFFER", versionBuffer);
     versionBuffer.writeUInt8(0xff & version, 0);
-    console.debug("Address", "VERSION_BUFFER", versionBuffer);
+    // console.debug("Address", "VERSION_BUFFER", versionBuffer);
     var addr = Buffer.concat([versionBuffer, rep]);
-    console.debug("Address", "ADDR", addr);
+    // console.debug("Address", "ADDR", addr);
     var check = sha256(addr);
-    console.debug("Address", "CHECK", check);
+    // console.debug("Address", "CHECK", check);
     check = sha256(check);
-    console.debug("Address", "CHECK SHA2", check);
+    // console.debug("Address", "CHECK SHA2", check);
     var buffer = Buffer.concat([addr, check.slice(0, 4)]);
-    console.debug("Address", "BUFFER", buffer);
-    console.debug("Address", "FINAL", new Address(ripemd160(buffer)));
-    console.debug("Address", "FINALSTRING", new Address(ripemd160(buffer)).toString("CYB"));
+    // console.debug("Address", "BUFFER", buffer);
+    // console.debug("Address", "FINAL", new Address(ripemd160(buffer)));
+    // console.debug("Address", "FINALSTRING", new Address(ripemd160(buffer)).toString("CYB"));
     return new Address(ripemd160(buffer));
   }
 

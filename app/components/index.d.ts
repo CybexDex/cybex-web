@@ -18,14 +18,24 @@ declare module "alt-container" {
 }
 
 declare module "alt-react" {
-  function connect(Component, injector: any);
+  const supplyFluxContext: any;
+  function connect(
+    Component,
+    injector: {
+      listenTo?(): any[];
+      getProps?(props: any): { [propName: string]: any };
+    }
+  );
 }
 
 declare namespace CommonUtils {
   const price_text: (price: string, base: any, quote: any) => string;
-  const replaceName: (name: string, isBitAsset?:boolean) => {
+  const replaceName: (
     name: string,
-    prefix: string
+    isBitAsset?: boolean
+  ) => {
+    name: string;
+    prefix: string;
   };
   const format_volume: (amount: number) => string;
   const are_equal_shallow: (...args) => boolean;

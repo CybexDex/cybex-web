@@ -9,9 +9,9 @@ fontawesome.library.add(faTelegram);
 export class Contact extends React.Component<any, any> {
   render() {
     return (
-      <div className="contact-wrapper">
+      <div className="contact-wrapper text-center">
         <Translate component="h2" className="text-center contact-title" content="contact.title" />
-        <table className="contact-table">
+        <table className="contact-table" style={{display: "inline-table", textAlign: "left"}}>
           <tbody>
             <tr>
               <td className="bigger">

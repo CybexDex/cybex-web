@@ -481,9 +481,10 @@ section progress {
   align-self: flex-end;
 }
 
-// input:-webkit-autofill {
-//   -webkit-box-shadow: 0 0 0 1000px white inset !important;
-// }
+textarea:-webkit-autofill, select:-webkit-autofill, input:-webkit-autofill {
+  background-color: transparent !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
 .period-horizontal {
   width: 100%;
   display: flex;

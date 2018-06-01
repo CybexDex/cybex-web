@@ -9,7 +9,7 @@ import { ModalActions } from "actions/ModalActions";
 import { ModalStore } from "stores/ModalStore";
 import { connect } from "alt-react";
 export const DEFAULT_SUPPORT_MODAL = "support_modal";
-export let BrowserSupportModal = class extends React.Component<{modalId, open}, any> {
+export let BrowserSupportModal = class extends React.Component<{modalId, open?}, any> {
   
 
   _openLink() {
