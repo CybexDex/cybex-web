@@ -29,7 +29,9 @@ class VolumnStore extends AbstractStore<VolumnState> {
   }
   handlePriceUpdate(priceState) {
     console.debug("Update Price: ", priceState);
-    this.setState({priceState});
+    if ("ETH" in priceState) {
+      this.setState({ priceState });
+    }
   }
   handleAddMarket() {}
   handleRemoveMarket() {}

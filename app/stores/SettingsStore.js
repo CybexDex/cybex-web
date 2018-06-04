@@ -157,6 +157,7 @@ class SettingsStore {
           "JADE.BTC",
           "JADE.EOS",
           "JADE.LTC",
+          "JADE.LHC",
           "JADE.INK",
           "JADE.BAT",
           "JADE.VEN",

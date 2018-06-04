@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import utils from "common/utils";
 
-class Dropdown extends React.PureComponent<
+class Dropdown extends React.Component<
   {
     isAsset?;
     id?;

@@ -230,12 +230,12 @@ class Exchange extends React.Component<any, any> {
     ).subscribe(resizeEvent => this._getWindowSize);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (!nextProps.marketReady && !this.props.marketReady) {
-      return false;
-    }
-    return true;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   if (!nextProps.marketReady && !this.props.marketReady) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   _checkFeeStatus(
     assets = [

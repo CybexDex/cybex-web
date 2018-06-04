@@ -126,7 +126,7 @@ let OrderBookRowVertical = class extends React.Component<
   };
 
   shouldComponentUpdate(np) {
-    if (np.order.market_base !== this.props.order.market_base) return false;
+    // if (np.order.market_base !== this.props.order.market_base) return false;
     return (
       np.order.ne(this.props.order) ||
       np.index !== this.props.index ||

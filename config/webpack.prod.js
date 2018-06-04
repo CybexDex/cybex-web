@@ -7,10 +7,10 @@ const {
   defines
 } = require("./webpack.config");
 const Clean = require("clean-webpack-plugin");
+const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const path = require("path");
 console.log("Webpack Config for Dev");
 const webpack = require("webpack");
-const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cssLoaders = [
   {
@@ -57,13 +57,13 @@ let outputDir = "dist";
 
 // DIRECTORY CLEANER
 var cleanDirectories = [outputDir];
-const prodPlugins = [
+const prodPlugins = plugins.concat([
   new Clean(cleanDirectories, {
     root: BASE_URL
   }),
-  // new PreloadWebpackPlugin({
-  //   rel: "prefetch"
-  // }),
+  new PreloadWebpackPlugin({
+    rel: "prefetch"
+  }),
   new webpack.DefinePlugin({
     "process.env": {
       NODE_ENV: JSON.stringify("production")
@@ -82,7 +82,7 @@ const prodPlugins = [
   //   debug: false
   // })
   // new webpack.optimize.ModuleConcatenationPlugin(),
-].concat(plugins);
+]);
 
 const config = {
   entry: {
@@ -112,9 +112,9 @@ const config = {
     splitChunks: {
       cacheGroups: {
         commons: {
+          test: /node_modules\//,
           name: "commons",
-          chunks: "initial",
-          minChunks: 2
+          chunks: "initial"
         }
       }
     }

@@ -11,10 +11,6 @@ import counterpart from "counterpart";
 import cnames from "classnames";
 
 export default class ExchangeHeader extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    if (!nextProps.marketReady) return false;
-    return true;
-  }
 
   _addMarket(quote, base) {
     let marketID = `${quote}_${base}`;

@@ -112,7 +112,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       priceFormat,
       timeFormatter,
       volumeFormat,
-      margin: { left: 10, right: 20, top: 30, bottom: 20 },
+      margin: { left: 10, right: 48, top: 30, bottom: 20 },
       calculators: this._getCalculators(props)
     };
 
@@ -170,7 +170,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
   }
 
   calcDigits = props => {
-    let [digits, marginRight] = [2, 30];
+    let [digits, marginRight] = [6, 48];
     try {
       digits = props.latest.int.length > 1 ? 2 : 6;
       marginRight = (props.latest.int.length + digits) * 6 + 12;

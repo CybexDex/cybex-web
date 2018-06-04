@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { OrderRow, TableHeader } from "../Exchange/MyOpenOrders";
 import counterpart from "counterpart";
 import MarketsActions from "actions/MarketsActions";
@@ -43,8 +44,13 @@ let AccountOrders = class extends React.Component<any, any> {
       let order = ChainStore.getObject(orderID).toJS();
       let assetA = ChainStore.getAsset(order.sell_price.base.asset_id);
       let assetB = ChainStore.getAsset(order.sell_price.quote.asset_id);
-      let { base, quote } = correctMarketPairMap(assetA, assetB);
 
+      if (!assetA || !assetB) {
+        return null;
+      }
+      // To Debug 不理解
+      let { base, quote } = correctMarketPairMap(assetA, assetB);
+      
       if (base && quote) {
         let assets = {
           [base.get("id")]: { precision: base.get("precision") },
@@ -139,15 +145,18 @@ let AccountOrders = class extends React.Component<any, any> {
   }
 };
 
-AccountOrders = connect(AccountOrders, {
-  listenTo() {
-    return [SettingsStore];
-  },
-  getProps() {
-    return {
-      marketDirections: SettingsStore.getState().marketDirections
-    };
+AccountOrders = connect(
+  AccountOrders,
+  {
+    listenTo() {
+      return [SettingsStore];
+    },
+    getProps() {
+      return {
+        marketDirections: SettingsStore.getState().marketDirections
+      };
+    }
   }
-});
+);
 
 export default AccountOrders;
