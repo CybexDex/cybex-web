@@ -313,14 +313,20 @@ class WithdrawModal extends React.Component<props, state> {
       this.props.withdrawInfo.gatewayAccount,
       withdrawAmount,
       this.props.asset.get("id"),
-      "withdraw:" +
-        GATEWAY_ID +
-        ":" +
-        this.props.withdrawInfo.type +
-        ":" +
-        this.state.withdraw_address,
+      this._withdrawMemo(),
       null,
       useCybAsFee ? "1.3.0" : this.props.asset.get("id")
+    );
+  };
+
+  _withdrawMemo = () => {
+    return (
+      "withdraw:" +
+      GATEWAY_ID +
+      ":" +
+      this.props.withdrawInfo.type +
+      ":" +
+      this.state.withdraw_address
     );
   };
 
@@ -391,16 +397,14 @@ class WithdrawModal extends React.Component<props, state> {
       gatewayServiceInvalid ||
       !amountValid;
     // withdraw_amount <= 0;
-    let assetName =  utils.replaceName(this.props.asset.get("symbol")).name;
+    let assetName = utils.replaceName(this.props.asset.get("symbol")).name;
     console.debug("AssetName: ", assetName);
     return (
       <BaseModal modalId={modalId}>
         <div className="content-block">
           <h3>
             <Translate content={"gateway.withdraw"} />
-            {" " + assetName}({
-              this.props.receive_asset_symbol
-            })
+            {" " + assetName}({this.props.receive_asset_symbol})
           </h3>
         </div>
         <div className="content-block">
@@ -571,21 +575,24 @@ let WithdrawModalWrapper = BindToChainState(WithdrawModal, {
   show_loader: true
 });
 
-WithdrawModalWrapper = connect(WithdrawModalWrapper, {
-  listenTo() {
-    return [GatewayStore];
-  },
-  getProps(props) {
-    let { modalId } = props;
-    debug("connect", props);
-    let withdrawInfo = GatewayStore.getState().withdrawInfo;
-    return {
-      open: GatewayStore.getState().modals.get(modalId),
-      withdrawInfo,
-      receive_asset_symbol: withdrawInfo.type,
-      asset: GatewayStore.getState().withdrawInfo.asset
-    };
+WithdrawModalWrapper = connect(
+  WithdrawModalWrapper,
+  {
+    listenTo() {
+      return [GatewayStore];
+    },
+    getProps(props) {
+      let { modalId } = props;
+      debug("connect", props);
+      let withdrawInfo = GatewayStore.getState().withdrawInfo;
+      return {
+        open: GatewayStore.getState().modals.get(modalId),
+        withdrawInfo,
+        receive_asset_symbol: withdrawInfo.type,
+        asset: GatewayStore.getState().withdrawInfo.asset
+      };
+    }
   }
-});
+);
 
 export default WithdrawModalWrapper;
