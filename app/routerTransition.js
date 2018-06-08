@@ -8,7 +8,6 @@ import WalletManagerStore from "stores/WalletManagerStore";
 import WalletDb from "stores/WalletDb";
 import SettingsStore from "stores/SettingsStore";
 import AccountStore from "stores/AccountStore";
-import { NetworkStore } from "stores/NetworkStore";
 
 import ls from "common/localStorage";
 const STORAGE_KEY = "__graphene__";

@@ -150,13 +150,8 @@ class VolumnActions {
           let priceSet = {};
           for (let price of outer.prices) {
             priceSet[price.name] = parseFloat(price.value.toFixed(2));
-            // if (price.name.toUpperCase() === "ETH") {
-            //   let realPrice =
-            //     (await getLatestPrice("1.3.2", "1.3.0")) * price.value;
-            //   priceSet["CYB"] = parseFloat(realPrice.toFixed(2));
-            // }
           }
-          console.debug("Final: ", priceSet);
+          // console.debug("Final: ", priceSet);
           return priceSet;
         }
       })

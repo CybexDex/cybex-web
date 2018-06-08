@@ -24,7 +24,7 @@ var plugins = [
   // new webpack.optimize.OccurrenceOrderPlugin(),
   new HtmlWebpackPlugin({
     filename: "index.html",
-    template: path.resolve(root_dir, "app/assets/index-dev.html")
+    template: path.resolve(root_dir, "app/assets/index.html")
   })
 ];
 

@@ -16,7 +16,6 @@ import Immutable from "immutable";
 import TimeAgo from "../Utility/TimeAgo";
 import FormattedAsset from "../Utility/FormattedAsset";
 import TransitionWrapper from "../Utility/TransitionWrapper";
-import { ExplorerNav } from "./ExplorerNav";
 
 require("../Blockchain/json-inspector.scss");
 
@@ -268,7 +267,6 @@ class Blocks extends React.Component {
 
     return (
       <div ref="outerWrapper" className="block-wrapper grid-block page-layout">
-        {/* <ExplorerNav /> */}
         <div className="block-left bgcolor-primary with-shadow">
           {/* First row of stats */}
           <div className="grid-block text-center small-6">

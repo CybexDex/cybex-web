@@ -29,5 +29,17 @@ declare module "cybexjs-ws" {
     setAutoReconnect(auto: boolean): void;
     chainId(): string;
   };
-  const ChainConfig: any;
+  
+  const ChainConfig: {
+    core_asset: string;
+    address_prefix: string;
+    expire_in_secs: number;
+    expire_in_secs_proposal: number;
+    review_in_secs_committee: number;
+    networks: any;
+    setChainId(chainID: string): { network_name: string; network: any } | void;
+    reset(): void;
+    setProposalExpire(time: number): number;
+    setPrefix(address: string): string;
+  };
 }

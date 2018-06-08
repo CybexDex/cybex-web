@@ -39,6 +39,11 @@ function didOrdersChange(newOrders, oldOrders) {
 }
 
 class Asset {
+  satoshi;
+  asset_id;
+  precision;
+  amount;
+  _real_amount;
   constructor({
     asset_id = "1.3.0",
     amount = 0,
@@ -132,7 +137,7 @@ class Asset {
     // asset amount times a price p
     let temp, amount;
     if (this.asset_id === p.base.asset_id) {
-      temp = this.amount * p.quote.amount / p.base.amount;
+      temp = (this.amount * p.quote.amount) / p.base.amount;
       amount = Math.floor(temp);
       /*
             * Sometimes prices are inexact for the relevant amounts, in the case
@@ -149,7 +154,7 @@ class Asset {
         precision: p.quote.precision
       });
     } else if (this.asset_id === p.quote.asset_id) {
-      temp = this.amount * p.base.amount / p.quote.amount;
+      temp = (this.amount * p.base.amount) / p.quote.amount;
       amount = Math.floor(temp);
       /*
             * Sometimes prices are inexact for the relevant amounts, in the case
@@ -274,11 +279,9 @@ class Price {
       return this[key];
     }
     let real = sameBase
-      ? this.quote.amount *
-        this.base.toSats() /
+      ? (this.quote.amount * this.base.toSats()) /
         (this.base.amount * this.quote.toSats())
-      : this.base.amount *
-        this.quote.toSats() /
+      : (this.base.amount * this.quote.toSats()) /
         (this.quote.amount * this.base.toSats());
     this[key] = parseFloat(real.toFixed(digits));
     return this[key]; // toFixed and parseFloat helps avoid floating point errors for really big or small numbers
@@ -366,6 +369,9 @@ class Price {
 }
 
 class FeedPrice extends Price {
+  _squeeze_price;
+  sqr;
+  inverted;
   constructor({ priceObject, assets, market_base, sqr, real = false }) {
     if (
       !priceObject ||
@@ -426,6 +432,12 @@ class FeedPrice extends Price {
 }
 
 class LimitOrderCreate {
+  fill_or_kill;
+  min_to_receive;
+  amount_for_sale;
+  seller;
+  fee;
+  expiration;
   constructor({
     for_sale,
     to_receive,
@@ -633,6 +645,12 @@ class CallOrder {
   _feed_price;
   _squeeze_price;
   _collateral;
+  total_for_sale;
+  _for_sale;
+  _to_receive;
+  _total_to_receive;
+  _total_for_sale;
+  total_to_receive;
   constructor(order, assets, market_base, feed, is_prediction_market = false) {
     if (!order || !assets || !market_base || !feed) {
       throw new Error("CallOrder missing inputs");
@@ -866,6 +884,10 @@ class CallOrder {
 }
 
 class SettleOrder extends LimitOrder {
+  offset_percent;
+  settlement_date;
+  inverted;
+  feed_price;
   constructor(order, assets, market_base, feed_price, bitasset_options) {
     if (!feed_price || !bitasset_options) {
       throw new Error(

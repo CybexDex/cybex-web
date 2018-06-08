@@ -3,7 +3,6 @@ import * as PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
 import utils from "./dl_cli_index";
-import "./scrollbar-helper";
 if (window) {
   window.$utils = utils;
 }

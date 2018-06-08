@@ -1,11 +1,13 @@
 import alt from "alt-instance";
 import SettingsActions from "actions/SettingsActions";
 import IntlActions from "actions/IntlActions";
-import Immutable from "immutable";
+import { Map, List } from "immutable";
 import { merge } from "lodash";
 import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
+import * as FingerPrint  from "fingerprintjs2";
+import { AbstractStore } from "./AbstractStore";
 
 const CORE_ASSET = "CYB"; // Setting this to CYB to prevent loading issues when used with CYB chain which is the most usual case currently
 
@@ -13,8 +15,27 @@ const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
 const SETTING_VERSION = "defaults_v2";
 
-class SettingsStore {
+class SettingsStore extends AbstractStore<any> {
+  initDone = false;
+  defaultSettings = Map();
+  settings;
+  defaults;
+  viewSettings;
+  marketDirections;
+  hiddenAssets;
+  apiLatencies;
+  mainnet_faucet;
+  testnet_faucet;
+  starredKey;
+  marketsKey;
+  preferredBases;
+  defaultMarkets;
+  starredMarkets;
+  userMarkets;
+  fp;
+
   constructor() {
+    super();
     this.exportPublicMethods({
       init: this.init.bind(this),
       getSetting: this.getSetting.bind(this),
@@ -41,7 +62,7 @@ class SettingsStore {
     });
 
     this.initDone = false;
-    this.defaultSettings = Immutable.Map({
+    this.defaultSettings = Map({
       locale: "zh",
       apiServer: settingsAPIs.DEFAULT_WS_NODE,
       faucet_address: settingsAPIs.DEFAULT_FAUCET,
@@ -65,12 +86,7 @@ class SettingsStore {
       unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "CNY", "BTC", "EUR"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
       showAssetPercent: [{ translate: "yes" }, { translate: "no" }],
-      themes: [
-        "cybexDarkTheme"
-        // "darkTheme",
-        // "lightTheme",
-        // "olDarkTheme",
-      ],
+      themes: ["cybexDarkTheme"],
       passwordLogin: [
         { translate: "cloud_login" },
         { translate: "local_wallet" }
@@ -84,7 +100,7 @@ class SettingsStore {
     // this.settings = Immutable.Map(merge(this.defaultSettings.toJS(), ss.get("settings_v3")));
 
     // TODO for Online
-    this.settings = Immutable.Map(
+    this.settings = Map(
       merge(this.defaultSettings.toJS(), ss.get("settings_v3"))
     );
 
@@ -130,11 +146,11 @@ class SettingsStore {
       }
     }
 
-    this.viewSettings = Immutable.Map(ss.get("viewSettings_v1"));
+    this.viewSettings = Map(ss.get("viewSettings_v1"));
 
-    this.marketDirections = Immutable.Map(ss.get("marketDirections"));
+    this.marketDirections = Map(ss.get("marketDirections"));
 
-    this.hiddenAssets = Immutable.List(ss.get("hiddenAssets", []));
+    this.hiddenAssets = List(ss.get("hiddenAssets", []));
 
     this.apiLatencies = ss.get("apiLatencies", {});
 
@@ -147,6 +163,10 @@ class SettingsStore {
       if (this.initDone) resolve();
       this.starredKey = this._getChainKey("markets");
       this.marketsKey = this._getChainKey("userMarkets");
+      let fp = new FingerPrint().get(result => {
+        this.fp = result;
+      });
+      
       // Default markets setup
       let topMarkets = {
         markets_90be01e8: [
@@ -157,7 +177,7 @@ class SettingsStore {
           "JADE.BTC",
           "JADE.EOS",
           "JADE.LTC",
-          "JADE.LHC",
+          // "JADE.LHC",
           "JADE.INK",
           "JADE.BAT",
           "JADE.VEN",
@@ -205,14 +225,15 @@ class SettingsStore {
       this.defaults.unit[0] = coreAsset;
 
       let chainBases = bases[this.starredKey] || bases.markets_90be01e8;
-      this.preferredBases = Immutable.List(chainBases);
+      this.preferredBases = List(chainBases);
 
       const addMarkets = (target, base, markets) => {
         markets
           .filter((a, i, all) => {
             return (
               a !== base &&
-              (this.preferredBases.indexOf(a) > this.preferredBases.indexOf(base) ||
+              (this.preferredBases.indexOf(a) >
+                this.preferredBases.indexOf(base) ||
                 this.preferredBases.indexOf(a) === -1)
             );
           })
@@ -227,9 +248,9 @@ class SettingsStore {
         addMarkets(defaultMarkets, base, chainMarkets);
       });
 
-      this.defaultMarkets = Immutable.Map(defaultMarkets);
-      this.starredMarkets = Immutable.Map(ss.get(this.starredKey, []));
-      this.userMarkets = Immutable.Map(ss.get(this.marketsKey, {}));
+      this.defaultMarkets = Map(defaultMarkets);
+      this.starredMarkets = Map(ss.get(this.starredKey, []));
+      this.userMarkets = Map(ss.get(this.marketsKey, {}));
 
       this.initDone = true;
       resolve();
@@ -338,7 +359,7 @@ class SettingsStore {
   }
 
   onClearStarredMarkets() {
-    this.starredMarkets = Immutable.Map({});
+    this.starredMarkets = Map({});
     ss.set(this.starredKey, this.starredMarkets.toJS());
   }
 
@@ -403,4 +424,4 @@ class SettingsStore {
   }
 }
 
-export default alt.createStore(SettingsStore, "SettingsStore");
+export default alt.createStore(SettingsStore, "SettingsStore") as SettingsStore;

@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import MyMarkets from "./MyMarkets";
-import { ExplorerNav } from "../Explorer/ExplorerNav";
 
 class Markets extends React.Component {
   constructor() {
@@ -39,7 +38,6 @@ class Markets extends React.Component {
   render() {
     return (
       <div ref="wrapper" className="grid-block page-layout no-overflow">
-        {/* <ExplorerNav /> */}
         <MyMarkets
           style={{ width: "100%", padding: 20 }}
           listHeight={this.state.height ? this.state.height - 82 : null}

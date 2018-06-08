@@ -1,7 +1,5 @@
 import BaseStore from "./BaseStore";
-import {
-  Set
-} from "immutable";
+import { Set } from "immutable";
 import alt from "alt-instance";
 import { Store } from "alt-instance";
 import ModalActions from "actions/ModalActions";
@@ -14,10 +12,10 @@ let ss = new ls(STORAGE_KEY);
 const debug = debugGen("ModalStore");
 
 type State = {
-  showingModals: Set<string>
+  showingModals: Set<string>;
 };
 
-class ModalStore extends BaseStore implements Store<State>{
+class ModalStore extends BaseStore implements Store<State> {
   bindListeners;
   setState;
   state: State = {
@@ -53,9 +51,8 @@ class ModalStore extends BaseStore implements Store<State>{
   handleNeverShow({ modal_id, neverShow = true }) {
     ss.set("modal_has_shown_" + modal_id, neverShow);
   }
-
 }
 const StoreWrapper = alt.createStore(ModalStore, "ModalStore");
-export { StoreWrapper as ModalStore }
+export { StoreWrapper as ModalStore };
 
 export default StoreWrapper;

@@ -10,25 +10,6 @@ export class ExplorerNav extends React.Component {
     super(props);
   }
 
-  componentWillUnmount() {
-    let hub = document.getElementById("context-hub");
-    if (hub) {
-      hub.removeChild(this.nav);
-    }
-  }
-
-  // componentDidMount() {
-  //   let hub = document.getElementById("context-hub");
-  //   if (hub.children.length) {
-  //     hub.removeChild(hub.children[0]);
-  //   }
-  //   hub.appendChild(this.nav);
-  // }
-
-  // getClass = (pathFragment: string) => {
-  //   return location.pathname.indexOf(pathFragment) === -1 ? "" : "active";
-  // }
-
   render() {
     return (
       <div

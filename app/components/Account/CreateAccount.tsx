@@ -78,7 +78,6 @@ let CreateAccount = Radium(
     isValid() {
       let firstAccount = AccountStore.getMyAccounts().length === 0;
       let valid = this.state.validAccountName;
-      console.debug("Valid 1", valid);
       if (!WalletDb.getWallet()) {
         // console.debug("Valid Not Wallet", valid, this.state.validPassword);
         valid = valid && this.state.validPassword;
@@ -508,11 +507,14 @@ let CreateAccount = Radium(
   }
 );
 
-export default connect(CreateAccount, {
-  listenTo() {
-    return [AccountStore];
-  },
-  getProps() {
-    return {};
+export default connect(
+  CreateAccount,
+  {
+    listenTo() {
+      return [AccountStore];
+    },
+    getProps() {
+      return {};
+    }
   }
-});
+);

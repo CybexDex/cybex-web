@@ -792,7 +792,9 @@ Types.public_key = {
     }
     return object == null
       ? object
-      : object.Q ? object : PublicKey.fromStringOrThrow(object);
+      : object.Q
+        ? object
+        : PublicKey.fromStringOrThrow(object);
   },
   fromByteBuffer(b) {
     return fp.public_key(b);
@@ -820,7 +822,10 @@ Types.public_key = {
     return object.toString();
   },
   compare(a, b) {
-    return strCmp(a.toBlockchainAddress().toString("hex"), b.toBlockchainAddress().toString("hex"));
+    return strCmp(
+      a.toBlockchainAddress().toString("hex"),
+      b.toBlockchainAddress().toString("hex")
+    );
   }
 };
 
@@ -856,21 +861,21 @@ Types.address = {
 let strCmp = (a, b) => (a > b ? 1 : a < b ? -1 : 0);
 let firstEl = el => (Array.isArray(el) ? el[0] : el);
 let sortOperation = (array, st_operation) => {
-  console.debug("Sort OP");
+  // console.debug("Sort OP");
   return st_operation.nosort
     ? array
     : st_operation.compare
       ? array.sort((a, b) => st_operation.compare(firstEl(a), firstEl(b))) // custom compare operation
       : array.sort((a, b) => {
-          console.debug("Sort: ", a, b);
-          return typeof firstEl(a) === "number" &&
+          // console.debug("Sort: ", a, b);
+        return typeof firstEl(a) === "number" &&
             typeof firstEl(b) === "number"
             ? firstEl(a) - firstEl(b)
             : // A binary string compare does not work. Performanance is very good so HEX is used..  localeCompare is another option.
               Buffer.isBuffer(firstEl(a)) && Buffer.isBuffer(firstEl(b))
               ? strCmp(firstEl(a).toString("hex"), firstEl(b).toString("hex"))
               : strCmp(firstEl(a).toString(), firstEl(b).toString());
-        });
+      });
 };
 
 export default Types;

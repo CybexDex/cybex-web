@@ -11,8 +11,9 @@ import utils from "common/utils";
 import counterpart from "counterpart";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import { RecentTransactions } from "../Account/RecentTransactions";
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 import { ChainStore } from "cybexjs";
+import { ChainConfig } from "cybexjs-ws";
 import { connect } from "alt-react";
 import { checkFeeStatusAsync, checkBalance } from "common/trxHelper";
 import { debounce, isNaN } from "lodash";
@@ -22,28 +23,30 @@ import { Period } from "components/Forms/Period";
 
 import { PublicKeySelector } from "components/Forms/PublicKeySelector";
 
-class Transfer extends React.Component {
+class Transfer extends React.Component<any, any> {
+  nestedRef;
   constructor(props) {
     super(props);
-    this.state = Transfer.getInitialState();
+    let initState: { [s: string]: any } = Transfer.getInitialState();
     let { query } = this.props.location;
-
     if (query.from) {
-      this.state.from_name = query.from;
+      initState.from_name = query.from;
       ChainStore.getAccount(query.from);
     }
     if (query.to) {
-      this.state.to_name = query.to;
+      initState.to_name = query.to;
       ChainStore.getAccount(query.to);
     }
-    if (query.amount) this.state.amount = query.amount;
+    if (query.amount) initState.amount = query.amount;
     if (query.asset) {
-      this.state.asset_id = query.asset;
-      this.state.asset = ChainStore.getAsset(query.asset);
+      initState.asset_id = query.asset;
+      initState.asset = ChainStore.getAsset(query.asset);
     }
-    if (query.memo) this.state.memo = query.memo;
+    if (query.memo) initState.memo = query.memo;
     let currentAccount = AccountStore.getState().currentAccount;
-    if (!this.state.from_name) this.state.from_name = currentAccount;
+    if (!initState.from_name) initState.from_name = currentAccount;
+
+    this.state = initState;
     this.onTrxIncluded = this.onTrxIncluded.bind(this);
 
     this._updateFee = debounce(this._updateFee.bind(this), 250);
@@ -598,7 +601,7 @@ class Transfer extends React.Component {
               />
               <textarea
                 style={{ marginBottom: 0 }}
-                rows="1"
+                rows={1}
                 value={memo}
                 tabIndex={tabIndex++}
                 onChange={this.onMemoChanged.bind(this)}
@@ -674,16 +677,31 @@ class Transfer extends React.Component {
                             allows adjusting of the memo to / from parameters.
                         */}
             {propose ? (
-              <div className="full-width-content form-group transfer-input">
-                <label className="left-label">
-                  <Translate content="account.propose_from" />
-                </label>
-                <AccountSelect
-                  account_names={AccountStore.getMyAccounts()}
-                  onChange={this.onProposeAccount.bind(this)}
-                  tabIndex={tabIndex++}
-                />
-              </div>
+              <>
+                <div className="full-width-content form-group transfer-input">
+                  <label className="left-label">
+                    <Translate content="account.propose_from" />
+                  </label>
+                  <AccountSelect
+                    account_names={AccountStore.getMyAccounts()}
+                    onChange={this.onProposeAccount.bind(this)}
+                    tabIndex={tabIndex++}
+                  />
+                </div>
+                <div className="full-width-content form-group transfer-input">
+                  <label className="left-label">
+                    <Translate content="proposal.expires" />
+                  </label>
+                  <Period
+                    disabled={!propose}
+                    className="period-horizontal"
+                    defaultPeriod={ChainConfig.expire_in_secs_proposal}
+                    name="expires"
+                    tabIndex={(tabIndex += 2)}
+                    onPeriodChange={time => ChainConfig.setProposalExpire(time)}
+                  />
+                </div>
+              </>
             ) : null}
 
             {/*  S E N D  B U T T O N  */}
@@ -725,14 +743,17 @@ class Transfer extends React.Component {
   }
 }
 
-export default connect(Transfer, {
-  listenTo() {
-    return [AccountStore];
-  },
-  getProps() {
-    return {
-      currentAccount: AccountStore.getState().currentAccount,
-      passwordAccount: AccountStore.getState().passwordAccount
-    };
+export default connect(
+  Transfer,
+  {
+    listenTo() {
+      return [AccountStore];
+    },
+    getProps() {
+      return {
+        currentAccount: AccountStore.getState().currentAccount,
+        passwordAccount: AccountStore.getState().passwordAccount
+      };
+    }
   }
-});
+);

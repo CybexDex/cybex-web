@@ -139,6 +139,10 @@
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@types/d3-time/-/d3-time-1.0.7.tgz#4266d7c9be15fa81256a88d1d052d61cd8dc572c"
 
+"@types/fingerprintjs2@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@types/fingerprintjs2/-/fingerprintjs2-1.5.2.tgz#0c139038259042686579b2a4c2155421ad2914c5"
+
 "@types/history@^3":
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-3.2.2.tgz#b6affa240cb10b5f841c6443d8a24d7f3fc8bb0c"

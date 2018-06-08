@@ -9,7 +9,6 @@ import BindToChainState from "../Utility/BindToChainState";
 import FormattedAsset from "../Utility/FormattedAsset";
 import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";
 import { ChainStore, ChainTypes as grapheneChainTypes } from "cybexjs";
-import { ExplorerNav } from "../Explorer/ExplorerNav";
 
 const { operations } = grapheneChainTypes;
 let ops = Object.keys(operations);
@@ -202,7 +201,6 @@ class Fees extends React.Component {
 
     return (
       <div className="grid-block page-layout">
-        {/* <ExplorerNav /> */}
         <div className="grid-block vertical" style={{ overflow: "visible" }}>
           <div
             className="grid-block small-12 shrink"

@@ -12,7 +12,6 @@ import { connect } from "alt-react";
 import SettingsActions from "actions/SettingsActions";
 import SettingsStore from "stores/SettingsStore";
 import classNames from "classnames";
-import { ExplorerNav } from "./ExplorerNav";
 
 require("./witnesses.scss");
 
@@ -414,7 +413,6 @@ class Witnesses extends React.Component {
 
     return (
       <div className="grid-block">
-        {/* <ExplorerNav /> */}
         <div className="grid-block page-layout">
           <div className="grid-block vertical small-5 medium-3">
             <div className="grid-content">

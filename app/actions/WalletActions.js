@@ -60,6 +60,9 @@ class WalletActions {
       "active",
       password
     );
+
+    cap.fp = SettingsStore.getState().fp;
+    console.debug("Finger Print: ", cap);
     console.log("create account:", account_name);
     console.log(
       "new active pubkey",
@@ -159,6 +162,8 @@ class WalletActions {
       //this.actions.brainKeyAccountCreateError( error )
       return Promise.reject(error);
     }
+    cap.fp = SettingsStore.getState().fp;
+
     let owner_private = WalletDb.generateNextKey();
     let active_private = WalletDb.generateNextKey();
     //let memo_private = WalletDb.generateNextKey()

@@ -9,7 +9,6 @@ import { debounce } from "lodash";
 import ChainTypes from "../Utility/ChainTypes";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "../Utility/BalanceComponent";
-import { ExplorerNav } from "./ExplorerNav";
 
 class AccountRow extends React.Component {
   static propTypes = {
@@ -100,7 +99,6 @@ class Accounts extends React.Component {
 
     return (
       <div className="grid-block page-layout">
-        {/* <ExplorerNav /> */}
         <div className="grid-block vertical medium-6 medium-offset-3">
           <div className="grid-content shrink">
             <Translate component="h3" content="explorer.accounts.title" />

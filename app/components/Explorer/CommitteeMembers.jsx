@@ -10,7 +10,6 @@ import Translate from "react-translate-component";
 import { connect } from "alt-react";
 import SettingsActions from "actions/SettingsActions";
 import SettingsStore from "stores/SettingsStore";
-import { ExplorerNav } from "./ExplorerNav";
 
 class CommitteeMemberCard extends React.Component {
   static propTypes = {
@@ -352,7 +351,6 @@ class CommitteeMembers extends React.Component {
 
     return (
       <div className="grid-block">
-        {/* <ExplorerNav /> */}
         <div className="grid-block page-layout vertical medium-horizontal">
           {/* <div className="grid-block shrink">
                         <div className="grid-content">

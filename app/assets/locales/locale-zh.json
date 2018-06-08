@@ -1655,9 +1655,9 @@
   "proposal": {
     "transfer": "从账户{from}发送{amount}到{to}, 锁定期为{vesting}",
     "limit_order_create":
-      "为账户%(account)s下单，买入%(buy_amount)s，挂出%(sell_amount)s",
-    "limit_order_sell": "为账户%(account)s下单，以价格{price}卖出%(amount)s",
-    "limit_order_buy": "为账户%(account)s下单，以价格{price}买入%(amount)s",
+      "为账户 {account} 下单，买入{buy_amount}，挂出{sell_amount}",
+    "limit_order_sell": "为账户 {account} 下单，以价格{price}卖出 {amount}",
+    "limit_order_buy": "为账户{account} 下单，以价格{price}买入 {amount}",
     "committee_member_update_global_parameters": "{account}更新理事会全局参数",
     "action": "操作",
     "expires": "过期时间",
@@ -1673,7 +1673,7 @@
     },
     "approve": "批准",
     "reject": "否决",
-    "asset_create": "使用账户{account}创建资产%{asset}s",
+    "asset_create": "使用账户{account}创建资产{asset}",
     "asset_update": "使用 {account} 更新 {asset} ",
     "override_transfer": "从 {from} 到 {to} 转账 {amount}， 由 {issuer} 授权",
     "asset_settle": "Request a settlement of",

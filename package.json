@@ -213,6 +213,7 @@
     "@types/d3-interpolate": "^1.1.6",
     "@types/d3-time": "^1.0.7",
     "@types/d3-time-format": "^2.1.0",
+    "@types/fingerprintjs2": "^1.5.2",
     "@types/lodash": "^4.14.92",
     "@types/radium": "^0.24.0",
     "@types/react-dom": "^16.0.5",
