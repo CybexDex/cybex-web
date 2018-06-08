@@ -20,6 +20,8 @@ import marketUtils from "common/market_utils";
 import { connect } from "alt-react";
 import SettingsStore from "stores/SettingsStore";
 
+import { pickContent } from "lib/qtb";
+
 const { operations } = grapheneChainTypes;
 require("./operations.scss");
 
@@ -225,19 +227,7 @@ class Operation extends React.PureComponent<any, any> {
       case "limit_order_create":
         color = "warning";
         let o = op[1];
-        /*
-                marketID = OPEN.ETH_USD
-                if (!inverted) (default)
-                    price = USD / OPEN.ETH
-                    buy / sell OPEN.ETH
-                    isBid = amount_to_sell.asset_symbol = USD
-                    amount = to_receive
-                if (inverted)
-                    price =  OPEN.ETH / USD
-                    buy / sell USD
-                    isBid = amount_to_sell.asset_symbol = OPEN.ETH
-                    amount =
-                */
+
         column = (
           <span>
             <BindToChainState.Wrapper
@@ -257,14 +247,16 @@ class Operation extends React.PureComponent<any, any> {
                   op[1].amount_to_sell,
                   op[1].min_to_receive
                 ];
-
+                let content = pickContent(
+                  base.get("symbol"),
+                  "limit_order_create",
+                  isBid
+                    ? "operation.limit_order_buy"
+                    : "operation.limit_order_sell"
+                );
                 return (
                   <TranslateWithLinks
-                    string={
-                      isBid
-                        ? "operation.limit_order_buy"
-                        : "operation.limit_order_sell"
-                    }
+                    string={content}
                     keys={[
                       { type: "account", value: op[1].seller, arg: "account" },
                       {
@@ -327,27 +319,38 @@ class Operation extends React.PureComponent<any, any> {
 
         column = (
           <span>
-            <TranslateWithLinks
-              string="operation.call_order_update"
-              keys={[
-                {
-                  type: "account",
-                  value: op[1].funding_account,
-                  arg: "account"
-                },
-                {
-                  type: "asset",
-                  value: op[1].delta_debt.asset_id,
-                  arg: "debtSymbol"
-                },
-                { type: "amount", value: op[1].delta_debt, arg: "debt" },
-                {
-                  type: "amount",
-                  value: op[1].delta_collateral,
-                  arg: "collateral"
-                }
-              ]}
-            />
+            <BindToChainState.Wrapper base={op[1].delta_debt.asset_id}>
+              {({ base }) => {
+                let content = pickContent(
+                  base.get("symbol"),
+                  "call_order_update",
+                  "operation.call_order_update"
+                );
+                return (
+                  <TranslateWithLinks
+                    string={content}
+                    keys={[
+                      {
+                        type: "account",
+                        value: op[1].funding_account,
+                        arg: "account"
+                      },
+                      {
+                        type: "asset",
+                        value: op[1].delta_debt.asset_id,
+                        arg: "debtSymbol"
+                      },
+                      { type: "amount", value: op[1].delta_debt, arg: "debt" },
+                      {
+                        type: "amount",
+                        value: op[1].delta_collateral,
+                        arg: "collateral"
+                      }
+                    ]}
+                  />
+                );
+              }}
+            </BindToChainState.Wrapper>
           </span>
         );
         break;
@@ -538,13 +541,24 @@ class Operation extends React.PureComponent<any, any> {
         color = "warning";
         column = (
           <span>
-            <TranslateWithLinks
-              string="operation.asset_settle"
-              keys={[
-                { type: "account", value: op[1].account, arg: "account" },
-                { type: "amount", value: op[1].amount, arg: "amount" }
-              ]}
-            />
+            <BindToChainState.Wrapper asset={op[1].amount.asset_id}>
+              {({ asset }) => {
+                let content = pickContent(
+                  asset.get("symbol"),
+                  "asset_settle",
+                  "operation.asset_settle"
+                );
+                return (
+                  <TranslateWithLinks
+                    string={content}
+                    keys={[
+                      { type: "account", value: op[1].account, arg: "account" },
+                      { type: "amount", value: op[1].amount, arg: "amount" }
+                    ]}
+                  />
+                );
+              }}
+            </BindToChainState.Wrapper>
           </span>
         );
         break;
@@ -762,32 +776,6 @@ class Operation extends React.PureComponent<any, any> {
       case "fill_order":
         color = "success";
         o = op[1];
-
-        /*
-                marketID = OPEN.ETH_USD
-                if (!inverted) (default)
-                    price = USD / OPEN.ETH
-                    buy / sell OPEN.ETH
-                    isBid = amount_to_sell.asset_symbol = USD
-                    amount = to_receive
-                if (inverted)
-                    price =  OPEN.ETH / USD
-                    buy / sell USD
-                    isBid = amount_to_sell.asset_symbol = OPEN.ETH
-                    amount =
-
-                    const {marketID, first, second} = marketUtils.getMarketID(base, quote);
-                    const inverted = this.props.marketDirections.get(marketID);
-                    // const paySymbol = base.get("symbol");
-                    // const receiveSymbol = quote.get("symbol");
-
-                    const isBid = o.amount_to_sell.asset_id === (inverted ? first.get("id") : second.get("id"));
-
-                    let priceBase = (isBid) ? o.amount_to_sell : o.min_to_receive;
-                    let priceQuote = (isBid) ? o.min_to_receive : o.amount_to_sell;
-                    const amount = isBid ? op[1].min_to_receive : op[1].amount_to_sell;
-                */
-
         column = (
           <span>
             <BindToChainState.Wrapper
@@ -801,8 +789,6 @@ class Operation extends React.PureComponent<any, any> {
                 );
                 const isBid = o.pays.asset_id === second.get("id");
 
-                // const paySymbol = base.get("symbol");
-                // const receiveSymbol = quote.get("symbol");
                 let priceBase = isBid ? o.receives : o.pays;
                 let priceQuote = isBid ? o.pays : o.receives;
                 let amount = isBid ? o.receives : o.pays;
@@ -810,10 +796,14 @@ class Operation extends React.PureComponent<any, any> {
                   o.fee.asset_id === amount.asset_id
                     ? amount.amount - o.fee.amount
                     : amount.amount;
-
+                let content = pickContent(
+                  base.get("symbol"),
+                  "fill_order",
+                  `operation.fill_order_${isBid ? "buy" : "sell"}`
+                );
                 return (
                   <TranslateWithLinks
-                    string={`operation.fill_order_${isBid ? "buy" : "sell"}`}
+                    string={content}
                     keys={[
                       {
                         type: "account",
@@ -1124,15 +1114,18 @@ class Operation extends React.PureComponent<any, any> {
   }
 }
 
-Operation = connect(Operation, {
-  listenTo() {
-    return [SettingsStore];
-  },
-  getProps() {
-    return {
-      marketDirections: SettingsStore.getState().marketDirections
-    };
+Operation = connect(
+  Operation,
+  {
+    listenTo() {
+      return [SettingsStore];
+    },
+    getProps() {
+      return {
+        marketDirections: SettingsStore.getState().marketDirections
+      };
+    }
   }
-});
+);
 
 export default Operation;

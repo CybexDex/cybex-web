@@ -9,6 +9,11 @@ import Translate from "react-translate-component";
 import { getClassName } from "utils";
 
 const styles = {
+  hover: {
+    ":hover": {
+      filter: "brightness(1.2)"
+    }
+  },
   base: {
     display: "flex",
     alignItems: "center",
@@ -48,7 +53,13 @@ let NavItem = ({
       id={id}
       href={linkTo || "javascript:;"}
       className={getClassName("", { active })}
-      style={[active && styles.active, !!children && styles.toggle] as any}
+      style={
+        [
+          styles.hover,
+          active && styles.active,
+          !!children && styles.toggle
+        ] as any
+      }
       onClick={e => {
         e.preventDefault();
         onClick(e);

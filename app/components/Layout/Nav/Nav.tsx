@@ -226,16 +226,20 @@ export class Nav extends React.PureComponent<
             ];
           })}
           {/* Logout Button */}
-          {/* {currentAccount && (
+          {
             <NavItem
-              {...logoutItem}
+              name="worldcup"
               key={getNavId(logoutItem.id)}
               id={getNavId(logoutItem.id)}
-              hideIcon={!isVertical}
-              hideLabel={isVertical}
-              onClick={this.logout}
+              hideIcon
+              onClick={() =>
+                window.open(
+                  "https://2018.cybex.io",
+                  "_blank"
+                )
+              }
             />
-          )} */}
+          }
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>
@@ -243,22 +247,25 @@ export class Nav extends React.PureComponent<
   }
 }
 
-const NavWithProps = connect(Nav, {
-  listenTo() {
-    return [AccountStore, SettingsStore];
-  },
-  getProps() {
-    const chainID = Apis.instance().chain_id;
-    return {
-      settings: SettingsStore.getState().settings,
-      currentAccount:
-        AccountStore.getState().currentAccount ||
-        AccountStore.getState().passwordAccount,
-      lastMarket: SettingsStore.getState().viewSettings.get(
-        `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
-      )
-    };
+const NavWithProps = connect(
+  Nav,
+  {
+    listenTo() {
+      return [AccountStore, SettingsStore];
+    },
+    getProps() {
+      const chainID = Apis.instance().chain_id;
+      return {
+        settings: SettingsStore.getState().settings,
+        currentAccount:
+          AccountStore.getState().currentAccount ||
+          AccountStore.getState().passwordAccount,
+        lastMarket: SettingsStore.getState().viewSettings.get(
+          `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
+        )
+      };
+    }
   }
-});
+);
 
 export default withRouter(NavWithProps);

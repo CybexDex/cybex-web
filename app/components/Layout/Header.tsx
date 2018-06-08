@@ -33,6 +33,7 @@ import LogoutModal, {
 } from "components/Modal/LogoutModal";
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
+import { CybexLogo } from "./Logo";
 
 const FlagImage = ({ flag, width = 20, height = 20 }) => {
   return (
@@ -254,12 +255,12 @@ class Header extends React.Component<any, any> {
           paddingBottom: 18,
           flex: "0 0 auto"
         }}
-        className={cnames({
-          active: active === "/" || active.indexOf("dashboard") !== -1
-        })}
         onClick={this._onNavigate.bind(this, "/dashboard")}
       >
-        <img style={{ margin: 0, height: 20, marginLeft: 6 }} src={logo} />
+        <CybexLogo
+          isActive={active === "/" || active.indexOf("dashboard") === 1}
+          style={{ margin: 0, height: 20, marginLeft: 6 }}
+        />
       </a>
     );
 
@@ -509,36 +510,39 @@ class Header extends React.Component<any, any> {
   }
 }
 
-export default connect(Header, {
-  listenTo() {
-    return [
-      AccountStore,
-      WalletUnlockStore,
-      WalletManagerStore,
-      SettingsStore,
-      MarketsStore,
-      ContextMenuStore,
-      VolumnStore
-    ];
-  },
-  getProps() {
-    const chainID = Apis.instance().chain_id;
-    return {
-      contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],
-      linkedAccounts: AccountStore.getState().linkedAccounts,
-      currentAccount:
-        AccountStore.getState().currentAccount ||
-        AccountStore.getState().passwordAccount,
-      locked: WalletUnlockStore.getState().locked,
-      current_wallet: WalletManagerStore.getState().current_wallet,
-      lastMarket: SettingsStore.getState().viewSettings.get(
-        `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
-      ),
-      vol: VolumnStore.getState(),
-      starredAccounts: AccountStore.getState().starredAccounts,
-      passwordLogin: SettingsStore.getState().settings.get("passwordLogin"),
-      currentLocale: SettingsStore.getState().settings.get("locale"),
-      locales: SettingsStore.getState().defaults.locale
-    };
+export default connect(
+  Header,
+  {
+    listenTo() {
+      return [
+        AccountStore,
+        WalletUnlockStore,
+        WalletManagerStore,
+        SettingsStore,
+        MarketsStore,
+        ContextMenuStore,
+        VolumnStore
+      ];
+    },
+    getProps() {
+      const chainID = Apis.instance().chain_id;
+      return {
+        contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],
+        linkedAccounts: AccountStore.getState().linkedAccounts,
+        currentAccount:
+          AccountStore.getState().currentAccount ||
+          AccountStore.getState().passwordAccount,
+        locked: WalletUnlockStore.getState().locked,
+        current_wallet: WalletManagerStore.getState().current_wallet,
+        lastMarket: SettingsStore.getState().viewSettings.get(
+          `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
+        ),
+        vol: VolumnStore.getState(),
+        starredAccounts: AccountStore.getState().starredAccounts,
+        passwordLogin: SettingsStore.getState().settings.get("passwordLogin"),
+        currentLocale: SettingsStore.getState().settings.get("locale"),
+        locales: SettingsStore.getState().defaults.locale
+      };
+    }
   }
-});
+);

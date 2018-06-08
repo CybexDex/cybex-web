@@ -1,0 +1,49 @@
+import * as React from "react";
+import Radium from "radium";
+
+const logoLong =
+  "data:image/png;base64,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";
+const logoLongGrey =
+  "data:image/png;base64,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";
+const logo = require("assets/logo-text.png");
+
+const $style = {
+  base: {
+    ":hover": {
+      filter: "brightness(1.3)"
+    }
+  },
+  short: {
+    clipPath: "polygon(0% 0%, 33% 0%, 33% 100%, 0% 100%)"
+  },
+  bright: {
+    filter: "brightness(1.3)"
+  }
+};
+
+export const CybexLogo = Radium(
+  ({
+    isShort = false,
+    isActive = false,
+    onClick = () => void 0,
+    style = {}
+  }) => {
+    return (
+      <img
+        src={logo}
+        style={
+          [
+            $style.base,
+            isShort && $style.short,
+            isActive && $style.bright,
+            style
+          ] as any
+        }
+        className="clickable"
+        onClick={onClick}
+        alt="Cybex Dashboard"
+      />
+    );
+  }
+);
+export default CybexLogo;
