@@ -4,6 +4,7 @@ import { Apis } from "cybexjs-ws";
 import { debugGen } from "utils//Utils";
 import { correctMarketPair } from "utils/Market";
 import { PRICE_API } from "api/apiConfig";
+import { MARKETS } from "stores/SettingsStore";
 
 type OuterPrice = {
   name: string;
@@ -68,10 +69,12 @@ async function getVol(quote?, base?) {
 
 async function statVolume() {
   if (!Apis.instance().db_api()) return;
-  let assets = await Apis.instance()
-    .db_api()
-    .exec("list_assets", ["", 100]);
-  let assetSymbols = assets.map(asset => asset.symbol);
+  // let assets = await Apis.instance()
+  //   .db_api()
+  //   .exec("list_assets", ["", 100]);
+  // let assets = MARKETS;
+  // console.debug("Asest: ", assets);
+  let assetSymbols = MARKETS;
   let rawPairs = assetSymbols.reduce((allPairs, next, i, arr) => {
     arr.forEach(symbol => {
       if (symbol !== next) {
@@ -151,7 +154,6 @@ class VolumnActions {
           for (let price of outer.prices) {
             priceSet[price.name] = parseFloat(price.value.toFixed(2));
           }
-          // console.debug("Final: ", priceSet);
           return priceSet;
         }
       })

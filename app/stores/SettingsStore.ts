@@ -6,8 +6,36 @@ import { merge } from "lodash";
 import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
-import * as FingerPrint  from "fingerprintjs2";
+import * as FingerPrint from "fingerprintjs2";
 import { AbstractStore } from "./AbstractStore";
+
+export const MARKETS = [
+  // Main Net
+  "CYB",
+  "JADE.MT",
+  "JADE.ETH",
+  "JADE.BTC",
+  "JADE.EOS",
+  "JADE.LTC",
+  // "JADE.LHC",
+  "JADE.INK",
+  "JADE.BAT",
+  "JADE.VEN",
+  "JADE.OMG",
+  "JADE.SNT",
+  "JADE.NAS",
+  "JADE.KNC",
+  "JADE.PAY",
+  "JADE.GET",
+  "JADE.MAD",
+  "JADE.GNX",
+  "JADE.KEY",
+  "JADE.TCT",
+  "JADE.USDT",
+  "JADE.DPY",
+  // "JADE.LST",
+  "JADE.ENG"
+];
 
 const CORE_ASSET = "CYB"; // Setting this to CYB to prevent loading issues when used with CYB chain which is the most usual case currently
 
@@ -166,35 +194,10 @@ class SettingsStore extends AbstractStore<any> {
       let fp = new FingerPrint().get(result => {
         this.fp = result;
       });
-      
+
       // Default markets setup
       let topMarkets = {
-        markets_90be01e8: [
-          // Main Net
-          "CYB",
-          "JADE.MT",
-          "JADE.ETH",
-          "JADE.BTC",
-          "JADE.EOS",
-          "JADE.LTC",
-          // "JADE.LHC",
-          "JADE.INK",
-          "JADE.BAT",
-          "JADE.VEN",
-          "JADE.OMG",
-          "JADE.SNT",
-          "JADE.NAS",
-          "JADE.KNC",
-          "JADE.PAY",
-          "JADE.GET",
-          "JADE.MAD",
-          "JADE.GNX",
-          "JADE.KEY",
-          "JADE.TCT",
-          "JADE.DPY",
-          // "JADE.LST",
-          "JADE.ENG"
-        ]
+        markets_90be01e8: MARKETS
       };
 
       let bases = {

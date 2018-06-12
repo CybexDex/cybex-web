@@ -19,6 +19,8 @@ import ProposedOperation from "./ProposedOperation";
 import marketUtils from "common/market_utils";
 import { connect } from "alt-react";
 import SettingsStore from "stores/SettingsStore";
+import * as humanize from "humanize-duration";
+import IntlStore from "stores/IntlStore";
 
 import { pickContent } from "lib/qtb";
 
@@ -27,6 +29,12 @@ require("./operations.scss");
 
 let ops = Object.keys(operations);
 let listings = account_constants.account_listing;
+
+function getVestingPeriodFromOp(op) {
+  if (!op.extensions || !op.extensions.length || !op.extensions[0][1]) return 0;
+  return op.extensions[0][1]["vesting_period"] || 0;
+}
+const SECONDS_OF_ONE_DAY = 86400000;
 
 class TransactionLabel extends React.PureComponent<any, any> {
   // shouldComponentUpdate(nextProps) {
@@ -204,6 +212,26 @@ class Operation extends React.PureComponent<any, any> {
         if (op[1].memo) {
           memoComponent = <MemoText memo={op[1].memo} fullLength={true} />;
         }
+        if (op[1].memo) {
+          memoComponent = <MemoText memo={op[1].memo} />;
+        }
+        let humanizeLocals = {
+          zh: "zh_CN",
+          en: "en"
+        };
+        let locale = IntlStore.getState().currentLocale;
+        let vesting = getVestingPeriodFromOp(op[1]);
+        let vestingStr = !vesting
+          ? "none"
+          : humanize(vesting * 1000, {
+              language: humanizeLocals[locale],
+              unitMeasures: {
+                y: 365 * SECONDS_OF_ONE_DAY,
+                mo: 30 * SECONDS_OF_ONE_DAY,
+                w: 7 * SECONDS_OF_ONE_DAY,
+                d: SECONDS_OF_ONE_DAY
+              }
+            });
 
         color = "success";
         op[1].amount.amount = parseFloat(op[1].amount.amount);
@@ -215,7 +243,8 @@ class Operation extends React.PureComponent<any, any> {
               keys={[
                 { type: "account", value: op[1].from, arg: "from" },
                 { type: "amount", value: op[1].amount, arg: "amount" },
-                { type: "account", value: op[1].to, arg: "to" }
+                { type: "account", value: op[1].to, arg: "to" },
+                { value: vestingStr, arg: "vesting" }
               ]}
             />
             {memoComponent}

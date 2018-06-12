@@ -553,7 +553,7 @@
     "pending": " %(blocks)s 个区块待定",
     "no_recent": "近期无交易",
     "reg_account": "{registrar} 注册了账户 {new_account}",
-    "transfer": "{from} 发送 {amount} 到 {to}",
+    "transfer": "{from} 发送 {amount} 到 {to}, 锁定期为{vesting}",
     "proposal_create": "{account} 创建了拟议交易",
     "proposal_update": "{account} 更新了拟议交易",
     "proposal_delete": "{account} 删除了拟议交易",
