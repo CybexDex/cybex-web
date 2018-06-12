@@ -189,7 +189,7 @@ const LogoutModalWapper = connect(
     },
     getProps(props) {
       let { modalId } = props;
-      console.debug("WalletManagerStore: ", WalletManagerStore.getState());
+      // console.debug("WalletManagerStore: ", WalletManagerStore.getState());
       return {
         walletMode: !SettingsStore.getState().settings.get("passwordLogin"),
         walletState: WalletManagerStore.getState(),

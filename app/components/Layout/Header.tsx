@@ -259,7 +259,7 @@ class Header extends React.Component<any, any> {
       >
         <CybexLogo
           isActive={active === "/" || active.indexOf("dashboard") === 1}
-          style={{ margin: 0, height: 20, marginLeft: 6 }}
+          style={{ margin: "0 0 0 6px", height: 20 }}
         />
       </a>
     );

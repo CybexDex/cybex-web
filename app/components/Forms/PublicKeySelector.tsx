@@ -70,7 +70,7 @@ class PublicKeySelector extends React.PureComponent<{ account: Map<string, any>,
     let { account, disabled } = nextProps;
     let keys = account ? account.getIn(["active", "key_auths"]).toJS() : [];
     if (this.props.account !== account) {
-      if (keys.length > 1) {
+      if (keys.length > 1 || !keys.length) {
         this.key = "";
         this.setState({
           keys,

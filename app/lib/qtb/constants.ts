@@ -5,6 +5,7 @@ export const QTB_ASSETS = new Set([
   "QTBNST",
   "QTBSOU",
   "WON",
+  "HDP",
   "GLN"
 ]);
 export const OPERATIONS = {

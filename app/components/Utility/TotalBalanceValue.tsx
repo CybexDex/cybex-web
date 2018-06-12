@@ -13,6 +13,7 @@ import { List } from "immutable";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import { MarketStatsCheck } from "./EquivalentPrice";
+import { isFootballAsset } from "qtb";
 
 /**
  *  Given an asset amount, displays the equivalent value in baseAsset if possible
@@ -24,7 +25,7 @@ import { MarketStatsCheck } from "./EquivalentPrice";
  *  -'fullPrecision' boolean to tell if the amount uses the full precision of the asset
  */
 
-class TotalValue extends MarketStatsCheck {
+let TotalValue = class extends MarketStatsCheck {
   static propTypes = {
     fromAssets: ChainTypes.ChainAssetsList.isRequired,
     toAsset: ChainTypes.ChainAsset.isRequired,
@@ -39,8 +40,8 @@ class TotalValue extends MarketStatsCheck {
     coreAsset: "1.3.0"
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   shouldComponentUpdate(np) {
@@ -103,7 +104,7 @@ class TotalValue extends MarketStatsCheck {
 
   render() {
     let {
-      fromAssets,
+      fromAssets: _formAssets,
       toAsset,
       balances,
       marketStats,
@@ -117,7 +118,9 @@ class TotalValue extends MarketStatsCheck {
     if (!coreAsset || !toAsset) {
       return null;
     }
-
+    let fromAssets = _formAssets.filter(
+      asset => asset && !isFootballAsset(asset.get("symbol"))
+    );
     let assets = {};
     fromAssets.forEach(asset => {
       if (asset) {
@@ -131,6 +134,11 @@ class TotalValue extends MarketStatsCheck {
     // Collateral value
     for (let asset in collateral) {
       let fromAsset = assets[asset];
+      // Hide For Wcup
+      let fromAssetMap = ChainStore.getAsset(fromAsset);
+      if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
+        continue;
+      }
       if (fromAsset) {
         let collateralValue = this._convertValue(
           collateral[asset],
@@ -151,6 +159,11 @@ class TotalValue extends MarketStatsCheck {
     // Open orders value
     for (let asset in openOrders) {
       let fromAsset = assets[asset];
+      // Hide For Wcup
+      let fromAssetMap = ChainStore.getAsset(fromAsset);
+      if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
+        continue;
+      }
       if (fromAsset) {
         let orderValue = this._convertValue(
           openOrders[asset],
@@ -171,6 +184,11 @@ class TotalValue extends MarketStatsCheck {
     // Debt value
     for (let asset in debt) {
       let fromAsset = assets[asset];
+      // Hide For Wcup
+      let fromAssetMap = ChainStore.getAsset(fromAsset);
+      if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
+        continue;
+      }
       if (fromAsset) {
         let debtValue = this._convertValue(
           debt[asset],
@@ -191,6 +209,10 @@ class TotalValue extends MarketStatsCheck {
     // Balance value
     balances.forEach(balance => {
       let fromAsset = assets[balance.asset_id];
+      let fromAssetMap = ChainStore.getAsset(balance.asset_id);
+      if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
+        return;
+      }
       if (fromAsset) {
         let eqValue =
           fromAsset !== toAsset
@@ -318,30 +340,33 @@ class TotalValue extends MarketStatsCheck {
       );
     }
   }
-}
+};
 TotalValue = BindToChainState(TotalValue, { keep_updating: true });
 
-class ValueStoreWrapper extends React.Component {
+let ValueStoreWrapper = class extends React.Component<any, any> {
   render() {
     let preferredUnit = this.props.settings.get("unit") || "1.3.0";
 
     return <TotalValue {...this.props} toAsset={preferredUnit} />;
   }
-}
+};
 
-ValueStoreWrapper = connect(ValueStoreWrapper, {
-  listenTo() {
-    return [MarketsStore, SettingsStore];
-  },
-  getProps() {
-    return {
-      marketStats: MarketsStore.getState().allMarketStats,
-      settings: SettingsStore.getState().settings
-    };
+ValueStoreWrapper = connect(
+  ValueStoreWrapper,
+  {
+    listenTo() {
+      return [MarketsStore, SettingsStore];
+    },
+    getProps() {
+      return {
+        marketStats: MarketsStore.getState().allMarketStats,
+        settings: SettingsStore.getState().settings
+      };
+    }
   }
-});
+);
 
-class TotalBalanceValue extends React.Component {
+let TotalBalanceValue = class extends React.Component<any, any> {
   static propTypes = {
     balances: ChainTypes.ChainObjectsList
   };
@@ -368,19 +393,19 @@ class TotalBalanceValue extends React.Component {
     });
 
     for (let asset in collateral) {
-      if (!assets.has(asset)) {
+      if (!assets.has(asset as any)) {
         assets = assets.push(asset);
       }
     }
 
     for (let asset in debt) {
-      if (!assets.has(asset)) {
+      if (!assets.has(asset as any)) {
         assets = assets.push(asset);
       }
     }
 
     for (let asset in openOrders) {
-      if (!assets.has(asset)) {
+      if (!assets.has(asset as any)) {
         assets = assets.push(asset);
       }
     }
@@ -399,12 +424,12 @@ class TotalBalanceValue extends React.Component {
       />
     );
   }
-}
+};
 TotalBalanceValue = BindToChainState(TotalBalanceValue, {
   keep_updating: true
 });
 
-class AccountWrapper extends React.Component {
+let AccountWrapper = class extends React.Component<any, any> {
   static propTypes = {
     accounts: ChainTypes.ChainAccountsList.isRequired
   };
@@ -507,8 +532,8 @@ class AccountWrapper extends React.Component {
       );
     }
   }
-}
+};
 AccountWrapper = BindToChainState(AccountWrapper, { keep_updating: true });
 
-TotalBalanceValue.AccountWrapper = AccountWrapper;
+(TotalBalanceValue as any).AccountWrapper = AccountWrapper;
 export default TotalBalanceValue;

@@ -11,6 +11,7 @@ import SettingsStore from "stores/SettingsStore";
 import SettingsActions from "actions/SettingsActions";
 import marketUtils from "common/market_utils";
 import { correctMarketPairMap } from "utils/Market";
+import { isFootballAsset } from "qtb";
 
 let AccountOrders = class extends React.Component<any, any> {
   _cancelLimitOrder(orderID, e) {
@@ -48,9 +49,16 @@ let AccountOrders = class extends React.Component<any, any> {
       if (!assetA || !assetB) {
         return null;
       }
+      // console.debug("Asset: ", assetA.get("symbol"))
+      if (
+        isFootballAsset(assetA.get("symbol")) ||
+        isFootballAsset(assetB.get("symbol"))
+      ) {
+        return null;
+      }
       // To Debug 不理解
       let { base, quote } = correctMarketPairMap(assetA, assetB);
-      
+
       if (base && quote) {
         let assets = {
           [base.get("id")]: { precision: base.get("precision") },

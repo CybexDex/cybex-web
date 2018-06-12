@@ -1,5 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
-
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import utils from "common/utils";
 import ChainTypes from "./ChainTypes";
@@ -9,17 +9,16 @@ import SettingsStore from "stores/SettingsStore";
 import FormattedPrice from "./FormattedPrice";
 import MarketsActions from "actions/MarketsActions";
 import MarketsStore from "stores/MarketsStore";
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 
-export class MarketStatsCheck extends React.Component {
-  constructor() {
-    super();
-
-    this.fromStatsIntervals = {};
-    this.toStatsInterval = null;
+export class MarketStatsCheck extends React.Component<any, any> {
+  fromStatsIntervals = {};
+  toStatsInterval = null;
+  constructor(props) {
+    super(props);
   }
 
-  _checkStats(newStats = { close: {} }, oldStats = { close: {} }) {
+  _checkStats(newStats: any = { close: {} }, oldStats: any = { close: {} }) {
     return (
       newStats.volumeBase !== oldStats.volumeBase ||
       !utils.are_equal_shallow(
@@ -112,7 +111,7 @@ export class MarketStatsCheck extends React.Component {
   }
 }
 
-class EquivalentPrice extends MarketStatsCheck {
+let EquivalentPrice = class extends MarketStatsCheck {
   static propTypes = {
     toAsset: ChainTypes.ChainAsset.isRequired,
     fromAsset: ChainTypes.ChainAsset.isRequired,
@@ -131,15 +130,15 @@ class EquivalentPrice extends MarketStatsCheck {
 
   componentD;
 
-  shouldComponentUpdate(np, nextState) {
-    return (
-      super.shouldComponentUpdate(np) ||
-      np.base_amount !== this.props.base_amount ||
-      np.quote_amount !== this.props.quote_amount ||
-      np.decimals !== this.props.decimals ||
-      !utils.are_equal_shallow(nextState, this.state)
-    );
-  }
+  // shouldComponentUpdate(np, nextState) {
+  //   return (
+  //     super.shouldComponentUpdate(np) ||
+  //     np.base_amount !== this.props.base_amount ||
+  //     np.quote_amount !== this.props.quote_amount ||
+  //     np.decimals !== this.props.decimals ||
+  //     !utils.are_equal_shallow(nextState, this.state)
+  //   );
+  // }
 
   getFinalPrice(real = false) {
     const { coreAsset, fromAsset, toAsset, marketStats } = this.props;
@@ -197,11 +196,11 @@ class EquivalentPrice extends MarketStatsCheck {
       />
     );
   }
-}
+};
 
 EquivalentPrice = BindToChainState(EquivalentPrice);
 
-export default class EquivalentPriceWrapper extends React.Component {
+export default class EquivalentPriceWrapper extends React.Component<any, any> {
   render() {
     return (
       <AltContainer

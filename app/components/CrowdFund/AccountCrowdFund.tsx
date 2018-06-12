@@ -30,8 +30,8 @@ type Fund = {
 };
 
 type CrowdFundProps = {
-  allFunds: immutable.List<Fund>;
-  partiCrowds: immutable.List<any>;
+  allFunds?: immutable.List<Fund>;
+  partiCrowds?: immutable.List<any>;
   account: immutable.Map<any, any>;
   notification?: any
 };

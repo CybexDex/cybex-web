@@ -39,6 +39,7 @@ import { AccountVestedBalances } from "components/Account/AccountVestedBalances"
 import CrowdFund from "components/CrowdFund/AccountCrowdFund";
 import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
 import { JadePool } from "services/GatewayConfig";
+import { isFootballAsset } from "qtb";
 
 const sortFunctions = {
   alphabetic: function(a, b, force) {
@@ -72,7 +73,7 @@ const sortFunctions = {
   }
 };
 
-class AccountOverview extends React.Component {
+let AccountOverview = class extends React.Component<any, any> {
   static propTypes = {
     balanceAssets: ChainTypes.ChainAssetsList,
     core_asset: ChainTypes.ChainAsset.isRequired
@@ -81,9 +82,11 @@ class AccountOverview extends React.Component {
   static defaultProps = {
     core_asset: "1.3.0"
   };
-
+  priceRefs = {};
+  valueRefs = {};
+  changeRefs = {};
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       sortKey: props.viewSettings.get("portfolioSort", "totalValue"),
       sortDirection: props.viewSettings.get("portfolioSortDirection", true), // alphabetical A -> B, numbers high to low
@@ -108,9 +111,7 @@ class AccountOverview extends React.Component {
 
     // this.tableHeightMountInterval = tableHeightHelper.tableHeightMountInterval.bind(this);
     // this.adjustHeightOnChangeTab = tableHeightHelper.adjustHeightOnChangeTab.bind(this);
-    this.priceRefs = {};
-    this.valueRefs = {};
-    this.changeRefs = {};
+
     for (let key in this.sortFunctions) {
       this.sortFunctions[key] = this.sortFunctions[key].bind(this);
     }
@@ -155,8 +156,8 @@ class AccountOverview extends React.Component {
       if (aRef && bRef) {
         let aValue = aRef.getValue();
         let bValue = bRef.getValue();
-        let aChange = parseFloat(aValue) != "NaN" ? parseFloat(aValue) : aValue;
-        let bChange = parseFloat(bValue) != "NaN" ? parseFloat(bValue) : bValue;
+        let aChange = parseFloat(aValue) || aValue;
+        let bChange = parseFloat(bValue) || bValue;
         let direction =
           typeof this.state.sortDirection !== "undefined"
             ? this.state.sortDirection
@@ -221,7 +222,7 @@ class AccountOverview extends React.Component {
       settleAsset: id
     });
 
-    this.refs.settlement_modal.show();
+    (this.refs.settlement_modal as any).show();
   }
 
   _hideAsset(asset, status) {
@@ -254,7 +255,7 @@ class AccountOverview extends React.Component {
     this.props.router.push(route);
   }
 
-  _renderBalances(balanceList, optionalAssets, visible) {
+  _renderBalances(balanceList, optionalAssets, visible?) {
     const { core_asset } = this.props;
     let { settings, hiddenAssets, orders } = this.props;
     let preferredUnit = settings.get("unit") || core_asset.get("symbol");
@@ -281,7 +282,7 @@ class AccountOverview extends React.Component {
           <a
             onClick={() => {
               ReactTooltip.hide();
-              this.refs[modalRef].show();
+              (this.refs[modalRef] as any).show();
             }}
           >
             <Icon name="dollar" className="icon-14px" />
@@ -303,6 +304,11 @@ class AccountOverview extends React.Component {
       if (!asset) return null;
 
       const assetName = asset.get("symbol");
+      console.debug("AssetName: ", assetName);
+      // Hide for Wcup
+      // if (isFootballAsset(assetName)) {
+      //   return null;
+      // }
       const notCore = asset.get("id") !== "1.3.0";
       const notCorePrefUnit = preferredUnit !== core_asset.get("symbol");
 
@@ -341,7 +347,10 @@ class AccountOverview extends React.Component {
 
       /* Popover content */
       settleLink = (
-        <a href onClick={this._onSettleAsset.bind(this, asset.get("id"))}>
+        <a
+          href="javascript:;"
+          onClick={this._onSettleAsset.bind(this, asset.get("id"))}
+        >
           <Icon name="settle" className="icon-14px" />
         </a>
       );
@@ -579,7 +588,7 @@ class AccountOverview extends React.Component {
                   </td>
                   <td />
                   <td />
-                  <td className="column-hide-small" colSpan="2" />
+                  <td className="column-hide-small" colSpan={2} />
                   <td style={{ textAlign: "center" }}>
                     {canBuy && this.props.isMyAccount ? (
                       <span>
@@ -743,8 +752,13 @@ class AccountOverview extends React.Component {
       // Filter out balance objects that have 0 balance or are not included in open orders
       // console.debug("Account_Balances: ", account_balances);
       account_balances = account_balances.filter((a, index) => {
-        // console.debug("Account_Balances: ", a, index);
         let balanceObject = ChainStore.getObject(a);
+        // console.debug("BalanceObject: ", balanceObject);
+        // Hide for Wcup
+        let asset = ChainStore.getAsset(balanceObject.get("asset_type"));
+        if (!asset || isFootballAsset(asset.get("symbol"))) {
+          return false;
+        }
         if (
           balanceObject &&
           (!balanceObject.get("balance") && !orders[index])
@@ -845,7 +859,7 @@ class AccountOverview extends React.Component {
         <td className="column-hide-small" style={{ textAlign: "right" }}>
           {portFolioValue}
         </td>
-        <td colSpan="9" />
+        <td colSpan={9} />
       </tr>
     );
 
@@ -1023,43 +1037,46 @@ class AccountOverview extends React.Component {
                   <tbody>
                     <tr className="total-value">
                       <td style={{ textAlign: "center" }}>{totalValueText}</td>
-                      <td colSpan="3" />
+                      <td colSpan={3} />
                       <td style={{ textAlign: "center" }}>{ordersValue}</td>
-                      <td colSpan="1" />
+                      <td colSpan={1} />
                       {this.props.isMyAccount ? <td /> : null}
                     </tr>
                   </tbody>
                 </AccountOrders>
               </Tab>
 
-              <Tab
-                title="account.collaterals"
-                subText={
-                  <span className={this.state.globalMarginStatus}>
-                    {marginValue}
-                  </span>
-                }
-              >
-                <div className="content-block">
-                  <div className="generic-bordered-box">
-                    <MarginPositions
-                      preferredUnit={preferredUnit}
-                      className="dashboard-table"
-                      callOrders={call_orders}
-                      account={account}
-                    >
-                      <tr className="total-value">
-                        <td>{totalValueText}</td>
-                        <td>{debtValue}</td>
-                        <td>{collateralValue}</td>
-                        <td />
-                        <td>{marginValue}</td>
-                        <td colSpan="5" />
-                      </tr>
-                    </MarginPositions>
+              {// Hide for Wcup
+              false && (
+                <Tab
+                  title="account.collaterals"
+                  subText={
+                    <span className={this.state.globalMarginStatus}>
+                      {marginValue}
+                    </span>
+                  }
+                >
+                  <div className="content-block">
+                    <div className="generic-bordered-box">
+                      <MarginPositions
+                        preferredUnit={preferredUnit}
+                        className="dashboard-table"
+                        callOrders={call_orders}
+                        account={account}
+                      >
+                        <tr className="total-value">
+                          <td>{totalValueText}</td>
+                          <td>{debtValue}</td>
+                          <td>{collateralValue}</td>
+                          <td />
+                          <td>{marginValue}</td>
+                          <td colSpan={5} />
+                        </tr>
+                      </MarginPositions>
+                    </div>
                   </div>
-                </div>
-              </Tab>
+                </Tab>
+              )}
               {this.props.isMyAccount && (
                 <Tab title="account.vested">
                   <div className="content-block">
@@ -1120,11 +1137,11 @@ class AccountOverview extends React.Component {
       </div>
     );
   }
-}
+};
 
 AccountOverview = BindToChainState(AccountOverview);
 
-class BalanceWrapper extends React.Component {
+class BalanceWrapper extends React.Component<any, any> {
   static propTypes = {
     balances: ChainTypes.ChainObjectsList,
     orders: ChainTypes.ChainObjectsList

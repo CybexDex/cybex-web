@@ -21,11 +21,11 @@ import {
 } from "cybexjs";
 
 type VestedBalancesProps = {
-  selected_balances: any;
-  account_refs: Immutable.Set<any>;
-  balances: Immutable.Set<any>;
-  claim_account_name: string;
-  loading: boolean;
+  selected_balances?: any;
+  account_refs?: Immutable.Set<any>;
+  balances?: Immutable.Set<any>;
+  claim_account_name?: string;
+  loading?: boolean;
 };
 
 let AccountVestedBalances = class extends React.PureComponent<VestedBalancesProps, any> {
