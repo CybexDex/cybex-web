@@ -320,11 +320,12 @@ class WalletDb extends BaseStore {
     let dictionaryPromise = brainkey_plaintext
       ? null
       : require("common/dictionary.json");
+    // console.debug("DICT: ", dictionaryPromise);
     return Promise.all([dictionaryPromise])
       .then(res => {
         return brainkey_plaintext
           ? walletCreateFct(null)
-          : res[0].json().then(walletCreateFct);
+          : walletCreateFct(dictionaryPromise);
       })
       .catch(err => {
         console.log("unable to fetch dictionary.json", err);

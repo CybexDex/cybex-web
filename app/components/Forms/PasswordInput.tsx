@@ -200,9 +200,9 @@ class PasswordInput extends React.Component<any, any> {
               autoComplete="off"
               onChange={this.handleChange}
             />
-            {confirmMatch ? (
+            {/* {confirmMatch ? (
               <div className={"ok-indicator success"}>OK</div>
-            ) : null}
+            ) : null} */}
             {confirmation_error}
           </div>
         ) : null}
