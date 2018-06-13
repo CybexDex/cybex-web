@@ -4,6 +4,7 @@ export const QTB_ASSETS = new Set([
   "QTBGLN",
   "QTBNST",
   "QTBSOU",
+  "QTBWON",
   "WON",
   "HDP",
   "GLN"

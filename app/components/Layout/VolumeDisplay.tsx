@@ -10,7 +10,7 @@ export class VolumeDisplay extends React.PureComponent<any, any> {
     VolumnActions.queryVol();
     this.subscription = setInterval(() => {
       VolumnActions.queryVol();
-    }, 20 * 1000);
+    }, 300 * 1000);
   }
   componentWillUnmount() {
     if (this.subscription) {
