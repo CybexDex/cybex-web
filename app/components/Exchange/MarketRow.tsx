@@ -93,7 +93,7 @@ let MarketRow = class extends React.Component<
         this.props.base,
         this.props.quote
       ),
-      35 * 1000
+      30 * 1000
     );
   }
 

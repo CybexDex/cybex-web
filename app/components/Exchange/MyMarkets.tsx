@@ -59,7 +59,7 @@ const FilteredMarkets = {
   // "JADE.BTC": new Set(["JADE.LTC"]),
   "JADE.ETH": new Set(["JADE.LTC"]),
   "JADE.EOS": new Set(["JADE.LTC"]),
-  "JADE.BTC": new Set(BTC_MARKETS),
+  "JADE.BTC": new Set(BTC_MARKETS)
   // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
@@ -959,7 +959,7 @@ let MyMarkets = class extends React.Component<any, any> {
     );
   }
 };
-MyMarkets = BindToChainState(MyMarkets);
+MyMarkets = BindToChainState(MyMarkets, { keep_updating: true });
 
 class MyMarketsWrapper extends React.Component {
   render() {

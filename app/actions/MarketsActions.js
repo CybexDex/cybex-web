@@ -10,7 +10,8 @@ import Immutable from "immutable";
 let subs = {};
 let currentBucketSize;
 let marketStats = {};
-let statTTL = 60 * 2 * 1000; // 2 minutes
+let statTTL = 29 * 1000; // 2 minutes
+// let statTTL = 60 * 2 * 1000; // 2 minutes
 
 let cancelBatchIDs = Immutable.List();
 let dispatchCancelTimeout = null;
