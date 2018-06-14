@@ -5,7 +5,9 @@ import { ChainStore } from "cybexjs";
 import { Apis } from "cybexjs-ws";
 import marketUtils from "common/market_utils";
 import accountUtils from "common/account_utils";
-import Immutable from "immutable";
+import * as Immutable from "immutable";
+
+declare const __DEV__;
 
 let subs = {};
 let currentBucketSize;
@@ -13,11 +15,11 @@ let marketStats = {};
 let statTTL = 29 * 1000; // 2 minutes
 // let statTTL = 60 * 2 * 1000; // 2 minutes
 
-let cancelBatchIDs = Immutable.List();
+let cancelBatchIDs: any = Immutable.List();
 let dispatchCancelTimeout = null;
 let cancelBatchTime = 500;
 
-let subBatchResults = Immutable.List();
+let subBatchResults: any = Immutable.List();
 let dispatchSubTimeout = null;
 let subBatchTime = 500;
 
@@ -51,7 +53,7 @@ class MarketsActions {
       let refresh = false;
 
       if (marketStats[market]) {
-        if (now - marketStats[market].lastFetched < statTTL) {
+        if ((now as any) - marketStats[market].lastFetched < statTTL) {
           return false;
         } else {
           refresh = true;
@@ -249,7 +251,8 @@ class MarketsActions {
                       startDate2.toISOString().slice(0, -5)
                     ])
             ])
-              .then(results => { // Todo
+              .then(results => {
+                // Todo
                 const data1 = results[6] || [];
                 const data2 = results[7] || [];
                 dispatch({
