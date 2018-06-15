@@ -87,8 +87,7 @@ let LoginMain = Radium(
           style={
             [
               $styleFlexContainer("column", "center", "center"),
-              $styleFlexItem(1, 1),
-              { padding: "1em" }
+              $styleFlexItem(1, 1)
             ] as any
           }
           className="right"
@@ -97,7 +96,7 @@ let LoginMain = Radium(
             className="main-wrapper"
             style={{
               width: "400px",
-              marginBottom: "4em"
+              maxWidth: "92vw"
             }}
           >
             <form
