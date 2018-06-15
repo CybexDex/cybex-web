@@ -329,7 +329,7 @@ let Input = Radium(
 
 let InputValidator = props => {};
 
-const ACCOUNT_NAME_SET = /^[a-z0-9\-]*$/;
+const ACCOUNT_NAME_SET = /^[a-z0-9\.-]*$/;
 
 let LoginAccountInput = class extends React.PureComponent<
   { onValidChange; errorMsgs? },
