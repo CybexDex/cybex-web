@@ -159,8 +159,11 @@ let TotalValue = class extends MarketStatsCheck {
     // Open orders value
     for (let asset in openOrders) {
       let fromAsset = assets[asset];
+      console.debug("From Asset: ", fromAsset);
       // Hide For Wcup
-      let fromAssetMap = ChainStore.getAsset(fromAsset);
+      let fromAssetMap = fromAsset.get
+        ? fromAsset
+        : ChainStore.getAsset(fromAsset);
       if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
         continue;
       }
