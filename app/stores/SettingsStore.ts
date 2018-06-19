@@ -39,7 +39,7 @@ export const MARKETS = [
   "JADE.USDT",
   "JADE.DPY",
   // "JADE.LST",
-  "JADE.ENG"
+  // "JADE.ENG"
 ];
 
 const CORE_ASSET = "CYB"; // Setting this to CYB to prevent loading issues when used with CYB chain which is the most usual case currently

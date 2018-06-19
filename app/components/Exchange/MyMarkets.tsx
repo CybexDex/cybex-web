@@ -57,7 +57,7 @@ const BTC_MARKETS = [
   // "JADE.ICX",
   // "JADE.BTM",
   "JADE.DPY",
-  "JADE.ENG"
+  // "JADE.ENG"
 ];
 const FilteredMarkets = {
   // "JADE.BTC": new Set(["JADE.LTC"]),

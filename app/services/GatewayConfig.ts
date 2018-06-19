@@ -25,7 +25,7 @@ export const JadePool = __TEST__ ?
       "TEST.GNX": "GNX",
       "TEST.KEY": "KEY",
       // "TEST.LST": "LST",
-      "TEST.ENG": "ENG"
+      // "TEST.ENG": "ENG"
     },
     "ADDRESS_ASSETS": {
       "ETH": "TEST.ETH",
@@ -50,7 +50,7 @@ export const JadePool = __TEST__ ?
       "GNX": "TEST.GNX",
       "KEY": "TEST.KEY",
       // "LST": "TEST.LST",
-      "ENG": "TEST.ENG",
+      // "ENG": "TEST.ENG",
     }
   } : {
     "GATEWAY_ACCOUNT": "cybex-jadegateway",
@@ -82,7 +82,7 @@ export const JadePool = __TEST__ ?
       "JADE.KEY": "KEY",
       "JADE.MT": "MT",
       // "JADE.LST": "LST",
-      "JADE.ENG": "ENG"
+      // "JADE.ENG": "ENG"
     },
     "ADDRESS_ASSETS": {
       "ETH": "JADE.ETH",
@@ -112,7 +112,7 @@ export const JadePool = __TEST__ ?
       "KEY": "JADE.KEY",
       "MT": "JADE.MT",
       // "LST": "JADE.LST",
-      "ENG": "JADE.ENG"
+      // "ENG": "JADE.ENG"
     }
   };
 
