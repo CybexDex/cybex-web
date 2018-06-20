@@ -62,6 +62,8 @@ import Icon from "../Icon/Icon";
 import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
 import { Checkbox, Button, LabelOption } from "components/Common";
 
+import numeral from "numeral";
+
 const bbStroke = {
   top: "#964B00",
   middle: "#000000",
@@ -101,8 +103,10 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
 
     const priceFormat = format(`.${pricePrecision}f`);
     const timeFormatter = timeFormat("%Y-%m-%d %H:%M");
-    const volumeFormat = format(`.2s`);
-    // const volumeFormat = format(`.${volumePrecision}r`);
+    const volumeFormat = volume =>
+      volume > 10
+        ? numeral(volume).format(`0.0a`)
+        : numeral(volume).format(`0.00a`);
 
     let { digits, marginRight } = this.calcDigits(props);
     this.state = {
@@ -452,7 +456,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       timeFormatter,
       volumeFormat,
       priceFormat,
-      
+
       enableTrendLine,
       enableFib,
       calculators
