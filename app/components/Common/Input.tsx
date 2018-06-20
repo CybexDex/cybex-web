@@ -27,6 +27,7 @@ let Input = Radium(
       disabled?;
       placeholder?;
       keepPlaceholder?;
+      autoComplete?;
       style?;
       error?;
       active?;
@@ -42,6 +43,7 @@ let Input = Radium(
     static defaultProps = {
       size: "normal",
       valueFromOuter: false,
+      autoComplete: "off",
       inputRef: () => void 0
     };
     static styles = {
@@ -213,6 +215,7 @@ let Input = Radium(
         size,
         placeholder,
         keepPlaceholder,
+        autoComplete,
         error,
         active,
         tip,
@@ -265,6 +268,7 @@ let Input = Radium(
               type={type}
               name={name}
               placeholder={keepPlaceholder ? "" : placeholder}
+              autoComplete={autoComplete}
               onFocus={this.onFocus}
               onBlur={this.onBlur}
               onChange={this.onChange}

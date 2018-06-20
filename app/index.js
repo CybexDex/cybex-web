@@ -19,6 +19,15 @@ require("./components/Utility/Prototypes"); // Adds a .equals method to Array fo
 const history = browserHistory;
 
 const rootEl = document.getElementById("content");
+if (history) {
+  history.listen(location => {
+    if (window.gtag) {
+      window.gtag("event", "page_view", {
+        page_path: location.pathname + location.search
+      });
+    }
+  });
+}
 const render = () => {
   ReactDOM.render(
     <AppContainer>
