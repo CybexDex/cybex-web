@@ -1769,7 +1769,8 @@
     "swap": "Atomic Swap",
     "logout": "Logout",
     "worldcup": "World Cup 2018",
-    "help": "Documents"
+    "help": "Documents",
+    "eo": "EO"
   },
   "vesting": {
     "progress": "Unlock Progress",

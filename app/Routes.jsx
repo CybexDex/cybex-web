@@ -263,7 +263,14 @@ const routes = (
           .catch(errorLoading);
       }}
     />
-
+    <Route
+      path="eo"
+      getComponent={(location, cb) => {
+        import("components/Eo")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    >
     <Route
       path="invoice/:data"
       getComponent={(location, cb) => {
@@ -536,6 +543,7 @@ const routes = (
           .catch(errorLoading);
       }}
     >
+    
       <Route
         path=":path1"
         getComponent={(location, cb) => {

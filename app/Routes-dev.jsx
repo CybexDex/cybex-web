@@ -72,6 +72,7 @@ import { Gateway } from "./components/Gateway/Gateway";
 import { Contact } from "./components/HelpDrawer/Contact";
 import Login from "./components/Login/Login";
 import CreateSelector from "./components/Login/CreateSelector";
+import Eo from "./components/Eo";
 
 const history = browserHistory;
 
@@ -97,6 +98,7 @@ const routes = (
     <Route path="/explorer/witnesses" component={Witnesses} />
     <Route path="/explorer/committee-members" component={CommitteeMembers} />
     <Route path="/swap" component={SwapContainer} />
+    <Route path="/eo" component={Eo} />
 
     <Route path="wallet" component={WalletManager}>
       {/* wallet management console */}
