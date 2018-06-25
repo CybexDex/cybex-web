@@ -9,7 +9,7 @@ import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
 import { Link } from "react-router"; 
 import "./detail.scss";
-let logo_demo = require('assets/cybex_rainbow_lg.png');
+let logo_demo = require('assets/img_demo_1.jpg');
 
 class Detail extends React.Component<any, any> {
   // nestedRef;
