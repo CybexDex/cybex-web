@@ -1,0 +1,77 @@
+.detail {
+	.left-part{
+		width: 60%;
+		float: left;
+		position: relative;
+	}
+	.right-part{
+		width: 40%;
+		float: right;
+	}
+
+	position: relative;
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 1em;
+	width: 90%;
+	margin: auto;
+	break-inside: avoid;
+	img{
+		margin-bottom: 20px;
+		border: 1px solid #ffd400;
+		width: 400px;
+		height: 200px;
+	}
+	
+	// box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+	color: #fff;
+		.title{
+			color: #fff;
+		}
+		.button{
+			&.primery-button{
+				background: #ffd400;
+				color: #000;
+			}
+		}
+		.info-item{
+			overflow: hidden;
+			margin-top: 10px;
+			color: #ffd400;
+			.info-title{
+				float: left;
+				font-weight: bold;
+			}
+			.info-detail{
+				float: left;
+				padding-left: 10px;
+			}
+		}
+		.info-text{
+			float: left;
+			width: 20%;
+			text-align: left;
+			padding-left: 10px;
+		}
+		.percent{
+			float: left;
+			background: #fff;
+			width: 70%;
+			height: 10px;
+			position: relative;
+			padding: 1px;
+			box-sizing: border-box;
+	
+			.percent-in{
+				position: absolute;
+				height: 8px;
+				width: 30%;
+				background: linear-gradient(to right, orange , #ffd400);
+			}
+		}
+		.button-holder{
+			position: absolute;
+			bottom: 20px;
+			right: 20%;
+		}
+	}

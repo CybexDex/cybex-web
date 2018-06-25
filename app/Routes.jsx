@@ -272,6 +272,15 @@ const routes = (
       }}
     >
     <Route
+      path="eo/detail/:id"
+      getComponent={(location, cb) => {
+        import("components/Eo/Detail")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    >
+
+    <Route
       path="invoice/:data"
       getComponent={(location, cb) => {
         import("components/Transfer/Invoice")
