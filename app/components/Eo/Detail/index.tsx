@@ -8,6 +8,8 @@ import * as PropTypes from "prop-types";
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
 import { Link } from "react-router"; 
+import DetalModal from "./Modal.jsx";
+import Trigger from "react-foundation-apps/src/trigger";
 import "./detail.scss";
 let logo_demo = require('assets/img_demo_1.jpg');
 
@@ -16,7 +18,7 @@ class Detail extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-
+      showModal: false
     }
   }
 
@@ -24,7 +26,11 @@ class Detail extends React.Component<any, any> {
 
   }
 
-
+  public openModal = () => {
+    this.setState({
+      showModal: true
+    })
+  }
 
   render() {
     return (
@@ -81,11 +87,14 @@ class Detail extends React.Component<any, any> {
             <div className="info-detail">Asdfdasf dsfsadfdsaf Fdlskjfadsf</div>
           </div>
           <div className="button-holder">
-          <Link to={`/eo/detail/123`}>
+          <Trigger open="ieo-detail-modal">
           <div className="button primery-button">Join Item</div>
-          </Link>
+          </Trigger>
           </div>
+          
         </div>
+          <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
+          </DetalModal>
       </div>
     );
   }
