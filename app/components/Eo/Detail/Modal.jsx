@@ -3,6 +3,8 @@ import * as PropTypes from "prop-types";
 
 import Modal from "react-foundation-apps/src/modal";
 import Trigger from "react-foundation-apps/src/trigger";
+import foundationApi from "react-foundation-apps/src/utils/foundation-api";
+
 // import Button from "../../Common/Button";
 import BindToChainState from "../../Utility/BindToChainState";
 import AccountInfo from "../../Account/AccountInfo";
@@ -33,10 +35,16 @@ export class BaseModal extends React.Component {
     //   this.props.onClose();
     // }
   };
+  componentDidMount(){
+    console.log(Trigger);
+  }
   componentWillReceiveProps(n){
     this.setState({
       isShow: n.isShow
     });
+  }
+  cao = () => {
+    foundationApi.publish(this.props.id, "close");
   }
   render() {
     // let { fade, overlay, noCloseBtn, overlayClose } = this.props;
@@ -57,9 +65,8 @@ export class BaseModal extends React.Component {
           </div>
           <div className="input-item">
           <input type="text" className="enter-info" placeholder="please enter" />
-          <AccountInfo />
           <button className="join-action detail-modal-btn" disabled>Submit</button>
-          <button className="add-money detail-modal-btn">Add Money</button>
+          <button className="add-money detail-modal-btn" onClick={this.cao}>Add Money</button>
           <p className="error-msg">21312321</p>
           </div>
           <div className="input-item">
@@ -103,9 +110,10 @@ export default connect(BaseModal,{
       return [AccountStore];
     },
     getProps(props) {
-      console.log(AccountStore.getMyAccounts())
       return {
-        myAccounts: AccountStore.getMyAccounts()
+        myAccounts: AccountStore.getMyAccounts(),
+        accountsWithAuthState: AccountStore.getMyAccountsWithAuthState(),
+        isMyAccount: AccountStore.getState()
       }
       // let assets = Map(),
       //   assetsList = List();

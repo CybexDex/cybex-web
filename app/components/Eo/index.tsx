@@ -11,6 +11,7 @@ import sha256 from "js-sha256";
 import { Link } from "react-router"; 
 let logo_demo = require('assets/cybex_rainbow_lg.png');
 import ReactSwipe from 'react-swipe';
+import * as fetchJson from "./service";
 import './transfer.scss';
 
 class EO extends React.Component<any, any> {
@@ -23,7 +24,9 @@ class EO extends React.Component<any, any> {
   }
 
   componentDidMount(){
-
+    fetchJson.fetchJson().then((data)=>{
+      this.setState({...data});
+    })
   }
   next() {
     this.reactSwipe.next();
@@ -36,6 +39,7 @@ class EO extends React.Component<any, any> {
 
 
   render() {
+    const data = this.state.data || [];
     const swipeOptions = {
       startSlide: 0,
       auto: 0,
@@ -50,7 +54,7 @@ class EO extends React.Component<any, any> {
       }
     };
     
-    console.log(logo_demo)
+    console.log(data)
     return (
       <div>
         <div className="slider-holder">
@@ -78,25 +82,29 @@ class EO extends React.Component<any, any> {
           <div className="slide-btn slide-btn-right" onClick={this.next.bind(this)}>&gt;</div>
         </div>
         </div>
-      <div class="container">
-      <div class="waterfall">
-
-      <div class="pin">
-        <img src={logo_demo} width={100} height={100} />
-        <h3 className="title">Title</h3>
-        <p>1 convallis timestamp</p>
-        <Link to={`/eo/detail/123`}>
-        <div className="button primery-button">Join</div>
-        </Link>
-        <div className="info-item">
-          <div className="percent">
-            <div className="percent-in"></div>
+      <div className="container">
+      <div className="waterfall">
+      {data.map((e,i)=>{
+        return(
+          <div className="pin" key={i}>
+            <img src={logo_demo} width={100} height={100} />
+            <h3 className="title">{e.name}</h3>
+            <p>1 convallis timestamp</p>
+            <Link to={`/eo/detail/123`}>
+            <div className="button primery-button">Join</div>
+            </Link>
+            <div className="info-item">
+              <div className="percent">
+                <div className="percent-in"></div>
+              </div>
+              <div className="info-text">30%</div>
+            </div>
           </div>
-          <div className="info-text">30%</div>
-        </div>
-      </div>
+        )
+      })}
+      
 
-      <div class="pin">
+      <div className="pin">
         <img src={logo_demo} width={100} height={100} />
         <h3 className="title">Title</h3>
         <p>2 convallis timestamp timestamp timestamp timestamp timestamp timestamp timestamp</p>
@@ -109,7 +117,7 @@ class EO extends React.Component<any, any> {
         </div>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       3 Nullam eget lectus augue. Donec eu sem sit amet ligula
@@ -118,7 +126,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       4 Donec a fermentum nisi. Integer dolor est, commodo ut
@@ -126,7 +134,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       5 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -136,7 +144,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       6 Nullam eget lectus augue. Donec eu sem sit amet ligula
@@ -146,21 +154,21 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       7 Nullam eget lectus augue.
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <p>
       8 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       Sed feugiat consectetur pellentesque.
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       9 Donec a fermentum nisi. Integer dolor est, commodo ut
@@ -169,7 +177,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       10 Donec a fermentum nisi. Integer dolor est, commodo ut
@@ -178,7 +186,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       11 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -187,7 +195,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       12 Donec a fermentum nisi. Integer dolor est, commodo ut
@@ -196,7 +204,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       13 Donec a fermentum nisi. Integer dolor est, commodo ut
@@ -205,7 +213,7 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       14 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -214,14 +222,14 @@ class EO extends React.Component<any, any> {
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       15 Nullam eget lectus augue.
       </p>
       </div>
 
-      <div class="pin">
+      <div className="pin">
       <img src={logo_demo} width={100} height={100} />
       <p>
       16 Nullam eget lectus augue.
