@@ -24,7 +24,7 @@ const SECONDS_OF_ONE_DAY = 86400000;
 function getVestingPeriodFromOp(op) {
   if (!op.extensions || !op.extensions.length || !op.extensions[0][1])
     return null;
-  return op.extensions[0][1]["vesting_period"] || null;
+  return op.extensions[0][1]["vesting_period"];
 }
 
 require("./operations.scss");

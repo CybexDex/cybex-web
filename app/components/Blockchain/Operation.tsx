@@ -31,8 +31,8 @@ let ops = Object.keys(operations);
 let listings = account_constants.account_listing;
 
 function getVestingPeriodFromOp(op) {
-  if (!op.extensions || !op.extensions.length || !op.extensions[0][1]) return null;
-  return op.extensions[0][1]["vesting_period"] || null;
+  if (!op.extensions || !op.extensions.length|| !op.extensions[0][1]) return null;
+  return op.extensions[0][1]["vesting_period"];
 }
 const SECONDS_OF_ONE_DAY = 86400000;
 
