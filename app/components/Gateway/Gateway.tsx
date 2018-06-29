@@ -147,6 +147,15 @@ let GatewayTable = class extends React.Component<any, any> {
 };
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
+let GatewayRecords = class extends React.Component<{ account }, {}> {
+  query = () => {
+    GatewayActions.queryFundRecords(this.props.account);
+  };
+  render() {
+    return <button onClick={this.query}>Query</button>;
+  }
+};
+
 let GatewayContainer = class extends React.Component<any, any> {
   constructor(props) {
     super(props);
@@ -204,7 +213,7 @@ let GatewayContainer = class extends React.Component<any, any> {
               account={account}
               balances={account.get("balances", null)}
             />
-
+            {/* <GatewayRecords account={account} /> */}
             {depositModal && (
               <DepositModal
                 balances={account.get("balances", null)}
@@ -228,18 +237,21 @@ let GatewayContainer = class extends React.Component<any, any> {
 };
 
 GatewayContainer = BindToChainState(GatewayContainer);
-GatewayContainer = connect(GatewayContainer, {
-  listenTo() {
-    return [AccountStore, GatewayStore];
-  },
-  getProps() {
-    return {
-      account: AccountStore.getState().currentAccount,
-      depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
-      withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
-    };
+GatewayContainer = connect(
+  GatewayContainer,
+  {
+    listenTo() {
+      return [AccountStore, GatewayStore];
+    },
+    getProps() {
+      return {
+        account: AccountStore.getState().currentAccount,
+        depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
+        withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
+      };
+    }
   }
-});
+);
 
 export { GatewayContainer as Gateway };
 export default GatewayContainer;

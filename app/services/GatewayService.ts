@@ -1,9 +1,16 @@
-import { JadePool, CALLBACK_URL, JadeBody, GATEWAY_URI, GATEWAY_ID } from "./GatewayConfig";
+import {
+  JadePool,
+  CALLBACK_URL,
+  JadeBody,
+  GATEWAY_URI,
+  GATEWAY_ID
+} from "./GatewayConfig";
 import { debugGen } from "utils";
 import gql from "graphql-tag";
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { CustomTx } from "CustomTx";
 
 const debug = debugGen("GatewayService");
 
@@ -12,22 +19,24 @@ const headers = new Headers();
 headers.append("Content-Type", "application/x-www-form-urlencoded");
 
 // Convert Params Object to serilized string;
-const serilize: (params: { [key: string]: any }) => string =
-  params =>
-    Object
-      .keys(params)
-      .reduce((paramsArray, nextParam) =>
-        [...paramsArray, `${nextParam}=${params[nextParam]}`], [])
-      .join("&");
+const serilize: (params: { [key: string]: any }) => string = params =>
+  Object.keys(params)
+    .reduce(
+      (paramsArray, nextParam) => [
+        ...paramsArray,
+        `${nextParam}=${params[nextParam]}`
+      ],
+      []
+    )
+    .join("&");
 
 // Generate common request will be used to communicate with Jadepool
-const genRequestInit: (body: any) => RequestInit =
-  body => ({
-    mode: "cors",
-    headers,
-    method: "POST",
-    body
-  });
+const genRequestInit: (body: any) => RequestInit = body => ({
+  mode: "cors",
+  headers,
+  method: "POST",
+  body
+});
 // Configure Apollo
 const httpLink = new HttpLink({ uri: GATEWAY_URI });
 
@@ -36,82 +45,118 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-
-export async function getDepositInfo(accountName, asset: string, needNew?): Promise<{ address, accountName, asset, time }> {
+export async function getDepositInfo(
+  accountName,
+  asset: string,
+  needNew?
+): Promise<{ address; accountName; asset; time }> {
   debug("Get Deposit: ", accountName, asset, needNew);
   let mutation = gql`
-  mutation GenNewAddress($accountName: String!, $asset: String!) {
-    newDepositAddress(
-      accountName: $accountName,
-      asset: $asset
-    ) {
-      address
-      accountName
-      asset
-      type
-      createAt
+    mutation GenNewAddress($accountName: String!, $asset: String!) {
+      newDepositAddress(accountName: $accountName, asset: $asset) {
+        address
+        accountName
+        asset
+        type
+        createAt
+      }
     }
-  }
-`;
+  `;
   let query = gql`
-query GetAddress($accountName: String!, $asset: String!) {
-  getDepositAddress(
-    accountName: $accountName,
-    asset: $asset
-  ) {
-    address
-    accountName
-    asset
-    type
-    createAt
-  }
+    query GetAddress($accountName: String!, $asset: String!) {
+      getDepositAddress(accountName: $accountName, asset: $asset) {
+        address
+        accountName
+        asset
+        type
+        createAt
+      }
+    }
+  `;
+  return needNew
+    ? await impl(
+        "mutate",
+        {
+          mutation,
+          variables: { accountName, asset }
+        },
+        "newDepositAddress"
+      )
+    : await impl(
+        "query",
+        {
+          query,
+          variables: { accountName, asset }
+        },
+        "getDepositAddress"
+      );
 }
-`;
-  return needNew ? await impl("mutate", {
-    mutation,
-    variables: { accountName, asset },
-  }, "newDepositAddress") :
-    await impl("query", {
+
+export async function getWithdrawInfo(
+  type: string
+): Promise<{ fee; minValue }> {
+  let query = gql`
+    query WithdrawInfo($type: String!) {
+      withdrawInfo(type: $type) {
+        fee
+        minValue
+        asset
+        type
+        gatewayAccount
+      }
+    }
+  `;
+  return await impl(
+    "query",
+    {
       query,
-      variables: { accountName, asset },
-    }, "getDepositAddress");
+      variables: { type }
+    },
+    "withdrawInfo"
+  );
+}
 
-};
-
-
-export async function getWithdrawInfo(type: string): Promise<{ fee, minValue }> {
+export async function verifyAddress(
+  address: string,
+  accountName: string,
+  asset: string
+): Promise<{ valid; error? }> {
   let query = gql`
-  query WithdrawInfo($type: String!) {
-    withdrawInfo(type:$type) {
-      fee,
-      minValue,
-      asset,
-      type,
-      gatewayAccount
+    query VerifyAddress(
+      $asset: String!
+      $accountName: String!
+      $address: String!
+    ) {
+      verifyAddress(
+        asset: $asset
+        accountName: $accountName
+        address: $address
+      ) {
+        valid
+        asset
+      }
     }
-  }
-`;
-  return await impl("query", {
-    query,
-    variables: { type },
-  }, "withdrawInfo");
-};
+  `;
+  return await impl(
+    "query",
+    {
+      query,
+      variables: { asset, accountName, address }
+    },
+    "verifyAddress"
+  );
+}
 
-
-export async function verifyAddress(address: string, accountName: string, asset: string): Promise<{ valid, error?}> {
-  let query = gql`
-  query VerifyAddress($asset: String!, $accountName: String!, $address: String!) {
-    verifyAddress(asset:$asset, accountName: $accountName, address: $address) {
-      valid,
-      asset
-    }
-  }
-`;
-  return await impl("query", {
-    query,
-    variables: { asset, accountName, address },
-  }, "verifyAddress");
-};
+export async function queryFundRecords(tx: CustomTx) {
+  let headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  let init = {
+    headers,
+    method: "POST",
+    body: JSON.stringify(tx)
+  };
+  return fetch("http://localhost:5684/records", init);
+}
 
 async function impl(method: string, params: any, dataName: string) {
   try {
@@ -121,7 +166,6 @@ async function impl(method: string, params: any, dataName: string) {
     throw error;
   }
 }
-
 
 export const GatewayService = {
   getDepositInfo,
