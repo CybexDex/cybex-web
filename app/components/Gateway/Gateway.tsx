@@ -6,6 +6,7 @@ import GatewayActions, {
 } from "actions/GatewayActions";
 import GatewayStore from "stores/GatewayStore";
 import AccountStore from "stores/AccountStore";
+import WalletUnlockStore from "stores/WalletUnlockStore";
 import { JadePool } from "services//GatewayConfig";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
@@ -30,6 +31,9 @@ const oriAssets = Object.keys(ADDRESS_TYPES);
 const noBalanceTip = counterpart.translate("gateway.no_balance");
 
 let AssetRow = class extends React.Component<any, any> {
+  static propTypes = {
+    balance: ChainTypes.ChainObject
+  };
   _showWithdrawModal = asset => {
     let { account } = this.props;
     GatewayActions.showWithdrawModal(asset);
@@ -40,9 +44,10 @@ let AssetRow = class extends React.Component<any, any> {
   }
 
   render() {
-    let { asset } = this.props;
-    // console.debug("Asset: ", asset && asset.toJS(), balance);
-    let canWithdraw = !!asset.get("balance");
+    let { asset, balance } = this.props;
+    console.debug("Asset: ", balance);
+    let canWithdraw = balance && balance.get && balance.get("balance") > 0;
+    // let canWithdraw = !!asset.get("balance") && asset.get("balance") > 0;
     return (
       <>
         <tr>
@@ -122,6 +127,7 @@ let GatewayTable = class extends React.Component<any, any> {
   render() {
     let { assets, balances, filter, account } = this.props;
     let assetRows = assets.filter(a => !!a).map(asset => {
+      console.debug("Balance: ", balances);
       let a = asset.set("balance", balances.get(asset.get("id")));
       return a;
     });
@@ -138,7 +144,12 @@ let GatewayTable = class extends React.Component<any, any> {
         </thead>
         <tbody>
           {assetRows.map(asset => (
-            <AssetRow key={asset.get("id")} asset={asset} account={account} />
+            <AssetRow
+              key={asset.get("id")}
+              asset={asset}
+              account={account}
+              balance={asset.get("balance")}
+            />
           ))}
         </tbody>
       </table>
@@ -147,14 +158,65 @@ let GatewayTable = class extends React.Component<any, any> {
 };
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
-let GatewayRecords = class extends React.Component<{ account }, {}> {
+let GatewayRecords = class extends React.Component<{ account; isLocked? }, {}> {
+  static propTypes = {
+    isLocked: PropTypes.bool.isRequired
+  };
+
+  static defaultProps = {
+    isLocked: true
+  };
+
+  constructor(props) {
+    super(props);
+    if (!props.isLocked) {
+      GatewayActions.queryFundRecords(props.account);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      (prevProps.isLocked && !this.props.isLocked) ||
+      prevProps.account !== this.props.account
+    ) {
+      console.debug("[GatewayRecords] Updated", prevProps, this.props);
+      GatewayActions.queryFundRecords(this.props.account);
+    }
+  }
+
   query = () => {
     GatewayActions.queryFundRecords(this.props.account);
   };
+  login = () => {
+    GatewayActions.loginGatewayQuery(this.props.account);
+  };
   render() {
-    return <button onClick={this.query}>Query</button>;
+    return (
+      <>
+        <button onClick={this.query}>Query</button>
+        <button onClick={this.login}>Login</button>
+      </>
+    );
   }
 };
+
+GatewayRecords = connect(
+  GatewayRecords,
+  {
+    listenTo() {
+      return [WalletUnlockStore];
+    },
+    getProps(props) {
+      console.debug(
+        "WalletUnlockStore.getState()",
+        WalletUnlockStore.getState()
+      );
+      return {
+        isLocked: WalletUnlockStore.getState().locked
+      };
+    }
+  }
+);
 
 let GatewayContainer = class extends React.Component<any, any> {
   constructor(props) {
@@ -213,7 +275,7 @@ let GatewayContainer = class extends React.Component<any, any> {
               account={account}
               balances={account.get("balances", null)}
             />
-            {/* <GatewayRecords account={account} /> */}
+            <GatewayRecords account={account} />
             {depositModal && (
               <DepositModal
                 balances={account.get("balances", null)}

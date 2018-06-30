@@ -1,7 +1,7 @@
 export class CustomTx {
-  signers = [];
+  signer = "";
   constructor(public op: any) {}
   addSigner(signer) {
-    this.signers.push(signer);
+    this.signer = signer;
   }
 }

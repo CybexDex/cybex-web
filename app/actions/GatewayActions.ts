@@ -1,13 +1,16 @@
 import alt from "alt-instance";
 import { Apis } from "cybexjs-ws";
 import WalletDb from "stores/WalletDb";
+import SettingsStore from "stores/SettingsStore";
+import GatewayStore from "stores/GatewayStore";
 import WalletApi from "api/WalletApi";
 import { debugGen } from "utils";
 import * as moment from "moment";
 import {
   getDepositInfo,
   getWithdrawInfo,
-  queryFundRecords as queryFundRecordsImpl
+  queryFundRecords as queryFundRecordsImpl,
+  loginQuery as loginQueryImpl
 } from "services//GatewayService";
 import { NotificationActions } from "actions//NotificationActions";
 import { ApolloClient } from "apollo-client-preset";
@@ -82,33 +85,80 @@ class GatewayActions {
     return true;
   }
 
-  async queryFundRecords(account: Map<string, any>) {
+  async queryFundRecords(account: Map<string, any>, offset = 0, size = 20) {
     debug("[QueryFundRecord]", account);
     const tx = new CustomTx({
       accountName: account.get("name"),
-      // asset: "TEST.ETH",
-      // fundType: "WITHDRAW",
-      offset: 5,
-      size: 5,
-      expiration: Math.ceil(Date.now() / 1000) + 30
+      offset,
+      size
+    });
+    let { login } = GatewayStore.getState();
+    if (login.accountName === account.get("name") && login.signer) {
+      tx.addSigner(login.signer);
+    }
+
+    // 尝试获取记录
+    let records = await queryFundRecordsImpl(tx);
+    // 如果获取不成功，重新登录并再次尝试获取
+    if (!records) {
+      await this.loginGatewayQuery(account);
+      let { login } = GatewayStore.getState();
+      tx.addSigner(login.signer);
+      records = await queryFundRecordsImpl(tx);
+    }
+    // 如果最终获取，更新记录
+    if (records) {
+      this.updateFundRecords(records);
+    }
+  }
+
+  updateFundRecords(records) {
+    return records;
+  }
+
+
+  /**
+   * 注册一个查询签名
+   *
+   * @param {Map<string, any>} account
+   * @memberof GatewayActions
+   */
+  async loginGatewayQuery(account: Map<string, any>) {
+    debug("[LoginGatewayQuery]", account);
+    debug("[LoginGatewayQuery]", SettingsStore.getSetting("walletLockTimeout"));
+
+    const tx = new CustomTx({
+      accountName: account.get("name"),
+      expiration:
+        Date.now() + SettingsStore.getSetting("walletLockTimeout") * 1000
     });
     const op = ops.fund_query.fromObject(tx.op);
-
     let privKey = WalletDb.getPrivateKey(
       account.getIn(["options", "memo_key"])
     );
+    if (!privKey) {
+      throw Error("Privkey Not Found");
+    }
     debug(
-      "[QueryFundRecord privKey]",
+      "[LoginGatewayQuery privKey]",
       account.getIn(["options", "memo_key"]),
       privKey
     );
     // let privKey = PrivateKey.fromWif(privKeyWif);
     let buffer = ops.fund_query.toBuffer(op);
     let signedHex = Signature.signBuffer(buffer, privKey).toHex();
-    debug("[QueryFundRecord Signed]", signedHex);
+    debug("[LoginGatewayQuery Signed]", signedHex);
+    // tx.addSigner(1);
     tx.addSigner(signedHex);
+    let loginRes = await loginQueryImpl(tx);
+    debug("[LoginGatewayQuery LoginRes]", loginRes);
+    if (loginRes) {
+      this.updateLogin(loginRes);
+    }
+  }
 
-    return await queryFundRecordsImpl(tx);
+  updateLogin(loginRes) {
+    return loginRes;
   }
 
   afterUpdateWithdrawInfo(limit: { asset; type; fee; minValue }) {

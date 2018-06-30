@@ -11,6 +11,11 @@ import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { CustomTx } from "CustomTx";
+import {
+  LoginBody,
+  Result as GatewayQueryResult,
+  FundRecordRes
+} from "./GatewayModels";
 
 const debug = debugGen("GatewayService");
 
@@ -147,7 +152,18 @@ export async function verifyAddress(
   );
 }
 
-export async function queryFundRecords(tx: CustomTx) {
+export async function queryFundRecords(tx: CustomTx): Promise<FundRecordRes> {
+  return await queryImpl("records", tx).then(res => res.data);
+}
+
+export async function loginQuery(tx: CustomTx): Promise<LoginBody> {
+  return await queryImpl("login", tx).then(res => res.data);
+}
+
+async function queryImpl(
+  api: string,
+  tx: CustomTx
+): Promise<GatewayQueryResult> {
   let headers = new Headers();
   headers.append("Content-Type", "application/json");
   let init = {
@@ -155,7 +171,14 @@ export async function queryFundRecords(tx: CustomTx) {
     method: "POST",
     body: JSON.stringify(tx)
   };
-  return fetch("http://localhost:5684/records", init);
+  return await fetch(`http://localhost:5684/${api}`, init)
+    .then(res => res.json())
+    .catch(e => {
+      return {
+        code: 400,
+        error: e.message
+      };
+    });
 }
 
 async function impl(method: string, params: any, dataName: string) {
