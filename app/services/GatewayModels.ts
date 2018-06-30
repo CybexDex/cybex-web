@@ -9,10 +9,23 @@ export interface LoginBody {
 }
 export interface FundRecordRes {
   total: number;
-  records: any[];
+  records: FundRecordEntry[];
   offset: number;
   size: number;
 }
+
+export type FundRecordEntry = {
+  accountName: string;
+  address: string;
+  amount: number;
+  asset: string;
+  coinType: string;
+  fee: number;
+  fundType: string;
+  state: string;
+  updateAt: string;
+};
+
 export class QueryResult implements Result {
   constructor(public data: FundRecordRes, public code = 200) {}
 }
