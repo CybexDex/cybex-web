@@ -345,6 +345,7 @@ let GatewayContainer = class extends React.Component<any, any> {
                     name="nameFilter"
                     id="nameFilter"
                     type="text"
+                    style={{ marginBottom: 0 }}
                     onChange={this.onNameFilterChange}
                     value={this.state.nameFilter}
                     placeholder={counterpart.translate("gateway.find_asset")}

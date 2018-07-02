@@ -3,6 +3,7 @@ import {
   CALLBACK_URL,
   JadeBody,
   GATEWAY_URI,
+  GATEWAY_QUERY_URI,
   GATEWAY_ID
 } from "./GatewayConfig";
 import { debugGen } from "utils";
@@ -171,7 +172,7 @@ async function queryImpl(
     method: "POST",
     body: JSON.stringify(tx)
   };
-  return await fetch(`http://localhost:5684/${api}`, init)
+  return await fetch(`${GATEWAY_QUERY_URI}/${api}`, init)
     .then(res => res.json())
     .catch(e => {
       return {
