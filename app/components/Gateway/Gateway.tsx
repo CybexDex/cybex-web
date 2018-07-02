@@ -245,6 +245,18 @@ let GatewayRecords = class extends React.PureComponent<
                   <td>{record.updateAt}</td>
                 </tr>
               ))}
+            {!fundRecords.records ||
+              (!fundRecords.records.length &&
+                !isLocked && (
+                  <tr>
+                    {/* <td>{record.accountName}</td> */}
+                    <Translate
+                      component="td"
+                      colSpan={6}
+                      content={`gateway.no_record_one_month`}
+                    />
+                  </tr>
+                ))}
           </tbody>
         </table>
         {isLocked && (

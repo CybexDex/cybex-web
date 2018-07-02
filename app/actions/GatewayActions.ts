@@ -24,6 +24,20 @@ const debug = debugGen("GatewayActions");
 export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
 
+const pickKeys = (keys: string[], count = 1) => {
+  let res = [];
+  for (let key of keys) {
+    let privKey = WalletDb.getPrivateKey(key);
+    if (privKey) {
+      res.push(privKey);
+      if (res.length >= count) {
+        break;
+      }
+    }
+  }
+  return res;
+};
+
 class GatewayActions {
   async showDepositModal(account, asset, modalId = DEPOSIT_MODAL_ID) {
     let type = JadePool.ADDRESS_TYPES[asset];
@@ -116,7 +130,6 @@ class GatewayActions {
     return records;
   }
 
-
   /**
    * 注册一个查询签名
    *
@@ -133,9 +146,15 @@ class GatewayActions {
         Date.now() + SettingsStore.getSetting("walletLockTimeout") * 1000
     });
     const op = ops.fund_query.fromObject(tx.op);
-    let privKey = WalletDb.getPrivateKey(
-      account.getIn(["options", "memo_key"])
-    );
+
+    // Pick approps key
+    let weight_threshold = account.getIn(["active", "weight_threshold"]);
+    let availKeys = account
+      .getIn(["active", "key_auths"])
+      .filter(key => key.get(1) >= 1)
+      .map(key => key.get(0))
+      .toJS();
+    let privKey = pickKeys(availKeys)[0];
     if (!privKey) {
       throw Error("Privkey Not Found");
     }

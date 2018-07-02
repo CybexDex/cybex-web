@@ -172,7 +172,7 @@ async function queryImpl(
     method: "POST",
     body: JSON.stringify(tx)
   };
-  return await fetch(`${GATEWAY_QUERY_URI}/${api}`, init)
+  return await fetch(`${GATEWAY_QUERY_URI}${api}`, init)
     .then(res => res.json())
     .catch(e => {
       return {

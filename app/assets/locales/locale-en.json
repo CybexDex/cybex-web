@@ -1612,7 +1612,9 @@
     "deposit": "Deposit",
     "withdraw": "Withdraw",
     "last_update": "Last Update",
-    "unlock_first": "Please unlock the account in order to check the fund records",
+    "unlock_first":
+      "Please unlock the account in order to check the fund records",
+    "no_record_one_month": "No available records",
     "convert": "Internal conversion",
     "withdraw_now": "Withdraw now",
     "convert_now": "Convert now",

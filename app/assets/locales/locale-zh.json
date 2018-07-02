@@ -1553,6 +1553,7 @@
     "fund_records": "充提记录",
     "last_update": "更新时间",
     "unlock_first": "请先解锁钱包，以查看出入金记录",
+    "no_record_one_month": "暂无可查阅充提记录",
     "inventory": "库存",
     "scan_qr": "扫描二维码，手机支付",
     "generate_new": "生成新地址",
