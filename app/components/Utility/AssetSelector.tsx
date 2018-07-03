@@ -12,6 +12,7 @@ import AssetName from "./AssetName";
 import * as Immutable from "immutable";
 import utils from "common/utils";
 import classnames from "classnames";
+import { isFootballAsset } from "qtb";
 
 let AssetDropdown = class extends React.Component<any, any> {
   static propTypes = {
@@ -167,6 +168,7 @@ class AssetSelector extends React.Component<any, any> {
     let action_class = classnames("button", {
       disabled: !this.props.asset || error || this.props.disableActionButton
     });
+
 
     return (
       <div

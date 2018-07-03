@@ -2,7 +2,7 @@ import BaseStore from "./BaseStore";
 import { List, Set, Map, fromJS } from "immutable";
 import alt from "alt-instance";
 import { Store } from "alt-instance";
-import GatewayActions from "actions/GatewayActions";
+import { GatewayActions } from "actions/GatewayActions";
 import { JadePool } from "services/GatewayConfig";
 import { debugGen } from "utils//Utils";
 import {

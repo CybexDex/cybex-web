@@ -2,7 +2,6 @@ import alt from "alt-instance";
 import { Apis } from "cybexjs-ws";
 import WalletDb from "stores/WalletDb";
 import SettingsStore from "stores/SettingsStore";
-import GatewayStore from "stores/GatewayStore";
 import WalletApi from "api/WalletApi";
 import { debugGen } from "utils";
 import * as moment from "moment";
@@ -13,7 +12,6 @@ import {
   loginQuery as loginQueryImpl
 } from "services//GatewayService";
 import { NotificationActions } from "actions//NotificationActions";
-import { ApolloClient } from "apollo-client-preset";
 import { JadePool } from "services/GatewayConfig";
 import { ops, PrivateKey, Signature } from "cybexjs";
 import { Map } from "immutable";
@@ -99,14 +97,14 @@ class GatewayActions {
     return true;
   }
 
-  async queryFundRecords(account: Map<string, any>, offset = 0, size = 20) {
+  async queryFundRecords(account: Map<string, any>, login, offset = 0, size = 20) {
     debug("[QueryFundRecord]", account);
     const tx = new CustomTx({
       accountName: account.get("name"),
       offset,
       size
     });
-    let { login } = GatewayStore.getState();
+    // let { login } = GatewayStore.getState();
     if (login.accountName === account.get("name") && login.signer) {
       tx.addSigner(login.signer);
     }
@@ -116,7 +114,6 @@ class GatewayActions {
     // 如果获取不成功，重新登录并再次尝试获取
     if (!records) {
       await this.loginGatewayQuery(account);
-      let { login } = GatewayStore.getState();
       tx.addSigner(login.signer);
       records = await queryFundRecordsImpl(tx);
     }

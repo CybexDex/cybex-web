@@ -110,9 +110,11 @@ let AssetRow = class extends React.Component<any, any> {
             )}
           </td>
         </tr>
-        <ReactTooltip id="noBalance" effect="solid">
-          {noBalanceTip}
-        </ReactTooltip>
+        {!canWithdraw && (
+          <ReactTooltip id="noBalance" effect="solid">
+            {noBalanceTip}
+          </ReactTooltip>
+        )}
       </>
     );
   }
@@ -163,7 +165,7 @@ let GatewayTable = class extends React.Component<any, any> {
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
 let GatewayRecords = class extends React.PureComponent<
-  { account; isLocked?: boolean; fundRecords?: FundRecordRes },
+  { account; isLocked?: boolean; fundRecords?: FundRecordRes; login },
   {}
 > {
   static propTypes = {
@@ -176,14 +178,13 @@ let GatewayRecords = class extends React.PureComponent<
 
   constructor(props) {
     super(props);
-    if (!props.isLocked) {
-      GatewayActions.queryFundRecords(props.account);
-    }
   }
 
   componentDidMount() {
     if (this.props.isLocked) {
-      WalletUnlockActions.unlock().then(() => {});
+      WalletUnlockActions.unlock();
+    } else {
+      GatewayActions.queryFundRecords(this.props.account, this.props.login);
     }
   }
 
@@ -193,12 +194,12 @@ let GatewayRecords = class extends React.PureComponent<
       prevProps.account !== this.props.account
     ) {
       console.debug("[GatewayRecords] Updated", prevProps, this.props);
-      GatewayActions.queryFundRecords(this.props.account);
+      GatewayActions.queryFundRecords(this.props.account, this.props.login);
     }
   }
 
   query = () => {
-    GatewayActions.queryFundRecords(this.props.account);
+    GatewayActions.queryFundRecords(this.props.account, this.props.login);
   };
   login = () => {
     GatewayActions.loginGatewayQuery(this.props.account);
@@ -301,7 +302,8 @@ GatewayRecords = connect(
       );
       return {
         isLocked: WalletUnlockStore.getState().locked,
-        fundRecords: GatewayStore.getState().records
+        fundRecords: GatewayStore.getState().records,
+        login: GatewayStore.getState().login
       };
     }
   }
