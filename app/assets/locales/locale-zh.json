@@ -67,6 +67,14 @@
     "tr": "Turkish",
     "ru": "Русский"
   },
+  "table": {
+    "previousText": "上一页",
+    "nextText": "下一页",
+    "loadingText": "载入中...",
+    "pageText": "页",
+    "ofText": "共",
+    "rowsText": "行"
+  },
   "incognito": {
     "no_support":
       "当前Cybex钱包依赖于本地存储和IndexedDB，在使用隐身浏览时会导致不稳定。我们建议您使用常规浏览方式。",

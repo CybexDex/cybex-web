@@ -26,9 +26,13 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import LinkToAssetById from "../Utility/LinkToAssetById";
 import { Tabs, Tab } from "../Utility/Tabs";
 
+import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
+
+//React Table
+import ReactTable from "react-table";
 
 const { ADDRESS_TYPES } = JadePool;
 
@@ -164,7 +168,7 @@ let GatewayTable = class extends React.Component<any, any> {
 };
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
-let GatewayRecords = class extends React.PureComponent<
+let GatewayRecords = class extends React.Component<
   { account; isLocked?: boolean; fundRecords?: FundRecordRes; login? },
   {}
 > {
@@ -206,9 +210,10 @@ let GatewayRecords = class extends React.PureComponent<
   };
   render() {
     let { fundRecords, isLocked } = this.props;
+    let records = fundRecords.records || [];
     return (
       <div className="gateway-records" style={{ position: "relative" }}>
-        <table
+        {/*<table
           className="table gateway-table dashboard-table"
           style={
             isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
@@ -229,7 +234,6 @@ let GatewayRecords = class extends React.PureComponent<
               fundRecords.records.map(record => (
                 <tr key={record.updateAt}>
                   <td>{record.coinType}</td>
-                  {/* <td>{record.accountName}</td> */}
                   <Translate
                     component="td"
                     content={`gateway.${record.fundType.toLowerCase()}`}
@@ -250,7 +254,6 @@ let GatewayRecords = class extends React.PureComponent<
               (!fundRecords.records.length &&
                 !isLocked && (
                   <tr>
-                    {/* <td>{record.accountName}</td> */}
                     <Translate
                       component="td"
                       colSpan={6}
@@ -259,7 +262,71 @@ let GatewayRecords = class extends React.PureComponent<
                   </tr>
                 ))}
           </tbody>
-        </table>
+              </table> */}
+        <ReactTable
+          data={records}
+          noDataText={counterpart.translate(`gateway.no_record_one_month`)}
+          previousText={counterpart.translate(`table.previousText`)}
+          nextText={counterpart.translate(`table.nextText`)}
+          loadingText={counterpart.translate(`table.loadingText`)}
+          pageText={counterpart.translate(`table.pageText`)}
+          ofText={counterpart.translate(`table.ofText`)}
+          rowsText={counterpart.translate(`table.rowsText`)}
+          style={
+            isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
+          }
+          columns={[
+            {
+              Header: counterpart.translate("account.asset"),
+              accessor: "coinType",
+              maxWidth: 80
+            },
+            {
+              Header: counterpart.translate("gateway.type"),
+              maxWidth: 80,
+              accessor: record =>
+                counterpart.translate(
+                  `gateway.${record.fundType.toLowerCase()}`
+                ),
+              id: "fundType"
+            },
+            {
+              Header: counterpart.translate("transfer.amount"),
+              accessor: d => ({ asset: d.asset, amount: d.amount }),
+              maxWidth: 120,
+              id: "amount",
+              sortMethod: (a, b) => {
+                return a.amount - b.amount;
+              },
+              Cell: row => (
+                <FormattedAsset
+                  asset={row.original.asset}
+                  amount={row.original.amount}
+                  hide_asset
+                />
+              )
+            },
+            {
+              Header: counterpart.translate("gateway.address"),
+              id: "address",
+              accessor: d => d.address
+            },
+            {
+              Header: counterpart.translate("proposal.status"),
+              id: "state",
+              maxWidth: 80,
+              accessor: d => d.state
+            },
+            {
+              Header: counterpart.translate("gateway.last_update"),
+              maxWidth: 180,
+              id: "update",
+              accessor: d => d.updateAt
+            }
+          ]}
+          defaultPageSize={10}
+          className="-striped -highlight"
+        />
         {isLocked && (
           <div
             className="mask gateway-mask"

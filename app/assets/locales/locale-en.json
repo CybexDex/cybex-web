@@ -19,6 +19,14 @@
     "tr": "Turkish",
     "ru": "Русский"
   },
+  "table": {
+    "previousText": "Previous",
+    "nextText": "Next",
+    "loadingText": "Loading...",
+    "pageText": "Page",
+    "ofText": "of",
+    "rowsText": "rows"
+  },
   "incognito": {
     "no_support":
       "This Cybex Wallet relies on Local Storage and IndexedDB which are not persistent when using Incognito Browsing. We recommend using a regular browsing session.",
@@ -1594,6 +1602,7 @@
     "service": "Transfer Service",
     "bridge": "Bridge",
     "gateway": "Gateway",
+    "fund_records": "Records",
     "symbol": "Symbol",
     "website": "Visit the website",
     "deposit_to": "Please send your %(asset)s to the address below",
