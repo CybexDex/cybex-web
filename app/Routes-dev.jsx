@@ -100,9 +100,9 @@ const routes = (
     <Route path="/explorer/witnesses" component={Witnesses} />
     <Route path="/explorer/committee-members" component={CommitteeMembers} />
     <Route path="/swap" component={SwapContainer} />
-    <Route path="/eo" component={Eo} />
-    <Route path="/eo/detail/:id" component={Detail} />
-    <Route path="/eo/join/:id" component={Join} />
+    <Route path="/ieo" component={Eo} />
+    <Route path="/ieo/detail/:id" component={Detail} />
+    <Route path="/ieo/join/:id" component={Join} />
 
     <Route path="wallet" component={WalletManager}>
       {/* wallet management console */}
