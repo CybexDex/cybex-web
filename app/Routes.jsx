@@ -279,6 +279,14 @@ const routes = (
           .catch(errorLoading);
       }}
     >
+    <Route
+      path="eo/join/:id"
+      getComponent={(location, cb) => {
+        import("components/Eo/Detail/join")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    >
 
     <Route
       path="invoice/:data"
