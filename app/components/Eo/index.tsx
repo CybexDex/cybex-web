@@ -138,7 +138,7 @@ class EO extends React.Component<any, any> {
             
             </span></h3>
             <p>{e.adds_detail}</p>
-            <Link to={`/eo/detail/${e.id}`}>
+            <Link to={`/ieo/detail/${e.id}`}>
             <div className="button primery-button"><Translate content="EIO.Details" /></div>
             </Link>
             <div className="info-item">

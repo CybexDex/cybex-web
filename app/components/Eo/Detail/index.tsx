@@ -37,9 +37,14 @@ class Detail extends React.Component<any, any> {
       this.setState({data: res.result});
       // window.sessionStorage.setItem('detailData', res.result)
     });
-    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0]}, (res)=>{
-      this.setState({kyc_status: res.result});
-    })
+    if(!this.props.myAccounts[0]){
+      this.setState({kyc_status: 'not-login'});
+    }else{
+      fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0]}, (res)=>{
+        this.setState({kyc_status: res.result});
+      })
+    }
+    
   }
 
   public openModal = () => {
@@ -233,17 +238,26 @@ class Detail extends React.Component<any, any> {
 
           <div className="button-holder">
           {/* <Trigger open="ieo-detail-modal"> */}
-          {this.state.kyc_status == "not_start"? (
-            <Link to={`/eo/join/${this.props.params.id}`}>
+          {this.state.kyc_status == "not-login"? (
+            <Link to={`/login`}>
             <div className="button primery-button">
             <Translate content="EIO.participate" />
             </div>
             </Link>
-          ):(
-            <div className="button primery-button disabled">
-            <Translate content="EIO.participate" />
-            </div>
+          ): (
+            this.state.kyc_status !== "not_start"? (
+              <Link to={`/ieo/join/${this.props.params.id}`}>
+              <div className="button primery-button">
+              <Translate content="EIO.participate" />
+              </div>
+              </Link>
+            ):(
+              <div className="button primery-button disabled">
+              <Translate content="EIO.participate" />
+              </div>
+            )
           )}
+          
           
           {/* </Trigger> */}
           
