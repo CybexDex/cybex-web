@@ -270,7 +270,7 @@ let GatewayRecords = class extends React.Component<
           nextText={counterpart.translate(`table.nextText`)}
           loadingText={counterpart.translate(`table.loadingText`)}
           pageText={counterpart.translate(`table.pageText`)}
-          ofText={counterpart.translate(`table.ofText`)}
+          ofText={counterpart.translate(`table.ofText`) + " "}
           rowsText={counterpart.translate(`table.rowsText`)}
           style={
             isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
@@ -420,7 +420,7 @@ let GatewayContainer = class extends React.Component<any, any> {
               contentClass="no-padding"
               tabsClass="account-overview no-padding bordered-header content-block"
             >
-              <Tab title="nav.gateway">
+              <Tab title="account.deposit_withdraw">
                 <div className="filter-wrapper">
                   <input
                     name="nameFilter"
