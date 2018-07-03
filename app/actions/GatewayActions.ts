@@ -97,7 +97,12 @@ class GatewayActions {
     return true;
   }
 
-  async queryFundRecords(account: Map<string, any>, login, offset = 0, size = 20) {
+  async queryFundRecords(
+    account: Map<string, any>,
+    login,
+    offset = 0,
+    size = 20
+  ) {
     debug("[QueryFundRecord]", account);
     const tx = new CustomTx({
       accountName: account.get("name"),
@@ -113,8 +118,8 @@ class GatewayActions {
     let records = await queryFundRecordsImpl(tx);
     // 如果获取不成功，重新登录并再次尝试获取
     if (!records) {
-      await this.loginGatewayQuery(account);
-      tx.addSigner(login.signer);
+      let { signer } = await this.loginGatewayQuery(account);
+      tx.addSigner(signer);
       records = await queryFundRecordsImpl(tx);
     }
     // 如果最终获取，更新记录
@@ -171,6 +176,7 @@ class GatewayActions {
     if (loginRes) {
       this.updateLogin(loginRes);
     }
+    return loginRes;
   }
 
   updateLogin(loginRes) {

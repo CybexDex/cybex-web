@@ -165,7 +165,7 @@ let GatewayTable = class extends React.Component<any, any> {
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
 let GatewayRecords = class extends React.PureComponent<
-  { account; isLocked?: boolean; fundRecords?: FundRecordRes; login },
+  { account; isLocked?: boolean; fundRecords?: FundRecordRes; login? },
   {}
 > {
   static propTypes = {
