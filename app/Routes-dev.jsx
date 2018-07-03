@@ -74,6 +74,7 @@ import Login from "./components/Login/Login";
 import CreateSelector from "./components/Login/CreateSelector";
 import Eo from "./components/Eo";
 import Detail from "./components/Eo/Detail";
+import Join from "./components/Eo/Detail/join";
 
 const history = browserHistory;
 
@@ -101,6 +102,7 @@ const routes = (
     <Route path="/swap" component={SwapContainer} />
     <Route path="/eo" component={Eo} />
     <Route path="/eo/detail/:id" component={Detail} />
+    <Route path="/eo/join/:id" component={Join} />
 
     <Route path="wallet" component={WalletManager}>
       {/* wallet management console */}
