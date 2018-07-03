@@ -2,17 +2,20 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import Modal from "react-foundation-apps/src/modal";
-import Trigger from "react-foundation-apps/src/trigger";
 import foundationApi from "react-foundation-apps/src/utils/foundation-api";
 
 // import Button from "../../Common/Button";
 import BindToChainState from "../../Utility/BindToChainState";
 import AccountInfo from "../../Account/AccountInfo";
 // import AccountStore from "../../../stores/AccountStore";
+import DetailModal from "./Modal.jsx";
+import Trigger from "react-foundation-apps/src/trigger";
 import AccountStore from "stores/AccountStore";
 import { connect } from "alt-react";
-import "./Modal.scss";
+import "./join.scss";
+import * as fetchJson from "../service";
 import Translate from "react-translate-component";
+
 
 
 
@@ -37,7 +40,12 @@ export class BaseModal extends React.Component {
     // }
   };
   componentDidMount(){
-    console.log(Trigger);
+    let data = {
+      project: this.props.params.id
+    }
+    fetchJson.fetchDetails(data,(res)=>{
+      this.setState({data: res.result});
+    });
   }
   componentWillReceiveProps(n){
     this.setState({
@@ -48,50 +56,55 @@ export class BaseModal extends React.Component {
     foundationApi.publish(this.props.id, "close");
   }
   render() {
-    // let { fade, overlay, noCloseBtn, overlayClose } = this.props;
-    // let { fadeOut, isShow } = this.state;
+    console.log(this.state)
+    const data = this.state.data || {}
+    const {
+      name, 
+      token_name,
+      status,
+      current_user_count,
+      current_base_token_count,
+      base_max_quota,
+      rate,
+      adds_token_total,
+      adds_ico_total,
+      start_at,
+      adds_on_market_time,
+      adds_advantage,
+      offer_at,
+      base_token_count,
+      district_restriction,
+      base_token_name,
+      adds_website,
+      whitepaper,
+      adds_detail,
+      current_percent
+    } = data;
     return (
-      <Modal
-        id={this.props.id}
-        // overlay={props.overlay}
-        // onClose={props.onClose}
-        // className={props.className}
-        // overlayClose={props.overlayClose}
-      >
-      <div className="modal-container">
-        <div className="modal-content">
+      <div className="join-container">
+        <div className="join-content">
           <div className="input-item">
-            <h3>Demo Demo</h3>
-            <p>jkaslkdfk sadfkklsdafjs sadfasdfsadfdsa</p>
+            <h3>{name}({token_name})</h3>
+            <p><Translate content="EIO.current_ETH_balance" />: {current_user_count} <br />
+            <Translate content="EIO.Quota_Remaining" />: {current_base_token_count} <br />
+            <Translate content="EIO.Personal_Limit" />: {base_max_quota}</p>
           </div>
-          {/* <div className="input-item"> */}
-          {/* <input type="text" className="enter-info" placeholder="please enter" /> */}
-          <button className="confirm detail-modal-btn" disabled>Confirm</button>
-          <div className="divider"></div>
-          <button className="cancel detail-modal-btn" onClick={this.cao}>Cancel</button>
-          {/* <p className="error-msg">21312321</p>
+          <div className="input-item">
+          <input type="text" className="enter-info" placeholder="please enter" />
+          <Trigger open="ieo-detail-modal">
+          <button className="join-action detail-join-btn">Submit</button>
+          </Trigger>
+          <button className="add-money detail-join-btn" onClick={this.cao}>Add Money</button>
+          <p className="error-msg">21312321</p>
           </div>
           <div className="input-item">
             <p className="description">jkaslkdfk sadfkklsdafjs sadfasdfsadfdsa</p>
-          </div> */}
+          </div>
           {/* <Button ButtonSize="xsmall" ButtonType="secondary">submit</Button> */}
         </div>
+        <DetailModal id="ieo-detail-modal">
+          </DetailModal>
       </div>
-      
-      <Trigger close={this.props.id}>
-        <a href="#" className="close-button">
-          &times;
-        </a>
-      </Trigger>
-        {/* {!props.noCloseBtn && (
-          <Trigger close={props.id}>
-            <a href="#" className="close-button">
-              &times;
-            </a>
-          </Trigger>
-        )}
-        {props.children} */}
-      </Modal>
       // <div className={`detail-modal${isShow ? ` show`:` hide`}`}>
       //   <div className="modal-container">
       //     <div className="modal-title">123</div>

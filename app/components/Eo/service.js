@@ -1,64 +1,97 @@
-export function fetchJson(options){
-    let option = options || {}
-    return new Promise(function(resolve, reject){
-        setTimeout(()=>{
-            resolve({
-                data: [{
-                    "name": "yang1",   //项目名字
-                    "token" : "jade.YY",   // 内部代号
-                    "token_name" : "YY",  // token 名字
-                    "adds":{"name":1},    // 额外参数
-                    "status" : "pre",   //  状态  pre , ok, pause ,finish
-                    "base_token_count":2000,  // 众筹金额
-                    "base_token": "jade.ETH",  // 众筹币代号
-                    "base_token_name" : "ETH",  // 众筹使用货币
-                    "rate": 100,  // 兑换比例  token:base = 100
-                    "base_min_quota": 0.1,  //单人最小众筹量
-                    "base_max_quota": 9.9,  //单人最大众筹量
-                    "base_accuracy": 0.1,  //精度
-                    "recieve_address": "adadada", //收取众筹金的地址
-                    "start_at":"2018-07-01",  //开始时间
-                    "end_at":"2018-08-01",   //结束时间
-                    "current_base_token_count": "aaa", //当前募资数
-                    "current_user_count": "aaa" //当前参与人数
-                },{
-                    "name": "yang1",   //项目名字
-                    "token" : "jade.YY",   // 内部代号
-                    "token_name" : "YY",  // token 名字
-                    "adds":{"name":1},    // 额外参数
-                    "status" : "pre",   //  状态  pre , ok, pause ,finish
-                    "base_token_count":2000,  // 众筹金额
-                    "base_token": "jade.ETH",  // 众筹币代号
-                    "base_token_name" : "ETH",  // 众筹使用货币
-                    "rate": 100,  // 兑换比例  token:base = 100
-                    "base_min_quota": 0.1,  //单人最小众筹量
-                    "base_max_quota": 9.9,  //单人最大众筹量
-                    "base_accuracy": 0.1,  //精度
-                    "recieve_address": "adadada", //收取众筹金的地址
-                    "start_at":"2018-07-01",  //开始时间
-                    "end_at":"2018-08-01",   //结束时间
-                    "current_base_token_count": "aaa", //当前募资数
-                    "current_user_count": "aaa" //当前参与人数
-                },{
-                    "name": "yang1",   //项目名字
-                    "token" : "jade.YY",   // 内部代号
-                    "token_name" : "YY",  // token 名字
-                    "adds":{"name":1},    // 额外参数
-                    "status" : "pre",   //  状态  pre , ok, pause ,finish
-                    "base_token_count":2000,  // 众筹金额
-                    "base_token": "jade.ETH",  // 众筹币代号
-                    "base_token_name" : "ETH",  // 众筹使用货币
-                    "rate": 100,  // 兑换比例  token:base = 100
-                    "base_min_quota": 0.1,  //单人最小众筹量
-                    "base_max_quota": 9.9,  //单人最大众筹量
-                    "base_accuracy": 0.1,  //精度
-                    "recieve_address": "adadada", //收取众筹金的地址
-                    "start_at":"2018-07-01",  //开始时间
-                    "end_at":"2018-08-01",   //结束时间
-                    "current_base_token_count": "aaa", //当前募资数
-                    "current_user_count": "aaa" //当前参与人数
-                }]
-            })
-        },500)
+let isFlag = false;
+
+export const fetchJson = (options) => {
+  const { url, type, data, ...others } = options;
+
+  isFlag = true;
+
+  let opts = {
+    ...others,
+    method: type || "get",
+    credentials: "include",
+    headers: options.headers || {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+     
+  };
+  if(["POST","PUT"].indexOf(opts.method.toUpperCase()) >= 0){
+        // let params = Object.keys(data).map(function (key) {
+        //     return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+        // }).join("&");
+    opts.body =  JSON.stringify(data);
+  }
+  var newUrl = url;
+  if(opts.method.toUpperCase() == "GET" && data){
+    newUrl+="?";
+    let params = Object.keys(data).map(function (key) {
+      return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+    }).join("&");
+    newUrl+=params;
+  }
+  fetch(newUrl, opts)
+        .then(resData => toJson(resData, opts))
+        .catch(error => errorHandler(error,opts))
+        .then(resData => resHandler(resData, opts))
+        .catch(error => errorHandler(error, opts));
+};
+
+function toJson(resp, options) {
+  return resp.json();
+}
+function resHandler(resData, options){
+    console.log(resData)
+  options.success(resData);
+}
+function errorHandler(error, options, status) {
+  isFlag=false;
+  if(options.error){
+    options.error(error);
+  }else{
+    console.error(error);
+  }
+  return false;
+}
+
+export function fetchJsonList(cb){
+  fetchJson({
+    url: "/api/cybex/projects",
+    type: "GET",
+    success: (data)=>{
+      cb(data);
+    }
+  });
+}
+
+export function fetchBanner(cb){
+    fetchJson({
+      url: "/api/cybex/projects/banner",
+      type: "GET",
+      success: (data)=>{
+        cb(data);
+      }
+    });
+  }
+
+export function fetchDetails(data, cb){
+    fetchJson({
+        url: "/api/cybex/project/detail",
+        type: "GET",
+        success: (res)=>{
+            cb(res);
+        },
+        data:data
     });
 }
+export function fetchKYC(data, cb){
+    fetchJson({
+        url: "/api/cybex/user/check_status",
+        type: "GET",
+        success: (res)=>{
+            cb(res);
+        },
+        data:data
+    });
+
+}
+

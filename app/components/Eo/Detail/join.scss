@@ -1,0 +1,39 @@
+.join-container{
+	width: 90%;
+	margin: 3rem auto;
+	.detail-join-btn{
+		width: 8rem;
+		height: 30px;
+		color: #000;
+		margin-right: 1rem;
+		&:hover{
+			background: #eee
+		}
+		&:active{
+			background: #ccc
+		}
+	}
+	.input-item{
+		position: relative;
+		overflow: hidden;
+	}
+	.error-msg{
+		width: 100%;
+		float: left;
+		color: red;
+		font-weight: 500;
+	}
+	.enter-info{
+		border: 1px solid #fff;
+		margin-right: 1rem;
+		float: left;
+		width: 60%;
+	}
+	.btn-group{
+		float: left;
+		width: 30%;
+	}
+	.description{
+		color: #ffd400;
+	}
+}

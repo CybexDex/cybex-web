@@ -70,8 +70,9 @@
 			}
 		}
 		.button-holder{
-			position: absolute;
-			bottom: 20px;
-			right: 20%;
+			margin-top: 20px;
+			.disabled{
+				background: gray;
+			}
 		}
 	}

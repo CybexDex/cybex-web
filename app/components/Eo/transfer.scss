@@ -9,6 +9,37 @@
 	}
 	position: relative;
 }
+.title-container{
+	width: 90%;
+	overflow: hidden;
+	.kyc-btn{
+		border: .5px solid #ffd400; 
+		float: right;
+		padding: .5rem 2rem;
+		border-radius: 3rem;
+		margin-top: 1.5rem;
+		cursor: pointer;
+		p{
+			margin: 0;
+			color: #ffd400;
+			text-align: center;
+		}
+		h4{
+			margin: 0;
+			color: #ffd400;
+			text-align: center;
+		}
+		&:hover{
+			background: #ffd400;
+			p{
+				color: #fff;
+			}
+			h4{
+				color: #fff;
+			}
+		}
+	}
+}
 .slide-btn{
 	background: #000;
 	position: absolute;
