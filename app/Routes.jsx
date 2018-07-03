@@ -264,29 +264,29 @@ const routes = (
       }}
     />
     <Route
-      path="eo"
+      path="ieo"
       getComponent={(location, cb) => {
         import("components/Eo")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}
-    >
+    />
     <Route
-      path="eo/detail/:id"
+      path="ieo/detail/:id"
       getComponent={(location, cb) => {
         import("components/Eo/Detail")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}
-    >
+    />
     <Route
-      path="eo/join/:id"
+      path="ieo/join/:id"
       getComponent={(location, cb) => {
         import("components/Eo/Detail/join")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}
-    >
+    />
 
     <Route
       path="invoice/:data"
