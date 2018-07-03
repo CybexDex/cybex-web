@@ -1,6 +1,6 @@
 {
   "name": "cybex-web",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "An Advanced wallet interface, inspired by bitshares-ui",
   "author": "CybexDEX",
   "browser": {
