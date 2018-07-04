@@ -1,11 +1,5 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
-// import Button from "../../Common/Button";
 import BindToChainState from "../../Utility/BindToChainState";
-import AccountInfo from "../../Account/AccountInfo";
-// import AccountStore from "../../../stores/AccountStore";
-import DetailModal from "./Modal.jsx";
-import Trigger from "react-foundation-apps/src/trigger";
 import AccountActions from "actions/AccountActions";
 import AccountStore from "stores/AccountStore";
 import AmountSelector from "components/Utility/AmountSelector";
@@ -42,12 +36,6 @@ let Join = class extends React.Component<
     balanceError;
   }
 > {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     fadeOut: false
-  //   };
-  // }
 
   static propTypes = {
     currentAccount: ChainTypes.ChainAccount
@@ -66,7 +54,6 @@ let Join = class extends React.Component<
       feeAsset: null,
       hasBalance: false,
       hasPoolBalance: false,
-      from_error: null,
       fee_asset_id: "1.3.0",
       feeAmount: new Asset({ amount: 0 }),
       feeStatus: {},
@@ -170,11 +157,10 @@ let Join = class extends React.Component<
       return feeStatus[id] && feeStatus[id].hasBalance;
     }
 
-    const { from_error } = state;
     let { currentAccount: from_account } = this.props;
     let asset_types = [],
       fee_asset_types = [];
-    if (!(from_account && from_account.get("balances") && !from_error)) {
+    if (!(from_account && from_account.get("balances"))) {
       return { asset_types, fee_asset_types };
     }
     let account_balances = from_account.get("balances").toJS();
