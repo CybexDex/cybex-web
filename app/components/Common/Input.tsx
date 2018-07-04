@@ -178,7 +178,11 @@ let Input = Radium(
       }
       this.setState({ value, valid });
       if (this.props.onChange) {
-        this.props.onChange(value);
+        if (this.props.valueFromOuter) {
+          this.props.onChange(e);
+        } else {
+          this.props.onChange(value);
+        }
       }
       if (this.props.onValid && valid) {
         this.props.onValid(value);

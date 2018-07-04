@@ -7,6 +7,7 @@ import FormattedAsset from "./FormattedAsset";
 import FloatingDropdown from "./FloatingDropdown";
 import Immutable from "immutable";
 import counterpart from "counterpart";
+import { Input } from "components/Common";
 
 class AssetSelector extends React.Component {
   static propTypes = {
@@ -98,22 +99,26 @@ class AmountSelector extends React.Component {
         />
         <div className="inline-label input-wrapper">
           {isNumber ? (
-            <input
+            <Input
               disabled={this.props.disabled}
               type="number"
+              valueFromOuter
               value={value || 0}
               placeholder={this.props.placeholder}
               onChange={this._onChange.bind(this)}
               tabIndex={this.props.tabIndex}
+              style={{width: "100%", marginBottom: 0}}
             />
           ) : (
-            <input
+            <Input
               disabled={this.props.disabled}
               type="text"
+              valueFromOuter
               value={value || ""}
               placeholder={this.props.placeholder}
               onChange={this._onChange.bind(this)}
               tabIndex={this.props.tabIndex}
+              style={{width: "100%", marginBottom: 0}}
             />
           )}
           <div className="form-label select floating-dropdown">
