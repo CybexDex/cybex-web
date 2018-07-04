@@ -24,7 +24,7 @@ class EO extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-
+      offset:0
     };
   }
 
