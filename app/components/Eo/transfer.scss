@@ -63,6 +63,7 @@
 }
 .container {
 	width: 80%;
+	max-width: 1200px;
 	margin: 20px auto;
 	}
 	
@@ -71,6 +72,35 @@
 		height: 600px;
 		width: 100%;
 		position: relative;
+	}
+	.button{
+		&.primery-button{
+			background: linear-gradient(90deg, #ffc175 , #ff9648);
+			border: none;
+			color: #fff;
+			padding: 10px 30px;
+			font-weight: 500;
+			border-radius: 2px;
+		}
+		
+	}
+	.btn-coming-soon{
+		border: 1px solid #ffc175;
+		color: #ffc175;
+		background: #171d2b;
+		padding: 10px 10px;
+		font-weight: 500;
+		border-radius: 2px;
+		width: 120px;
+		margin: auto;
+		margin-top: 10px;
+		margin-bottom: 10px;
+    	text-align: center;
+    	cursor: pointer;
+		&:hover{
+			background: linear-gradient(90deg, #ffc175 , #ff9648);
+			color: #fff;
+		}
 	}
 	.pin {
 		padding: 2em;
@@ -84,17 +114,13 @@
 			color: #fff;
 			font-size: 2.3rem
 		}
-		.button{
-			&.primery-button{
-				background: #ffd400;
-				color: #000;
-			}
-		}
+		
 		.status-label{
 			display: inline-block;
 			vertical-align: middle;
 			margin-bottom: 0;
 			margin-left: 5px;
+			font-size: 1rem;
 		}
 		
 		
@@ -109,13 +135,14 @@
 		}
 		.percent{
 			float: left;
-			background: #fff;
+			box-shadow: 0px 0px 10px #000 inset;
 			width: 80%;
 			height: 10px;
 			position: relative;
 			padding: 1px;
 			box-sizing: border-box;
-	
+			border-radius: 5px;
+
 			.percent-in{
 				position: absolute;
 				height: 8px;
@@ -132,7 +159,7 @@
 					width: 30%;
 					top: 0;
 					left: 0;
-					background: #ccc;
+					background: #323c52;
 					color: #000;
 				}
 				&:nth-child(4n+2) {
@@ -140,7 +167,7 @@
 					width: 30%;
 					top: 0;
 					left: 30%;
-					background: #CCC;
+					background: #323c52;
 					color: #000;
 					.title{
 						font-size: 1.8rem;
@@ -151,7 +178,7 @@
 					width: 40%;
 					top: 0;
 					left: 60%;
-					background: #CCC;
+					background: #323c52;
 					color: #000;
 					.title{
 						font-size: 1.8rem;
@@ -162,11 +189,14 @@
 					width: 60%;
 					top: 360px;
 					left: 0;
-					background: #CCC;
+					background: #1d2637;
 					color: #000;
 					.title{
 						font-size: 1.8rem;
 					}
+				}
+				&.coming-soon{
+					background: #1d2637;
 				}
 			}
 		}
@@ -177,7 +207,7 @@
 					width: 40%;
 					top: 0;
 					left: 0;
-					background: linear-gradient(160deg, #e8a95e , #e76637);
+					background: #323c52;
 					color: #000;
 					.title{
 						font-size: 2.4rem;
@@ -186,6 +216,13 @@
 						width: 130px;
 						height: 130px;
 					}
+					.status-label{
+						display: block;
+						font-size: 1.6rem;
+					}
+				}
+				&.special{
+					background: linear-gradient(160deg, #e8a95e , #e76637);
 				}
 				&:nth-child(4n+2) {
 					height: 360px;
@@ -219,6 +256,9 @@
 					.title{
 						font-size: 1.8rem;
 					}
+				}
+				&.coming-soon{
+					background: #1d2637;
 				}
 			}
 		}

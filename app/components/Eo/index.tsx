@@ -27,17 +27,24 @@ class EO extends React.Component<any, any> {
     super(props);
     this.state = {
       data:[[]],
-      offset:0
+      offset:0,
+      showMore: 'block'
     };
-  }
 
+  }
+  canClick = true;
   componentDidMount(){
     fetchJson.fetchJsonList(this.state.offset, (data)=>{
+      let showMore = 'block';
+      if(data.result.length < 4){
+        showMore = 'none';
+      }
       let newDate = this.state.data;
       newDate[0] = data.result
       this.setState({
         offset: this.state.offset+4,
-        data: newDate
+        data: newDate,
+        showMore: showMore
       });
     });
     fetchJson.fetchBanner((res)=>{
@@ -56,18 +63,30 @@ class EO extends React.Component<any, any> {
   }
   
   addMore() {
-    fetchJson.fetchJsonList(this.state.offset, (data)=>{
-      let newDate = this.state.data;
-      newDate[this.state.offset/4] = data.result
-      this.setState({
-        offset: this.state.offset+4,
-        data: newDate
+    
+    if(this.canClick){
+      this.canClick = false;
+      fetchJson.fetchJsonList(this.state.offset, (data)=>{
+        let showMore = 'block';
+        if(data.result.length < 4){
+          showMore = 'none';
+        }
+        let newDate = this.state.data;
+        newDate[this.state.offset/4] = data.result
+        this.setState({
+          offset: this.state.offset+4,
+          data: newDate,
+          showMore: showMore
+        }, ()=>{
+          this.canClick = true;
+        });
+
       });
-    });
+    }
+    
   }
 
   render() {
-    let hideMoreBtn = 'block';
 
     const data = this.state.data || [];
     const bannerData = this.state.bannerData || [];
@@ -132,17 +151,12 @@ class EO extends React.Component<any, any> {
         }
       <div className="container">
       {data.map((f,j) => {
-        if(f.length == 0 || f.length < 4){
-          hideMoreBtn = 'none';
-        }
         if(f.length<4 && f.length !== 0){
-          hideMoreBtn = 'none';
           let comingSoonLength = 4 - f.length;
           for(let i = 0; i< comingSoonLength; i++){
             f.push({comingSoon: true});
           }
         }
-
         return (
           <div className="waterfall">
       {f.map((e,i)=>{
@@ -154,23 +168,23 @@ class EO extends React.Component<any, any> {
         let remainStr = `${0-endAt.diff(now,'days')} ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh:mm:ss')}`
         return(
           e.comingSoon==true?(
-              <div className="pin" key={i}>
+              <div className="pin coming-soon" key={i}>
                 <h3>coming soon</h3>
               </div>
             ):(
-            <div className="pin" key={i}>
+            <div className={`pin${(j==0&&i==0)?' special':''}`} key={i}>
               <img src={logo_demo} width={100} height={100} />
               <h3 className="title">{e.name}<span>
               {e.status == 'ok'? (
-                <p className="status-label">[<Translate content="EIO.ok" />]</p>
+                <p className="status-label">[ <Translate content="EIO.ok" /> ]</p>
               ):(
                 (e.status == 'pre')? (
-                  <p className="status-label">[<Translate content="EIO.pre" />]</p>
+                  <p className="status-label">[ <Translate content="EIO.pre" /> ]</p>
                 ):(
                   e.status == 'finish'? (
-                    <p className="status-label">[<Translate content="EIO.finish" />]</p>
+                    <p className="status-label">[ <Translate content="EIO.finish" /> ]</p>
                   ):(
-                    <p className="status-label">[<Translate content="EIO.pause" />]</p>
+                    <p className="status-label">[ <Translate content="EIO.pause" /> ]</p>
                   )
                 )
               )}
@@ -197,9 +211,8 @@ class EO extends React.Component<any, any> {
       </div>
         )
       })}
-      
       </div>
-      <div style={{display: hideMoreBtn}} onClick={this.addMore.bind(this)}>Add More</div>
+      <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Add More</div>
       </div>
     );
   }
