@@ -67,20 +67,22 @@
 	}
 	
 	.waterfall {
-	overflow: hidden;
+		overflow: hidden;
 		height: 600px;
 		width: 100%;
 		position: relative;
 	}
 	.pin {
-	padding: 1em;
-	break-inside: avoid;
-	background: white;
-	color: #fff;
-	background: #333;
-	position: absolute;
+		padding: 2em;
+		break-inside: avoid;
+		background: white;
+		color: #fff;
+		background: #333;
+		position: absolute;
+		border: 2px solid #171d2b;
 		.title{
 			color: #fff;
+			font-size: 2.3rem
 		}
 		.button{
 			&.primery-button{
@@ -88,54 +90,14 @@
 				color: #000;
 			}
 		}
+		.status-label{
+			display: inline-block;
+			vertical-align: middle;
+			margin-bottom: 0;
+			margin-left: 5px;
+		}
 		
-		&:nth-child(4n+1) {
-			height: 600px;
-			width: 36%;
-			top: 0;
-			left: 0;
-			background: #CCC;
-			color: #000;
-			.title{
-				color: #000;
-			}
-		}
-		&:nth-child(4n+2) {
-			height: 360px;
-			width: 32%;
-			top: 0;
-			left: 36%;
-			background: #CCC;
-			color: #000;
-			.title{
-				color: #000;
-			}
-		}
-		&:nth-child(4n+3) {
-			height: 360px;
-			width: 32%;
-			top: 0;
-			left: 68%;
-			background: #CCC;
-			color: #000;
-			.title{
-				color: #000;
-			}
-		}
-		&:nth-child(4n+4) {
-			height: 240px;
-			width: 64%;
-			top: 360px;
-			left: 36%;
-			background: #CCC;
-			color: #000;
-			.title{
-				color: #000;
-			}
-		}
-		&:hover{
-			background: linear-gradient(to right, orange , #ffd400);
-		}
+		
 		.info-item{
 			overflow: hidden;
 			margin-top: 20px;
@@ -158,15 +120,116 @@
 				position: absolute;
 				height: 8px;
 				width: 30%;
-				background: linear-gradient(to right, orange , #ffd400);
+				background: linear-gradient(to right, #e8a95e , #e76637);
 			}
 		}
 	}
+	.waterfall{
+		&:nth-child(2n){
+			.pin {
+				&:nth-child(4n+1) {
+					height: 360px;
+					width: 30%;
+					top: 0;
+					left: 0;
+					background: #ccc;
+					color: #000;
+				}
+				&:nth-child(4n+2) {
+					height: 360px;
+					width: 30%;
+					top: 0;
+					left: 30%;
+					background: #CCC;
+					color: #000;
+					.title{
+						font-size: 1.8rem;
+					}
+				}
+				&:nth-child(4n+3) {
+					height: 600px;
+					width: 40%;
+					top: 0;
+					left: 60%;
+					background: #CCC;
+					color: #000;
+					.title{
+						font-size: 1.8rem;
+					}
+				}
+				&:nth-child(4n+4) {
+					height: 240px;
+					width: 60%;
+					top: 360px;
+					left: 0;
+					background: #CCC;
+					color: #000;
+					.title{
+						font-size: 1.8rem;
+					}
+				}
+			}
+		}
+		&:nth-child(2n+1){
+			.pin {
+				&:nth-child(4n+1) {
+					height: 600px;
+					width: 40%;
+					top: 0;
+					left: 0;
+					background: linear-gradient(160deg, #e8a95e , #e76637);
+					color: #000;
+					.title{
+						font-size: 2.4rem;
+					}
+					img {
+						width: 130px;
+						height: 130px;
+					}
+				}
+				&:nth-child(4n+2) {
+					height: 360px;
+					width: 30%;
+					top: 0;
+					left: 40%;
+					background: #323c52;
+					color: #000;
+					.title{
+						font-size: 1.8rem;
+					}
+				}
+				&:nth-child(4n+3) {
+					height: 360px;
+					width: 30%;
+					top: 0;
+					left: 70%;
+					background: #323c52;
+					color: #000;
+					.title{
+						font-size: 1.8rem;
+					}
+				}
+				&:nth-child(4n+4) {
+					height: 240px;
+					width: 60%;
+					top: 360px;
+					left: 40%;
+					background: #1d2637;
+					color: #000;
+					.title{
+						font-size: 1.8rem;
+					}
+				}
+			}
+		}
+
+	}
+		
 	.pin img {
 		padding-bottom: 1em;
 		margin-bottom: 0.5em;
-		width: 60px;
-		height: 60px;
+		width: 80px;
+		height: 80px;
 		border: .5px solid #aaa;
 		border-radius: 50%;
 		background: #fff;
