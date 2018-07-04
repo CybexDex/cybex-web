@@ -67,19 +67,18 @@
 	}
 	
 	.waterfall {
-	column-count: 3;
-	column-width: 24em;
-	column-gap: 1em;
+	overflow: hidden;
+		height: 600px;
+		width: 100%;
+		position: relative;
 	}
-	
 	.pin {
 	padding: 1em;
-	margin: 0 0.125em 1em;
 	break-inside: avoid;
 	background: white;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
 	color: #fff;
 	background: #333;
+	position: absolute;
 		.title{
 			color: #fff;
 		}
@@ -89,8 +88,45 @@
 				color: #000;
 			}
 		}
-	
-		&:nth-child(2n+1) {
+		
+		&:nth-child(4n+1) {
+			height: 600px;
+			width: 36%;
+			top: 0;
+			left: 0;
+			background: #CCC;
+			color: #000;
+			.title{
+				color: #000;
+			}
+		}
+		&:nth-child(4n+2) {
+			height: 360px;
+			width: 32%;
+			top: 0;
+			left: 36%;
+			background: #CCC;
+			color: #000;
+			.title{
+				color: #000;
+			}
+		}
+		&:nth-child(4n+3) {
+			height: 360px;
+			width: 32%;
+			top: 0;
+			left: 68%;
+			background: #CCC;
+			color: #000;
+			.title{
+				color: #000;
+			}
+		}
+		&:nth-child(4n+4) {
+			height: 240px;
+			width: 64%;
+			top: 360px;
+			left: 36%;
 			background: #CCC;
 			color: #000;
 			.title{
