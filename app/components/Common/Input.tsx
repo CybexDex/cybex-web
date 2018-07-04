@@ -143,7 +143,8 @@ let Input = Radium(
         },
         small: {
           wrapper: {
-            height: "2.6667rem"
+            height: "2.6667rem",
+            fontSize: "1em"
           },
           icon: {
             fontSize: "2em"

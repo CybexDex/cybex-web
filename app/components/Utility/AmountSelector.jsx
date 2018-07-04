@@ -104,6 +104,7 @@ class AmountSelector extends React.Component {
               type="number"
               valueFromOuter
               value={value || 0}
+              size="small"
               placeholder={this.props.placeholder}
               onChange={this._onChange.bind(this)}
               tabIndex={this.props.tabIndex}
@@ -114,6 +115,7 @@ class AmountSelector extends React.Component {
               disabled={this.props.disabled}
               type="text"
               valueFromOuter
+              size="small"
               value={value || ""}
               placeholder={this.props.placeholder}
               onChange={this._onChange.bind(this)}

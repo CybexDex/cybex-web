@@ -177,7 +177,7 @@ class TransactionConfirm extends React.Component {
       );
       button_group = (
         <div className="button-group">
-          <div className="grid-block full-width-content">
+          <div className="grid-block full-width-content" style={{alignItems: "center"}}>
             <Button
               onClick={this.onConfirmClick.bind(this)}
               type="primary"
@@ -189,7 +189,7 @@ class TransactionConfirm extends React.Component {
                 <Translate content="transfer.confirm" />
               )}
             </Button>
-            <Button type="secondary" onClick={this.onCloseClick.bind(this)}>
+            <Button type="secondary" style={{minHeight: 42}} onClick={this.onCloseClick.bind(this)}>
               <Translate content="account.perm.cancel" />
             </Button>
           </div>
@@ -254,7 +254,7 @@ class TransactionConfirm extends React.Component {
               {button_group}
 
               {/* P R O P O S E   T O G G L E */}
-              {!this.props.transaction.has_proposed_operation() &&
+              {null && !this.props.transaction.has_proposed_operation() &&
               !(broadcast || broadcasting) ? (
                 <div className="align-right grid-block">
                   <label
