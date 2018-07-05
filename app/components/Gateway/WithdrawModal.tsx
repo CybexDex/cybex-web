@@ -399,7 +399,7 @@ class WithdrawModal extends React.Component<props, state> {
     // withdraw_amount <= 0;
     let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
       .name;
-    let isEOS = assetName.toLowerCase().indexOf("eos") !== -1;
+    let isEOS = assetName.indexOf("EOS") !== -1;
     console.debug("AssetName: ", assetName);
     return (
       <BaseModal modalId={modalId}>

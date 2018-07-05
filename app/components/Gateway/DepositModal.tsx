@@ -67,7 +67,17 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       amount: currentBalance ? currentBalance.get("balance") : 0
     });
     let assetName = type;
-    const isEOS = assetName.indexOf("EOS");
+
+    let address, gatewayAccount;
+    const gatewayRex = /^(.+)\[(.+)\]$/;
+
+    if (gatewayRex.test(depositInfo.address)) {
+      gatewayAccount = depositInfo.address.match(gatewayRex)[1];
+      address = depositInfo.address.match(gatewayRex)[2];
+    } else {
+      address = depositInfo.address;
+    }
+    let isEOS = type === "EOS";
     return (
       <BaseModal modalId={modalId}>
         <h3>
@@ -89,9 +99,12 @@ class DepositModal extends React.Component<props, { fadeOut }> {
         )}
         <div className="SimpleTrade__withdraw-row">
           {isEOS ? (
-            <section className="text-center">
-              <Translate content="gateway.deposit_eos" />
-            </section>
+            <Translate
+              component="p"
+              style={{ fontSize: "bold" }}
+              content="gateway.deposit_eos"
+              account={gatewayAccount}
+            />
           ) : (
             <>
               <p
@@ -116,7 +129,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
                     display: "inline-block"
                   }}
                 >
-                  <QRCode level="L" size={140} value={depositInfo.address} />
+                  <QRCode level="L" size={140} value={address} />
                 </div>
               </section>
             </>
@@ -131,9 +144,9 @@ class DepositModal extends React.Component<props, { fadeOut }> {
                   id="depositAddress"
                   readOnly
                   type="text"
-                  value={depositInfo.address}
+                  value={address}
                 />
-                <CopyButton text={depositInfo.address} />
+                <CopyButton text={address} />
               </span>
             </label>
           )}
@@ -149,7 +162,11 @@ class DepositModal extends React.Component<props, { fadeOut }> {
               onClick={this.getNewAddress}
               type="submit"
             >
-              <Translate content="gateway.generate_new" />
+              {isEOS ? (
+                <Translate content="gateway.generate_new_eos" />
+              ) : (
+                <Translate content="gateway.generate_new" />
+              )}
             </button>
           </div>
         </div>

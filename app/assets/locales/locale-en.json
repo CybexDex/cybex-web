@@ -1613,7 +1613,7 @@
       "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. <br>* Please make sure that your withdrawal address is correct, otherwise you may lose your tokens permanently. <br>* It may take some time for each transfer to confirm, please kindly be patient. <br>* For the withdrawal operation, please use your personal wallet address only. <br>* Any smart contract address, exchange deposit address or ICO related address used for withdrawal could result in failed contract execution and transfer, and your funds would be sent back to your Cybex account, which may keep you waiting for longer time. Please kindly understand this.",
     "balance_asset": "Current %(asset)s balance",
     "withdraw_placeholder": "Please enter your %(asset)s address",
-    "deposit_eos": "please send your EOS to account 'cybexeospool' on the EOS chain with the memo displayed below. please do not put any other information in the memo.",
+    "deposit_eos": "please send your EOS to account '%(account)s' on the EOS chain with the memo displayed below. please do not put any other information in the memo.",
     "deposit_eos_memo": "Deposit Memo",
     "balance": "Current balance",
     "generate": "Generate",
