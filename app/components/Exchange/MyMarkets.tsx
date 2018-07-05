@@ -54,7 +54,7 @@ const BTC_MARKETS = [
   "JADE.TCT",
   "JADE.MKR",
   "JADE.FUN",
-  // "JADE.SDT",
+  "JADE.SDT",
   "JADE.GNT",
   "JADE.NKN",
   "JADE.MVP",

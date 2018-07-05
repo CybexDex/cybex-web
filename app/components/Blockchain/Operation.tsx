@@ -31,7 +31,8 @@ let ops = Object.keys(operations);
 let listings = account_constants.account_listing;
 
 function getVestingPeriodFromOp(op) {
-  if (!op.extensions || !op.extensions.length|| !op.extensions[0][1]) return null;
+  if (!op.extensions || !op.extensions.length || !op.extensions[0][1])
+    return null;
   return op.extensions[0][1]["vesting_period"];
 }
 const SECONDS_OF_ONE_DAY = 86400000;
@@ -221,20 +222,21 @@ class Operation extends React.PureComponent<any, any> {
         };
         let locale = IntlStore.getState().currentLocale;
         let vesting = getVestingPeriodFromOp(op[1]);
-        let vestingStr = vesting === null
-          ? "none"
-          : humanize(vesting * 1000, {
-              language: humanizeLocals[locale],
-              unitMeasures: {
-                y: 365 * SECONDS_OF_ONE_DAY,
-                mo: 30 * SECONDS_OF_ONE_DAY,
-                w: 7 * SECONDS_OF_ONE_DAY,
-                d: SECONDS_OF_ONE_DAY,
-                h: 3600000,
-                m: 60000,
-                s: 1000,
-              }
-            });
+        let vestingStr =
+          vesting === null
+            ? "none"
+            : humanize(vesting * 1000, {
+                language: humanizeLocals[locale],
+                unitMeasures: {
+                  y: 365 * SECONDS_OF_ONE_DAY,
+                  mo: 30 * SECONDS_OF_ONE_DAY,
+                  w: 7 * SECONDS_OF_ONE_DAY,
+                  d: SECONDS_OF_ONE_DAY,
+                  h: 3600000,
+                  m: 60000,
+                  s: 1000
+                }
+              });
 
         color = "success";
         op[1].amount.amount = parseFloat(op[1].amount.amount);
