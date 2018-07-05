@@ -61,7 +61,7 @@ export const JadePool = __TEST__
         "JADE.ETH": "ETH",
         "JADE.BTC": "BTC",
         "JADE.LTC": "LTC",
-        // "JADE.EOS": "EOS",
+        "JADE.EOS": "EOS",
         "JADE.USDT": "USDT",
         "JADE.LHT": "LHT",
         "JADE.INK": "INK",
@@ -94,7 +94,7 @@ export const JadePool = __TEST__
         ETH: "JADE.ETH",
         BTC: "JADE.BTC",
         // ERC20
-        // "EOS": "JADE.EOS",
+        "EOS": "JADE.EOS",
         USDT: "JADE.USDT",
         LTC: "JADE.LTC",
         LHT: "JADE.LHT",
