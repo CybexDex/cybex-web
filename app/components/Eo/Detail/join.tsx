@@ -395,8 +395,10 @@ let Join = class extends React.Component<
         .indexOf(".") === -1;
     console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
+    const avail = base_max_quota - current_user_count;
+    const isOverflow = amountValue > avail;
     const isSendNotValid =
-      !isAmountValid || !asset || balanceError || !isAmountIntTimes;
+      !isAmountValid || !asset || balanceError || !isAmountIntTimes || isOverflow;
     return (
       <div
         className="join-wrapper"
@@ -452,6 +454,11 @@ let Join = class extends React.Component<
             {!!intTimeError && (
               <p className="has-error no-margin" style={{ paddingTop: 10 }}>
                 <Translate content="ieo.int_times" />
+              </p>
+            )}
+            {!!isOverflow && (
+              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+                <Translate content="ieo.warning_overflow" />
               </p>
             )}
           </div>
