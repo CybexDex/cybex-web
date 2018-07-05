@@ -53,9 +53,9 @@ function errorHandler(error, options, status) {
   return false;
 }
 
-export function fetchJsonList(cb){
+export function fetchJsonList(offset, cb){
   fetchJson({
-    url: "/api/cybex/projects?limit=4",
+    url: `/api/cybex/projects?limit=4&offset=${offset}`,
     type: "GET",
     success: (data)=>{
       cb(data);
