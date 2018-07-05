@@ -120,7 +120,7 @@ class WalletDb extends BaseStore {
     return this.decryptTcomb_PrivateKey(private_key_tcomb);
   }
 
-  process_transaction(tr, signer_pubkeys, broadcast, extra_keys = []) {
+  process_transaction(tr, signer_pubkeys, broadcast, extra_keys = [], appendParams) {
     const passwordLogin = SettingsStore.getState().settings.get(
       "passwordLogin"
     );
@@ -192,7 +192,7 @@ class WalletDb extends BaseStore {
               if (broadcast) {
                 if (this.confirm_transactions) {
                   let p = new Promise((resolve, reject) => {
-                    TransactionConfirmActions.confirm(tr, resolve, reject);
+                    TransactionConfirmActions.confirm(tr, resolve, reject, appendParams);
                   });
                   return p;
                 } else return tr.broadcast();

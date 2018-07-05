@@ -37,3 +37,26 @@
 		color: #ffd400;
 	}
 }
+
+.join-wrapper {
+	padding: 0 1em;
+	.illustration-list {
+		line-height: 1.5;
+		margin-bottom: 2em;
+	}
+
+	li {
+		list-style-type: initial;
+		.highlight {
+			background: unset;
+			color: unset;
+			filter: brightness(2);
+		}
+	}
+
+	.input-group {
+		height: 3.3334em !important;
+	}
+
+	
+}

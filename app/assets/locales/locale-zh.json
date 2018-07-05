@@ -108,7 +108,7 @@
     "pre": "即将开始",
     "finish": "已经结束",
     "pause": "暂停",
-    "current_ETH_balance":"当前您的ETH资产的可用余额为",
+    "current_ETH_balance": "当前您的ETH资产的可用余额为",
     "Popular_IEOs": "热门众筹",
     "Coming_Soon": "即将开始",
     "KYC_Verification": "KYC认证",
@@ -589,7 +589,8 @@
   },
   "operation": {
     "qtb": {
-      "fill_order": "成功参与一次世界杯竞猜，部分竞猜资金被确认，详情可查看世界杯竞猜页面",
+      "fill_order":
+        "成功参与一次世界杯竞猜，部分竞猜资金被确认，详情可查看世界杯竞猜页面",
       "asset_global_settle": "公布了一场世界杯竞猜结果",
       "call_order_update": "调整了竞猜资金配置",
       "asset_settle": "确认了一次世界杯竞猜结果，详情可查看世界杯竞猜页面",
@@ -1904,5 +1905,19 @@
     "error": "获取验证码失败，请检查水龙头设置",
     "label": "验证码",
     "click": "点击更新验证码"
+  },
+  "ieo": {
+    "crowd_project": "%(project)s 项目众筹",
+    "amount_remain": "项目剩余额度：%(amount)s",
+    "account_limit": "每账号限额：%(cap)s，最小认购单位：%(unit)s",
+    "current_state": "已认购额度：%(used)s, 剩余可认购额度：%(avail)s",
+    "take_in": "参与众筹",
+    "cybex_in": "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
+    "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
+    "complete_tip": "该项目众筹完成后，对应项目资产将于%(end_time)s发送至您的帐号(%(account)s)中",
+    "int_times": "众筹参与金额需为最小认购单位的整数倍",
+    "warning_overflow": "本次认购金额需小于剩余可认购额度",
+    "overflow": "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
+    "be_patient": "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA"
   }
 }

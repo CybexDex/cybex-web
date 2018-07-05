@@ -109,7 +109,6 @@ class Dropdown extends React.Component<
   render() {
     const { entries, value, isAsset } = this.props;
     let { active } = this.state;
-    console.debug("isAsset: ", isAsset);
 
     if (entries.length === 0) return null;
     if (entries.length == 1) {
@@ -121,7 +120,7 @@ class Dropdown extends React.Component<
           }
         >
           <div>
-            {this.props.singleEntry ? this.props.singleEntry : entries[0]}
+            {this.props.singleEntry ? utils.replaceName(this.props.singleEntry).name : utils.replaceName(entries[0]).name}
           </div>
         </div>
       );
@@ -151,7 +150,7 @@ class Dropdown extends React.Component<
           }
         >
           <div style={{ paddingRight: 15 }}>
-            {value ? value : <span className="hidden">A</span>}
+            {value ? utils.replaceName(value).name : <span className="hidden">A</span>}
           </div>
           <ul
             className="dropdown"
