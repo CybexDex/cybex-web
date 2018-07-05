@@ -1481,6 +1481,7 @@
     "withdraw": {
       "amount": "提现金额",
       "address": "提现到地址",
+      "to_eos": "提现到EOS账户",
       "submit": "提现",
       "cyb_fee": "使用CYB支付此次提现所需的Cybex内部转账手续费"
     },
@@ -1558,6 +1559,8 @@
     "address": "地址",
     "deposit": "充值",
     "withdraw": "提现",
+    "deposit_eos_memo": "充值Memo",
+    "deposit_eos": "请在EOS网上将您要充值的EOS转账至账户：cybexeospool，并务必在转账memo中填入下面的验证码。请勿在memo中填入其他信息，以免您的充值不被认可。",
     "fund_records": "充提记录",
     "last_update": "更新时间",
     "unlock_first": "请先解锁钱包，以查看出入金记录",

@@ -248,7 +248,6 @@
     "copyfiles": "^1.2.0",
     "cross-env": "^5.1.6",
     "css-loader": "^0.22.0",
-    "d3-scale": "1",
     "d3-time": "^1.0.8",
     "d3-time-format": "^2.1.1",
     "electron": "^1.7.9",

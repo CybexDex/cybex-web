@@ -397,7 +397,9 @@ class WithdrawModal extends React.Component<props, state> {
       gatewayServiceInvalid ||
       !amountValid;
     // withdraw_amount <= 0;
-    let assetName = utils.replaceName(this.props.asset.get("symbol")).name;
+    let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
+      .name;
+    let isEOS = assetName.toLowerCase().indexOf("eos") !== -1;
     console.debug("AssetName: ", assetName);
     return (
       <BaseModal modalId={modalId}>
@@ -513,7 +515,11 @@ class WithdrawModal extends React.Component<props, state> {
         </div>
         <div className="content-block">
           <label className="left-label">
-            <Translate component="span" content="modal.withdraw.address" />
+            {!isEOS ? (
+              <Translate component="span" content="modal.withdraw.address" />
+            ) : (
+              <Translate component="span" content="modal.withdraw.to_eos" />
+            )}
           </label>
           <div className="blocktrades-select-dropdown">
             <div className="inline-label">

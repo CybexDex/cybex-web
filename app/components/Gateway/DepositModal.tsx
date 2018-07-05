@@ -67,6 +67,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       amount: currentBalance ? currentBalance.get("balance") : 0
     });
     let assetName = type;
+    const isEOS = assetName.indexOf("EOS");
     return (
       <BaseModal modalId={modalId}>
         <h3>
@@ -87,31 +88,39 @@ class DepositModal extends React.Component<props, { fadeOut }> {
           <CurrentBalance currentBalance={balance} asset={asset} />
         )}
         <div className="SimpleTrade__withdraw-row">
-          <p
-            style={{ marginBottom: 10 }}
-            data-place="right"
-            data-tip={counterpart.translate("tooltip.deposit_tip", {
-              asset: assetName
-            })}
-          >
-            <span className="help-tooltip">
-              {counterpart.translate("gateway.deposit_to", {
-                asset: assetName
-              })}
-            </span>
-          </p>
-          <section className="text-center">
-            <div
-              className="wrapper"
-              style={{
-                padding: "8px",
-                background: "white",
-                display: "inline-block"
-              }}
-            >
-              <QRCode level="L" size={140} value={depositInfo.address} />
-            </div>
-          </section>
+          {isEOS ? (
+            <section className="text-center">
+              <Translate content="gateway.deposit_eos" />
+            </section>
+          ) : (
+            <>
+              <p
+                style={{ marginBottom: 10 }}
+                data-place="right"
+                data-tip={counterpart.translate("tooltip.deposit_tip", {
+                  asset: assetName
+                })}
+              >
+                <span className="help-tooltip">
+                  {counterpart.translate("gateway.deposit_to", {
+                    asset: assetName
+                  })}
+                </span>
+              </p>
+              <section className="text-center">
+                <div
+                  className="wrapper"
+                  style={{
+                    padding: "8px",
+                    background: "white",
+                    display: "inline-block"
+                  }}
+                >
+                  <QRCode level="L" size={140} value={depositInfo.address} />
+                </div>
+              </section>
+            </>
+          )}
 
           {!depositInfo ? (
             <LoadingIndicator type="three-bounce" />
@@ -153,20 +162,23 @@ let DepositModalWrapper = BindToChainState(DepositModal, {
   show_loader: true
 });
 
-DepositModalWrapper = connect(DepositModalWrapper, {
-  listenTo() {
-    return [GatewayStore];
-  },
-  getProps(props) {
-    let { modalId } = props;
+DepositModalWrapper = connect(
+  DepositModalWrapper,
+  {
+    listenTo() {
+      return [GatewayStore];
+    },
+    getProps(props) {
+      let { modalId } = props;
 
-    return {
-      open: GatewayStore.getState().modals.get(modalId),
-      depositInfo: GatewayStore.getState().depositInfo,
-      type: GatewayStore.getState().depositInfo.type,
-      asset: GatewayStore.getState().depositInfo.asset
-    };
+      return {
+        open: GatewayStore.getState().modals.get(modalId),
+        depositInfo: GatewayStore.getState().depositInfo,
+        type: GatewayStore.getState().depositInfo.type,
+        asset: GatewayStore.getState().depositInfo.asset
+      };
+    }
   }
-});
+);
 
 export default DepositModalWrapper;
