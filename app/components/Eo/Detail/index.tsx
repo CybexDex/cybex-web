@@ -169,12 +169,12 @@ class Detail extends React.Component<any, any> {
             </div>
             <div className="info-detail">{adds_token_total}</div>
           </div>
-          <div className="info-item">
+          {/* <div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Total_IEO_Supply" />:             
             </div>
             <div className="info-detail">{adds_ico_total}</div>
-          </div>
+          </div> */}
           <div className="info-item">
             <div className="info-title">
             <Translate content="EIO.IEO_Period" />: 

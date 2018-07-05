@@ -19,6 +19,8 @@ import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import moment from "moment";
+import Slider from "react-slick";
+// import 'slick-carousel/slick/slick.css';
 
 
 class EO extends React.Component<any, any> {
@@ -103,9 +105,36 @@ class EO extends React.Component<any, any> {
         console.log('ended transition');
       }
     };
+    let settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
     
     return (
       <div>
+        <Slider {...settings}>
+          <div>
+            <h3>1</h3>
+          </div>
+          <div>
+            <h3>2</h3>
+          </div>
+          <div>
+            <h3>3</h3>
+          </div>
+          <div>
+            <h3>4</h3>
+          </div>
+          <div>
+            <h3>5</h3>
+          </div>
+          <div>
+            <h3>6</h3>
+          </div>
+        </Slider>
         <div className="slider-holder">
         <ReactSwipe ref={reactSwipe => this.reactSwipe = reactSwipe} className="mySwipe" swipeOptions={swipeOptions}>
         {/* {bannerData.map((e,i)=>{
@@ -165,18 +194,25 @@ class EO extends React.Component<any, any> {
         let showPercent = `${percent>100?100:percent}%`;
         let endAt = moment(e.end_at);
         let now = moment();
-        let remainStr = `${0-endAt.diff(now,'days')} ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh:mm:ss')}`
+        let remainStr = `${0-endAt.diff(now,'days')} ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh:mm')}`
         return(
           e.comingSoon==true?(
               <div className="pin coming-soon" key={i}>
+                <div className="info-holder">
+                <div className="text-holder">
                 <h3>coming soon</h3>
+                <p>即将上线...</p>
+                </div>
+                </div>
               </div>
             ):(
             <div className={`pin${(j==0&&i==0)?' special':''}`} key={i}>
+            <div className="info-holder">
+            <div className="top-holder">
               <img src={logo_demo} width={100} height={100} />
               <h3 className="title">{e.name}<span>
               {e.status == 'ok'? (
-                <p className="status-label">[ <Translate content="EIO.ok" /> ]</p>
+                <p className="status-label">[ <Translate content="EIO.ok" />... ]</p>
               ):(
                 (e.status == 'pre')? (
                   <p className="status-label">[ <Translate content="EIO.pre" /> ]</p>
@@ -188,19 +224,34 @@ class EO extends React.Component<any, any> {
                   )
                 )
               )}
-              
               </span></h3>
-              <p>{e.adds_detail}</p>
+              <h4 className="adds_keyword">{e.adds_keyword}asdfdsafasdfsdf fdsafsadfasd</h4>
+              {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
+                <p className="proj-desc">{e.adds_detail} dsfasdfadsf adsfasdfasdfasdfsadfasdfsadf sdfasdfasdfadsadsfsda</p>
+              ):null}
+              </div>
+              <div className="bottom-holder">
               <Link to={`/ieo/detail/${e.id}`}>
               <div className="button primery-button"><Translate content="EIO.Details" /></div>
               </Link>
-              <div className="info-item">
-                <div className="percent">
-                  <div className="percent-in" style={{width: showPercent}}></div>
+
+              <div className="percent-holder">
+                <div className="info-item">
+                <div>
+                  <div className="percent">
+                    <div className="percent-in" style={{width: showPercent}}></div>
+                    {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
+                  </div>
+                  <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div>
                 </div>
-                <div className="info-text">{`${percent}%`}</div>
+                </div>
               </div>
-              <p>{remainStr}</p>
+              {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
+                <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
+              ):null}
+              <p className="raised">{remainStr}</p>
+              </div>
+              </div>
             </div>
           )
           
@@ -212,7 +263,7 @@ class EO extends React.Component<any, any> {
         )
       })}
       </div>
-      <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Add More</div>
+        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Add More</div>
       </div>
     );
   }
