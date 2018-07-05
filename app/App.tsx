@@ -36,7 +36,6 @@ import LogoutModal, {
 import Radium from "radium";
 let { StyleRoot } = Radium;
 // import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
-import EthModal from "components/Modal/EthModal";
 
 (function(window) {
   if (window) {
@@ -156,7 +155,6 @@ let App = class extends React.Component<any, any> {
     // Todo
     this.showBackupTip();
     this._rebuildTooltips();
-    ModalActions.showModal("EOS_MAPPING", true);
 
     let loadingMask = document.getElementById("globalLoading");
     if (loadingMask) {
@@ -307,7 +305,7 @@ let App = class extends React.Component<any, any> {
             }}
           />
           <WalletUnlockModal />
-          <EthModal modalId={"EOS_MAPPING"} />
+          {/* <EthModal modalId={"EOS_MAPPING"} /> */}
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />
