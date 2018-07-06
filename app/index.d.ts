@@ -1,3 +1,75 @@
+///<reference types="immutable"  />
+
+
+declare const __TEST__;
+declare namespace IEO {
+  type IEORecord = {
+    token: string;
+    project_id: string;
+    block_num: number;
+    memo?: string;
+    user_id: string;
+    created_at: string;
+    update_at: string;
+    ieo_type: string;
+    id: string;
+    ieo_status: string;
+    trade_num: 0; //block里面的第几个index
+    token_count: 3;
+    reason: string;
+  };
+  type ProjectDetail = {
+    name: string;
+    token_name: string;
+    status: string;
+    control_status: string;
+    adds_keyword: string;
+    adds_advantage: string;
+    adds_website: string;
+    adds_detail: string;
+    adds_banner: string;
+    adds_logo: string;
+    adds_token_total: number;
+    adds_ico_total: number;
+    adds_kyc_require: string;
+    adds_erc20: string;
+    adds_on_market_time: string;
+    type: string;
+    base_soft_cap: number;
+    base_token_count: string;
+    start_at: string;
+    end_at: string;
+    rate: number;
+    base_token_name: string;
+    base_min_quota: number;
+    base_max_quota: number;
+    current_base_token_count: number;
+    current_user_count: number;
+    current_percent: string;
+    finish_at: string;
+    all_take_time: string;
+    offer_at: string;
+    lock_time: string;
+    close_at: string;
+    token: string;
+    base_token: string;
+    address_key: string;
+    recieve_address: string;
+    base_accuracy: number;
+  };
+}
+
+declare namespace Cybex {
+  type AccountProperty =
+    | "id"
+    | "name"
+    | "active"
+    | "active_special_authority"
+    | "assets"
+    | "balances"
+    | "blacklisted_accounts";
+  type Account = Map<AccountProperty, any>;
+}
 
 type Auth = [string, number];
 type AccountOptions = {
@@ -6,12 +78,12 @@ type AccountOptions = {
   num_witness: number;
   votes: any[];
   voting_account: AccountId;
-}
+};
 type AccountAuth = {
   account_auths: Auth[];
   address_auths: Auth[];
   key_auths: Auth[];
-  weight_threshold: number
+  weight_threshold: number;
 };
 type AccountId = string;
 

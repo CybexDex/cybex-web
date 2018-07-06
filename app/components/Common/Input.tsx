@@ -143,7 +143,8 @@ let Input = Radium(
         },
         small: {
           wrapper: {
-            height: "2.6667rem"
+            height: "2.6667rem",
+            fontSize: "1em"
           },
           icon: {
             fontSize: "2em"
@@ -178,7 +179,11 @@ let Input = Radium(
       }
       this.setState({ value, valid });
       if (this.props.onChange) {
-        this.props.onChange(value);
+        if (this.props.valueFromOuter) {
+          this.props.onChange(e);
+        } else {
+          this.props.onChange(value);
+        }
       }
       if (this.props.onValid && valid) {
         this.props.onValid(value);
