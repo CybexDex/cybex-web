@@ -1,7 +1,14 @@
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
 .slider-holder{
 	position: relative;
+	margin: auto;
+	.img-content{
+		width: 100%;
+		height: 100%;
+		img{
+			width: 100%;
+			height: 100%;
+		}
+	}
 }
 .mySwipe{
 	width: 100%;
@@ -12,8 +19,14 @@
 	position: relative;
 }
 .title-container{
-	width: 90%;
 	overflow: hidden;
+    width: 1024px;
+	margin: auto;
+	margin-top: 20px;
+	padding: 20px 5px;
+	.base-title{
+		color: #e7ac5f;
+	}
 	.kyc-btn{
 		border: .5px solid #ffd400; 
 		float: right;
@@ -63,7 +76,9 @@
 		right: 0;
 	}
 }
+
 .container {
+	
 	width: 1024px;
 	// width: 80%;
 	// max-width: 800px;
@@ -164,8 +179,10 @@
 			.proj-desc{
 				width: 343px;
 				font-size: 14px;
-				line-height: 1.57;
-				color: #ffffff;
+				line-height: 22px;
+				// /* 3 times the line-height to show 3 lines */
+				color: #fff;
+
 			}
 			
 			.info-item{
@@ -181,8 +198,13 @@
 			.button{
 				margin-top: 16px;
 			}
+			.percent-holder-out{
+				position: absolute;
+				width: 83%;
+				bottom: 32px;
+			}
 			.percent-holder{
-				margin-top: 20%;
+				// margin-top: 20%;
 				position: relative;
 			}
 			.percent{
@@ -229,7 +251,7 @@
 							height: 80px;
 						}
 						.adds_keyword{
-							font-size: 18px;
+							font-size: 16px;
 							font-weight: 500;
 						}
 						.percent-holder{
@@ -246,7 +268,7 @@
 						background-image: linear-gradient(140deg, #262f40, #1a2334);
 						color: #000;
 						.adds_keyword{
-							font-size: 18px;
+							font-size: 16px;
 							font-weight: 500;
 						}
 					}
@@ -282,7 +304,7 @@
 						}
 						.status-label{
 							display: block;
-							font-size: 20px;
+							font-size: 16px;
 							font-weight: normal;
 							margin-top: 10px;  
 						}
@@ -374,7 +396,7 @@
 							width: 315px;
 							height: 42px;
 							font-family: PingFangSC;
-							font-size: 36px;
+							font-size: 32px;
 							font-weight: 500;
 							font-style: normal;
 							font-stretch: normal;
@@ -383,7 +405,7 @@
 							color: #ffffff;
 						}
 						.adds_keyword{
-							font-size: 22px;
+							font-size: 20px;
 							font-weight: 500;
 							margin-top: 46px;
 						}
@@ -393,7 +415,7 @@
 						}
 						.status-label{
 							display: block;
-							font-size: 20px;
+							font-size: 16px;
 							font-weight: normal;
 							margin-top: 10px;  
 						}
@@ -435,7 +457,7 @@
 							font-size: 1.8rem;
 						}
 						.adds_keyword{
-							font-size: 18px;
+							font-size: 16px;
 							font-weight: 500;
 						}
 					}

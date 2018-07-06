@@ -19,9 +19,9 @@ import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import moment from "moment";
-import Slider from "react-slick";
-// import 'slick-carousel/slick/slick.css';
-
+import Swiper from 'react-id-swiper';
+import Icon from "../Icon/Icon";
+import './swiper.scss';
 
 class EO extends React.Component<any, any> {
   // nestedRef;
@@ -42,15 +42,22 @@ class EO extends React.Component<any, any> {
         showMore = 'none';
       }
       let newDate = this.state.data;
-      newDate[0] = data.result
+      newDate[0] = data.result;
+      let bannerData = [];
+      data.result.map((e) => {
+        e.adds_banner && bannerData.push(e.adds_banner);
+      })
       this.setState({
         offset: this.state.offset+4,
         data: newDate,
-        showMore: showMore
+        showMore: showMore,
+        // bannerData
       });
     });
     fetchJson.fetchBanner((res)=>{
-      this.setState({bannerData: res.result});
+      this.setState({
+        bannerData: res.result
+      });
     })
     fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0]}, (res)=>{
       this.setState({kyc_status: res.result});
@@ -92,92 +99,58 @@ class EO extends React.Component<any, any> {
 
     const data = this.state.data || [];
     const bannerData = this.state.bannerData || [];
-    const swipeOptions = {
-      startSlide: 0,
-      auto: 0,
-      speed: 300,
-      disableScroll: true,
-      continuous: true,
-      callback() {
-        console.log('slide changed');
+    const params = {
+      spaceBetween: 30,
+      autoplay: {
+        delay: 2500
       },
-      transitionEnd() {
-        console.log('ended transition');
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
       }
     };
-    let settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1
-    };
     
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // display: -webkit-box;
+    // -webkit-line-clamp: 2;
+    // -webkit-box-orient: vertical;
+    // font-size: 14px;
+    // line-height: 22px;
+    // width: 200px;
+
     return (
       <div>
-        <Slider {...settings}>
-          <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-        </Slider>
         <div className="slider-holder">
-        <ReactSwipe ref={reactSwipe => this.reactSwipe = reactSwipe} className="mySwipe" swipeOptions={swipeOptions}>
-        {/* {bannerData.map((e,i)=>{
-          <div key={i}>
-            <div className="item">
-              <img src={require('assets/img_demo_1.jpg')} />
-            </div>
-          </div>
-        })} */}
-        <div key={1}>
-          <div className="item">
-            <img src={require('assets/img_demo_1.jpg')} />
-          </div>
-        </div>
-        <div key={2}>
-          <div className="item">
-            <div className="item-in">
-            <img src={require('assets/img_demo_2.jpg')} />
-            </div>
-          </div>
-        </div>
-        <div key={3}>
-          <div className="item">
-            <img src={require('assets/img_demo_3.jpg')} />
-          </div>
-        </div>
-        </ReactSwipe>
-        <div>
-          <div className="slide-btn slide-btn-left" onClick={this.prev.bind(this)}>&lt;</div>
-          <div className="slide-btn slide-btn-right" onClick={this.next.bind(this)}>&gt;</div>
-        </div>
+        <Swiper {...params}>
+          {bannerData.map((e,i)=>{
+            
+            return(
+              <div key={i}>
+                <div className="item">
+                <Link to={`/ieo/detail/${e.id}`}>
+                  <div className="img-content">
+                  <img src={`${e.adds_banner}`} width={1280} height={656} />
+                  </div>
+                </Link>
+                </div>
+              </div>
+            )
+          })}
+        </Swiper>
         </div>
 
-        {this.state.kyc_status=="not_start"?(
+        {/* {this.state.kyc_status=="not_start"?( */}
           <div className="title-container">
-          <div className="kyc-btn">
-            <h4><Translate content="EIO.KYC_Verification" /></h4>
-            <p><Translate content="EIO.Accept_KYC_Verification" /></p>
+          <h2 className="base-title">
+          | <Translate content="EIO.Popular_IEOs" />
+          </h2>
+          <div className="kyc-btn button primery-button">
+            {/* <Translate content="EIO.KYC_Verification" /> */}
+            <Translate content="EIO.Accept_KYC_Verification" />
           </div>
         </div>
-        ):null
-      
-        }
+        {/* ):null */}
       <div className="container">
       {data.map((f,j) => {
         if(f.length<4 && f.length !== 0){
@@ -194,7 +167,7 @@ class EO extends React.Component<any, any> {
         let showPercent = `${percent>100?100:percent}%`;
         let endAt = moment(e.end_at);
         let now = moment();
-        let remainStr = `${0-endAt.diff(now,'days')} ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh:mm')}`
+        let remainStr = ` 剩余 ${0-endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
         return(
           e.comingSoon==true?(
               <div className="pin coming-soon" key={i}>
@@ -225,31 +198,64 @@ class EO extends React.Component<any, any> {
                 )
               )}
               </span></h3>
-              <h4 className="adds_keyword">{e.adds_keyword}asdfdsafasdfsdf fdsafsadfasd</h4>
+              <h4 className="adds_keyword" style={
+                  {
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis', 
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                  }
+                }>{e.adds_keyword}</h4>
               {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
-                <p className="proj-desc">{e.adds_detail} dsfasdfadsf adsfasdfasdfasdfsadfasdfsadf sdfasdfasdfadsadsfsda</p>
+                <p className="proj-desc" style={
+                  {
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis', 
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                  }
+                }>{e.adds_detail}</p>
               ):null}
               </div>
               <div className="bottom-holder">
               <Link to={`/ieo/detail/${e.id}`}>
-              <div className="button primery-button"><Translate content="EIO.Details" /></div>
-              </Link>
-
-              <div className="percent-holder">
-                <div className="info-item">
-                <div>
-                  <div className="percent">
-                    <div className="percent-in" style={{width: showPercent}}></div>
-                    {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
-                  </div>
-                  <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div>
-                </div>
-                </div>
+              <div className="button primery-button">
+                {e.status == 'ok'? (
+                  <Translate content="EIO.Join_in_IEO" />
+                ):(
+                  (e.status == 'pre')? (
+                    <Translate content="EIO.Reserve_IEO" />
+                  ):(
+                    e.status == 'finish'? (
+                      <Translate content="EIO.Details" />
+                    ):(
+                      <Translate content="EIO.Details" />
+                    )
+                  )
+                )}
+                
+              
               </div>
-              {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
-                <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
-              ):null}
-              <p className="raised">{remainStr}</p>
+              </Link>
+              <div className="percent-holder-out">
+                <div className="percent-holder">
+                  <div className="info-item">
+                  <div>
+                    <div className="percent">
+                      <div className="percent-in" style={{width: showPercent}}></div>
+                      {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
+                    </div>
+                    <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div>
+                  </div>
+                  </div>
+                </div>
+                {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
+                  <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
+                ):null}
+                <p className="raised"><Icon name="time" />{remainStr}</p>
+                </div>
               </div>
               </div>
             </div>

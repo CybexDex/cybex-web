@@ -1,13 +1,66 @@
 .detail {
+	width: 1280px;
+	margin-top: 50px;
+	overflow: hidden;
+	box-sizing: border-box;
 	.left-part{
 		width: 60%;
 		float: left;
 		position: relative;
+		box-sizing: border-box;
 	}
 	.right-part{
 		width: 40%;
-		float: right;
+		float: left;
+		box-sizing: border-box;
 	}
+
+	.title{
+		height: 45px;
+		object-fit: contain;
+		
+		font-weight: 500;
+		color: #ffffff;
+		.main{
+			font-size: 32px;
+		}
+		.sub{
+			margin-left: 5px;
+			font-size: 18px;
+			width: 102px;
+			height: 25px;
+			object-fit: contain;
+			color: #ff9143;
+		}
+	}
+	.info-item{
+		object-fit: contain;
+		font-size: 14px;
+		color: #ffffff;
+		line-height: 1.5;
+		position: relative;
+		.info-title{
+			text-align: justify;
+		}
+		.info-detail{
+			width: 80%;
+		}
+	}
+	.large-time{
+		font-size: 22px;
+		color: #ffc478;
+		font-weight: 800;
+		.info-detail{
+			width: auto;
+		}
+		.icon-time{
+			width: 22px;
+			height: 22px;
+			margin-bottom: 0;
+		}
+	}
+	
+
 
 	position: relative;
 	overflow: hidden;
@@ -19,8 +72,7 @@
 	img{
 		margin: auto;
 		margin-bottom: 20px;
-		border: 1px solid #ffd400;
-		width: 80%;
+		width: 90%;
 	}
 	
 	// box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
@@ -30,14 +82,18 @@
 		}
 		.button{
 			&.primery-button{
-				background: #ffd400;
-				color: #000;
+				height: 40px;
+				border-radius: 4px;
+				padding-left: 30px;
+				padding-right: 30px;
+				background-image: linear-gradient(107deg, #ffc478, #ff9143);
+				span{
+					vertical-align: middle;
+				}
 			}
 		}
 		.info-item{
 			overflow: hidden;
-			margin-top: 10px;
-			color: #ffd400;
 			.info-title{
 				float: left;
 				font-weight: bold;
@@ -55,18 +111,21 @@
 		}
 		.percent{
 			float: left;
-			background: #fff;
-			width: 70%;
+			width: 80%;
 			height: 10px;
 			position: relative;
-			padding: 1px;
+			padding: 2px;
 			box-sizing: border-box;
-	
+			margin-top: 5px;
+			border-radius: 5px;
+			box-shadow: 0 0 10px #000 inset;
+			overflow: hidden;
 			.percent-in{
 				position: absolute;
-				height: 8px;
+				height: 6px;
 				width: 30%;
-				background: linear-gradient(to right, orange , #ffd400);
+				border-radius: 3px;
+				background: linear-gradient(to right, #e7ac5f , #e76536);
 			}
 		}
 		.button-holder{
