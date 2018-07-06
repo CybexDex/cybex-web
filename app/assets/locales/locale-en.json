@@ -1809,15 +1809,17 @@
   },
   "first": {
     "title":
-      "The Announcement on <br>CYBEX Exchange Supporting the Mapping of EOS",
-    "p1": "<p>Dear CYBEX Users,</p>",
+      "【Announcement on CYBEX Resuming the Top-up/withdraw of EOS】",
+    "p1": "<p>Dear CYBEXers,</p>",
     "p2":
-      "<p>In order to collaborate on the mapping of EOS, CYBEX Exchange will suspend the deposit and withdraw of EOS starting from the last week before the launch of the EOS main network(i.e. after 20:00, May 25 2018). The restoration of said functions is expected to happen from the second week after the launch of the main network.</p>",
+      "<p>CYBEX Exchange has resumed the top-up and withdraw of EOS tokens on EOS mainnet. If you have any questions, please feel free to contact us.</p>",
     "p3":
-      "<p>During the mapping process, a differing set of sophisticated options are involved, which may bring about risks to personal actions. If there is any EOS in your account, we will immediately conduct snapshot and mapping transfer for your account. Therefore, after the mapping, you will be able to freely withdraw your EOS stored on the main network from CYBEX Exchange after the main network is launched without any extra action or any interruption to your transaction behaviors. </p>",
+      "<p>CYBEX Community AssistantA（CybexServiceA）</p>",
     "p4":
-      "<p>Click here to check the official announcement made by EOS on the mapping proposal: <a target=\"_blank\" href=\"https://medium.com/eosio/eos-io-dawn-2-0-released-development-update-c19348eac3c7\" >https://medium.com/eosio/eos-io-dawn-2-0-released-development-update-c19348eac3c7</a></p>",
-    "footer": "<p class='text-right'>CYBEX Exchange<br> May/25th/2018</p>"
+      "<p>CYBEX Community AssistantB（CybexServiceB）</p>",
+    "p5":
+      "<p>CYBEX Community AssistantC（CybexServiceC）</p>",
+    "footer": "<p class='text-right'>CYBEX Exchange<br>Jul 6, 2018</p>"
   },
   "captcha": {
     "error": "Cannot fetch captcha, check your faucet setting, please.",
