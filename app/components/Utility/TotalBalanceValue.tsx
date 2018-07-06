@@ -160,6 +160,9 @@ let TotalValue = class extends MarketStatsCheck {
     for (let asset in openOrders) {
       let fromAsset = assets[asset];
       console.debug("From Asset: ", fromAsset);
+      if (!fromAsset) {
+        continue;
+      };
       // Hide For Wcup
       let fromAssetMap = fromAsset.get
         ? fromAsset
@@ -187,6 +190,9 @@ let TotalValue = class extends MarketStatsCheck {
     // Debt value
     for (let asset in debt) {
       let fromAsset = assets[asset];
+      if (!fromAsset) {
+        continue;
+      };
       // Hide For Wcup
       let fromAssetMap = ChainStore.getAsset(fromAsset);
       if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
@@ -212,6 +218,9 @@ let TotalValue = class extends MarketStatsCheck {
     // Balance value
     balances.forEach(balance => {
       let fromAsset = assets[balance.asset_id];
+      if (!fromAsset) {
+        return;
+      };
       let fromAssetMap = ChainStore.getAsset(balance.asset_id);
       if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
         return;

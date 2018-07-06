@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
     <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cybex.io/; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.zdassets.com/ https://ekr.zdassets.com https://cdnjs.cloudflare.com/ajax/libs/ https://v2.zopim.com/; style-src 'self' 'unsafe-inline'; connect-src 'self' *; font-src 'self' data: https://v2.zopim.com/; img-src 'self' data: blob: https://v2.zopim.com/;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cybex.io/; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.zdassets.com/ https://ekr.zdassets.com https://cdnjs.cloudflare.com/ajax/libs/ https://v2.zopim.com/ https://www.googletagmanager.com/ https://www.google-analytics.com/; style-src 'self' 'unsafe-inline'; connect-src 'self' wss://*.51nebula.com/ wss://*.cybex.io *; font-src 'self' data: https://v2.zopim.com/; img-src 'self' data: blob: https://v2.zopim.com/ https://www.google-analytics.com/;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Cybex DEX</title>
     <meta name="description" content="CYBEX: a decentralized crypto-asset exchange. A future exchange system based on the Graphene Blockchain">
@@ -160,6 +160,17 @@
             <div>L</div>
         </div>
     </div>
+    <!-- Google Analytics tracking code -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121047450-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        let gtag = window.gtag = function () { dataLayer.push(arguments); }
+        gtag("config", "UA-121047450-1", { app_name: "CybexDex", });
+        gtag("config", "UA-121082216-1", { app_name: "CybexDex", });
+        gtag('js', new Date());
+    </script>
+    <!-- End Google Analytics tracking code -->
 </body>
 
 </html>

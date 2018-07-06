@@ -1453,7 +1453,10 @@ class Exchange extends React.Component<any, any> {
       <div className="market-layout">
         <div
           className="market-main _scroll-bar"
-          style={{ overflowX: "hidden" ,boxShadow: `0 0 2px 2px ${BaseColors.$colorNoir}` }}
+          style={{
+            overflowX: "hidden",
+            boxShadow: `0 0 2px 2px ${BaseColors.$colorNoir}`
+          }}
         >
           {/* Top bar with info */}
           <ExchangeHeader
@@ -1669,7 +1672,6 @@ class Exchange extends React.Component<any, any> {
         ) : null}
         {/* End of Second Vertical Block */}
         <AccountNotifications />
-        
       </div>
     );
   }
