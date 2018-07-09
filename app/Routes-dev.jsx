@@ -73,6 +73,7 @@ import { Contact } from "./components/HelpDrawer/Contact";
 import Login from "./components/Login/Login";
 import CreateSelector from "./components/Login/CreateSelector";
 import Eo from "./components/Eo";
+import Training from "./components/Eo/Training";
 import Detail from "./components/Eo/Detail";
 import Join from "./components/Eo/Detail/join";
 
@@ -101,6 +102,7 @@ const routes = (
     <Route path="/explorer/committee-members" component={CommitteeMembers} />
     <Route path="/swap" component={SwapContainer} />
     <Route path="/ieo" component={Eo} />
+    <Route path="/ieo/training" component={Training} />
     <Route path="/ieo/detail/:id" component={Detail} />
     <Route path="/ieo/join/:id" component={Join} />
 
