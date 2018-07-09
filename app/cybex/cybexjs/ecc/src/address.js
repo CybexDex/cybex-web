@@ -44,7 +44,7 @@ class Address {
       "Address",
       "Start",
       public_key.toString(),
-      public_key.toBuffer(compressed),
+      public_key.toAddressString(),
       compressed,
       version
     );
@@ -65,7 +65,7 @@ class Address {
     var buffer = Buffer.concat([addr, check.slice(0, 4)]);
     // console.debug("Address", "BUFFER", buffer);
     // console.debug("Address", "FINAL", new Address(ripemd160(buffer)));
-    // console.debug("Address", "FINALSTRING", new Address(ripemd160(buffer)).toString("CYB"));
+    console.debug("Address", "FINALSTRING", new Address(ripemd160(buffer)).toString("CYB"));
     return new Address(ripemd160(buffer));
   }
 

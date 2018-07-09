@@ -1,4 +1,38 @@
 declare module "cybexjs" {
+  class Serializer {
+    constructor(operation_name: string, types: { [p: string]: any });
+    fromByteBuffer(b);
+    appendByteBuffer(b, object);
+    fromObject(serialized_object);
+    toObject(
+      serialized_object,
+      debug: { use_default?: boolean; annotate?: boolean }
+    );
+    compare(a, b);
+    fromHex(hex);
+    fromBuffer(buffer);
+    toHex(object);
+    toByteBuffer(objectt);
+    toBuffer(object);
+  }
+  const ops: { [op: string]: Serializer };
+
+  class Signature {
+    constructor(r1, s1, i1);
+    static fromBuffer(buf): Signature;
+    toBuffer();
+    recoverPublicKeyFromBuffer(buffer);
+    static signBuffer(buf, private_key);
+    static signBufferSha256(buf_sha256, private_key);
+    static sign(string, private_key);
+    verifyBuffer(buf, public_key);
+    verifyHash(hash, public_key);
+    toByteBuffer();
+    static fromHex(hex);
+    toHex();
+    static signHex(hex, private_key);
+    verifyHex(hex, public_key);
+  }
   type ParamsOfCheck = {
     accountName: string;
     password: string;

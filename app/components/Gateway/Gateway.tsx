@@ -6,22 +6,33 @@ import GatewayActions, {
 } from "actions/GatewayActions";
 import GatewayStore from "stores/GatewayStore";
 import AccountStore from "stores/AccountStore";
+import WalletUnlockActions from "actions/WalletUnlockActions";
+import WalletUnlockStore from "stores/WalletUnlockStore";
 import { JadePool } from "services//GatewayConfig";
+import { FundRecordEntry, FundRecordRes } from "services//GatewayModels";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
 import ReactTooltip from "react-tooltip";
 
 import counterpart from "counterpart";
 import { List } from "immutable";
+import { Colors } from "components/Common/Colors";
 
 import ChainTypes from "../Utility/ChainTypes";
 import EquivalentPrice from "../Utility/EquivalentPrice";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "../Utility/BalanceComponent";
+import FormattedAsset from "../Utility/FormattedAsset";
 import LinkToAssetById from "../Utility/LinkToAssetById";
+import { Tabs, Tab } from "../Utility/Tabs";
+
+import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
+
+//React Table
+import ReactTable from "react-table";
 
 const { ADDRESS_TYPES } = JadePool;
 
@@ -30,6 +41,9 @@ const oriAssets = Object.keys(ADDRESS_TYPES);
 const noBalanceTip = counterpart.translate("gateway.no_balance");
 
 let AssetRow = class extends React.Component<any, any> {
+  static propTypes = {
+    balance: ChainTypes.ChainObject
+  };
   _showWithdrawModal = asset => {
     let { account } = this.props;
     GatewayActions.showWithdrawModal(asset);
@@ -40,9 +54,9 @@ let AssetRow = class extends React.Component<any, any> {
   }
 
   render() {
-    let { asset } = this.props;
-    // console.debug("Asset: ", asset && asset.toJS(), balance);
-    let canWithdraw = !!asset.get("balance");
+    let { asset, balance } = this.props;
+    let canWithdraw = balance && balance.get && balance.get("balance") > 0;
+    // let canWithdraw = !!asset.get("balance") && asset.get("balance") > 0;
     return (
       <>
         <tr>
@@ -100,9 +114,11 @@ let AssetRow = class extends React.Component<any, any> {
             )}
           </td>
         </tr>
-        <ReactTooltip id="noBalance" effect="solid">
-          {noBalanceTip}
-        </ReactTooltip>
+        {!canWithdraw && (
+          <ReactTooltip id="noBalance" effect="solid">
+            {noBalanceTip}
+          </ReactTooltip>
+        )}
       </>
     );
   }
@@ -126,7 +142,7 @@ let GatewayTable = class extends React.Component<any, any> {
       return a;
     });
     return (
-      <table className="table gateway-table dashboard-table with-shadow">
+      <table className="table gateway-table dashboard-table">
         <thead>
           <tr>
             <Translate component="th" content="account.asset" />
@@ -138,7 +154,12 @@ let GatewayTable = class extends React.Component<any, any> {
         </thead>
         <tbody>
           {assetRows.map(asset => (
-            <AssetRow key={asset.get("id")} asset={asset} account={account} />
+            <AssetRow
+              key={asset.get("id")}
+              asset={asset}
+              account={account}
+              balance={asset.get("balance")}
+            />
           ))}
         </tbody>
       </table>
@@ -146,6 +167,214 @@ let GatewayTable = class extends React.Component<any, any> {
   }
 };
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
+
+let GatewayRecords = class extends React.Component<
+  { account; isLocked?: boolean; fundRecords?: FundRecordRes; login? },
+  {}
+> {
+  static propTypes = {
+    isLocked: PropTypes.bool.isRequired
+  };
+
+  static defaultProps = {
+    isLocked: true
+  };
+
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    if (this.props.isLocked) {
+      WalletUnlockActions.unlock();
+    } else {
+      GatewayActions.queryFundRecords(this.props.account, this.props.login);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      (prevProps.isLocked && !this.props.isLocked) ||
+      prevProps.account !== this.props.account
+    ) {
+      console.debug("[GatewayRecords] Updated", prevProps, this.props);
+      GatewayActions.queryFundRecords(this.props.account, this.props.login);
+    }
+  }
+
+  query = () => {
+    GatewayActions.queryFundRecords(this.props.account, this.props.login);
+  };
+  login = () => {
+    GatewayActions.loginGatewayQuery(this.props.account);
+  };
+  render() {
+    let { fundRecords, isLocked } = this.props;
+    let records = fundRecords.records || [];
+    return (
+      <div className="gateway-records" style={{ position: "relative" }}>
+        {/*<table
+          className="table gateway-table dashboard-table"
+          style={
+            isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
+          }
+        >
+          <thead>
+            <tr>
+              <Translate component="th" content="account.asset" />
+              <Translate component="th" content="gateway.type" />
+              <Translate component="th" content="transfer.amount" />
+              <Translate component="th" content="gateway.address" />
+              <Translate component="th" content="proposal.status" />
+              <Translate component="th" content="gateway.last_update" />
+            </tr>
+          </thead>
+          <tbody>
+            {fundRecords.records &&
+              fundRecords.records.map(record => (
+                <tr key={record.updateAt}>
+                  <td>{record.coinType}</td>
+                  <Translate
+                    component="td"
+                    content={`gateway.${record.fundType.toLowerCase()}`}
+                  />
+                  <td>
+                    <FormattedAsset
+                      asset={record.asset}
+                      amount={record.amount}
+                      hide_asset
+                    />
+                  </td>
+                  <td>{record.address}</td>
+                  <td>{record.state}</td>
+                  <td>{record.updateAt}</td>
+                </tr>
+              ))}
+            {!fundRecords.records ||
+              (!fundRecords.records.length &&
+                !isLocked && (
+                  <tr>
+                    <Translate
+                      component="td"
+                      colSpan={6}
+                      content={`gateway.no_record_one_month`}
+                    />
+                  </tr>
+                ))}
+          </tbody>
+              </table> */}
+        <ReactTable
+          data={records}
+          noDataText={counterpart.translate(`gateway.no_record_one_month`)}
+          previousText={counterpart.translate(`table.previousText`)}
+          nextText={counterpart.translate(`table.nextText`)}
+          loadingText={counterpart.translate(`table.loadingText`)}
+          pageText={counterpart.translate(`table.pageText`)}
+          ofText={counterpart.translate(`table.ofText`) + " "}
+          rowsText={counterpart.translate(`table.rowsText`)}
+          style={
+            isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
+          }
+          columns={[
+            {
+              Header: counterpart.translate("account.asset"),
+              accessor: "coinType",
+              maxWidth: 80
+            },
+            {
+              Header: counterpart.translate("gateway.type"),
+              maxWidth: 80,
+              accessor: record =>
+                counterpart.translate(
+                  `gateway.${record.fundType.toLowerCase()}`
+                ),
+              id: "fundType"
+            },
+            {
+              Header: counterpart.translate("transfer.amount"),
+              accessor: d => ({ asset: d.asset, amount: d.amount }),
+              maxWidth: 120,
+              id: "amount",
+              sortMethod: (a, b) => {
+                return a.amount - b.amount;
+              },
+              Cell: row => (
+                <FormattedAsset
+                  asset={row.original.asset}
+                  amount={row.original.amount}
+                  hide_asset
+                />
+              )
+            },
+            {
+              Header: counterpart.translate("gateway.address"),
+              id: "address",
+              accessor: d => d.address
+            },
+            {
+              Header: counterpart.translate("proposal.status"),
+              id: "state",
+              maxWidth: 80,
+              accessor: d => d.state
+            },
+            {
+              Header: counterpart.translate("gateway.last_update"),
+              maxWidth: 180,
+              id: "update",
+              accessor: d => d.updateAt
+            }
+          ]}
+          defaultPageSize={10}
+          className="-striped -highlight"
+        />
+        {isLocked && (
+          <div
+            className="mask gateway-mask"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              right: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: Colors.$colorMask
+            }}
+          >
+            <Translate
+              className="mask-tip"
+              component="th"
+              content="gateway.unlock_first"
+            />
+          </div>
+        )}
+        {/* <button onClick={this.query}>Query</button> */}
+        {/* <button onClick={this.login}>Login</button> */}
+      </div>
+    );
+  }
+};
+
+GatewayRecords = connect(
+  GatewayRecords,
+  {
+    listenTo() {
+      return [WalletUnlockStore, GatewayStore];
+    },
+    getProps(props) {
+      console.debug(
+        "WalletUnlockStore.getState()",
+        WalletUnlockStore.getState()
+      );
+      return {
+        isLocked: WalletUnlockStore.getState().locked,
+        fundRecords: GatewayStore.getState().records,
+        login: GatewayStore.getState().login
+      };
+    }
+  }
+);
 
 let GatewayContainer = class extends React.Component<any, any> {
   constructor(props) {
@@ -182,45 +411,55 @@ let GatewayContainer = class extends React.Component<any, any> {
     return (
       <div className="page-layout">
         <div className="grid-block main-content">
-          <div className="grid-container gateway-wrapper app-tables overview-tabs">
-            <div className="filter-wrapper">
-              <input
-                name="nameFilter"
-                id="nameFilter"
-                type="text"
-                onChange={this.onNameFilterChange}
-                value={this.state.nameFilter}
-                placeholder={counterpart.translate("gateway.find_asset")}
-              />
-
-              {/* <label htmlFor="onlyCanWithdraw">
-                <input type="checkbox" checked={this.state.onlyCanWithdraw} onChange={this.onWithdrawFilterChange} />
-                <Translate content="account.asset" />
-              </label> */}
-            </div>
-            <GatewayTable
-              filter={this.state}
-              assets={assets}
-              account={account}
-              balances={account.get("balances", null)}
-            />
-
-            {depositModal && (
-              <DepositModal
-                balances={account.get("balances", null)}
-                modalId={DEPOSIT_MODAL_ID}
-                fade={true}
-              />
-            )}
-            {withdrawModal && (
-              <WithdrawModal
-                balances={account.get("balances", null)}
-                account={account}
-                issuer={account.get("id")}
-                modalId={WITHDRAW_MODAL_ID}
-              />
-            )}
+          <div className="grid-container">
+            <Tabs
+              defaultActiveTab={1}
+              segmented={false}
+              setting="overviewTab"
+              className="overview-tabs app-tables gateway-wrapper"
+              contentClass="no-padding"
+              tabsClass="account-overview no-padding bordered-header content-block"
+            >
+              <Tab title="account.deposit_withdraw">
+                <div className="filter-wrapper">
+                  <input
+                    name="nameFilter"
+                    id="nameFilter"
+                    type="text"
+                    style={{ marginBottom: 0 }}
+                    onChange={this.onNameFilterChange}
+                    value={this.state.nameFilter}
+                    placeholder={counterpart.translate("gateway.find_asset")}
+                  />
+                </div>
+                <GatewayTable
+                  filter={this.state}
+                  assets={assets}
+                  account={account}
+                  balances={account.get("balances", null)}
+                />
+              </Tab>
+              <Tab title="gateway.fund_records">
+                <GatewayRecords account={account} />
+              </Tab>
+            </Tabs>
           </div>
+
+          {depositModal && (
+            <DepositModal
+              balances={account.get("balances", null)}
+              modalId={DEPOSIT_MODAL_ID}
+              fade={true}
+            />
+          )}
+          {withdrawModal && (
+            <WithdrawModal
+              balances={account.get("balances", null)}
+              account={account}
+              issuer={account.get("id")}
+              modalId={WITHDRAW_MODAL_ID}
+            />
+          )}
         </div>
       </div>
     );
@@ -228,18 +467,21 @@ let GatewayContainer = class extends React.Component<any, any> {
 };
 
 GatewayContainer = BindToChainState(GatewayContainer);
-GatewayContainer = connect(GatewayContainer, {
-  listenTo() {
-    return [AccountStore, GatewayStore];
-  },
-  getProps() {
-    return {
-      account: AccountStore.getState().currentAccount,
-      depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
-      withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
-    };
+GatewayContainer = connect(
+  GatewayContainer,
+  {
+    listenTo() {
+      return [AccountStore, GatewayStore];
+    },
+    getProps() {
+      return {
+        account: AccountStore.getState().currentAccount,
+        depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
+        withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
+      };
+    }
   }
-});
+);
 
 export { GatewayContainer as Gateway };
 export default GatewayContainer;

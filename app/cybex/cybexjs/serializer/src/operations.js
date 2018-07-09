@@ -1217,6 +1217,15 @@ export const stealth_memo_data = new Serializer("stealth_memo_data", {
   commitment: bytes(33),
   check: uint32
 });
+
+export const fund_query = new Serializer("fund_query", {
+  accountName: string,
+  asset: optional(string),
+  fundType: optional(string),
+  size: optional(uint32),
+  offset: optional(uint32),
+  expiration: time_point_sec
+});
 // var stealth_confirmation = new Serializer(
 //     "stealth_confirmation", {
 //     one_time_key: public_key,
