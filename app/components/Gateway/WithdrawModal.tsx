@@ -119,9 +119,10 @@ class WithdrawModal extends React.Component<props, state> {
       outerPrecision = 4;
     }
     if (this.props.withdrawInfo.type === "EOS") {
+      let p = new BigNumber(1).dividedBy(Math.pow(10, outerPrecision));
       eosPrecisionError =
         new BigNumber(amount || 1)
-          .dividedBy(1 * Math.pow(10, outerPrecision))
+          .dividedBy(p)
           .toString()
           .indexOf(".") !== -1;
     }
