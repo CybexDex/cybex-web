@@ -69,14 +69,25 @@ let Join = class extends React.Component<
   }
 
   componentDidMount() {
+    this.updateProject();
+    ChainStore.subscribe(this.updateProject);
+  }
+
+  componentWillUnmount() {
+    ChainStore.unsubscribe(this.updateProject);
+  }
+
+  updateProject = () => {
     let data = {
       project: this.props.params.id
     };
     fetchJson.fetchDetails(data, res => {
-      let targetAccount = FetchChain("getAccount", res.result.recieve_address);
+      let targetAccount = FetchChain("getAccount", res.result.receive_address);
       this.setState({ data: res.result });
     });
-  }
+    this._updateFee();
+  };
+  
 
   onAmountChanged({ amount, asset }) {
     if (!asset) {
@@ -312,7 +323,7 @@ let Join = class extends React.Component<
     });
     let targetAccount = await FetchChain(
       "getAccount",
-      this.state.data.recieve_address
+      this.state.data.receive_address
     );
     if (!targetAccount) {
       return NotificationActions.error(`Project address error`);
@@ -344,7 +355,7 @@ let Join = class extends React.Component<
     const data = this.state.data || {};
     const {
       name,
-      recieve_address,
+      receive_address,
       current_user_count,
       current_base_token_count,
       base_max_quota,
