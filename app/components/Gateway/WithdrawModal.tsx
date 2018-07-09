@@ -29,6 +29,7 @@ import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
 import AccountActions from "actions/AccountActions";
 import { calcAmount } from "utils//Asset";
+import { BigNumber } from "bignumber.js";
 
 const debug = debugGen("WithdrawModal");
 
@@ -67,6 +68,8 @@ type state = {
   useCybAsFee?;
   withdraw_amount;
   withdraw_address;
+  eosPrecisionError;
+  outerPrecision: number;
 };
 
 class WithdrawModal extends React.Component<props, state> {
@@ -96,13 +99,37 @@ class WithdrawModal extends React.Component<props, state> {
       balanceError: null,
       error: false,
       useCybAsFee: true,
+      eosPrecisionError: false,
       withdraw_address_loading: false,
-      withdraw_address_valid: false
+      withdraw_address_valid: false,
+      outerPrecision: 2
     };
   }
 
   onWithdrawAmountChange = ({ amount }) => {
-    this.setState({ withdraw_amount: amount });
+    let eosPrecisionError = false;
+    let outerPrecision;
+    try {
+      outerPrecision =
+        this.props.withdrawInfo.type === "EOS"
+          ? 4
+          : this.props.withdrawInfo.precision ||
+            this.props.asset.get("precision");
+    } catch (e) {
+      outerPrecision = 4;
+    }
+    if (this.props.withdrawInfo.type === "EOS") {
+      eosPrecisionError =
+        new BigNumber(amount || 1)
+          .dividedBy(1 * Math.pow(10, outerPrecision))
+          .toString()
+          .indexOf(".") !== -1;
+    }
+    this.setState({
+      withdraw_amount: amount,
+      eosPrecisionError,
+      outerPrecision
+    });
   };
 
   onWithdrawAddressChanged(e) {
@@ -356,6 +383,7 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_address_loading,
       withdraw_address_error,
       useCybAsFee,
+      eosPrecisionError,
       memo
     } = this.state;
 
@@ -395,6 +423,7 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_address_loading ||
       addressInvalid ||
       gatewayServiceInvalid ||
+      eosPrecisionError ||
       !amountValid;
     // withdraw_amount <= 0;
     let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
@@ -442,6 +471,16 @@ class WithdrawModal extends React.Component<props, state> {
                 messageParams: {
                   symbol: this.props.withdrawInfo.type,
                   amount: this.props.withdrawInfo.minValue
+                }
+              },
+              {
+                name: "withdraw-precision",
+                isError: eosPrecisionError,
+                isI18n: true,
+                message: "gateway.precision_error",
+                messageParams: {
+                  symbol: this.props.withdrawInfo.type,
+                  amount: 0.0001
                 }
               }
             ]}
