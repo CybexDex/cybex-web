@@ -183,7 +183,7 @@ class EO extends React.Component<any, any> {
             <div className={`pin${(j==0&&i==0)?' special':''}`} key={i}>
             <div className="info-holder">
             <div className="top-holder">
-              <img src={logo_demo} width={100} height={100} />
+              <img src={e.adds_logo||logo_demo} width={100} height={100} />
               <h3 className="title">{e.name}<span>
               {e.status == 'ok'? (
                 <p className="status-label">[ <Translate content="EIO.ok" />... ]</p>
