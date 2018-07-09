@@ -1,0 +1,545 @@
+.slider-holder{
+	position: relative;
+	margin: auto;
+	.img-content{
+		width: 100%;
+		height: 100%;
+		img{
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
+.mySwipe{
+	width: 100%;
+	height: 300px;
+	img{
+		width: 100%;
+	}
+	position: relative;
+}
+.title-container{
+	overflow: hidden;
+    width: 1024px;
+	margin: auto;
+	margin-top: 20px;
+	padding: 20px 5px;
+	.base-title{
+		color: #e7ac5f;
+	}
+	.kyc-btn{
+		border: .5px solid #ffd400; 
+		float: right;
+		padding: .5rem 2rem;
+		border-radius: 3rem;
+		margin-top: 1.5rem;
+		cursor: pointer;
+		p{
+			margin: 0;
+			color: #ffd400;
+			text-align: center;
+		}
+		h4{
+			margin: 0;
+			color: #ffd400;
+			text-align: center;
+		}
+		&:hover{
+			background: #ffd400;
+			p{
+				color: #fff;
+			}
+			h4{
+				color: #fff;
+			}
+		}
+	}
+}
+.slide-btn{
+	background: #000;
+	position: absolute;
+	height: 100px;
+	line-height: 100px;
+	width: 50px;
+	top: 100px;
+	font-size: 60px;
+	text-align: center;
+	opacity: .2;
+	cursor: pointer;
+	&:hover{
+		opacity: .5;
+	}
+	&.slide-btn-left{
+		left: 0;
+	}
+	&.slide-btn-right{
+		right: 0;
+	}
+}
+
+.container {
+	width: 1024px;
+	// width: 80%;
+	// max-width: 800px;
+	margin: 20px auto;
+	}
+	
+	.waterfall {
+		margin-top: 5px;
+		overflow: hidden;
+		height: 612px;
+		width: 100%;
+		position: relative;
+	}
+	.button{
+		&.primery-button{
+			background: linear-gradient(90deg, #ffc175 , #ff9648);
+			border: none;
+			color: #fff;
+			padding: 10px 40px;
+			font-weight: 500;
+			height: 36px;
+			border-radius: 4px;
+			font-size: 14px;
+		}
+		
+	}
+	.btn-coming-soon{
+		border: 1px solid #ffc175;
+		color: #ffc175;
+		background: #171d2b;
+		padding: 10px 10px;
+		font-weight: 500;
+		border-radius: 2px;
+		width: 120px;
+		margin: auto;
+		margin-top: 10px;
+		margin-bottom: 10px;
+    	text-align: center;
+    	cursor: pointer;
+		&:hover{
+			background: linear-gradient(90deg, #e7ac5f , #e76536);
+			color: #fff;
+		}
+	}
+	.coming-soon{
+		.info-holder{
+			background: #1d2637;
+			.text-holder{
+				width: 267px;
+				height: 100px;
+				position: absolute;
+				margin-top: -50px;
+				margin-left: -134px;
+				top: 50%;
+				left: 50%;
+				
+			}
+			h3{
+				font-size: 36px;
+				font-weight: 500;
+				text-align: center;
+				color: #78819a;
+			}
+			p{
+				font-size: 18px;
+				font-weight: 500;
+				color: #ff9143;
+				text-align: center;
+			}
+			
+		}
+		
+	}
+	.pin {
+		position: absolute;
+		break-inside: avoid;
+		box-sizing: border-box;
+		padding: 5px;
+		.info-holder{
+			height: 100%;
+			width: 100%;
+			padding: 2em;
+			color: #fff;
+			
+			.title{
+				color: #fff;
+				font-size: 2.3rem;
+				margin-top: 20px;
+			}
+			
+			.status-label{
+				display: inline-block;
+				vertical-align: middle;
+				margin-bottom: 0;
+				margin-left: 5px;
+				font-size: 1rem;
+			}
+			.proj-desc{
+				width: 343px;
+				font-size: 14px;
+				line-height: 22px;
+				// /* 3 times the line-height to show 3 lines */
+				color: #fff;
+
+			}
+			
+			.info-item{
+				overflow: hidden;
+				margin-top: 20px;
+			}
+			.info-text{
+				float: right;
+				width: 20%;
+				text-align: center;
+				color: #fff;
+			}
+			.button{
+				margin-top: 16px;
+			}
+			.percent-holder-out{
+				position: absolute;
+				width: 83%;
+				bottom: 32px;
+			}
+			.percent-holder{
+				// margin-top: 20%;
+				position: relative;
+			}
+			.percent{
+				float: left;
+				box-shadow: 0px 0px 10px #000 inset;
+				width: 80%;
+				height: 10px;
+				position: relative;
+				padding: 1px;
+				box-sizing: border-box;
+				border-radius: 5px;
+
+				.percent-in{
+					position: absolute;
+					height: 8px;
+					width: 30%;
+					background: linear-gradient(to right, #e8a95e , #e76637);
+				}
+			}
+			.raised{
+				width: 137px;
+				height: 20px;
+				font-size: 14px;
+				font-weight: 500;
+				color: #ffffff;
+				line-height: 50px;
+			}
+			
+		}
+	}
+	.waterfall{
+		&:nth-child(2n){
+			.pin {
+				&:nth-child(4n+1) {
+					height: 374px;
+					width: 30%;
+					top: 0;
+					left: 0;
+					.info-holder{
+						background-image: linear-gradient(320deg, #293246, #39445b);
+						color: #000;
+						img {
+							width: 80px;
+							height: 80px;
+						}
+						.adds_keyword{
+							font-size: 16px;
+							font-weight: 500;
+						}
+						.percent-holder{
+							margin-top: 40px;
+						}
+					}
+				}
+				&:nth-child(4n+2) {
+					height: 374px;
+					width: 30%;
+					top: 0;
+					left: 30%;
+					.info-holder{
+						background-image: linear-gradient(140deg, #262f40, #1a2334);
+						color: #000;
+						.adds_keyword{
+							font-size: 16px;
+							font-weight: 500;
+						}
+					}
+				}
+				&:nth-child(4n+3) {
+					height: 622px;
+					width: 40%;
+					top: 0;
+					left: 60%;
+					.info-holder{
+						background-image: linear-gradient(320deg,  #262f40, #1a2334);
+						color: #000;
+						.title{
+							width: 315px;
+							height: 42px;
+							font-family: PingFangSC;
+							font-size: 36px;
+							font-weight: 500;
+							font-style: normal;
+							font-stretch: normal;
+							line-height: 1.17;
+							letter-spacing: normal;
+							color: #ffffff;
+						}
+						.adds_keyword{
+							font-size: 22px;
+							font-weight: 500;
+							margin-top: 46px;
+						}
+						img {
+							width: 144px;
+							height: 144px;
+						}
+						.status-label{
+							display: block;
+							font-size: 16px;
+							font-weight: normal;
+							margin-top: 10px;  
+						}
+
+						.percent{
+							display: block;
+							float: none;
+							width: 100%;
+						}
+						.info-text{
+							display: block;
+							float: none;
+							background: #fff;
+							color: #000;
+							width: 50px;
+							line-height: 20px;
+							height: 20px;
+							position: absolute;
+							margin-top: -40px;
+						}
+					}
+				}
+				&:nth-child(4n+4) {
+					height: 240px;
+					width: 60%;
+					bottom: -5px;
+					left: 0;
+					.info-holder{
+						background-image: linear-gradient(140deg, #262f40, #1a2334);
+						.top-holder{
+							width: 70%;
+							overflow: hidden;
+							margin: auto;
+							margin-top: 20px;
+						}
+						img{
+							float: left;
+						}
+						.title{
+							float: right;
+							font-size: 1.8rem;
+							display: block;
+							text-align: left;
+							width: 60%;
+						}
+						.adds_keyword{
+							float: right;
+							display: block;
+							font-size: 18px;
+							font-weight: 500;
+							text-align: left;
+							width: 60%;
+						}
+						.bottom-holder{
+							width: 80%;
+							overflow: hidden;
+							margin: auto;
+							.button{
+								float: left;
+								margin-top: 20px;
+							}
+							.percent-holder{
+								float: right;
+								width: 60%;
+								margin-top: 0;
+							}
+							.raised{
+								float: right;
+								width: 60%;
+								line-height: 30px;
+							}
+						}
+					}
+				}
+				
+			}
+		}
+		&:nth-child(2n+1){
+			.pin {
+				&:nth-child(4n+1) {
+					width: 40%;
+  					height: 622px;
+					top: 0;
+					left: 0;
+					.info-holder{
+						background-image: linear-gradient(320deg, #293246, #39445b);
+						color: #000;
+						.title{
+							width: 315px;
+							height: 42px;
+							font-family: PingFangSC;
+							font-size: 32px;
+							font-weight: 500;
+							font-style: normal;
+							font-stretch: normal;
+							line-height: 1.17;
+							letter-spacing: normal;
+							color: #ffffff;
+						}
+						.adds_keyword{
+							font-size: 20px;
+							font-weight: 500;
+							margin-top: 46px;
+						}
+						img {
+							width: 144px;
+							height: 144px;
+						}
+						.status-label{
+							display: block;
+							font-size: 16px;
+							font-weight: normal;
+							margin-top: 10px;  
+						}
+
+						.percent{
+							display: block;
+							float: none;
+							width: 100%;
+						}
+						.info-text{
+							display: block;
+							float: none;
+							background: #fff;
+							color: #000;
+							width: 50px;
+							line-height: 20px;
+							height: 20px;
+							position: absolute;
+							margin-top: -40px;
+						}
+					}
+				}
+				&.special{
+					.info-holder{
+  						background-image: linear-gradient(147deg, #e7ac5f, #e76536);
+  						box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14);	
+					}
+				}
+				&:nth-child(4n+2) {
+					width: 30%;
+  					height: 374px;
+					top: 0;
+					left: 40%;
+					.info-holder{
+						background-image: linear-gradient(320deg, #293246, #39445b);
+						color: #000;
+						.title{
+							font-size: 1.8rem;
+						}
+						.adds_keyword{
+							font-size: 16px;
+							font-weight: 500;
+						}
+					}
+				}
+				&:nth-child(4n+3) {
+					width: 30%;
+  					height: 374px;
+					top: 0;
+					left: 70%;
+					.info-holder{
+						background-image: linear-gradient(320deg, #293246, #39445b);
+						color: #000;
+						.title{
+							font-size: 1.8rem;
+						}
+						.adds_keyword{
+							font-size: 18px;
+							font-weight: 500;
+						}
+					}
+				}
+				&:nth-child(4n+4) {
+					height: 245px;
+					width: 60%;
+					bottom: -5px;
+					left: 40%;
+					.info-holder{
+						background-image: linear-gradient(201deg, #262f40, #1a2334);
+						.top-holder{
+							width: 70%;
+							overflow: hidden;
+							margin: auto;
+							margin-top: 20px;
+						}
+						img{
+							float: left;
+						}
+						.title{
+							float: right;
+							font-size: 1.8rem;
+							display: block;
+							text-align: left;
+							width: 60%;
+						}
+						.adds_keyword{
+							float: right;
+							display: block;
+							font-size: 18px;
+							font-weight: 500;
+							text-align: left;
+							width: 60%;
+						}
+						.bottom-holder{
+							width: 80%;
+							overflow: hidden;
+							margin: auto;
+							.button{
+								float: left;
+								margin-top: 20px;
+							}
+							.percent-holder{
+								float: right;
+								width: 60%;
+								margin-top: 0;
+							}
+							.raised{
+								float: right;
+								width: 60%;
+								line-height: 30px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+		
+	.pin img {
+		padding-bottom: 1em;
+		margin-bottom: 0.5em;
+		width: 80px;
+		height: 80px;
+		border: .5px solid #aaa;
+		border-radius: 50%;
+		background: #fff;
+	}

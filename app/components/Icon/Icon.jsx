@@ -48,7 +48,8 @@ let icons = [
   "adjust",
   "excel",
   "share",
-  "minus-circle"
+  "minus-circle",
+  "time"
 ];
 
 let icons_map = {};
