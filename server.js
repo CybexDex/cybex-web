@@ -6,11 +6,18 @@ var hotMiddleware = require("webpack-hot-middleware");
 var feathers = require("feathers");
 const https = require("https");
 const fs = require("fs");
+const expressproxy = require('express-http-proxy');
+let proxyUrl = 'http://106.14.159.224:3049/';
 
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
 var config = require("./config/webpack.dev.js");
 
 var app = express();
+app.use('/api/', expressproxy(proxyUrl, {
+    proxyReqPathResolver: function(req,res) {
+        return '/api' + require('url').parse(req.url).path;
+    }
+}));
 var compiler = webpack(config);
 
 compiler.apply(

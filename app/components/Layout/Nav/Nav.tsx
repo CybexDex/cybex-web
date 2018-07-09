@@ -240,6 +240,16 @@ export class Nav extends React.PureComponent<
               }
             />
           }
+          <NavItem
+            name="ieo"
+            key={getNavId('ieo')}
+            id={getNavId('ieo')}
+            hideIcon
+            linkTo='/ieo'
+            onClick={(e) => {
+              this.context.router.push('/ieo');
+            }}
+          />
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>

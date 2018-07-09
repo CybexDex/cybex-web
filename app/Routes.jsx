@@ -263,6 +263,30 @@ const routes = (
           .catch(errorLoading);
       }}
     />
+    <Route
+      path="ieo"
+      getComponent={(location, cb) => {
+        import("components/Eo")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    />
+    <Route
+      path="ieo/detail/:id"
+      getComponent={(location, cb) => {
+        import("components/Eo/Detail")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    />
+    <Route
+      path="ieo/join/:id"
+      getComponent={(location, cb) => {
+        import("components/Eo/Detail/join")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    />
 
     <Route
       path="invoice/:data"
@@ -536,6 +560,7 @@ const routes = (
           .catch(errorLoading);
       }}
     >
+    
       <Route
         path=":path1"
         getComponent={(location, cb) => {

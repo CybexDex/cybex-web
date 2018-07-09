@@ -92,7 +92,7 @@ const ApplicationApi = {
     propose_account = null,
     fee_asset_id = "1.3.0",
     vesting = null
-  }) {
+  }, appendParams) {
     // console.debug("Transfer: ", arguments);
     let memo_sender = propose_account || from_account;
 
@@ -222,7 +222,9 @@ const ApplicationApi = {
         return WalletDb.process_transaction(
           tr,
           null, //signer_private_keys,
-          broadcast
+          broadcast,
+          [],
+          appendParams
         );
       });
     });
