@@ -1,0 +1,60 @@
+#ieo-detail-modal{
+	background: #252f44;
+	width: 30%;
+	padding-bottom: 30px;
+	h3, p{
+		text-align: center;
+	}
+	.detail-modal-btn{
+		height: 40px;
+		color: #fff;
+		width: 50%;
+		bottom: 0;
+		position: absolute;
+		background: #252f44;
+		&:hover{
+			color: #eee
+		}
+		&:active{
+			color: #ccc
+		}
+	}
+	.modal-btn-group{
+		position: relative;
+	}
+	.divider{
+		width: 1px;
+		height: 20px;
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		z-index: 2;
+		margin: 0;
+	}
+	.confirm{
+		left: 0;
+		color: #ffd400;
+	}
+	.cancel{
+		right: 0;
+	}
+	.input-item{
+		position: relative;
+		overflow: hidden;
+	}
+	.error-msg{
+		width: 100%;
+		float: left;
+		color: red;
+		font-weight: 500;
+	}
+	.enter-info{
+		border: 1px solid #fff;
+		margin-right: 1rem;
+		float: left;
+		width: 60%;
+	}
+	.description{
+		color: #ffd400;
+	}
+}
