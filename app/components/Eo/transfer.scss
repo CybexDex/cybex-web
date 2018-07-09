@@ -78,7 +78,6 @@
 }
 
 .container {
-	
 	width: 1024px;
 	// width: 80%;
 	// max-width: 800px;
@@ -441,8 +440,7 @@
 				&.special{
 					.info-holder{
   						background-image: linear-gradient(147deg, #e7ac5f, #e76536);
-  						box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14);
-						
+  						box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 16px 24px 2px rgba(0, 0, 0, 0.14);	
 					}
 				}
 				&:nth-child(4n+2) {

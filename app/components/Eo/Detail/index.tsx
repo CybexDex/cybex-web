@@ -35,7 +35,11 @@ class Detail extends React.Component<any, any> {
       project: this.props.params.id
     }
     fetchJson.fetchDetails(data,(res)=>{
-      this.setState({data: res.result});
+      let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
+      this.setState({
+        countDownTime,
+        data: res.result
+      });
       // window.sessionStorage.setItem('detailData', res.result)
     });
     if(!this.props.myAccounts[0]){
@@ -55,7 +59,6 @@ class Detail extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.state)
     const data = this.state.data || {}
     const {
       name, 
@@ -85,11 +88,18 @@ class Detail extends React.Component<any, any> {
     let showPercent = `${percent>100?100:percent}%`;
     let endAt = moment(end_at);
     let now = moment();
+
+    // setInterval(()=>{
+    //   this.setState({
+    //     countDownTime: this.state.countDownTime-1000
+    //   })
+    // },1000)
+    
     // console.log(endAt.diff(now,'days'),'sdafadsfdasfdsaf')
 
         // console.log(moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm:ss'),'asdfdsdsf');
     // let remainStr = `${(endAt.diff(now,'days'))<0?0:(endAt.diff(now,'days'))} days ${moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm')}`
-    let remainStr = `${0-endAt.diff(now,'days')} days ${moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm')}`
+    let remainStr = `${0-endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm')}`
     return (
       <div className="detail">
         <div className="left-part">
