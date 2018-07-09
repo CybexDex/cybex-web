@@ -379,6 +379,7 @@ let Join = class extends React.Component<
       if (asset_types.length > 0) {
         let current_asset_id = asset ? asset.get("id") : asset_types[0];
         let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
+        console.debug("AccountBalances: ", account_balances[current_asset_id]);
         balance = (
           <span
             style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }}
@@ -391,7 +392,11 @@ let Join = class extends React.Component<
             )}
           >
             <Translate component="span" content="transfer.available" />:{" "}
-            <BalanceComponent balance={account_balances[current_asset_id]} />
+            {account_balances[current_asset_id] ? (
+              <BalanceComponent balance={account_balances[current_asset_id]} />
+            ) : (
+              "0"
+            )}
           </span>
         );
       } else {
