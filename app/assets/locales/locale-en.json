@@ -111,7 +111,8 @@
     "Ended": "Ended",
     "Your_current_ETH_balance_is": "Your current ETH balance is",
     "Quota_Remaining": "Quota Remaining",
-    "participate": "Participate"
+    "participate": "Participate",
+    "no_login": "Login"
   },
   "tooltip": {
     "call_limit":

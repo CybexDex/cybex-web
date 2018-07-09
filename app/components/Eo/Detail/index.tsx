@@ -26,10 +26,93 @@ class Detail extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
+      showModal: false,
+      reserve_status: ()=>null,
+      kyc_status: ()=>null
     }
   }
-
+  reserve(){
+    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
+      switch(res2.result.status){
+        case 'ok':
+          this.setState({reserve_status:()=>{
+            switch(this.state.data.result.status){
+              case 'ok': ()=>{
+                return (
+                  <Link to={`/ieo/join/${this.props.params.id}`}>
+                  <div className="button primery-button disabled">
+                  <Translate content="EIO.Reserve_Now" />
+                  </div>
+                  </Link>
+                )
+              }
+              break;
+              case 'pre': ()=>{
+                return (
+                  <div className="button primery-button disabled">
+                    等待项目开始
+                  </div>
+                )
+              }
+            }
+            
+          }})
+        break;
+        case 'waiting':
+          this.setState({reserve_status:()=>{
+            return (
+              <div className="button primery-button disabled">
+                审核中
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }})
+        break;
+        case 'reject':
+          this.setState({reserve_status:()=>{
+            return (
+              <div>
+              <div className="button primery-button disabled">
+                审核失败
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+              <p>{res2.result.reason}</p>
+              </div>
+            )
+          }})
+        break;
+        case 'pending':
+          this.setState({reserve_status:()=>{
+            return (
+              <div className="button primery-button disabled">
+                审核中
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }})
+        break;
+        default:
+        this.setState({reserve_status:()=>{
+          if(res2.result.kyc_status == 'ok'){
+            return (
+              <div className="button primery-button" onClick={this.reserve.bind(this)}>
+                立即预约
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }else{
+            return(
+              <div className="button primery-button disabled">
+                立即预约
+              {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }
+          
+        }})
+      }
+    })
+}
   componentDidMount(){
     let data = {
       project: this.props.params.id
@@ -39,17 +122,127 @@ class Detail extends React.Component<any, any> {
       this.setState({
         countDownTime,
         data: res.result
+      }, ()=>{
+        setInterval(()=>{
+          this.setState({
+            countDownTime: (this.state.countDownTime>1000)?(this.state.countDownTime-1000): 0
+          })
+        },1000)
+        
       });
-      // window.sessionStorage.setItem('detailData', res.result)
+      if(!this.props.myAccounts[0]){
+        this.setState({kyc_status: ()=>{
+          return (
+            <Link to={`/login`}>
+            <div className="button primery-button">
+            <Translate content="EIO.Reserve_Now" />
+            </div>
+            </Link>
+          )
+        }});
+      }else{
+        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.params.id}, (res2)=>{
+          switch(res2.result.status){
+            case 'ok':
+              this.setState({reserve_status:()=>{
+                switch(res.result.status){
+                  case 'ok': ()=>{
+                    return (
+                      <Link to={`/ieo/join/${this.props.params.id}`}>
+                      <div className="button primery-button disabled">
+                      <Translate content="EIO.Reserve_Now" />
+                      </div>
+                      </Link>
+                    )
+                  }
+                  break;
+                  case 'pre': ()=>{
+                    return (
+                      <div className="button primery-button disabled">
+                        等待项目开始
+                      </div>
+                    )
+                  }
+                }
+                
+              }})
+            break;
+            case 'waiting':
+              this.setState({reserve_status:()=>{
+                return (
+                  <div className="button primery-button disabled">
+                    审核中
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                )
+              }})
+            break;
+            case 'reject':
+              this.setState({reserve_status:()=>{
+                return (
+                  <div>
+                  <div className="button primery-button disabled">
+                    审核失败
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                  <p>{res2.result.reason}</p>
+                  </div>
+                )
+              }})
+            break;
+            case 'pending':
+              this.setState({reserve_status:()=>{
+                return (
+                  <div className="button primery-button disabled">
+                    审核中
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                )
+              }})
+            break;
+            default:
+            this.setState({reserve_status:()=>{
+              if(res2.result.kyc_status == 'ok'){
+                return (
+                  <div className="button primery-button" onClick={this.reserve.bind(this)}>
+                    立即预约
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                )
+              }else{
+                return(
+                  <div className="button primery-button disabled">
+                    立即预约
+                  {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                )
+              }
+              
+            }})
+          }
+          if(res2.result.kyc_status=='ok'){
+            this.setState({kyc_status:()=>null})
+          }else{
+            this.setState({kyc_status:()=>{
+              return (
+                <div>
+                  <Link to="/ieo/training">
+                  <div className="kyc-btn button primery-button">
+                    <Translate content="EIO.Accept_KYC_Verification" />
+                  </div>
+                  </Link>
+                </div>
+              )
+            }})
+          }
+        });
+        // res.result.kyc_status = 'ok'
+        
+      }
     });
-    if(!this.props.myAccounts[0]){
-      this.setState({kyc_status: 'not-login'});
-    }else{
-      fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0]}, (res)=>{
-        this.setState({kyc_status: res.result});
-      })
-    }
-    
+  }
+  kycNotPass() {
+    alert('Kyc Not Passed')
   }
 
   public openModal = () => {
@@ -99,7 +292,7 @@ class Detail extends React.Component<any, any> {
 
         // console.log(moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm:ss'),'asdfdsdsf');
     // let remainStr = `${(endAt.diff(now,'days'))<0?0:(endAt.diff(now,'days'))} days ${moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm')}`
-    let remainStr = `${0-endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm')}`
+    let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm:ss')}`
     return (
       <div className="detail">
         <div className="left-part">
@@ -152,10 +345,6 @@ class Detail extends React.Component<any, any> {
           </div>
           <div className="info-detail">{remainStr}</div>
         </div>):null}
-        
-        
-        
-        
         </div>
         <div className="right-part">
           <h3 className="title">
@@ -266,7 +455,19 @@ class Detail extends React.Component<any, any> {
 
           <div className="button-holder">
           {/* <Trigger open="ieo-detail-modal"> */}
-          {this.state.kyc_status == "not-login"? (
+          {/* {this.state.kyc_status()} */}
+          {
+            (status == 'ok'||status == 'pre') ? (
+                this.state.reserve_status()
+            ):null 
+          }
+          {
+            (status == 'ok'||status == 'pre') ? (
+              this.state.kyc_status()
+             ):null 
+          }
+            
+          {/* {this.state.kyc_status == "not-login"? (
             <Link to={`/login`}>
             <div className="button primery-button">
             <Translate content="EIO.participate" />
@@ -274,17 +475,18 @@ class Detail extends React.Component<any, any> {
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              <Link to={`/ieo/join/${this.props.params.id}`}>
-              <div className="button primery-button">
+              // <Link to={`/ieo/join/${this.props.params.id}`}>
+              <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>
-              </Link>
+              // </Link>
             ):(
+
               <div className="button primery-button disabled">
               <Translate content="EIO.Verifying" />
               </div>
             )
-          )}
+          )} */}
           
           
           {/* </Trigger> */}

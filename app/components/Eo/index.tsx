@@ -124,7 +124,6 @@ class EO extends React.Component<any, any> {
         <div className="slider-holder">
         <Swiper {...params}>
           {bannerData.map((e,i)=>{
-            
             return(
               <div key={i}>
                 <div className="item">
@@ -142,6 +141,7 @@ class EO extends React.Component<any, any> {
 
         {/* {this.state.kyc_status=="not_start"?( */}
           <div className="title-container">
+          {/* <Link to="/ieo/training"> */}
           <h2 className="base-title">
           | <Translate content="EIO.Popular_IEOs" />
           </h2>
@@ -149,6 +149,7 @@ class EO extends React.Component<any, any> {
             {/* <Translate content="EIO.KYC_Verification" /> */}
             <Translate content="EIO.Accept_KYC_Verification" />
           </div>
+          {/* </Link> */}
         </div>
         {/* ):null */}
       <div className="container">
@@ -167,7 +168,8 @@ class EO extends React.Component<any, any> {
         let showPercent = `${percent>100?100:percent}%`;
         let endAt = moment(e.end_at);
         let now = moment();
-        let remainStr = ` 剩余 ${0-endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
+        let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
+
         return(
           e.comingSoon==true?(
               <div className="pin coming-soon" key={i}>
@@ -182,7 +184,7 @@ class EO extends React.Component<any, any> {
             <div className={`pin${(j==0&&i==0)?' special':''}`} key={i}>
             <div className="info-holder">
             <div className="top-holder">
-              <img src={logo_demo} width={100} height={100} />
+              <img src={e.adds_logo||logo_demo} width={100} height={100} />
               <h3 className="title">{e.name}<span>
               {e.status == 'ok'? (
                 <p className="status-label">[ <Translate content="EIO.ok" />... ]</p>
@@ -222,6 +224,7 @@ class EO extends React.Component<any, any> {
               <div className="bottom-holder">
               <Link to={`/ieo/detail/${e.id}`}>
               <div className="button primery-button">
+              {e.status}
                 {e.status == 'ok'? (
                   <Translate content="EIO.Join_in_IEO" />
                 ):(

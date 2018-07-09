@@ -1,0 +1,24 @@
+.container{
+	position: relative;
+	.Combined-Shape {
+		width: 316px;
+		height: 861px;
+		background-color: #0484cb;
+		float: left;
+	}
+	.right-top {
+		width: 708px;
+		height: 411px;
+		background-color: #d8d8d8;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.right-bottom {
+		width: 708px;
+		height: 410.5px;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+	}
+}
