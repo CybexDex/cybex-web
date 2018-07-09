@@ -31,7 +31,88 @@ class Detail extends React.Component<any, any> {
       kyc_status: ()=>null
     }
   }
-
+  reserve(){
+    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
+      switch(res2.result.status){
+        case 'ok':
+          this.setState({reserve_status:()=>{
+            switch(this.state.data.result.status){
+              case 'ok': ()=>{
+                return (
+                  <Link to={`/ieo/join/${this.props.params.id}`}>
+                  <div className="button primery-button disabled">
+                  <Translate content="EIO.Reserve_Now" />
+                  </div>
+                  </Link>
+                )
+              }
+              break;
+              case 'pre': ()=>{
+                return (
+                  <div className="button primery-button disabled">
+                    等待项目开始
+                  </div>
+                )
+              }
+            }
+            
+          }})
+        break;
+        case 'waiting':
+          this.setState({reserve_status:()=>{
+            return (
+              <div className="button primery-button disabled">
+                审核中
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }})
+        break;
+        case 'reject':
+          this.setState({reserve_status:()=>{
+            return (
+              <div>
+              <div className="button primery-button disabled">
+                审核失败
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+              <p>{res2.result.reason}</p>
+              </div>
+            )
+          }})
+        break;
+        case 'pending':
+          this.setState({reserve_status:()=>{
+            return (
+              <div className="button primery-button disabled">
+                审核中
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }})
+        break;
+        default:
+        this.setState({reserve_status:()=>{
+          if(res2.result.kyc_status == 'ok'){
+            return (
+              <div className="button primery-button" onClick={this.reserve.bind(this)}>
+                立即预约
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }else{
+            return(
+              <div className="button primery-button disabled">
+                立即预约
+              {/* <Translate content="EIO.Reserve_Now" /> */}
+              </div>
+            )
+          }
+          
+        }})
+      }
+    })
+}
   componentDidMount(){
     let data = {
       project: this.props.params.id
@@ -121,26 +202,35 @@ class Detail extends React.Component<any, any> {
             break;
             default:
             this.setState({reserve_status:()=>{
-              return (
-                <div className="button primery-button disabled">
-                  立即预约
+              if(res2.result.kyc_status == 'ok'){
+                return (
+                  <div className="button primery-button" onClick={this.reserve.bind(this)}>
+                    立即预约
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                )
+              }else{
+                return(
+                  <div className="button primery-button disabled">
+                    立即预约
                   {/* <Translate content="EIO.Reserve_Now" /> */}
-                </div>
-              )
+                  </div>
+                )
+              }
+              
             }})
           }
           if(res2.result.kyc_status=='ok'){
-            // alert('cao')
             this.setState({kyc_status:()=>null})
           }else{
             this.setState({kyc_status:()=>{
               return (
                 <div>
-                  {/* <Link to="/ieo/training"> */}
+                  <Link to="/ieo/training">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>
-                  {/* </Link> */}
+                  </Link>
                 </div>
               )
             }})
