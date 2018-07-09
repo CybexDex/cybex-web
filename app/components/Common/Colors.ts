@@ -14,6 +14,7 @@ export const BaseColors = {
   $colorGreyLightWhite: "rgba(120, 129, 154, 0.3)",
   $colorGreyLight: "rgba(216, 216, 216, 0.3)",
   $colorDark: "#171d2a",
+  $colorMask: "rgba(23, 30, 42, 0.8)",
   // Sub Colors
   $colorRosset: "#c87b41",
   $colorBronze: "#c86443",

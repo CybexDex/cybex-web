@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
 import { PeriodSelect, COMMON_PERIODS } from "components/Forms/PeriodSelect";
 
@@ -8,7 +9,7 @@ export type PeriodProps = {
   name: string;
   tabIndex?: number;
   defaultPeriod: number;
-  onPeriodChange: (period: number) => any
+  onPeriodChange: (period: number) => any;
 };
 
 export class Period extends React.Component<PeriodProps, any> {
@@ -32,9 +33,13 @@ export class Period extends React.Component<PeriodProps, any> {
   onVestingChanged(e) {
     let { amount, unit } = this.getIds();
     let { onPeriodChange } = this.props;
-    let vestingAmount = (document.getElementById(amount) as HTMLInputElement).value;
+    let vestingAmount = (document.getElementById(amount) as HTMLInputElement)
+      .value;
     let vestingUnit = (document.getElementById(unit) as HTMLInputElement).value;
-    let vestingPeriod = (vestingAmount as any) * (vestingUnit as any);
+    let vestingPeriod = parseInt(
+      ((vestingAmount as any) * (vestingUnit as any)) as any,
+      10
+    );
     onPeriodChange(vestingPeriod);
     this.setState({
       vestingUnit,
@@ -44,10 +49,12 @@ export class Period extends React.Component<PeriodProps, any> {
   }
   onVestingUnitChanged(e) {
     let { amount, unit } = this.getIds();
-    let vestingPeriod = this.state.vestingPeriod
+    let vestingPeriod = this.state.vestingPeriod;
     let vestingUnit = (document.getElementById(unit) as HTMLInputElement).value;
     this.setState({
-      vestingAmount: vestingPeriod / (vestingUnit as any),
+      vestingAmount: parseFloat(
+        (vestingPeriod / (vestingUnit as any)).toFixed(2)
+      ),
       vestingUnit
     });
   }
@@ -56,7 +63,7 @@ export class Period extends React.Component<PeriodProps, any> {
     return (
       <div className={className}>
         <input
-          tabIndex={tabIndex? tabIndex - 1: -1}
+          tabIndex={tabIndex ? tabIndex - 1 : -1}
           id={this.getIds().amount}
           name={this.getIds().amount}
           type="number"
@@ -66,15 +73,15 @@ export class Period extends React.Component<PeriodProps, any> {
           disabled={disabled}
         />
         <PeriodSelect
-          tabIndex={tabIndex? tabIndex - 1: -1}
+          tabIndex={tabIndex ? tabIndex - 1 : -1}
           id={this.getIds().unit}
-          disabled={disabled}          
+          disabled={disabled}
           name={this.getIds().unit}
           value={this.state.vestingUnit}
           onChange={this.onVestingUnitChanged.bind(this)}
           items={COMMON_PERIODS}
         />
       </div>
-    )
+    );
   }
 }

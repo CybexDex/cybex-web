@@ -20,7 +20,10 @@ const cssLoaders = [
         loader: "css-loader"
       },
       {
-        loader: "postcss-loader"
+        loader: "postcss-loader",
+        options: {
+          plugins: [require("autoprefixer")]
+        }
       }
     ]
   },

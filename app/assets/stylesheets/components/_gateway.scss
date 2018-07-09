@@ -1,0 +1,25 @@
+.gateway-records {
+  .ReactTable .-pagination input,
+  .ReactTable .-pagination select {
+    background: inherit;
+  }
+
+  input, select {
+    margin-bottom: 0;
+  }
+  .ReactTable .-pagination .-btn {
+    color: #eee;
+  }
+
+  .ReactTable .rt-td {
+    text-align: center;
+  }
+  .ReactTable .rt-noData {
+    color: #eee;
+    background: unset;
+  }
+  .ReactTable .-pageInfo {
+    display: flex;
+    align-items: center;
+  }
+}

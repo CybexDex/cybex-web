@@ -67,6 +67,14 @@
     "tr": "Turkish",
     "ru": "Русский"
   },
+  "table": {
+    "previousText": "上一页",
+    "nextText": "下一页",
+    "loadingText": "载入中...",
+    "pageText": "页",
+    "ofText": "共",
+    "rowsText": "行"
+  },
   "incognito": {
     "no_support":
       "当前Cybex钱包依赖于本地存储和IndexedDB，在使用隐身浏览时会导致不稳定。我们建议您使用常规浏览方式。",
@@ -1586,16 +1594,6 @@
     "find_asset": "按资产名称筛选",
     "no_balance": "对应资产余额不足，无法提现",
     "title": "充值&提现",
-    "assets": {
-      "open":
-        "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Openledger 提供的网关服务进行充值提现。",
-      "trade":
-        "<br/><br/>资产 %(asset)s 由真实资产 %(backed)s 1:1 储备背书。可以通过 Blocktrades 提供的网关服务进行充值提现。",
-      "bit":
-        "<br/>bit %(asset)s 锚定 %(backed)s 的金融衍生品. 它是100%去中心化，无需信任第三方中心机构，并由锁定在区块链上智能合用中的抵押品进行价值背书。",
-      "bitcny":
-        "<br/><br/>bitCNY 可以通过 Magic Wallet 提供的网关服务进行充值提现。更多信息请访问 https://www.magicw.net/"
-    },
     "your_account": "你的账户",
     "bridge": "桥接",
     "gateway": "承兑商",
@@ -1603,40 +1601,16 @@
     "deposit_to": "请将你的%(asset)s转账至以下地址",
     "balance": "余额",
     "generate": "生成地址",
+    "type": "操作类型",
+    "address": "地址",
     "deposit": "充值",
     "withdraw": "提现",
+    "fund_records": "充提记录",
+    "last_update": "更新时间",
+    "unlock_first": "请先解锁钱包，以查看出入金记录",
+    "no_record_one_month": "暂无可查阅充提记录",
     "inventory": "库存",
     "scan_qr": "扫描二维码，手机支付",
-    "transwiser": {
-      "channel": {
-        "withdraw": {
-          "alipay": "支付宝",
-          "weixin_pay": "微信支付",
-          "bank_wire": "银行账户"
-        }
-      },
-      "fee": "手续费",
-      "fee_min": "最低",
-      "gateway": "Transwiser",
-      "visit_weidian": "访问网店进行充值",
-      "deposit_title": "充值人民币到 %(asset)s",
-      "withdraw_title": "提现 %(asset)s 到 %(channel)s",
-      "alipay_account": "支付宝账户",
-      "memo": "备注",
-      "alipay_account_name_notice": "支付宝账户名，一般为邮箱或手机号。",
-      "alipay_realname": "支付宝账户实名",
-      "alipay_realname_notice": "提现到支付宝请在备注栏输入真实姓名以供校验",
-      "withdraw_note":
-        "目前仅支持支付宝提现，将资产按1:1比例兑换成人民币发送到你的支付宝账户中",
-      "you_will_receive": "你将收到 %(amount)s 元人民币",
-      "bank_name": "银行名称",
-      "bank_branch": "分行/支行名",
-      "bank_account": "收款人账号",
-      "bank_holder": "收款人户名"
-    },
-    "meta": {
-      "open_website": "访问官网"
-    },
     "generate_new": "生成新地址",
     "calc": "计算中",
     "website": "访问网站",
@@ -1666,42 +1640,19 @@
     "bridge_text":
       "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
     "gateway_text":
-      "网关能让你将Cybex中的资产与外部资产进行互换，比如OPEN.BTC到BTC。",
+      "网关能让你将Cybex中的资产与外部资产进行互换，比如JADE.BTC到BTC。",
     "fiat_text":
       "法币的冲提现服务由CCEDK提供。你必须先行在CCEDK上进行账户注册。下面是支持的货币：",
     "service": "转账服务",
-    "purchase": "购买 %(asset)s",
-    "purchase_1":
-      "快速简便地从外部钱包使用 %(inputAsset)s 购买 %(outputAsset)s 。这项服务由 <a href='https://blocktrades.us/' target='blank' rel='noopener noreferrer'>Blocktrades</a> 提供",
     "deposit_limit": "充值限额",
-    "bitkapital_text": "Choose an asset to deposit or withdraw:",
-    "bitkapital_withdraw": "You are withdrawing",
-    "bitkapital_receive": "You will receive",
-    "iban": "IBAN",
     "add_funds":
       "您可以快速方便的充入资金到您的Cybex账号<strong>%(account)s</strong>中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> 同一账户同一资产充值地址需间隔五分钟才可重新生成 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 您当前所获取的资产地址用于充入%(type)s，请勿充入其他资产，否则可能无法到账且不可找回",
     "withdraw_funds":
       "您将提出您的 %(type)s 到外部账号中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> * 网关服务需要一定的手续费支持运行，其中需要执行一次Cybex内盘转账，该部分手续费您可选择使用CYB支付或%(asset)s支付 <br> * 网关执行手续费将以您希望取出的目标资产(%(type)s)支付，并从您提取金额中扣除 <br> * 请务必确认您的提币地址正确，一旦填写错误，您的提币将丢失 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 提币操作请使用您的个人钱包地址, 提币到合约地址、交易所地址、ICO项目地址可能会发生合约执行失败，将导致转账失败，资产将退回到您的Cybex账户，处理时间较长，请您谅解。",
     "balance_asset": "当前您 %(asset)s 资产的的可用余额为",
     "withdraw_placeholder": "Please enter your %(asset)s address",
-    "convert": "Internal conversion",
-    "convert_now": "Convert now",
-    "convert_coin": "Convert to %(coin)s (%(symbol)s)",
-    "address_with_memo":
-      "%(address)s <span class=\"blocktrades-with-memo\">with memo</span> %(memo)s",
-    "rudex": {
-      "support_block": "For support, please contact RuDEX at:",
-      "min_amount": "Minimum amount: %(minAmount)s %(symbol)s",
-      "min_amount_error": "Please enter number >= minimum",
-      "coming_soon": "Coming soon"
-    },
-    "unavailable":
-      "The gateway service for this asset is currently down, please try again later",
-    "unavailable_bridge":
-      "The brdige service for this asset is currently down, please try again later",
-    "unavailable_OPEN": "The OpenLedger Gateway is down or not responding",
-    "unavailable_RUDEX": "The RuDEX Gateway is down or not responding",
-    "unavailable_TRADE": "The Blocktrades Bridge is down or not responding"
+    "unavailable_jade":
+      "The gateway service for this asset is currently down, please try again later"
   },
   "or": "或",
   "I_know": "我知道了",

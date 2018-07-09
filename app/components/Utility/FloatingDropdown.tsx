@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import utils from "common/utils";
+import { isFootballAsset } from "qtb";
 
 class Dropdown extends React.Component<
   {
@@ -125,7 +126,7 @@ class Dropdown extends React.Component<
         </div>
       );
     } else {
-      let options = entries.map(value => {
+      let options = entries.filter(value => !isFootballAsset(value)).map(value => {
         return (
           <li
             className={this.props.upperCase ? "upper-case" : ""}

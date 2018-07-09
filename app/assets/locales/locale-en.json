@@ -19,6 +19,14 @@
     "tr": "Turkish",
     "ru": "Русский"
   },
+  "table": {
+    "previousText": "Previous",
+    "nextText": "Next",
+    "loadingText": "Loading...",
+    "pageText": "Page",
+    "ofText": "of",
+    "rowsText": "rows"
+  },
   "incognito": {
     "no_support":
       "This Cybex Wallet relies on Local Storage and IndexedDB which are not persistent when using Incognito Browsing. We recommend using a regular browsing session.",
@@ -1634,16 +1642,6 @@
     "find_asset": "Find an asset",
     "title": "Deposit & Withdraw",
     "no_balance": "No enough balance",
-    "assets": {
-      "open":
-        "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Openledger.",
-      "trade":
-        "<br/><br/>The %(asset)s asset is backed 1:1 by real %(backed)s and can be deposited or withdrawn using the gateway service provided by Blocktrades.",
-      "bit":
-        "<br/>bit%(asset)s is a derivative that tracks the real value of %(backed)s. It is 100%% decentralized, trustless and backed by collateral held by the blockchain in a smart contract.",
-      "bitcny":
-        "<br/><br/>bitCNY can be deposited or withdrawn 1:1 to real Yuan using a gateway service such as Magic Wallet. For more info, see https://www.magicw.net/"
-    },
     "your_account": "Your account",
     "bitkapital_text": "Choose an asset to deposit or withdraw:",
     "bitkapital_withdraw": "You are withdrawing",
@@ -1652,6 +1650,7 @@
     "service": "Transfer Service",
     "bridge": "Bridge",
     "gateway": "Gateway",
+    "fund_records": "Records",
     "symbol": "Symbol",
     "website": "Visit the website",
     "deposit_to": "Please send your %(asset)s to the address below",
@@ -1665,8 +1664,14 @@
     "generate": "Generate",
     "generate_new": "Get new address",
     "generate_new_memo": "Get new memo",
+    "type": "Type",
+    "address": "Address",
     "deposit": "Deposit",
     "withdraw": "Withdraw",
+    "last_update": "Last Update",
+    "unlock_first":
+      "Please unlock the account in order to check the fund records",
+    "no_record_one_month": "No available records",
     "convert": "Internal conversion",
     "withdraw_now": "Withdraw now",
     "convert_now": "Convert now",
@@ -1695,69 +1700,14 @@
     "convert_coin": "Convert to %(coin)s (%(symbol)s)",
     "limit": "Limit: %(amount)s %(symbol)s",
     "low_limit": "The value must be higher than %(amount)s %(symbol)s",
-    "bridge_text":
-      "A bridge lets you exchange an asset into another one, for example BTC to CYB.",
-    "gateway_text":
-      "Choose whether you want to make a deposit or withdrawal here",
-    "fiat_text":
-      "Fiat deposits and withdrawal are provided by CCEDK. In order to get started you need to complete the registration process. The following conversions are available:",
-    "transwiser": {
-      "channel": {
-        "withdraw": {
-          "alipay": "ALIPAY",
-          "weixin_pay": "Wechat Pay",
-          "bank_wire": "Bank Wire"
-        }
-      },
-      "fee": "Fee",
-      "fee_min": "Minimum",
-      "gateway": "Transwiser",
-      "visit_weidian": "Visit to deposit",
-      "deposit_title": "Deposit RMB to %(asset)s",
-      "withdraw_title": "Withdraw %(asset)s to %(channel)s",
-      "alipay_account": "ALIPAY Account Name",
-      "memo": "Memo",
-      "alipay_account_name_notice":
-        "Normally it's your Alipay account username or mobile phone number",
-      "alipay_realname": "Real Name",
-      "alipay_realname_notice":
-        "Withdraw to Alipay, please provide real name in MEMO field to verify",
-      "withdraw_note":
-        "Currently only ALIPAY withdraw is supported.  Your asset will be converted at 1:1 ratio and send RMB to your ALIPAY account.",
-      "you_will_receive": "You will receive %(amount)s RMB",
-      "bank_name": "Bank Name",
-      "bank_branch": "Branch",
-      "bank_account": "Account NO",
-      "bank_holder": "Holder Name"
-    },
-    "meta": {
-      "open_website": "Open Website"
-    },
-    "purchase": "Purchase %(asset)s",
-    "purchase_1":
-      "Quickly and easily purchase %(outputAsset)s using %(inputAsset)s from an external wallet. This service is provided by <a href='https://blocktrades.us/' target='blank' rel='noopener noreferrer'>Blocktrades</a>",
-    "purchase_notice":
-      "%(inputAsset)s sent to this address will show up as %(outputAsset)s",
-    "purchase_notice_memo":
-      "Memo <b>required</b> for proper routing to your account",
     "deposit_limit": "Deposit limit",
     "address_with_memo":
       "%(address)s <span class=\"blocktrades-with-memo\">with memo</span> %(memo)s",
-    "rudex": {
-      "support_block": "For support, please contact RuDEX at:",
-      "min_amount": "Minimum amount: %(minAmount)s %(symbol)s",
-      "min_amount_error": "Please enter number >= minimum",
-      "coming_soon": "Coming soon"
-    },
     "unavailable":
       "The gateway service for this asset is currently down, please try again later",
     "unavailable_bridge":
       "The bridge service for this asset is currently down, please try again later",
-    "unavailable_OPEN": "The OpenLedger Gateway is down or not responding",
-    "unavailable_RUDEX": "The RuDEX Gateway is down or not responding",
-    "unavailable_TRADE": "The Blocktrades Bridge is down or not responding",
-    "contact_TRADE": "Contact Blocktrades",
-    "over_limit": "Limit Reached"
+    "unavailable_jade": "The Jadepool Gateway is down or not responding"
   },
   "chat": {
     "title": "Chat",
@@ -1811,7 +1761,7 @@
     "transfer": "TRANSFER",
     "exchange": "EXCHANGE",
     "account": "ACCOUNT",
-    "gateway": "GATEWAY",
+    "gateway": "DEPOSIT/WITHDRAW",
     "bazaar": "BAZAAR",
     "explorer": "EXPLORER",
     "swap": "Atomic Swap",
@@ -1882,7 +1832,8 @@
     "password_s2": "I've alreay backup my password and save it appropriate.",
     "password_s3": "I really want to logout and I know what am I doing.",
     "logout": "Logout",
-    "clogout_with_wallet": "There seems a local wallet existing in your browser. In order to logout correctly, please remove the wallet after confirming your backup status.",    
+    "clogout_with_wallet":
+      "There seems a local wallet existing in your browser. In order to logout correctly, please remove the wallet after confirming your backup status.",
     "reload": "Reload",
     "wallet_tip":
       "You're using the local wallet mode. If you haven't backup your wallet and save it appropriate, please close this modal and take the backup of your wallet. If you done the backup and confirm to logout. You can select the wallet you want to remove it and confirm the delete opearation. After the removing and clicking the 'Reload' button, this page will be reloaded and the wallet information you've deleted will be cleared."
