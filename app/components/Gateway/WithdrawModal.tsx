@@ -480,7 +480,7 @@ class WithdrawModal extends React.Component<props, state> {
                 message: "gateway.precision_error",
                 messageParams: {
                   symbol: this.props.withdrawInfo.type,
-                  amount: 0.0001
+                  amount: this.state.outerPrecision
                 }
               }
             ]}
