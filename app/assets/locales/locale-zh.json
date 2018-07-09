@@ -148,7 +148,8 @@
     "Ended": "完成时间",
     "Your_current_ETH_balance_is": "当前您的ETH资产的可用余额为",
     "Quota_Remaining": "每个账号限额",
-    "participate": "参与众筹"
+    "participate": "参与众筹",
+    "no_login": "未登录"
   },
   "tooltip": {
     "call_limit": "市场中最少抵押率头寸的平仓价",
