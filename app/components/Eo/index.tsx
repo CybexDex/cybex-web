@@ -169,6 +169,7 @@ class EO extends React.Component<any, any> {
         let endAt = moment(e.end_at);
         let now = moment();
         let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
+
         return(
           e.comingSoon==true?(
               <div className="pin coming-soon" key={i}>
