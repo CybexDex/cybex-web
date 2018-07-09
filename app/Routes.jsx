@@ -272,6 +272,14 @@ const routes = (
       }}
     />
     <Route
+      path="ieo/training"
+      getComponent={(location, cb) => {
+        import("components/Eo/Training")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    />
+    <Route
       path="ieo/detail/:id"
       getComponent={(location, cb) => {
         import("components/Eo/Detail")
