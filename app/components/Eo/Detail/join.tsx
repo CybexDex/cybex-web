@@ -87,7 +87,6 @@ let Join = class extends React.Component<
     });
     this._updateFee();
   };
-  
 
   onAmountChanged({ amount, asset }) {
     if (!asset) {
@@ -470,8 +469,10 @@ let Join = class extends React.Component<
             <Translate
               content="ieo.current_state"
               component="section"
-              used={current_user_count + base_token_name}
-              avail={base_max_quota - current_user_count + base_token_name}
+              used={current_user_count + " " + base_token_name}
+              avail={
+                base_max_quota - current_user_count + " " + base_token_name
+              }
             />
           </div>
           <div className="content-block transfer-input">
