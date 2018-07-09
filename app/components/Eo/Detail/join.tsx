@@ -7,17 +7,19 @@ import { connect } from "alt-react";
 import "./join.scss";
 import * as fetchJson from "../service";
 import Translate from "react-translate-component";
-import { ChainStore } from "cybexjs";
+import { ChainStore, FetchChain } from "cybexjs";
 import { checkFeeStatusAsync, checkBalance } from "common/trxHelper";
 import utils from "common/utils";
 import BalanceComponent from "components/Utility/BalanceComponent";
 import { Asset } from "common/MarketClasses";
 import classnames from "classnames";
 import ChainTypes from "components/Utility/ChainTypes";
-import { Button, ButtonType, ButtonSize } from "components/Common/Button";
+import { Button } from "components/Common/Button";
 import { Colors } from "components/Common/Colors";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import { BigNumber } from "bignumber.js";
+import { NotificationActions } from "actions//NotificationActions";
+
 let Join = class extends React.Component<
   any,
   {
@@ -36,7 +38,6 @@ let Join = class extends React.Component<
     balanceError;
   }
 > {
-
   static propTypes = {
     currentAccount: ChainTypes.ChainAccount
   };
@@ -72,6 +73,7 @@ let Join = class extends React.Component<
       project: this.props.params.id
     };
     fetchJson.fetchDetails(data, res => {
+      let targetAccount = FetchChain("getAccount", res.result.recieve_address);
       this.setState({ data: res.result });
     });
   }
@@ -289,11 +291,18 @@ let Join = class extends React.Component<
     let { data } = this.state || { data: {} };
     let { name } = data;
     if (name) {
-      return <Translate className="confirm-tip text-center" content="ieo.confirm" component="h5" project={name}/>
+      return (
+        <Translate
+          className="confirm-tip text-center"
+          content="ieo.confirm"
+          component="h5"
+          project={name}
+        />
+      );
     } else return null;
   };
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
     const { asset, amount } = this.state;
     const sendAmount = new Asset({
@@ -301,9 +310,16 @@ let Join = class extends React.Component<
       asset_id: asset.get("id"),
       precision: asset.get("precision")
     });
+    let targetAccount = await FetchChain(
+      "getAccount",
+      this.state.data.recieve_address
+    );
+    if (!targetAccount) {
+      return NotificationActions.error(`Project address error`);
+    }
     AccountActions.transfer(
       this.props.currentAccount.get("id"),
-      "1.2.7", // Todo confirm receive account
+      targetAccount.get("id"), // Todo confirm receive account
       sendAmount.getAmount(),
       asset.get("id"),
       this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
@@ -328,6 +344,7 @@ let Join = class extends React.Component<
     const data = this.state.data || {};
     const {
       name,
+      recieve_address,
       current_user_count,
       current_base_token_count,
       base_max_quota,
@@ -349,8 +366,8 @@ let Join = class extends React.Component<
       fee_asset_id,
       balanceError
     } = this.state;
-    ///
 
+    //
     let { asset_types, fee_asset_types } = this._getAvailableAssets();
     let balance = null;
 
@@ -398,7 +415,11 @@ let Join = class extends React.Component<
     const avail = base_max_quota - current_user_count;
     const isOverflow = amountValue > avail;
     const isSendNotValid =
-      !isAmountValid || !asset || balanceError || !isAmountIntTimes || isOverflow;
+      !isAmountValid ||
+      !asset ||
+      balanceError ||
+      !isAmountIntTimes ||
+      isOverflow;
     return (
       <div
         className="join-wrapper"
