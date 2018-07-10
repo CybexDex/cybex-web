@@ -1,7 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-class LoadingIndicator extends React.Component {
+class LoadingIndicator extends React.Component<
+  { type: "three-bounce" | "circle" | "progress"; loadingText? },
+  { progress }
+> {
+  // progress;
   constructor(props) {
     super(props);
     this.state = { progress: 0 };
@@ -36,9 +40,10 @@ class LoadingIndicator extends React.Component {
           </div>
         );
         break;
+      case "progress":
       default:
         var classes = "loading-overlay";
-        if (this.progress > 0) {
+        if (this.state.progress > 0) {
           classes += " with-progress";
         }
         return (
@@ -59,5 +64,5 @@ class LoadingIndicator extends React.Component {
     }
   }
 }
-
+export { LoadingIndicator };
 export default LoadingIndicator;
