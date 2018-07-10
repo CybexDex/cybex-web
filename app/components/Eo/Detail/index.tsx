@@ -39,14 +39,14 @@ class Detail extends React.Component<any, any> {
             if(this.state.data.status == 'ok'){
               return (
                 <Link to={`/ieo/join/${this.props.params.id}`}>
-                <div className="button primery-button disabled">
+                <div className="button primery-button disabled ok">
                 <Translate content="EIO.Reserve_Now" />
                 </div>
                 </Link>
               )
             }else if(this.state.data.status == 'pre'){
               return (
-                <div className="button primery-button disabled">
+                <div className="button primery-button disabled pre">
                   等待众筹开始
                 </div>
               )
@@ -56,7 +56,7 @@ class Detail extends React.Component<any, any> {
         case 'waiting':
           this.setState({reserve_status:()=>{
             return (
-              <div className="button primery-button disabled">
+              <div className="button primery-button disabled waiting">
                 审核中
                 {/* <Translate content="EIO.Reserve_Now" /> */}
               </div>
@@ -67,7 +67,7 @@ class Detail extends React.Component<any, any> {
           this.setState({reserve_status:()=>{
             return (
               <div>
-              <div className="button primery-button disabled">
+              <div className="button primery-button disabled reject">
                 审核失败
                 {/* <Translate content="EIO.Reserve_Now" /> */}
               </div>
@@ -79,7 +79,7 @@ class Detail extends React.Component<any, any> {
         case 'pending':
           this.setState({reserve_status:()=>{
             return (
-              <div className="button primery-button disabled">
+              <div className="button primery-button disabled waiting">
                 审核中
                 {/* <Translate content="EIO.Reserve_Now" /> */}
               </div>
@@ -213,7 +213,7 @@ class Detail extends React.Component<any, any> {
             case 'pending':
               this.setState({reserve_status:()=>{
                 return (
-                  <div className="button primery-button disabled pending">
+                  <div className="button primery-button disabled waiting">
                     审核中
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
