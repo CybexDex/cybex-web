@@ -9397,6 +9397,10 @@ react-dom@^16.3.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-fetch-component@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/react-fetch-component/-/react-fetch-component-6.0.1.tgz#e4ec51d2a350bc27e490830858ca5bf961644449"
+
 react-highcharts@^12.0.0:
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/react-highcharts/-/react-highcharts-12.0.0.tgz#a7c8b5f5b56b37afe8e7fe02ec8bee72e376158a"
