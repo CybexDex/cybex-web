@@ -97,7 +97,7 @@ class WalletUnlockModal extends React.Component {
         this.refs.account_input &&
         this.refs.account_input.refs.bound_component
       ) {
-        this.refs.account_input.refs.bound_component.refs.user_input.focus();
+        // this.refs.account_input.refs.bound_component.refs.user_input.focus();
       }
     }
   }

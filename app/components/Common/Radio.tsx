@@ -38,6 +38,7 @@ const styles = {
       backgroundRepeat: "no-repeat",
       backgroundSize: "contain",
       appearance: "none",
+      WebkitAppearance: "none",
       MozAppearance: "none",
       width: "1.4em",
       height: "1.4em",

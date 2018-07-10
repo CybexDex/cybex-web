@@ -67,6 +67,17 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       amount: currentBalance ? currentBalance.get("balance") : 0
     });
     let assetName = type;
+
+    let address, gatewayAccount;
+    const gatewayRex = /^(.+)\[(.+)\]$/;
+
+    if (gatewayRex.test(depositInfo.address)) {
+      gatewayAccount = depositInfo.address.match(gatewayRex)[1];
+      address = depositInfo.address.match(gatewayRex)[2];
+    } else {
+      address = depositInfo.address;
+    }
+    let isEOS = type === "EOS";
     return (
       <BaseModal modalId={modalId}>
         <h3>
@@ -87,31 +98,42 @@ class DepositModal extends React.Component<props, { fadeOut }> {
           <CurrentBalance currentBalance={balance} asset={asset} />
         )}
         <div className="SimpleTrade__withdraw-row">
-          <p
-            style={{ marginBottom: 10 }}
-            data-place="right"
-            data-tip={counterpart.translate("tooltip.deposit_tip", {
-              asset: assetName
-            })}
-          >
-            <span className="help-tooltip">
-              {counterpart.translate("gateway.deposit_to", {
-                asset: assetName
-              })}
-            </span>
-          </p>
-          <section className="text-center">
-            <div
-              className="wrapper"
-              style={{
-                padding: "8px",
-                background: "white",
-                display: "inline-block"
-              }}
-            >
-              <QRCode level="L" size={140} value={depositInfo.address} />
-            </div>
-          </section>
+          {isEOS ? (
+            <Translate
+              component="p"
+              style={{ fontSize: "bold" }}
+              content="gateway.deposit_eos"
+              account={gatewayAccount}
+            />
+          ) : (
+            <>
+              <p
+                style={{ marginBottom: 10 }}
+                data-place="right"
+                data-tip={counterpart.translate("tooltip.deposit_tip", {
+                  asset: assetName
+                })}
+              >
+                <span className="help-tooltip">
+                  {counterpart.translate("gateway.deposit_to", {
+                    asset: assetName
+                  })}
+                </span>
+              </p>
+              <section className="text-center">
+                <div
+                  className="wrapper"
+                  style={{
+                    padding: "8px",
+                    background: "white",
+                    display: "inline-block"
+                  }}
+                >
+                  <QRCode level="L" size={140} value={address} />
+                </div>
+              </section>
+            </>
+          )}
 
           {!depositInfo ? (
             <LoadingIndicator type="three-bounce" />
@@ -122,9 +144,9 @@ class DepositModal extends React.Component<props, { fadeOut }> {
                   id="depositAddress"
                   readOnly
                   type="text"
-                  value={depositInfo.address}
+                  value={address}
                 />
-                <CopyButton text={depositInfo.address} />
+                <CopyButton text={address} />
               </span>
             </label>
           )}
@@ -140,7 +162,11 @@ class DepositModal extends React.Component<props, { fadeOut }> {
               onClick={this.getNewAddress}
               type="submit"
             >
-              <Translate content="gateway.generate_new" />
+              {isEOS ? (
+                <Translate content="gateway.generate_new_eos" />
+              ) : (
+                <Translate content="gateway.generate_new" />
+              )}
             </button>
           </div>
         </div>
@@ -153,20 +179,23 @@ let DepositModalWrapper = BindToChainState(DepositModal, {
   show_loader: true
 });
 
-DepositModalWrapper = connect(DepositModalWrapper, {
-  listenTo() {
-    return [GatewayStore];
-  },
-  getProps(props) {
-    let { modalId } = props;
+DepositModalWrapper = connect(
+  DepositModalWrapper,
+  {
+    listenTo() {
+      return [GatewayStore];
+    },
+    getProps(props) {
+      let { modalId } = props;
 
-    return {
-      open: GatewayStore.getState().modals.get(modalId),
-      depositInfo: GatewayStore.getState().depositInfo,
-      type: GatewayStore.getState().depositInfo.type,
-      asset: GatewayStore.getState().depositInfo.asset
-    };
+      return {
+        open: GatewayStore.getState().modals.get(modalId),
+        depositInfo: GatewayStore.getState().depositInfo,
+        type: GatewayStore.getState().depositInfo.type,
+        asset: GatewayStore.getState().depositInfo.asset
+      };
+    }
   }
-});
+);
 
 export default DepositModalWrapper;

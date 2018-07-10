@@ -28,6 +28,9 @@ type Locale = {
   [lang: string]: string;
 };
 
+const getLangFromNavi = () =>
+  navigator.language.toLocaleLowerCase().startsWith("zh") ? "zh" : "en";
+
 class IntlStore extends AbstractStore<{ currentLocale }> {
   locales = ["zh", "en"];
   localesObject = {
@@ -41,7 +44,7 @@ class IntlStore extends AbstractStore<{ currentLocale }> {
 
     let currentLocale = (this.currentLocale = ss.has("settings_v3")
       ? ss.get("settings_v3").locale
-      : "zh");
+      : getLangFromNavi());
 
     this.switchLocale(currentLocale);
 
