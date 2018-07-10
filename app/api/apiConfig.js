@@ -45,7 +45,7 @@ const WS_NODE_LIST = __TEST__
     new ApiNode("korea-01.cybex.io/", "Korea")
   ];
 
-export const IEO_API = __DEV__ ? "///localhost:8080/api/" : __TEST__ ? "" : "";
+export const IEO_API = __DEV__ ? "///localhost:8080/api/" : __TEST__ ? "///ieo-apitest.nbltrust.com/api" : "";
 export const PRICE_API = "https://app.cybex.io/price";
 export const settingsAPIs = {
   DEFAULT_WS_NODE: BITSHARES_NODE,

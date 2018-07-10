@@ -106,6 +106,7 @@ export async function getWithdrawInfo(
       withdrawInfo(type: $type) {
         fee
         minValue
+        precision
         asset
         type
         gatewayAccount

@@ -9,7 +9,7 @@ export const fetchJson = options => {
   let opts = {
     ...others,
     method: type || "get",
-    credentials: "include",
+    // credentials: "include",
     headers: options.headers || {
       Accept: "application/json",
       "Content-Type": "application/json"
