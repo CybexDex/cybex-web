@@ -80,6 +80,7 @@ let Checkbox = class extends React.Component<
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
         MozAppearance: "none",
+        WebkitAppearance: "none",
         appearance: "none",
         width: "1.2em",
         height: "1.2em",

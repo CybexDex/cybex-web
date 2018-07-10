@@ -28,7 +28,6 @@ class Training extends React.Component<any, any> {
 
     return (
       <div className="training">
-        
           <div className="title-container">
           <h2 className="base-title">
           </h2>
