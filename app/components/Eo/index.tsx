@@ -145,10 +145,14 @@ class EO extends React.Component<any, any> {
           <h2 className="base-title">
           | <Translate content="EIO.Popular_IEOs" />
           </h2>
+          <Link to="/ieo/training">
           <div className="kyc-btn button primery-button">
+          
             {/* <Translate content="EIO.KYC_Verification" /> */}
             <Translate content="EIO.Accept_KYC_Verification" />
+          
           </div>
+          </Link>
           {/* </Link> */}
         </div>
         {/* ):null */}
@@ -175,7 +179,6 @@ class EO extends React.Component<any, any> {
         let startAt = moment(e.start_at);
         let finishAt = moment(e.finish_at);
         let now = moment();
-<<<<<<< HEAD
         // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
         let remainStr;
         let projectStatus;
@@ -198,9 +201,6 @@ class EO extends React.Component<any, any> {
           break;
           default:
         }
-=======
-        let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
->>>>>>> 673a218a77aa68de6482bc537497dafcd1379d3d
 
         return(
           e.comingSoon==true?(
@@ -317,16 +317,13 @@ class EO extends React.Component<any, any> {
               </div>
             </div>
           )
-          
         )
-
-
       })}
       </div>
         )
       })}
       </div>
-        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Add More</div>
+        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Load More</div>
       </div>
     );
   }
