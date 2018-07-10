@@ -217,6 +217,7 @@ class EO extends React.Component<any, any> {
             <div className="info-holder">
             <div className="top-holder">
               <img src={e.adds_logo||logo_demo} width={100} height={100} />
+              
               <h3 className="title"><span className="main-title-large"
                  style={
                   {
