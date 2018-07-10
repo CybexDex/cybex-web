@@ -3,6 +3,44 @@
 	margin-top: 50px;
 	overflow: hidden;
 	box-sizing: border-box;
+	a{
+		color: #fff;
+	}
+	.button{
+		&.primery-button{
+			border-radius: 4px;
+			padding-left: 30px;
+			padding-right: 30px;
+			background-image: linear-gradient(107deg, #ffc478, #ff9143);
+			span{
+				vertical-align: middle;
+			}
+			&.waiting{
+				border: 1px solid #e7ac5f;
+				background: transparent;
+				background-image: none;
+				color: #e7ac5f;
+				padding-left: 50px;
+				padding-right: 50px;
+			}
+			&.pre{
+				border: 1px solid #e7ac5f;
+				background: transparent;
+				background-image: none;
+				color: #e7ac5f;
+				padding-left: 50px;
+				padding-right: 50px;
+			}
+			&.reject{
+				border: 1px solid #666;
+				background: transparent;
+				background-image: none;
+				color: #666;
+				padding-left: 50px;
+				padding-right: 50px;
+			}
+		}
+	}
 	.left-part{
 		width: 60%;
 		float: left;
@@ -56,7 +94,7 @@
 		.icon-time{
 			width: 22px;
 			height: 22px;
-			margin-bottom: 0;
+			margin-bottom: 3px;
 		}
 	}
 	
@@ -65,7 +103,7 @@
 	position: relative;
 	overflow: hidden;
 	margin: 0 auto;
-	padding: 1em;
+	padding: 5em;
 	width: 90%;
 	margin: auto;
 	break-inside: avoid;
@@ -80,18 +118,7 @@
 		.title{
 			color: #fff;
 		}
-		.button{
-			&.primery-button{
-				height: 40px;
-				border-radius: 4px;
-				padding-left: 30px;
-				padding-right: 30px;
-				background-image: linear-gradient(107deg, #ffc478, #ff9143);
-				span{
-					vertical-align: middle;
-				}
-			}
-		}
+		
 		.info-item{
 			overflow: hidden;
 			.info-title{
@@ -130,8 +157,6 @@
 		}
 		.button-holder{
 			margin-top: 20px;
-			.disabled{
-				background: gray;
-			}
+			margin-bottom: 20px;
 		}
 	}

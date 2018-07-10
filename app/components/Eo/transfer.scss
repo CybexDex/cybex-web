@@ -1,10 +1,13 @@
 .slider-holder{
 	position: relative;
+	max-width: 1280px;
 	margin: auto;
 	.img-content{
 		width: 100%;
 		height: 100%;
+		max-width: 1280px;
 		img{
+			max-width: 1280px;
 			width: 100%;
 			height: 100%;
 		}
@@ -24,6 +27,7 @@
 	margin: auto;
 	margin-top: 20px;
 	padding: 20px 5px;
+	
 	.base-title{
 		color: #e7ac5f;
 	}
@@ -101,6 +105,9 @@
 			height: 36px;
 			border-radius: 4px;
 			font-size: 14px;
+			&:hover{
+				background: linear-gradient(90deg, #ffc175 , #ff9648);
+			}
 		}
 		
 	}
@@ -156,16 +163,31 @@
 		break-inside: avoid;
 		box-sizing: border-box;
 		padding: 5px;
+		.button{
+			&.finish{
+				background: transparent;
+				border: 1px solid #e7ac5f;
+				color: #e7ac5f;
+				&:hover{
+					background: #e7ac5f !important;
+					border: 1px solid #e7ac5f;
+					color: #fff;
+				}
+			}
+		}
 		.info-holder{
 			height: 100%;
 			width: 100%;
 			padding: 2em;
 			color: #fff;
-			
+			.time{
+				margin-right: 5px;
+			}
 			.title{
 				color: #fff;
 				font-size: 2.3rem;
 				margin-top: 20px;
+				display: flex;
 			}
 			
 			.status-label{
@@ -194,9 +216,6 @@
 				text-align: center;
 				color: #fff;
 			}
-			.button{
-				margin-top: 16px;
-			}
 			.percent-holder-out{
 				position: absolute;
 				width: 83%;
@@ -212,13 +231,14 @@
 				width: 80%;
 				height: 10px;
 				position: relative;
-				padding: 1px;
+				padding: 2px;
 				box-sizing: border-box;
 				border-radius: 5px;
 
 				.percent-in{
 					position: absolute;
-					height: 8px;
+					border-radius: 5px;
+					height: 6px;
 					width: 30%;
 					background: linear-gradient(to right, #e8a95e , #e76637);
 				}
@@ -245,6 +265,9 @@
 					.info-holder{
 						background-image: linear-gradient(320deg, #293246, #39445b);
 						color: #000;
+						.main-title-large{
+							max-width: 42%;
+						}
 						img {
 							width: 80px;
 							height: 80px;
@@ -256,6 +279,10 @@
 						.percent-holder{
 							margin-top: 40px;
 						}
+						.button{
+							position: absolute;
+							bottom: 100px;
+						}
 					}
 				}
 				&:nth-child(4n+2) {
@@ -266,9 +293,16 @@
 					.info-holder{
 						background-image: linear-gradient(140deg, #262f40, #1a2334);
 						color: #000;
+						.main-title-large{
+							max-width: 42%;
+						}
 						.adds_keyword{
 							font-size: 16px;
 							font-weight: 500;
+						}
+						.button{
+							position: absolute;
+							bottom: 100px;
 						}
 					}
 				}
@@ -291,6 +325,7 @@
 							line-height: 1.17;
 							letter-spacing: normal;
 							color: #ffffff;
+							display: block;
 						}
 						.adds_keyword{
 							font-size: 22px;
@@ -345,7 +380,7 @@
 						.title{
 							float: right;
 							font-size: 1.8rem;
-							display: block;
+							display: flex;
 							text-align: left;
 							width: 60%;
 						}
@@ -402,6 +437,7 @@
 							line-height: 1.17;
 							letter-spacing: normal;
 							color: #ffffff;
+							display: block;
 						}
 						.adds_keyword{
 							font-size: 20px;
@@ -428,12 +464,14 @@
 							display: block;
 							float: none;
 							background: #fff;
+							background: url('../../assets/feedback.png') no-repeat;
 							color: #000;
 							width: 50px;
-							line-height: 20px;
-							height: 20px;
+							line-height: 28px;
+							height: 28px;
 							position: absolute;
 							margin-top: -40px;
+							background-size: 100% 100%;
 						}
 					}
 				}
@@ -448,6 +486,9 @@
   					height: 374px;
 					top: 0;
 					left: 40%;
+					.main-title-large{
+						max-width: 42%;
+					}
 					.info-holder{
 						background-image: linear-gradient(320deg, #293246, #39445b);
 						color: #000;
@@ -458,6 +499,10 @@
 							font-size: 16px;
 							font-weight: 500;
 						}
+						.button{
+							position: absolute;
+							bottom: 100px;
+						}
 					}
 				}
 				&:nth-child(4n+3) {
@@ -465,6 +510,9 @@
   					height: 374px;
 					top: 0;
 					left: 70%;
+					.main-title-large{
+						max-width: 42%;
+					}
 					.info-holder{
 						background-image: linear-gradient(320deg, #293246, #39445b);
 						color: #000;
@@ -472,8 +520,12 @@
 							font-size: 1.8rem;
 						}
 						.adds_keyword{
-							font-size: 18px;
+							font-size: 16px;
 							font-weight: 500;
+						}
+						.button{
+							position: absolute;
+							bottom: 100px;
 						}
 					}
 				}
@@ -496,7 +548,7 @@
 						.title{
 							float: right;
 							font-size: 1.8rem;
-							display: block;
+							display: flex;
 							text-align: left;
 							width: 60%;
 						}
