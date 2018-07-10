@@ -1643,6 +1643,7 @@
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
     "low_limit": "单次提现金额不可低于最低限额: %(amount)s %(symbol)s",
+    "precision_error": "%(symbol)s 提现金额需为其外部资产精度(%(amount)s)的整数倍",
     "bridge_text":
       "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
     "gateway_text":
