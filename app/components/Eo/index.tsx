@@ -145,10 +145,14 @@ class EO extends React.Component<any, any> {
           <h2 className="base-title">
           | <Translate content="EIO.Popular_IEOs" />
           </h2>
+          <Link to="/ieo/training">
           <div className="kyc-btn button primery-button">
+          
             {/* <Translate content="EIO.KYC_Verification" /> */}
             <Translate content="EIO.Accept_KYC_Verification" />
+          
           </div>
+          </Link>
           {/* </Link> */}
         </div>
         {/* ):null */}
@@ -313,16 +317,13 @@ class EO extends React.Component<any, any> {
               </div>
             </div>
           )
-          
         )
-
-
       })}
       </div>
         )
       })}
       </div>
-        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Add More</div>
+        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Load More</div>
       </div>
     );
   }
