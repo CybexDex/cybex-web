@@ -108,7 +108,7 @@ class WithdrawModal extends React.Component<props, state> {
 
   onWithdrawAmountChange = ({ amount }) => {
     let eosPrecisionError = false;
-    let outerPrecision;
+    let outerPrecision, p;
     try {
       outerPrecision =
         this.props.withdrawInfo.type === "EOS"
@@ -118,18 +118,16 @@ class WithdrawModal extends React.Component<props, state> {
     } catch (e) {
       outerPrecision = 4;
     }
-    if (this.props.withdrawInfo.type === "EOS") {
-      let p = new BigNumber(1).dividedBy(Math.pow(10, outerPrecision));
-      eosPrecisionError =
-        new BigNumber(amount || 1)
-          .dividedBy(p)
-          .toString()
-          .indexOf(".") !== -1;
-    }
+    p = new BigNumber(1).dividedBy(Math.pow(10, outerPrecision));
+    eosPrecisionError =
+      new BigNumber(amount || 1)
+        .dividedBy(p)
+        .toString()
+        .indexOf(".") !== -1;
     this.setState({
       withdraw_amount: amount,
       eosPrecisionError,
-      outerPrecision
+      outerPrecision: p.toString()
     });
   };
 
