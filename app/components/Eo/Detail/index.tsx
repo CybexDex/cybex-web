@@ -36,26 +36,22 @@ class Detail extends React.Component<any, any> {
       switch(res2.result.status){
         case 'ok':
           this.setState({reserve_status:()=>{
-            switch(this.state.data.result.status){
-              case 'ok': ()=>{
-                return (
-                  <Link to={`/ieo/join/${this.props.params.id}`}>
-                  <div className="button primery-button disabled">
-                  <Translate content="EIO.Reserve_Now" />
-                  </div>
-                  </Link>
-                )
-              }
-              break;
-              case 'pre': ()=>{
-                return (
-                  <div className="button primery-button disabled">
-                    等待项目开始
-                  </div>
-                )
-              }
-            }
             
+            if(this.state.data.status == 'ok'){
+              return (
+                <Link to={`/ieo/join/${this.props.params.id}`}>
+                <div className="button primery-button disabled">
+                <Translate content="EIO.Reserve_Now" />
+                </div>
+                </Link>
+              )
+            }else if(this.state.data.status == 'pre'){
+              return (
+                <div className="button primery-button disabled">
+                  等待众筹开始
+                </div>
+              )
+            }
           }})
         break;
         case 'waiting':
@@ -117,17 +113,46 @@ class Detail extends React.Component<any, any> {
     let data = {
       project: this.props.params.id
     }
+
     fetchJson.fetchDetails(data,(res)=>{
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
+      let endAt = moment(res.result.end_at);
+      let startAt = moment(res.result.start_at);
+      let finishAt = moment(res.result.finish_at);
+      let now = moment();
+      // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
+      let remainStr;
+      let projectStatus;
+      switch(res.result.status){
+        case 'pre':
+        countDownTime = moment(startAt).valueOf() - moment().valueOf();
+        remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        break;
+        case 'finish':
+        countDownTime = moment(finishAt).valueOf();
+        remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        break;
+        case 'ok':
+        countDownTime = moment(endAt).valueOf() - moment().valueOf();
+        remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        break;
+        case 'fail':
+        countDownTime = moment(finishAt).valueOf();
+        remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        break;
+        default:
+      }
+
       this.setState({
         countDownTime,
-        data: res.result
+        data: res.result,
+        remainStr
       }, ()=>{
-        setInterval(()=>{
-          this.setState({
-            countDownTime: (this.state.countDownTime>1000)?(this.state.countDownTime-1000): 0
-          })
-        },1000)
+        // setInterval(()=>{
+        //   this.setState({
+        //     countDownTime: (this.state.countDownTime>1000)?(this.state.countDownTime-1000): 0
+        //   })
+        // },1000)
         
       });
       if(!this.props.myAccounts[0]){
@@ -145,32 +170,27 @@ class Detail extends React.Component<any, any> {
           switch(res2.result.status){
             case 'ok':
               this.setState({reserve_status:()=>{
-                switch(res.result.status){
-                  case 'ok': ()=>{
-                    return (
-                      <Link to={`/ieo/join/${this.props.params.id}`}>
-                      <div className="button primery-button disabled">
-                      <Translate content="EIO.Reserve_Now" />
-                      </div>
-                      </Link>
-                    )
-                  }
-                  break;
-                  case 'pre': ()=>{
-                    return (
-                      <div className="button primery-button disabled">
-                        等待项目开始
-                      </div>
-                    )
-                  }
+                if(res.result.status == 'ok'){
+                  return (
+                    <Link to={`/ieo/join/${this.props.params.id}`}>
+                    <div className="button primery-button disabled ok">
+                    <Translate content="EIO.Reserve_Now" />
+                    </div>
+                    </Link>
+                  )
+                }else if(res.result.status == 'pre'){
+                  return (
+                    <div className="button primery-button disabled pre">
+                      等待众筹开始
+                    </div>
+                  )
                 }
-                
               }})
             break;
             case 'waiting':
               this.setState({reserve_status:()=>{
                 return (
-                  <div className="button primery-button disabled">
+                  <div className="button primery-button disabled waiting">
                     审核中
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
@@ -181,8 +201,8 @@ class Detail extends React.Component<any, any> {
               this.setState({reserve_status:()=>{
                 return (
                   <div>
-                  <div className="button primery-button disabled">
-                    审核失败
+                  <div className="button primery-button disabled reject">
+                    预约失败
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
                   <p>{res2.result.reason}</p>
@@ -193,7 +213,7 @@ class Detail extends React.Component<any, any> {
             case 'pending':
               this.setState({reserve_status:()=>{
                 return (
-                  <div className="button primery-button disabled">
+                  <div className="button primery-button disabled pending">
                     审核中
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
@@ -204,14 +224,14 @@ class Detail extends React.Component<any, any> {
             this.setState({reserve_status:()=>{
               if(res2.result.kyc_status == 'ok'){
                 return (
-                  <div className="button primery-button" onClick={this.reserve.bind(this)}>
+                  <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                     立即预约
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
                 )
               }else{
                 return(
-                  <div className="button primery-button disabled">
+                  <div className="button primery-button disabled can-not-reserve">
                     立即预约
                   {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
@@ -292,7 +312,9 @@ class Detail extends React.Component<any, any> {
 
         // console.log(moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm:ss'),'asdfdsdsf');
     // let remainStr = `${(endAt.diff(now,'days'))<0?0:(endAt.diff(now,'days'))} days ${moment(moment(end_at).valueOf() - moment().valueOf()).format('hh:mm')}`
-    let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm:ss')}`
+    // let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm:ss')}`
+    // let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm')}`
+    let remainStr = this.state.remainStr;
     return (
       <div className="detail">
         <div className="left-part">
@@ -342,6 +364,19 @@ class Detail extends React.Component<any, any> {
         {remainStr?(<div className="info-item large-time">
           <div className="info-title">
           <img className="icon-time" src={time} />
+          {status == 'ok'? (
+              <span className={`sub-time ${status}`}> 距离结束 </span>
+            ):(
+              (status == 'pre')? (
+                <span className={`sub-time ${status}`}> 距离开始 </span>
+              ):(
+                status == 'finish'? (
+                  <span className={`sub-time ${status}`}> 完成时间 </span>
+                ):(
+                  <span className={`sub-time ${status}`}> 完成时间 </span>
+                )
+              )
+            )}
           </div>
           <div className="info-detail">{remainStr}</div>
         </div>):null}
@@ -365,8 +400,6 @@ class Detail extends React.Component<any, any> {
               )
             )}
           </h3>
-          
-          
           
           {name?(<div className="info-item">
             <div className="info-title">
@@ -433,16 +466,17 @@ class Detail extends React.Component<any, any> {
           </div>):null}
           
           {adds_website?(<div className="info-item">
+          
             <div className="info-title">
             <Translate content="EIO.Official_Website" />: 
             </div>
-            <div className="info-detail">{adds_website}</div>
+            <div className="info-detail"><Link to={adds_website}>{adds_website}</Link></div>
           </div>):null}
           {whitepaper?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Whitepaper" />: 
             </div>
-            <div className="info-detail">{whitepaper}</div>
+            <div className="info-detail"><Link to={whitepaper}>{whitepaper}</Link></div>
           </div>):null}
           
           {adds_detail?(<div className="info-item">

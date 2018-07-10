@@ -166,9 +166,38 @@ class EO extends React.Component<any, any> {
         let percent = e.current_percent*100;
         percent = percent.toFixed(2);
         let showPercent = `${percent>100?100:percent}%`;
+        // let endAt = moment(e.end_at);
+        // let now = moment();
+        // let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
+
+        let countDownTime = moment(e.end_at).valueOf() - moment().valueOf();
         let endAt = moment(e.end_at);
+        let startAt = moment(e.start_at);
+        let finishAt = moment(e.finish_at);
         let now = moment();
-        let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
+        // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
+        let remainStr;
+        let projectStatus;
+        switch(e.status){
+          case 'pre':
+          countDownTime = moment(startAt).valueOf() - moment().valueOf();
+          remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          break;
+          case 'finish':
+          countDownTime = moment(finishAt).valueOf();
+          remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          break;
+          case 'ok':
+          countDownTime = moment(endAt).valueOf() - moment().valueOf();
+          remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          break;
+          case 'fail':
+          countDownTime = moment(finishAt).valueOf();
+          remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          break;
+          default:
+        }
+
         return(
           e.comingSoon==true?(
               <div className="pin coming-soon" key={i}>
@@ -184,7 +213,17 @@ class EO extends React.Component<any, any> {
             <div className="info-holder">
             <div className="top-holder">
               <img src={e.adds_logo||logo_demo} width={100} height={100} />
-              <h3 className="title">{e.name}<span>
+              <h3 className="title"><span className="main-title-large"
+                 style={
+                  {
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis', 
+                    display: '-webkit-box',
+                    WebkitLineClamp: 1,
+                    WebkitBoxOrient: 'vertical',
+                  }
+                }
+              >{e.name}</span><span>
               {e.status == 'ok'? (
                 <p className="status-label">[ <Translate content="EIO.ok" />... ]</p>
               ):(
@@ -199,7 +238,10 @@ class EO extends React.Component<any, any> {
                 )
               )}
               </span></h3>
-              <h4 className="adds_keyword" style={
+              
+              {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
+                <div>
+                <h4 className="adds_keyword" style={
                   {
                     overflow: 'hidden', 
                     textOverflow: 'ellipsis', 
@@ -208,7 +250,6 @@ class EO extends React.Component<any, any> {
                     WebkitBoxOrient: 'vertical',
                   }
                 }>{e.adds_keyword}</h4>
-              {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
                 <p className="proj-desc" style={
                   {
                     overflow: 'hidden', 
@@ -218,12 +259,22 @@ class EO extends React.Component<any, any> {
                     WebkitBoxOrient: 'vertical',
                   }
                 }>{e.adds_detail}</p>
-              ):null}
+                </div>
+              ):(
+                <h4 className="adds_keyword" style={
+                  {
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis', 
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                  }
+                }>{e.adds_keyword}</h4>
+              )}
               </div>
               <div className="bottom-holder">
               <Link to={`/ieo/detail/${e.id}`}>
-              <div className="button primery-button">
-              {e.status}
+              <div className={`button primery-button ${e.status}`}>
                 {e.status == 'ok'? (
                   <Translate content="EIO.Join_in_IEO" />
                 ):(

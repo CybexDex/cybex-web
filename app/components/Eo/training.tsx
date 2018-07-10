@@ -27,7 +27,7 @@ class Training extends React.Component<any, any> {
   render() {
 
     return (
-      <div>
+      <div className="training">
         
           <div className="title-container">
           <h2 className="base-title">
@@ -36,8 +36,62 @@ class Training extends React.Component<any, any> {
           </div>
         </div>
         <div className="container">
-          <div className="Combined-Shape"></div>
-          <div className="Mask"></div>
+          <div className="Combined-Shape">
+            <div className="content">
+            <h2 className="step">STEP</h2>
+            <div className="right-pointer"></div>
+            <div className="bottom-pointer"></div>
+            </div>
+          </div>
+          <div className="right-top">456</div>
+          <div className="right-bottom">456</div>
+        </div>
+        <div className="gap"><div className="dashed-border"></div></div>
+        <div className="container">
+          <div className="Combined-Shape">
+          <div className="content">
+            <div className="right-pointer"></div>
+            <div className="bottom-pointer"></div>
+            </div>
+          </div>
+          <div className="right-top">456</div>
+          <div className="right-bottom">456</div>
+        </div>
+        <div className="gap"><div className="dashed-border"></div></div>
+        <div className="container">
+          <div className="Combined-Shape">
+          <div className="content">
+            <div className="right-pointer"></div>
+            <div className="bottom-pointer"></div>
+            </div>
+          </div>
+          <div className="right-top">456</div>
+          <div className="right-bottom">456</div>
+        </div>
+        <div className="gap"><div className="dashed-border"></div></div>
+        <div className="container-large">
+          <div className="Combined-Shape">
+          <div className="content">
+            <div className="right-pointer"></div>
+            <div className="bottom-pointer"></div>
+            </div>
+          </div>
+          <div className="right-top">456</div>
+          <div className="right-middle">456</div>
+          <div className="right-bottom">456</div>
+        </div>
+        <div className="gap">
+          <div className="dashed-border"></div>
+        </div>
+        <div className="container">
+          <div className="Combined-Shape">
+          <div className="content">
+            <div className="right-pointer"></div>
+            <div className="bottom-pointer"></div>
+            </div>
+          </div>
+          <div className="right-top">456</div>
+          <div className="right-bottom">456</div>
         </div>
       </div>
     );
