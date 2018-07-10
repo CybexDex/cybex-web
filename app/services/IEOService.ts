@@ -1,7 +1,7 @@
-const API_URL = __TEST__
+export const API_URL = __DEV__
   ? "http://106.14.159.224:3049/"
-  : "https://ieo.cybex.io";
+  : __TEST__
+    ? "https://ieo-apitest.nbltrust.com"
+    : "https://ieo.cybex.io";
 
-export const getProjects = () => {
-  
-}
+export const getProjects = () => {};

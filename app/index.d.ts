@@ -2,6 +2,7 @@
 
 
 declare const __TEST__;
+declare const __DEV__;
 declare namespace IEO {
   type IEORecord = {
     token: string;
