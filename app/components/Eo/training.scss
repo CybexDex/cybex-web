@@ -1,9 +1,53 @@
+`.training{
+	.step {
+		width: 100%;
+		text-align: center;
+		height: 71px;
+		font-family: Rubik;
+		font-size: 60px;
+		font-weight: 500;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: normal;
+		letter-spacing: normal;
+		color: #ffffff;
+		transform: translateY(100px);
+	  }
+	.content{
+		margin-top: -2px;
+		position: relative;
+		height: 846px;
+		width: 301px;
+		background-color: #0484cb;
+	}
+	.right-pointer{
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		background-color: #0484cb;
+		transform: rotateZ(45deg);
+		right: -10px;
+		top: 4px;
+	}
+	.bottom-pointer{
+		position: absolute;
+		width: 20px;
+		height: 20px;
+		background-color: #0484cb;
+		transform: rotateZ(45deg);
+		margin-left: -20px;
+		left: 50%;
+		bottom: -10px;
+	}
 .container{
+	margin: auto;
 	position: relative;
+	width: 1028px;
+	height: 861px;
 	.Combined-Shape {
+		
 		width: 316px;
 		height: 861px;
-		background-color: #0484cb;
 		float: left;
 	}
 	.right-top {
@@ -16,9 +60,67 @@
 	}
 	.right-bottom {
 		width: 708px;
-		height: 410.5px;
+		height: 411px;
 		position: absolute;
 		right: 0;
-		bottom: 0;
+		bottom: 15px;
+		background-color: red;
 	}
+}
+.gap{
+	height: 80px;
+	width: 1024px;
+	margin: auto;
+	position: relative;
+	.dashed-border{
+		position: absolute;
+		left: 0;
+		width: 140px;
+		height: 100%;
+		border-right: 4px dashed #0484cb;
+	}
+	
+}
+.container-large{
+	margin: auto;
+	position: relative;
+	width: 1028px;
+	height: 1290px;
+	.content{
+		margin-top: -2px;
+		position: relative;
+		height: 1275px;
+		width: 301px;
+		background-color: #0484cb;
+	}
+	.Combined-Shape {
+		width: 316px;
+		height: 1290px;
+		float: left;
+	}
+	.right-middle {
+		width: 708px;
+		height: 411px;
+		background-color: #d8d8d8;
+		position: absolute;
+		right: 0;
+		top: 433px;
+	}
+	.right-top {
+		width: 708px;
+		height: 411px;
+		background-color: red;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.right-bottom {
+		width: 708px;
+		height: 411px;
+		position: absolute;
+		right: 0;
+		bottom: 15px;
+		background-color: aqua;
+	}
+}
 }
