@@ -36,7 +36,6 @@ class Detail extends React.Component<any, any> {
       switch(res2.result.status){
         case 'ok':
           this.setState({reserve_status:()=>{
-            
             if(this.state.data.status == 'ok'){
               return (
                 <Link to={`/ieo/join/${this.props.params.id}`}>
@@ -153,6 +152,7 @@ class Detail extends React.Component<any, any> {
         //     countDownTime: (this.state.countDownTime>1000)?(this.state.countDownTime-1000): 0
         //   })
         // },1000)
+
         
       });
       if(!this.props.myAccounts[0]){
