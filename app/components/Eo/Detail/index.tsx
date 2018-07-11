@@ -13,6 +13,7 @@ import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
 import Translate from "react-translate-component";
 import moment from "moment";
+import * as humanize from "humanize-duration";
 import BindToChainState from "../../Utility/BindToChainState";
 import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
@@ -108,12 +109,19 @@ class Detail extends React.Component<any, any> {
       }
     })
 }
+formatTime(input){
+  return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD hh:mm:ss');
+}
   componentDidMount(){
     let data = {
       project: this.props.params.id
     }
 
     fetchJson.fetchDetails(data,(res)=>{
+      res.result.end_at = this.formatTime(res.result.end_at);
+      res.result.start_at = this.formatTime(res.result.start_at);
+      res.result.created_at = this.formatTime(res.result.created_at);
+      res.result.finish_at = this.formatTime(res.result.finish_at);
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
       let endAt = moment(res.result.end_at);
       let startAt = moment(res.result.start_at);
@@ -122,22 +130,46 @@ class Detail extends React.Component<any, any> {
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       let remainStr;
       let projectStatus;
+      const shortEnglishHumanizer = humanize.humanizer({
+        language: 'shortEn',
+        units: ['d', 'h', 'm'],
+        unitMeasures: {
+          y: 365 * 86400000,
+          mo: 30 * 86400000,
+          w: 7 * 86400000,
+          d: 86400000,
+          h: 3600000,
+          m: 60000,
+          s: 1000
+        },
+        round: true,
+        languages: {
+          shortEn: {
+            y: function() { return '年' },
+            mo: function() { return '月' },
+            d: function() { return '天' },
+            h: function() { return '小时' },
+            m: function() { return '分钟' },
+            s: function() { return '秒' }
+          }
+        }
+      })
       switch(res.result.status){
         case 'pre':
         countDownTime = moment(startAt).valueOf() - moment().valueOf();
-        remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
+        remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(/[\,]/g,'');
         break;
         case 'finish':
-        countDownTime = moment(finishAt).valueOf();
-        remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
+        countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
+        remainStr = shortEnglishHumanizer(endAt.diff(startAt)).replace(/[\,]/g,'');
         break;
         case 'ok':
         countDownTime = moment(endAt).valueOf() - moment().valueOf();
-        remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
+        remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g,'');
         break;
         case 'fail':
         countDownTime = moment(finishAt).valueOf();
-        remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
+        remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(/[\,]/g,'');
         break;
         default:
       }
@@ -245,7 +277,7 @@ class Detail extends React.Component<any, any> {
           }else{
             this.setState({kyc_status:()=>{
               return (
-                <div>
+                <div className="kyc-btn-holder">
                   <Link to="/ieo/training">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
@@ -279,6 +311,7 @@ class Detail extends React.Component<any, any> {
       current_user_count,
       current_base_token_count,
       base_max_quota,
+      base_min_quota,
       rate,
       adds_token_total,
       adds_ico_total,
@@ -298,7 +331,8 @@ class Detail extends React.Component<any, any> {
     } = data;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
-    let showPercent = `${percent>100?100:percent}%`;
+    // let showPercent = `${percent>100?100:percent}%`;
+    let showPercent = `${percent>99?99:(percent<2?(percent==0?0:2):percent)}%`;
     let endAt = moment(end_at);
     let now = moment();
 
@@ -321,44 +355,44 @@ class Detail extends React.Component<any, any> {
         <img src={adds_banner} />
         {percent?(<div className="info-item">
           <div className="percent">
-            <div className="percent-in" style={{width: showPercent}}></div>
+            <div className={`percent-in ${status}`} style={{width: showPercent}}></div>
           </div>
           <div className="info-text">{percent}%</div>
         </div>):null}
         
-        {name?(<div className="info-item">
+        {/* {name?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Project_Name" />: 
           </div>
           <div className="info-detail">{name}</div>
-        </div>):null}
+        </div>):null} */}
         
         {current_user_count?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Participants" />: 
           </div>
-          <div className="info-detail">{current_user_count}</div>
+          <div className="info-detail">{current_user_count}人</div>
         </div>):null}
         
         {current_base_token_count?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Raised" />:
           </div>
-          <div className="info-detail">{current_base_token_count}</div>
+          <div className="info-detail">{current_base_token_count}{base_token_name}</div>
         </div>):null}
         
         {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
-          <div className="info-detail">{rate}</div>
+          <div className="info-detail">1{base_token_name}={rate}CC</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
-          <div className="info-detail">{base_max_quota}</div>
+          <div className="info-detail">每人可投{base_min_quota}-{base_max_quota}{base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
@@ -387,15 +421,15 @@ class Detail extends React.Component<any, any> {
               <Translate content="EIO.Project_Details" />
             </span>
             {status == 'ok'? (
-              <span className="sub">[<Translate content="EIO.ok" />]</span>
+              <span className="sub ok">[ <Translate content="EIO.ok" />...]</span>
             ):(
               (status == 'pre')? (
-                <span className="sub">[<Translate content="EIO.pre" />]</span>
+                <span className="sub pre">[ <Translate content="EIO.pre" /> ]</span>
               ):(
                 status == 'finish'? (
-                  <span className="sub">[<Translate content="EIO.finish" />]</span>
+                  <span className="sub finish">[ <Translate content="EIO.finish" /> ]</span>
                 ):(
-                  <span className="sub">[<Translate content="EIO.pause" />]</span>
+                  <span className="sub finish">[ <Translate content="EIO.pause" /> ]</span>
                 )
               )
             )}
@@ -412,7 +446,7 @@ class Detail extends React.Component<any, any> {
             <div className="info-title">
               <Translate content="EIO.Total_Token_Supply" />: 
             </div>
-            <div className="info-detail">{adds_token_total}</div>
+            <div className="info-detail">{adds_token_total/100000000}亿个</div>
           </div>):null}
 
           
@@ -455,7 +489,7 @@ class Detail extends React.Component<any, any> {
             <div className="info-title">
             <Translate content="EIO.IEO_Quota" />: 
             </div>
-            <div className="info-detail">{base_token_count}</div>
+            <div className="info-detail">{base_token_count}{base_token_name}</div>
           </div>):null}
           
           {district_restriction?(<div className="info-item">

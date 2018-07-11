@@ -1,5 +1,46 @@
 .training{
 	background: #b9dbf0;
+	.base-title{
+		width: 562px;
+		height: 114px;
+		font-family: PingFangSC;
+		font-size: 36px;
+		font-weight: 500;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: 1.58;
+		letter-spacing: normal;
+		color: #00293f;
+		margin: auto;
+	}
+	.title-container{
+		position: relative;
+		height: 300px;
+		width: 700px;
+		padding-top: 90px;
+	}
+	.trangle-holder{
+		&.left{
+			position: absolute;
+			top: 20px;
+			transform: rotateZ(90deg);
+			left: 0;
+		}
+		&.right{
+			position: absolute;
+			transform: rotateZ(270deg);
+			bottom: 20px;
+			right: 0;
+		}
+	}
+	.trangle {
+		width: 0;
+		height: 0;
+		transform: skewX(26deg);
+		border-left: 40px solid transparent;
+		border-right: 40px solid transparent;
+		border-bottom: 80px solid #ffc175;
+	  }
 	.step {
 		width: 100%;
 		text-align: center;

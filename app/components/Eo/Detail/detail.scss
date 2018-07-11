@@ -4,7 +4,11 @@
 	overflow: hidden;
 	box-sizing: border-box;
 	a{
-		color: #fff;
+		color: #ff9143;
+		text-decoration: underline;
+		&:hover{
+			color: #ff9143;
+		}
 	}
 	.button{
 		&.primery-button{
@@ -63,13 +67,25 @@
 			font-size: 32px;
 		}
 		.sub{
-			margin-left: 5px;
+			margin-left: 10px;
 			font-size: 18px;
 			width: 102px;
 			height: 25px;
 			object-fit: contain;
 			color: #ff9143;
+			&.finish{
+				color: #666;
+			}
 		}
+	}
+	.kyc-btn-holder{
+		margin-top: 16px;
+	}
+	.can-not-reserve{
+		background: transparent;
+		background-image: none !important;
+		color: #666;
+		border: #666 1px solid;
 	}
 	.info-item{
 		object-fit: contain;
@@ -85,16 +101,19 @@
 		}
 	}
 	.large-time{
-		font-size: 22px;
-		color: #ffc478;
+		font-size: 20px;
+		color: #ff9143;
 		font-weight: 800;
+		margin-top: 10px;
 		.info-detail{
 			width: auto;
+			margin-right: 5px;
 		}
 		.icon-time{
 			width: 22px;
 			height: 22px;
 			margin-bottom: 3px;
+			margin-right: 5px;
 		}
 	}
 	
@@ -135,6 +154,7 @@
 			width: 20%;
 			text-align: left;
 			padding-left: 10px;
+			color: #ff9143;
 		}
 		.percent{
 			float: left;
@@ -147,14 +167,19 @@
 			border-radius: 5px;
 			box-shadow: 0 0 10px #000 inset;
 			overflow: hidden;
+			margin-bottom: 10px;
 			.percent-in{
 				position: absolute;
 				height: 6px;
 				width: 30%;
 				border-radius: 3px;
 				background: linear-gradient(to right, #e7ac5f , #e76536);
+				&.finish{
+					background: linear-gradient(to right, #999 , #ddd);
+				}
 			}
 		}
+		
 		.button-holder{
 			margin-top: 20px;
 			margin-bottom: 20px;
