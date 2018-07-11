@@ -47,11 +47,19 @@
 
 	li {
 		list-style-type: initial;
+		.highlight {
+			background: unset;
+			color: unset;
+			filter: brightness(1.36);
+		}
 	}
 
 	.input-group {
 		height: 3.3334em !important;
 	}
 
+	.error-wrapper {
+		margin-top: 1em;
+	}
 	
 }

@@ -19,6 +19,9 @@ import { Colors } from "components/Common/Colors";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import { BigNumber } from "bignumber.js";
 import { NotificationActions } from "actions//NotificationActions";
+import * as moment from "moment";
+import ReactTooltip from "react-tooltip";
+import ErrorTipBox from "components/Utility/ErrorTipBox";
 
 let Join = class extends React.Component<
   any,
@@ -42,6 +45,10 @@ let Join = class extends React.Component<
   static propTypes = {
     currentAccount: ChainTypes.ChainAccount
   };
+
+  // static defaultProps = {
+  //   currentAccount: Map({})
+  // };
 
   nestedRef;
 
@@ -80,6 +87,7 @@ let Join = class extends React.Component<
   }
 
   updateProject = () => {
+    if (!this.props.currentAccount || !this.props.currentAccount.get) return;
     let data = {
       project: this.props.params.id,
       cybex_name: this.props.currentAccount.get("name")
@@ -446,7 +454,7 @@ let Join = class extends React.Component<
         .indexOf(".") === -1;
     console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
-    const avail = base_max_quota - current_user_count;
+    const avail = base_max_quota - base_received;
     const isOverflow = amountValue > avail;
     const isSendNotValid =
       !isAmountValid ||
@@ -489,9 +497,7 @@ let Join = class extends React.Component<
               content="ieo.current_state"
               component="section"
               used={base_received + " " + base_token_name}
-              avail={
-                base_max_quota - base_received + " " + base_token_name
-              }
+              avail={base_max_quota - base_received + " " + base_token_name}
             />
           </div>
           <div className="content-block transfer-input">
@@ -503,21 +509,30 @@ let Join = class extends React.Component<
               assets={[crowd_asset && crowd_asset.get("id")]}
               display_balance={balance}
             />
-            {this.state.balanceError && (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="transfer.errors.insufficient" />
-              </p>
-            )}
-            {!!intTimeError && (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="ieo.int_times" />
-              </p>
-            )}
-            {!!isOverflow && (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="ieo.warning_overflow" />
-              </p>
-            )}
+            <ErrorTipBox
+              isI18n={true}
+              tips={[
+                {
+                  name: "insufficient",
+                  isError: this.state.balanceError,
+                  isI18n: true,
+                  message: "transfer.errors.insufficient"
+                },
+                {
+                  name: "int_times",
+                  isError: intTimeError,
+                  isI18n: true,
+                  message: "ieo.int_times"
+                },
+                {
+                  name: "isOverflow",
+                  isError: isOverflow,
+                  isI18n: true,
+                  message: "ieo.warning_overflow"
+                }
+              ]}
+              muiltTips={false}
+            />
           </div>
           {/*  F E E   */}
           <div
@@ -578,12 +593,32 @@ let Join = class extends React.Component<
             component="li"
             asset={base_token_name}
           />
-          <Translate
-            content="ieo.complete_tip"
-            component="li"
-            end_time={end_at}
-            account={currentAccount && currentAccount.get("name")}
-          />
+          <li>
+            <Translate
+              content="ieo.complete_tip_1"
+              account={currentAccount && currentAccount.get("name")}
+            />
+            <span
+              className="highlight tooltip"
+              data-for="time"
+              data-offset="{ 'left': -50 }"
+              data-tip
+              data-place="top"
+            >
+              {moment.utc(end_at).format("YYYY-MM-DD HH:mm:ss")}
+            </span>
+            <ReactTooltip id="time" effect="solid">
+              <Translate content="ieo.local_time" />：
+              {moment
+                .utc(end_at)
+                .toDate()
+                .toString()}
+            </ReactTooltip>
+            <Translate
+              content="ieo.complete_tip_2"
+              account={currentAccount && currentAccount.get("name")}
+            />
+          </li>
           <Translate content="ieo.overflow" unsafe component="li" />
           <Translate content="ieo.be_patient" component="li" />
         </ul>

@@ -1875,8 +1875,11 @@
     "cybex_in":
       "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
     "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
-    "complete_tip":
-      "该项目众筹完成后，对应项目资产将于%(end_time)s发送至您的帐号(%(account)s)中",
+    "complete_tip_1":
+      "该项目众筹完成后，对应项目资产将于格林尼治时间",
+    "complete_tip_2":
+      "发送至您的帐号(%(account)s)中",
+    "local_time": "即本机时间",
     "int_times": "众筹参与金额需为最小认购单位的整数倍",
     "warning_overflow": "本次认购金额需小于剩余可认购额度",
     "overflow":
