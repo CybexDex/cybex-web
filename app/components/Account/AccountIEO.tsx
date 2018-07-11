@@ -54,7 +54,16 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                 />
               )}
               {error && JSON.stringify(error)}
-              {/* {loading && <LoadingIndicator type="circle" />} */}
+              {loading && (
+                <div className="text-center">
+                  <span>
+                    <LoadingIndicator
+                      type="circle"
+                      style={{ display: "inline-block" }}
+                    />
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </Fetch>
