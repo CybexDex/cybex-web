@@ -95,3 +95,13 @@ export function fetchKYC(data, cb) {
     data: data
   });
 }
+export function fetchUserProjectStatus(data, cb) {
+  fetchJson({
+    url: "/cybex/user/status",
+    type: "GET",
+    success: res => {
+      cb(res);
+    },
+    data: data
+  });
+}
