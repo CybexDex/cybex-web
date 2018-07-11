@@ -15,6 +15,7 @@ let Table = class extends React.Component<
       Cell?: (row: any) => any;
       [p: string]: any;
     }[];
+    noDataText?: string,
     [p: string]: any;
   },
   {}

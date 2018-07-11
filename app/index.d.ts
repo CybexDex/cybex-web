@@ -16,7 +16,7 @@ declare namespace IEO {
     id: string;
     ieo_status: string;
     trade_num: 0; //block里面的第几个index
-    token_count: 3;
+    token_count: number;
     reason: string;
   };
   type ProjectDetail = {
