@@ -17,6 +17,7 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
               {data && (
                 <Table
                   data={data.result.data}
+                  loading={loading}
                   noDataText={counterpart.translate("ieo.records.no_data")}
                   columns={[
                     {
@@ -53,7 +54,7 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                 />
               )}
               {error && JSON.stringify(error)}
-              {loading && <LoadingIndicator type="circle" />}
+              {/* {loading && <LoadingIndicator type="circle" />} */}
             </div>
           )}
         </Fetch>

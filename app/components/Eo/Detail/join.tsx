@@ -381,6 +381,8 @@ let Join = class extends React.Component<
       end_at,
       base_token
     } = data;
+    const statusData = this.state.personalStatus || {};
+    const { base_received } = statusData;
 
     let { currentAccount } = this.props;
     let {
@@ -486,9 +488,9 @@ let Join = class extends React.Component<
             <Translate
               content="ieo.current_state"
               component="section"
-              used={current_user_count + " " + base_token_name}
+              used={base_received + " " + base_token_name}
               avail={
-                base_max_quota - current_user_count + " " + base_token_name
+                base_max_quota - base_received + " " + base_token_name
               }
             />
           </div>
