@@ -19,6 +19,7 @@ import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import moment from "moment";
+import * as humanize from "humanize-duration";
 import Swiper from 'react-id-swiper';
 import Icon from "../Icon/Icon";
 import './swiper.scss';
@@ -94,7 +95,9 @@ class EO extends React.Component<any, any> {
     }
     
   }
-
+  formatTime(input){
+    return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD hh:mm:ss');
+  }
   render() {
 
     const data = this.state.data || [];
@@ -104,10 +107,10 @@ class EO extends React.Component<any, any> {
       autoplay: {
         delay: 2500
       },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      }
+      // pagination: {
+      //   el: '.swiper-pagination',
+      //   clickable: true,
+      // }
     };
     
     // overflow: hidden;
@@ -169,35 +172,66 @@ class EO extends React.Component<any, any> {
       {f.map((e,i)=>{
         let percent = e.current_percent*100;
         percent = percent.toFixed(2);
-        let showPercent = `${percent>100?100:percent}%`;
+        let showPercent = `${percent>99?99:(percent<2?(percent==0?0:2):percent)}%`;
+        let end_at = this.formatTime(e.end_at);
+        let start_at = this.formatTime(e.start_at);
+        let created_at = this.formatTime(e.created_at);
+        let finish_at = this.formatTime(e.finish_at);
         // let endAt = moment(e.end_at);
         // let now = moment();
         // let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
-
-        let countDownTime = moment(e.end_at).valueOf() - moment().valueOf();
-        let endAt = moment(e.end_at);
-        let startAt = moment(e.start_at);
-        let finishAt = moment(e.finish_at);
+        
+        let countDownTime = moment(end_at).valueOf() - moment().valueOf();
+        let endAt = moment(end_at);
+        let startAt = moment(start_at);
+        let finishAt = moment(finish_at);
+        let createAt = moment(created_at);
         let now = moment();
         // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
         let remainStr;
         let projectStatus;
+
+        const shortEnglishHumanizer = humanize.humanizer({
+          language: 'shortEn',
+          units: ['d', 'h', 'm'],
+          unitMeasures: {
+            y: 365 * 86400000,
+            mo: 30 * 86400000,
+            w: 7 * 86400000,
+            d: 86400000,
+            h: 3600000,
+            m: 60000,
+            s: 1000
+          },
+          round: true,
+          languages: {
+            shortEn: {
+              y: function() { return '年' },
+              mo: function() { return '月' },
+              d: function() { return '天' },
+              h: function() { return '小时' },
+              m: function() { return '分钟' },
+              s: function() { return '秒' }
+            }
+          }
+        })
+        console.log(endAt)
         switch(e.status){
           case 'pre':
           countDownTime = moment(startAt).valueOf() - moment().valueOf();
-          remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
+          remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(/[\,]/g,'');
           break;
           case 'finish':
-          countDownTime = moment(finishAt).valueOf();
-          remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
+          countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
+          remainStr = shortEnglishHumanizer(endAt.diff(startAt)).replace(/[\,]/g,'');
           break;
           case 'ok':
           countDownTime = moment(endAt).valueOf() - moment().valueOf();
-          remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
+          remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g,'');
           break;
           case 'fail':
           countDownTime = moment(finishAt).valueOf();
-          remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
+          remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(/[\,]/g,'');
           break;
           default:
         }
@@ -207,7 +241,7 @@ class EO extends React.Component<any, any> {
               <div className="pin coming-soon" key={i}>
                 <div className="info-holder">
                 <div className="text-holder">
-                <h3>coming soon</h3>
+                <h3>COMING SOON</h3>
                 <p>即将上线...</p>
                 </div>
                 </div>
@@ -230,15 +264,15 @@ class EO extends React.Component<any, any> {
                 }
               >{e.name}</span><span>
               {e.status == 'ok'? (
-                <p className="status-label">[ <Translate content="EIO.ok" />... ]</p>
+                <p className="status-label ok">[ <Translate content="EIO.ok" />... ]</p>
               ):(
                 (e.status == 'pre')? (
-                  <p className="status-label">[ <Translate content="EIO.pre" /> ]</p>
+                  <p className="status-label pre">[ <Translate content="EIO.pre" /> ]</p>
                 ):(
                   e.status == 'finish'? (
-                    <p className="status-label">[ <Translate content="EIO.finish" /> ]</p>
+                    <p className="status-label finish">[ <Translate content="EIO.finish" /> ]</p>
                   ):(
-                    <p className="status-label">[ <Translate content="EIO.pause" /> ]</p>
+                    <p className="status-label finish">[ <Translate content="EIO.pause" /> ]</p>
                   )
                 )
               )}
@@ -302,7 +336,7 @@ class EO extends React.Component<any, any> {
                   <div className="info-item">
                   <div>
                     <div className="percent">
-                      <div className="percent-in" style={{width: showPercent}}></div>
+                      <div className={`percent-in ${e.status}`} style={{width: showPercent}}></div>
                       {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
                     </div>
                     <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div>
@@ -312,7 +346,23 @@ class EO extends React.Component<any, any> {
                 {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
                   <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
                 ):null}
-                <p className="raised"><Icon name="time" />{remainStr}</p>
+                <p className={`raised ${e.status}`}><Icon name="time" />
+                {e.status == 'ok'? (
+                  <span className={`sub-time ${e.status}`}> 剩余 </span>
+                ):(
+                  (e.status == 'pre')? (
+                    <span className={`sub-time ${e.status}`}> 距离开始 </span>
+                  ):(
+                    e.status == 'finish'? (
+                      <span className={`sub-time ${e.status}`}> 完成时间 </span>
+                    ):(
+                      <span className={`sub-time ${e.status}`}> 完成时间 </span>
+                    )
+                  )
+                )}
+                <span>{remainStr}</span>
+                
+                </p>
                 </div>
               </div>
               </div>
