@@ -30,8 +30,16 @@ class Training extends React.Component<any, any> {
     return (
       <div className="training">
           <div className="title-container">
+          <div className="trangle-holder left">
+          <div className="trangle"></div>
+          </div>
           <h2 className="base-title">
+          如果您需要参与Cybex的IEO项目，<br />
+请先进行KYC认证和账号绑定。
           </h2>
+          <div className="trangle-holder right">
+          <div className="trangle"></div>
+          </div>
           {/* <div className="kyc-btn button primery-button">
           </div> */}
         </div>
