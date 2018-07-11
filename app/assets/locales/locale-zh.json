@@ -560,7 +560,7 @@
       "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
     "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。",
     "vested": "锁定期资产",
-    "crowdfund": "众筹"
+    "crowdfund": "众筹项目记录"
   },
   "transfer": {
     "from": "来自",

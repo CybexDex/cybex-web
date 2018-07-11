@@ -58,6 +58,12 @@ let Button = class extends React.Component<ButtonProps, any> {
       },
       ":active": {
         background: Colors.$colorOrange
+      },
+      ":disabled": {
+        background: Colors.$colorGreyLightWhite,
+        cursor: "not-allowed",
+        color: Colors.$colorGreyLight,
+        opacity: "1"
       }
     },
     secondary: {

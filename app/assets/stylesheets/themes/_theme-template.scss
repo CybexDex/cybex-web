@@ -1367,6 +1367,14 @@
   .u-userLauncherColor:not([disabled]) {
     background-color: $success-color;
   }
+  .join-wrapper {
+    .highlight {
+      background: unset;
+      color: unset;
+      filter: brightness(1.36);
+      -webkit-filter: brightness(1.36);
+    }
+  }
 }
 
 .olDarkTheme .gate_fee .amount-selector {
