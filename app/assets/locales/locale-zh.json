@@ -133,6 +133,7 @@
     "Token_Name": "代币名称",
     "Total_Token_Supply": "代币总量",
     "IEO": "IEO",
+    "End_at": "结束时间",
     "Total_IEO_Supply": "IEO 总量",
     "Soft_cap": "软顶",
     "Time_remains": "剩余时间",
