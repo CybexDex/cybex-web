@@ -40,6 +40,7 @@ import CrowdFund from "components/CrowdFund/AccountCrowdFund";
 import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
 import { JadePool } from "services/GatewayConfig";
 import { isFootballAsset } from "qtb";
+import { AccountIEO } from "components/Account/AccountIEO";
 
 const sortFunctions = {
   alphabetic: function(a, b, force) {
@@ -1086,15 +1087,16 @@ let AccountOverview = class extends React.Component<any, any> {
                   </div>
                 </Tab>
               )}
-              {this.props.isMyAccount && (
+              {/* {this.props.isMyAccount && ( */}
                 <Tab title="account.crowdfund">
                   <div className="content-block">
                     <div className="generic-bordered-box">
-                      <CrowdFund account={account} />
+                      {/* <CrowdFund account={account} /> */}
+                      <AccountIEO account={account} />
                     </div>
                   </div>
                 </Tab>
-              )}
+              {/* )} */}
               {/* <Tab title="markets.title" subText={hiddenSubText}>
 
                             </Tab> */}

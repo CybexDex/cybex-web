@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import utils from "common/utils";
 import AccountImage from "../Account/AccountImage";
