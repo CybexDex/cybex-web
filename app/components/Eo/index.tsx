@@ -185,19 +185,19 @@ class EO extends React.Component<any, any> {
         switch(e.status){
           case 'pre':
           countDownTime = moment(startAt).valueOf() - moment().valueOf();
-          remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
           break;
           case 'finish':
           countDownTime = moment(finishAt).valueOf();
-          remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
           break;
           case 'ok':
           countDownTime = moment(endAt).valueOf() - moment().valueOf();
-          remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
           break;
           case 'fail':
           countDownTime = moment(finishAt).valueOf();
-          remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+          remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 时 mm 分')}`
           break;
           default:
         }
@@ -217,7 +217,7 @@ class EO extends React.Component<any, any> {
             <div className="info-holder">
             <div className="top-holder">
               <img src={e.adds_logo||logo_demo} width={100} height={100} />
-              
+
               <h3 className="title"><span className="main-title-large"
                  style={
                   {
