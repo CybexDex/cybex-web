@@ -125,19 +125,19 @@ class Detail extends React.Component<any, any> {
       switch(res.result.status){
         case 'pre':
         countDownTime = moment(startAt).valueOf() - moment().valueOf();
-        remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        remainStr = `${startAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
         break;
         case 'finish':
         countDownTime = moment(finishAt).valueOf();
-        remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        remainStr = `${0-finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
         break;
         case 'ok':
         countDownTime = moment(endAt).valueOf() - moment().valueOf();
-        remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        remainStr = `${endAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
         break;
         case 'fail':
         countDownTime = moment(finishAt).valueOf();
-        remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh:mm')}`
+        remainStr = `${finishAt.diff(now,'days')} 天 ${moment(countDownTime).format('hh 小时 mm 分钟')}`
         break;
         default:
       }
@@ -173,8 +173,8 @@ class Detail extends React.Component<any, any> {
                 if(res.result.status == 'ok'){
                   return (
                     <Link to={`/ieo/join/${this.props.params.id}`}>
-                    <div className="button primery-button disabled ok">
-                    <Translate content="EIO.Reserve_Now" />
+                    <div className="button primery-button ok">
+                    <Translate content="EIO.Join_IEO_now" />
                     </div>
                     </Link>
                   )
@@ -423,6 +423,13 @@ class Detail extends React.Component<any, any> {
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
+          {end_at?(<div className="info-item">
+            <div className="info-title">
+            <Translate content="EIO.End_at" />: 
+            </div>
+            <div className="info-detail">{end_at}</div>
+          </div>):null}
+
           {adds_on_market_time?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Listing_Time" />: 
@@ -470,13 +477,13 @@ class Detail extends React.Component<any, any> {
             <div className="info-title">
             <Translate content="EIO.Official_Website" />: 
             </div>
-            <div className="info-detail"><Link to={adds_website}>{adds_website}</Link></div>
+            <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
           </div>):null}
           {whitepaper?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Whitepaper" />: 
             </div>
-            <div className="info-detail"><Link to={whitepaper}>{whitepaper}</Link></div>
+            <div className="info-detail"><a href={whitepaper} target="_blank">{whitepaper}</a></div>
           </div>):null}
           
           {adds_detail?(<div className="info-item">

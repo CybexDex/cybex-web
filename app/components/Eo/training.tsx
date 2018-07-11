@@ -44,15 +44,15 @@ class Training extends React.Component<any, any> {
               <span>
             打开ICOAPE的网站并进行邮箱注册。</span>
 
-            <span className="spetial"><Link to="https://www.icoape.com/">https://www.icoape.com/</Link></span>
+            <span className="spetial"><a href="https://www.icoape.com/" target="_blank">https://www.icoape.com/</a></span>
             </p>
             </div>
             <div className="right-pointer"></div>
             <div className="bottom-pointer"></div>
             </div>
           </div>
-          <div className="right-top">456</div>
-          <div className="right-bottom">456</div>
+          <div className="right-top"><img src={require('../../assets/trainings/1.png')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/2.png')} /></div>
         </div>
         <div className="gap"><div className="dashed-border"></div></div>
         <div className="container">
@@ -68,8 +68,8 @@ class Training extends React.Component<any, any> {
             <div className="bottom-pointer"></div>
             </div>
           </div>
-          <div className="right-top">456</div>
-          <div className="right-bottom">456</div>
+          <div className="right-top"><img src={require('../../assets/trainings/3.png')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/4.png')} /></div>
         </div>
         <div className="gap"><div className="dashed-border"></div></div>
         <div className="container">
@@ -85,51 +85,62 @@ class Training extends React.Component<any, any> {
             <div className="bottom-pointer"></div>
             </div>
           </div>
-          <div className="right-top">456</div>
-          <div className="right-bottom">456</div>
+          <div className="right-top"><img src={require('../../assets/trainings/5.png')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/6.png')} /></div>
         </div>
         <div className="gap"><div className="dashed-border"></div></div>
-        <div className="container-large">
-          <div className="Combined-Shape">
-          <div className="content">
-            <div className="steps">
-              <img src={require('../../assets/step/step4.png')} />
-              <p className="step-info">
-              <span>提交成功KYC资料后，我们会对您提交的资料进行审核。审核结果会在3-7个工作日内以邮件形式发送给您。</span><br />
 
-<span className="spectial">注意：如果您的资料错误，请重新登录ICOAPE账号重新提交，我们会再次进行审核。</span>
-            </p>
-            </div>
-            <div className="right-pointer"></div>
-            <div className="bottom-pointer"></div>
-            </div>
-          </div>
-          <div className="right-top">456</div>
-          <div className="right-middle">456</div>
-          <div className="right-bottom">456</div>
-        </div>
-        <div className="gap">
-          <div className="dashed-border"></div>
-        </div>
+        
+
         <div className="container">
           <div className="Combined-Shape">
           <div className="content">
             <div className="steps">
-              <img src={require('../../assets/step/step5.png')} />
+              <img src={require('../../assets/step/step4.png')} />
             </div>
             <p className="step-info">
-            <span>成功通过审核后，恭喜您到了关联Cybex账号的最后步骤了！！
-请先确保您已注册了一个Cybex账号，登录ICOAPE，并将Cybex账号填入关联账号处。</span><br /><span className="spectial">
-同时，打开Cybex交易所https://dex.cybex.io/ 登录您的Cybex账号，在您的“账户名 – 活动记录”里将会收到一笔小额转账并附带一个验证码（verify code），将这个关键的verify code 填到ICOAPE的验证码处，就绑定成功啦！
-</span>
+            <span>提交成功KYC资料后，我们会对您提交的资料进行审核。审核结果会在3-7个工作日内以邮件形式发送给您。</span><br />
+
+<span className="spectial">注意：如果您的资料错误，请重新登录ICOAPE账号重新提交，我们会再次进行审核。</span>
+            
             </p>
             <div className="right-pointer"></div>
             <div className="bottom-pointer"></div>
             </div>
           </div>
-          <div className="right-top">456</div>
-          <div className="right-bottom">456</div>
+          <div className="right-top"><img src={require('../../assets/trainings/7.png')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/8.png')} /></div>
         </div>
+
+        <div className="gap">
+          <div className="dashed-border"></div>
+        </div>
+
+          <div className="container-large">
+          <div className="Combined-Shape">
+          <div className="content">
+            <div className="steps">
+              <img src={require('../../assets/step/step5.png')} />
+              <p className="step-info">
+              <span>成功通过审核后，恭喜您到了关联Cybex账号的最后步骤了！！
+请先确保您已注册了一个Cybex账号，登录ICOAPE，并将Cybex账号填入关联账号处。</span><br /><span className="spectial">
+同时，打开Cybex交易所<a href="https://dex.cybex.io/" target="_blank">https://dex.cybex.io/</a> 登录您的Cybex账号，在您的“账户名 – 活动记录”里将会收到一笔小额转账并附带一个验证码（verify code），将这个关键的verify code 填到ICOAPE的验证码处，就绑定成功啦！
+</span>
+            </p>
+            </div>
+            <div className="right-pointer"></div>
+            <div className="bottom-pointer"></div>
+            </div>
+          </div>
+          <div className="right-top"><img src={require('../../assets/trainings/9.png')} /></div>
+          <div className="right-middle"><img src={require('../../assets/trainings/10.png')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/11.png')} /></div>
+        </div>
+        
+        
+
+
+
         <div className="gap">
           <div className="dashed-border"></div>
         </div>
@@ -152,8 +163,8 @@ class Training extends React.Component<any, any> {
             <div className="right-pointer"></div>
             </div>
           </div>
-          <div className="right-top">456</div>
-          <div className="right-bottom">456</div>
+          <div className="right-top"><img src={require('../../assets/trainings/12.png')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/training12.jpg')} /></div>
         </div>
       </div>
     );
