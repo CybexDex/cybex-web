@@ -14,7 +14,7 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
           url={getTradeUrl(account.get("name"))}
         >
           {({ loading, error, data }) => (
-            <div>
+            <div className="cybex-records">
               {data && (
                 <Table
                   data={data.result.data}

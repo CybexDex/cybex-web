@@ -213,7 +213,7 @@ let GatewayRecords = class extends React.Component<
     let { fundRecords, isLocked } = this.props;
     let records = fundRecords.records || [];
     return (
-      <div className="gateway-records" style={{ position: "relative" }}>
+      <div className="cybex-records" style={{ position: "relative" }}>
         {/*<table
           className="table gateway-table dashboard-table"
           style={
