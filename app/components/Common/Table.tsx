@@ -16,6 +16,7 @@ let Table = class extends React.Component<
       [p: string]: any;
     }[];
     noDataText?: string,
+    loading?: boolean,
     [p: string]: any;
   },
   {}
