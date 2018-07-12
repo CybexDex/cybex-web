@@ -19,7 +19,7 @@ import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import moment from "moment";
-import * as humanize from "humanize-duration";
+import * as humanize from "./humanize.js";
 import Swiper from 'react-id-swiper';
 import Icon from "../Icon/Icon";
 import './swiper.scss';
@@ -81,16 +81,21 @@ class EO extends React.Component<any, any> {
         if(data.result.length < 4){
           showMore = 'none';
         }
-        let newDate = this.state.data;
-        newDate[this.state.offset/4] = data.result
-        this.setState({
-          offset: this.state.offset+4,
-          data: newDate,
-          showMore: showMore
-        }, ()=>{
-          this.canClick = true;
-        });
-
+        if(data.result.length>0){
+          let newDate = this.state.data;
+          newDate[this.state.offset/4] = data.result
+          this.setState({
+            offset: this.state.offset+4,
+            data: newDate,
+            showMore: showMore
+          }, ()=>{
+            this.canClick = true;
+          });
+        }else{
+          this.setState({
+            showMore: showMore
+          })
+        }
       });
     }
     
@@ -193,7 +198,7 @@ class EO extends React.Component<any, any> {
 
         const shortEnglishHumanizer = humanize.humanizer({
           language: 'shortEn',
-          units: ['d', 'h', 'm'],
+          units: ['mo', 'd', 'h', 'm'],
           unitMeasures: {
             y: 365 * 86400000,
             mo: 30 * 86400000,
@@ -297,9 +302,10 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_detail}</p>
+                }>{e.adds_advantage}</p>
                 </div>
               ):(
+                // <div className={`keyword-holder ${e.status}`}>
                 <h4 className="adds_keyword" style={
                   {
                     overflow: 'hidden', 
@@ -309,6 +315,7 @@ class EO extends React.Component<any, any> {
                     WebkitBoxOrient: 'vertical',
                   }
                 }>{e.adds_keyword}</h4>
+                // </div>
               )}
               </div>
               <div className="bottom-holder">
@@ -334,12 +341,12 @@ class EO extends React.Component<any, any> {
               <div className="percent-holder-out">
                 <div className="percent-holder">
                   <div className="info-item">
-                  <div>
+                  <div className="percent-holder-in">
                     <div className="percent">
                       <div className={`percent-in ${e.status}`} style={{width: showPercent}}></div>
                       {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
                     </div>
-                    <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div>
+                    <div className="info-text" style={{left: showPercent}}>{`${percent}%`}</div>
                   </div>
                   </div>
                 </div>
@@ -374,7 +381,7 @@ class EO extends React.Component<any, any> {
         )
       })}
       </div>
-        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>Load More</div>
+        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>加载更多</div>
       </div>
     );
   }
