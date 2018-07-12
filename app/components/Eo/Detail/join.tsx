@@ -40,6 +40,7 @@ let Join = class extends React.Component<
     projectData;
     personalStatus;
     balanceError;
+    isOpen;
   }
 > {
   static propTypes = {
@@ -69,7 +70,8 @@ let Join = class extends React.Component<
       balanceError: null,
       projectData: null,
       personalStatus: null,
-      memo: null
+      memo: null,
+      isOpen: true
     };
 
     this._updateFee = this._updateFee.bind(this);
@@ -108,7 +110,10 @@ let Join = class extends React.Component<
         })
       )
     ]).then(([projectData, personalStatus]) => {
-      this.setState({ projectData, personalStatus });
+      let isOpen = moment
+        .utc()
+        .isBefore(moment.utc((projectData as any).end_at));
+      this.setState({ projectData, personalStatus, isOpen });
     });
     this._updateFee();
   };
@@ -401,6 +406,7 @@ let Join = class extends React.Component<
       error,
       feeAsset,
       fee_asset_id,
+      isOpen,
       balanceError
     } = this.state;
 
@@ -465,7 +471,12 @@ let Join = class extends React.Component<
     return (
       <div
         className="join-wrapper"
-        style={{ margin: "auto", marginTop: "2rem", maxWidth: "48em" }}
+        style={{
+          margin: "auto",
+          marginTop: "2rem",
+          maxWidth: "48em",
+          position: "relative"
+        }}
       >
         <form
           style={{ paddingBottom: 20, overflow: "visible" }}
@@ -622,6 +633,25 @@ let Join = class extends React.Component<
           <Translate content="ieo.overflow" unsafe component="li" />
           <Translate content="ieo.be_patient" component="li" />
         </ul>
+        {!isOpen && (
+          <div
+            className="closed-mask"
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: Colors.$colorDark,
+              opacity: 0.8,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+              <Translate component="h4" content="ieo.closed_tip" project={name}/>
+          </div>
+        )}
       </div>
     );
   }
