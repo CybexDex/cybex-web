@@ -155,7 +155,6 @@ let App = class extends React.Component<any, any> {
     // Todo
     this.showBackupTip();
     this._rebuildTooltips();
-    ModalActions.showModal("EOS_RESTORE", true);
     
     let loadingMask = document.getElementById("globalLoading");
     if (loadingMask) {
