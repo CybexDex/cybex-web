@@ -7,7 +7,8 @@ var feathers = require("feathers");
 const https = require("https");
 const fs = require("fs");
 const expressproxy = require('express-http-proxy');
-let proxyUrl = 'http://106.14.159.224:3049/';
+let proxyUrl = 'https://ieo-apitest.nbltrust.com/';
+// https://ieo-apitest.nbltrust.com/api/cybex/projects?limit=4&offset=0
 
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
 var config = require("./config/webpack.dev.js");
