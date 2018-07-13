@@ -245,9 +245,9 @@ export class Nav extends React.PureComponent<
             key={getNavId('ieo')}
             id={getNavId('ieo')}
             hideIcon
-            linkTo='/ieo'
+            linkTo='/ieo/mock'
             onClick={(e) => {
-              this.context.router.push('/ieo');
+              this.context.router.push('/ieo/mock');
             }}
           />
         </div>
