@@ -148,7 +148,7 @@ formatTime(input){
       rate = "1ETH = 10万个NES",
       adds_token_total = "20亿，每年增发5%",
       adds_ico_total,
-      start_at = "2018年8月11日 11:50",
+      start_at = "2018年8月11日 11:00",
       end_at = null,
       up_at = "计划2018年11月，某知名交易所（投资方）",
       adds_on_market_time,
@@ -235,7 +235,7 @@ formatTime(input){
           <img className="icon-time" src={time} />
               <span className={`sub-time ${status}`}> 开始日期 </span>
           </div>
-          <div className="info-detail">8月11日 11点50分</div>
+          <div className="info-detail">8月11日 11点00分</div>
         </div>
         </div>
         <div className="right-part">
