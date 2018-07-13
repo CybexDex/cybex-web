@@ -384,28 +384,28 @@ formatTime(input){
         </div>):null}
         
         {current_base_token_count?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Raised" />:
           </div>
           <div className="info-detail">{current_base_token_count}{base_token_name}</div>
         </div>):null}
         
         {rate?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_max_quota}{base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
-          <div className="info-title">
+          <div className="info-title">
           <img className="icon-time" src={time} />
           {status == 'ok'? (
               <span className={`sub-time ${status}`}> 距离结束 </span>
@@ -445,7 +445,7 @@ formatTime(input){
           </h3>
           
           {name?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
               <Translate content="EIO.Project_Name" />: 
             </div>
             <div className="info-detail">{name}</div>
@@ -460,14 +460,14 @@ formatTime(input){
 
           
           {start_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.IEO_Period" />: 
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
           {end_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.End_at" />: 
             </div>
             <div className="info-detail">{end_at}</div>
