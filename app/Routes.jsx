@@ -272,7 +272,7 @@ const routes = (
       }}
     />
     <Route
-      path="ieo/mock"
+      path="ieo/genesis-space"
       getComponent={(location, cb) => {
         import("components/Eo/Detail/Mock")
           .then(loadRoute(cb))
