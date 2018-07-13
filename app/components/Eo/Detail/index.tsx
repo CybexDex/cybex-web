@@ -124,6 +124,7 @@ formatTime(input){
       res.result.start_at = this.formatTime(res.result.start_at);
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
+      res.result.offer_at =  this.formatTime(res.result.offer_at);
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
       let endAt = moment(res.result.end_at);
       let startAt = moment(res.result.start_at);
@@ -331,6 +332,7 @@ formatTime(input){
       current_percent,
       adds_banner,
       token,
+      adds_keyword
     } = data;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
