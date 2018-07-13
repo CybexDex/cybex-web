@@ -538,8 +538,8 @@ formatTime(input){
           
 
           <div className="button-holder">
-          {/* <Trigger open="ieo-detail-modal"> */}
-          {/* {this.state.kyc_status()} */}
+          <Trigger open="ieo-detail-modal"><div></div></Trigger>
+          {/* {this.state.kyc_status()}
           {
             (status == 'ok'||status == 'pre') ? (
                 this.state.reserve_status()
@@ -579,8 +579,8 @@ formatTime(input){
           
           
         </div>
-          {/* <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
-          </DetalModal> */}
+          <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
+          </DetalModal>
       </div>
     );
   }

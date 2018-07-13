@@ -172,7 +172,7 @@ class Training extends React.Component<any, any> {
             </div>
           </div>
           <div className="right-top"><img src={require('../../assets/trainings/12.png')} /></div>
-          <div className="right-bottom"><img src={require('../../assets/trainings/training12.jpg')} /></div>
+          <div className="right-bottom"><img src={require('../../assets/trainings/13.png')} /></div>
         </div>
       </div>
     );
