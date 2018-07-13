@@ -332,7 +332,10 @@ formatTime(input){
       current_percent,
       adds_banner,
       token,
+<<<<<<< HEAD
       adds_keyword
+=======
+>>>>>>> 0b6bf8ab7f0a1c70818e37d0d6163fe91fe02fb7
     } = data;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
