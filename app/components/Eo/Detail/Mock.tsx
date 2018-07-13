@@ -148,18 +148,18 @@ formatTime(input){
       rate = "1ETH = 10万个NES",
       adds_token_total = "20亿，每年增发5%",
       adds_ico_total,
-      start_at = "2018年8月11日 11:00",
+      start_at = "8月11日 11:00  (GMT +8, 新加坡时间）",
       end_at = null,
       up_at = "计划2018年11月，某知名交易所（投资方）",
       adds_on_market_time,
-      adds_advantage = "1. 融资额度超低 2. 第一轮融资 3. 团队solid 4. 代码进度良好 5.创始人是产品经理，之前有成功案例。",
+      adds_advantage = "Genesis有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性。一个侧链就是一个虚拟国，每个虚拟国可以有完全不同的治理机制，实现无限的可能性。 Genesis项目的代码进展状况良好，testnet预计年底前上线。另外，这次IEO的融资额度非常小，又是第一轮融资，相当于散户直接可以参与基石轮。",
       offer_at,
       base_token_count = "2000ETH",
       district_restriction,
-      base_token_name = "NES",
+      base_token_name = "ETH",
       adds_website = "thegenesis.space",
       whitepaper = "http://thegenesis.space/whitepapers/Genesis%20Space%20Whitepaper.pdf",
-      adds_detail = "Genesis有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性。一个侧链就是一个虚拟国，每个虚拟国可以有完全不同的治理机制，实现无限的可能性。 Genesis项目的代码进展状况良好，testnet预计年底前上线。另外，这次IEO的融资额度非常小，又是第一轮融资，相当于散户直接可以参与基石轮。",
+      adds_detail,
       current_percent = 0,
       adds_banner,
       token = "NES",
@@ -210,32 +210,32 @@ formatTime(input){
         </div>):null}
         
         {current_base_token_count?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Raised" />:
           </div>
           <div className="info-detail">{current_base_token_count}</div>
         </div>):null}
         
         {rate?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">{rate}</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_max_quota}个ETH</div>
         </div>):null}
         
         <div className="info-item large-time">
-          <div className="info-title">
+          <div className="info-title">
           <img className="icon-time" src={time} />
               <span className={`sub-time ${status}`}> 开始日期 </span>
           </div>
-          <div className="info-detail">8月11日 11点00分</div>
+          <div className="info-detail">8月11日 11:00 (GMT +8, 新加坡时间）</div>
         </div>
         </div>
         <div className="right-part">
@@ -259,14 +259,14 @@ formatTime(input){
           </h3>
           
           {token?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
               <Translate content="EIO.Token_Name" />: 
             </div>
             <div className="info-detail">{token}</div>
           </div>):null}
 
           {name?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
               <Translate content="EIO.Project_Name" />: 
             </div>
             <div className="info-detail">{name}</div>
@@ -280,35 +280,35 @@ formatTime(input){
           </div>):null}
           
           {base_hard_cap?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.Hard_cap" />: 
             </div>
             <div className="info-detail">{base_hard_cap}</div>
           </div>):null}
           
           {start_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.IEO_Period" />: 
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
           {end_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.End_at" />: 
             </div>
             <div className="info-detail">{end_at}</div>
           </div>):null}
 
           {up_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <span>上市时间</span>: 
             </div>
             <div className="info-detail">{up_at}</div>
           </div>):null}
 
           {base_soft_cap?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.Soft_cap" />: 
             </div>
             <div className="info-detail">{base_soft_cap}</div>
