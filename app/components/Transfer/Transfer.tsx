@@ -336,9 +336,9 @@ class Transfer extends React.Component<any, any> {
         TransactionConfirmStore.listen(this.onTrxIncluded);
       })
       .catch(e => {
-        let msg = e.message ? e.message.split("\n")[1] : null;
-        console.log("error: ", e, msg);
+        let msg = e.message ? e.message : e.toString();
         this.setState({ error: msg });
+        console.log("error: ", e, msg);
       });
   }
 

@@ -13,12 +13,14 @@ import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
 import Translate from "react-translate-component";
 import moment from "moment";
-import * as humanize from "humanize-duration";
+// import * as humanize from "humanize-duration";
+import * as humanize from "../humanize.js";
 import BindToChainState from "../../Utility/BindToChainState";
 import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
+import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
 
@@ -132,7 +134,7 @@ formatTime(input){
       let projectStatus;
       const shortEnglishHumanizer = humanize.humanizer({
         language: 'shortEn',
-        units: ['d', 'h', 'm'],
+        units: [ 'd', 'h', 'm'],
         unitMeasures: {
           y: 365 * 86400000,
           mo: 30 * 86400000,
@@ -327,7 +329,8 @@ formatTime(input){
       whitepaper,
       adds_detail,
       current_percent,
-      adds_banner
+      adds_banner,
+      token,
     } = data;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
@@ -385,7 +388,7 @@ formatTime(input){
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
-          <div className="info-detail">1{base_token_name}={rate}CC</div>
+          <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
