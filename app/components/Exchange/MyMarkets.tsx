@@ -41,7 +41,6 @@ const BTC_MARKETS = [
   "JADE.EOS",
   "JADE.INK",
   "JADE.BAT",
-  "JADE.VEN",
   "JADE.OMG",
   "JADE.SNT",
   "JADE.NAS",
