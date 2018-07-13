@@ -24,6 +24,7 @@ import "./detail.scss";
 import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
+let fockImg = require('assets/mockImg.png')
 
 class Detail extends React.Component<any, any> {
   // nestedRef;
@@ -122,182 +123,6 @@ formatTime(input){
       project: this.props.params.id
     }
 
-    fetchJson.fetchDetails(data,(res)=>{
-      res.result.end_at = this.formatTime(res.result.end_at);
-      res.result.start_at = this.formatTime(res.result.start_at);
-      res.result.created_at = this.formatTime(res.result.created_at);
-      res.result.finish_at = this.formatTime(res.result.finish_at);
-      res.result.offer_at =  this.formatTime(res.result.offer_at);
-      let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
-      let endAt = moment(res.result.end_at);
-      let startAt = moment(res.result.start_at);
-      let finishAt = moment(res.result.finish_at);
-      let now = moment();
-      // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
-      let remainStr;
-      let projectStatus;
-      const shortEnglishHumanizer = humanize.humanizer({
-        language: 'shortEn',
-        units: [ 'd', 'h', 'm'],
-        unitMeasures: {
-          y: 365 * 86400000,
-          mo: 30 * 86400000,
-          w: 7 * 86400000,
-          d: 86400000,
-          h: 3600000,
-          m: 60000,
-          s: 1000
-        },
-        round: true,
-        languages: {
-          shortEn: {
-            y: function() { return '年' },
-            mo: function() { return '月' },
-            d: function() { return '天' },
-            h: function() { return '小时' },
-            m: function() { return '分钟' },
-            s: function() { return '秒' }
-          }
-        }
-      })
-      switch(res.result.status){
-        case 'pre':
-        countDownTime = moment(startAt).valueOf() - moment().valueOf();
-        remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(/[\,]/g,'');
-        break;
-        case 'finish':
-        countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
-        remainStr = shortEnglishHumanizer(endAt.diff(startAt)).replace(/[\,]/g,'');
-        break;
-        case 'ok':
-        countDownTime = moment(endAt).valueOf() - moment().valueOf();
-        remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g,'');
-        break;
-        case 'fail':
-        countDownTime = moment(finishAt).valueOf();
-        remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(/[\,]/g,'');
-        break;
-        default:
-      }
-
-      this.setState({
-        countDownTime,
-        data: res.result,
-        remainStr
-      }, ()=>{
-        // setInterval(()=>{
-        //   this.setState({
-        //     countDownTime: (this.state.countDownTime>1000)?(this.state.countDownTime-1000): 0
-        //   })
-        // },1000)
-
-        
-      });
-      if(!this.props.myAccounts[0]){
-        this.setState({kyc_status: ()=>{
-          return (
-            <Link to={`/login`}>
-            <div className="button primery-button">
-            <Translate content="EIO.Reserve_Now" />
-            </div>
-            </Link>
-          )
-        }});
-      }else{
-        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.params.id}, (res2)=>{
-          switch(res2.result.status){
-            case 'ok':
-              this.setState({reserve_status:()=>{
-                if(res.result.status == 'ok'){
-                  return (
-                    <Link to={`/ieo/join/${this.props.params.id}`}>
-                    <div className="button primery-button ok">
-                    <Translate content="EIO.Join_IEO_now" />
-                    </div>
-                    </Link>
-                  )
-                }else if(res.result.status == 'pre'){
-                  return (
-                    <div className="button primery-button disabled pre">
-                      等待众筹开始
-                    </div>
-                  )
-                }
-              }})
-            break;
-            case 'waiting':
-              this.setState({reserve_status:()=>{
-                return (
-                  <div className="button primery-button disabled waiting">
-                    审核中
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                )
-              }})
-            break;
-            case 'reject':
-              this.setState({reserve_status:()=>{
-                return (
-                  <div>
-                  <div className="button primery-button disabled reject">
-                    预约失败
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                  <p>{res2.result.reason}</p>
-                  </div>
-                )
-              }})
-            break;
-            case 'pending':
-              this.setState({reserve_status:()=>{
-                return (
-                  <div className="button primery-button disabled waiting">
-                    审核中
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                )
-              }})
-            break;
-            default:
-            this.setState({reserve_status:()=>{
-              if(res2.result.kyc_status == 'ok'){
-                return (
-                  <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
-                    立即预约
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                )
-              }else{
-                return(
-                  <div className="button primery-button disabled can-not-reserve">
-                    立即预约
-                  {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                )
-              }
-              
-            }})
-          }
-          if(res2.result.kyc_status=='ok'){
-            this.setState({kyc_status:()=>null})
-          }else{
-            this.setState({kyc_status:()=>{
-              return (
-                <div className="kyc-btn-holder">
-                  <Link to="/ieo/training">
-                  <div className="kyc-btn button primery-button">
-                    <Translate content="EIO.Accept_KYC_Verification" />
-                  </div>
-                  </Link>
-                </div>
-              )
-            }})
-          }
-        });
-        // res.result.kyc_status = 'ok'
-        
-      }
-    });
   }
   kycNotPass() {
     alert('Kyc Not Passed')
@@ -311,33 +136,34 @@ formatTime(input){
 
   render() {
     const data = this.state.data || {}
-    const {
-      name, 
-      status,
+    let
+      name = null, 
+      status = "pre",
+      base_soft_cap = null,
+      base_hard_cap = "2000ETH",
       current_user_count,
       current_base_token_count,
-      base_max_quota,
+      base_max_quota = "2",
       base_min_quota,
-      rate,
-      adds_token_total,
+      rate = "1ETH = 10万个NES",
+      adds_token_total = "20亿，每年增发5%",
       adds_ico_total,
-      start_at,
-      end_at,
+      start_at = "2018年8月11日 11:50",
+      end_at = null,
+      up_at = "计划2018年11月，某知名交易所（投资方）",
       adds_on_market_time,
-      adds_advantage,
+      adds_advantage = "1. 融资额度超低 2. 第一轮融资 3. 团队solid 4. 代码进度良好 5.创始人是产品经理，之前有成功案例。",
       offer_at,
-      base_token_count,
+      base_token_count = "2000ETH",
       district_restriction,
-      base_token_name,
-      adds_website,
-      whitepaper,
-      adds_detail,
-      current_percent,
+      base_token_name = "NES",
+      adds_website = "thegenesis.space",
+      whitepaper = "http://thegenesis.space/whitepapers/Genesis%20Space%20Whitepaper.pdf",
+      adds_detail = "Genesis有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性。一个侧链就是一个虚拟国，每个虚拟国可以有完全不同的治理机制，实现无限的可能性。 Genesis项目的代码进展状况良好，testnet预计年底前上线。另外，这次IEO的融资额度非常小，又是第一轮融资，相当于散户直接可以参与基石轮。",
+      current_percent = 0,
       adds_banner,
-      token,
-      adds_keyword
-    } = data;
-
+      token = "NES",
+      adds_keyword;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
     // let showPercent = `${percent>100?100:percent}%`;
@@ -361,7 +187,7 @@ formatTime(input){
     return (
       <div className="detail">
         <div className="left-part">
-        <img src={adds_banner} />
+        <img src={fockImg} />
         {percent?(<div className="info-item">
           <div className="percent">
             <div className={`percent-in ${status}`} style={{width: showPercent}}></div>
@@ -387,47 +213,35 @@ formatTime(input){
           <div className="info-title">
             <Translate content="EIO.Raised" />:
           </div>
-          <div className="info-detail">{current_base_token_count}{base_token_name}</div>
+          <div className="info-detail">{current_base_token_count}</div>
         </div>):null}
         
         {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
-          <div className="info-detail">1{base_token_name}={rate}{token}</div>
+          <div className="info-detail">{rate}</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
-          <div className="info-detail">{base_max_quota}{base_token_name}</div>
+          <div className="info-detail">{base_max_quota}个ETH</div>
         </div>):null}
         
-        {remainStr?(<div className="info-item large-time">
+        <div className="info-item large-time">
           <div className="info-title">
           <img className="icon-time" src={time} />
-          {status == 'ok'? (
-              <span className={`sub-time ${status}`}> 距离结束 </span>
-            ):(
-              (status == 'pre')? (
-                <span className={`sub-time ${status}`}> 距离开始 </span>
-              ):(
-                status == 'finish'? (
-                  <span className={`sub-time ${status}`}> 完成时间 </span>
-                ):(
-                  <span className={`sub-time ${status}`}> 完成时间 </span>
-                )
-              )
-            )}
+              <span className={`sub-time ${status}`}> 开始日期 </span>
           </div>
-          <div className="info-detail">{remainStr}</div>
-        </div>):null}
+          <div className="info-detail">8月11日 11点50分</div>
+        </div>
         </div>
         <div className="right-part">
           <h3 className="title">
             <span className="main">
-              <Translate content="EIO.Project_Details" />
+            Genesis Space
             </span>
             {status == 'ok'? (
               <span className="sub ok">[ <Translate content="EIO.ok" />...]</span>
@@ -444,6 +258,13 @@ formatTime(input){
             )}
           </h3>
           
+          {token?(<div className="info-item">
+            <div className="info-title">
+              <Translate content="EIO.Token_Name" />: 
+            </div>
+            <div className="info-detail">{token}</div>
+          </div>):null}
+
           {name?(<div className="info-item">
             <div className="info-title">
               <Translate content="EIO.Project_Name" />: 
@@ -455,9 +276,15 @@ formatTime(input){
             <div className="info-title">
               <Translate content="EIO.Total_Token_Supply" />: 
             </div>
-            <div className="info-detail">{numeral(adds_token_total).format('0,0.[0000000000]')}个</div>
+            <div className="info-detail">{adds_token_total}</div>
           </div>):null}
-
+          
+          {base_hard_cap?(<div className="info-item">
+            <div className="info-title">
+            <Translate content="EIO.Hard_cap" />: 
+            </div>
+            <div className="info-detail">{base_hard_cap}</div>
+          </div>):null}
           
           {start_at?(<div className="info-item">
             <div className="info-title">
@@ -473,6 +300,22 @@ formatTime(input){
             <div className="info-detail">{end_at}</div>
           </div>):null}
 
+          {up_at?(<div className="info-item">
+            <div className="info-title">
+            <span>上市时间</span>: 
+            </div>
+            <div className="info-detail">{up_at}</div>
+          </div>):null}
+
+          {base_soft_cap?(<div className="info-item">
+            <div className="info-title">
+            <Translate content="EIO.Soft_cap" />: 
+            </div>
+            <div className="info-detail">{base_soft_cap}</div>
+          </div>):null}
+
+          
+
           {adds_on_market_time?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Listing_Time" />: 
@@ -486,6 +329,13 @@ formatTime(input){
             </div>
             <div className="info-detail">{adds_advantage}</div>
           </div>):null}
+
+          {adds_detail?(<div className="info-item">
+            <div className="info-title">
+            <Translate content="EIO.Project_Details" />: 
+            </div>
+            <div className="info-detail">{adds_detail}</div>
+          </div>):null}
           
           {offer_at?(<div className="info-item">
             <div className="info-title">
@@ -498,7 +348,7 @@ formatTime(input){
             <div className="info-title">
             <Translate content="EIO.IEO_Quota" />: 
             </div>
-            <div className="info-detail">{base_token_count}{base_token_name}</div>
+            <div className="info-detail">{base_token_count}</div>
           </div>):null}
           
           {district_restriction?(<div className="info-item">
@@ -529,27 +379,21 @@ formatTime(input){
             <div className="info-detail"><a href={whitepaper} target="_blank">{whitepaper}</a></div>
           </div>):null}
           
-          {adds_detail?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Project_Details" />: 
-            </div>
-            <div className="info-detail">{adds_detail}</div>
-          </div>):null}
+          
           
 
           <div className="button-holder">
-          <Trigger open="ieo-detail-modal"><div></div></Trigger>
-          {/* {this.state.kyc_status()}
-          {
-            (status == 'ok'||status == 'pre') ? (
-                this.state.reserve_status()
-            ):null 
-          }
-          {
-            (status == 'ok'||status == 'pre') ? (
-              this.state.kyc_status()
-             ):null 
-          }
+          <div className="button primery-button disabled pre">
+                      等待众筹开始
+                    </div>
+          
+                    <div className="kyc-btn-holder">
+                  <Link to="/ieo/training">
+                  <div className="kyc-btn button primery-button">
+                    <Translate content="EIO.Accept_KYC_Verification" />
+                  </div>
+                  </Link>
+                </div>
             
           {/* {this.state.kyc_status == "not-login"? (
             <Link to={`/login`}>
@@ -579,8 +423,8 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
-          </DetalModal>
+          {/* <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
+          </DetalModal> */}
       </div>
     );
   }

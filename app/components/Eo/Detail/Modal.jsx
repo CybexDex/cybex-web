@@ -8,6 +8,7 @@ import foundationApi from "react-foundation-apps/src/utils/foundation-api";
 // import Button from "../../Common/Button";
 import BindToChainState from "../../Utility/BindToChainState";
 import AccountInfo from "../../Account/AccountInfo";
+import { Button } from "components/Common/Button";
 // import AccountStore from "../../../stores/AccountStore";
 import AccountStore from "stores/AccountStore";
 import { connect } from "alt-react";
@@ -47,6 +48,9 @@ export class BaseModal extends React.Component {
   cao = () => {
     foundationApi.publish(this.props.id, "close");
   }
+  submit() {
+    
+  }
   render() {
     // let { fade, overlay, noCloseBtn, overlayClose } = this.props;
     // let { fadeOut, isShow } = this.state;
@@ -65,8 +69,9 @@ export class BaseModal extends React.Component {
             <p>jkaslkdfk sadfkklsdafjs sadfasdfsadfdsa</p>
           </div>
           {/* <div className="input-item"> */}
-          {/* <input type="text" className="enter-info" placeholder="please enter" /> */}
-          <button className="confirm detail-modal-btn" disabled>Confirm</button>
+          <input type="text" className="enter-info" ref="codeInput" placeholder="please enter" />
+          
+          <button className="confirm detail-modal-btn" onClick={this.submit.bind(this)} disabled>Confirm</button>
           <div className="divider"></div>
           <button className="cancel detail-modal-btn" onClick={this.cao}>Cancel</button>
           {/* <p className="error-msg">21312321</p>
