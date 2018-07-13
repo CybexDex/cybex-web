@@ -230,13 +230,13 @@ formatTime(input){
           <div className="info-detail">{base_max_quota}个ETH</div>
         </div>):null}
         
-        {remainStr?(<div className="info-item large-time">
+        <div className="info-item large-time">
           <div className="info-title">
           <img className="icon-time" src={time} />
               <span className={`sub-time ${status}`}> 开始日期 </span>
           </div>
-          <div className="info-detail">8月11日 11点50</div>
-        </div>):null}
+          <div className="info-detail">8月11日 11点50分</div>
+        </div>
         </div>
         <div className="right-part">
           <h3 className="title">
