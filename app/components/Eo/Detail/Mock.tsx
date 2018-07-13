@@ -370,7 +370,7 @@ formatTime(input){
             <div className="info-title">
             <Translate content="EIO.Official_Website" />: 
             </div>
-            <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
+            <div className="info-detail"><a href="http://thegenesis.space" target="_blank">{adds_website}</a></div>
           </div>):null}
           {whitepaper?(<div className="info-item">
             <div className="info-title">
