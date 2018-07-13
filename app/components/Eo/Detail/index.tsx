@@ -332,10 +332,7 @@ formatTime(input){
       current_percent,
       adds_banner,
       token,
-<<<<<<< HEAD
       adds_keyword
-=======
->>>>>>> 0b6bf8ab7f0a1c70818e37d0d6163fe91fe02fb7
     } = data;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
@@ -454,7 +451,7 @@ formatTime(input){
             <div className="info-title">
               <Translate content="EIO.Total_Token_Supply" />: 
             </div>
-            <div className="info-detail">{adds_token_total/100000000}亿个</div>
+            <div className="info-detail">{adds_token_total}</div>
           </div>):null}
 
           
