@@ -74,7 +74,7 @@ const prodPlugins = plugins.concat([
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    filename: "[name].css",
+    filename: "[name]-[hash:7].css",
     chunkFilename: "[id].css"
   })
   // new webpack.LoaderOptionsPlugin({
