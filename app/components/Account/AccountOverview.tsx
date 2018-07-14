@@ -1088,14 +1088,14 @@ let AccountOverview = class extends React.Component<any, any> {
                 </Tab>
               )}
               {/* {this.props.isMyAccount && ( */}
-                <Tab title="account.crowdfund">
+                {/* <Tab title="account.crowdfund">
                   <div className="content-block">
-                    <div className="generic-bordered-box">
+                    <div className="generic-bordered-box"> */}
                       {/* <CrowdFund account={account} /> */}
-                      <AccountIEO account={account} />
+                      {/* <AccountIEO account={account} />
                     </div>
                   </div>
-                </Tab>
+                </Tab> */}
               {/* )} */}
               {/* <Tab title="markets.title" subText={hiddenSubText}>
 
