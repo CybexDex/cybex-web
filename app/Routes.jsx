@@ -282,7 +282,7 @@ const routes = (
     <Route
       path="ieo/training"
       getComponent={(location, cb) => {
-        import("components/Eo/Training")
+        import("components/Eo/training")
           .then(loadRoute(cb))
           .catch(errorLoading);
       }}
