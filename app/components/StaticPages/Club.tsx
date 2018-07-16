@@ -130,7 +130,7 @@ let Main = () => (
 let Footer = () => (
   <section style={{marginTop: "6em"}}>
     <section className="text-center">
-      <Button link="www.hai.com" style={{ padding: "0 2em" }} type="primary">
+      <Button link="/ieo/training" style={{ padding: "0 2em" }} type="primary">
         <Translate content="static.kyc_first" />
       </Button>
     </section>

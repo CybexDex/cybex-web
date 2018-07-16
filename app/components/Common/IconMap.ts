@@ -48,6 +48,9 @@ const icons = {
   info: {
     base: require("./icons/ic_info_outline_orange.svg")
   },
+  time: {
+    base: require("./icons/ic_time.svg")
+  },
   avatarWhite: {
     base: require("./icons/ic_avatar_white.svg"),
     error: require("./icons/ic_avatar_red.svg")

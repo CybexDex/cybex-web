@@ -37,6 +37,7 @@ import AccountSignedMessages from "./components/Account/AccountSignedMessages";
 import ExchangeContainer from "./components/Exchange/ExchangeContainer";
 import MarketsContainer from "./components/Exchange/MarketsContainer";
 import Transfer from "./components/Transfer/Transfer";
+import EtoStatic from "./components/StaticPages/EtoStatic";
 import SettingsContainer from "./components/Settings/SettingsContainer";
 import BlockContainer from "./components/Blockchain/BlockContainer";
 import AssetContainer from "./components/Blockchain/AssetContainer";
@@ -72,6 +73,11 @@ import { Gateway } from "./components/Gateway/Gateway";
 import { Contact } from "./components/HelpDrawer/Contact";
 import Login from "./components/Login/Login";
 import CreateSelector from "./components/Login/CreateSelector";
+import Eo from "./components/Eo";
+import Training from "./components/Eo/Training";
+import Detail from "./components/Eo/Detail";
+import IeoMock from "./components/Eo/Detail/Mock";
+import Join from "./components/Eo/Detail/join";
 
 const history = browserHistory;
 
@@ -97,6 +103,11 @@ const routes = (
     <Route path="/explorer/witnesses" component={Witnesses} />
     <Route path="/explorer/committee-members" component={CommitteeMembers} />
     <Route path="/swap" component={SwapContainer} />
+    <Route path="/ieo" component={Eo} />
+    <Route path="/ieo/genesis-space" component={IeoMock} />
+    <Route path="/ieo/training" component={Training} />
+    <Route path="/ieo/detail/:id" component={Detail} />
+    <Route path="/ieo/join/:id" component={Join} />
 
     <Route path="wallet" component={WalletManager}>
       {/* wallet management console */}
@@ -117,6 +128,7 @@ const routes = (
     <Route path="create-wallet-brainkey" component={CreateWalletFromBrainkey} />
 
     <Route path="transfer" component={Transfer} />
+    <Route path="eto-static" component={EtoStatic} />
 
     <Route path="invoice/:data" component={Invoice} />
     <Route path="explorer/markets" component={MarketsContainer} />

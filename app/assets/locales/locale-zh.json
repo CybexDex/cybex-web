@@ -111,6 +111,57 @@
     "account_notify": "当前活跃账户为 %(account)s",
     "account_value": "账户价值"
   },
+  "EIO": {
+    "ok": "正在进行",
+    "pre": "即将开始",
+    "finish": "已经结束",
+    "pause": "已结束 失败",
+    "current_ETH_balance": "当前您的ETH资产的可用余额为",
+    "Popular_IEOs": "热门众筹",
+    "Coming_Soon": "即将开始",
+    "KYC_Verification": "KYC认证",
+    "Accept_KYC_Verification": "预约众筹请先进行KYC认证",
+    "Join_in_IEO": "参与众筹",
+    "Details": "查看详情",
+    "Reserve_IEO": "预约众筹",
+    "Reserve_Now": "立即预约",
+    "Verifying": "审核中",
+    "Wait_for_IEO": "等待众筹开始",
+    "Reservation_failed": "预约失败",
+    "Join_IEO_now": "立即众筹",
+    "Project_Name": "项目名称",
+    "Token_Name": "代币名称",
+    "Total_Token_Supply": "代币总量",
+    "IEO": "IEO",
+    "End_at": "结束时间",
+    "Total_IEO_Supply": "IEO 总量",
+    "Soft_cap": "软顶",
+    "Hard_cap": "硬顶",
+    "Time_remains": "剩余时间",
+    "IEO_Period": "众筹时间",
+    "Listing_Time": "上市时间",
+    "Project_Strengths": "项目优势",
+    "IEO_Quota": "众筹额度",
+    "District_Restriction": "地区限制",
+    "IEO_token": "使用币种",
+    "Token_Releasing_Time": "发币时间",
+    "Lock-up_Period": "锁定期",
+    "Official_Website": "官方网站",
+    "Whitepaper": "白皮书",
+    "Project_Details": "项目详情",
+    "Project_Intruduce": "项目介绍",
+    "Participants": "参与人数",
+    "Raised": "当前募资",
+    "Redeeming_Ratio": "兑换比例",
+    "Personal_Limit": "个人限额",
+    "Left": "距离结束",
+    "In": "距离开始",
+    "Ended": "完成时间",
+    "Your_current_ETH_balance_is": "当前您的ETH资产的可用余额为",
+    "Quota_Remaining": "每个账号限额",
+    "participate": "参与众筹",
+    "no_login": "未登录"
+  },
   "tooltip": {
     "call_limit": "市场中最少抵押率头寸的平仓价",
     "margin_price": "这是触发平仓的最大价格。也被称为挤压价格。",
@@ -1719,7 +1770,9 @@
     "swap": "原子交换",
     "logout": "登出账户",
     "worldcup": "世界杯竞猜",
-    "help": "帮助文档"
+    "help": "帮助文档",
+    "eto": "ETO",
+    "ieo": "IEO"
   },
   "vesting": {
     "progress": "解锁进度",
@@ -1824,8 +1877,10 @@
     "weixin_service_a": "赛贝CYBEX社区小助手A：CybexServiceA",
     "weixin_service_b": "赛贝CYBEX社区小助手B：CybexServiceB",
     "weixin_service_c": "赛贝CYBEX社区小助手C：CybexServiceC",
-    "eto_resume_one": "ETO（Earlybirds Token Offering）是一个通过去中心化交易所帮助优秀区块链项目募资的方式。我们会帮助那些真正有价值，有技术和有规划的区块链项目在Cybex上进行代币发行。对于有潜力的项目而言，在最开始就应该引入社区的力量，帮助项目快速筹集到第一笔资金的同时也建立起最初的项目社区。我们觉得这才是对于行业有价值，对于未来发展有帮助的事情。",
-    "eto_resume_two": "ETO是一种把项目融资有机的整合到项目发展中的全新尝试，让那些有志于参与到项目早期社区建设的投资者能够获得项目最初的参与份额，对于项目方能够在获得来自于社区的资金的同时快速建立和拓展项目社区，而Cybex将利用本身的资源和经验来挑选和赋能那些有潜力的项目，并且利用严格的管理流程来确保募资前后的项目资金管理。",
+    "eto_resume_one":
+      "ETO（Earlybirds Token Offering）是一个通过去中心化交易所帮助优秀区块链项目募资的方式。我们会帮助那些真正有价值，有技术和有规划的区块链项目在Cybex上进行代币发行。对于有潜力的项目而言，在最开始就应该引入社区的力量，帮助项目快速筹集到第一笔资金的同时也建立起最初的项目社区。我们觉得这才是对于行业有价值，对于未来发展有帮助的事情。",
+    "eto_resume_two":
+      "ETO是一种把项目融资有机的整合到项目发展中的全新尝试，让那些有志于参与到项目早期社区建设的投资者能够获得项目最初的参与份额，对于项目方能够在获得来自于社区的资金的同时快速建立和拓展项目社区，而Cybex将利用本身的资源和经验来挑选和赋能那些有潜力的项目，并且利用严格的管理流程来确保募资前后的项目资金管理。",
     "feature_one_header": "对于那些希望参与项目早期的投资者",
     "feature_one_content":
       "将会和项目团队建立更加紧密的联系，而不仅仅是一个二级市场的投资者。这不是一个口号或者一个美好的愿望，每个投资者都必须身体力行的参与到项目社区的建设中，包括通过推广项目、根据项目的发展以及各种对于项目社区建立有帮助的各类活动。通过这些方式，能够帮助项目团队充分了解市场的需求，改善产品的设计。通过社区与项目团队的充分互动，及时提供反馈来帮助整个项目快速演进和迭代。",
@@ -1835,5 +1890,32 @@
     "feature_three_header": "对于募集到的数字货币",
     "feature_three_content":
       "Cybex将会提供第三方托管审计服务。所有的资金消费都可以在链上进行查询，从而让每个参与到项目的投资者都可以了解资金的使用情况。Cybex提供的是一套完整的软硬件的多签名托管审计服务，能够确保所有资金的安全使用，并且通过独家专利开发的硬件系统，能够对几乎所有的主流数字货币进行多签名管理，在技术上彻底保证资金管理流程的安全和规范。"
+  },
+  "ieo": {
+    "crowd_project": "%(project)s 项目众筹",
+    "amount_remain": "项目剩余额度：%(amount)s",
+    "account_limit": "每账号限额：%(cap)s，最小认购单位：%(unit)s",
+    "current_state": "您已认购额度：%(used)s, 剩余可认购额度：%(avail)s",
+    "take_in": "参与众筹",
+    "cybex_in":
+      "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
+    "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
+    "complete_tip":
+      "该项目众筹完成后，对应项目资产将于%(end_time)s发送至您的帐号(%(account)s)中",
+    "int_times": "众筹参与金额需为最小认购单位的整数倍",
+    "warning_overflow": "本次认购金额需小于剩余可认购额度",
+    "overflow":
+      "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
+    "be_patient":
+      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA",
+    "records": {
+      "project_id": "项目名称",
+      "block_num": "关联区块",
+      "update_at": "更新时间",
+      "ieo_status": "状态",
+      "ieo_type": "操作类型",
+      "token_count": "Token数量",
+      "no_data": "暂无IEO参与记录"
+    }
   }
 }

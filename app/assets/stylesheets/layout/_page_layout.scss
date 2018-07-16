@@ -551,3 +551,15 @@ a {
 #mobile-menu {
   z-index: 300;
 }
+
+.account-selector {
+  .form-field {
+    flex: 1;
+  }
+}
+
+#transaction_confirm_modal {
+  .button-group {
+    width: 100%;
+  }
+}
