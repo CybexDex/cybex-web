@@ -16,7 +16,8 @@ const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
   __TEST__:
     JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1 ||
-    process.env.NODE_ENV_TEST.toLowerCase() === "test",
+    (process.env.NODE_ENV_TEST &&
+      process.env.NODE_ENV_TEST.toLowerCase() === "test"),
   __BASE_URL__: JSON.stringify("/")
 };
 
