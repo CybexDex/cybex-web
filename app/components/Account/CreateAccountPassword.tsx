@@ -32,6 +32,7 @@ import {
 } from "components/Common/Styles";
 import { $breakpointSmall } from "components/Common/Breakpoints";
 import Radium from "radium";
+import { Gtag } from "services/Gtag";
 
 let CreateAccountPassword = class extends React.Component<any, any> {
   static contextTypes = {
@@ -168,6 +169,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
             }
           );
         }
+        Gtag.eventRegisterDone(name);
       })
       .catch(error => {
         console.log("ERROR AccountActions.createAccount", error);
@@ -184,6 +186,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
         });
         this.cap && this.cap.updateCaptcha();
         this.setState({ loading: false });
+        Gtag.eventRegisterFailed(name);
       });
   }
 
@@ -613,14 +616,17 @@ let CreateAccountPassword = class extends React.Component<any, any> {
   }
 };
 CreateAccountPassword = Radium(CreateAccountPassword);
-CreateAccountPassword = connect(CreateAccountPassword, {
-  listenTo() {
-    return [AccountStore];
-  },
-  getProps() {
-    return {};
+CreateAccountPassword = connect(
+  CreateAccountPassword,
+  {
+    listenTo() {
+      return [AccountStore];
+    },
+    getProps() {
+      return {};
+    }
   }
-});
+);
 
 export { CreateAccountPassword };
 export default CreateAccountPassword;

@@ -31,6 +31,8 @@ import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
 
+import { Gtag } from "services/Gtag";
+
 //React Table
 import ReactTable from "react-table";
 
