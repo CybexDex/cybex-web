@@ -73,7 +73,7 @@ const NavLinks: Array<NavLink> = [
     id: "eto",
     routeTo: "/eto-static",
     activeMatcher: /^\/eto/,
-    name: "ETO",
+    name: "eto",
     icon: "ETO",
   }
 ];
@@ -240,16 +240,6 @@ export class Nav extends React.PureComponent<
               }
             />
           }
-          <NavItem
-            name="ieo"
-            key={getNavId('ieo')}
-            id={getNavId('ieo')}
-            hideIcon
-            linkTo='/ieo/genesis-space'
-            onClick={(e) => {
-              this.context.router.push('/ieo/genesis-space');
-            }}
-          />
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>

@@ -103,11 +103,11 @@ const routes = (
     <Route path="/explorer/witnesses" component={Witnesses} />
     <Route path="/explorer/committee-members" component={CommitteeMembers} />
     <Route path="/swap" component={SwapContainer} />
-    <Route path="/ieo" component={Eo} />
-    <Route path="/ieo/genesis-space" component={IeoMock} />
-    <Route path="/ieo/training" component={Training} />
-    <Route path="/ieo/detail/:id" component={Detail} />
-    <Route path="/ieo/join/:id" component={Join} />
+    <Route path="/eto" component={Eo} />
+    <Route path="/eto/genesis-space" component={IeoMock} />
+    <Route path="/eto/training" component={Training} />
+    <Route path="/eto/detail/:id" component={Detail} />
+    <Route path="/eto/join/:id" component={Join} />
 
     <Route path="wallet" component={WalletManager}>
       {/* wallet management console */}

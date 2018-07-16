@@ -2,7 +2,7 @@ import * as React from "react";
 import { $breakpointSmall } from "components/Common/Breakpoints";
 import { Panel } from "components/Common/Panel";
 import { Colors } from "components/Common/Colors";
-import { Button } from "components/Common/Button";
+import { RouterButton } from "components/Common/Button";
 import Translate from "react-translate-component";
 import Radium from "radium";
 
@@ -128,11 +128,15 @@ let Main = () => (
 );
 
 let Footer = () => (
-  <section style={{marginTop: "6em"}}>
+  <section style={{ marginTop: "6em" }}>
     <section className="text-center">
-      <Button link="/ieo/training" style={{ padding: "0 2em" }} type="primary">
+      <RouterButton
+        link="/eto/training"
+        style={{ padding: "0 2em" }}
+        type="primary"
+      >
         <Translate content="static.kyc_first" />
-      </Button>
+      </RouterButton>
     </section>
     <section className="text-center">
       <Translate
@@ -154,8 +158,10 @@ let Club = class extends React.PureComponent<{}> {
     return (
       <div className="wrapper">
         <Banner />
-        <Main />
-        <Footer />
+        <div style={{maxWidth: "1024px", margin: "auto", paddingBottom: "6em"}}>
+          <Main />
+          <Footer />
+        </div>
       </div>
     );
   }

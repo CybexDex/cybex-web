@@ -1,0 +1,84 @@
+@import "./../layout/size";
+
+// Training
+@media screen and (max-width: $size-large) {
+  .main-body .training {
+    * {
+      max-width: 100%;
+    }
+    .title-container {
+      height: 220px;
+    }
+    .base-title {
+      font-size: 1.6em;
+      text-align: center;
+      height: unset;
+    }
+    .gap {
+      display: none;
+    }
+    &,
+    .container,
+    .container-large {
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+      width: 96%;
+      margin-top: 1em;
+      .Combined-Shape {
+        background-color: #0484cb;
+        padding: 1em;
+        height: unset;
+        .content {
+          margin: auto;
+          width: 80%;
+          height: unset;
+          .spectial {
+            padding-top: 0em;
+          }
+        }
+        .steps {
+          text-align: center;
+        }
+        .step-info,
+        .content img {
+          position: static;
+          margin-left: unset;
+          transform: unset;
+          width: unset;
+          font-size: 1.2em;
+        }
+        .step-info {
+          margin-top: 1em;
+          text-align: center;
+        }
+      }
+      height: unset;
+      .right-top,
+      .right-bottom,
+      .right-middle {
+        position: static;
+        height: unset;
+        width: 100%;
+        margin: auto;
+        img {
+          height: unset;
+        }
+        background-color: unset;
+      }
+
+      * {
+        height: unset;
+      }
+      .Combined-Shape {
+        float: unset;
+        &,
+        &.content {
+          width: 100%;
+        }
+      }
+
+      [class^="right"] {
+        border-top: 1px solid rgba(4, 13, 93, 0.4);
+      }
+    }
+  }
+}

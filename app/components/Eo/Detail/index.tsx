@@ -42,7 +42,7 @@ class Detail extends React.Component<any, any> {
           this.setState({reserve_status:()=>{
             if(this.state.data.status == 'ok'){
               return (
-                <Link to={`/ieo/join/${this.props.params.id}`}>
+                <Link to={`/eto/join/${this.props.params.id}`}>
                 <div className="button primery-button disabled ok">
                 <Translate content="EIO.Reserve_Now" />
                 </div>
@@ -210,7 +210,7 @@ formatTime(input){
               this.setState({reserve_status:()=>{
                 if(res.result.status == 'ok'){
                   return (
-                    <Link to={`/ieo/join/${this.props.params.id}`}>
+                    <Link to={`/eto/join/${this.props.params.id}`}>
                     <div className="button primery-button ok">
                     <Translate content="EIO.Join_IEO_now" />
                     </div>
@@ -284,7 +284,7 @@ formatTime(input){
             this.setState({kyc_status:()=>{
               return (
                 <div className="kyc-btn-holder">
-                  <Link to="/ieo/training">
+                  <Link to="/eto/training">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>
@@ -538,7 +538,7 @@ formatTime(input){
           
 
           <div className="button-holder">
-          <Trigger open="ieo-detail-modal"><div></div></Trigger>
+          <Trigger open="eto-detail-modal"><div></div></Trigger>
           {/* {this.state.kyc_status()}
           {
             (status == 'ok'||status == 'pre') ? (
@@ -559,7 +559,7 @@ formatTime(input){
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              // <Link to={`/ieo/join/${this.props.params.id}`}>
+              // <Link to={`/eto/join/${this.props.params.id}`}>
               <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>
@@ -579,7 +579,7 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
+          <DetalModal id="eto-detail-modal" isShow={this.state.showModal}>
           </DetalModal>
       </div>
     );

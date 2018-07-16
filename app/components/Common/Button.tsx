@@ -17,7 +17,7 @@ export interface ButtonProps {
   disabled?: boolean;
   size?: ButtonSize;
   type?: ButtonType;
-  loading: boolean;
+  loading?: boolean;
   style?: React.CSSProperties;
   onClick?;
   link?;
@@ -152,25 +152,7 @@ let Button = class extends React.Component<ButtonProps, any> {
   render() {
     let { children, size, type, disabled, style, loading, link } = this.props;
     let styles = Button.Styles;
-    return link ? (
-      <a
-        {...this.props}
-        className={classnames(loading ? "loading" : "", { disabled })}
-        style={
-          [
-            styles.base,
-            styles[type],
-            styles[size],
-            styles.lineHeight[size],
-            style
-          ] as any
-        }
-        onClick={this.props.onClick ? this.props.onClick : () => void 0}
-        href={link}
-      >
-        {children}
-      </a>
-    ) : (
+    return (
       <button
         {...this.props}
         disabled={disabled}
@@ -185,5 +167,19 @@ let Button = class extends React.Component<ButtonProps, any> {
 };
 Button = Radium(Button);
 
-export { Button };
+let RouterButton = class extends React.PureComponent<ButtonProps> {
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+  render() {
+    return (
+      <Button
+        {...this.props}
+        onClick={() => this.context.router.push(this.props.link)}
+      />
+    );
+  }
+};
+
+export { Button, RouterButton };
 export default Button;

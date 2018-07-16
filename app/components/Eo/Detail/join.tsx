@@ -321,7 +321,7 @@ let Join = class extends React.Component<
       return (
         <Translate
           className="confirm-tip text-center"
-          content="ieo.confirm"
+          content="eto.confirm"
           component="h5"
           project={name}
         />
@@ -465,7 +465,7 @@ let Join = class extends React.Component<
           noValidate
         >
           <Translate
-            content="ieo.crowd_project"
+            content="eto.crowd_project"
             component="h2"
             project={name}
             style={{ marginBottom: "2rem" }}
@@ -473,20 +473,20 @@ let Join = class extends React.Component<
           {/*  A M O U N T   */}
           <div className="illustration-list">
             <Translate
-              content="ieo.amount_remain"
+              content="eto.amount_remain"
               component="section"
               amount={
                 base_token_count - current_base_token_count + base_token_name
               }
             />
             <Translate
-              content="ieo.account_limit"
+              content="eto.account_limit"
               component="section"
               cap={base_max_quota}
               unit={base_min_quota}
             />
             <Translate
-              content="ieo.current_state"
+              content="eto.current_state"
               component="section"
               used={base_received + " " + base_token_name}
               avail={
@@ -510,12 +510,12 @@ let Join = class extends React.Component<
             )}
             {!!intTimeError && (
               <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="ieo.int_times" />
+                <Translate content="eto.int_times" />
               </p>
             )}
             {!!isOverflow && (
               <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="ieo.warning_overflow" />
+                <Translate content="eto.warning_overflow" />
               </p>
             )}
           </div>
@@ -560,7 +560,7 @@ let Join = class extends React.Component<
               type="primary"
               value="Submit"
             >
-              <Translate component="span" content="ieo.take_in" />
+              <Translate component="span" content="eto.take_in" />
             </Button>
           </div>
 
@@ -574,18 +574,18 @@ let Join = class extends React.Component<
           style={{ color: Colors.$colorOrange }}
         >
           <Translate
-            content="ieo.cybex_in"
+            content="eto.cybex_in"
             component="li"
             asset={base_token_name}
           />
           <Translate
-            content="ieo.complete_tip"
+            content="eto.complete_tip"
             component="li"
             end_time={end_at}
             account={currentAccount && currentAccount.get("name")}
           />
-          <Translate content="ieo.overflow" unsafe component="li" />
-          <Translate content="ieo.be_patient" component="li" />
+          <Translate content="eto.overflow" unsafe component="li" />
+          <Translate content="eto.be_patient" component="li" />
         </ul>
       </div>
     );

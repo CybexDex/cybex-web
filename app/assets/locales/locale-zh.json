@@ -132,9 +132,9 @@
     "Project_Name": "项目名称",
     "Token_Name": "代币名称",
     "Total_Token_Supply": "代币总量",
-    "IEO": "IEO",
+    "ETO": "ETO",
     "End_at": "结束时间",
-    "Total_IEO_Supply": "IEO 总量",
+    "Total_IEO_Supply": "ETO 总量",
     "Soft_cap": "软顶",
     "Hard_cap": "硬顶",
     "Time_remains": "剩余时间",
@@ -1772,7 +1772,7 @@
     "worldcup": "世界杯竞猜",
     "help": "帮助文档",
     "eto": "ETO",
-    "ieo": "IEO"
+    "eto": "ETO"
   },
   "vesting": {
     "progress": "解锁进度",
@@ -1891,7 +1891,7 @@
     "feature_three_content":
       "Cybex将会提供第三方托管审计服务。所有的资金消费都可以在链上进行查询，从而让每个参与到项目的投资者都可以了解资金的使用情况。Cybex提供的是一套完整的软硬件的多签名托管审计服务，能够确保所有资金的安全使用，并且通过独家专利开发的硬件系统，能够对几乎所有的主流数字货币进行多签名管理，在技术上彻底保证资金管理流程的安全和规范。"
   },
-  "ieo": {
+  "eto": {
     "crowd_project": "%(project)s 项目众筹",
     "amount_remain": "项目剩余额度：%(amount)s",
     "account_limit": "每账号限额：%(cap)s，最小认购单位：%(unit)s",
