@@ -2,6 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import Radium from "radium";
 import Colors from "./Colors";
+import classnames from "classnames";
 
 export type ButtonSize = "xsmall" | "normal" | "smaller" | "small" | "large";
 export type ButtonType =
@@ -19,6 +20,7 @@ export interface ButtonProps {
   loading: boolean;
   style?: React.CSSProperties;
   onClick?;
+  link?;
 }
 
 let Button = class extends React.Component<ButtonProps, any> {
@@ -133,13 +135,42 @@ let Button = class extends React.Component<ButtonProps, any> {
     large: {
       fontSize: "16px",
       height: "56px"
+    },
+    lineHeight: {
+      small: {
+        lineHeight: "32px"
+      },
+      normal: {
+        lineHeight: "40px"
+      },
+      large: {
+        lineHeight: "56px"
+      }
     }
   };
 
   render() {
-    let { children, size, type, disabled, style, loading } = this.props;
+    let { children, size, type, disabled, style, loading, link } = this.props;
     let styles = Button.Styles;
-    return (
+    return link ? (
+      <a
+        {...this.props}
+        className={classnames(loading ? "loading" : "", { disabled })}
+        style={
+          [
+            styles.base,
+            styles[type],
+            styles[size],
+            styles.lineHeight[size],
+            style
+          ] as any
+        }
+        onClick={this.props.onClick ? this.props.onClick : () => void 0}
+        href={link}
+      >
+        {children}
+      </a>
+    ) : (
       <button
         {...this.props}
         disabled={disabled}

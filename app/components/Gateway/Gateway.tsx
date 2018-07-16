@@ -30,9 +30,7 @@ import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
-
-import { Gtag } from "services/Gtag";
-
+import { Club } from "components/StaticPages/Club";
 //React Table
 import ReactTable from "react-table";
 
@@ -443,6 +441,9 @@ let GatewayContainer = class extends React.Component<any, any> {
               </Tab>
               <Tab title="gateway.fund_records">
                 <GatewayRecords account={account} />
+              </Tab>
+              <Tab title="gateway.fund_records">
+                <Club />
               </Tab>
             </Tabs>
           </div>

@@ -68,14 +68,13 @@ const NavLinks: Array<NavLink> = [
     name: "explorer",
     icon: "explorer",
     children: <ExplorerNav />
+  },
+  {
+    id: "eto",
+    routeTo: "/eto-static",
+    name: "ETO",
+    icon: "ETO",
   }
-  // {
-  //   id: "settings",
-  //   routeTo: "/settings",
-  //   name: "Settings",
-  //   icon: "settings",
-  //   down: true
-  // }
 ];
 
 let logoutItem = {
