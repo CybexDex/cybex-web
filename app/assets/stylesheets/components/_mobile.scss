@@ -1,5 +1,9 @@
 @import "./../layout/size";
-
+.main-body .training {
+  .title-container {
+    margin-top: unset;
+  }
+}
 // Training
 @media screen and (max-width: $size-large) {
   .main-body .training {
@@ -35,6 +39,9 @@
         background-color: #0484cb;
         padding: 1em;
         height: unset;
+        .right-pointer, .bottom-pointer {
+          display: none;
+        }
         .content {
           margin: auto;
           width: 80%;
