@@ -435,9 +435,6 @@ let GatewayContainer = class extends React.Component<any, any> {
               <Tab title="gateway.fund_records">
                 <GatewayRecords account={account} />
               </Tab>
-              <Tab title="gateway.fund_records">
-                <Club />
-              </Tab>
             </Tabs>
           </div>
 

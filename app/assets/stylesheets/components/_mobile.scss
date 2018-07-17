@@ -3,6 +3,8 @@
 // Training
 @media screen and (max-width: $size-large) {
   .main-body .training {
+    min-width: 100%;
+    padding: 2%;
     * {
       max-width: 100%;
     }
@@ -17,6 +19,11 @@
     }
     .gap {
       display: none;
+    }
+    .trangle {
+      border-left-width: 20px;
+      border-right-width: 20px;
+      border-bottom-width: 40px;
     }
     &,
     .container,
