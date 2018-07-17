@@ -12,7 +12,7 @@ class IEOActions {
     
   }
 
-  onIEORecordUpdate(records: IEO.IEORecord[]) {
+  onIEORecordUpdate(records: ETO.IEORecord[]) {
     return records;
   }
 }
