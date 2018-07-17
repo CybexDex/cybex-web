@@ -2,7 +2,7 @@ import * as React from "react";
 import { $breakpointSmall } from "components/Common/Breakpoints";
 import { Panel } from "components/Common/Panel";
 import { Colors } from "components/Common/Colors";
-import { RouterButton } from "components/Common/Button";
+import { Button } from "components/Common/Button";
 import Translate from "react-translate-component";
 import * as counterpart from "counterpart";
 import Radium from "radium";
@@ -10,8 +10,6 @@ import Radium from "radium";
 let image1 = require("components/Common/images/club_01.svg");
 let image2 = require("components/Common/images/club_02.svg");
 let image3 = require("components/Common/images/club_03.svg");
-
-
 
 let Feature = ({
   imgSrc,
@@ -43,7 +41,8 @@ let Feature = ({
       },
       {
         [`@media (max-width: ${$breakpointSmall})`]: {
-          padding: "1em"
+          padding: "2em",
+          display: "block"
         }
       }
     ]}
@@ -51,7 +50,18 @@ let Feature = ({
     <div style={{ flex: "1 1 50%", textAlign: "center" }}>
       <img src={imgSrc} alt="" style={{ height: "280px", padding: "0 2em" }} />
     </div>
-    <div style={{ flex: "1 1 50%", padding: "1em" }}>
+    <div
+      style={
+        [
+          { flex: "1 1 50%", padding: "1em" },
+          {
+            [`@media (max-width: ${$breakpointSmall})`]: {
+              padding: "2em 1em 1em 1em"
+            }
+          }
+        ] as any
+      }
+    >
       {
         <Translate
           component="h3"
@@ -72,9 +82,11 @@ let Feature = ({
 
 Feature = Radium(Feature);
 
-let Banner = () => <div>
-  <img src={counterpart.translate("assets.banner")} />
-</div>;
+let Banner = () => (
+  <div>
+    <img src={counterpart.translate("assets.banner")} />
+  </div>
+);
 
 let SectionHeader = ({ content }) => (
   <h2 className="text-center" style={{ margin: "2em" }}>
@@ -135,13 +147,13 @@ let Main = () => (
 let Footer = () => (
   <section style={{ marginTop: "6em" }}>
     <section className="text-center">
-      <RouterButton
-        link="/eto/training"
+      <Button
+        link="https://www.icoape.com"
         style={{ padding: "0 2em" }}
         type="primary"
       >
         <Translate content="static.kyc_first" />
-      </RouterButton>
+      </Button>
     </section>
     <section className="text-center">
       <Translate
@@ -163,7 +175,9 @@ let Club = class extends React.Component<{}> {
     return (
       <div className="wrapper">
         <Banner />
-        <div style={{maxWidth: "1024px", margin: "auto", paddingBottom: "6em"}}>
+        <div
+          style={{ maxWidth: "1024px", margin: "auto", paddingBottom: "6em" }}
+        >
           <Main />
           <Footer />
         </div>

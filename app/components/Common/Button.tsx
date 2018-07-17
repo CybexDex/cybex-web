@@ -158,7 +158,18 @@ let Button = class extends React.Component<ButtonProps, any> {
   render() {
     let { children, size, type, disabled, style, loading, link } = this.props;
     let styles = Button.Styles;
-    return (
+    return link ? (
+      <a
+        href={link}
+        target="_blank"
+        {...this.props}
+        className={classnames(loading ? "loading" : "", disabled)}
+        style={[styles.base, styles[type], styles[size], styles.lineHeight[size], style] as any}
+        onClick={this.props.onClick ? this.props.onClick : () => void 0}
+      >
+        {children}
+      </a>
+    ) : (
       <button
         {...this.props}
         disabled={disabled}

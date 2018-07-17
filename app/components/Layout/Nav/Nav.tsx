@@ -33,6 +33,13 @@ interface NavLink {
 
 const NavLinks: Array<NavLink> = [
   {
+    id: "eto",
+    routeTo: "/eto-static",
+    activeMatcher: /^\/eto/,
+    name: "eto",
+    icon: "ETO",
+  },
+  {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
     activeMatcher: /^\/account/,
@@ -69,13 +76,6 @@ const NavLinks: Array<NavLink> = [
     icon: "explorer",
     children: <ExplorerNav />
   },
-  {
-    id: "eto",
-    routeTo: "/eto-static",
-    activeMatcher: /^\/eto/,
-    name: "eto",
-    icon: "ETO",
-  }
 ];
 
 let logoutItem = {
