@@ -1909,7 +1909,7 @@
     "overflow":
       "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
     "be_patient":
-      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA",
+      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexServiceA",
     "records": {
       "project_id": "项目名称",
       "block_num": "关联区块",
@@ -1919,5 +1919,56 @@
       "token_count": "Token数量",
       "no_data": "暂无IEO参与记录"
     }
+  },
+  "training": {
+    "step_title": "如果您需要参与Cybex的IEO项目<br>请先进行KYC认证和账号绑定",
+    "step_one": "打开ICOAPE的网站并进行邮箱注册。",
+    "step_two":
+      "在注册的邮箱里，您会收到一封验证邮件，点开验证链接进行登录。如果找不到验证邮件，也许它躲在垃圾邮件里。",
+    "step_three": "提交真实有效的个人KYC资料，请记得保存。个人信息均为必填项。",
+    "step_four":
+      "提交成功KYC资料后，我们会对您提交的资料进行审核。审核结果会在3-7个工作日内以邮件形式发送给您。",
+    "step_four_sp":
+      "注意：如果您的资料错误，请重新登录ICOAPE账号重新提交，我们会再次进行审核。",
+    "step_five":
+      "成功通过审核后，恭喜您到了关联Cybex账号的最后步骤了！！请先确保您已注册了一个Cybex账号，登录ICOAPE，并将Cybex账号填入关联账号处。",
+    "step_five_sp":
+      "同时，打开Cybex交易所<a href=\"https://dex.cybex.io/\" target=\"_blank\">https://dex.cybex.io/</a> 登录您的Cybex账号，在您的“账户名 – 活动记录”里将会收到一笔小额转账并附带一个验证码（verify code），将这个关键的verify code 填到ICOAPE的验证码处，就绑定成功啦！",
+    "step_six":
+      "登录您绑定KYC的Cybex账号，然后选择您想众筹的项目，点击预约。搓搓小手就可以等待项目审核通过然后众筹了哟～ ",
+    "step_six_sp":
+      "注意：部分项目可能会有众筹的地区限制，所以不同项目还需要在您申请“众筹预约”后再次审核，我们将在3-7个工作日内进行审核。通过审核且项目开始众筹后，您就可以开始众筹了～ ",
+    "step_six_sp_1":
+      "请注意众筹前保证您的cybex账号里已有您预约项目众筹接受的币种，且数额不小于该项目的最低众筹额度。同时，不同项目的众筹限额不同，众筹超过限额部分也是无法成功众筹的。"
+  },
+  "assets": {
+    "banner":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/ETObanner1-CN0717.jpg",
+    "eto_step_1":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-1.jpg",
+    "eto_step_2":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-2.jpg",
+    "eto_step_3":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-3.jpg",
+    "eto_step_4":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-4.jpg",
+    "eto_step_5":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-5.jpg",
+    "eto_step_6":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-6.jpg",
+    "eto_step_7":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-7.jpg",
+    "eto_step_8":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-8.jpg",
+    "eto_step_9":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-9.jpg",
+    "eto_step_10":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-10.jpg",
+    "eto_step_11":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-11.jpg",
+    "eto_step_12":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-12.jpg",
+    "eto_step_13":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-13.jpg"
   }
 }

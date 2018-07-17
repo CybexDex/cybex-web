@@ -4,11 +4,14 @@ import { Panel } from "components/Common/Panel";
 import { Colors } from "components/Common/Colors";
 import { RouterButton } from "components/Common/Button";
 import Translate from "react-translate-component";
+import * as counterpart from "counterpart";
 import Radium from "radium";
 
 let image1 = require("components/Common/images/club_01.svg");
 let image2 = require("components/Common/images/club_02.svg");
 let image3 = require("components/Common/images/club_03.svg");
+
+
 
 let Feature = ({
   imgSrc,
@@ -69,7 +72,9 @@ let Feature = ({
 
 Feature = Radium(Feature);
 
-let Banner = () => <h1>Banner</h1>;
+let Banner = () => <div>
+  <img src={counterpart.translate("assets.banner")} />
+</div>;
 
 let SectionHeader = ({ content }) => (
   <h2 className="text-center" style={{ margin: "2em" }}>
@@ -153,7 +158,7 @@ let Footer = () => (
   </section>
 );
 
-let Club = class extends React.PureComponent<{}> {
+let Club = class extends React.Component<{}> {
   render() {
     return (
       <div className="wrapper">

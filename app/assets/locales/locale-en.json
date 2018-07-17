@@ -75,7 +75,8 @@
     "Popular_IEOs": "Popular IEOs",
     "Coming Soon": "Coming Soon",
     "KYC_Verification": "KYC Verification",
-    "Accept_KYC_Verification": "Accept KYC Verification before engaging in ETO reservation",
+    "Accept_KYC_Verification":
+      "Accept KYC Verification before engaging in ETO reservation",
     "Join_in_IEO": "Join in ETO",
     "Details": "Details",
     "Reserve_IEO": "Reserve ETO",
@@ -1876,25 +1877,56 @@
     "label": "Verify Code",
     "click": "Refersh Code"
   },
+  "static": {
+    "what_is_eto": "What is ETO?",
+    "why_eto": "The Beauty of ETO",
+    "kyc_first": "Please make KYC certification for reservations",
+    "weixin":
+      "Follow the official WeChat Public Account of CYBEX to know more: cybexexchange",
+    "weixin_service_a": "CYBEX Community Assistant A: CybexServiceA",
+    "weixin_service_b": "CYBEX Community Assistant B: CybexServiceB",
+    "weixin_service_c": "CYBEX Community Assistant C:CybexServiceC",
+    "eto_resume_one":
+      "ETO (Earlybirds Token Offering) is a method used by a decentralized exchange to help premium blockchain projects to raise funds. We will help those blockchain projects with potential, expertise and blueprints to list their tokens on CYBEX. For projects with expectations, the power of community should be introduced at the very beginning. It can help projects raise funds quickly as well as building early project community. We think this is something of value to the industry and of help to future development.",
+    "eto_resume_two":
+      "ETO is a new trial of integrating fund raising with project development organically. Investors who aim at participating in the building of early project community can obtain original participation quota. For projects, they can get funds from the community and build and expand project community at the same time. CYBEX would utilize its own resources and experience to select those projects with potentials, using a strict process to ensure the management of funds before and after ETO.",
+    "feature_one_header":
+      "For Investors in Hope of Being Engaged in Early Stages of a Project",
+    "feature_one_content":
+      "Beside buying in project tokens in secondary market, those investors will have tighter connections with the project team itself. This is not just an empty talk or unrealistic vision. Every investor must be engaged in the development of the community of a project, including generalizing the project and orchestrating various beneficial events for the growth of the project and its community. By these means, investors are positioned to help project teams better understand the demand of the market thus optimizing product design. Through collaborations between community and the project team, prompt feedbacks from the users are generated to push forward the transformation and evolution of the project.",
+    "feature_two_header": "For Projects",
+    "feature_two_content":
+      "For projects at an early stage, receiving funds from the community, establishing community, nurturing consensus are the most desired and proper track. We can see in many cases that the strengths from communities of a host of investors served as the greatest impetus for the rapid development of projects, helping them achieve significant breakthrough from scratch.",
+    "feature_three_header": "For Cryptocurrency Raised",
+    "feature_three_content":
+      "CYBEX will provide a third-party escrow & audit service. Each and every transaction is traceable on the blockchain, so investors in this project will have a clearer picture of the usage of the fund. What CYBEX will provide is a one-stop multi-signature escrow & audit service integrating both soft- and hard-ware, guaranteeing the safety of all assets used. At the same time, the patent hardware system of CYBEX is almost compatible with all mainstream cryptocurrencies in respect of multi-signature management, thus will radically make the asset-management procedure safer and more standardized from a technical aspect."
+  },
   "eto": {
-    "crowd_project": "%(project)s 项目众筹",
-    "amount_remain": "项目剩余额度：%(amount)s",
-    "account_limit": "每账号限额：%(cap)s，最小认购单位：%(unit)s",
-    "current_state": "您已认购额度：%(used)s, 剩余可认购额度：%(avail)s",
-    "closed_tip": "The current project %(project)s has ended, please understand",
-    "take_in": "参与众筹",
+    "crowd_project": "ETO of %(project)s",
+    "amount_remain": "Remaining Quota: %(amount)s",
+    "account_limit":
+      "Peraonal Hard Cap: %(cap)s, Minimum Purchasing Unit: %(unit)s",
+    "current_state":
+      "You have subscribed: %(used)s, Remaining Quota: %(avail)s",
+    "closed_tip":
+      "The current project %(project)s has ended, please understand",
+    "take_in": "JOIN ETO",
     "cybex_in":
-      "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
-    "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
-    "complete_tip_1": "该项目众筹完成后，对应项目资产将于格林尼治时间",
-    "complete_tip_2": "发送至您的帐号(%(account)s)中",
-    "local_time": "即本机时间",
-    "int_times": "众筹参与金额需为最小认购单位的整数倍",
-    "warning_overflow": "本次认购金额需小于剩余可认购额度",
+      "You will participate in the ETO by your %(asset)s balance in your CYBEX account, and the process may consume certain fees.",
+    "confirm":
+      "You will participate in the %(project)s ETO by transferring in CYBEX",
+    "complete_tip_1":
+      "When ETO completes, project assets will be given away by ",
+    "complete_tip_2": " to your CYBEX account(%(account)s)",
+    "local_time": "Local time",
+    "int_times":
+      "The quantity has to be the integral multiple of the minimum purchasing unit",
+    "warning_overflow":
+      "Your subscription cannot exceed the remaning quota of the project",
     "overflow":
-      "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
+      "Your final subscription will be subject to the verification by the project holder. You can check through <span class=\"highlight\">\"ETO Project History---Subscribed\"</span>. When circumstances like personal hard cap exceeded or project.Quota oversubscription happens, the unconfirmed excess quota will be refunded to relevant CYBEX accounts when project ETO ends. ",
     "be_patient":
-      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA",
+      "The final ETO participation result takes time to be confirmed. Please wait patiently. If you have any questions, please contact our community assistant through WeChat account: CybexServiceA",
     "records": {
       "project_id": "项目名称",
       "block_num": "关联区块",
@@ -1902,7 +1934,60 @@
       "ieo_status": "状态",
       "ieo_type": "操作类型",
       "token_count": "Token数量",
-      "no_data": "暂无IEO参与记录"
+      "no_data": "暂无ETO参与记录"
     }
+  },
+  "training": {
+    "step_title":
+      "If you want to participate in ETO projects on CYBEX, please take KYC authentication and bundle up your account first.",
+    "step_one": "Open the website of ICOAPE and register.",
+    "step_two":
+      "You will receive an E-mail sent to the address that you registered with. Open it and click the link to log in. If you cannot find the verification E-mail, search it in your spam E-mails.",
+    "step_three":
+      "Please do submit genuine and valid KYC information and save it. All items in personal information are required.",
+    "step_four":
+      "Once you submit your KYC data, we will audit it. The result will be sent to you by an E-mail within 3-7 workdays.",
+    "step_four_sp":
+      "Notice: If the information you have submitted was wrong, please re-submit it and we will audit again.",
+    "step_five":
+      "Please make sure you have already registered a Cybex account. Log in ICOAPE and fill in your Cybex account into the box.",
+    "step_five_sp":
+      "Meanwhile, open the Cybex Exchange: <a href=\"https://dex.cybex.io/\" target=\"_blank\">https://dex.cybex.io/</a> and log in. Click \"account\" then \"activity\". You will see a small amount of transfer to your account with a verify code. Fill in this code to your ICOAPE verify code box then you will succeed linking account!",
+    "step_six":
+      "Sign in CYBEX, choose ETO projects, then click reserve to wait for verification.",
+    "step_six_sp":
+      "Notice: Some projects may set a district limitation to the funders. So your qualification needs to be re-audited, which will be done within 3-7 workdays. Once passed, you can start investing.",
+    "step_six_sp_1":
+      "Please kindly check that whether there is enough balance. Meanwhile, the personal quota for different projects varies, tokens that exceeded an ETO project hard cap will be refunded to its original account."
+  },
+  "assets": {
+    "banner":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/ETObanner1-EN0717.jpg",
+    "eto_step_1":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-1.jpg",
+    "eto_step_2":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-2.jpg",
+    "eto_step_3":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-3.jpg",
+    "eto_step_4":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-4.jpg",
+    "eto_step_5":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-5.jpg",
+    "eto_step_6":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-6.jpg",
+    "eto_step_7":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-7.jpg",
+    "eto_step_8":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-8.jpg",
+    "eto_step_9":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-9.jpg",
+    "eto_step_10":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-10.jpg",
+    "eto_step_11":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-11.jpg",
+    "eto_step_12":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-12.jpg",
+    "eto_step_13":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-13.jpg"
   }
 }

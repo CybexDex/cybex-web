@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Club } from "./Club";
-export class EtoStatic extends React.PureComponent<{}> {
+export class EtoStatic extends React.Component<{}> {
   render() {
     return <Club />;
   }
