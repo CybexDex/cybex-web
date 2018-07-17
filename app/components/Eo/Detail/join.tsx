@@ -33,8 +33,9 @@ let Join = class extends React.Component<
     feeStatus;
     hasBalance;
     hasPoolBalance;
-    data;
     memo;
+    projectData;
+    personalStatus;
     balanceError;
   }
 > {
@@ -59,7 +60,8 @@ let Join = class extends React.Component<
       feeAmount: new Asset({ amount: 0 }),
       feeStatus: {},
       balanceError: null,
-      data: null,
+      projectData: null,
+      personalStatus: null,
       memo: null
     };
 
@@ -79,11 +81,26 @@ let Join = class extends React.Component<
 
   updateProject = () => {
     let data = {
-      project: this.props.params.id
+      project: this.props.params.id,
+      cybex_name: this.props.currentAccount.get("name")
     };
-    fetchJson.fetchDetails(data, res => {
-      let targetAccount = FetchChain("getAccount", res.result.receive_address);
-      this.setState({ data: res.result });
+    Promise.all([
+      new Promise(resolve =>
+        fetchJson.fetchDetails(data, res => {
+          let targetAccount = FetchChain(
+            "getAccount",
+            res.result.receive_address
+          );
+          resolve(res.result);
+        })
+      ),
+      new Promise(resolve =>
+        fetchJson.fetchUserProjectStatus(data, res => {
+          resolve(res.result);
+        })
+      )
+    ]).then(([projectData, personalStatus]) => {
+      this.setState({ projectData, personalStatus });
     });
     this._updateFee();
   };
@@ -298,8 +315,8 @@ let Join = class extends React.Component<
   };
 
   _getConfirmTip = () => {
-    let { data } = this.state || { data: {} };
-    let { name } = data;
+    let { projectData } = this.state || { projectData: {} };
+    let { name } = projectData;
     if (name) {
       return (
         <Translate
@@ -322,7 +339,7 @@ let Join = class extends React.Component<
     });
     let targetAccount = await FetchChain(
       "getAccount",
-      this.state.data.receive_address
+      this.state.projectData.receive_address
     );
     if (!targetAccount) {
       return NotificationActions.error(`Project address error`);
@@ -351,7 +368,7 @@ let Join = class extends React.Component<
 
   render() {
     console.log(this.state);
-    const data = this.state.data || {};
+    const data = this.state.projectData || {};
     const {
       name,
       receive_address,
@@ -364,6 +381,8 @@ let Join = class extends React.Component<
       end_at,
       base_token
     } = data;
+    const statusData = this.state.personalStatus || {};
+    const { base_received } = statusData;
 
     let { currentAccount } = this.props;
     let {
@@ -469,9 +488,9 @@ let Join = class extends React.Component<
             <Translate
               content="ieo.current_state"
               component="section"
-              used={current_user_count + " " + base_token_name}
+              used={base_received + " " + base_token_name}
               avail={
-                base_max_quota - current_user_count + " " + base_token_name
+                base_max_quota - base_received + " " + base_token_name
               }
             />
           </div>

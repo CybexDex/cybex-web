@@ -1646,6 +1646,8 @@
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
     "low_limit": "单次提现金额不可低于最低限额: %(amount)s %(symbol)s",
+    "precision_error":
+      "%(symbol)s 提现金额需为其外部资产精度(%(amount)s)的整数倍",
     "bridge_text":
       "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
     "gateway_text":
@@ -1870,14 +1872,27 @@
     "crowd_project": "%(project)s 项目众筹",
     "amount_remain": "项目剩余额度：%(amount)s",
     "account_limit": "每账号限额：%(cap)s，最小认购单位：%(unit)s",
-    "current_state": "已认购额度：%(used)s, 剩余可认购额度：%(avail)s",
+    "current_state": "您已认购额度：%(used)s, 剩余可认购额度：%(avail)s",
     "take_in": "参与众筹",
-    "cybex_in": "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
+    "cybex_in":
+      "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
     "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
-    "complete_tip": "该项目众筹完成后，对应项目资产将于%(end_time)s发送至您的帐号(%(account)s)中",
+    "complete_tip":
+      "该项目众筹完成后，对应项目资产将于%(end_time)s发送至您的帐号(%(account)s)中",
     "int_times": "众筹参与金额需为最小认购单位的整数倍",
     "warning_overflow": "本次认购金额需小于剩余可认购额度",
-    "overflow": "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
-    "be_patient": "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA"
+    "overflow":
+      "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
+    "be_patient":
+      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA",
+    "records": {
+      "project_id": "项目名称",
+      "block_num": "关联区块",
+      "update_at": "更新时间",
+      "ieo_status": "状态",
+      "ieo_type": "操作类型",
+      "token_count": "Token数量",
+      "no_data": "暂无IEO参与记录"
+    }
   }
 }

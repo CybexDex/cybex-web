@@ -10,7 +10,7 @@ export const fetchJson = options => {
   let opts = {
     ...others,
     method: type || "get",
-    credentials: "include",
+    // credentials: "include",
     headers: options.headers || {
       Accept: "application/json",
       "Content-Type": "application/json"
@@ -104,6 +104,17 @@ export function fetchCreatUser(data, cb) {
   fetchJson({
     url: "/cybex/user/create",
     type: "POST",
+    success: res => {
+      cb(res);
+    },
+    data: data
+  });
+}
+
+export function fetchUserProjectStatus(data, cb) {
+  fetchJson({
+    url: "/cybex/user/status",
+    type: "GET",
     success: res => {
       cb(res);
     },

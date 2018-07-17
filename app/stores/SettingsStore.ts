@@ -20,7 +20,6 @@ export const MARKETS = [
   "JADE.LHT",
   "JADE.INK",
   "JADE.BAT",
-  "JADE.VEN",
   "JADE.OMG",
   "JADE.SNT",
   "JADE.NAS",

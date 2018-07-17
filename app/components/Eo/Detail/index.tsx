@@ -216,17 +216,17 @@ formatTime(input){
               this.setState({reserve_status:()=>{
                 if(res.result.status == 'ok'){
                   return (
-                    res.result.create_user_type == 'code'?(
-                      <div className="button primery-button ok">
-                        <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
-                      </div>
-                    ):(
+                    // res.result.create_user_type == 'code'?(
+                    //   <div className="button primery-button ok">
+                    //     <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                    //   </div>
+                    // ):(
                       <Link to={`/ieo/join/${this.props.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_IEO_now" />
                       </div>
                       </Link>
-                    )
+                    // )
                     
                   )
                 }else if(res.result.status == 'pre'){
@@ -280,10 +280,16 @@ formatTime(input){
             this.setState({reserve_status:()=>{
               if(res2.result.kyc_status == 'ok'){
                 return (
+                  res.result.create_user_type == 'code'?(
+                      <div className="button primery-button ok">
+                        <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                      </div>
+                    ):(
                   <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                     立即预约
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
+                  )
                 )
               }else{
                 return(
@@ -317,9 +323,6 @@ formatTime(input){
       }
     });
   }
-  kycNotPass() {
-    alert('Kyc Not Passed')
-  }
 
   public openModal = () => {
     this.setState({
@@ -332,6 +335,7 @@ formatTime(input){
     ZfApi.publish("ieo-alert-modal", "open");
     setTimeout(()=>{
       ZfApi.publish("ieo-alert-modal", "close");
+      this.reserve();
     },3000)
     // this.setState({
     //   showAlertModal: true,
@@ -417,28 +421,28 @@ formatTime(input){
         </div>):null}
         
         {current_base_token_count?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Raised" />:
           </div>
           <div className="info-detail">{current_base_token_count}{base_token_name}</div>
         </div>):null}
         
         {rate?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_max_quota}{base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
-          <div className="info-title">
+          <div className="info-title">
           <img className="icon-time" src={time} />
           {status == 'ok'? (
               <span className={`sub-time ${status}`}> 距离结束 </span>
@@ -478,7 +482,7 @@ formatTime(input){
           </h3>
           
           {name?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
               <Translate content="EIO.Project_Name" />: 
             </div>
             <div className="info-detail">{name}</div>
@@ -493,14 +497,14 @@ formatTime(input){
 
           
           {start_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.IEO_Period" />: 
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
           {end_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.End_at" />: 
             </div>
             <div className="info-detail">{end_at}</div>
