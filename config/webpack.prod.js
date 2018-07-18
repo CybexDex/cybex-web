@@ -38,13 +38,19 @@ const cssLoaders = [
       {
         loader: "postcss-loader",
         options: {
-          plugins: [require("autoprefixer")]
+          plugins: [require("autoprefixer")],
+          options: {
+            minimize: true,
+            debug: false
+          }
         }
       },
       {
         loader: "sass-loader",
         options: {
-          outputStyle: "expanded"
+          outputStyle: "expanded",
+          minimize: true,
+          debug: false
         }
       }
     ]
@@ -86,8 +92,8 @@ const prodPlugins = plugins.concat([
 
 const config = {
   entry: {
-    styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
-    assets: path.resolve(BASE_URL, "app/assets/loader"),
+    // styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
+    // assets: path.resolve(BASE_URL, "app/assets/loader"),
     app: path.resolve(BASE_URL, "app/Main.js")
   },
   context: path.resolve(BASE_URL, "app"),
@@ -99,7 +105,7 @@ const config = {
     sourceMapFilename: "[name].js.map"
   },
   mode: "production",
-  devtool: false,
+  devtool: "none",
   module: {
     rules: loaders.concat(cssLoaders)
   },
@@ -111,10 +117,17 @@ const config = {
   optimization: {
     splitChunks: {
       cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true
+        },
         commons: {
-          test: /node_modules\//,
+          test: /node_modules/,
           name: "commons",
-          chunks: "initial"
+          chunks: "initial",
+          enforce: true
         }
       }
     }
