@@ -9,6 +9,7 @@ import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
 import { Link } from "react-router"; 
 import DetalModal from "./Modal.jsx";
+import AlertModal from './AlertModal.jsx';
 import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
 import Translate from "react-translate-component";
@@ -21,6 +22,7 @@ import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
+import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
@@ -123,6 +125,9 @@ formatTime(input){
     }
 
     fetchJson.fetchDetails(data,(res)=>{
+      if(res.result.control !== 'online'){
+        alert('go-back')
+      }
       res.result.end_at = this.formatTime(res.result.end_at);
       res.result.start_at = this.formatTime(res.result.start_at);
       res.result.created_at = this.formatTime(res.result.created_at);
@@ -133,6 +138,7 @@ formatTime(input){
       let startAt = moment(res.result.start_at);
       let finishAt = moment(res.result.finish_at);
       let now = moment();
+
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       let remainStr;
       let projectStatus;
@@ -210,17 +216,29 @@ formatTime(input){
               this.setState({reserve_status:()=>{
                 if(res.result.status == 'ok'){
                   return (
-                    <Link to={`/ieo/join/${this.props.params.id}`}>
-                    <div className="button primery-button ok">
-                    <Translate content="EIO.Join_IEO_now" />
-                    </div>
-                    </Link>
+                    // res.result.create_user_type == 'code'?(
+                    //   <div className="button primery-button ok">
+                    //     <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                    //   </div>
+                    // ):(
+                      <Link to={`/ieo/join/${this.props.params.id}`}>
+                      <div className="button primery-button ok">
+                      <Translate content="EIO.Join_IEO_now" />
+                      </div>
+                      </Link>
+                    // )
+                    
                   )
                 }else if(res.result.status == 'pre'){
                   return (
-                    <div className="button primery-button disabled pre">
-                      等待众筹开始
-                    </div>
+                    
+                    res.result.create_user_type == 'code'?(
+                      <div className="button primery-button pre">
+                        <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                      </div>
+                    ):(<div className="button primery-button disabled pre">
+                    等待众筹开始
+                  </div>)
                   )
                 }
               }})
@@ -262,10 +280,16 @@ formatTime(input){
             this.setState({reserve_status:()=>{
               if(res2.result.kyc_status == 'ok'){
                 return (
+                  res.result.create_user_type == 'code'?(
+                      <div className="button primery-button ok">
+                        <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                      </div>
+                    ):(
                   <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                     立即预约
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
+                  )
                 )
               }else{
                 return(
@@ -299,14 +323,26 @@ formatTime(input){
       }
     });
   }
-  kycNotPass() {
-    alert('Kyc Not Passed')
-  }
 
   public openModal = () => {
     this.setState({
       showModal: true
     })
+  }
+
+  sentdata(){
+    ZfApi.publish("ieo-detail-modal", "close");
+    ZfApi.publish("ieo-alert-modal", "open");
+    setTimeout(()=>{
+      ZfApi.publish("ieo-alert-modal", "close");
+      this.reserve();
+    },3000)
+    // this.setState({
+    //   showAlertModal: true,
+    //   showModal: false
+    // }, ()=>{
+    //   console.log(this.state)
+    // })
   }
 
   render() {
@@ -335,7 +371,8 @@ formatTime(input){
       current_percent,
       adds_banner,
       token,
-      adds_keyword
+      adds_keyword,
+      create_user_type
     } = data;
 
     let percent = current_percent*100;
@@ -384,28 +421,28 @@ formatTime(input){
         </div>):null}
         
         {current_base_token_count?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Raised" />:
           </div>
           <div className="info-detail">{current_base_token_count}{base_token_name}</div>
         </div>):null}
         
         {rate?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null}
         
         {base_max_quota?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_max_quota}{base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
-          <div className="info-title">
+          <div className="info-title">
           <img className="icon-time" src={time} />
           {status == 'ok'? (
               <span className={`sub-time ${status}`}> 距离结束 </span>
@@ -445,7 +482,7 @@ formatTime(input){
           </h3>
           
           {name?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
               <Translate content="EIO.Project_Name" />: 
             </div>
             <div className="info-detail">{name}</div>
@@ -460,14 +497,14 @@ formatTime(input){
 
           
           {start_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.IEO_Period" />: 
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
           {end_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.End_at" />: 
             </div>
             <div className="info-detail">{end_at}</div>
@@ -535,10 +572,22 @@ formatTime(input){
             </div>
             <div className="info-detail">{adds_detail}</div>
           </div>):null}
-          
 
           <div className="button-holder">
-          <Trigger open="ieo-detail-modal"><div></div></Trigger>
+          {/* {create_user_type?(
+            <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
+          ):null} */}
+          
+          {
+            (status == 'ok'||status == 'pre') ? (
+                this.state.reserve_status()
+            ):null 
+          }
+          {
+            (status == 'ok'||status == 'pre') ? (
+              this.state.kyc_status()
+             ):null 
+          }
           {/* {this.state.kyc_status()}
           {
             (status == 'ok'||status == 'pre') ? (
@@ -579,8 +628,10 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
+          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showModal}>
           </DetalModal>
+          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showAlertModal}>
+          </AlertModal>
       </div>
     );
   }
