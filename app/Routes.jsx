@@ -264,7 +264,7 @@ const routes = (
       }}
     />
     <Route
-      path="ieo"
+      path="eto"
       getComponent={(location, cb) => {
         import("components/Eo")
           .then(loadRoute(cb))
@@ -272,7 +272,7 @@ const routes = (
       }}
     />
     <Route
-      path="ieo/genesis-space"
+      path="eto/genesis-space"
       getComponent={(location, cb) => {
         import("components/Eo/Detail/Mock")
           .then(loadRoute(cb))
@@ -280,7 +280,7 @@ const routes = (
       }}
     />
     <Route
-      path="ieo/training"
+      path="eto/training"
       getComponent={(location, cb) => {
         import("components/Eo/training")
           .then(loadRoute(cb))
@@ -288,7 +288,7 @@ const routes = (
       }}
     />
     <Route
-      path="ieo/detail/:id"
+      path="eto/detail/:id"
       getComponent={(location, cb) => {
         import("components/Eo/Detail")
           .then(loadRoute(cb))
@@ -296,7 +296,7 @@ const routes = (
       }}
     />
     <Route
-      path="ieo/join/:id"
+      path="eto/join/:id"
       getComponent={(location, cb) => {
         import("components/Eo/Detail/join")
           .then(loadRoute(cb))

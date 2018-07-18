@@ -66,7 +66,7 @@ export class AlertModal extends React.Component {
           errorMsg: res.result
         });
       }
-      this.props.cb()
+      this.props.cb();
     });
   }
   render() {
@@ -81,7 +81,12 @@ export class AlertModal extends React.Component {
         // overlayClose={props.overlayClose}
       >
       <div className="modal-container">
-        success
+      <div className="modal-content">
+        <div className="title-holder">
+          <h3><icon className="icon icon-success"></icon><span>预约成功！</span></h3>
+          <p>请等待白名单审核</p>
+        </div>
+      </div>
       </div>
       
       <Trigger close={this.props.id}>
