@@ -173,7 +173,7 @@ class EO extends React.Component<any, any> {
           }
         }
         return (
-          <div className="waterfall">
+          <div key={`w-${j}`} className="waterfall">
       {f.map((e,i)=>{
         let percent = e.current_percent*100;
         percent = percent.toFixed(2);

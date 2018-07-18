@@ -230,16 +230,25 @@ formatTime(input){
                     
                   )
                 }else if(res.result.status == 'pre'){
-                  return (
-                    
-                    res.result.create_user_type == 'code'?(
-                      <div className="button primery-button pre">
-                        <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                  if(res.result.is_user_in == 0){
+                    return (
+                      <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
+                        停止预约
+                        {/* <Translate content="EIO.Reserve_Now" /> */}
                       </div>
-                    ):(<div className="button primery-button disabled pre">
-                    等待众筹开始
-                  </div>)
-                  )
+                    )
+                  }else{
+                    return (
+                      res.result.create_user_type == 'code'?(
+                        <div className="button primery-button pre">
+                          <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                        </div>
+                      ):(<div className="button primery-button disabled pre">
+                      等待众筹开始
+                    </div>)
+                    )
+                  }
+                  
                 }
               }})
             break;
@@ -279,18 +288,28 @@ formatTime(input){
             default:
             this.setState({reserve_status:()=>{
               if(res2.result.kyc_status == 'ok'){
-                return (
-                  res.result.create_user_type == 'code'?(
-                      <div className="button primery-button ok">
-                        <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
-                      </div>
-                    ):(
+                if(res.result.is_user_in == 0){
+                  return(
                   <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
-                    立即预约
+                    停止预约
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
                   )
-                )
+                }else{
+                  return (
+                    res.result.create_user_type == 'code'?(
+                        <div className="button primery-button ok">
+                          <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                        </div>
+                      ):(
+                    <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
+                      立即预约
+                      {/* <Translate content="EIO.Reserve_Now" /> */}
+                    </div>
+                    )
+                  )
+                }
+                
               }else{
                 return(
                   <div className="button primery-button disabled can-not-reserve">
@@ -567,6 +586,13 @@ formatTime(input){
             <div className="info-detail">{adds_detail}</div>
           </div>):null}
 
+          <div className="info-item">
+            <div className="info-title">
+            <input type="checkbox" />
+            <label>阅读并同意</label>
+            </div>
+          </div>
+
           <div className="button-holder">
           {/* {create_user_type?(
             <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
@@ -583,6 +609,7 @@ formatTime(input){
               this.state.kyc_status()
              ):null 
           }
+          
           {/* {this.state.kyc_status()}
           {
             (status == 'ok'||status == 'pre') ? (
