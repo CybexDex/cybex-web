@@ -88,7 +88,7 @@
     "Project_Name": "Project Name",
     "Token_Name": "Token Name",
     "Total_Token_Supply": "Total Token Supply",
-    "IEO": "IEO",
+    "ETO": "ETO",
     "End_at": "End Time",
     "Total_IEO_Supply": "Total IEO Supply",
     "Soft_cap": "Soft cap",
@@ -1775,7 +1775,7 @@
     "logout": "Logout",
     "worldcup": "World Cup 2018",
     "help": "Documents",
-    "ieo": "IEO"
+    "eto": "ETO"
   },
   "vesting": {
     "progress": "Unlock Progress",

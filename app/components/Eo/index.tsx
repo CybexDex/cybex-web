@@ -135,7 +135,7 @@ class EO extends React.Component<any, any> {
             return(
               <div key={i}>
                 <div className="item">
-                <Link to={`/ieo/detail/${e.id}`}>
+                <Link to={`/eto/detail/${e.id}`}>
                   <div className="img-content">
                   <img src={`${e.adds_banner}`} width={1280} height={656} />
                   </div>
@@ -149,11 +149,11 @@ class EO extends React.Component<any, any> {
 
         {/* {this.state.kyc_status=="not_start"?( */}
           <div className="title-container">
-          {/* <Link to="/ieo/training"> */}
+          {/* <Link to="/eto/training"> */}
           <h2 className="base-title">
           | <Translate content="EIO.Popular_IEOs" />
           </h2>
-          <Link to="/ieo/training">
+          <Link to="/eto/training">
           <div className="kyc-btn button primery-button">
           
             {/* <Translate content="EIO.KYC_Verification" /> */}
@@ -319,7 +319,7 @@ class EO extends React.Component<any, any> {
               )}
               </div>
               <div className="bottom-holder">
-              <Link to={`/ieo/detail/${e.id}`}>
+              <Link to={`/eto/detail/${e.id}`}>
               <div className={`button primery-button ${e.status}`}>
                 {e.status == 'ok'? (
                   <Translate content="EIO.Join_in_IEO" />

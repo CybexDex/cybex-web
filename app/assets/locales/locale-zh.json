@@ -132,7 +132,7 @@
     "Project_Name": "项目名称",
     "Token_Name": "代币名称",
     "Total_Token_Supply": "代币总量",
-    "IEO": "IEO",
+    "ETO": "ETO",
     "End_at": "结束时间",
     "Total_IEO_Supply": "IEO 总量",
     "Soft_cap": "软顶",
@@ -1771,7 +1771,7 @@
     "logout": "登出账户",
     "worldcup": "世界杯竞猜",
     "help": "帮助文档",
-    "ieo": "IEO"
+    "eto": "ETO"
   },
   "vesting": {
     "progress": "解锁进度",

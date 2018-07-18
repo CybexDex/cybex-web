@@ -1,5 +1,8 @@
-#ieo-alert-modall{
+#ieo-alert-modal{
 	background: #293246;
+	.close-button{
+		display: none;
+	}
 	.title-holder{
 		width: 40%;
 		text-align: center;
@@ -7,6 +10,12 @@
 		margin-top: 6%;
 		margin-bottom: 6%;
 		font-size: 20px;
+		h3{
+			font-size: 26px;
+			margin-bottom: 20px;
+			line-height: 30px;
+		}
+		
 	}
 	.error-msg-holder{
 		color: #d7333d;
@@ -26,6 +35,17 @@
 		font-size: 14px;
 		padding: 0 10px;
 	}
+	.icon-success{
+		background-image: url('../../../assets/ic-check-circle-green@3x.png');
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		width: 30px;
+		height: 30px;
+		margin-right: 10px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-bottom: 2px;
+	}
 	.flex-container{
 		position: relative;
 		width: 80%;
@@ -34,6 +54,7 @@
 		flex-direction: row;
 		justify-content: space-between;
 		justify-items: center;
+		
 		.flex-item{
 			margin-right: 20px;
 			&.flex-input-holder{

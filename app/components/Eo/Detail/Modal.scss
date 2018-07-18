@@ -8,6 +8,39 @@
 		margin-bottom: 6%;
 		font-size: 20px;
 	}
+	.close-button{
+		text-decoration: none;
+		background: #78819a;
+		color: #293246;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		line-height: 20px;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: center;
+	}
+	.icon-error{
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+		width: 25px;
+		height: 25px;
+		margin-right: 10px;
+		display: inline-block;
+		vertical-align: middle;
+		position: absolute;
+		right: 0px;
+		top: 6px;
+		background: #d7333d;
+		border-radius: 50%;
+		p{
+			margin: 0;
+			font-size: 19px;
+			text-align: center;
+			line-height: 25px;
+			color: #212939;
+		}
+	}
 	.error-msg-holder{
 		color: #d7333d;
 		height: 22px;
@@ -38,6 +71,7 @@
 			margin-right: 20px;
 			&.flex-input-holder{
 				flex-grow: 1;
+				position: relative;
 				input{
 					height: 100%;
 					background: #212939;
