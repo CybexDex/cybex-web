@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { Route, IndexRoute, Redirect } from "react-router";
+import { Route, IndexRoute, Redirect } from "react-router-dom";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
 

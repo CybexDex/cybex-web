@@ -150,7 +150,22 @@ const loaders = [
   {
     test: /.*\.svg$/,
     exclude: [path.resolve(root_dir, "app/components/Common")],
-    loaders: ["svg-inline-loader", "svgo-loader"]
+    use: [
+      {
+        loader: "svg-inline-loader"
+      },
+      {
+        loader: "svgo-loader",
+        options: {
+          plugins: [
+            { cleanupAttrs: true },
+            { removeMetadata: true },
+            { removeXMLNS: true },
+            { removeViewBox: false }
+          ]
+        }
+      }
+    ]
   },
   {
     test: /\.md/,

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { connect } from "alt-react";
 import ActionSheet from "react-foundation-apps/src/action-sheet";
 import AccountActions from "actions/AccountActions";
@@ -31,6 +31,8 @@ import { ModalActions } from "actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
+import { withRouter } from "react-router-dom";
+
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
 import { CybexLogo } from "./Logo";
@@ -98,22 +100,19 @@ const FlagDropdown = class extends React.PureComponent<{
 
 export const HeadContextMenuId = "$headerContext";
 
-class Header extends React.Component<any, any> {
+let Header = class extends React.Component<any, any> {
   unlisten = null;
-  static contextTypes = {
-    location: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
-  };
 
   constructor(props, context) {
     super(props);
+    console.debug("Component: ", this);
     this.state = {
-      active: context.location.pathname
+      active: props.location.pathname
     };
   }
 
   componentWillMount() {
-    this.unlisten = this.context.router.listen((newState, err) => {
+    this.unlisten = this.props.history.listen((newState, err) => {
       if (!err) {
         if (this.unlisten && this.state.active !== newState.pathname) {
           this.setState({
@@ -162,7 +161,7 @@ class Header extends React.Component<any, any> {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.props.history.push(route);
   }
 
   _onGoBack(e) {
@@ -178,10 +177,10 @@ class Header extends React.Component<any, any> {
   _accountClickHandler(account_name, e) {
     e.preventDefault();
     ZfApi.publish("account_drop_down", "close");
-    if (this.context.location.pathname.indexOf("/account/") !== -1) {
-      let currentPath = this.context.location.pathname.split("/");
+    if (this.props.location.pathname.indexOf("/account/") !== -1) {
+      let currentPath = this.props.location.pathname.split("/");
       currentPath[2] = account_name;
-      this.context.router.push(currentPath.join("/"));
+      this.props.history.push(currentPath.join("/"));
     }
     if (account_name !== this.props.currentAccount) {
       AccountActions.setCurrentAccount.defer(account_name);
@@ -508,9 +507,9 @@ class Header extends React.Component<any, any> {
       </div>
     );
   }
-}
+};
 
-export default connect(
+Header = connect(
   Header,
   {
     listenTo() {
@@ -546,3 +545,7 @@ export default connect(
     }
   }
 );
+Header = withRouter(Header);
+
+export default Header;
+export { Header };

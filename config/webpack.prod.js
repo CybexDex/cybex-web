@@ -75,6 +75,8 @@ const prodPlugins = plugins.concat([
       NODE_ENV: JSON.stringify("production")
     },
     __DEV__: false,
+    __PERFORMANCE_DEVTOOL__: false,
+    __DEPRECATED__: false,
     ...defines
   }),
   new MiniCssExtractPlugin({
@@ -101,6 +103,7 @@ const config = {
     publicPath: "/",
     path: path.join(BASE_URL, outputDir),
     filename: "[name]-[hash:7].js",
+    chunkFilename: "[name]-[chunkhash:7].js",
     pathinfo: true,
     sourceMapFilename: "[name].js.map"
   },
@@ -124,8 +127,20 @@ const config = {
           enforce: true
         },
         commons: {
-          test: /node_modules/,
+          test: /node_modules\/[^(react)|(d3)]/,
           name: "commons",
+          chunks: "initial",
+          enforce: true
+        },
+        react: {
+          test: /node_modules\/react.*/,
+          name: "framework",
+          chunks: "initial",
+          enforce: true
+        },
+        react: {
+          test: /node_modules\/d3.*/,
+          name: "d3",
           chunks: "initial",
           enforce: true
         }

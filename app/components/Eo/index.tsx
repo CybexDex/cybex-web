@@ -8,7 +8,7 @@ import * as PropTypes from "prop-types";
 import Anthem from './anthem';
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
-import { Link } from "react-router"; 
+import { Link } from "react-router-dom"; 
 let logo_demo = require('assets/cybex_rainbow_lg.png');
 import ReactSwipe from 'react-swipe';
 import * as fetchJson from "./service";

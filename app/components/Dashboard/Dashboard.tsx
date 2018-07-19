@@ -1,19 +1,20 @@
 import * as React from "react";
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 import DashboardList from "./DashboardList";
 import { RecentTransactions } from "../Account/RecentTransactions";
 import Translate from "react-translate-component";
 import MarketCard from "./MarketCard";
 import utils from "common/utils";
 import { Apis } from "cybexjs-ws";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 // let home1 = require("assets/images/home_1.jpg");
 // let home2 = require("assets/images/home_2.jpg");
 import LoadingIndicator from "../LoadingIndicator";
 import SettingsActions from "actions/SettingsActions";
 
-class Dashboard extends React.Component {
+let Dashboard = class extends React.Component<any, any> {
   constructor(props) {
-    super();
+    super(props);
     let marketsByChain = {
       "90be01e8": [["JADE.ETH", "CYB"]],
       "59e27e38": [["JADE.ETH", "CYB"]]
@@ -39,7 +40,7 @@ class Dashboard extends React.Component {
     let accountCount =
       linkedAccounts.size + myIgnoredAccounts.size + (passwordAccount ? 1 : 0);
     if (!accountCount) {
-      this.props.router.push("/login");
+      this.props.history.push("/login");
     }
   }
 
@@ -216,6 +217,6 @@ class Dashboard extends React.Component {
       </div>
     );
   }
-}
-
+};
+Dashboard = withRouter(Dashboard);
 export default Dashboard;

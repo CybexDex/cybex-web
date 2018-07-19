@@ -37,15 +37,19 @@ const WS_NODE_LIST = __TEST__
     new ApiNode("shenzhen.51nebula.com/", "Shenzhen")
   ]
   : [
-    new ApiNode("shanghai.51nebula.com/", "Shanghai"),
-    new ApiNode("beijing.51nebula.com/", "Beijing"),
-    new ApiNode("hongkong.cybex.io/", "Hongkong"),
     new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
+    new ApiNode("korea-01.cybex.io/", "Korea"),
     new ApiNode("singapore-01.cybex.io/", "Singapore"),
-    new ApiNode("korea-01.cybex.io/", "Korea")
+    new ApiNode("hongkong.cybex.io/", "Hongkong"),
+    new ApiNode("beijing.51nebula.com/", "Beijing"),
+    new ApiNode("shanghai.51nebula.com/", "Shanghai")
   ];
 
-export const IEO_API = __DEV__ ? "https://ieo-apitest.nbltrust.com/api" : __TEST__ ? "///ieo-apitest.nbltrust.com/api" : "";
+export const IEO_API = __DEV__
+  ? "https://ieo-apitest.nbltrust.com/api"
+  : __TEST__
+    ? "///ieo-apitest.nbltrust.com/api"
+    : "";
 export const PRICE_API = "https://app.cybex.io/price";
 export const settingsAPIs = {
   DEFAULT_WS_NODE: BITSHARES_NODE,

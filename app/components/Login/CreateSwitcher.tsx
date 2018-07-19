@@ -1,7 +1,7 @@
 import * as React from "react";
 import Radium from "radium";
 import { Button } from "components/Common";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 
 export let CreateSwitcher = Radium(

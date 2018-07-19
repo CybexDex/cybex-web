@@ -1,7 +1,7 @@
 import * as React from "react"; import * as PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import { NetworkStore } from "stores/NetworkStore";
-import { withRouter, Link } from "react-router";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "alt-react";
 import willTransitionTo from "../../routerTransition";
 import Translate from "react-translate-component";

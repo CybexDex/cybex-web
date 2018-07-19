@@ -5,7 +5,7 @@ import * as PropTypes from "prop-types";
 // import EOComponent from './Eo';
 // import EoStore from "stores/EoStore";
 // const store = configureStore();
-import { Link } from "react-router"; 
+import { Link } from "react-router-dom"; 
 import './training.scss';
 import Translate from "react-translate-component";
 import * as counterpart from "counterpart";

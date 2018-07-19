@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import BlockchainActions from "actions/BlockchainActions";
 import Translate from "react-translate-component";
 import { FormattedDate } from "react-intl";

@@ -57,7 +57,9 @@ const def = {
     "process.env": {
       NODE_ENV: JSON.stringify("development")
     },
-    __DEV__: true
+    __DEV__: true,
+    __DEPRECATED__: false,
+    __PERFORMANCE_DEVTOOL__: true
   },
   ...defines
 };
@@ -69,13 +71,10 @@ const devPlugins = [
 
 const config = {
   entry: {
-    vendor: ["react", "react-dom", "highcharts/highstock", "lodash"],
-    styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
-    assets: path.resolve(BASE_URL, "app/assets/loader-dev"),
     app: [
       "react-hot-loader/patch",
       "webpack-hot-middleware/client",
-      path.resolve(BASE_URL, "app/Main-dev.js")
+      path.resolve(BASE_URL, "app/Main.js")
     ]
   },
   context: path.resolve(BASE_URL, "app"),
@@ -91,11 +90,11 @@ const config = {
   module: {
     rules: loaders.concat(cssLoaders)
   },
-  resolve,
-  plugins: devPlugins,
   node: {
     fs: "empty"
   },
+  resolve,
+  plugins: devPlugins,
   optimization: {}
 };
 

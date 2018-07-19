@@ -4,7 +4,7 @@ import * as PropTypes from "prop-types";
 import { zipObject } from "lodash";
 import counterpart from "counterpart";
 import utils from "common/utils";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 
 let req = require.context("help", true, /\.md/);
 console.debug("REQ: ", req);

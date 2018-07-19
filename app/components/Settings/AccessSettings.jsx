@@ -5,7 +5,7 @@ import SettingsActions from "actions/SettingsActions";
 import SettingsStore from "stores/SettingsStore";
 import { settingsAPIs } from "../../api/apiConfig";
 import willTransitionTo from "../../routerTransition";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import { connect } from "alt-react";
 import { ChainConfig, Apis } from "cybexjs-ws";
 const URL_FRAGMENT_OF_TESTNET = "121.40";
