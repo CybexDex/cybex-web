@@ -236,17 +236,28 @@ formatTime(input){
         
       });
       if(!this.props.myAccounts[0]){
-        this.setState({kyc_status: ()=>{
+        this.setState({reserve_status: ()=>{
           return (
             this.state.canBeReserve?(
               <Link to={`/login`}>
               <div className="button primery-button">
-              <Translate content="EIO.Reserve_Now" />
+              {res.result.is_user_in == 0? (
+                <span>停止预约</span>
+                // <Translate content="EIO.Reserve_Now" />
+              ):(
+                <Translate content="EIO.Reserve_Now" />
+              )}
+              
               </div>
               </Link>
             ):(
               <div className="button primery-button disabled">
-              <Translate content="EIO.Reserve_Now" />
+              {res.result.is_user_in == 0? (
+                <span>停止预约</span>
+                // <Translate content="EIO.Reserve_Now" />
+              ):(
+                <Translate content="EIO.Reserve_Now" />
+              )}
               </div>
             )
             
@@ -398,11 +409,11 @@ formatTime(input){
             this.setState({kyc_status:()=>{
               return (
                 <div className="kyc-btn-holder">
-                  <Link to="/eto/training">
+                  <a href="https://www.icoape.com/" target="_blank">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>
-                  </Link>
+                  </a>
                 </div>
               )
             }})
@@ -462,8 +473,11 @@ formatTime(input){
       adds_banner,
       token,
       adds_keyword,
-      create_user_type
+      create_user_type,
+      current_token_count,
+      
     } = data;
+    let base_tokens = data.base_tokens ||[]
 
     let percent = current_percent*100;
         percent = percent.toFixed(2);
@@ -510,19 +524,35 @@ formatTime(input){
           <div className="info-detail">{current_user_count}人</div>
         </div>):null}
         
-        {current_base_token_count?(<div className="info-item">
+        {current_token_count?(<div className="info-item">
           <div className="info-title">
-            <Translate content="EIO.Raised" />:
+            <span>当前完成认购：</span>
+            {/* <Translate content="EIO.Raised" />: */}
           </div>
-          <div className="info-detail">{current_base_token_count}{base_token_name}</div>
+          <div className="info-detail">{adds_token_total + current_token_count}{base_token_name}</div>
+          {/* <div className="info-detail">{current_base_token_count}{base_token_name}</div> */}
+          {/* <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count}NES</p> */}
         </div>):null}
         
-        {rate?(<div className="info-item">
+        {base_tokens?(<div className="info-item">
+          <div className="info-title">
+            <Translate content="EIO.Redeeming_Ratio" />: 
+          </div>
+          {
+            base_tokens.map((e,i)=>{
+              return(
+                <div className="info-detail" key={i}>1{e.base_token_name}={e.rate}{token}</div>
+              )
+            })
+          }
+        </div>):null}
+
+        {/* {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
-        </div>):null}
+        </div>):null} */}
         
         {base_max_quota?(<div className="info-item">
           <div className="info-title">
@@ -635,12 +665,18 @@ formatTime(input){
             <div className="info-detail">{district_restriction}</div>
           </div>):null}
           
-          {base_token_name?(<div className="info-item">
+          <div className="info-item">
             <div className="info-title">
             <Translate content="EIO.IEO_token" />: 
             </div>
-            <div className="info-detail">{base_token_name}</div>
-          </div>):null}
+            <div className="info-detail">{
+              base_tokens.map((e,i)=>{
+                return (
+                  <span key={i}>{e.base_token_name} </span>
+                )
+              })
+            }</div>
+          </div>
           
           {adds_website?(<div className="info-item">
           
