@@ -1,0 +1,31 @@
+.detail {
+	&.en{
+		.left-part{
+			width: 60%;
+			float: left;
+			position: relative;
+			box-sizing: border-box;
+			.info-title{
+				text-align: justify;
+
+			}
+			.info-detail{
+				width: 80%;
+			}
+		}
+		.right-part{
+			width: 40%;
+			float: left;
+			box-sizing: border-box;
+			.info-title{
+				text-align: justify;
+				width: 30%
+			}
+			.info-detail{
+				width: 70%;
+			}
+		}
+	}
+	
+
+}
