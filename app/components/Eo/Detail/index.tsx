@@ -239,17 +239,16 @@ formatTime(input){
         this.setState({reserve_status: ()=>{
           return (
             this.state.canBeReserve?(
-              <Link to={`/login`}>
-              <div className="button primery-button">
+              // <Link to={`/login`}>
+              <div className="button primery-button disabled">
               {res.result.is_user_in == 0? (
                 <span>停止预约</span>
                 // <Translate content="EIO.Reserve_Now" />
               ):(
                 <Translate content="EIO.Reserve_Now" />
               )}
-              
               </div>
-              </Link>
+              // </Link>
             ):(
               <div className="button primery-button disabled">
               {res.result.is_user_in == 0? (
