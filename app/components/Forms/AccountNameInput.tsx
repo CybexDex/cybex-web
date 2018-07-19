@@ -27,7 +27,7 @@ class AccountNameInput extends React.Component<any, any> {
     noLabel: false
   };
 
-  accountInput = null
+  accountInput = null;
 
   constructor(props) {
     super(props);
@@ -135,12 +135,14 @@ class AccountNameInput extends React.Component<any, any> {
       AccountActions.accountSearch(value);
   }
 
-  handleChange(accoutnName) {
-    // e.preventDefault();
-    // e.stopPropagation();
+  handleChange(e) {
+    // if (!accountName) return;
+    e.preventDefault();
+    e.stopPropagation();
     // Simplify the rules (prevent typing of invalid characters)
-    var account_name = accoutnName;
-    // var account_name = e.target.value.toLowerCase();
+    // console.debug("AccountName: ", accountName);
+    // var account_name = accountName;
+    var account_name = e.target.value.toLowerCase();
     account_name = account_name.match(/[a-z0-9\.-]+/);
     account_name = account_name ? account_name[0] : null;
     account_name = account_name || "";
@@ -169,8 +171,8 @@ class AccountNameInput extends React.Component<any, any> {
           <label className="left-label">{this.props.placeholder}</label>
           <Input
             icon="avatar"
-            iconStyle={{transform: "scale(0.8)"}}  
-            inputRef={input => this.accountInput = input}          
+            iconStyle={{ transform: "scale(0.8)" }}
+            inputRef={input => (this.accountInput = input)}
             name="username"
             type="text"
             ref="input"
@@ -179,7 +181,7 @@ class AccountNameInput extends React.Component<any, any> {
             onChange={this.handleChange}
             onKeyDown={this.onKeyDown}
             valueFromOuter
-            style={{fontSize: "1.25rem", height: "3.66667em"}}
+            style={{ fontSize: "1.25rem", height: "3.66667em" }}
             value={this.state.account_name || this.props.initial_value}
           />
         </section>

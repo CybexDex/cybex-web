@@ -135,7 +135,7 @@ class EO extends React.Component<any, any> {
             return(
               <div key={i}>
                 <div className="item">
-                <Link to={`/ieo/detail/${e.id}`}>
+                <Link to={`/eto/detail/${e.id}`}>
                   <div className="img-content">
                   <img src={`${e.adds_banner}`} width={1280} height={656} />
                   </div>
@@ -149,18 +149,18 @@ class EO extends React.Component<any, any> {
 
         {/* {this.state.kyc_status=="not_start"?( */}
           <div className="title-container">
-          {/* <Link to="/ieo/training"> */}
+          {/* <Link to="/eto/training"> */}
           <h2 className="base-title">
           | <Translate content="EIO.Popular_IEOs" />
           </h2>
-          <Link to="/ieo/training">
+          <a href="https://www.icoape.com/" target="_blank">
           <div className="kyc-btn button primery-button">
           
             {/* <Translate content="EIO.KYC_Verification" /> */}
             <Translate content="EIO.Accept_KYC_Verification" />
           
           </div>
-          </Link>
+          </a>
           {/* </Link> */}
         </div>
         {/* ):null */}
@@ -173,7 +173,7 @@ class EO extends React.Component<any, any> {
           }
         }
         return (
-          <div className="waterfall">
+          <div key={`w-${j}`} className="waterfall">
       {f.map((e,i)=>{
         let percent = e.current_percent*100;
         percent = percent.toFixed(2);
@@ -319,7 +319,7 @@ class EO extends React.Component<any, any> {
               )}
               </div>
               <div className="bottom-holder">
-              <Link to={`/ieo/detail/${e.id}`}>
+              <Link to={`/eto/detail/${e.id}`}>
               <div className={`button primery-button ${e.status}`}>
                 {e.status == 'ok'? (
                   <Translate content="EIO.Join_in_IEO" />
@@ -351,7 +351,8 @@ class EO extends React.Component<any, any> {
                   </div>
                 </div>
                 {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
-                  <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
+                  // <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
+                  <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count}NES</p>
                 ):null}
                 <p className={`raised ${e.status}`}><Icon name="time" />
                 {e.status == 'ok'? (
@@ -370,6 +371,7 @@ class EO extends React.Component<any, any> {
                 <span>{remainStr}</span>
                 
                 </p>
+                
                 </div>
               </div>
               </div>
