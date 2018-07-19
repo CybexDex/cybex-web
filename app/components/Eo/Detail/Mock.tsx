@@ -21,7 +21,9 @@ import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
+import "./mock.scss";
 import { TokenKind } from "graphql";
+import counterpart from 'counterpart';
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
 let fockImg = require('assets/mockImg.png')
@@ -140,12 +142,13 @@ formatTime(input){
       name = null, 
       status = "pre",
       base_soft_cap = null,
-      base_hard_cap = "2000ETH",
+      base_hard_cap = "200,000,000NES",
       current_user_count,
       current_base_token_count,
-      base_max_quota = "2",
+      // base_max_quota = "2",
+      base_max_quota = null,
       base_min_quota,
-      rate = "1ETH = 10万个NES",
+      rate = "1ETH = 100,000NES  1CYB = 50NES",
       adds_token_total = "20亿，每年增发5%",
       adds_ico_total,
       start_at = "8月11日 11:00  (GMT +8, 新加坡时间）",
@@ -154,7 +157,7 @@ formatTime(input){
       adds_on_market_time,
       adds_advantage = "Genesis有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性。一个侧链就是一个虚拟国，每个虚拟国可以有完全不同的治理机制，实现无限的可能性。 Genesis项目的代码进展状况良好，testnet预计年底前上线。另外，这次IEO的融资额度非常小，又是第一轮融资，相当于散户直接可以参与基石轮。",
       offer_at,
-      base_token_count = "2000ETH",
+      base_token_count = "200,000,000NES",
       district_restriction,
       base_token_name = "ETH",
       adds_website = "thegenesis.space",
@@ -163,6 +166,7 @@ formatTime(input){
       current_percent = 0,
       adds_banner,
       token = "NES",
+      lock = "2018.11",
       adds_keyword;
     let percent = current_percent*100;
         percent = percent.toFixed(2);
@@ -185,7 +189,8 @@ formatTime(input){
     // let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm')}`
     let remainStr = this.state.remainStr;
     return (
-      <div className="detail">
+      <div className={`detail ${counterpart.getLocale()}`}>
+      
         <div className="left-part">
         <img src={fockImg} />
         {percent?(<div className="info-item">
@@ -233,9 +238,9 @@ formatTime(input){
         <div className="info-item large-time">
           <div className="info-title">
           <img className="icon-time" src={time} />
-              <span className={`sub-time ${status}`}> 开始日期 </span>
+              <span className={`sub-time ${status}`}> <Translate content="EIO.Start_date" />: </span>
           </div>
-          <div className="info-detail">8月11日 11:00 (GMT +8, 新加坡时间）</div>
+          <div className="info-detail"><Translate content="static.Augu" /></div>
         </div>
         </div>
         <div className="right-part">
@@ -276,7 +281,9 @@ formatTime(input){
             <div className="info-title">
               <Translate content="EIO.Total_Token_Supply" />: 
             </div>
-            <div className="info-detail">{adds_token_total}</div>
+            <div className="info-detail">
+            <Translate content="static.billions" />
+            </div>
           </div>):null}
           
           {base_hard_cap?(<div className="info-item">
@@ -285,12 +292,20 @@ formatTime(input){
             </div>
             <div className="info-detail">{base_hard_cap}</div>
           </div>):null}
+          {lock?(<div className="info-item">
+            <div className="info-title">
+            <Translate content="EIO.Lock-up_Period" />: 
+            </div>
+            <div className="info-detail">{lock}</div>
+          </div>):null}
+
+          
           
           {start_at?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_Period" />: 
+            <Translate content="EIO.ETO_Period" />: 
             </div>
-            <div className="info-detail">{start_at}</div>
+            <div className="info-detail"><Translate content="static.Augu" /></div>
           </div>):null}
           
           {end_at?(<div className="info-item">
@@ -302,9 +317,9 @@ formatTime(input){
 
           {up_at?(<div className="info-item">
             <div className="info-title">
-            <span>上市时间</span>: 
+            <Translate content="EIO.Listing_Time" /> 
             </div>
-            <div className="info-detail">{up_at}</div>
+            <div className="info-detail"><Translate content="static.plan_time" /></div>
           </div>):null}
 
           {base_soft_cap?(<div className="info-item">
@@ -327,7 +342,7 @@ formatTime(input){
             <div className="info-title">
             <Translate content="EIO.Project_Strengths" />: 
             </div>
-            <div className="info-detail">{adds_advantage}</div>
+            <div className="info-detail"><Translate content="static.Genesis" /><br /><Translate content="static.Genesis2" /></div>
           </div>):null}
 
           {adds_detail?(<div className="info-item">
@@ -346,7 +361,7 @@ formatTime(input){
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_Quota" />: 
+            <Translate content="EIO.ETO_Quota" />: 
             </div>
             <div className="info-detail">{base_token_count}</div>
           </div>):null}
@@ -360,9 +375,9 @@ formatTime(input){
           
           {base_token_name?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_token" />: 
+            <Translate content="EIO.ETO_token" />: 
             </div>
-            <div className="info-detail">{base_token_name}</div>
+            <div className="info-detail"><Translate content="static.EoC" /></div>
           </div>):null}
           
           {adds_website?(<div className="info-item">
@@ -384,7 +399,8 @@ formatTime(input){
 
           <div className="button-holder">
           <div className="button primery-button disabled pre">
-                      等待众筹开始
+                    <Translate content="EIO.Wait_for_ETO" /> 
+                      
                     </div>
           
                     <div className="kyc-btn-holder">
