@@ -748,15 +748,8 @@ formatTime(input){
             <div className="info-detail">{adds_detail}</div>
           </div>):null}
 
-          {/*<div className="info-item">
-            <div className="info-title">
-            <input
-              type="checkbox" 
-              onChange={this.changeCheckbox.bind(this)} 
-            />
-            <label>阅读并同意</label>
-            </div>
-          </div>*/}
+
+
 
           <div className="button-holder">
           {/* {create_user_type?(
