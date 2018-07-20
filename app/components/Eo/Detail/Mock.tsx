@@ -26,7 +26,9 @@ import { TokenKind } from "graphql";
 import counterpart from 'counterpart';
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
-let fockImg = require('assets/mockImg.png')
+let zh = require(`assets/sb_zh.png`);
+let en = require(`assets/sb_en.png`);
+
 
 class Detail extends React.Component<any, any> {
   // nestedRef;
@@ -188,11 +190,19 @@ formatTime(input){
     // let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm:ss')}`
     // let remainStr = `${endAt.diff(now,'days')} days ${moment(this.state.countDownTime).format('hh:mm')}`
     let remainStr = this.state.remainStr;
+    // let fockImg = require(`assets/sb_${counterpart.getLocale()}.jpeg`);
+    // console.log(fockImg)
     return (
       <div className={`detail ${counterpart.getLocale()}`}>
       
         <div className="left-part">
-        <img src={fockImg} />
+        {counterpart.getLocale()=='zh'?(
+          <img src={zh} />
+        ):(
+          <img src={en} />
+        )}
+        
+        
         {percent?(<div className="info-item">
           <div className="percent">
             <div className={`percent-in ${status}`} style={{width: showPercent}}></div>
@@ -317,7 +327,7 @@ formatTime(input){
 
           {up_at?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.Listing_Time" /> 
+            <Translate content="EIO.Listing_Time" />: 
             </div>
             <div className="info-detail"><Translate content="static.plan_time" /></div>
           </div>):null}
@@ -378,6 +388,13 @@ formatTime(input){
             <Translate content="EIO.ETO_token" />: 
             </div>
             <div className="info-detail"><Translate content="static.EoC" /></div>
+          </div>):null}
+
+          {rate?(<div className="info-item">
+            <div className="info-title">
+              <Translate content="EIO.Redeeming_Ratio" />: 
+            </div>
+            <div className="info-detail">{rate}</div>
           </div>):null}
           
           {adds_website?(<div className="info-item">
