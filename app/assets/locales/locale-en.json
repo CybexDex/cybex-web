@@ -68,7 +68,7 @@
   },
   "EIO": {
         "ok": "Current ETO Project",
-    "pre": "Yet to Start",
+    "pre": "Coming Soon",
     "finish": "Concluded ETO",
     "pause": "failed",
     "current_ETH_balance": "Your current ETH balance is",
