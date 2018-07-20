@@ -536,7 +536,7 @@ formatTime(input){
       adds_keyword,
       create_user_type,
       current_token_count,
-      
+      token_name
     } = data;
     let base_tokens = data.base_tokens ||[]
 
@@ -602,7 +602,7 @@ formatTime(input){
           {
             base_tokens.map((e,i)=>{
               return(
-                <div className="info-detail" key={i}>1{e.base_token_name}={e.rate}{token}</div>
+                <div className="info-detail" key={i}>1{e.base_token_name}={e.rate}{token_name}</div>
               )
             })
           }
