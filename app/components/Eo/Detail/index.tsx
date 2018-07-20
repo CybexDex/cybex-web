@@ -218,7 +218,8 @@ formatTime(input){
       res.result.start_at = this.formatTime(res.result.start_at);
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
-      res.result.offer_at =  this.formatTime(res.result.offer_at);
+      console.log(res.result.offer_at);
+      res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
       let endAt = moment(res.result.end_at);
       let startAt = moment(res.result.start_at);
@@ -601,13 +602,8 @@ formatTime(input){
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">
-          {
-            base_tokens.map((e,i)=>{
-              return(
-                <span key={i}>{e.base_token_name}={e.rate}{token_name}<br/></span>
-              )
-            })
-          }
+            1 {base_token_name} = {rate} {token_name}
+            
           </div>
         </div>):null}
 
@@ -622,7 +618,7 @@ formatTime(input){
           <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
-          <div className="info-detail">{base_max_quota}{base_token_name}</div>
+          <div className="info-detail">{base_min_quota}-{base_max_quota} {base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
@@ -717,7 +713,7 @@ formatTime(input){
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_Quota" />: 
+            <Translate content="EIO.ETO_Quota" />: 
             </div>
             <div className="info-detail">{base_token_count}{base_token_name}</div>
           </div>):null}
@@ -734,11 +730,12 @@ formatTime(input){
             <Translate content="EIO.ETO_token" />: 
             </div>
             <div className="info-detail">{
-              base_tokens.map((e,i)=>{
-                return (
-                  <span key={i}>{e.base_token_name} </span>
-                )
-              })
+              base_token_name
+              // base_tokens.map((e,i)=>{
+              //   return (
+              //     <span key={i}>{e.base_token_name} </span>
+              //   )
+              // })
             }</div>
           </div>
           
