@@ -150,7 +150,7 @@ formatTime(input){
       // base_max_quota = "2",
       base_max_quota = null,
       base_min_quota,
-      rate = "1ETH = 100,000NES  1CYB = 50NES",
+      rate = "1ETH = 100,000NES",
       adds_token_total = "20亿，每年增发5%",
       adds_ico_total,
       start_at = "8月11日 11:00  (GMT +8, 新加坡时间）",
