@@ -225,21 +225,7 @@ export class Nav extends React.PureComponent<
               />
             ];
           })}
-          {/* Logout Button */}
-          {
-            <NavItem
-              name="worldcup"
-              key={getNavId(logoutItem.id)}
-              id={getNavId(logoutItem.id)}
-              hideIcon
-              onClick={() =>
-                window.open(
-                  "https://2018.cybex.io",
-                  "_blank"
-                )
-              }
-            />
-          }
+          
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>
