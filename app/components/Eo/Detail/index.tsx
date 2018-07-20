@@ -22,6 +22,7 @@ import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
+import "./Mock.scss";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
@@ -599,13 +600,15 @@ formatTime(input){
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
+          <div className="info-detail">
           {
             base_tokens.map((e,i)=>{
               return(
-                <div className="info-detail" key={i}>1{e.base_token_name}={e.rate}{token_name}</div>
+                <span key={i}>{e.base_token_name}={e.rate}{token_name}<br/></span>
               )
             })
           }
+          </div>
         </div>):null}
 
         {/* {rate?(<div className="info-item">
