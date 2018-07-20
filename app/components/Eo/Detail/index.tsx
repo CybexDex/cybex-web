@@ -42,157 +42,160 @@ class Detail extends React.Component<any, any> {
     fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
       switch(res2.result.status){
         case 'ok':
-          this.setState({reserve_status:()=>{
-            if(this.state.data.status == 'ok'){
-              return (
-                <div>
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok'){
+                  return (
+                        <div>
                     <input
                       type="checkbox"
                       checked={true}
                       readOnly={true}
                     />
                     <label>阅读并同意</label>
-                <Link to={`/eto/join/${this.props.params.id}`}>
-                <div className="button primery-button disabled ok">
-                <Translate content="EIO.Reserve_Now" />
-                </div>
-                </Link>
-                </div>
-              )
-            }else if(this.state.data.status == 'pre'){
-              return (
-                <div>
+                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <div className="button primery-button ok">
+                      <Translate content="EIO.Join_ETO_now" />
+                      </div>
+                      </Link>
+                      </div>
+                    
+                  )
+                }else if(this.state.data.status == 'pre'){
+                  <div>
                     <input
                       type="checkbox"
                       checked={true}
                       readOnly={true}
                     />
                     <label>阅读并同意</label>
-                <div className="button primery-button disabled pre">
-                  等待众筹开始
-                </div>
-                </div>
-              )
-            }
-          }})
-        break;
-        case 'waiting':
-          this.setState({reserve_status:()=>{
-            return (
-              <div>
+                  <div className="button primery-button disabled pre">
+                    等待众筹开始
+                  </div>
+                  </div>
+                }else{
+                  return null;
+                }
+              }})
+            break;
+            case 'waiting':
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                      />
+                      <label>阅读并同意</label>
+                    <div className="button primery-button disabled waiting">
+                      审核中
+                      {/* <Translate content="EIO.Reserve_Now" /> */}
+                    </div>
+                    </div>
+                  )
+                }else{
+                  return null 
+                }
+              }})
+            break;
+            case 'reject':
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                  return (
+                  <div>
+                  <div className="button primery-button disabled reject">
+                    审核不通过
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                  <p>{res2.result.reason}</p>
+                  </div>
+                )}else{
+                  return null
+                }
+              }})
+            break;
+            case 'pending':
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                return (
+                  <div>
                     <input
                       type="checkbox"
                       checked={true}
                       readOnly={true}
                     />
                     <label>阅读并同意</label>
-              <div className="button primery-button disabled waiting">
-                审核中
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-              </div>
-            )
-          }})
-        break;
-        case 'reject':
-          this.setState({reserve_status:()=>{
-            return (
-              <div>
-              <div className="button primery-button disabled reject">
-                审核失败
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-              <p>{res2.result.reason}</p>
-              </div>
-            )
-          }})
-        break;
-        case 'pending':
-          this.setState({reserve_status:()=>{
-            return (
-              <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                    />
-                    <label>阅读并同意</label>
-              <div className="button primery-button disabled waiting">
-                审核中
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-              </div>
-            )
-          }})
-        break;
-        default:
-        this.setState({reserve_status:()=>{
-          if(res2.result.kyc_status == 'ok'){
-            return (
-              <div className="button primery-button" onClick={this.reserve.bind(this)}>
-                立即预约
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-            )
-          }else{
-            return(
-              <div className="button primery-button disabled">
-                立即预约
-              {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-            )
-          }
-          
-        }})
-
-        // this.setState({reserve_status:()=>{
-        //   if(res2.result.kyc_status == 'ok'){
-        //     if(this.state.data.is_user_in == 0){
-        //       return(
-        //       <div className="button primery-button disabled can-not-reserve">
-        //         停止预约
-        //         {/* <Translate content="EIO.Reserve_Now" /> */}
-        //       </div>
-        //       )
-        //     }else{
-        //       return (
-        //         this.state.data.create_user_type == 'code'?(
-        //           <div>
-        //             <input
-        //               type="checkbox" 
-        //               onChange={this.changeCheckbox.bind(this)} 
-        //             />
-        //             <label>阅读并同意</label>
-        //             <div className="button primery-button ok">
-        //               <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
-        //             </div>
-        //             </div>
-        //           ):(
-        //             <div>
-        //             <input
-        //               type="checkbox" 
-        //               onChange={this.changeCheckbox.bind(this)} 
-        //             />
-        //             <label>阅读并同意</label>
-        //         <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
-        //           立即预约
-        //           {/* <Translate content="EIO.Reserve_Now" /> */}
-        //         </div>
-        //         </div>
-        //         )
-        //       )
-        //     }
-            
-        //   }else{
-        //     return(
-        //       <div className="button primery-button disabled can-not-reserve">
-        //         立即预约
-        //       {/* <Translate content="EIO.Reserve_Now" /> */}
-        //       </div>
-        //     )
-        //   }
-          
-        // }})
+                  <div className="button primery-button disabled waiting">
+                    审核中
+                  </div>
+                  </div>
+                )
+              }else{
+                return null;
+              }
+              }})
+            break;
+            default:
+            this.setState({reserve_status:()=>{
+              if(res2.result.kyc_status == 'ok'){
+                if(this.state.data.is_user_in == 0){
+                  return(
+                  <div className="button primery-button disabled can-not-reserve">
+                    停止预约
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                  )
+                }else{
+                  if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                    return (
+                      this.state.data.create_user_type == 'code'?(
+                        <div>
+                          <input
+                            type="checkbox" 
+                            onChange={this.changeCheckbox.bind(this)} 
+                          />
+                          <label>阅读并同意</label>
+                          <div className="button primery-button ok">
+                          {this.state.canBeReserve?(
+                            <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                          ):(
+                            <div>立即预约</div>
+                          )}
+                            
+                          </div>
+                        </div>
+                        ):(
+                          <div>
+                            <input
+                              type="checkbox" 
+                              onChange={this.changeCheckbox.bind(this)} 
+                            />
+                            {this.state.canBeReserve?(
+                            <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
+                              立即预约
+                            </div>):(
+                              <div className="button primery-button can-reserve">
+                              立即预约
+                            </div>
+                            )}
+                          </div>
+                      )
+                    )
+                  }else{
+                    return null;
+                  }
+                } 
+              }else{
+                return(
+                  null
+                  // <div className="button primery-button disabled can-not-reserve">
+                  //   立即预约
+                  // </div>
+                )
+              }
+              
+            }})
       }
     })
 }
@@ -284,30 +287,25 @@ formatTime(input){
       if(!this.props.myAccounts[0]){
         this.setState({reserve_status: ()=>{
           return (
-              <div className="button primery-button disabled">
-              {res.result.is_user_in == 0? (
-                <span>停止预约</span>
-                // <Translate content="EIO.Reserve_Now" />
-              ):(
-                <Link to={`/login`}>
-                <Translate content="EIO.Reserve_Now" />
-                </Link>
-              )}
+            <div>
+            {res.result.status !== 'ok' || res.result.status !== 'pre'? (
+            <Link to={`/login`}>
+              <div className="button primery-button">
+              
+                <span>请登录后参与</span>
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              
               </div>
-            
-            
+              </Link>
+            ):(
+                
+              null
+              
+            )}
+            </div>
           )
         }});
       }else{
-        // return (
-        //   res.result.create_user_type == 'code'?(
-        //     <div className="button primery-button pre">
-        //       <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
-        //     </div>
-        //   ):(<div className="button primery-button disabled pre">
-        //   等待众筹开始
-        // </div>)
-        // )
         fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.params.id}, (res2)=>{
           switch(res2.result.status){
             case 'ok':
@@ -341,43 +339,52 @@ formatTime(input){
                     等待众筹开始
                   </div>
                   </div>
-                  
+                }else{
+                  return null;
                 }
               }})
             break;
             case 'waiting':
               this.setState({reserve_status:()=>{
-                return (
-                  <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                    />
-                    <label>阅读并同意</label>
-                  <div className="button primery-button disabled waiting">
-                    审核中
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                  </div>
-                )
+                if(res.result.status == 'ok' || res.result.status == 'pre'){
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                      />
+                      <label>阅读并同意</label>
+                    <div className="button primery-button disabled waiting">
+                      审核中
+                      {/* <Translate content="EIO.Reserve_Now" /> */}
+                    </div>
+                    </div>
+                  )
+                }else{
+                  return null 
+                }
               }})
             break;
             case 'reject':
               this.setState({reserve_status:()=>{
-                return (
+                if(res.result.status == 'ok' || res.result.status == 'pre'){
+                  return (
                   <div>
                   <div className="button primery-button disabled reject">
-                    预约失败
+                    审核不通过
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
                   <p>{res2.result.reason}</p>
                   </div>
-                )
+                )}else{
+                  return null
+                }
               }})
             break;
             case 'pending':
               this.setState({reserve_status:()=>{
+                if(res.result.status == 'ok' || res.result.status == 'pre'){
                 return (
                   <div>
                     <input
@@ -391,6 +398,9 @@ formatTime(input){
                   </div>
                   </div>
                 )
+              }else{
+                return null;
+              }
               }})
             break;
             default:
@@ -404,6 +414,7 @@ formatTime(input){
                   </div>
                   )
                 }else{
+                  if(res.result.status == 'ok' || res.result.status == 'pre'){
                     return (
                       res.result.create_user_type == 'code'?(
                         <div>
@@ -438,15 +449,16 @@ formatTime(input){
                           </div>
                       )
                     )
-                  
-                }
-                
+                  }else{
+                    return null;
+                  }
+                } 
               }else{
                 return(
-                  <div className="button primery-button disabled can-not-reserve">
-                    立即预约
-                  {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
+                  null
+                  // <div className="button primery-button disabled can-not-reserve">
+                  //   立即预约
+                  // </div>
                 )
               }
               

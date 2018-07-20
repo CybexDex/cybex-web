@@ -421,11 +421,11 @@ formatTime(input){
                     </div>
           
                     <div className="kyc-btn-holder">
-                  <Link to="/ieo/training">
+                  <a href="https://www.icoape.com/">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>
-                  </Link>
+                  </a>
                 </div>
             
           {/* {this.state.kyc_status == "not-login"? (
