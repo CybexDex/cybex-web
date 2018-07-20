@@ -22,7 +22,7 @@ import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
-import "./Mock.scss";
+import "./mock.scss";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
