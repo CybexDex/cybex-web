@@ -264,6 +264,15 @@ const routes = (
       }}
     />
     <Route
+      path="eto-static"
+      getComponent={(location, cb) => {
+        import("components/StaticPages/EtoStatic")
+          .then(loadRoute(cb))
+          .catch(errorLoading);
+      }}
+    />
+
+    <Route
       path="eto"
       getComponent={(location, cb) => {
         import("components/Eo")
@@ -576,7 +585,6 @@ const routes = (
           .catch(errorLoading);
       }}
     >
-    
       <Route
         path=":path1"
         getComponent={(location, cb) => {

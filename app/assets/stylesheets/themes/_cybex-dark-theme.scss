@@ -78,7 +78,7 @@ $input-background: lighten($bg-color, 8%);
 $alert-color: $error-text-color;
 $info-color: #4a90e2;
 $success-color: #18bc9c;
-$warning-color: #ff7f00;
+$warning-color: $color-orange;
 $fee-color: $secondary-text-color;
 
 // Exchange colors

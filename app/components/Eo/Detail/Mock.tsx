@@ -47,7 +47,7 @@ class Detail extends React.Component<any, any> {
           this.setState({reserve_status:()=>{
             if(this.state.data.status == 'ok'){
               return (
-                <Link to={`/ieo/join/${this.props.params.id}`}>
+                <Link to={`/eto/join/${this.props.params.id}`}>
                 <div className="button primery-button disabled ok">
                 <Translate content="EIO.Reserve_Now" />
                 </div>
@@ -436,7 +436,7 @@ formatTime(input){
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              // <Link to={`/ieo/join/${this.props.params.id}`}>
+              // <Link to={`/eto/join/${this.props.params.id}`}>
               <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>
@@ -456,7 +456,7 @@ formatTime(input){
           
           
         </div>
-          {/* <DetalModal id="ieo-detail-modal" isShow={this.state.showModal}>
+          {/* <DetalModal id="eto-detail-modal" isShow={this.state.showModal}>
           </DetalModal> */}
       </div>
     );

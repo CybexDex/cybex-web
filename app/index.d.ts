@@ -2,7 +2,7 @@
 
 declare const __TEST__;
 declare const __DEV__;
-declare namespace IEO {
+declare namespace ETO {
   type IEORecord = {
     token: string;
     project_id: string;

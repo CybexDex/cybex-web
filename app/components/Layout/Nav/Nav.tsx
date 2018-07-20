@@ -33,6 +33,13 @@ interface NavLink {
 
 const NavLinks: Array<NavLink> = [
   {
+    id: "eto",
+    routeTo: "/eto/genesis-space",
+    activeMatcher: /^\/eto/,
+    name: "eto",
+    icon: "ETO",
+  },
+  {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
     activeMatcher: /^\/account/,
@@ -68,14 +75,7 @@ const NavLinks: Array<NavLink> = [
     name: "explorer",
     icon: "explorer",
     children: <ExplorerNav />
-  }
-  // {
-  //   id: "settings",
-  //   routeTo: "/settings",
-  //   name: "Settings",
-  //   icon: "settings",
-  //   down: true
-  // }
+  },
 ];
 
 let logoutItem = {
@@ -240,16 +240,6 @@ export class Nav extends React.PureComponent<
               }
             />
           }
-          <NavItem
-            name="eto"
-            key={getNavId('eto')}
-            id={getNavId('eto')}
-            hideIcon
-            linkTo='/eto/genesis-space'
-            onClick={(e) => {
-              this.context.router.push('/eto/genesis-space');
-            }}
-          />
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>

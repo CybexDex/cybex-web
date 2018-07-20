@@ -14,7 +14,10 @@ let root_dir = BASE_URL;
 console.log("ROOT: ", root_dir);
 const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
-  __TEST__: JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1,
+  __TEST__:
+    JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1 ||
+    (process.env.NODE_ENV_TEST &&
+      process.env.NODE_ENV_TEST.toLowerCase() === "test"),
   __BASE_URL__: JSON.stringify("/")
 };
 
@@ -174,6 +177,7 @@ const resolve = {
     iconfont: path.resolve(root_dir, "app/assets/stylesheets/iconfont"),
     assets: path.resolve(root_dir, "app/assets"),
     counterpart: path.resolve(root_dir, "app/lib/counterpart"),
+    "react-stockcharts": path.resolve(root_dir, "app/lib/react-stockcharts"),
     "alt-react": path.resolve(root_dir, "app/lib/alt-react"),
     "react-foundation-apps": path.resolve(
       root_dir,
@@ -182,10 +186,10 @@ const resolve = {
     app: path.resolve(root_dir, "app")
   },
   modules: [
-    "node_modules",
     path.resolve(root_dir, "app"),
     path.resolve(root_dir, "app/lib"),
-    path.resolve(root_dir, "app/cybex")
+    path.resolve(root_dir, "app/cybex"),
+    "node_modules"
   ],
   extensions: [
     ".ts",

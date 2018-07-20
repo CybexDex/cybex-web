@@ -34,6 +34,7 @@ import { WalletInfo } from "components/Login/CreateSelector";
 import { LoginSelector } from "components/Login/LoginSelector";
 import { CreateSwitcher } from "components/Login/CreateSwitcher";
 import Radium from "radium";
+import { Gtag } from "services/Gtag";
 
 let CreateAccount = Radium(
   class extends React.Component<any, any> {
@@ -162,6 +163,7 @@ let CreateAccount = Radium(
                 }
               );
             }
+            Gtag.eventRegisterDone(name);
           })
           .catch(error => {
             console.log("ERROR AccountActions.createAccount", error);
@@ -173,6 +175,7 @@ let CreateAccount = Radium(
             });
             this.cap && this.cap.updateCaptcha();
             this.setState({ loading: false });
+            Gtag.eventRegisterFailed(name);
           });
       });
     }

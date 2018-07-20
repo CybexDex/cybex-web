@@ -7,7 +7,7 @@ import { $styleFlexContainer } from "./Styles";
 
 let Panel = Radium(
   class extends React.Component<
-    { children?; direction?; responsive?; styles? },
+    { children?; direction?; responsive?; style? },
     any
   > {
     static defaultProps = {
@@ -29,18 +29,18 @@ let Panel = Radium(
     };
 
     render() {
-      let { children, direction, responsive, styles } = this.props;
+      let { children, direction, responsive, style } = this.props;
       return (
         <div
+          {...this.props}
           style={
             [
-              styles,
               Panel.$style.base,
               $styleFlexContainer(direction),
-              responsive && Panel.$style.responsive
+              responsive && Panel.$style.responsive,
+              style
             ] as any
           }
-          {...this.props}
         >
           {children}
         </div>

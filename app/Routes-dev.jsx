@@ -37,6 +37,7 @@ import AccountSignedMessages from "./components/Account/AccountSignedMessages";
 import ExchangeContainer from "./components/Exchange/ExchangeContainer";
 import MarketsContainer from "./components/Exchange/MarketsContainer";
 import Transfer from "./components/Transfer/Transfer";
+import EtoStatic from "./components/StaticPages/EtoStatic";
 import SettingsContainer from "./components/Settings/SettingsContainer";
 import BlockContainer from "./components/Blockchain/BlockContainer";
 import AssetContainer from "./components/Blockchain/AssetContainer";
@@ -127,6 +128,7 @@ const routes = (
     <Route path="create-wallet-brainkey" component={CreateWalletFromBrainkey} />
 
     <Route path="transfer" component={Transfer} />
+    <Route path="eto-static" component={EtoStatic} />
 
     <Route path="invoice/:data" component={Invoice} />
     <Route path="explorer/markets" component={MarketsContainer} />

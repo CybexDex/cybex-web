@@ -19,6 +19,9 @@ import { Colors } from "components/Common/Colors";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import { BigNumber } from "bignumber.js";
 import { NotificationActions } from "actions//NotificationActions";
+import * as moment from "moment";
+import ReactTooltip from "react-tooltip";
+import ErrorTipBox from "components/Utility/ErrorTipBox";
 
 let Join = class extends React.Component<
   any,
@@ -37,11 +40,16 @@ let Join = class extends React.Component<
     projectData;
     personalStatus;
     balanceError;
+    isOpen;
   }
 > {
   static propTypes = {
     currentAccount: ChainTypes.ChainAccount
   };
+
+  // static defaultProps = {
+  //   currentAccount: Map({})
+  // };
 
   nestedRef;
 
@@ -62,7 +70,8 @@ let Join = class extends React.Component<
       balanceError: null,
       projectData: null,
       personalStatus: null,
-      memo: null
+      memo: null,
+      isOpen: true
     };
 
     this._updateFee = this._updateFee.bind(this);
@@ -80,6 +89,7 @@ let Join = class extends React.Component<
   }
 
   updateProject = () => {
+    if (!this.props.currentAccount || !this.props.currentAccount.get) return;
     let data = {
       project: this.props.params.id,
       cybex_name: this.props.currentAccount.get("name")
@@ -100,7 +110,10 @@ let Join = class extends React.Component<
         })
       )
     ]).then(([projectData, personalStatus]) => {
-      this.setState({ projectData, personalStatus });
+      let isOpen = moment
+        .utc()
+        .isBefore(moment.utc((projectData as any).end_at));
+      this.setState({ projectData, personalStatus, isOpen });
     });
     this._updateFee();
   };
@@ -321,7 +334,7 @@ let Join = class extends React.Component<
       return (
         <Translate
           className="confirm-tip text-center"
-          content="ieo.confirm"
+          content="eto.confirm"
           component="h5"
           project={name}
         />
@@ -393,6 +406,7 @@ let Join = class extends React.Component<
       error,
       feeAsset,
       fee_asset_id,
+      isOpen,
       balanceError
     } = this.state;
 
@@ -446,7 +460,7 @@ let Join = class extends React.Component<
         .indexOf(".") === -1;
     console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
-    const avail = base_max_quota - current_user_count;
+    const avail = base_max_quota - base_received;
     const isOverflow = amountValue > avail;
     const isSendNotValid =
       !isAmountValid ||
@@ -457,7 +471,12 @@ let Join = class extends React.Component<
     return (
       <div
         className="join-wrapper"
-        style={{ margin: "auto", marginTop: "2rem", maxWidth: "48em" }}
+        style={{
+          margin: "auto",
+          marginTop: "2rem",
+          maxWidth: "48em",
+          position: "relative"
+        }}
       >
         <form
           style={{ paddingBottom: 20, overflow: "visible" }}
@@ -465,7 +484,7 @@ let Join = class extends React.Component<
           noValidate
         >
           <Translate
-            content="ieo.crowd_project"
+            content="eto.crowd_project"
             component="h2"
             project={name}
             style={{ marginBottom: "2rem" }}
@@ -473,25 +492,23 @@ let Join = class extends React.Component<
           {/*  A M O U N T   */}
           <div className="illustration-list">
             <Translate
-              content="ieo.amount_remain"
+              content="eto.amount_remain"
               component="section"
               amount={
                 base_token_count - current_base_token_count + base_token_name
               }
             />
             <Translate
-              content="ieo.account_limit"
+              content="eto.account_limit"
               component="section"
               cap={base_max_quota}
               unit={base_min_quota}
             />
             <Translate
-              content="ieo.current_state"
+              content="eto.current_state"
               component="section"
               used={base_received + " " + base_token_name}
-              avail={
-                base_max_quota - base_received + " " + base_token_name
-              }
+              avail={base_max_quota - base_received + " " + base_token_name}
             />
           </div>
           <div className="content-block transfer-input">
@@ -503,21 +520,30 @@ let Join = class extends React.Component<
               assets={[crowd_asset && crowd_asset.get("id")]}
               display_balance={balance}
             />
-            {this.state.balanceError && (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="transfer.errors.insufficient" />
-              </p>
-            )}
-            {!!intTimeError && (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="ieo.int_times" />
-              </p>
-            )}
-            {!!isOverflow && (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="ieo.warning_overflow" />
-              </p>
-            )}
+            <ErrorTipBox
+              isI18n={true}
+              tips={[
+                {
+                  name: "insufficient",
+                  isError: this.state.balanceError,
+                  isI18n: true,
+                  message: "transfer.errors.insufficient"
+                },
+                {
+                  name: "int_times",
+                  isError: intTimeError,
+                  isI18n: true,
+                  message: "eto.int_times"
+                },
+                {
+                  name: "isOverflow",
+                  isError: isOverflow,
+                  isI18n: true,
+                  message: "eto.warning_overflow"
+                }
+              ]}
+              muiltTips={false}
+            />
           </div>
           {/*  F E E   */}
           <div
@@ -560,7 +586,7 @@ let Join = class extends React.Component<
               type="primary"
               value="Submit"
             >
-              <Translate component="span" content="ieo.take_in" />
+              <Translate component="span" content="eto.take_in" />
             </Button>
           </div>
 
@@ -574,19 +600,58 @@ let Join = class extends React.Component<
           style={{ color: Colors.$colorOrange }}
         >
           <Translate
-            content="ieo.cybex_in"
+            content="eto.cybex_in"
             component="li"
             asset={base_token_name}
           />
-          <Translate
-            content="ieo.complete_tip"
-            component="li"
-            end_time={end_at}
-            account={currentAccount && currentAccount.get("name")}
-          />
-          <Translate content="ieo.overflow" unsafe component="li" />
-          <Translate content="ieo.be_patient" component="li" />
+          <li>
+            <Translate
+              content="eto.complete_tip_1"
+              account={currentAccount && currentAccount.get("name")}
+            />
+            <span
+              className="highlight tooltip"
+              data-for="time"
+              data-offset="{ 'left': -50 }"
+              data-tip
+              data-place="top"
+            >
+              {moment.utc(end_at).format("YYYY-MM-DD HH:mm:ss")}
+            </span>
+            <ReactTooltip id="time" effect="solid">
+              <Translate content="eto.local_time" />：
+              {moment
+                .utc(end_at)
+                .toDate()
+                .toString()}
+            </ReactTooltip>
+            <Translate
+              content="eto.complete_tip_2"
+              account={currentAccount && currentAccount.get("name")}
+            />
+          </li>
+          <Translate content="eto.overflow" unsafe component="li" />
+          <Translate content="eto.be_patient" component="li" />
         </ul>
+        {!isOpen && (
+          <div
+            className="closed-mask"
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              backgroundColor: Colors.$colorDark,
+              opacity: 0.8,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+              <Translate component="h4" content="eto.closed_tip" project={name}/>
+          </div>
+        )}
       </div>
     );
   }

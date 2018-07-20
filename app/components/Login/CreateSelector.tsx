@@ -194,7 +194,7 @@ export default class CreateSelector extends React.Component<any, { mode }> {
             <Panel
               direction="row"
               className="readable anim-fade"
-              styles={{ margin: "auto" }}
+              style={{ margin: "auto" }}
             >
               <div
                 style={
@@ -235,7 +235,7 @@ export default class CreateSelector extends React.Component<any, { mode }> {
             <Panel
               direction="row"
               className="readable anim-fade"
-              styles={{ margin: "auto" }}
+              style={{ margin: "auto" }}
             >
               <WalletInfo mode={mode} />
               <div className="divider" style={CreateSelector.$style.divider} />
