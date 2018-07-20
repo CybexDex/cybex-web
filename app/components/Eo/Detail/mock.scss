@@ -61,7 +61,9 @@
   }
   &.en,
   &.zh {
-    padding: 0;
+		padding: 0;
+		width: 100%;
+		padding: 1em;
     .left-part,
     .right-part {
       min-width: 350px;
@@ -89,7 +91,8 @@
         }
         .info-detail {
           text-align: justify;
-          vertical-align: bottom;
+					vertical-align: bottom;
+					overflow-wrap: break-word;
         }
       }
     }
