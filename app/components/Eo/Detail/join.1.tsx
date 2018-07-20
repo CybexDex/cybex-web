@@ -19,9 +19,7 @@ import { Colors } from "components/Common/Colors";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import { BigNumber } from "bignumber.js";
 import { NotificationActions } from "actions//NotificationActions";
-import * as moment from "moment";
-import ReactTooltip from "react-tooltip";
-import ErrorTipBox from "components/Utility/ErrorTipBox";
+import { calcValue } from "utils/Asset";
 
 let Join = class extends React.Component<
   any,
@@ -37,19 +35,14 @@ let Join = class extends React.Component<
     hasBalance;
     hasPoolBalance;
     memo;
-    projectData;
+    projectData: null | ETO.ProjectDetail;
     personalStatus;
     balanceError;
-    isOpen;
   }
 > {
   static propTypes = {
     currentAccount: ChainTypes.ChainAccount
   };
-
-  // static defaultProps = {
-  //   currentAccount: Map({})
-  // };
 
   nestedRef;
 
@@ -70,8 +63,7 @@ let Join = class extends React.Component<
       balanceError: null,
       projectData: null,
       personalStatus: null,
-      memo: null,
-      isOpen: true
+      memo: null
     };
 
     this._updateFee = this._updateFee.bind(this);
@@ -89,7 +81,6 @@ let Join = class extends React.Component<
   }
 
   updateProject = () => {
-    if (!this.props.currentAccount || !this.props.currentAccount.get) return;
     let data = {
       project: this.props.params.id,
       cybex_name: this.props.currentAccount.get("name")
@@ -110,10 +101,7 @@ let Join = class extends React.Component<
         })
       )
     ]).then(([projectData, personalStatus]) => {
-      let isOpen = moment
-        .utc()
-        .isBefore(moment.utc((projectData as any).end_at));
-      this.setState({ projectData, personalStatus, isOpen });
+      this.setState({ projectData, personalStatus });
     });
     this._updateFee();
   };
@@ -122,6 +110,8 @@ let Join = class extends React.Component<
     if (!asset) {
       return;
     }
+    ;
+    let value = calcValue(amount || 0, asset.get("precision"));
     this.setState(
       { amount, asset, asset_id: asset.get("id"), error: null },
       this._checkBalance
@@ -329,8 +319,8 @@ let Join = class extends React.Component<
 
   _getConfirmTip = () => {
     let { projectData } = this.state || { projectData: {} };
-    let { name } = projectData;
-    if (name) {
+    let { project } = projectData as ETO.ProjectDetail;
+    if (project) {
       return (
         <Translate
           className="confirm-tip text-center"
@@ -381,19 +371,20 @@ let Join = class extends React.Component<
 
   render() {
     console.log(this.state);
-    const data = this.state.projectData || {};
+    if (!this.state.projectData) return null;
+    const { projectData: data } = this.state;
     const {
       name,
       receive_address,
       current_user_count,
-      current_base_token_count,
-      base_max_quota,
-      base_min_quota,
-      base_token_count,
-      base_token_name,
       end_at,
-      base_token
-    } = data;
+      base_tokens,
+      token_count,
+      token_name,
+      current_token_count,
+      max,
+      default_base_token
+    } = data as ETO.ProjectDetail;
     const statusData = this.state.personalStatus || {};
     const { base_received } = statusData;
 
@@ -406,7 +397,6 @@ let Join = class extends React.Component<
       error,
       feeAsset,
       fee_asset_id,
-      isOpen,
       balanceError
     } = this.state;
 
@@ -446,21 +436,31 @@ let Join = class extends React.Component<
         balance = "No funds";
       }
     }
-    let crowd_asset =
-      base_token && ChainStore.getAsset(base_token.toString().toUpperCase());
+    let crowd_assets = base_tokens.map(base =>
+      ChainStore.getAsset(base.base_token)
+    ).filter(a => !!a).map(asset => asset.get("id"));
+    console.debug("Data: ", data, crowd_assets);
+    let crowd_asset = ChainStore.getAsset(
+      this.state.asset_id || default_base_token
+    );
+    if (!crowd_asset) return null;
+    let current_base = base_tokens.find(
+      value => value.base_token === crowd_asset.get("symbol")
+    );
 
+    if (!current_base) return null;
     const amountValue = parseFloat(
       String.prototype.replace.call(amount, /,/g, "")
     );
     const isAmountValid = amountValue && !isNaN(amountValue);
     const isAmountIntTimes =
       new BigNumber(amountValue || 1)
-        .dividedBy(base_min_quota || 1)
+        .dividedBy(Math.pow(10, current_base.accuracy) || 1)
         .toString()
         .indexOf(".") === -1;
-    console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
+    console.debug("A: ", isAmountIntTimes, amountValue);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
-    const avail = base_max_quota - base_received;
+    const avail = max - current_user_count;
     const isOverflow = amountValue > avail;
     const isSendNotValid =
       !isAmountValid ||
@@ -471,12 +471,7 @@ let Join = class extends React.Component<
     return (
       <div
         className="join-wrapper"
-        style={{
-          margin: "auto",
-          marginTop: "2rem",
-          maxWidth: "48em",
-          position: "relative"
-        }}
+        style={{ margin: "auto", marginTop: "2rem", maxWidth: "48em" }}
       >
         <form
           style={{ paddingBottom: 20, overflow: "visible" }}
@@ -494,21 +489,19 @@ let Join = class extends React.Component<
             <Translate
               content="eto.amount_remain"
               component="section"
-              amount={
-                base_token_count - current_base_token_count + base_token_name
-              }
+              amount={token_count - current_token_count + " " + token_name}
             />
             <Translate
               content="eto.account_limit"
               component="section"
-              cap={base_max_quota}
-              unit={base_min_quota}
+              cap={max - current_user_count + " " + token_name}
+              unit={1 / Math.pow(10, current_base.accuracy)}
             />
             <Translate
               content="eto.current_state"
               component="section"
-              used={base_received + " " + base_token_name}
-              avail={base_max_quota - base_received + " " + base_token_name}
+              used={current_token_count + " " + token_name}
+              avail={max - current_user_count + " " + token_name}
             />
           </div>
           <div className="content-block transfer-input">
@@ -517,33 +510,24 @@ let Join = class extends React.Component<
               amount={amount}
               onChange={this.onAmountChanged.bind(this)}
               asset={crowd_asset && crowd_asset.get("id")}
-              assets={[crowd_asset && crowd_asset.get("id")]}
+              assets={crowd_assets}
               display_balance={balance}
             />
-            <ErrorTipBox
-              isI18n={true}
-              tips={[
-                {
-                  name: "insufficient",
-                  isError: this.state.balanceError,
-                  isI18n: true,
-                  message: "transfer.errors.insufficient"
-                },
-                {
-                  name: "int_times",
-                  isError: intTimeError,
-                  isI18n: true,
-                  message: "eto.int_times"
-                },
-                {
-                  name: "isOverflow",
-                  isError: isOverflow,
-                  isI18n: true,
-                  message: "eto.warning_overflow"
-                }
-              ]}
-              muiltTips={false}
-            />
+            {this.state.balanceError && (
+              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+                <Translate content="transfer.errors.insufficient" />
+              </p>
+            )}
+            {!!intTimeError && (
+              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+                <Translate content="eto.int_times" />
+              </p>
+            )}
+            {!!isOverflow && (
+              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+                <Translate content="eto.warning_overflow" />
+              </p>
+            )}
           </div>
           {/*  F E E   */}
           <div
@@ -599,59 +583,16 @@ let Join = class extends React.Component<
           className="illustration-list"
           style={{ color: Colors.$colorOrange }}
         >
+          <Translate content="eto.cybex_in" component="li" asset={""} />
           <Translate
-            content="eto.cybex_in"
+            content="eto.complete_tip"
             component="li"
-            asset={base_token_name}
+            end_time={end_at}
+            account={currentAccount && currentAccount.get("name")}
           />
-          <li>
-            <Translate
-              content="eto.complete_tip_1"
-              account={currentAccount && currentAccount.get("name")}
-            />
-            <span
-              className="highlight tooltip"
-              data-for="time"
-              data-offset="{ 'left': -50 }"
-              data-tip
-              data-place="top"
-            >
-              {moment.utc(end_at).format("YYYY-MM-DD HH:mm:ss")}
-            </span>
-            <ReactTooltip id="time" effect="solid">
-              <Translate content="eto.local_time" />：
-              {moment
-                .utc(end_at)
-                .toDate()
-                .toString()}
-            </ReactTooltip>
-            <Translate
-              content="eto.complete_tip_2"
-              account={currentAccount && currentAccount.get("name")}
-            />
-          </li>
           <Translate content="eto.overflow" unsafe component="li" />
           <Translate content="eto.be_patient" component="li" />
         </ul>
-        {!isOpen && (
-          <div
-            className="closed-mask"
-            style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              backgroundColor: Colors.$colorDark,
-              opacity: 0.8,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-              <Translate component="h4" content="eto.closed_tip" project={name}/>
-          </div>
-        )}
       </div>
     );
   }
