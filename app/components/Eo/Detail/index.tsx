@@ -51,7 +51,7 @@ class Detail extends React.Component<any, any> {
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
                 <Link to={`/eto/join/${this.props.params.id}`}>
                 <div className="button primery-button disabled ok">
                 <Translate content="EIO.Reserve_Now" />
@@ -67,7 +67,7 @@ class Detail extends React.Component<any, any> {
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
                 <div className="button primery-button disabled pre">
                   等待众筹开始
                 </div>
@@ -85,7 +85,7 @@ class Detail extends React.Component<any, any> {
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
               <div className="button primery-button disabled waiting">
                 审核中
                 {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -116,7 +116,7 @@ class Detail extends React.Component<any, any> {
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
               <div className="button primery-button disabled waiting">
                 审核中
                 {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -162,7 +162,7 @@ class Detail extends React.Component<any, any> {
         //               type="checkbox" 
         //               onChange={this.changeCheckbox.bind(this)} 
         //             />
-        //             <label>阅读并同意</label>
+        //             <label>阅读并同意</label>
         //             <div className="button primery-button ok">
         //               <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
         //             </div>
@@ -173,7 +173,7 @@ class Detail extends React.Component<any, any> {
         //               type="checkbox" 
         //               onChange={this.changeCheckbox.bind(this)} 
         //             />
-        //             <label>阅读并同意</label>
+        //             <label>阅读并同意</label>
         //         <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
         //           立即预约
         //           {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -320,10 +320,10 @@ formatTime(input){
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
                       <Link to={`/eto/join/${this.props.params.id}`}>
                       <div className="button primery-button ok">
-                      <Translate content="EIO.Join_IEO_now" />
+                      <Translate content="EIO.Join_ETO_now" />
                       </div>
                       </Link>
                       </div>
@@ -336,7 +336,7 @@ formatTime(input){
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
                   <div className="button primery-button disabled pre">
                     等待众筹开始
                   </div>
@@ -354,7 +354,7 @@ formatTime(input){
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
                   <div className="button primery-button disabled waiting">
                     审核中
                     {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -385,7 +385,7 @@ formatTime(input){
                       checked={true}
                       readOnly={true}
                     />
-                    <label>阅读并同意</label>
+                    <label>阅读并同意</label>
                   <div className="button primery-button disabled waiting">
                     审核中
                   </div>
@@ -411,7 +411,7 @@ formatTime(input){
                             type="checkbox" 
                             onChange={this.changeCheckbox.bind(this)} 
                           />
-                          <label>阅读并同意</label>
+                          <label>阅读并同意</label>
                           <div className="button primery-button ok">
                           {this.state.canBeReserve?(
                             <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
@@ -574,7 +574,7 @@ formatTime(input){
         </div>):null}
         
         {current_token_count?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <span>当前完成认购：</span>
             {/* <Translate content="EIO.Raised" />: */}
           </div>
@@ -584,7 +584,7 @@ formatTime(input){
         </div>):null}
         
         {base_tokens?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           {
@@ -597,21 +597,21 @@ formatTime(input){
         </div>):null}
 
         {/* {rate?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null} */}
         
         {base_max_quota?(<div className="info-item">
-          <div className="info-title">
+          <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_max_quota}{base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
-          <div className="info-title">
+          <div className="info-title">
           <img className="icon-time" src={time} />
           {status == 'ok'? (
               <span className={`sub-time ${status}`}> 距离结束 </span>
@@ -651,7 +651,7 @@ formatTime(input){
           </h3>
           
           {name?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
               <Translate content="EIO.Project_Name" />: 
             </div>
             <div className="info-detail">{name}</div>
@@ -666,14 +666,14 @@ formatTime(input){
 
           
           {start_at?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.IEO_Period" />: 
+            <div className="info-title">
+            <Translate content="EIO.ETO_Period" />: 
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
           {end_at?(<div className="info-item">
-            <div className="info-title">
+            <div className="info-title">
             <Translate content="EIO.End_at" />: 
             </div>
             <div className="info-detail">{end_at}</div>
@@ -716,7 +716,7 @@ formatTime(input){
           
           <div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_token" />: 
+            <Translate content="EIO.ETO_token" />: 
             </div>
             <div className="info-detail">{
               base_tokens.map((e,i)=>{
@@ -748,15 +748,8 @@ formatTime(input){
             <div className="info-detail">{adds_detail}</div>
           </div>):null}
 
-          {/* <div className="info-item">
-            <div className="info-title">
-            <input
-              type="checkbox" 
-              onChange={this.changeCheckbox.bind(this)} 
-            />
-            <label>阅读并同意</label>
-            </div>
-          </div> */}
+
+
 
           <div className="button-holder">
           {/* {create_user_type?(
