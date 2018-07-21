@@ -267,7 +267,7 @@ class EO extends React.Component<any, any> {
                     WebkitBoxOrient: 'vertical',
                   }
                 }
-              >{e.name}</span><span>
+              >{e.name}</span><span className="span-status">
               {e.status == 'ok'? (
                 <p className="status-label ok">[ <Translate content="EIO.ok" />... ]</p>
               ):(
