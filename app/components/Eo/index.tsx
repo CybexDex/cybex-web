@@ -352,7 +352,7 @@ class EO extends React.Component<any, any> {
                 </div>
                 {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
                   // <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
-                  <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count} {e.base_token_name}</p>
+                  <p className="raised">当前完成认购: {e.current_base_token_count} {e.base_token_name}</p>
                 ):null}
                 <p className={`raised ${e.status}`}><Icon name="time" />
                 {e.status == 'ok'? (
