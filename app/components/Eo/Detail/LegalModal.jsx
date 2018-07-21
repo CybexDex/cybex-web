@@ -80,8 +80,14 @@ export class AlertModal extends React.Component {
         // className={props.className}
         // overlayClose={props.overlayClose}
       >
+      <Trigger close={this.props.id}>
+        <a href="#" className="close-button">
+          &times;
+        </a>
+      </Trigger>
       <div className="modal-container">
       <div className="modal-content">
+      
         <div className="title-holder">
           <h3 className="center title">服务条款与条件</h3>
           <p>本条款由您与数字资产交易平台运营商Cybex共同缔结，并具有合同效力。</p>
@@ -230,11 +236,7 @@ export class AlertModal extends React.Component {
       </div>
       </div>
       
-      <Trigger close={this.props.id}>
-        <a href="#" className="close-button">
-          &times;
-        </a>
-      </Trigger>
+      
         {/* {!props.noCloseBtn && (
           <Trigger close={props.id}>
             <a href="#" className="close-button">

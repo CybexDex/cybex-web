@@ -129,7 +129,7 @@ export class BaseModal extends React.Component {
           {/* <div className="input-item"> */}
           <div className="flex-container">
           <div className="flex-item flex-input-holder">
-          <input type="text" className="enter-info" ref="codeInput" placeholder="please enter" defaultValue="" />
+          <input type="text" className="enter-info" ref="codeInput" placeholder="请输入邀请码" defaultValue="" />
           {this.state.errorMsg?(
             <icon className="icon icon-error"><p>!</p></icon>
           ):null}
