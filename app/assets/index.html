@@ -160,6 +160,34 @@
             <div>L</div>
         </div>
     </div>
+    <script>
+        (function name(params) {
+            if (/MQQBrowser\/6\.2/.test(navigator.userAgent)) {
+                document.getElementById("content").remove();
+                document.getElementById("globalLoading").remove();
+                document.body.innerHTML = (`<div style="color: #eee;
+    text-align: center;
+    height: 100vh;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100vw;">
+    <div style="    width: 16em;
+    height: 16em;
+    margin: auto;
+    line-height: 16em;
+    border-radius: 100%;
+    overflow: hidden;
+    background: #ddd;
+    box-shadow: 0 0 4px #fff;">
+        
+        <img src="/images/logo-main.png"/>
+        </div>
+    <p style="
+    font-size: 18px; margin-top: 2em">
+    请点击右上角菜单<br>选择<strong>在浏览器中打开</strong></p></div>`)
+            }
+        }());
+    </script>
     <!-- Google Analytics tracking code -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121047450-1"></script>
@@ -172,6 +200,8 @@
         gtag('js', new Date());
     </script>
     <!-- End Google Analytics tracking code -->
+
+
 </body>
 
 </html>

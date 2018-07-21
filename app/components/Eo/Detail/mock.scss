@@ -76,8 +76,8 @@
     }
     .right-part {
       .info-item {
-				display: flex;
-				flex-wrap: wrap;
+        display: flex;
+        flex-wrap: wrap;
         & > * {
           padding: 0.3em 0;
         }
@@ -86,8 +86,8 @@
         }
         .info-title {
           width: 10em;
-					text-align: left;
-					padding-right: 0.4em;
+          text-align: left;
+          padding-right: 0.4em;
         }
         .info-detail {
           text-align: justify;
@@ -96,12 +96,12 @@
           flex: 1 1;
           min-width: 300px;
         }
-			}
-			.button-holder {
-				.button {
-					height: unset;
-				}
-			}
+      }
+      .button-holder {
+        .button {
+          height: unset;
+        }
+      }
     }
   }
   &.en {
@@ -121,15 +121,17 @@
       }
     }
   }
-  .title {
-    height: unset;
-    white-space: nowrap;
-    > span:not(.main) {
-      &::before {
-        content: "[";
-      }
-      &::after {
-        content: "]";
+  &.mock {
+    .title {
+      height: unset;
+      white-space: nowrap;
+      > span:not(.main) {
+        &::before {
+          content: "[";
+        }
+        &::after {
+          content: "]";
+        }
       }
     }
   }

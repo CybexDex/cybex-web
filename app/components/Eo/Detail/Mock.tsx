@@ -215,7 +215,7 @@ class Detail extends React.Component<any, any> {
     // let fockImg = require(`assets/sb_${counterpart.getLocale()}.jpeg`);
     // console.log(fockImg)
     return (
-      <div className={`detail ${counterpart.getLocale()}`}>
+      <div className={`mock detail ${counterpart.getLocale()}`}>
         <div className="left-part">
           {counterpart.getLocale() == "zh" ? (
             <img src={zh} />
