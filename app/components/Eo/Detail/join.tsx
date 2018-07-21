@@ -597,7 +597,7 @@ let Join = class extends React.Component<
         </form>
         <ul
           className="illustration-list"
-          style={{ color: Colors.$colorOrange }}
+          style={{ color: Colors.$colorOrange, textAlign: "justify" }}
         >
           <Translate
             content="eto.cybex_in"
