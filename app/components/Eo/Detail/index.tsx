@@ -52,8 +52,9 @@ class Detail extends React.Component<any, any> {
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                       <Link to={`/eto/join/${this.props.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
@@ -68,8 +69,9 @@ class Detail extends React.Component<any, any> {
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                   <div className="button primery-button disabled pre">
                     等待众筹开始
                   </div>
@@ -88,8 +90,9 @@ class Detail extends React.Component<any, any> {
                         type="checkbox"
                         checked={true}
                         readOnly={true}
+                        className="legal-input"
                       />
-                      <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                     <div className="button primery-button disabled waiting">
                       审核中
                       {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -126,8 +129,9 @@ class Detail extends React.Component<any, any> {
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                   <div className="button primery-button disabled waiting">
                     审核中
                   </div>
@@ -156,8 +160,9 @@ class Detail extends React.Component<any, any> {
                           <input
                             type="checkbox" 
                             onChange={this.changeCheckbox.bind(this)} 
+                            className="legal-input"
                           />
-                          <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                          <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                           <div className="button primery-button ok">
                           {this.state.canBeReserve?(
                             <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
@@ -172,8 +177,9 @@ class Detail extends React.Component<any, any> {
                             <input
                               type="checkbox" 
                               onChange={this.changeCheckbox.bind(this)} 
+                              className="legal-input"
                             />
-                            <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                            <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                             {this.state.canBeReserve?(
                             <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                               立即预约
@@ -320,8 +326,9 @@ formatTime(input){
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                       <Link to={`/eto/join/${this.props.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
@@ -337,8 +344,9 @@ formatTime(input){
                         type="checkbox"
                         checked={true}
                         readOnly={true}
+                        className="legal-input"
                       />
-                      <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                     <div className="button primery-button disabled pre">
                       等待众筹开始
                     </div>
@@ -358,8 +366,9 @@ formatTime(input){
                         type="checkbox"
                         checked={true}
                         readOnly={true}
+                        className="legal-input"
                       />
-                      <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                     <div className="button primery-button disabled waiting">
                       审核中
                       {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -396,8 +405,9 @@ formatTime(input){
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                   <div className="button primery-button disabled waiting">
                     审核中
                   </div>
@@ -426,8 +436,9 @@ formatTime(input){
                           <input
                             type="checkbox" 
                             onChange={this.changeCheckbox.bind(this)} 
+                            className="legal-input"
                           />
-                          <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                          <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                           <div className="button primery-button ok">
                           {this.state.canBeReserve?(
                             <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
@@ -442,8 +453,9 @@ formatTime(input){
                             <input
                               type="checkbox" 
                               onChange={this.changeCheckbox.bind(this)} 
+                              className="legal-input"
                             />
-                            <label><Trigger open="ieo-legal-modal"><div>阅读并同意</div></Trigger></label>
+                            <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                             {this.state.canBeReserve?(
                             <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                               立即预约
