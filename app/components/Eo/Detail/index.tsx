@@ -671,10 +671,15 @@ formatTime(input){
                 status == 'finish'? (
                   <span className="sub finish">[ <Translate content="EIO.finish" /> ]</span>
                 ):(
-                  <span className="sub finish">[ <Translate content="EIO.pause" /> ]</span>
+                  status == 'pause')? (
+                    <span className="sub finish">[ <Translate content="EIO.pause" /> ]</span>
+                  ):(
+                    null
+                  )
+                  
                 )
               )
-            )}
+            }
           </h3>
           
           {name?(<div className="info-item">

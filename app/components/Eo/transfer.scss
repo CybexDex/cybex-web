@@ -512,6 +512,14 @@
 					.info-holder{
 						background-image: linear-gradient(320deg, #293246, #39445b);
 						color: #000;
+						.percent-holder-out{
+							position: absolute;
+							width: 83%;
+							bottom: 32px;
+							.percent-holder{
+								margin-top: 0;
+							}
+						}
 						.title{
 							width: 315px;
 							height: 42px;
@@ -653,6 +661,9 @@
 							width: 60%;
 							padding-left: 20px;
 							margin-top: 0;
+							.span-status{
+								width: 80%;
+							}
 						}
 						.keyword-holder{
 							padding-left: 20px;
