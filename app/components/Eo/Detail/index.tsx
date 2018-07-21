@@ -761,7 +761,7 @@ formatTime(input){
             <div className="info-title">
             <Translate content="EIO.Project_Details" />: 
             </div>
-            <div className="info-detail">{adds_detail}</div>
+            <div className="info-detail"><a href={adds_detail} target="_blank">{adds_detail}</a></div>
           </div>):null}
 
 
