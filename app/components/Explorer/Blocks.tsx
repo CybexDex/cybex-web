@@ -12,14 +12,14 @@ import TransactionChart from "./TransactionChart";
 import BlocktimeChart from "./BlocktimeChart";
 import classNames from "classnames";
 import utils from "common/utils";
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 import TimeAgo from "../Utility/TimeAgo";
 import FormattedAsset from "../Utility/FormattedAsset";
 import TransitionWrapper from "../Utility/TransitionWrapper";
 
 require("../Blockchain/json-inspector.scss");
 
-class BlockTimeAgo extends React.Component {
+class BlockTimeAgo extends React.Component<any> {
   shouldComponentUpdate(nextProps) {
     return nextProps.blockTime !== this.props.blockTime;
   }
@@ -46,7 +46,7 @@ class BlockTimeAgo extends React.Component {
   }
 }
 
-class Blocks extends React.Component {
+class Blocks extends React.Component<any, any> {
   static propTypes = {
     globalObject: ChainTypes.ChainObject.isRequired,
     dynGlobalObject: ChainTypes.ChainObject.isRequired,
@@ -438,6 +438,7 @@ class Blocks extends React.Component {
         <div
           ref="transactionsBlock"
           className="block-right show-for-medium vertical grid-block no-overflow"
+          style={{padding: 0}}
         >
           <div className="grid-block bgcolor-primary with-shadow small-12 vertical no-overflow">
             <div className="grid-block vertical no-overflow generic-bordered-box">

@@ -192,15 +192,14 @@ let Header = class extends React.Component<any, any> {
         autoDismiss: 2
       });
     }
-    // this.onClickUser(account_name, e);
+    this.onClickUser(account_name, e);
   }
 
-  // onClickUser(account, e) {
-  //     e.stopPropagation();
-  //     e.preventDefault();
-  //
-  //     this.context.router.push(`/account/${account}/overview`);
-  // }
+  onClickUser(account, e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.props.history.push(`/account/${account}/overview`);
+  }
 
   render() {
     let { active } = this.state;
@@ -375,7 +374,7 @@ let Header = class extends React.Component<any, any> {
       <ActionSheet.Button title="" setActiveState={() => {}}>
         <a
           onClick={this._accountClickHandler.bind(this, account_display_name)}
-          style={{ cursor: "default", padding: "1rem", border: "none" }}
+          style={{ padding: "1rem", border: "none" }}
           className="button"
         >
           <span className="table-cell">

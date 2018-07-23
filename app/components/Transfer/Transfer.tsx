@@ -28,7 +28,7 @@ class Transfer extends React.Component<any, any> {
   constructor(props) {
     super(props);
     let initState: { [s: string]: any } = Transfer.getInitialState();
-    let { query } = this.props.location;
+    let { params: query } = this.props.match;
     if (query.from) {
       initState.from_name = query.from;
       ChainStore.getAccount(query.from);

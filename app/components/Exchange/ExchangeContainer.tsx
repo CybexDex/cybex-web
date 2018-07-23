@@ -14,10 +14,11 @@ import MarketsActions from "actions/MarketsActions";
 import { correctMarketPair } from "utils/Market";
 import market_utils from "common/utils";
 import market_utils_ori from "common/market_utils";
+import { withRouter } from "react-router-dom";
 
-class ExchangeContainer extends React.Component<any, any> {
+let ExchangeContainer = class extends React.Component<any, any> {
   render() {
-    let symbols = this.props.params.marketID.split("_");
+    let symbols = this.props.match.params.marketID.split("_");
 
     return (
       <AltContainer
@@ -275,5 +276,5 @@ ExchangeSubscriber = BindToChainState(ExchangeSubscriber, {
   keep_updating: true,
   show_loader: true
 });
-
+ExchangeContainer = withRouter(ExchangeContainer);
 export default ExchangeContainer;

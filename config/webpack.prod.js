@@ -94,8 +94,7 @@ const prodPlugins = plugins.concat([
 
 const config = {
   entry: {
-    // styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
-    // assets: path.resolve(BASE_URL, "app/assets/loader"),
+    styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
     app: path.resolve(BASE_URL, "app/Main.js")
   },
   context: path.resolve(BASE_URL, "app"),

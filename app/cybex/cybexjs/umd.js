@@ -9356,6 +9356,7 @@ class Signature {
         @return {Signature}
     */
     static signBufferSha256(buf_sha256, private_key) {
+        console.debug("Sha256: ", buf_sha256);
         if( buf_sha256.length !== 32 || ! Buffer.isBuffer(buf_sha256) )
             throw new Error("buf_sha256: 32 byte buffer requred")
         var der, e, ecsignature, i, lenR, lenS, nonce;

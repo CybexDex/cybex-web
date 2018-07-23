@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Translate from "react-translate-component";
 import Icon from "../Icon/Icon";
 
@@ -15,32 +15,36 @@ export class ExplorerNav extends React.Component {
       <div
         className="explorer-nav with-shadow"
         ref={nav => (this.nav = nav)}
-        onClick={e => e.stopPropagation()}
+        onClick={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }}
       >
-        <Link activeClassName="active" to="ledger">
+        <NavLink activeClassName="active" to="/explorer/blocks">
           <Translate component="span" content="explorer.blocks.title" />
-        </Link>
-        <Link activeClassName="active" to="explorer/assets">
+        </NavLink>
+        <NavLink activeClassName="active" to="/explorer/assets">
           <Translate component="span" content="explorer.assets.title" />
-        </Link>
-        <Link activeClassName="active" to="explorer/accounts">
+        </NavLink>
+        <NavLink activeClassName="active" to="/explorer/accounts">
           <Translate component="span" content="explorer.accounts.title" />
-        </Link>
-        <Link activeClassName="active" to="explorer/witnesses">
+        </NavLink>
+        <NavLink activeClassName="active" to="/explorer/witnesses">
           <Translate component="span" content="explorer.witnesses.title" />
-        </Link>
-        <Link activeClassName="active" to="explorer/committee-members">
+        </NavLink>
+        <NavLink activeClassName="active" to="/explorer/committee">
           <Translate
             component="span"
             content="explorer.committee_members.title"
           />
-        </Link>
+        </NavLink>
         {/* <Link activeClassName="active" to="explorer/markets">
           <Translate component="span" content="markets.title" />
         </Link> */}
-        <Link activeClassName="active" to="explorer/fees">
+        <NavLink activeClassName="active" to="/explorer/fees">
           <Translate component="span" content="fees.title" />
-        </Link>
+        </NavLink>
       </div>
     );
   }

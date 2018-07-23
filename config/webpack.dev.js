@@ -71,6 +71,7 @@ const devPlugins = [
 
 const config = {
   entry: {
+    styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
     app: [
       "react-hot-loader/patch",
       "webpack-hot-middleware/client",

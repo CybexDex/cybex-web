@@ -49,6 +49,11 @@ const Exchange = Loadable({
     import(/* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"),
   loading: LoadingIndicator
 });
+const Gateway = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "gateway" */ "./components/Gateway/Gateway"),
+  loading: LoadingIndicator
+});
 
 const Explorer = Loadable({
   loader: () =>
@@ -68,11 +73,6 @@ const Transfer = Loadable({
   loading: LoadingIndicator
 });
 
-const AccountDepositWithdraw = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "deposit-withdraw" */ "./components/Account/AccountDepositWithdraw"),
-  loading: LoadingIndicator
-});
 
 const Settings = Loadable({
   loader: () =>
@@ -122,9 +122,11 @@ const CreateWorker = Loadable({
 });
 const EtoStatic = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "create-worker" */ "./components/StaticPages/EtoStatic"),
+    import(/* webpackChunkName: "EtoStatic" */ "./components/StaticPages/EtoStatic"),
   loading: LoadingIndicator
 });
+
+
 
 let App = class extends React.Component<any, any> {
   syncCheckInterval;
@@ -384,50 +386,41 @@ let App = class extends React.Component<any, any> {
           <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
           {/* <Nav isVertical={true} hideLabel={true} /> */}
           <div className="main-body">
-            <div className="grid-block vertical">
-              <Switch>
-                <Route path="/" exact component={DashboardPage} />
-                <Route path="/account/:account_name" component={AccountPage} />
-                {/* <Route path="/accounts" component={DashboardAccountsOnly} /> */}
-                <Route path="/market/:marketID" component={Exchange} />
-                <Route path="/settings/:tab" component={Settings} />
-                <Route path="/settings" component={Settings} />
+            <Switch>
+              <Route path="/" exact component={DashboardPage} />
+              <Route path="/account/:account_name" component={AccountPage} />
+              
+              {/* <Route path="/accounts" component={DashboardAccountsOnly} /> */}
+              <Route path="/market/:marketID" component={Exchange} />
+              <Route path="/settings/:tab" component={Settings} />
+              <Route path="/settings" component={Settings} />
 
-                <Route path="/transfer" exact component={Transfer} />
-                <Route
-                  path="/deposit-withdraw"
-                  exact
-                  component={AccountDepositWithdraw}
-                />
-                {/* <Route path="/create-account" component={LoginSelector} /> */}
+              <Route path="/transfer" exact component={Transfer} />
+              <Route path="/gateway" exact component={Gateway} />
+              {/* <Route path="/create-account" component={LoginSelector} /> */}
 
-                {/* Explorer routes */}
-                <Route path="/explorer/:tab" component={Explorer} />
-                <Route path="/explorer" component={Explorer} />
-                <Route path="/asset/:symbol" component={Asset} />
-                <Route exact path="/block/:height" component={Block} />
-                <Route exact path="/block/:height/:txIndex" component={Block} />
+              {/* Explorer routes */}
+              <Route path="/explorer/" component={Explorer} />
+              {/* <Route path="/explorer/:tab" component={Explorer} /> */}
+              <Route path="/asset/:symbol" component={Asset} />
+              <Route exact path="/block/:height" component={Block} />
+              <Route exact path="/block/:height/:txIndex" component={Block} />
 
-                {/* Wallet backup/restore routes */}
-                <Route path="/wallet" component={WalletManager} />
+              {/* Wallet backup/restore routes */}
+              <Route path="/wallet" component={WalletManager} />
 
-                <Route path="/existing-account" component={ExistingAccount} />
+              <Route path="/existing-account" component={ExistingAccount} />
 
-                <Route path="/create-worker" component={CreateWorker} />
-                <Route path="/eto-static" component={EtoStatic} />
+              <Route path="/create-worker" component={CreateWorker} />
+              <Route path="/eto-static" component={EtoStatic} />
 
-                {/* Help routes */}
-                <Route exact path="/help" component={Help} />
-                <Route exact path="/help/:path1" component={Help} />
-                <Route exact path="/help/:path1/:path2" component={Help} />
-                <Route
-                  exact
-                  path="/help/:path1/:path2/:path3"
-                  component={Help}
-                />
-                {/* <Route path="*" component={Page404} /> */}
-              </Switch>
-            </div>
+              {/* Help routes */}
+              <Route exact path="/help" component={Help} />
+              <Route exact path="/help/:path1" component={Help} />
+              <Route exact path="/help/:path1/:path2" component={Help} />
+              <Route exact path="/help/:path1/:path2/:path3" component={Help} />
+              {/* <Route path="*" component={Page404} /> */}
+            </Switch>
           </div>
           <Footer synced={this.state.synced} />
           <ReactTooltip

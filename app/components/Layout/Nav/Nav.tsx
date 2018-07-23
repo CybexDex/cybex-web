@@ -39,14 +39,14 @@ const NavLinks: Array<NavLink> = [
     name: "eto",
     icon: "ETO"
   },
-  {
-    id: "account",
-    routeTo: accountName => `/account/${accountName}/dashboard`,
-    activeMatcher: /^\/account/,
-    name: "account",
-    icon: "wallet",
-    displayOnlyWhen: "currentAccount"
-  },
+  // {
+  //   id: "account",
+  //   routeTo: accountName => `/account/${accountName}/dashboard`,
+  //   activeMatcher: /^\/account/,
+  //   name: "account",
+  //   icon: "wallet",
+  //   displayOnlyWhen: "currentAccount"
+  // },
 
   {
     id: "exchange",
@@ -70,7 +70,7 @@ const NavLinks: Array<NavLink> = [
   },
   {
     id: "explorer",
-    routeTo: "/ledger",
+    routeTo: "/explorer/blocks",
     activeMatcher: /^\/ledger|explorer/,
     name: "explorer",
     icon: "explorer",
@@ -109,12 +109,12 @@ let sideStyles = {
   }
 };
 
-type NavProps = RouteComponentProps<any> & {
-  settings: any;
+type NavProps = {
+  settings?: any;
   isVertical?;
-  currentAccount: string;
-  lastMarket: string;
-  // [x: string]: string;
+  currentAccount?: string;
+  lastMarket?: string;
+  [x: string]: any;
 };
 
 const getNavId = id => `$nav__${id}`;
@@ -227,15 +227,7 @@ let Nav = class extends React.PureComponent<
             ];
           })}
           {/* Logout Button */}
-          {
-            <NavItem
-              name="worldcup"
-              key={getNavId(logoutItem.id)}
-              id={getNavId(logoutItem.id)}
-              hideIcon
-              onClick={() => window.open("https://2018.cybex.io", "_blank")}
-            />
-          }
+          
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>

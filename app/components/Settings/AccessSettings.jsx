@@ -32,22 +32,22 @@ class ApiNode extends React.Component {
     this.setState({ hovered: false });
   }
 
-  activate() {
+  activate(url) {
     SettingsActions.changeSetting({
       setting: "apiServer",
-      value: this.props.url
+      value: url
     });
-    setTimeout(
-      function() {
-        willTransitionTo(
-          this.props.router,
-          this.props.router.replace,
-          () => {},
-          false
-        );
-      }.bind(this),
-      50
-    );
+    if (
+      SettingsStore.getSetting("activeNode") !=
+      SettingsStore.getSetting("apiServer")
+    ) {
+      setTimeout(
+        function() {
+          willTransitionTo(false);
+        }.bind(this),
+        50
+      );
+    }
   }
 
   remove(url, name, e) {
@@ -132,7 +132,7 @@ class ApiNode extends React.Component {
           state.hovered &&
           !(automatic && autoActive) &&
           (automatic || isTestnet ? true : true) && (
-            <div className="button" onClick={this.activate.bind(this)}>
+            <div className="button" onClick={this.activate.bind(this, url)}>
               <Translate content="settings.activate" />
             </div>
           )}
@@ -316,17 +316,20 @@ class AccessSettings extends React.Component {
   }
 }
 
-AccessSettings = connect(AccessSettings, {
-  listenTo() {
-    return [SettingsStore];
-  },
-  getProps() {
-    return {
-      currentNode: SettingsStore.getState().settings.get("apiServer"),
-      activeNode: SettingsStore.getState().settings.get("activeNode"),
-      apiLatencies: SettingsStore.getState().apiLatencies
-    };
+AccessSettings = connect(
+  AccessSettings,
+  {
+    listenTo() {
+      return [SettingsStore];
+    },
+    getProps() {
+      return {
+        currentNode: SettingsStore.getState().settings.get("apiServer"),
+        activeNode: SettingsStore.getState().settings.get("activeNode"),
+        apiLatencies: SettingsStore.getState().apiLatencies
+      };
+    }
   }
-});
+);
 
 export default AccessSettings;

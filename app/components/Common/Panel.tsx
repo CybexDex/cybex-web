@@ -14,9 +14,7 @@ let Panel = Radium(
       direction: "column",
       responsive: true
     };
-    static propTypes = {
-      responsive: PropTypes.bool.isRequired
-    };
+    
     static $style = {
       base: {
         backgroundColor: Colors.$colorLead
