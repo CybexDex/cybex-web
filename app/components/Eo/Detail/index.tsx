@@ -470,7 +470,7 @@ formatTime(input){
                   }else{
                     return null;
                   }
-                } 
+                }
               }else{
                 return(
                   null
