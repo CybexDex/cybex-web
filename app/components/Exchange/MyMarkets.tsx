@@ -51,6 +51,7 @@ const BTC_MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.NES",
   "JADE.RHOC",
   "JADE.PPT",
   "JADE.MKR",

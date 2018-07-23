@@ -126,7 +126,7 @@ class MobileMenu extends React.Component {
                 </a>
               </li>
               <li>
-                <a onClick={this._onNavigate.bind(this, "/eto-static")}>
+                <a onClick={this._onNavigate.bind(this, "/eto/genesis-space")}>
                   <Translate content="nav.eto" />
                 </a>
               </li>

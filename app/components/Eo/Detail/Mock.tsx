@@ -162,7 +162,7 @@ class Detail extends React.Component<any, any> {
     let name = null,
       status = "pre",
       base_soft_cap = null,
-      base_hard_cap = "200,000,000NES",
+      base_hard_cap = "2,000 ETH",
       current_user_count,
       current_base_token_count,
       // base_max_quota = "2",
@@ -178,7 +178,7 @@ class Detail extends React.Component<any, any> {
       adds_advantage =
         "Genesis有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性。一个侧链就是一个虚拟国，每个虚拟国可以有完全不同的治理机制，实现无限的可能性。 Genesis项目的代码进展状况良好，testnet预计年底前上线。另外，这次IEO的融资额度非常小，又是第一轮融资，相当于散户直接可以参与基石轮。",
       offer_at,
-      base_token_count = "200,000,000NES",
+      base_token_count = "2,000 ETH",
       district_restriction,
       base_token_name = "ETH",
       adds_website = "thegenesis.space",
