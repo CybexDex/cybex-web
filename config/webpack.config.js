@@ -18,6 +18,10 @@ const defines = {
     JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1 ||
     (process.env.NODE_ENV_TEST &&
       process.env.NODE_ENV_TEST.toLowerCase() === "test"),
+  __STAGING__:
+    JSON.stringify(gitRevisionPlugin.branch()).indexOf("test") !== -1 ||
+    (process.env.NODE_ENV_TEST &&
+      process.env.NODE_ENV_TEST.toLowerCase() === "staging"),
   __BASE_URL__: JSON.stringify("/")
 };
 
