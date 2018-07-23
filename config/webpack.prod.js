@@ -9,7 +9,7 @@ const {
 const Clean = require("clean-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const path = require("path");
-console.log("Webpack Config for Dev");
+console.log("Webpack Config for Prod");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cssLoaders = [

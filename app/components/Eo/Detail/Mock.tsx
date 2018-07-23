@@ -527,7 +527,7 @@ class Detail extends React.Component<any, any> {
               </div>
 
               <div className="kyc-btn-holder">
-                <a href="https://www.icoape.com/">
+                <a href={__ICOAPE__}>
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>

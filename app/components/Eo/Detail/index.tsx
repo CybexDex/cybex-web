@@ -488,7 +488,7 @@ formatTime(input){
             this.setState({kyc_status:()=>{
               return (
                 <div className="kyc-btn-holder">
-                  <a href="https://www.icoape.com/" target="_blank">
+                  <a href={__ICOAPE__} target="_blank">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>
