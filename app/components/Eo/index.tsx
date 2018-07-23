@@ -101,7 +101,7 @@ class EO extends React.Component<any, any> {
     
   }
   formatTime(input){
-    return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD hh:mm:ss');
+    return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss');
   }
   render() {
 
@@ -220,7 +220,6 @@ class EO extends React.Component<any, any> {
             }
           }
         })
-        console.log(endAt)
         switch(e.status){
           case 'pre':
           countDownTime = moment(startAt).valueOf() - moment().valueOf();
