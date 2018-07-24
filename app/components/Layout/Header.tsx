@@ -174,8 +174,9 @@ let Header = class extends React.Component<any, any> {
     window.history.forward();
   }
 
-  _accountClickHandler(account_name, e) {
+  _accountClickHandler(account_name, e, quickShift = false) {
     e.preventDefault();
+    e.stopPropagation();
     ZfApi.publish("account_drop_down", "close");
     if (this.props.location.pathname.indexOf("/account/") !== -1) {
       let currentPath = this.props.location.pathname.split("/");
@@ -192,7 +193,9 @@ let Header = class extends React.Component<any, any> {
         autoDismiss: 2
       });
     }
-    this.onClickUser(account_name, e);
+    if (!quickShift) {
+      this.onClickUser(account_name, e);
+    }
   }
 
   onClickUser(account, e) {
@@ -349,7 +352,7 @@ let Header = class extends React.Component<any, any> {
             >
               <a
                 href="javascript:;"
-                onClick={this._accountClickHandler.bind(this, name)}
+                onClick={e => this._accountClickHandler(name, e, false)}
               >
                 <span className="table-cell">
                   <AccountImage
@@ -360,6 +363,13 @@ let Header = class extends React.Component<any, any> {
                 </span>
                 <span className="table-cell" style={{ paddingLeft: 10 }}>
                   <span>{name}</span>
+                </span>
+                <span
+                  className="table-cell link"
+                  onClick={e => this._accountClickHandler(name, e, true)}
+                  style={{ paddingLeft: 10 }}
+                >
+                  <span>快速切换</span>
                 </span>
               </a>
             </li>

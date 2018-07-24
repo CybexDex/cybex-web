@@ -120,7 +120,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
       FetchChain("getAccount", this.state.accountName, undefined, {
         [this.state.accountName]: true
       }).then(() => {
-        this.props.router.push("/wallet/backup/create?newAccount=true");
+        this.props.history.push("/wallet/backup/create?newAccount=true");
       });
     }
   }

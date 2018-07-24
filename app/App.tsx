@@ -27,8 +27,9 @@ import LogoutModal, {
 } from "components/Modal/LogoutModal";
 import Loadable from "react-loadable";
 import titleUtils from "common/titleUtils";
+import { LoadComponent } from "./Routes";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 (function(window) {
   if (window) {
@@ -72,7 +73,6 @@ const Transfer = Loadable({
     import(/* webpackChunkName: "transfer" */ "./components/Transfer/Transfer"),
   loading: LoadingIndicator
 });
-
 
 const Settings = Loadable({
   loader: () =>
@@ -126,7 +126,25 @@ const EtoStatic = Loadable({
   loading: LoadingIndicator
 });
 
-
+const Login = Loadable({
+  loader: () => import("./components/Login/Login"),
+  loading: LoadingIndicator
+});
+const CreateSelector = Loadable({
+  loader: () => import("./components/Login/CreateSelector"),
+  loading: LoadingIndicator
+});
+const BrainkeyWallet = Loadable({
+  loader: () =>
+    import("components/Wallet/WalletCreate").then(
+      ({ CreateWalletFromBrainkey }) => CreateWalletFromBrainkey
+    ),
+  loading: LoadingIndicator
+});
+const Contact = Loadable({
+  loader: () => import("./components/HelpDrawer/Contact"),
+  loading: LoadingIndicator
+});
 
 let App = class extends React.Component<any, any> {
   syncCheckInterval;
@@ -387,9 +405,10 @@ let App = class extends React.Component<any, any> {
           {/* <Nav isVertical={true} hideLabel={true} /> */}
           <div className="main-body">
             <Switch>
-              <Route path="/" exact component={DashboardPage} />
+              <Route path="/dashboard" exact component={DashboardPage} />
+
               <Route path="/account/:account_name" component={AccountPage} />
-              
+
               {/* <Route path="/accounts" component={DashboardAccountsOnly} /> */}
               <Route path="/market/:marketID" component={Exchange} />
               <Route path="/settings/:tab" component={Settings} />
@@ -414,12 +433,21 @@ let App = class extends React.Component<any, any> {
               <Route path="/create-worker" component={CreateWorker} />
               <Route path="/eto-static" component={EtoStatic} />
 
+              <Route path="/login" component={Login} />
+              <Route
+                path="/create-wallet-brainkey"
+                component={BrainkeyWallet}
+              />
+              <Route path="/create-account" component={CreateSelector} />
+              <Route path="/contact" component={Contact} />
+
               {/* Help routes */}
               <Route exact path="/help" component={Help} />
               <Route exact path="/help/:path1" component={Help} />
               <Route exact path="/help/:path1/:path2" component={Help} />
               <Route exact path="/help/:path1/:path2/:path3" component={Help} />
               {/* <Route path="*" component={Page404} /> */}
+              <Redirect from="/" to="/dashboard" />
             </Switch>
           </div>
           <Footer synced={this.state.synced} />

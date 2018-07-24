@@ -163,7 +163,7 @@ let LoginMain = Radium(
 
 export default class Login extends React.Component<any, any> {
   onSelect(route) {
-    this.props.router.push("/create-account/" + route);
+    this.props.history.push("/create-account/" + route);
   }
 
   render() {
@@ -176,7 +176,7 @@ export default class Login extends React.Component<any, any> {
         style={{ width: "100%", display: "flex", height: "100%" }}
       >
         <LeftSlide />
-        <LoginMain resolve={() => this.props.router.push("/dashboard")} />
+        <LoginMain resolve={() => this.props.history.push("/dashboard")} />
       </div>
     );
   }

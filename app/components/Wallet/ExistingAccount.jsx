@@ -5,6 +5,11 @@ import WalletManagerStore from "stores/WalletManagerStore";
 import BalanceClaimActive from "components/Wallet/BalanceClaimActive";
 import Translate from "react-translate-component";
 
+import { Route, Switch } from "react-router-dom";
+import { BackupRestore } from "components/Wallet/Backup";
+import ImportKeys from "components/Wallet/ImportKeys";
+import Brainkey from "components/Wallet/Brainkey";
+
 const connectObject = {
   listenTo() {
     return [WalletManagerStore];
@@ -36,14 +41,34 @@ class ExistingAccount extends React.Component {
                 </h3>
               )}
             </div>
-            <div className="content-block">{this.props.children}</div>
+            <div className="content-block">
+              <Switch>
+                <Route path="/existing-account" component={BackupRestore} />
+                <Route
+                  path="/existing-account/import-backup"
+                  component={ExistingAccountOptions}
+                />
+                <Route
+                  path="/existing-account/import-keys"
+                  component={ImportKeys}
+                />
+                <Route path="/existing-account/brainkey" component={Brainkey} />
+                <Route
+                  path="/existing-account/balance-claim"
+                  component={BalanceClaimActive}
+                />
+              </Switch>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
-ExistingAccount = connect(ExistingAccount, connectObject);
+ExistingAccount = connect(
+  ExistingAccount,
+  connectObject
+);
 
 class ExistingAccountOptions extends React.Component {
   render() {
@@ -90,6 +115,10 @@ class ExistingAccountOptions extends React.Component {
     );
   }
 }
-ExistingAccountOptions = connect(ExistingAccountOptions, connectObject);
+ExistingAccountOptions = connect(
+  ExistingAccountOptions,
+  connectObject
+);
 
 export { ExistingAccount, ExistingAccountOptions };
+export default ExistingAccount;

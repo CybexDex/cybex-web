@@ -37,6 +37,7 @@ type Props = {
   myActiveAccounts?;
   hiddenAssets?;
   history?;
+  match?
 };
 
 /* Nested routes */
@@ -126,6 +127,7 @@ let AccountPage = class extends React.Component<Props, any> {
       myActiveAccounts,
       hiddenAssets,
       history,
+      match,
       bridgeCoins,
       backedCoins
     } = this.props;

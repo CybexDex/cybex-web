@@ -26,7 +26,7 @@ class WitnessCard extends React.Component {
 
   _onCardClick(e) {
     e.preventDefault();
-    this.context.router.push(`/account/${this.props.witness.get("name")}`);
+    this.context.router.history.push(`/account/${this.props.witness.get("name")}`);
   }
 
   render() {
@@ -111,7 +111,7 @@ class WitnessRow extends React.Component {
 
   _onRowClick(e) {
     e.preventDefault();
-    this.context.router.push(`/account/${this.props.witness.get("name")}`);
+    this.context.router.history.push(`/account/${this.props.witness.get("name")}`);
   }
 
   // componentWillUnmount() {

@@ -147,7 +147,7 @@ class MarginPosition extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
   }
 
   render() {
@@ -366,7 +366,7 @@ class MarginPositionPlaceHolder extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
   }
 
   render() {

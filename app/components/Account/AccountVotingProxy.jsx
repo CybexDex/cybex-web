@@ -118,7 +118,7 @@ class AccountVotingProxy extends React.Component {
   }
 
   _onNavigate(route) {
-    this.context.router.push(route);
+    this.context.router.history.push(route);
     // this._changeTab();
   }
 

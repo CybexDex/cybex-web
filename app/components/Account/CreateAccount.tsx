@@ -120,7 +120,7 @@ let CreateAccount = Radium(
           [this.state.accountName]: true
         }).then(() => {
           console.log("onFinishConfirm");
-          this.props.router.push("/wallet/backup/create?newAccount=true");
+          this.props.history.push("/wallet/backup/create?newAccount=true");
         });
       }
     }

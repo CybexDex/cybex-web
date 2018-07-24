@@ -999,7 +999,7 @@ AssetContainer = BindToChainState(AssetContainer, { keep_updating: true });
 
 export default class AssetSymbolSplitter extends React.Component {
   render() {
-    let symbol = this.props.params.symbol;
+    let symbol = this.props.match.params.symbol.toUpperCase();
     return <AssetContainer {...this.props} asset={symbol} />;
   }
 }

@@ -79,7 +79,7 @@ class HelpContent extends React.Component {
     let path = e.target.pathname.split("/").filter(p => p && p !== "#");
     if (path.length === 0) return false;
     let route = "/" + path.join("/");
-    this.props.router.push(route);
+    this.props.history.push(route);
     return false;
   }
 

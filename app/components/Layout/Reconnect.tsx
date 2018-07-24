@@ -73,8 +73,8 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
     this.timer = setTimeout(
       () =>
         willTransitionTo(
-          this.props.router,
-          this.props.router.replace,
+          this.props.history,
+          this.props.history.replace,
           () => {},
           false
         ),

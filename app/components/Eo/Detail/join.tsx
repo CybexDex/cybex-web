@@ -91,7 +91,7 @@ let Join = class extends React.Component<
   updateProject = () => {
     if (!this.props.currentAccount || !this.props.currentAccount.get) return;
     let data = {
-      project: this.props.params.id,
+      project: this.props.match.params.id,
       cybex_name: this.props.currentAccount.get("name")
     };
     Promise.all([

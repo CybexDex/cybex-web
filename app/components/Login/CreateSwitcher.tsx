@@ -9,17 +9,21 @@ export let CreateSwitcher = Radium(
     render() {
       let { mode, style } = this.props;
       return (
-        <Button size="xsmall" type="white-primary" style={style}>
+        <div style={style}>
           {mode === 1 ? (
             <Link to="/create-account/password">
-              <Translate content="login.switch_to_cloud" />
+              <Button size="xsmall" type="white-primary">
+                <Translate content="login.switch_to_cloud" />
+              </Button>
             </Link>
           ) : (
             <Link to="/create-account/wallet">
-              <Translate content="login.switch_to_local" />
+              <Button size="xsmall" type="white-primary">
+                <Translate content="login.switch_to_local" />
+              </Button>
             </Link>
           )}
-        </Button>
+        </>
       );
     }
   }

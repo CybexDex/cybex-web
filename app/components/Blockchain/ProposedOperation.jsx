@@ -57,7 +57,7 @@ class Row extends React.Component {
 
   showDetails(e) {
     e.preventDefault();
-    this.context.router.push(`/block/${this.props.block}`);
+    this.context.router.hsitory.push(`/block/${this.props.block}`);
   }
 
   render() {

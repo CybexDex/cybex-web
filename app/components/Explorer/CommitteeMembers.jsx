@@ -22,7 +22,7 @@ class CommitteeMemberCard extends React.Component {
 
   _onCardClick(e) {
     e.preventDefault();
-    this.context.router.push(
+    this.context.router.history.push(
       `/account/${this.props.committee_member.get("name")}`
     );
   }
@@ -83,7 +83,7 @@ class CommitteeMemberRow extends React.Component {
 
   _onRowClick(e) {
     e.preventDefault();
-    this.context.router.push(
+    this.context.router.history.push(
       `/account/${this.props.committee_member.get("name")}`
     );
   }

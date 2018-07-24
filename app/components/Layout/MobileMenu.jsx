@@ -28,7 +28,7 @@ class MobileMenu extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
     ZfApi.publish("mobile-menu", "close");
   }
 

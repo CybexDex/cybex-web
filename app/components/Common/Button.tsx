@@ -192,7 +192,7 @@ let RouterButton = class extends React.PureComponent<ButtonProps> {
     return (
       <Button
         {...this.props}
-        onClick={() => this.context.router.push(this.props.link)}
+        onClick={() => this.context.router.history.push(this.props.link)}
       />
     );
   }

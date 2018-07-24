@@ -98,15 +98,6 @@ let AccountOverview = class extends React.Component<any, any> {
       bridgeAsset: null,
       alwaysShowAssets: [
         "CYB"
-        // "BTS",
-        // "USD",
-        // "CNY",
-        // "OPEN.BTC",
-        // "OPEN.USDT",
-        // "OPEN.ETH",
-        // "OPEN.MAID",
-        // "OPEN.STEEM",
-        // "OPEN.DASH"
       ]
     };
 
@@ -253,7 +244,7 @@ let AccountOverview = class extends React.Component<any, any> {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.props.router.push(route);
+    this.props.history.push(route);
   }
 
   _renderBalances(balanceList, optionalAssets, visible?) {

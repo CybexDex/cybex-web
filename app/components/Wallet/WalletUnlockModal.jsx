@@ -155,7 +155,7 @@ class WalletUnlockModal extends React.Component {
 
   _onCreateWallet() {
     ZfApi.publish(this.props.modalId, "close");
-    this.context.router.push("/create-account/wallet");
+    this.context.router.history.push("/create-account/wallet");
   }
 
   renderWalletLogin() {
