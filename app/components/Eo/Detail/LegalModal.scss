@@ -1,0 +1,29 @@
+#ieo-legal-modal{
+	background: #293246;
+	.close-button{
+		text-decoration: none;
+	}
+	.modal-container{
+		height: 500px;
+		overflow: scroll;
+	}
+	.modal-container{
+		margin-top: 20px;
+	}
+	li{
+		text-indent: -1.3em;
+		margin-left: 2em;
+		margin-right: 2em;
+		text-align: justify;
+	}
+	.center{
+		text-align: center;
+	}
+	.title-sub{
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+	.title{
+		margin-bottom: 20px;
+	}
+}

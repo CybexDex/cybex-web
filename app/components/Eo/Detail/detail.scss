@@ -10,6 +10,21 @@
 			color: #ff9143;
 		}
 	}
+	.legal-input{
+		margin-top: 7px;
+    	margin-right: 10px;
+	}
+	.legal-label{
+		display: inline;
+		margin-left: 20px;
+		line-height: 2rem;
+	}
+	.legal-info{
+		width: 91%;
+		margin-top: -25px;
+		margin-left: 18px;
+		margin-bottom: 15px;
+	}
 	.button{
 		&.primery-button{
 			border-radius: 4px;
