@@ -24,6 +24,7 @@ import AccountStore from "stores/AccountStore";
 import "./detail.scss";
 import "./mock.scss";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
+import LegalModal from "./LegalModal";
 import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
@@ -51,8 +52,9 @@ class Detail extends React.Component<any, any> {
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label>阅读并同意</label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                       <Link to={`/eto/join/${this.props.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
@@ -67,8 +69,9 @@ class Detail extends React.Component<any, any> {
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label>阅读并同意</label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                   <div className="button primery-button disabled pre">
                     等待众筹开始
                   </div>
@@ -87,8 +90,9 @@ class Detail extends React.Component<any, any> {
                         type="checkbox"
                         checked={true}
                         readOnly={true}
+                        className="legal-input"
                       />
-                      <label>阅读并同意</label>
+                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                     <div className="button primery-button disabled waiting">
                       审核中
                       {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -125,8 +129,9 @@ class Detail extends React.Component<any, any> {
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label>阅读并同意</label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                   <div className="button primery-button disabled waiting">
                     审核中
                   </div>
@@ -155,8 +160,9 @@ class Detail extends React.Component<any, any> {
                           <input
                             type="checkbox" 
                             onChange={this.changeCheckbox.bind(this)} 
+                            className="legal-input"
                           />
-                          <label>阅读并同意</label>
+                          <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                           <div className="button primery-button ok">
                           {this.state.canBeReserve?(
                             <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
@@ -171,7 +177,9 @@ class Detail extends React.Component<any, any> {
                             <input
                               type="checkbox" 
                               onChange={this.changeCheckbox.bind(this)} 
+                              className="legal-input"
                             />
+                            <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                             {this.state.canBeReserve?(
                             <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                               立即预约
@@ -218,7 +226,6 @@ formatTime(input){
       res.result.start_at = this.formatTime(res.result.start_at);
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
-      console.log(res.result.offer_at);
       res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
       let endAt = moment(res.result.end_at);
@@ -319,8 +326,9 @@ formatTime(input){
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label>阅读并同意</label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                       <Link to={`/eto/join/${this.props.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
@@ -330,17 +338,20 @@ formatTime(input){
                     
                   )
                 }else if(res.result.status == 'pre'){
-                  <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                    />
-                    <label>阅读并同意</label>
-                  <div className="button primery-button disabled pre">
-                    等待众筹开始
-                  </div>
-                  </div>
+                  return(
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                        className="legal-input"
+                      />
+                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
+                    <div className="button primery-button disabled pre">
+                      等待众筹开始
+                    </div>
+                    </div>
+                  )
                 }else{
                   return null;
                 }
@@ -355,8 +366,9 @@ formatTime(input){
                         type="checkbox"
                         checked={true}
                         readOnly={true}
+                        className="legal-input"
                       />
-                      <label>阅读并同意</label>
+                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                     <div className="button primery-button disabled waiting">
                       审核中
                       {/* <Translate content="EIO.Reserve_Now" /> */}
@@ -393,8 +405,9 @@ formatTime(input){
                       type="checkbox"
                       checked={true}
                       readOnly={true}
+                      className="legal-input"
                     />
-                    <label>阅读并同意</label>
+                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                   <div className="button primery-button disabled waiting">
                     审核中
                   </div>
@@ -423,8 +436,9 @@ formatTime(input){
                           <input
                             type="checkbox" 
                             onChange={this.changeCheckbox.bind(this)} 
+                            className="legal-input"
                           />
-                          <label>阅读并同意</label>
+                          <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                           <div className="button primery-button ok">
                           {this.state.canBeReserve?(
                             <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
@@ -439,7 +453,9 @@ formatTime(input){
                             <input
                               type="checkbox" 
                               onChange={this.changeCheckbox.bind(this)} 
+                              className="legal-input"
                             />
+                            <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#">我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容</a></div></Trigger></label>
                             {this.state.canBeReserve?(
                             <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                               立即预约
@@ -454,7 +470,7 @@ formatTime(input){
                   }else{
                     return null;
                   }
-                } 
+                }
               }else{
                 return(
                   null
@@ -655,10 +671,15 @@ formatTime(input){
                 status == 'finish'? (
                   <span className="sub finish">[ <Translate content="EIO.finish" /> ]</span>
                 ):(
-                  <span className="sub finish">[ <Translate content="EIO.pause" /> ]</span>
+                  status == 'pause')? (
+                    <span className="sub finish">[ <Translate content="EIO.pause" /> ]</span>
+                  ):(
+                    null
+                  )
+                  
                 )
               )
-            )}
+            }
           </h3>
           
           {name?(<div className="info-item">
@@ -757,7 +778,7 @@ formatTime(input){
             <div className="info-title">
             <Translate content="EIO.Project_Details" />: 
             </div>
-            <div className="info-detail">{adds_detail}</div>
+            <div className="info-detail"><a href={adds_detail} target="_blank">{adds_detail}</a></div>
           </div>):null}
 
 
@@ -824,6 +845,8 @@ formatTime(input){
           </DetalModal>
           <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showAlertModal}>
           </AlertModal>
+          <LegalModal id="ieo-legal-modal">
+          </LegalModal>
       </div>
     );
   }
