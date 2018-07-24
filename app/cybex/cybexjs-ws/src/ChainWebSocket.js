@@ -1,3 +1,6 @@
+import { cloneDeep } from "lodash";
+import { NetworkStore } from "stores/NetworkStore";
+
 let WebSocketClient;
 if (typeof WebSocket === "undefined" && !process.env.browser) {
   WebSocketClient = require("ws");
@@ -18,8 +21,9 @@ function getWebSocketClient(autoReconnect) {
 }
 
 let keep_alive_interval = 5000;
-let max_send_life = 5;
-let max_recv_life = max_send_life * 2;
+let max_send_life = 2;
+// let max_send_life = 5;
+let max_recv_life = max_send_life * 4;
 
 class ChainWebSocket {
   constructor(
@@ -50,6 +54,8 @@ class ChainWebSocket {
     this.send_life = max_send_life;
     this.recv_life = max_recv_life;
     this.keepAliveCb = keepAliveCb;
+    NetworkStore.updateApiStatus("connecting");
+
     this.connect_promise = new Promise((resolve, reject) => {
       this.current_reject = reject;
       let WsClient = getWebSocketClient(autoReconnect);
@@ -66,13 +72,28 @@ class ChainWebSocket {
       }
 
       this.ws.onopen = () => {
+        NetworkStore.updateApiStatus("online");
         clearTimeout(this.connectionTimeout);
         if (this.statusCb) this.statusCb("open");
         if (this.on_reconnect) this.on_reconnect();
         this.keepalive_timer = setInterval(() => {
           this.recv_life--;
+          // console.debug("RecvLife: ", this.recv_life);
+          if (this.recv_life === max_recv_life - 1) {
+            NetworkStore.updateApiStatus("online");
+          }
+          if (this.recv_life < max_recv_life - 2) {
+            NetworkStore.updateApiStatus("blocked");
+          }
           if (this.recv_life == 0) {
             console.error(this.url + " connection is dead, terminating ws");
+            NetworkStore.updateApiStatus("offline");
+
+            if (this.ws.terminate) {
+              this.ws.terminate();
+            } else {
+              this.ws.close();
+            }
             this.close();
             // clearInterval(this.keepalive_timer);
             // this.keepalive_timer = undefined;
@@ -81,12 +102,14 @@ class ChainWebSocket {
           this.send_life--;
           if (this.send_life == 0) {
             // this.ws.ping('', false, true);
+            this.call([2, "get_objects", [["2.1.0"]]]);
+
             if (this.keepAliveCb) {
               this.keepAliveCb(this.closed);
             }
             this.send_life = max_send_life;
           }
-        }, 5000);
+        }, keep_alive_interval);
         this.current_reject = null;
         resolve();
       };
@@ -97,6 +120,7 @@ class ChainWebSocket {
         }
         clearTimeout(this.connectionTimeout);
         if (this.statusCb) this.statusCb("error");
+        NetworkStore.updateApiStatus("error");
 
         if (this.current_reject) {
           this.current_reject(error);
@@ -116,7 +140,9 @@ class ChainWebSocket {
         for (var cbId = this.responseCbId + 1; cbId <= this.cbId; cbId += 1) {
           this.cbs[cbId].reject(err);
         }
+        NetworkStore.updateApiStatus("error");
         if (this.statusCb) this.statusCb("closed");
+        if (this.closeCb) this.closeCb();
         if (this._closeCb) this._closeCb();
         if (this.on_close) this.on_close();
       };
