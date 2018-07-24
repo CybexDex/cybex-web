@@ -49,7 +49,7 @@ class Training extends React.Component<any, any> {
               <img src={require('../../assets/step/step1.png')} />
               <p className="step-info">
               <Translate className="text-justify" content="training.step_one"/>
-            <span className="spetial"><a href="https://www.icoape.com/" target="_blank">https://www.icoape.com/</a></span>
+            <span className="spetial"><a href={__ICOAPE__} target="_blank">https://www.icoape.com/</a></span>
             </p>
             </div>
             <div className="right-pointer"></div>
