@@ -55,6 +55,11 @@ const Gateway = Loadable({
     import(/* webpackChunkName: "gateway" */ "./components/Gateway/Gateway"),
   loading: LoadingIndicator
 });
+const Eto = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "gateway" */ "./components/Eo"),
+  loading: LoadingIndicator
+});
 
 const Explorer = Loadable({
   loader: () =>
@@ -432,6 +437,7 @@ let App = class extends React.Component<any, any> {
 
               <Route path="/create-worker" component={CreateWorker} />
               <Route path="/eto-static" component={EtoStatic} />
+              <Route path="/eto" component={Eto} />
 
               <Route path="/login" component={Login} />
               <Route

@@ -40,7 +40,7 @@ class Detail extends React.Component<any, any> {
     }
   }
   reserve(){
-    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
+    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.match.params.id,create:1}, (res2) => {
       switch(res2.result.status){
         case 'ok':
               this.setState({reserve_status:()=>{
@@ -53,7 +53,7 @@ class Detail extends React.Component<any, any> {
                       readOnly={true}
                     />
                     <label>阅读并同意</label>
-                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <Link to={`/eto/join/${this.props.match.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
                       </div>
@@ -207,7 +207,7 @@ formatTime(input){
 }
   componentDidMount(){
     let data = {
-      project: this.props.params.id
+      project: this.props.match.params.id
     }
 
     fetchJson.fetchDetails(data,(res)=>{
@@ -218,7 +218,7 @@ formatTime(input){
       res.result.start_at = this.formatTime(res.result.start_at);
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
-      console.log(res.result.offer_at);
+      // console.log(res.result.offer_at);
       res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
       let endAt = moment(res.result.end_at);
@@ -308,7 +308,7 @@ formatTime(input){
           )
         }});
       }else{
-        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.params.id}, (res2)=>{
+        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.match.params.id}, (res2)=>{
           switch(res2.result.status){
             case 'ok':
               this.setState({reserve_status:()=>{
@@ -321,7 +321,7 @@ formatTime(input){
                       readOnly={true}
                     />
                     <label>阅读并同意</label>
-                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <Link to={`/eto/join/${this.props.match.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
                       </div>
@@ -800,7 +800,7 @@ formatTime(input){
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              // <Link to={`/eto/join/${this.props.params.id}`}>
+              // <Link to={`/eto/join/${this.props.match.params.id}`}>
               <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>
@@ -820,9 +820,9 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showModal}>
+          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showModal}>
           </DetalModal>
-          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showAlertModal}>
+          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showAlertModal}>
           </AlertModal>
       </div>
     );
