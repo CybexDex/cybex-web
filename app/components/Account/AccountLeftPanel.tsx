@@ -254,14 +254,14 @@ class AccountLeftPanel extends React.Component<
                       <Translate content="account.permissions" />
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink
+                  {/* <li>
+                    <Link
                       to={`/account/${account_name}/whitelist/`}
                       activeClassName="active"
                     >
                       <Translate content="account.whitelist.title" />
-                    </NavLink>
-                  </li>
+                    </Link>
+                  </li> */}
                   {isMyAccount ? (
                     <li>
                       <NavLink

@@ -1,6 +1,5 @@
 ///<reference types="immutable"  />
 
-
 declare const __TEST__;
 declare const __DEV__;
 declare const __GATEWAY_URL__;
@@ -20,44 +19,51 @@ declare namespace ETO {
     token_count: number;
     reason: string;
   };
-  type ProjectDetail = {
-    name: string;
-    token_name: string;
-    status: string;
-    control_status: string;
-    adds_keyword: string;
-    adds_advantage: string;
-    adds_website: string;
-    adds_detail: string;
-    adds_banner: string;
-    adds_logo: string;
-    adds_token_total: number;
-    adds_ico_total: number;
-    adds_kyc_require: string;
-    adds_erc20: string;
-    adds_on_market_time: string;
-    type: string;
-    base_soft_cap: number;
-    base_token_count: string;
-    start_at: string;
-    end_at: string;
+  
+  type Optional = string | number | null;
+
+  type EtoBase = {
+    base_token: string;
+    base_min: number;
+    accuracy: number;
     rate: number;
     base_token_name: string;
-    base_min_quota: number;
-    base_max_quota: number;
-    current_base_token_count: number;
+  };
+  type ProjectDetail = {
+    soft_cap: Optional;
+    created_at: string;
+    token_name: string;
+    lock_at: Optional;
+    base_tokens: EtoBase[];
+    update_at: string;
+    status: "ok";
+    close_at: Optional;
+    max: number;
     current_user_count: number;
-    current_percent: string;
-    finish_at: string;
-    all_take_time: string;
-    offer_at: string;
-    lock_time: string;
-    close_at: string;
+    type: string;
+    end_at: string;
+    receive_address: string;
+    current_token_count: number;
+    control_status: "ok";
+    start_at: string;
+    id: string;
+    offer_at: Optional;
+    name: string;
+    default_base_token: string;
+    finish_at: Optional;
+    token_count: number;
     token: string;
-    base_token: string;
-    address_key: string;
-    recieve_address: string;
-    base_accuracy: number;
+    deleted: 0;
+    score: 0;
+    control: string;
+    banner: 0;
+    is_user_in: "1" ;
+    _id: string;
+    project: string;
+    timestamp: string;
+    __v: 0;
+    adds_erc20: boolean;
+    current_percent: number;
   };
 }
 

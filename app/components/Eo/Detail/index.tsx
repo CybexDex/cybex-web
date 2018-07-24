@@ -9,6 +9,7 @@ import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
 import { Link } from "react-router-dom"; 
 import DetalModal from "./Modal.jsx";
+import AlertModal from './AlertModal.jsx';
 import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
 import Translate from "react-translate-component";
@@ -21,6 +22,8 @@ import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
+import "./mock.scss";
+import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import { TokenKind } from "graphql";
 let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
@@ -32,83 +35,168 @@ class Detail extends React.Component<any, any> {
     this.state = {
       showModal: false,
       reserve_status: ()=>null,
-      kyc_status: ()=>null
+      kyc_status: ()=>null,
+      canBeReserve: false
     }
   }
   reserve(){
     fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
       switch(res2.result.status){
         case 'ok':
-          this.setState({reserve_status:()=>{
-            if(this.state.data.status == 'ok'){
-              return (
-                <Link to={`/eto/join/${this.props.params.id}`}>
-                <div className="button primery-button disabled ok">
-                <Translate content="EIO.Reserve_Now" />
-                </div>
-                </Link>
-              )
-            }else if(this.state.data.status == 'pre'){
-              return (
-                <div className="button primery-button disabled pre">
-                  等待众筹开始
-                </div>
-              )
-            }
-          }})
-        break;
-        case 'waiting':
-          this.setState({reserve_status:()=>{
-            return (
-              <div className="button primery-button disabled waiting">
-                审核中
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-            )
-          }})
-        break;
-        case 'reject':
-          this.setState({reserve_status:()=>{
-            return (
-              <div>
-              <div className="button primery-button disabled reject">
-                审核失败
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-              <p>{res2.result.reason}</p>
-              </div>
-            )
-          }})
-        break;
-        case 'pending':
-          this.setState({reserve_status:()=>{
-            return (
-              <div className="button primery-button disabled waiting">
-                审核中
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-            )
-          }})
-        break;
-        default:
-        this.setState({reserve_status:()=>{
-          if(res2.result.kyc_status == 'ok'){
-            return (
-              <div className="button primery-button" onClick={this.reserve.bind(this)}>
-                立即预约
-                {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-            )
-          }else{
-            return(
-              <div className="button primery-button disabled">
-                立即预约
-              {/* <Translate content="EIO.Reserve_Now" /> */}
-              </div>
-            )
-          }
-          
-        }})
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok'){
+                  return (
+                        <div>
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      readOnly={true}
+                    />
+                    <label>阅读并同意</label>
+                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <div className="button primery-button ok">
+                      <Translate content="EIO.Join_ETO_now" />
+                      </div>
+                      </Link>
+                      </div>
+                    
+                  )
+                }else if(this.state.data.status == 'pre'){
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      readOnly={true}
+                    />
+                    <label>阅读并同意</label>
+                  <div className="button primery-button disabled pre">
+                    等待众筹开始
+                  </div>
+                  </div>
+                }else{
+                  return null;
+                }
+              }})
+            break;
+            case 'waiting':
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                      />
+                      <label>阅读并同意</label>
+                    <div className="button primery-button disabled waiting">
+                      审核中
+                      {/* <Translate content="EIO.Reserve_Now" /> */}
+                    </div>
+                    </div>
+                  )
+                }else{
+                  return null 
+                }
+              }})
+            break;
+            case 'reject':
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                  return (
+                  <div>
+                  <div className="button primery-button disabled reject">
+                    审核不通过
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                  <p>{res2.result.reason}</p>
+                  </div>
+                )}else{
+                  return null
+                }
+              }})
+            break;
+            case 'pending':
+              this.setState({reserve_status:()=>{
+                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                return (
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      readOnly={true}
+                    />
+                    <label>阅读并同意</label>
+                  <div className="button primery-button disabled waiting">
+                    审核中
+                  </div>
+                  </div>
+                )
+              }else{
+                return null;
+              }
+              }})
+            break;
+            default:
+            this.setState({reserve_status:()=>{
+              if(res2.result.kyc_status == 'ok'){
+                if(this.state.data.is_user_in == 0){
+                  return(
+                  <div className="button primery-button disabled can-not-reserve">
+                    停止预约
+                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
+                  )
+                }else{
+                  if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+                    return (
+                      this.state.data.create_user_type == 'code'?(
+                        <div>
+                          <input
+                            type="checkbox" 
+                            onChange={this.changeCheckbox.bind(this)} 
+                          />
+                          <label>阅读并同意</label>
+                          <div className="button primery-button ok">
+                          {this.state.canBeReserve?(
+                            <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                          ):(
+                            <div>立即预约</div>
+                          )}
+                            
+                          </div>
+                        </div>
+                        ):(
+                          <div>
+                            <input
+                              type="checkbox" 
+                              onChange={this.changeCheckbox.bind(this)} 
+                            />
+                            {this.state.canBeReserve?(
+                            <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
+                              立即预约
+                            </div>):(
+                              <div className="button primery-button can-reserve">
+                              立即预约
+                            </div>
+                            )}
+                          </div>
+                      )
+                    )
+                  }else{
+                    return null;
+                  }
+                } 
+              }else{
+                return(
+                  null
+                  // <div className="button primery-button disabled can-not-reserve">
+                  //   立即预约
+                  // </div>
+                )
+              }
+              
+            }})
       }
     })
 }
@@ -123,16 +211,21 @@ formatTime(input){
     }
 
     fetchJson.fetchDetails(data,(res)=>{
+      if(res.result.control !== 'online'){
+        alert('go-back')
+      }
       res.result.end_at = this.formatTime(res.result.end_at);
       res.result.start_at = this.formatTime(res.result.start_at);
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
-      res.result.offer_at =  this.formatTime(res.result.offer_at);
+      console.log(res.result.offer_at);
+      res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
       let countDownTime = moment(res.result.end_at).valueOf() - moment().valueOf();
       let endAt = moment(res.result.end_at);
       let startAt = moment(res.result.start_at);
       let finishAt = moment(res.result.finish_at);
       let now = moment();
+
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       let remainStr;
       let projectStatus;
@@ -194,13 +287,24 @@ formatTime(input){
         
       });
       if(!this.props.myAccounts[0]){
-        this.setState({kyc_status: ()=>{
+        this.setState({reserve_status: ()=>{
           return (
+            <div>
+            {res.result.status !== 'ok' || res.result.status !== 'pre'? (
             <Link to={`/login`}>
-            <div className="button primery-button">
-            <Translate content="EIO.Reserve_Now" />
+              <div className="button primery-button">
+              
+                <span>请登录后参与</span>
+                {/* <Translate content="EIO.Reserve_Now" /> */}
+              
+              </div>
+              </Link>
+            ):(
+                
+              null
+              
+            )}
             </div>
-            </Link>
           )
         }});
       }else{
@@ -210,69 +314,153 @@ formatTime(input){
               this.setState({reserve_status:()=>{
                 if(res.result.status == 'ok'){
                   return (
-                    <Link to={`/eto/join/${this.props.params.id}`}>
-                    <div className="button primery-button ok">
-                    <Translate content="EIO.Join_IEO_now" />
-                    </div>
-                    </Link>
+                        <div>
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      readOnly={true}
+                    />
+                    <label>阅读并同意</label>
+                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <div className="button primery-button ok">
+                      <Translate content="EIO.Join_ETO_now" />
+                      </div>
+                      </Link>
+                      </div>
+                    
                   )
                 }else if(res.result.status == 'pre'){
-                  return (
-                    <div className="button primery-button disabled pre">
-                      等待众筹开始
-                    </div>
-                  )
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      readOnly={true}
+                    />
+                    <label>阅读并同意</label>
+                  <div className="button primery-button disabled pre">
+                    等待众筹开始
+                  </div>
+                  </div>
+                }else{
+                  return null;
                 }
               }})
             break;
             case 'waiting':
               this.setState({reserve_status:()=>{
-                return (
-                  <div className="button primery-button disabled waiting">
-                    审核中
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
-                )
+                if(res.result.status == 'ok' || res.result.status == 'pre'){
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                      />
+                      <label>阅读并同意</label>
+                    <div className="button primery-button disabled waiting">
+                      审核中
+                      {/* <Translate content="EIO.Reserve_Now" /> */}
+                    </div>
+                    </div>
+                  )
+                }else{
+                  return null 
+                }
               }})
             break;
             case 'reject':
               this.setState({reserve_status:()=>{
-                return (
+                if(res.result.status == 'ok' || res.result.status == 'pre'){
+                  return (
                   <div>
                   <div className="button primery-button disabled reject">
-                    预约失败
+                    审核不通过
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
                   <p>{res2.result.reason}</p>
                   </div>
-                )
+                )}else{
+                  return null
+                }
               }})
             break;
             case 'pending':
               this.setState({reserve_status:()=>{
+                if(res.result.status == 'ok' || res.result.status == 'pre'){
                 return (
+                  <div>
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      readOnly={true}
+                    />
+                    <label>阅读并同意</label>
                   <div className="button primery-button disabled waiting">
                     审核中
-                    {/* <Translate content="EIO.Reserve_Now" /> */}
+                  </div>
                   </div>
                 )
+              }else{
+                return null;
+              }
               }})
             break;
             default:
             this.setState({reserve_status:()=>{
               if(res2.result.kyc_status == 'ok'){
-                return (
-                  <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
-                    立即预约
+                if(res.result.is_user_in == 0){
+                  return(
+                  <div className="button primery-button disabled can-not-reserve">
+                    停止预约
                     {/* <Translate content="EIO.Reserve_Now" /> */}
                   </div>
-                )
+                  )
+                }else{
+                  if(res.result.status == 'ok' || res.result.status == 'pre'){
+                    return (
+                      res.result.create_user_type == 'code'?(
+                        <div>
+                          <input
+                            type="checkbox" 
+                            onChange={this.changeCheckbox.bind(this)} 
+                          />
+                          <label>阅读并同意</label>
+                          <div className="button primery-button ok">
+                          {this.state.canBeReserve?(
+                            <Trigger open="ieo-detail-modal"><div>立即预约</div></Trigger>
+                          ):(
+                            <div>立即预约</div>
+                          )}
+                            
+                          </div>
+                        </div>
+                        ):(
+                          <div>
+                            <input
+                              type="checkbox" 
+                              onChange={this.changeCheckbox.bind(this)} 
+                            />
+                            {this.state.canBeReserve?(
+                            <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
+                              立即预约
+                            </div>):(
+                              <div className="button primery-button can-reserve">
+                              立即预约
+                            </div>
+                            )}
+                          </div>
+                      )
+                    )
+                  }else{
+                    return null;
+                  }
+                } 
               }else{
                 return(
-                  <div className="button primery-button disabled can-not-reserve">
-                    立即预约
-                  {/* <Translate content="EIO.Reserve_Now" /> */}
-                  </div>
+                  null
+                  // <div className="button primery-button disabled can-not-reserve">
+                  //   立即预约
+                  // </div>
                 )
               }
               
@@ -284,11 +472,11 @@ formatTime(input){
             this.setState({kyc_status:()=>{
               return (
                 <div className="kyc-btn-holder">
-                  <Link to="/eto/training">
+                  <a href="https://www.icoape.com/" target="_blank">
                   <div className="kyc-btn button primery-button">
                     <Translate content="EIO.Accept_KYC_Verification" />
                   </div>
-                  </Link>
+                  </a>
                 </div>
               )
             }})
@@ -299,13 +487,25 @@ formatTime(input){
       }
     });
   }
-  kycNotPass() {
-    alert('Kyc Not Passed')
-  }
 
   public openModal = () => {
     this.setState({
       showModal: true
+    })
+  }
+
+  sentdata(){
+    ZfApi.publish("ieo-detail-modal", "close");
+    ZfApi.publish("ieo-alert-modal", "open");
+    setTimeout(()=>{
+      ZfApi.publish("ieo-alert-modal", "close");
+      this.reserve();
+    },3000)
+  }
+
+  changeCheckbox(e){
+    this.setState({
+      canBeReserve: e.target.checked
     })
   }
 
@@ -335,8 +535,12 @@ formatTime(input){
       current_percent,
       adds_banner,
       token,
-      adds_keyword
+      adds_keyword,
+      create_user_type,
+      current_token_count,
+      token_name
     } = data;
+    let base_tokens = data.base_tokens ||[]
 
     let percent = current_percent*100;
         percent = percent.toFixed(2);
@@ -383,25 +587,38 @@ formatTime(input){
           <div className="info-detail">{current_user_count}人</div>
         </div>):null}
         
-        {current_base_token_count?(<div className="info-item">
+        {current_token_count?(<div className="info-item">
           <div className="info-title">
-            <Translate content="EIO.Raised" />:
+            <span>当前完成认购：</span>
+            {/* <Translate content="EIO.Raised" />: */}
           </div>
-          <div className="info-detail">{current_base_token_count}{base_token_name}</div>
+          <div className="info-detail">{adds_token_total + current_token_count}{base_token_name}</div>
+          {/* <div className="info-detail">{current_base_token_count}{base_token_name}</div> */}
+          {/* <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count}NES</p> */}
         </div>):null}
         
-        {rate?(<div className="info-item">
+        {base_tokens?(<div className="info-item">
+          <div className="info-title">
+            <Translate content="EIO.Redeeming_Ratio" />: 
+          </div>
+          <div className="info-detail">
+            1 {base_token_name} = {rate} {token_name}
+            
+          </div>
+        </div>):null}
+
+        {/* {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
-        </div>):null}
+        </div>):null} */}
         
         {base_max_quota?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
-          <div className="info-detail">{base_max_quota}{base_token_name}</div>
+          <div className="info-detail">{base_min_quota}-{base_max_quota} {base_token_name}</div>
         </div>):null}
         
         {remainStr?(<div className="info-item large-time">
@@ -461,7 +678,7 @@ formatTime(input){
           
           {start_at?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_Period" />: 
+            <Translate content="EIO.ETO_Period" />: 
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
@@ -496,7 +713,7 @@ formatTime(input){
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_Quota" />: 
+            <Translate content="EIO.ETO_Quota" />: 
             </div>
             <div className="info-detail">{base_token_count}{base_token_name}</div>
           </div>):null}
@@ -508,12 +725,19 @@ formatTime(input){
             <div className="info-detail">{district_restriction}</div>
           </div>):null}
           
-          {base_token_name?(<div className="info-item">
+          <div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.IEO_token" />: 
+            <Translate content="EIO.ETO_token" />: 
             </div>
-            <div className="info-detail">{base_token_name}</div>
-          </div>):null}
+            <div className="info-detail">{
+              base_token_name
+              // base_tokens.map((e,i)=>{
+              //   return (
+              //     <span key={i}>{e.base_token_name} </span>
+              //   )
+              // })
+            }</div>
+          </div>
           
           {adds_website?(<div className="info-item">
           
@@ -535,10 +759,27 @@ formatTime(input){
             </div>
             <div className="info-detail">{adds_detail}</div>
           </div>):null}
-          
+
+
+
 
           <div className="button-holder">
-          <Trigger open="eto-detail-modal"><div></div></Trigger>
+          {/* {create_user_type?(
+            <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
+          ):null} */}
+          {/* <Trigger open="ieo-detail-modal"><div>123</div></Trigger> */}
+          
+          {
+            (status == 'ok'||status == 'pre') ? (
+                this.state.reserve_status()
+            ):null 
+          }
+          {
+            (status == 'ok'||status == 'pre') ? (
+              this.state.kyc_status()
+             ):null 
+          }
+          
           {/* {this.state.kyc_status()}
           {
             (status == 'ok'||status == 'pre') ? (
@@ -579,8 +820,10 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="eto-detail-modal" isShow={this.state.showModal}>
+          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showModal}>
           </DetalModal>
+          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showAlertModal}>
+          </AlertModal>
       </div>
     );
   }

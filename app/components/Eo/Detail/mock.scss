@@ -1,0 +1,138 @@
+.detail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  &.en {
+    .left-part {
+      width: 60%;
+      position: relative;
+      box-sizing: border-box;
+      .info-title {
+        text-align: justify;
+      }
+      .info-detail {
+        width: 80%;
+      }
+    }
+    .right-part {
+      width: 40%;
+      box-sizing: border-box;
+      .info-title {
+        text-align: justify;
+        // width: 30%;
+      }
+      .info-detail {
+        // width: 70%;
+      }
+    }
+  }
+  &.zh {
+    .left-part {
+      width: 60%;
+      position: relative;
+      box-sizing: border-box;
+      .info-title {
+        text-align: justify;
+      }
+      .info-detail {
+        width: 80%;
+      }
+    }
+    .right-part {
+      width: 40%;
+      box-sizing: border-box;
+      .info-title {
+        text-align: justify;
+        width: 25%;
+        max-width: 100px;
+        // span{
+
+        // 	&:after{//文字两端对齐
+        // 		content: '';
+        // 		display: inline-block;
+        // 		padding-left: 99%;
+        // 	}
+        // }
+      }
+      .info-detail {
+        width: 75%;
+      }
+    }
+  }
+  &.en,
+  &.zh {
+    padding: 0;
+    width: 96%;
+    padding: 1em;
+    .left-part,
+    .right-part {
+      min-width: 300px;
+      float: none;
+      flex: 1;
+      padding-top: 2em;
+    }
+    .separate {
+      width: 1em;
+    }
+    .right-part {
+      .info-item {
+        display: flex;
+        flex-wrap: wrap;
+        & > * {
+          padding: 0.3em 0;
+        }
+        .info-title::after {
+          content: ":";
+        }
+        .info-title {
+          width: 10em;
+          text-align: left;
+          padding-right: 0.4em;
+        }
+        .info-detail {
+          text-align: justify;
+          vertical-align: bottom;
+          overflow-wrap: break-word;
+          flex: 1 1;
+          min-width: 300px;
+        }
+      }
+      .button-holder {
+        .button {
+          height: unset;
+        }
+      }
+    }
+  }
+  &.en {
+  }
+  &.zh {
+    .right-part {
+      .info-item {
+        .info-title::after {
+          content: ":";
+        }
+        .info-title {
+          width: 9em;
+        }
+        .info-detail {
+          text-align: justify;
+        }
+      }
+    }
+  }
+  &.mock {
+    .title {
+      height: unset;
+      white-space: nowrap;
+      > span:not(.main) {
+        &::before {
+          content: "[";
+        }
+        &::after {
+          content: "]";
+        }
+      }
+    }
+  }
+}

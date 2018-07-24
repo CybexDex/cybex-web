@@ -45,11 +45,7 @@ const WS_NODE_LIST = __TEST__
     new ApiNode("shanghai.51nebula.com/", "Shanghai")
   ];
 
-export const IEO_API = __DEV__
-  ? "https://ieo-apitest.nbltrust.com/api"
-  : __TEST__
-    ? "///ieo-apitest.nbltrust.com/api"
-    : "";
+export const IEO_API = __DEV__ ? "https://ieo-apitest.cybex.io/api" : __TEST__ ? "///ieo-apitest.cybex.io/api" : "";
 export const PRICE_API = "https://app.cybex.io/price";
 export const settingsAPIs = {
   DEFAULT_WS_NODE: BITSHARES_NODE,

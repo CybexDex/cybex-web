@@ -16,6 +16,9 @@
 			padding-left: 30px;
 			padding-right: 30px;
 			background-image: linear-gradient(107deg, #ffc478, #ff9143);
+			a{
+				text-decoration: none;
+			}
 			span{
 				vertical-align: middle;
 			}
@@ -40,6 +43,14 @@
 				background: transparent;
 				background-image: none;
 				color: #666;
+				padding-left: 50px;
+				padding-right: 50px;
+			}
+			&.disabled{
+				border: 1px solid #e7ac5f;
+				background: transparent;
+				background-image: none;
+				color: #e7ac5f;
 				padding-left: 50px;
 				padding-right: 50px;
 			}

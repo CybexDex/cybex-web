@@ -34,7 +34,7 @@ interface NavLink {
 const NavLinks: Array<NavLink> = [
   {
     id: "eto",
-    routeTo: "/eto-static",
+    routeTo: "/eto/genesis-space",
     activeMatcher: /^\/eto/,
     name: "eto",
     icon: "ETO"
@@ -226,8 +226,6 @@ let Nav = class extends React.PureComponent<
               />
             ];
           })}
-          {/* Logout Button */}
-          
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>
