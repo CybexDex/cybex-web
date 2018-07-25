@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import classnames from "classnames";
 
 class LoadingIndicator extends React.Component<
-  { type: "three-bounce" | "circle" | "progress"; loadingText?; className?, style? },
+  { type?: "three-bounce" | "circle" | "progress"; loadingText?; className?, style? },
   { progress }
 > {
   // progress;

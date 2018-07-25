@@ -41,7 +41,7 @@ class Invoice extends React.Component {
   }
 
   componentDidMount() {
-    let compressed_data = bs58.decode(this.props.params.data);
+    let compressed_data = bs58.decode(this.props.match.params.data);
     try {
       decompress(compressed_data, result => {
         let invoice = JSON.parse(result);

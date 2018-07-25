@@ -61,6 +61,8 @@ class Signature {
     */
     static signBuffer(buf, private_key) {
         var _hash = sha256(buf);
+        console.debug("Sha256: ", buf, _hash);
+
         return Signature.signBufferSha256(_hash, private_key)
     }
 

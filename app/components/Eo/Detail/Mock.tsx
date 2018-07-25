@@ -7,7 +7,7 @@ import * as PropTypes from "prop-types";
 // const store = configureStore();
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import DetalModal from "./Modal.jsx";
 import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
@@ -24,7 +24,6 @@ import "./detail.scss";
 import "./mock.scss";
 import { TokenKind } from "graphql";
 import counterpart from "counterpart";
-let logo_demo = require("assets/img_demo_1.jpg");
 let time = require("assets/time.png");
 let zh = require(`assets/sb_zh.png`);
 let en = require(`assets/sb_en.png`);
@@ -43,7 +42,7 @@ class Detail extends React.Component<any, any> {
     fetchJson.fetchKYC(
       {
         cybex_name: this.props.myAccounts[0],
-        project: this.props.params.id,
+        project: this.props.match.params.id,
         create: 1
       },
       res2 => {
@@ -53,7 +52,7 @@ class Detail extends React.Component<any, any> {
               reserve_status: () => {
                 if (this.state.data.status == "ok") {
                   return (
-                    <Link to={`/eto/join/${this.props.params.id}`}>
+                    <Link to={`/eto/join/${this.props.match.params.id}`}>
                       <div className="button primery-button disabled ok">
                         <Translate content="EIO.Reserve_Now" />
                       </div>
@@ -144,7 +143,7 @@ class Detail extends React.Component<any, any> {
   }
   componentDidMount() {
     let data = {
-      project: this.props.params.id
+      project: this.props.match.params.id
     };
   }
   kycNotPass() {
@@ -542,7 +541,7 @@ class Detail extends React.Component<any, any> {
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              // <Link to={`/eto/join/${this.props.params.id}`}>
+              // <Link to={`/eto/join/${this.props.match.params.id}`}>
               <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>

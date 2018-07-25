@@ -76,18 +76,18 @@ class Block extends BaseComponent {
   }
 
   _nextBlock() {
-    let height = this.props.params.height;
+    let height = this.props.match.params.height;
     let nextBlock = Math.min(
       this.props.dynGlobalObject.get("head_block_number"),
       parseInt(height, 10) + 1
     );
-    this.props.router.push(`/block/${nextBlock}`);
+    this.props.history.push(`/block/${nextBlock}`);
   }
 
   _previousBlock() {
-    let height = this.props.params.height;
+    let height = this.props.match.params.height;
     let previousBlock = Math.max(1, parseInt(height, 10) - 1);
-    this.props.router.push(`/block/${previousBlock}`);
+    this.props.history.push(`/block/${previousBlock}`);
   }
 
   componentDidMount() {

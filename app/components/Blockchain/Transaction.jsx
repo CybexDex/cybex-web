@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import FormattedAsset from "../Utility/FormattedAsset";
-import { Link as RealLink } from "react-router";
+import { Link as RealLink } from "react-router-dom";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 import classNames from "classnames";

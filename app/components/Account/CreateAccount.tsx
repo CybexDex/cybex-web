@@ -8,7 +8,7 @@ import AccountNameInput from "./../Forms/AccountNameInput";
 import PasswordInput from "./../Forms/PasswordInput";
 import WalletDb from "stores/WalletDb";
 import notify from "actions/NotificationActions";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AccountSelect from "../Forms/AccountSelect";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
@@ -120,7 +120,7 @@ let CreateAccount = Radium(
           [this.state.accountName]: true
         }).then(() => {
           console.log("onFinishConfirm");
-          this.props.router.push("/wallet/backup/create?newAccount=true");
+          this.props.history.push("/wallet/backup/create?newAccount=true");
         });
       }
     }

@@ -14,10 +14,11 @@ import MarketsActions from "actions/MarketsActions";
 import { correctMarketPair } from "utils/Market";
 import market_utils from "common/utils";
 import market_utils_ori from "common/market_utils";
+import { withRouter } from "react-router-dom";
 
-class ExchangeContainer extends React.Component<any, any> {
+let ExchangeContainer = class extends React.Component<any, any> {
   render() {
-    let symbols = this.props.params.marketID.split("_");
+    let symbols = this.props.match.params.marketID.split("_");
 
     return (
       <AltContainer
@@ -104,7 +105,7 @@ class ExchangeContainer extends React.Component<any, any> {
         }}
       >
         <ExchangeSubscriber
-          router={this.props.router}
+          router={this.props.history}
           quoteAsset={symbols[0]}
           baseAsset={symbols[1]}
         />
@@ -199,7 +200,7 @@ let ExchangeSubscriber = class extends React.Component<any, any> {
       nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
     ) {
       /* Prediction markets should only be shown in one direction, if the link goes to the wrong one we flip it */
-      this.props.router.push(
+      this.props.history.push(
         `/market/${nextProps.baseAsset.get(
           "symbol"
         )}_${nextProps.quoteAsset.get("symbol")}`
@@ -210,7 +211,7 @@ let ExchangeSubscriber = class extends React.Component<any, any> {
       !nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
     ) {
       // console.debug("SwapMarket: ", baseAsset, quoteAsset, pair);
-      this.props.router.push(
+      this.props.history.push(
         `/market/${nextProps.baseAsset.get(
           "symbol"
         )}_${nextProps.quoteAsset.get("symbol")}`
@@ -275,5 +276,5 @@ ExchangeSubscriber = BindToChainState(ExchangeSubscriber, {
   keep_updating: true,
   show_loader: true
 });
-
+ExchangeContainer = withRouter(ExchangeContainer);
 export default ExchangeContainer;

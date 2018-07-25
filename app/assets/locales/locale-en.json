@@ -1920,7 +1920,7 @@
     "crowd_project": "ETO of %(project)s",
     "amount_remain": "Remaining Quota: %(amount)s",
     "account_limit":
-      "Peraonal Hard Cap: %(cap)s, Minimum Purchasing Unit: %(unit)s",
+      "Personal Hard Cap: %(cap)s, Minimum Purchasing Unit: %(unit)s",
     "current_state":
       "You have subscribed: %(used)s, Remaining Quota: %(avail)s",
     "closed_tip":

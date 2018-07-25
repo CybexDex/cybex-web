@@ -22,7 +22,7 @@ let root_dir = BASE_URL;
 console.log("ROOT: ", root_dir);
 const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
-  __TEST__: isTest,
+  __TEST__: isTest || isTestStaging,
   __STAGING__: isTestStaging,
   __ICOAPE__: isTestStaging ? JSON.stringify("http://47.91.242.71:8083/") : JSON.stringify("https://www.icoape.com/"),
   __BASE_URL__ : JSON.stringify("/")
@@ -157,7 +157,22 @@ const loaders = [
   {
     test: /.*\.svg$/,
     exclude: [path.resolve(root_dir, "app/components/Common")],
-    loaders: ["svg-inline-loader", "svgo-loader"]
+    use: [
+      {
+        loader: "svg-inline-loader"
+      },
+      {
+        loader: "svgo-loader",
+        options: {
+          plugins: [
+            { cleanupAttrs: true },
+            { removeMetadata: true },
+            { removeXMLNS: true },
+            { removeViewBox: false }
+          ]
+        }
+      }
+    ]
   },
   {
     test: /\.md/,

@@ -1,16 +1,10 @@
 import { ChainStore } from "cybexjs";
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import IntlStore from "stores/IntlStore";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
-import IntlActions from "actions/IntlActions";
 import VolumeActions from "actions/VolumeActions";
 import NotificationStore from "stores/NotificationStore";
-import intlData from "./components/Utility/intlData";
-import alt from "alt-instance";
-import { connect, supplyFluxContext } from "alt-react";
-import { IntlProvider } from "react-intl";
 import SyncError from "./components/SyncError";
 import LoadingIndicator from "./components/LoadingIndicator";
 import Header from "components/Layout/Header";
@@ -25,36 +19,159 @@ import BrowserSupportModal, {
 import WalletDb from "stores/WalletDb";
 import CachedPropertyStore from "stores/CachedPropertyStore";
 import BackupModal from "components/Modal/BackupModal";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import Footer from "./components/Layout/Footer";
-import Nav from "./components/Layout/Nav";
 import { ModalActions } from "./actions/ModalActions";
-import { VolumnActions } from "./actions/VolumeActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
-import Radium from "radium";
-let { StyleRoot } = Radium;
-import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
+import Loadable from "react-loadable";
+import titleUtils from "common/titleUtils";
+import { LoadComponent } from "./Routes";
 
+import { Route, Switch, Redirect } from "react-router-dom";
+let patch = false;
 (function(window) {
   if (window) {
     let agent = window.navigator.userAgent;
     // Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36"
     let version = /Chrome\/(.+)(?=\s)/i.exec(agent);
     if (version && version[1] && parseInt(version[1]) < 60) {
-      import("assets/stylesheets/patch.scss");
-      // console.debug("Patch: ", patch);
+      console.info("Patch: ", version);
+      patch = true;
     }
   }
 })(window);
+
+// Router
+
+const Exchange = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"),
+  loading: LoadingIndicator
+});
+const Gateway = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "gateway" */ "./components/Gateway/Gateway"),
+  loading: LoadingIndicator
+});
+const Eto = Loadable({
+  loader: () => import(/* webpackChunkName: "gateway" */ "./components/Eo"),
+  loading: LoadingIndicator
+});
+
+const Explorer = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "explorer" */ "./components/Explorer/Explorer"),
+  loading: LoadingIndicator
+});
+
+const AccountPage = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "account" */ "./components/Account/AccountPage"),
+  loading: LoadingIndicator
+});
+
+const Transfer = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "transfer" */ "./components/Transfer/Transfer"),
+  loading: LoadingIndicator
+});
+
+const Settings = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "settings" */ "./components/Settings/SettingsContainer"),
+  loading: LoadingIndicator
+});
+
+const Help = Loadable({
+  loader: () => import(/* webpackChunkName: "help" */ "./components/Help"),
+  loading: LoadingIndicator
+});
+
+const Asset = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "asset" */ "./components/Blockchain/Asset"),
+  loading: LoadingIndicator
+});
+
+const Block = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "block" */ "./components/Blockchain/BlockContainer"),
+  loading: LoadingIndicator
+});
+
+const DashboardPage = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "dashboard" */ "./components/Dashboard/DashboardContainer"),
+  loading: LoadingIndicator
+});
+
+const WalletManager = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "wallet" */ "./components/Wallet/WalletManager"),
+  loading: LoadingIndicator
+});
+
+const ExistingAccount = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "existing-account" */ "./components/Wallet/ExistingAccount"),
+  loading: LoadingIndicator
+});
+
+const CreateWorker = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "create-worker" */ "./components/Account/CreateWorker"),
+  loading: LoadingIndicator
+});
+const EtoStatic = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "EtoStatic" */ "./components/StaticPages/EtoStatic"),
+  loading: LoadingIndicator
+});
+
+const Login = Loadable({
+  loader: () => import("./components/Login/Login"),
+  loading: LoadingIndicator
+});
+const CreateSelector = Loadable({
+  loader: () => import("./components/Login/CreateSelector"),
+  loading: LoadingIndicator
+});
+const BrainkeyWallet = Loadable({
+  loader: () =>
+    import("components/Wallet/WalletCreate").then(
+      ({ CreateWalletFromBrainkey }) => CreateWalletFromBrainkey
+    ),
+  loading: LoadingIndicator
+});
+const Contact = Loadable({
+  loader: () => import("./components/HelpDrawer/Contact"),
+  loading: LoadingIndicator
+});
 
 let App = class extends React.Component<any, any> {
   syncCheckInterval;
   backupModal;
   priceSubscription;
+
+  static contextTypes = {
+    router: PropTypes.shape({
+      route: PropTypes.object.isRequired
+    }).isRequired,
+    location: PropTypes.object
+  };
+
+  // static childContextTypes = {
+  //   router: PropTypes.shape({
+  //     route: PropTypes.object.isRequired
+  //   }).isRequired,
+  //   location: PropTypes.object
+  // };
+
   constructor(props) {
     super(props);
+    console.debug("APP: ", this.props, this.context);
 
     // Check for mobile device to disable chat
     const user_agent = navigator.userAgent.toLowerCase();
@@ -97,22 +214,43 @@ let App = class extends React.Component<any, any> {
     clearInterval(this.priceSubscription);
   }
 
-  _syncStatus(setState = false) {
-    let synced = true;
+  /**
+   * Returns the current blocktime, or exception if not yet available
+   * @returns {Date}
+   */
+  getBlockTime() {
     let dynGlobalObject = ChainStore.getObject("2.1.0");
     if (dynGlobalObject) {
       let block_time = dynGlobalObject.get("time");
       if (!/Z$/.test(block_time)) {
         block_time += "Z";
       }
+      return new Date(block_time);
+    } else {
+      throw new Error("Blocktime not available right now");
+    }
+  }
 
+  /**
+   * Returns the delta between the current time and the block time in seconds, or -1 if block time not available yet
+   *
+   * Note: Could be integrating properly with BlockchainStore to send out updates, but not necessary atp
+   */
+  getBlockTimeDelta() {
+    try {
       let bt =
-        (new Date(block_time).getTime() +
+        (this.getBlockTime().getTime() +
           ChainStore.getEstimatedChainTimeOffset()) /
         1000;
       let now = new Date().getTime() / 1000;
-      synced = Math.abs(now - bt) < 5;
+      return Math.abs(now - bt);
+    } catch (err) {
+      return -1;
     }
+  }
+
+  _syncStatus(setState = false) {
+    let synced = this.getBlockTimeDelta() < 5;
     if (setState && synced !== this.state.synced) {
       this.setState({ synced });
     }
@@ -150,21 +288,21 @@ let App = class extends React.Component<any, any> {
       console.debug("Show Support Modal");
       ModalActions.showModal(DEFAULT_SUPPORT_MODAL, true);
     }
-    
-    this.props.router.listen(this._rebuildTooltips);
+    console.debug("Context: ", this);
+    this.context.router.history.listen(this._rebuildTooltips);
     // Todo
     this.showBackupTip();
     this._rebuildTooltips();
+
     
-    let loadingMask = document.getElementById("globalLoading");
-    if (loadingMask) {
-      loadingMask.classList.add("fade-out");
-      setTimeout(() => loadingMask.remove(), 500);
-    }
   }
 
   _onIgnoreIncognitoWarning() {
     this.setState({ incognitoWarningDismissed: true });
+  }
+
+  onRouteChanged() {
+    document.title = titleUtils.GetTitleByPath(this.props.location.pathname);
   }
 
   showBackupTip() {
@@ -173,8 +311,7 @@ let App = class extends React.Component<any, any> {
       wallet &&
       (!wallet.backup_date || CachedPropertyStore.get("backup_recommended"));
     if (
-      this.props.router.location.pathname.search("wallet/backup/create") ===
-        -1 &&
+      this.props.location.pathname.search("wallet/backup/create") === -1 &&
       backup_recommended
     )
       this.backupModal.show();
@@ -240,6 +377,8 @@ let App = class extends React.Component<any, any> {
 
   render() {
     let { isMobile, theme } = this.state;
+    let { walletMode, location, match, ...others } = this.props;
+
     let content = null;
 
     let showFooter = 1;
@@ -258,17 +397,60 @@ let App = class extends React.Component<any, any> {
           />
         </div>
       );
-    } else if (this.props.location.pathname === "/init-error") {
-      content = (
-        <div className="grid-frame vertical">{this.props.children}</div>
-      );
     } else {
       content = (
-        <div className="cybex-layout">
+        <div className={"cybex-layout" + (patch ? " patch" : "")}>
           <Header />
           <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
           {/* <Nav isVertical={true} hideLabel={true} /> */}
-          <div className="main-body">{this.props.children}</div>
+          <div className="main-body">
+            <Switch>
+              <Route path="/dashboard" exact component={DashboardPage} />
+
+              <Route path="/account/:account_name" component={AccountPage} />
+
+              {/* <Route path="/accounts" component={DashboardAccountsOnly} /> */}
+              <Route path="/market/:marketID" component={Exchange} />
+              <Route path="/settings/:tab" component={Settings} />
+              <Route path="/settings" component={Settings} />
+
+              <Route path="/transfer" exact component={Transfer} />
+              <Route path="/gateway" exact component={Gateway} />
+              {/* <Route path="/create-account" component={LoginSelector} /> */}
+
+              {/* Explorer routes */}
+              <Route path="/explorer/" component={Explorer} />
+              {/* <Route path="/explorer/:tab" component={Explorer} /> */}
+              <Route path="/asset/:symbol" component={Asset} />
+              <Route exact path="/block/:height" component={Block} />
+              <Route exact path="/block/:height/:txIndex" component={Block} />
+
+              {/* Wallet backup/restore routes */}
+              <Route path="/wallet" component={WalletManager} />
+
+              <Route path="/existing-account" component={ExistingAccount} />
+
+              <Route path="/create-worker" component={CreateWorker} />
+              <Route path="/eto-static" component={EtoStatic} />
+              <Route path="/eto" component={Eto} />
+
+              <Route path="/login" component={Login} />
+              <Route
+                path="/create-wallet-brainkey"
+                component={BrainkeyWallet}
+              />
+              <Route path="/create-account" component={CreateSelector} />
+              <Route path="/contact" component={Contact} />
+
+              {/* Help routes */}
+              <Route exact path="/help" component={Help} />
+              <Route exact path="/help/:path1" component={Help} />
+              <Route exact path="/help/:path1/:path2" component={Help} />
+              <Route exact path="/help/:path1/:path2/:path3" component={Help} />
+              {/* <Route path="*" component={Page404} /> */}
+              <Redirect from="/" to="/dashboard" />
+            </Switch>
+          </div>
           <Footer synced={this.state.synced} />
           <ReactTooltip
             ref="tooltip"
@@ -305,7 +487,6 @@ let App = class extends React.Component<any, any> {
             }}
           />
           <WalletUnlockModal />
-          <EthModal modalId={"EOS_RESTORE"} />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />
@@ -315,93 +496,6 @@ let App = class extends React.Component<any, any> {
   }
 };
 
-App = withRouter(App as any);
-
-let RootIntl = class extends React.Component<any, any> {
-  componentWillMount() {
-    IntlActions.switchLocale(this.props.locale);
-  }
-
-  render() {
-    return (
-      <IntlProvider
-        locale={this.props.locale}
-        formats={intlData.formats}
-        initialNow={Date.now()}
-      >
-        <StyleRoot>
-          <App {...this.props} />
-        </StyleRoot>
-      </IntlProvider>
-    );
-  }
-};
-
-RootIntl = connect(
-  RootIntl,
-  {
-    listenTo() {
-      return [IntlStore];
-    },
-    getProps() {
-      return {
-        locale: IntlStore.getState().currentLocale
-      };
-    }
-  }
-);
-
-class Root extends React.Component<any, any> {
-  static childContextTypes = {
-    router: PropTypes.object,
-    location: PropTypes.object
-  };
-
-  componentDidMount() {
-    //Detect OS for platform specific fixes
-    if (navigator.platform.indexOf("Win") > -1) {
-      var main = document.getElementById("content");
-      var windowsClass = "windows";
-      if (main.className.indexOf("windows") === -1) {
-        main.className =
-          main.className + (main.className.length ? " " : "") + windowsClass;
-      }
-    }
-
-    // const user_agent = navigator.userAgent.toLowerCase();
-    // if (
-    //   !(
-    //     window.electron ||
-    //     user_agent.indexOf("firefox") > -1 ||
-    //     user_agent.indexOf("chrome") > -1 ||
-    //     user_agent.indexOf("edge") > -1
-    //   )
-    // ) {
-    //   this.refs.browser_modal.show();
-    // }
-  }
-
-  getChildContext() {
-    return {
-      router: this.props.router,
-      location: this.props.location
-    };
-  }
-
-  render() {
-    return <RootIntl {...this.props} />;
-  }
-}
-
-// const zd = document.createElement("script");
-// zd.innerHTML =
-//   '/*<![CDATA[*/window.zE || (function (e, t, s) { var n = window.zE = window.zEmbed = function () { n._.push(arguments) }, a = n.s = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.set = function (e) { n.set._.push(e) }, n._ = [], n.set._ = [], a.async = true, a.setAttribute("charset", "utf-8"), a.src = "https://static.zdassets.com/ekr/asset_composer.js?key=" + s, n.t = +new Date, a.type = "text/javascript", r.parentNode.insertBefore(a, r) })(document, "script", "4a299e55-8cd6-491a-86dc-ad6e256b4ada");/*]]>*/';
-// window.document.head.appendChild(zd);
-
-IntlStore.listen(e => {
-  let luncher = document.getElementById("launcher");
-  if (!luncher) return;
-  e.currentLocale !== "zh" ? (luncher.hidden = true) : (luncher.hidden = false);
-});
-
-export default supplyFluxContext(alt)(Root);
+App = withRouter(App);
+export { App };
+export default App;

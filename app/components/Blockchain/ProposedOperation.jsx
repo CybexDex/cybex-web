@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import FormattedAsset from "../Utility/FormattedAsset";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -57,7 +57,7 @@ class Row extends React.Component {
 
   showDetails(e) {
     e.preventDefault();
-    this.context.router.push(`/block/${this.props.block}`);
+    this.context.router.hsitory.push(`/block/${this.props.block}`);
   }
 
   render() {

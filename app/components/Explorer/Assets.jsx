@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 
 import AssetActions from "actions/AssetActions";
 import SettingsActions from "actions/SettingsActions";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";

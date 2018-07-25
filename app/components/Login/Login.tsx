@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import RestoreWallet from "components/Account/RestoreWallet";
 import SettingsActions from "actions/SettingsActions";
@@ -163,7 +163,7 @@ let LoginMain = Radium(
 
 export default class Login extends React.Component<any, any> {
   onSelect(route) {
-    this.props.router.push("/create-account/" + route);
+    this.props.history.push("/create-account/" + route);
   }
 
   render() {
@@ -176,7 +176,7 @@ export default class Login extends React.Component<any, any> {
         style={{ width: "100%", display: "flex", height: "100%" }}
       >
         <LeftSlide />
-        <LoginMain resolve={() => this.props.router.push("/dashboard")} />
+        <LoginMain resolve={() => this.props.history.push("/dashboard")} />
       </div>
     );
   }

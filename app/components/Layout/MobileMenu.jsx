@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import Panel from "react-foundation-apps/src/panel";
 import Trigger from "react-foundation-apps/src/trigger";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Translate from "react-translate-component";
 import AccountStore from "stores/AccountStore";
@@ -28,7 +28,7 @@ class MobileMenu extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
     ZfApi.publish("mobile-menu", "close");
   }
 

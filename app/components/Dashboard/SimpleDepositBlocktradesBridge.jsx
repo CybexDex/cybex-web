@@ -28,9 +28,6 @@ import SettingsStore from "stores/SettingsStore";
 import SettingsActions from "actions/SettingsActions";
 import QRCode from "qrcode.react";
 
-// import DepositFiatOpenLedger from "components/DepositWithdraw/openledger/DepositFiatOpenLedger";
-// import WithdrawFiatOpenLedger from "components/DepositWithdraw/openledger/WithdrawFiatOpenLedger";
-
 class SimpleDepositBlocktradesBridge extends React.Component {
   static propTypes = {
     sender: ChainTypes.ChainAccount.isRequired,

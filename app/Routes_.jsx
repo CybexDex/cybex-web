@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { Route, IndexRoute, Redirect } from "react-router";
+import { Route, IndexRoute, Redirect } from "react-router-dom";
 import willTransitionTo from "./routerTransition";
 import App from "./App";
 
@@ -272,46 +272,7 @@ const routes = (
       }}
     />
 
-    <Route
-      path="eto"
-      getComponent={(location, cb) => {
-        import("components/Eo")
-          .then(loadRoute(cb))
-          .catch(errorLoading);
-      }}
-    />
-    <Route
-      path="eto/genesis-space"
-      getComponent={(location, cb) => {
-        import("components/Eo/Detail/Mock")
-          .then(loadRoute(cb))
-          .catch(errorLoading);
-      }}
-    />
-    <Route
-      path="eto/training"
-      getComponent={(location, cb) => {
-        import("components/Eo/training")
-          .then(loadRoute(cb))
-          .catch(errorLoading);
-      }}
-    />
-    <Route
-      path="eto/detail/:id"
-      getComponent={(location, cb) => {
-        import("components/Eo/Detail")
-          .then(loadRoute(cb))
-          .catch(errorLoading);
-      }}
-    />
-    <Route
-      path="eto/join/:id"
-      getComponent={(location, cb) => {
-        import("components/Eo/Detail/join")
-          .then(loadRoute(cb))
-          .catch(errorLoading);
-      }}
-    />
+    
 
     <Route
       path="invoice/:data"

@@ -4,7 +4,7 @@ import ReactHighstock from "react-highcharts/dist/ReactHighstock";
 import { takeRight } from "lodash";
 import counterpart from "counterpart";
 
-class BlocktimeChart extends React.Component {
+class BlocktimeChart extends React.Component<any, any> {
   shouldComponentUpdate(nextProps) {
     if (nextProps.blockTimes.length < 19) {
       return false;

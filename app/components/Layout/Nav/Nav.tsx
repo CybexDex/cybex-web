@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link, withRouter, WithRouterProps } from "react-router";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { getClassName } from "utils/ClassName";
 import Icon from "components/Icon/Icon";
 import SettingsStore from "stores/SettingsStore";
@@ -37,16 +37,16 @@ const NavLinks: Array<NavLink> = [
     routeTo: "/eto/genesis-space",
     activeMatcher: /^\/eto/,
     name: "eto",
-    icon: "ETO",
+    icon: "ETO"
   },
-  {
-    id: "account",
-    routeTo: accountName => `/account/${accountName}/dashboard`,
-    activeMatcher: /^\/account/,
-    name: "account",
-    icon: "wallet",
-    displayOnlyWhen: "currentAccount"
-  },
+  // {
+  //   id: "account",
+  //   routeTo: accountName => `/account/${accountName}/dashboard`,
+  //   activeMatcher: /^\/account/,
+  //   name: "account",
+  //   icon: "wallet",
+  //   displayOnlyWhen: "currentAccount"
+  // },
 
   {
     id: "exchange",
@@ -70,12 +70,12 @@ const NavLinks: Array<NavLink> = [
   },
   {
     id: "explorer",
-    routeTo: "/ledger",
+    routeTo: "/explorer/blocks",
     activeMatcher: /^\/ledger|explorer/,
     name: "explorer",
     icon: "explorer",
     children: <ExplorerNav />
-  },
+  }
 ];
 
 let logoutItem = {
@@ -109,16 +109,17 @@ let sideStyles = {
   }
 };
 
-type NavProps = WithRouterProps & {
-  settings: any;
+type NavProps = {
+  settings?: any;
   isVertical?;
-  currentAccount: string;
-  [x: string]: string;
+  currentAccount?: string;
+  lastMarket?: string;
+  [x: string]: any;
 };
 
 const getNavId = id => `$nav__${id}`;
 
-export class Nav extends React.PureComponent<
+let Nav = class extends React.PureComponent<
   NavProps,
   { isExpand; siderTop; siderLeft }
 > {
@@ -214,7 +215,7 @@ export class Nav extends React.PureComponent<
                 key={id}
                 id={id}
                 onClick={e => {
-                  this.context.router.push(routeTo);
+                  this.props.history.push(routeTo);
                 }}
                 active={
                   link.activeMatcher
@@ -225,15 +226,14 @@ export class Nav extends React.PureComponent<
               />
             ];
           })}
-          
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>
     );
   }
-}
+};
 
-const NavWithProps = connect(
+Nav = connect(
   Nav,
   {
     listenTo() {
@@ -254,4 +254,7 @@ const NavWithProps = connect(
   }
 );
 
-export default withRouter(NavWithProps);
+Nav = withRouter(Nav);
+
+export default Nav;
+export { Nav };
