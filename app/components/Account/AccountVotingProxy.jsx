@@ -1,6 +1,6 @@
 import * as React from "react"; import * as PropTypes from "prop-types";
 
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AccountSelector from "./AccountSelector";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
@@ -118,7 +118,7 @@ class AccountVotingProxy extends React.Component {
   }
 
   _onNavigate(route) {
-    this.context.router.push(route);
+    this.context.router.history.push(route);
     // this._changeTab();
   }
 

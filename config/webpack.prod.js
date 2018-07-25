@@ -9,7 +9,7 @@ const {
 const Clean = require("clean-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const path = require("path");
-console.log("Webpack Config for Dev");
+console.log("Webpack Config for Prod");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cssLoaders = [
@@ -38,13 +38,19 @@ const cssLoaders = [
       {
         loader: "postcss-loader",
         options: {
-          plugins: [require("autoprefixer")]
+          plugins: [require("autoprefixer")],
+          options: {
+            minimize: true,
+            debug: false
+          }
         }
       },
       {
         loader: "sass-loader",
         options: {
-          outputStyle: "expanded"
+          outputStyle: "expanded",
+          minimize: true,
+          debug: false
         }
       }
     ]
@@ -69,13 +75,15 @@ const prodPlugins = plugins.concat([
       NODE_ENV: JSON.stringify("production")
     },
     __DEV__: false,
+    __PERFORMANCE_DEVTOOL__: false,
+    __DEPRECATED__: false,
     ...defines
   }),
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    filename: "[name].css",
-    chunkFilename: "[id].css"
+    filename: "[name]-[hash:7].css",
+    chunkFilename: "[id]-[hash:7].css"
   })
   // new webpack.LoaderOptionsPlugin({
   //   minimize: true,
@@ -87,7 +95,6 @@ const prodPlugins = plugins.concat([
 const config = {
   entry: {
     styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
-    assets: path.resolve(BASE_URL, "app/assets/loader"),
     app: path.resolve(BASE_URL, "app/Main.js")
   },
   context: path.resolve(BASE_URL, "app"),
@@ -95,11 +102,12 @@ const config = {
     publicPath: "/",
     path: path.join(BASE_URL, outputDir),
     filename: "[name]-[hash:7].js",
+    chunkFilename: "[name]-[chunkhash:7].js",
     pathinfo: true,
     sourceMapFilename: "[name].js.map"
   },
   mode: "production",
-  devtool: false,
+  devtool: "none",
   module: {
     rules: loaders.concat(cssLoaders)
   },
@@ -111,10 +119,29 @@ const config = {
   optimization: {
     splitChunks: {
       cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true
+        },
         commons: {
-          test: /node_modules\//,
+          test: /node_modules\/[^(react)|(d3)]/,
           name: "commons",
-          chunks: "initial"
+          chunks: "initial",
+          enforce: true
+        },
+        react: {
+          test: /node_modules\/react.*/,
+          name: "framework",
+          chunks: "initial",
+          enforce: true
+        },
+        react: {
+          test: /node_modules\/d3.*/,
+          name: "d3",
+          chunks: "initial",
+          enforce: true
         }
       }
     }

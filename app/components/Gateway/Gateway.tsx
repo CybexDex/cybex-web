@@ -17,6 +17,7 @@ import ReactTooltip from "react-tooltip";
 import counterpart from "counterpart";
 import { List } from "immutable";
 import { Colors } from "components/Common/Colors";
+import { Table } from "components/Common/Table";
 
 import ChainTypes from "../Utility/ChainTypes";
 import EquivalentPrice from "../Utility/EquivalentPrice";
@@ -30,7 +31,7 @@ import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
-
+import { Club } from "components/StaticPages/Club";
 //React Table
 import ReactTable from "react-table";
 
@@ -212,7 +213,7 @@ let GatewayRecords = class extends React.Component<
     let { fundRecords, isLocked } = this.props;
     let records = fundRecords.records || [];
     return (
-      <div className="gateway-records" style={{ position: "relative" }}>
+      <div className="cybex-records" style={{ position: "relative" }}>
         {/*<table
           className="table gateway-table dashboard-table"
           style={
@@ -263,15 +264,9 @@ let GatewayRecords = class extends React.Component<
                 ))}
           </tbody>
               </table> */}
-        <ReactTable
+        <Table
           data={records}
           noDataText={counterpart.translate(`gateway.no_record_one_month`)}
-          previousText={counterpart.translate(`table.previousText`)}
-          nextText={counterpart.translate(`table.nextText`)}
-          loadingText={counterpart.translate(`table.loadingText`)}
-          pageText={counterpart.translate(`table.pageText`)}
-          ofText={counterpart.translate(`table.ofText`) + " "}
-          rowsText={counterpart.translate(`table.rowsText`)}
           style={
             isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
           }
@@ -324,8 +319,6 @@ let GatewayRecords = class extends React.Component<
               accessor: d => d.updateAt
             }
           ]}
-          defaultPageSize={10}
-          className="-striped -highlight"
         />
         {isLocked && (
           <div

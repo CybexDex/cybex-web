@@ -1,3 +1,4 @@
+
 @mixin FlexWrapper($direction: column) {
   display: flex;
   flex-direction: $direction;
@@ -5,7 +6,7 @@
     flex-grow: 1;
   }
 }
-.cybex-layout {
+.cybex-layout.patch {
   @include FlexWrapper();
   .main-body {
     @include FlexWrapper();
@@ -14,44 +15,45 @@
       @include FlexWrapper(row);
     }
   }
-}
+  
+  .market-layout {
+    position: relative;
+    height: 100%;
+    margin: 0 4px;
+    .market-main {
+      position: absolute;
+      width: 51%;
+      left: 24.25%;
+      height: 100%;
+    }
+    .market-markets {
+      position: absolute;
+      width: 24%;
+      height: 50%;
+      left: 0;
+      top: 0;
+    }
+    .market-orders {
+      position: absolute;
+      width: 24%;
+      height: 50%;
+      left: 0;
+      top: 50%;
+    }
+    .market-orderbook {
+      position: absolute;
+      width: 24.5%;
+      height: 100%;
+      left: 75.5%;
+      top: 0;
+    }
+  }
+  .settings-wrapper {
+    display: flex;
+    .settings-left {
+      width: 320px;
+      flex: 0 0 320px;
+    }
+  }
 
-.market-layout {
-  position: relative;
-  height: 100%;
-  margin: 0 4px;
-  .market-main {
-    position: absolute;
-    width: 51%;
-    left: 24.25%;
-    height: 100%;
-  }
-  .market-markets {
-    position: absolute;
-    width: 24%;
-    height: 50%;
-    left: 0;
-    top: 0;
-  }
-  .market-orders {
-    position: absolute;
-    width: 24%;
-    height: 50%;
-    left: 0;
-    top: 50%;
-  }
-  .market-orderbook {
-    position: absolute;
-    width: 24.5%;
-    height: 100%;
-    left: 75.5%;
-    top: 0;
-  }
-}
-.settings-wrapper {
-  display: flex;
-  .settings-left {
-    width: 320px;
-    flex: 0 0 320px;
-  }
-}
+}  

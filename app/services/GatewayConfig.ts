@@ -9,7 +9,6 @@ export const JadePool = __TEST__
         // "TEST.EOS": "EOS",
         "TEST.USDT": "USDT",
         "TEST.BAT": "BAT",
-        "TEST.VEN": "VEN",
         "TEST.OMG": "OMG",
         "TEST.SNT": "SNT",
         "TEST.NAS": "NAS",
@@ -35,7 +34,6 @@ export const JadePool = __TEST__
         // "EOS": "TEST.EOS",
         USDT: "TEST.USDT",
         BAT: "TEST.BAT",
-        VEN: "TEST.VEN",
         OMG: "TEST.OMG",
         SNT: "TEST.SNT",
         NAS: "TEST.NAS",
@@ -66,7 +64,6 @@ export const JadePool = __TEST__
         "JADE.LHT": "LHT",
         "JADE.INK": "INK",
         "JADE.BAT": "BAT",
-        "JADE.VEN": "VEN",
         "JADE.OMG": "OMG",
         "JADE.SNT": "SNT",
         "JADE.NAS": "NAS",
@@ -75,9 +72,12 @@ export const JadePool = __TEST__
         "JADE.GET": "GET",
         "JADE.MAD": "MAD",
         "JADE.TCT": "TCT",
+        "JADE.NES": "NES",
+        "JADE.PPT": "PPT",
+        "JADE.RHOC": "RHOC",
         "JADE.MKR": "MKR",
         "JADE.FUN": "FUN",
-        // "JADE.SDT": "SDT",
+        "JADE.VEN": "VEN",
         "JADE.MVP": "MVP",
         // "JADE.ICX": "ICX",
         "JADE.GNT": "GNT",
@@ -94,13 +94,12 @@ export const JadePool = __TEST__
         ETH: "JADE.ETH",
         BTC: "JADE.BTC",
         // ERC20
-        "EOS": "JADE.EOS",
+        EOS: "JADE.EOS",
         USDT: "JADE.USDT",
         LTC: "JADE.LTC",
         LHT: "JADE.LHT",
         BAT: "JADE.BAT",
         INK: "JADE.INK",
-        VEN: "JADE.VEN",
         OMG: "JADE.OMG",
         SNT: "JADE.SNT",
         NAS: "JADE.NAS",
@@ -109,9 +108,12 @@ export const JadePool = __TEST__
         GET: "JADE.GET",
         MAD: "JADE.MAD",
         TCT: "JADE.TCT",
+        NES: "JADE.NES",
+        RHOC: "JADE.RHOC",
+        PPT: "JADE.PPT",
         MKR: "JADE.MKR",
         FUN: "JADE.FUN",
-        // SDT: "JADE.SDT",
+        VEN: "JADE.VEN",
         MVP: "JADE.MVP",
         // "ICX": "JADE.ICX",
         // "BTM": "JADE.BTM",
@@ -127,9 +129,10 @@ export const JadePool = __TEST__
     };
 
 declare const __TEST__;
-export const GATEWAY_URI = __TEST__
-  ? "https://gatewaytest.cybex.io/gateway"
-  : "https://gateway.cybex.io/gateway";
+export const GATEWAY_URI =
+  __TEST__ || __DEV__
+    ? "https://gatewaytest.cybex.io/gateway"
+    : "https://gateway.cybex.io/gateway";
 export const GATEWAY_QUERY_URI = !__DEV__
   ? "https://gateway-query.cybex.io/"
   : "///localhost:5684/";

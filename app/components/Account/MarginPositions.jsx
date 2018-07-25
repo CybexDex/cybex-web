@@ -14,7 +14,7 @@ import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 import TotalBalanceValue from "../Utility/TotalBalanceValue";
 import { List } from "immutable";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import TranslateWithLinks from "../Utility/TranslateWithLinks";
 import EquivalentPrice from "../Utility/EquivalentPrice";
 import Immutable from "immutable";
@@ -147,7 +147,7 @@ class MarginPosition extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
   }
 
   render() {
@@ -366,7 +366,7 @@ class MarginPositionPlaceHolder extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
   }
 
   render() {

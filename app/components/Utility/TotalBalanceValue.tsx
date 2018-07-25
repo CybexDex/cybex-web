@@ -159,7 +159,6 @@ let TotalValue = class extends MarketStatsCheck {
     // Open orders value
     for (let asset in openOrders) {
       let fromAsset = assets[asset];
-      console.debug("From Asset: ", fromAsset);
       if (!fromAsset) {
         continue;
       };

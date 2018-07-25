@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import AltContainer from "alt-container";
 import Translate from "react-translate-component";
 import BindToChainState from "../Utility/BindToChainState";
@@ -73,7 +74,7 @@ class Footer extends React.Component {
                                 {version}
                             </span> */}
             <Translate
-              className="contact highlight link"
+              className="contact highlight link hide-for-small-only"
               content="nav.help"
               component="div"
               onClick={this.onHelp}
@@ -151,23 +152,23 @@ class Footer extends React.Component {
   }
 
   onBackup() {
-    this.context.router.push("/wallet/backup/create");
+    this.context.router.history.push("/wallet/backup/create");
   }
 
   onBackupBrainkey() {
-    this.context.router.push("/wallet/backup/brainkey");
+    this.context.router.history.push("/wallet/backup/brainkey");
   }
 
   onContact = () => {
-    this.context.router.push("/contact");
+    this.context.router.history.push("/contact");
   };
   onHelp = () => {
-    this.context.router.push("/help/introduction/cybex");
+    this.context.router.history.push("/help/introduction/cybex");
   };
 
   onAccess() {
     SettingsActions.changeViewSetting({ activeSetting: 6 });
-    this.context.router.push("/settings");
+    this.context.router.history.push("/settings");
   }
 }
 Footer = BindToChainState(Footer, { keep_updating: true });

@@ -317,6 +317,11 @@ div.bordered-header {
     display: block !important;
   }
 }
+.hide-for-small-only:not(.ng-hide) {
+  @media screen and (max-width: $size-medium) {
+    display: none !important;
+  }
+}
 
 .margin-column {
   @media screen and (min-width: $size-medium) {

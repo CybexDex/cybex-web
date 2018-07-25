@@ -2,6 +2,8 @@ import { Store } from "alt-instance";
 
 export class AbstractStore<S> implements Store<S> {
   state: S;
+  listen?(stateListener): void;
+  unlisten?(stateListener): void;
   getState?(): S;
   setState?(state: any): S;
   bindListeners?(listenerBinder: { [method: string]: Function }): void;

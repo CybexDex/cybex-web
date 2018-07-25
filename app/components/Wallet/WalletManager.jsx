@@ -1,5 +1,5 @@
 import * as React from "react"; import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { connect } from "alt-react";
 import WalletActions from "actions/WalletActions";
 import BackupActions from "actions/BackupActions";

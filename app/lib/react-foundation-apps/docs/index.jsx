@@ -1,5 +1,5 @@
 var React = require("react");
-var Router = require("react-router");
+var Router = require("react-router-dom");
 var routes = require("./routes");
 var ExecutionEnvironment = require("react/lib/ExecutionEnvironment");
 

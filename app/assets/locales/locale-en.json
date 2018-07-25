@@ -38,7 +38,7 @@
     "sub_text_2":
       "Once you've synchronized your clock, please refresh this page.<br/><br/>If your clock is already correct, the API server you're using could be out of sync. In that case, please try a different server from the list below."
   },
-  
+
   "header": {
     "title": "Cybex UI",
     "account": "Account",
@@ -67,44 +67,46 @@
     "account_value": "Account value"
   },
   "EIO": {
-    "ok": "Taking place",
+        "ok": "Current ETO Project",
     "pre": "Coming Soon",
-    "finish": "Finished",
-    "pause": "Paused",
+    "finish": "Concluded ETO",
+    "pause": "failed",
     "current_ETH_balance": "Your current ETH balance is",
-    "Popular_IEOs": "Popular IEOs",
+    "Popular_ETOs": "Popular ETOs",
     "Coming Soon": "Coming Soon",
     "KYC_Verification": "KYC Verification",
-    "Accept_KYC_Verification": "Accept KYC Verification before engaging in IEO reservation",
-    "Join_in_IEO": "Join in IEO",
+    "Accept_KYC_Verification": "Please make KYC certification for ETO.",
+    "Join_in_ETO": "Join in ETO",
     "Details": "Details",
-    "Reserve_IEO": "Reserve IEO",
+    "Reserve_ETO": "Reserve ETO",
     "Reserve_Now": "Reserve Now",
     "Verifying": "Verifying",
     "Time_remains": "Time remains",
-    "Wait_for_IEO": "Wait for IEO",
+    "Wait_for_ETO": "Waiting for ETO to start",
     "Reservation_failed": "Reservation failed",
-    "Join_IEO_now": "Join IEO now",
+    "Join_ETO_now": "Join ETO now",
     "Project_Name": "Project Name",
     "Token_Name": "Token Name",
     "Total_Token_Supply": "Total Token Supply",
-    "IEO": "IEO",
-    "Total_IEO_Supply": "Total IEO Supply",
+    "ETO": "ETO",
+    "End_at_time": "End Time",
+    "Total_ETO_Supply": "Total ETO Supply",
     "Soft_cap": "Soft cap",
-    "IEO_Period": "IEO Period",
-    "Listing_Time": "Listing Time",
+    "ETO_Period": "ETO Time",
+    "Listing_Time": "Listing schedule",
     "Project_Strengths": "Project Strengths",
-    "IEO_Quota": "IEO Quota",
+    "ETO_Quota": "ETO Quota",
     "District_Restriction": "District Restriction",
-    "IEO_token": "IEO token",
+    "ETO_token": "Currency",
     "Token_Releasing_Time": "Token Releasing Time",
-    "Lock-up_Period": "Lock-up Period",
-    "Official_Website": "Official Website",
+    "Lock-up_Period": "Circulation on Cybex starts at",
+    "Official_Website": "Official website",
     "Whitepaper": "Whitepaper",
     "Project_Details": "Project Details",
     "Participants": "Participants",
     "Raised": "Raised",
-    "Redeeming_Ratio": "Redeeming Ratio",
+    "Project_Intruduce": "Project Details",
+    "Redeeming_Ratio": "Exchange ratio",
     "Personal_Limit": "Personal Limit",
     "Left": "Left",
     "In": "In",
@@ -112,7 +114,40 @@
     "Your_current_ETH_balance_is": "Your current ETH balance is",
     "Quota_Remaining": "Quota Remaining",
     "participate": "Participate",
-    "no_login": "Login"
+    "no_login": "Login",
+    "End_at": "End at",
+    "Hard_cap":"Hard Cap",
+    "Start_date": "Start date"
+  },
+  "static":{
+    "Augu":"August 11th 11:00 (GMT +8, Singapore time)",
+    "billions":"2 billion, 5% increase per year",
+    "plan_time":"Planned for November 2018, a well-known exchange",
+    "Genesis":"Project Strengths:  Genesis Space as the first ETO project ever is limited in quota. It is world’s first project doing crowdfunding at cornerstone round. Genesis has a more advanced DDPOS consensus mechanism than DPOS, with a built-in voting-based system upgrade mechanism. Its high scalability is realized through sidechains. The codes are written in RUST. Each sidechain is a virtual world, and each one can adopt completely different governance mechanisms to achieve unlimited possibilities. ",
+    "Genesis2": "The team consists of alumni from Harvard, Columbia, UC Berkeley, CMU, etc. Christoph, an important developer and Yellowpaper writer of Ethereum, is an ardent advisor of Genesis.",
+    "EoC": "ETH",  
+    "what_is_eto": "What is ETO?",
+    "why_eto": "The Beauty of ETO",
+    "kyc_first": "Please make KYC certification for reservations",
+    "weixin":
+      "Follow the official WeChat Public Account of CYBEX to know more: cybexexchange",
+    "weixin_service_a": "CYBEX Community Assistant A: CybexServiceA",
+    "weixin_service_b": "CYBEX Community Assistant B: CybexServiceB",
+    "weixin_service_c": "CYBEX Community Assistant C: CybexServiceC",
+    "eto_resume_one":
+      "ETO (Earlybirds Token Offering) is a method used by a decentralized exchange to help premium blockchain projects to raise funds. We will help those blockchain projects with potential, expertise and blueprints to list their tokens on CYBEX. For projects with expectations, the power of community should be introduced at the very beginning. It can help projects raise funds quickly as well as building early project community. We think this is something of value to the industry and of help to future development.",
+    "eto_resume_two":
+      "ETO is a new trial of integrating fund raising with project development organically. Investors who aim at participating in the building of early project community can obtain original participation quota. For projects, they can get funds from the community and build and expand project community at the same time. CYBEX would utilize its own resources and experience to select those projects with potentials, using a strict process to ensure the management of funds before and after ETO.",
+    "feature_one_header":
+      "For Investors in Hope of Being Engaged in Early Stages of a Project",
+    "feature_one_content":
+      "Beside buying in project tokens in secondary market, those investors will have tighter connections with the project team itself. This is not just an empty talk or unrealistic vision. Every investor must be engaged in the development of the community of a project, including generalizing the project and orchestrating various beneficial events for the growth of the project and its community. By these means, investors are positioned to help project teams better understand the demand of the market thus optimizing product design. Through collaborations between community and the project team, prompt feedbacks from the users are generated to push forward the transformation and evolution of the project.",
+    "feature_two_header": "For Projects",
+    "feature_two_content":
+      "For projects at an early stage, receiving funds from the community, establishing community, nurturing consensus are the most desired and proper track. We can see in many cases that the strengths from communities of a host of investors served as the greatest impetus for the rapid development of projects, helping them achieve significant breakthrough from scratch.",
+    "feature_three_header": "For Cryptocurrency Raised",
+    "feature_three_content":
+      "CYBEX will provide a third-party escrow & audit service. Each and every transaction is traceable on the blockchain, so investors in this project will have a clearer picture of the usage of the fund. What CYBEX will provide is a one-stop multi-signature escrow & audit service integrating both soft- and hard-ware, guaranteeing the safety of all assets used. At the same time, the patent hardware system of CYBEX is almost compatible with all mainstream cryptocurrencies in respect of multi-signature management, thus will radically make the asset-management procedure safer and more standardized from a technical aspect."
   },
   "tooltip": {
     "call_limit":
@@ -1662,7 +1697,8 @@
       "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. <br>* Please make sure that your withdrawal address is correct, otherwise you may lose your tokens permanently. <br>* It may take some time for each transfer to confirm, please kindly be patient. <br>* For the withdrawal operation, please use your personal wallet address only. <br>* Any smart contract address, exchange deposit address or ICO related address used for withdrawal could result in failed contract execution and transfer, and your funds would be sent back to your Cybex account, which may keep you waiting for longer time. Please kindly understand this.",
     "balance_asset": "Current %(asset)s balance",
     "withdraw_placeholder": "Please enter your %(asset)s address",
-    "deposit_eos": "please send your EOS to account '%(account)s' on the EOS chain with the memo displayed below. please do not put any other information in the memo.",
+    "deposit_eos":
+      "please send your EOS to account '%(account)s' on the EOS chain with the memo displayed below. please do not put any other information in the memo.",
     "deposit_eos_memo": "Deposit Memo",
     "balance": "Current balance",
     "generate": "Generate",
@@ -1772,7 +1808,7 @@
     "logout": "Logout",
     "worldcup": "World Cup 2018",
     "help": "Documents",
-    "ieo": "IEO"
+    "eto": "ETO"
   },
   "vesting": {
     "progress": "Unlock Progress",
@@ -1858,22 +1894,108 @@
     }
   },
   "first": {
-    "title":
-      "【Announcement on CYBEX Resuming the Top-up/withdraw of EOS】",
+    "title": "【Announcement on CYBEX Resuming the Top-up/withdraw of EOS】",
     "p1": "<p>Dear CYBEXers,</p>",
     "p2":
       "<p>CYBEX Exchange has resumed the top-up and withdraw of EOS tokens on EOS mainnet. If you have any questions, please feel free to contact us.</p>",
-    "p3":
-      "<p>CYBEX Community AssistantA（CybexServiceA）</p>",
-    "p4":
-      "<p>CYBEX Community AssistantB（CybexServiceB）</p>",
-    "p5":
-      "<p>CYBEX Community AssistantC（CybexServiceC）</p>",
+    "p3": "<p>CYBEX Community AssistantA（CybexServiceA）</p>",
+    "p4": "<p>CYBEX Community AssistantB（CybexServiceB）</p>",
+    "p5": "<p>CYBEX Community AssistantC（CybexServiceC）</p>",
     "footer": "<p class='text-right'>CYBEX Exchange<br>Jul 6, 2018</p>"
   },
   "captcha": {
     "error": "Cannot fetch captcha, check your faucet setting, please.",
     "label": "Verify Code",
     "click": "Refersh Code"
+  },
+  
+  "eto": {
+    "crowd_project": "ETO of %(project)s",
+    "amount_remain": "Remaining Quota: %(amount)s",
+    "account_limit":
+      "Personal Hard Cap: %(cap)s, Minimum Purchasing Unit: %(unit)s",
+    "current_state":
+      "You have subscribed: %(used)s, Remaining Quota: %(avail)s",
+    "closed_tip":
+      "The current project %(project)s has ended, please understand",
+    "take_in": "JOIN ETO",
+    "cybex_in":
+      "You will participate in the ETO by your %(asset)s balance in your CYBEX account, and the process may consume certain fees.",
+    "confirm":
+      "You will participate in the %(project)s ETO by transferring in CYBEX",
+    "complete_tip_1":
+      "When ETO completes, project assets will be given away by ",
+    "complete_tip_2": " to your CYBEX account(%(account)s)",
+    "local_time": "Local time",
+    "int_times":
+      "The quantity has to be the integral multiple of the minimum purchasing unit",
+    "warning_overflow":
+      "Your subscription cannot exceed the remaning quota of the project",
+    "overflow":
+      "Your final subscription will be subject to the verification by the project holder. You can check through <span class=\"highlight\">\"ETO Project History---Subscribed\"</span>. When circumstances like personal hard cap exceeded or project.Quota oversubscription happens, the unconfirmed excess quota will be refunded to relevant CYBEX accounts when project ETO ends. ",
+    "be_patient":
+      "The final ETO participation result takes time to be confirmed. Please wait patiently. If you have any questions, please contact our community assistant through WeChat account: CybexServiceA",
+    "records": {
+      "project_id": "项目名称",
+      "block_num": "关联区块",
+      "update_at": "更新时间",
+      "ieo_status": "状态",
+      "ieo_type": "操作类型",
+      "token_count": "Token数量",
+      "no_data": "暂无ETO参与记录"
+    }
+  },
+  "training": {
+    "step_title":
+      "If you want to participate in ETO projects on CYBEX, please take KYC authentication and bundle up your account first.",
+    "step_one": "Open the website of ICOAPE and register.",
+    "step_two":
+      "You will receive an E-mail sent to the address that you registered with. Open it and click the link to log in. If you cannot find the verification E-mail, search it in your spam E-mails.",
+    "step_three":
+      "Please do submit genuine and valid KYC information and save it. All items in personal information are required.",
+    "step_four":
+      "Once you submit your KYC data, we will audit it. The result will be sent to you by an E-mail within 3-7 workdays.",
+    "step_four_sp":
+      "Notice: If the information you have submitted was wrong, please re-submit it and we will audit again.",
+    "step_five":
+      "Please make sure you have already registered a Cybex account. Log in ICOAPE and fill in your Cybex account into the box.",
+    "step_five_sp":
+      "Meanwhile, open the Cybex Exchange: <a href=\"https://dex.cybex.io/\" target=\"_blank\">https://dex.cybex.io/</a> and log in. Click \"account\" then \"activity\". You will see a small amount of transfer to your account with a verify code. Fill in this code to your ICOAPE verify code box then you will succeed linking account!",
+    "step_six":
+      "Sign in CYBEX, choose ETO projects, then click reserve to wait for verification.",
+    "step_six_sp":
+      "Notice: Some projects may set a district limitation to the funders. So your qualification needs to be re-audited, which will be done within 3-7 workdays. Once passed, you can start investing.",
+    "step_six_sp_1":
+      "Please kindly check that whether there is enough balance. Meanwhile, the personal quota for different projects varies, tokens that exceeded an ETO project hard cap will be refunded to its original account."
+  },
+  "assets": {
+    "banner":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/ETObanner1-EN0717.jpg",
+    "eto_step_1":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-1.jpg",
+    "eto_step_2":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-2.jpg",
+    "eto_step_3":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-3.jpg",
+    "eto_step_4":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-4.jpg",
+    "eto_step_5":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-5.jpg",
+    "eto_step_6":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-6.jpg",
+    "eto_step_7":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-7.jpg",
+    "eto_step_8":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-8.jpg",
+    "eto_step_9":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-9.jpg",
+    "eto_step_10":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-10.jpg",
+    "eto_step_11":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-11.jpg",
+    "eto_step_12":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-12.jpg",
+    "eto_step_13":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-13.jpg"
   }
 }

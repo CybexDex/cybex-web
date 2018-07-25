@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width" />
     <meta name="format-detection" content="telephone=no">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cybex.io/; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.zdassets.com/ https://ekr.zdassets.com https://cdnjs.cloudflare.com/ajax/libs/ https://v2.zopim.com/ https://www.googletagmanager.com/ https://www.google-analytics.com/; style-src 'self' 'unsafe-inline'; connect-src 'self' wss://*.51nebula.com/ wss://*.cybex.io *; font-src 'self' data: https://v2.zopim.com/; img-src 'self' data: blob: https://v2.zopim.com/ https://ieo-test.oss-cn-hangzhou.aliyuncs.com/ https://www.google-analytics.com/;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cybex.io/; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.zdassets.com/ https://ekr.zdassets.com https://cdnjs.cloudflare.com/ajax/libs/ https://v2.zopim.com/ https://www.googletagmanager.com/ https://www.google-analytics.com/; style-src 'self' 'unsafe-inline'; connect-src 'self' wss://*.51nebula.com/ wss://*.cybex.io *; font-src 'self' data: https://v2.zopim.com/; img-src 'self' data: blob: https://ieo-apitest.nbltrust.com/ https://v2.zopim.com/ https://ieo.oss-cn-hangzhou.aliyuncs.com/ https://ieo-test.oss-cn-hangzhou.aliyuncs.com/ https://www.google-analytics.com/;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Cybex DEX</title>
     <meta name="description" content="CYBEX: a decentralized crypto-asset exchange. A future exchange system based on the Graphene Blockchain">
@@ -160,6 +160,34 @@
             <div>L</div>
         </div>
     </div>
+    <script>
+        (function name(params) {
+            if (/MQQBrowser\/6\.2/.test(navigator.userAgent)) {
+                document.getElementById("content").remove();
+                document.getElementById("globalLoading").remove();
+                document.body.innerHTML = (`<div style="color: #eee;
+    text-align: center;
+    height: 100vh;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100vw;">
+    <div style="    width: 16em;
+    height: 16em;
+    margin: auto;
+    line-height: 16em;
+    border-radius: 100%;
+    overflow: hidden;
+    background: #ddd;
+    box-shadow: 0 0 4px #fff;">
+        
+        <img src="/images/logo-main.png"/>
+        </div>
+    <p style="
+    font-size: 18px; margin-top: 2em">
+    请点击右上角菜单<br>选择<strong>在浏览器中打开</strong></p></div>`)
+            }
+        }());
+    </script>
     <!-- Google Analytics tracking code -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121047450-1"></script>
@@ -168,9 +196,12 @@
         let gtag = window.gtag = function () { dataLayer.push(arguments); }
         gtag("config", "UA-121047450-1", { app_name: "CybexDex", });
         gtag("config", "UA-121082216-1", { app_name: "CybexDex", });
+        gtag("config", "UA-121050870-1", { app_name: "CybexDex", });
         gtag('js', new Date());
     </script>
     <!-- End Google Analytics tracking code -->
+
+
 </body>
 
 </html>

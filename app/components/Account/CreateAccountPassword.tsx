@@ -7,7 +7,7 @@ import AccountStore from "stores/AccountStore";
 import AccountNameInput from "./../Forms/AccountNameInput";
 import WalletDb from "stores/WalletDb";
 import notify from "actions/NotificationActions";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AccountSelect from "../Forms/AccountSelect";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import LoadingIndicator from "../LoadingIndicator";
@@ -32,6 +32,7 @@ import {
 } from "components/Common/Styles";
 import { $breakpointSmall } from "components/Common/Breakpoints";
 import Radium from "radium";
+import { Gtag } from "services/Gtag";
 
 let CreateAccountPassword = class extends React.Component<any, any> {
   static contextTypes = {
@@ -119,7 +120,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
       FetchChain("getAccount", this.state.accountName, undefined, {
         [this.state.accountName]: true
       }).then(() => {
-        this.props.router.push("/wallet/backup/create?newAccount=true");
+        this.props.history.push("/wallet/backup/create?newAccount=true");
       });
     }
   }
@@ -168,6 +169,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
             }
           );
         }
+        Gtag.eventRegisterDone(name);
       })
       .catch(error => {
         console.log("ERROR AccountActions.createAccount", error);
@@ -184,6 +186,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
         });
         this.cap && this.cap.updateCaptcha();
         this.setState({ loading: false });
+        Gtag.eventRegisterFailed(name);
       });
   }
 
@@ -613,14 +616,17 @@ let CreateAccountPassword = class extends React.Component<any, any> {
   }
 };
 CreateAccountPassword = Radium(CreateAccountPassword);
-CreateAccountPassword = connect(CreateAccountPassword, {
-  listenTo() {
-    return [AccountStore];
-  },
-  getProps() {
-    return {};
+CreateAccountPassword = connect(
+  CreateAccountPassword,
+  {
+    listenTo() {
+      return [AccountStore];
+    },
+    getProps() {
+      return {};
+    }
   }
-});
+);
 
 export { CreateAccountPassword };
 export default CreateAccountPassword;

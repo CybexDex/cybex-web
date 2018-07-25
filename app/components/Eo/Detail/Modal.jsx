@@ -8,20 +8,37 @@ import foundationApi from "react-foundation-apps/src/utils/foundation-api";
 // import Button from "../../Common/Button";
 import BindToChainState from "../../Utility/BindToChainState";
 import AccountInfo from "../../Account/AccountInfo";
+import { Button } from "components/Common/Button";
 // import AccountStore from "../../../stores/AccountStore";
 import AccountStore from "stores/AccountStore";
 import { connect } from "alt-react";
 import "./Modal.scss";
 import Translate from "react-translate-component";
+import * as fetchJson from "../service";
 
 
 
 export class BaseModal extends React.Component {
 
   constructor(props) {
+    
+    let timePassed = window.localStorage.getItem('timePassed');
+    let timeNow = new Date().valueOf();
+    // console.log((timePassed - timeNow)/1000);
+    console.log((timeNow - timePassed)/1000)
+    let countDown = -1;
+    let _countDown = parseInt((timeNow - timePassed)/1000);
+    
+    if(_countDown < 30){
+      countDown = 30 - _countDown;
+    }
+
+    // let countDown = (30 - timePassed) > -1 ? 30 - timePassed : -1;
     super(props);
     this.state = {
-      fadeOut: false
+      fadeOut: false,
+      countDown: countDown,
+      errorMsg: null
     };
   }
 
@@ -38,6 +55,12 @@ export class BaseModal extends React.Component {
   };
   componentDidMount(){
     console.log(Trigger);
+    
+    // let countDown = (30 - timePassed) > -1 ? 30 - timePassed : -1;
+    // this.state = {
+    //   fadeOut: false,
+    //   countDown: countDown
+    // };
   }
   componentWillReceiveProps(n){
     this.setState({
@@ -47,7 +70,44 @@ export class BaseModal extends React.Component {
   cao = () => {
     foundationApi.publish(this.props.id, "close");
   }
+  submits() {
+    this.sentdata({
+      user:this.props.accountsWithAuthState[0],
+      project: this.props.project,
+      msg: {
+        code: this.refs.codeInput.value
+      }
+    });
+  }
+
+  sentdata(data){
+    fetchJson.fetchCreatUser(data, (res)=>{
+      if(res.code !== 0){
+        this.setState({
+          errorMsg: res.result,
+          countDown: 30
+        });
+        window.localStorage.setItem('timePassed', new Date().valueOf());
+      } else {
+        this.props.cb();
+        this.setState({
+          errorMsg: null
+        });
+        this.refs.codeInput.value = null;
+      }
+    });
+  }
   render() {
+    let countDown = this.state.countDown;
+    if(countDown>-1){
+      setTimeout(()=>{
+        countDown--;
+        this.setState({
+          countDown: countDown
+        });
+        // window.localStorage.setItem('timePassed', new Date().valueOf());
+      },1000);
+    }
     // let { fade, overlay, noCloseBtn, overlayClose } = this.props;
     // let { fadeOut, isShow } = this.state;
     return (
@@ -59,16 +119,35 @@ export class BaseModal extends React.Component {
         // overlayClose={props.overlayClose}
       >
       <div className="modal-container">
+        
         <div className="modal-content">
-          <div className="input-item">
-            <h3>Demo Demo</h3>
-            <p>jkaslkdfk sadfkklsdafjs sadfasdfsadfdsa</p>
+        {/* <button className="cancel detail-modal-btn" onClick={this.cao}>Cancel</button> */}
+          <div className="title-holder">
+            <h3>请添加邀请码</h3>
+            
           </div>
           {/* <div className="input-item"> */}
-          {/* <input type="text" className="enter-info" placeholder="please enter" /> */}
-          <button className="confirm detail-modal-btn" disabled>Confirm</button>
-          <div className="divider"></div>
-          <button className="cancel detail-modal-btn" onClick={this.cao}>Cancel</button>
+          <div className="flex-container">
+          <div className="flex-item flex-input-holder">
+          <input type="text" className="enter-info" ref="codeInput" placeholder="请输入邀请码" defaultValue="" />
+          {this.state.errorMsg?(
+            <icon className="icon icon-error"><p>!</p></icon>
+          ):null}
+          
+          </div>
+          <div className="flex-item flex-button-holder">
+          {this.state.countDown<0?
+            (
+              <div className="button primery-button" onClick={this.submits.bind(this)}>添加</div>
+            ):(
+              <div className="button primery-button disabled">{`${this.state.countDown}秒后重试`}</div>
+            )}
+          
+          </div>
+          
+          {/* <div className="divider"></div> */}
+          
+          </div>
           {/* <p className="error-msg">21312321</p>
           </div>
           <div className="input-item">
@@ -76,6 +155,8 @@ export class BaseModal extends React.Component {
           </div> */}
           {/* <Button ButtonSize="xsmall" ButtonType="secondary">submit</Button> */}
         </div>
+        <p className="error-msg-holder">{this.state.errorMsg}</p>
+        <p className="footer-msg">邀请码获取方式请联系小助手微信：CybexServiceA</p>
       </div>
       
       <Trigger close={this.props.id}>

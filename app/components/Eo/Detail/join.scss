@@ -50,7 +50,7 @@
 		.highlight {
 			background: unset;
 			color: unset;
-			filter: brightness(2);
+			filter: brightness(1.36);
 		}
 	}
 
@@ -58,5 +58,8 @@
 		height: 3.3334em !important;
 	}
 
+	.error-wrapper {
+		margin-top: 1em;
+	}
 	
 }

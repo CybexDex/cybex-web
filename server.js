@@ -6,13 +6,18 @@ var hotMiddleware = require("webpack-hot-middleware");
 var feathers = require("feathers");
 const https = require("https");
 const fs = require("fs");
+const compress = require("compression");
 const expressproxy = require('express-http-proxy');
-let proxyUrl = 'http://106.14.159.224:3049/';
+// let proxyUrl = 'http://ieo-apitest.nbltrust.com:3049/';
+let proxyUrl = 'https://ieo-apitest.cybex.io/';
+
+// https://ieo-apitest.nbltrust.com/api/cybex/projects?limit=4&offset=0
 
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
 var config = require("./config/webpack.dev.js");
 
 var app = express();
+app.use(compress());
 app.use('/api/', expressproxy(proxyUrl, {
     proxyReqPathResolver: function(req,res) {
         return '/api' + require('url').parse(req.url).path;

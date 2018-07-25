@@ -880,7 +880,7 @@ export default Radium(
     }
 
     shouldComponentUpdate(np, ns) {
-      if (!np.marketReady && !this.props.marketReady) return false;
+      // if (!np.marketReady && !this.props.marketReady) return false;
       if (!np.priceData.length && !this.props.priceData.length) return false;
       return (
         !utils.are_equal_shallow(np.priceData, this.props.priceData) ||

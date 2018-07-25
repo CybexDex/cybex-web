@@ -1,5 +1,51 @@
 .training{
 	background: #b9dbf0;
+	background-image: url('../../assets/trainings/trainingBack.jpg');
+	background-repeat: repeat-y;
+	background-size: 100% auto;
+	.base-title{
+		width: 572px;
+		height: 114px;
+		font-family: PingFangSC;
+		font-size: 36px;
+		font-weight: 500;
+		font-style: normal;
+		font-stretch: normal;
+		line-height: 1.58;
+		letter-spacing: normal;
+		color: #00293f;
+		margin: auto;
+	}
+	.title-container{
+		margin-left: auto;
+		margin-right: auto;
+		position: relative;
+		height: 300px;
+		width: 700px;
+		padding-top: 90px;
+	}
+	.trangle-holder{
+		&.left{
+			position: absolute;
+			top: 20px;
+			transform: rotateZ(90deg);
+			left: 0;
+		}
+		&.right{
+			position: absolute;
+			transform: rotateZ(270deg);
+			bottom: 20px;
+			right: 0;
+		}
+	}
+	.trangle {
+		width: 0;
+		height: 0;
+		transform: skewX(26deg);
+		border-left: 40px solid transparent;
+		border-right: 40px solid transparent;
+		border-bottom: 80px solid #ffc175;
+	  }
 	.step {
 		width: 100%;
 		text-align: center;
@@ -13,6 +59,12 @@
 		letter-spacing: normal;
 		color: #ffffff;
 		transform: translateY(100px);
+	}
+	.right-top,.right-middle,.right-bottom{
+		img{
+			height: 100%;
+			width: 100%;
+		}
 	}
 	.content{
 		margin-top: -2px;
@@ -105,7 +157,7 @@
 	}
 }
 .gap{
-	height: 80px;
+	height: 130px;
 	width: 1024px;
 	margin: auto;
 	position: relative;
@@ -124,7 +176,6 @@
 	width: 1028px;
 	height: 1290px;
 	.content{
-		margin-top: -2px;
 		position: relative;
 		height: 1275px;
 		width: 301px;
@@ -161,3 +212,4 @@
 	}
 }
 }
+

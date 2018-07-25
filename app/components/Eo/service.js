@@ -1,5 +1,6 @@
 let isFlag = false;
 import { IEO_API } from "api/apiConfig";
+// import { reject } from "../../../node_modules/@types/async";
 
 export const fetchJson = options => {
   const { url, type, data, ...others } = options;
@@ -9,7 +10,7 @@ export const fetchJson = options => {
   let opts = {
     ...others,
     method: type || "get",
-    credentials: "include",
+    // credentials: "include",
     headers: options.headers || {
       Accept: "application/json",
       "Content-Type": "application/json"
@@ -39,15 +40,18 @@ export const fetchJson = options => {
 };
 
 function toJson(resp, options) {
+  if(resp.status == 500){}
   return resp.json();
 }
 function resHandler(resData, options) {
-  console.log(resData);
+  // console.log(resData);
+  
   options.success(resData);
 }
 function errorHandler(error, options, status) {
   isFlag = false;
   if (options.error) {
+    
     options.error(error);
   } else {
     console.error(error);
@@ -88,6 +92,28 @@ export function fetchDetails(data, cb) {
 export function fetchKYC(data, cb) {
   fetchJson({
     url: "/cybex/user/check_status",
+    type: "GET",
+    success: res => {
+      cb(res);
+    },
+    data: data
+  });
+}
+
+export function fetchCreatUser(data, cb) {
+  fetchJson({
+    url: "/cybex/user/create",
+    type: "POST",
+    success: res => {
+      cb(res);
+    },
+    data: data
+  });
+}
+
+export function fetchUserProjectStatus(data, cb) {
+  fetchJson({
+    url: "/cybex/user/status",
     type: "GET",
     success: res => {
       cb(res);

@@ -1,5 +1,5 @@
 import * as React from "react"; import * as PropTypes from "prop-types";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import DrawerToggle from "./DrawerToggle";
 import HelpWindow from "./HelpWindow";
 

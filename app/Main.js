@@ -3,6 +3,8 @@ import * as PropTypes from "prop-types";
 import * as React from "react";
 React.createClass = createClass;
 React.PropTypes = PropTypes;
+
+require("./assets/loader");
 if (!window.Intl) {
   // Safari polyfill
   require.ensure(["intl"], require => {

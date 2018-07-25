@@ -41,7 +41,6 @@ const BTC_MARKETS = [
   "JADE.EOS",
   "JADE.INK",
   "JADE.BAT",
-  "JADE.VEN",
   "JADE.OMG",
   "JADE.SNT",
   "JADE.NAS",
@@ -52,6 +51,9 @@ const BTC_MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.NES",
+  "JADE.RHOC",
+  "JADE.PPT",
   "JADE.MKR",
   "JADE.FUN",
   // "JADE.SDT",
@@ -479,7 +481,7 @@ let MyMarkets = class extends React.Component<any, any> {
   }
 
   _goMarkets() {
-    this.context.router.push("/markets");
+    this.context.router.history.push("/markets");
   }
 
   _changeTab(tab) {
