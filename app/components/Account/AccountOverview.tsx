@@ -96,9 +96,7 @@ let AccountOverview = class extends React.Component<any, any> {
       depositAsset: null,
       withdrawAsset: null,
       bridgeAsset: null,
-      alwaysShowAssets: [
-        "CYB"
-      ]
+      alwaysShowAssets: ["CYB"]
     };
 
     // this.tableHeightMountInterval = tableHeightHelper.tableHeightMountInterval.bind(this);
@@ -1042,14 +1040,14 @@ let AccountOverview = class extends React.Component<any, any> {
                 </Tab>
               )}
               {/* {this.props.isMyAccount && ( */}
-              {/* <Tab title="account.crowdfund">
-                  <div className="content-block">
-                    <div className="generic-bordered-box"> */}
-              {/* <CrowdFund account={account} /> */}
-              {/* <AccountIEO account={account} />
-                    </div>
+              <Tab title="account.crowdfund">
+                <div className="content-block">
+                  <div className="generic-bordered-box">
+                    {/* <CrowdFund account={account} /> */}
+                    <AccountIEO account={account} />
                   </div>
-                </Tab> */}
+                </div>
+              </Tab>
               {/* )} */}
               {/* <Tab title="markets.title" subText={hiddenSubText}>
 

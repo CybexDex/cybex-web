@@ -30,15 +30,15 @@ import titleUtils from "common/titleUtils";
 import { LoadComponent } from "./Routes";
 
 import { Route, Switch, Redirect } from "react-router-dom";
-
+let patch = false;
 (function(window) {
   if (window) {
     let agent = window.navigator.userAgent;
     // Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36"
     let version = /Chrome\/(.+)(?=\s)/i.exec(agent);
     if (version && version[1] && parseInt(version[1]) < 60) {
-      require("assets/stylesheets/patch.scss");
-      // console.debug("Patch: ", patch);
+      console.info("Patch: ", version);
+      patch = true;
     }
   }
 })(window);
@@ -56,8 +56,7 @@ const Gateway = Loadable({
   loading: LoadingIndicator
 });
 const Eto = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "gateway" */ "./components/Eo"),
+  loader: () => import(/* webpackChunkName: "gateway" */ "./components/Eo"),
   loading: LoadingIndicator
 });
 
@@ -404,7 +403,7 @@ let App = class extends React.Component<any, any> {
       );
     } else {
       content = (
-        <div className="cybex-layout">
+        <div className={"cybex-layout" + (patch ? " patch" : "")}>
           <Header />
           <MobileMenu isUnlocked={this.state.isUnlocked} id="mobile-menu" />
           {/* <Nav isVertical={true} hideLabel={true} /> */}
