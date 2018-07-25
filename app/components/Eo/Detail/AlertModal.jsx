@@ -83,8 +83,13 @@ export class AlertModal extends React.Component {
       <div className="modal-container">
       <div className="modal-content">
         <div className="title-holder">
-          <h3><icon className="icon icon-success"></icon><span>预约成功！</span></h3>
-          <p>请等待白名单审核</p>
+          <h3><icon className="icon icon-success"></icon>
+          <Translate content="EIO.ReserveSuccessful" />
+          {/* <span>预约成功！</span> */}
+          </h3>
+          <Translate content="EIO.WaitForApp" />
+          
+          {/* <p>请等待白名单审核</p> */}
         </div>
       </div>
       </div>
