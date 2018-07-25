@@ -112,10 +112,22 @@ class MobileMenu extends React.Component {
               {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
               )}
+              {linkedAccounts.size === 0 && !currentAccount ? null : (
+                <li>
+                  <a onClick={this._onNavigate.bind(this, "/gateway")}>
+                    <Translate content="nav.gateway" />
+                  </a>
+                </li>
+              )}
               {/* {currentAccount && myAccounts.indexOf(currentAccount) !== -1 ? <li onClick={this.onClick}><Link to={"/deposit-withdraw/"}><Translate content="account.deposit_withdraw" /></Link></li> : null} */}
               <li>
                 <a onClick={this._onNavigate.bind(this, "/explorer")}>
                   <Translate content="header.explorer" />
+                </a>
+              </li>
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/eto/genesis-space")}>
+                  <Translate content="nav.eto" />
                 </a>
               </li>
               <li onClick={this.onClick}>
@@ -138,24 +150,32 @@ class MobileMenu extends React.Component {
   }
 }
 
-MobileMenu = connect(MobileMenu, {
-  listenTo() {
-    return [AccountStore, WalletUnlockStore, WalletManagerStore, SettingsStore];
-  },
-  getProps() {
-    const chainID = Apis.instance().chain_id;
-    return {
-      linkedAccounts: AccountStore.getState().linkedAccounts,
-      currentAccount: AccountStore.getState().currentAccount,
-      locked: WalletUnlockStore.getState().locked,
-      current_wallet: WalletManagerStore.getState().current_wallet,
-      lastMarket: SettingsStore.getState().viewSettings.get(
-        `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
-      ),
-      myAccounts: AccountStore.getMyAccounts()
-    };
+MobileMenu = connect(
+  MobileMenu,
+  {
+    listenTo() {
+      return [
+        AccountStore,
+        WalletUnlockStore,
+        WalletManagerStore,
+        SettingsStore
+      ];
+    },
+    getProps() {
+      const chainID = Apis.instance().chain_id;
+      return {
+        linkedAccounts: AccountStore.getState().linkedAccounts,
+        currentAccount: AccountStore.getState().currentAccount,
+        locked: WalletUnlockStore.getState().locked,
+        current_wallet: WalletManagerStore.getState().current_wallet,
+        lastMarket: SettingsStore.getState().viewSettings.get(
+          `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
+        ),
+        myAccounts: AccountStore.getMyAccounts()
+      };
+    }
   }
-});
+);
 
 export default class WidthWrapper extends React.Component {
   constructor() {

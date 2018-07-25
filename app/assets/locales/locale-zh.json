@@ -175,7 +175,27 @@
     "plan_time":"计划2018年11月，某知名交易所",
     "Genesis":"Genesis Space是首个ETO项目，额度小，海外市场火爆，史上首个基石轮公开的项目。Genesis Space有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性，且用RUST语言开发。一个侧链就是一个虚拟空间，每个虚拟空间可以有完全不同的治理机制，可实现无限的可能性",
     "Genesis2":"团队皆为国际名校毕业，如哈佛、哥伦比亚、伯克利、卡耐基梅隆。由以太坊核心开发者，以太坊黄皮书主要撰写者Christoph亲自指导",
-    "EoC": "ETH"
+    "EoC": "ETH",
+    "what_is_eto": "ETO是什么",
+    "why_eto": "ETO的优势",
+    "kyc_first": "预约众筹请先进行KYC认证",
+    "weixin": "关注公众号了解详情：cybexexchange",
+    "weixin_service_a": "赛贝CYBEX社区小助手A：CybexServiceA",
+    "weixin_service_b": "赛贝CYBEX社区小助手B：CybexServiceB",
+    "weixin_service_c": "赛贝CYBEX社区小助手C：CybexServiceC",
+    "eto_resume_one":
+      "ETO（Earlybirds Token Offering）是一个通过去中心化交易所帮助优秀区块链项目募资的方式。我们会帮助那些真正有价值，有技术和有规划的区块链项目在Cybex上进行代币发行。对于有潜力的项目而言，在最开始就应该引入社区的力量，帮助项目快速筹集到第一笔资金的同时也建立起最初的项目社区。我们觉得这才是对于行业有价值，对于未来发展有帮助的事情。",
+    "eto_resume_two":
+      "ETO是一种把项目融资有机的整合到项目发展中的全新尝试，让那些有志于参与到项目早期社区建设的投资者能够获得项目最初的参与份额，对于项目方能够在获得来自于社区的资金的同时快速建立和拓展项目社区，而Cybex将利用本身的资源和经验来挑选和赋能那些有潜力的项目，并且利用严格的管理流程来确保募资前后的项目资金管理。",
+    "feature_one_header": "对于那些希望参与项目早期的投资者",
+    "feature_one_content":
+      "将会和项目团队建立更加紧密的联系，而不仅仅是一个二级市场的投资者。这不是一个口号或者一个美好的愿望，每个投资者都必须身体力行的参与到项目社区的建设中，包括通过推广项目、根据项目的发展以及各种对于项目社区建立有帮助的各类活动。通过这些方式，能够帮助项目团队充分了解市场的需求，改善产品的设计。通过社区与项目团队的充分互动，及时提供反馈来帮助整个项目快速演进和迭代。",
+    "feature_two_header": "而对于项目方而言",
+    "feature_two_content":
+      "早期接受来自于社区的资金对于项目建立社区与共识是不二之选。从很多项目案例都可以看到，社区或者大量投资者的力量，是最能够帮助项目快速成长，实现从零到壹的突破。",
+    "feature_three_header": "对于募集到的数字货币",
+    "feature_three_content":
+      "Cybex将会提供第三方托管审计服务。所有的资金消费都可以在链上进行查询，从而让每个参与到项目的投资者都可以了解资金的使用情况。Cybex提供的是一套完整的软硬件的多签名托管审计服务，能够确保所有资金的安全使用，并且通过独家专利开发的硬件系统，能够对几乎所有的主流数字货币进行多签名管理，在技术上彻底保证资金管理流程的安全和规范。"
   },
   "tooltip": {
     "call_limit": "市场中最少抵押率头寸的平仓价",
@@ -577,7 +597,7 @@
       "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
     "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。",
     "vested": "锁定期资产",
-    "crowdfund": "众筹"
+    "crowdfund": "众筹项目记录"
   },
   "transfer": {
     "from": "来自",
@@ -1883,23 +1903,25 @@
     "label": "验证码",
     "click": "点击更新验证码"
   },
-  "ieo": {
+  "eto": {
     "crowd_project": "%(project)s 项目众筹",
     "amount_remain": "项目剩余额度：%(amount)s",
     "account_limit": "每账号限额：%(cap)s，最小认购单位：%(unit)s",
     "current_state": "您已认购额度：%(used)s, 剩余可认购额度：%(avail)s",
+    "closed_tip": "当前项目%(project)s众筹已结束,请谅解",
     "take_in": "参与众筹",
     "cybex_in":
       "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
     "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
-    "complete_tip":
-      "该项目众筹完成后，对应项目资产将于%(end_time)s发送至您的帐号(%(account)s)中",
+    "complete_tip_1": "该项目众筹完成后，对应项目资产将于格林尼治时间",
+    "complete_tip_2": "发送至您的帐号(%(account)s)中",
+    "local_time": "即本机时间",
     "int_times": "众筹参与金额需为最小认购单位的整数倍",
     "warning_overflow": "本次认购金额需小于剩余可认购额度",
     "overflow":
       "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
     "be_patient":
-      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexSerivceA",
+      "最终确认众筹参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexServiceA",
     "records": {
       "project_id": "项目名称",
       "block_num": "关联区块",
@@ -1909,5 +1931,56 @@
       "token_count": "Token数量",
       "no_data": "暂无IEO参与记录"
     }
+  },
+  "training": {
+    "step_title": "如果您需要参与Cybex的ETO项目<br>请先进行KYC认证和账号绑定",
+    "step_one": "打开ICOAPE的网站并进行邮箱注册。",
+    "step_two":
+      "在注册的邮箱里，您会收到一封验证邮件，点开验证链接进行登录。如果找不到验证邮件，也许它躲在垃圾邮件里。",
+    "step_three": "提交真实有效的个人KYC资料，请记得保存。个人信息均为必填项。",
+    "step_four":
+      "提交成功KYC资料后，我们会对您提交的资料进行审核。审核结果会在3-7个工作日内以邮件形式发送给您。",
+    "step_four_sp":
+      "注意：如果您的资料错误，请重新登录ICOAPE账号重新提交，我们会再次进行审核。",
+    "step_five":
+      "成功通过审核后，恭喜您到了关联Cybex账号的最后步骤了！！请先确保您已注册了一个Cybex账号，登录ICOAPE，并将Cybex账号填入关联账号处。",
+    "step_five_sp":
+      "同时，打开Cybex交易所<a href=\"https://dex.cybex.io/\" target=\"_blank\">https://dex.cybex.io/</a> 登录您的Cybex账号，在您的“账户名 – 活动记录”里将会收到一笔小额转账并附带一个验证码（verify code），将这个关键的verify code 填到ICOAPE的验证码处，就绑定成功啦！",
+    "step_six":
+      "登录您绑定KYC的Cybex账号，然后选择您想众筹的项目，点击预约。搓搓小手就可以等待项目审核通过然后众筹了哟～ ",
+    "step_six_sp":
+      "注意：部分项目可能会有众筹的地区限制，所以不同项目还需要在您申请“众筹预约”后再次审核，我们将在3-7个工作日内进行审核。通过审核且项目开始众筹后，您就可以开始众筹了～ ",
+    "step_six_sp_1":
+      "请注意众筹前保证您的cybex账号里已有您预约项目众筹接受的币种，且数额不小于该项目的最低众筹额度。同时，不同项目的众筹限额不同，众筹超过限额部分也是无法成功众筹的。"
+  },
+  "assets": {
+    "banner":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/ETObanner1-CN0717.jpg",
+    "eto_step_1":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-1.jpg",
+    "eto_step_2":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-2.jpg",
+    "eto_step_3":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-3.jpg",
+    "eto_step_4":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-4.jpg",
+    "eto_step_5":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-5.jpg",
+    "eto_step_6":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-6.jpg",
+    "eto_step_7":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-7.jpg",
+    "eto_step_8":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-8.jpg",
+    "eto_step_9":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-9.jpg",
+    "eto_step_10":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-10.jpg",
+    "eto_step_11":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-11.jpg",
+    "eto_step_12":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-12.jpg",
+    "eto_step_13":
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-13.jpg"
   }
 }

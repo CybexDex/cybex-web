@@ -1,0 +1,120 @@
+@import "./../layout/size";
+.main-body .training {
+  padding-top: 2em;
+  .title-container {
+    margin-top: unset;
+    height: unset;
+    padding-top: 4em;
+    padding: 2em;
+    text-align: justify;
+    text-align-last: center;
+    .trangle-holder.left {
+      top: -1.2em;
+    }
+    .trangle-holder.right {
+      bottom: 0;
+    }
+  }
+  .content .spectial {
+    padding-top: 1em;
+  }
+  .base-title {
+    height: unset;
+    padding: 0 2em;
+    font-size: 2.4em;
+  }
+}
+// Training
+@media screen and (max-width: $size-large) {
+  .main-body .training {
+    min-width: 100%;
+    padding: 2%;
+    * {
+      max-width: 100%;
+    }
+    .title-container {
+      margin-top: unset;
+    }
+    .base-title {
+      font-size: 1.6em;
+      text-align: center;
+      height: unset;
+    }
+    .gap {
+      display: none;
+    }
+    .trangle {
+      border-left-width: 20px;
+      border-right-width: 20px;
+      border-bottom-width: 40px;
+    }
+    &,
+    .container,
+    .container-large {
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+      width: 96%;
+      margin-top: 1em;
+      .Combined-Shape {
+        background-color: #0484cb;
+        padding: 1em;
+        height: unset;
+        .right-pointer,
+        .bottom-pointer {
+          display: none;
+        }
+        .content {
+          margin: auto;
+          width: 90%;
+          height: unset;
+          .spectial {
+            padding-top: 0em;
+          }
+        }
+        .steps {
+          text-align: center;
+        }
+        .step-info,
+        .content img {
+          position: static;
+          margin-left: unset;
+          transform: unset;
+          width: unset;
+          font-size: 1.2em;
+        }
+        .step-info {
+          margin-top: 1em;
+          text-align: center;
+          text-align-last: center;
+        }
+      }
+      height: unset;
+      .right-top,
+      .right-bottom,
+      .right-middle {
+        position: static;
+        height: unset;
+        width: 100%;
+        margin: auto;
+        img {
+          height: unset;
+        }
+        background-color: unset;
+      }
+
+      * {
+        height: unset;
+      }
+      .Combined-Shape {
+        float: unset;
+        &,
+        &.content {
+          width: 100%;
+        }
+      }
+
+      [class^="right"] {
+        border-top: 1px solid rgba(4, 13, 93, 0.4);
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import AltContainer from "alt-container";
 import Translate from "react-translate-component";
 import BindToChainState from "../Utility/BindToChainState";
@@ -73,7 +74,7 @@ class Footer extends React.Component {
                                 {version}
                             </span> */}
             <Translate
-              className="contact highlight link"
+              className="contact highlight link hide-for-small-only"
               content="nav.help"
               component="div"
               onClick={this.onHelp}

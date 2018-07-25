@@ -31,7 +31,7 @@ import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
-
+import { Club } from "components/StaticPages/Club";
 //React Table
 import ReactTable from "react-table";
 

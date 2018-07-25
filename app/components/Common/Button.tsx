@@ -2,6 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import Radium from "radium";
 import Colors from "./Colors";
+import classnames from "classnames";
 
 export type ButtonSize = "xsmall" | "normal" | "smaller" | "small" | "large";
 export type ButtonType =
@@ -16,9 +17,10 @@ export interface ButtonProps {
   disabled?: boolean;
   size?: ButtonSize;
   type?: ButtonType;
-  loading: boolean;
+  loading?: boolean;
   style?: React.CSSProperties;
   onClick?;
+  link?;
 }
 
 let Button = class extends React.Component<ButtonProps, any> {
@@ -58,6 +60,12 @@ let Button = class extends React.Component<ButtonProps, any> {
       },
       ":active": {
         background: Colors.$colorOrange
+      },
+      ":disabled": {
+        background: Colors.$colorGreyLightWhite,
+        cursor: "not-allowed",
+        color: Colors.$colorGreyLight,
+        opacity: "1"
       }
     },
     secondary: {
@@ -133,13 +141,35 @@ let Button = class extends React.Component<ButtonProps, any> {
     large: {
       fontSize: "16px",
       height: "56px"
+    },
+    lineHeight: {
+      small: {
+        lineHeight: "32px"
+      },
+      normal: {
+        lineHeight: "40px"
+      },
+      large: {
+        lineHeight: "56px"
+      }
     }
   };
 
   render() {
-    let { children, size, type, disabled, style, loading } = this.props;
+    let { children, size, type, disabled, style, loading, link } = this.props;
     let styles = Button.Styles;
-    return (
+    return link ? (
+      <a
+        href={link}
+        target="_blank"
+        {...this.props}
+        className={classnames(loading ? "loading" : "", disabled)}
+        style={[styles.base, styles[type], styles[size], styles.lineHeight[size], style] as any}
+        onClick={this.props.onClick ? this.props.onClick : () => void 0}
+      >
+        {children}
+      </a>
+    ) : (
       <button
         {...this.props}
         disabled={disabled}
@@ -154,5 +184,19 @@ let Button = class extends React.Component<ButtonProps, any> {
 };
 Button = Radium(Button);
 
-export { Button };
+let RouterButton = class extends React.PureComponent<ButtonProps> {
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
+  render() {
+    return (
+      <Button
+        {...this.props}
+        onClick={() => this.context.router.push(this.props.link)}
+      />
+    );
+  }
+};
+
+export { Button, RouterButton };
 export default Button;

@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
+import classnames from "classnames";
 
 class LoadingIndicator extends React.Component<
-  { type: "three-bounce" | "circle" | "progress"; loadingText? },
+  { type: "three-bounce" | "circle" | "progress"; loadingText?; className?, style? },
   { progress }
 > {
   // progress;
@@ -24,7 +25,7 @@ class LoadingIndicator extends React.Component<
         break;
       case "circle":
         return (
-          <div className="circle-wrapper">
+          <div className={classnames("circle-wrapper", this.props.className)} style={this.props.style}>
             <div className="circle1 circle" />
             <div className="circle2 circle" />
             <div className="circle3 circle" />

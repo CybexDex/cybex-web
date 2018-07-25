@@ -154,7 +154,7 @@ class EO extends React.Component<any, any> {
           <h2 className="base-title">
           | <Translate content="EIO.Popular_ETOs" />
           </h2>
-          <a href="https://www.icoape.com/" target="_blank">
+          <a href={__ICOAPE__} target="_blank">
           <div className="kyc-btn button primery-button">
           
             {/* <Translate content="EIO.KYC_Verification" /> */}

@@ -9,7 +9,7 @@ const {
 const Clean = require("clean-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
 const path = require("path");
-console.log("Webpack Config for Dev");
+console.log("Webpack Config for Prod");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const cssLoaders = [
@@ -74,8 +74,8 @@ const prodPlugins = plugins.concat([
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    filename: "[name].css",
-    chunkFilename: "[id].css"
+    filename: "[name]-[hash:7].css",
+    chunkFilename: "[id]-[hash:7].css"
   })
   // new webpack.LoaderOptionsPlugin({
   //   minimize: true,
