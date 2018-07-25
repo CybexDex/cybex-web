@@ -263,7 +263,14 @@ class EO extends React.Component<any, any> {
             <div className={`pin${(j==0&&i==0)?' special':''}`} key={i}>
             <div className="info-holder">
             <div className="top-holder">
-              <img src={e.adds_logo||logo_demo} width={100} height={100} />
+            {
+              lang=='zh'?(
+                <img src={e.adds_log||logo_demo} width={100} height={100} />
+              ):(
+                <img src={e.adds_logo__lang_en||logo_demo} width={100} height={100} />
+              )
+            }
+              
 
               <h3 className="title"><span className="main-title-large"
                  style={

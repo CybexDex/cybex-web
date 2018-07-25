@@ -512,6 +512,8 @@ formatTime(input){
       create_user_type,
       current_token_count,
       adds_website__lang_en,
+      adds_whitepaper,
+      adds_whitepaper__lang_en,
       whitepaper__lang_en,
       adds_detail__lang_en,
       token_name,
@@ -588,7 +590,7 @@ formatTime(input){
     
     // let remainStr = this.state.remainStr;
     return (
-      <div className="detail">
+      <div className={`detail ${lang}`}>
         <div className="left-part">
         
         {lang=='zh'?(
@@ -699,14 +701,14 @@ formatTime(input){
           
           {name?(<div className="info-item">
             <div className="info-title">
-              <Translate content="EIO.Project_Name" />: 
+              <Translate content="EIO.Project_Name" />
             </div>
             <div className="info-detail">{name}</div>
           </div>):null}
           
           {adds_token_total?(<div className="info-item">
             <div className="info-title">
-              <Translate content="EIO.Total_Token_Supply" />: 
+              <Translate content="EIO.Total_Token_Supply" /> 
             </div>
             <div className="info-detail">{numeral(adds_token_total).format('0,0.[0000000000]')}</div>
           </div>):null}
@@ -714,21 +716,21 @@ formatTime(input){
           
           {start_at?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.ETO_Period" />: 
+            <Translate content="EIO.ETO_Period" />
             </div>
             <div className="info-detail">{start_at}</div>
           </div>):null}
           
           {end_at?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.End_at" />: 
+            <Translate content="EIO.End_at" />
             </div>
             <div className="info-detail">{end_at}</div>
           </div>):null}
 
           {adds_on_market_time?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.Listing_Time" />: 
+            <Translate content="EIO.Listing_Time" />
             </div>
             <div className="info-detail">{adds_on_market_time}</div>
           </div>):null}
@@ -736,14 +738,14 @@ formatTime(input){
             lang=='zh'?(
               adds_advantage?(<div className="info-item">
                 <div className="info-title">
-                <Translate content="EIO.Project_Strengths" />: 
+                <Translate content="EIO.Project_Strengths" />
                 </div>
                 <div className="info-detail">{adds_advantage}</div>
               </div>):null
             ):(
               adds_advantage__lang_en?(<div className="info-item">
                 <div className="info-title">
-                <Translate content="EIO.Project_Strengths" />: 
+                <Translate content="EIO.Project_Strengths" />
                 </div>
                 <div className="info-detail">{adds_advantage__lang_en}</div>
               </div>):null
@@ -751,28 +753,28 @@ formatTime(input){
           }
           {offer_at?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.Token_Releasing_Time" />: 
+            <Translate content="EIO.Token_Releasing_Time" />
             </div>
             <div className="info-detail">{offer_at}</div>
           </div>):null}
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.ETO_Quota" />: 
+            <Translate content="EIO.ETO_Quota" />
             </div>
             <div className="info-detail">{base_token_count}{base_token_name}</div>
           </div>):null}
           
           {district_restriction?(<div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.District_Restriction" />: 
+            <Translate content="EIO.District_Restriction" />
             </div>
             <div className="info-detail">{district_restriction}</div>
           </div>):null}
           
           <div className="info-item">
             <div className="info-title">
-            <Translate content="EIO.ETO_token" />: 
+            <Translate content="EIO.ETO_token" />
             </div>
             <div className="info-detail">{
               base_token_name
@@ -787,7 +789,7 @@ formatTime(input){
             adds_website?(<div className="info-item">
             
               <div className="info-title">
-              <Translate content="EIO.Official_Website" />: 
+              <Translate content="EIO.Official_Website" />
               </div>
               <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
             </div>):null
@@ -795,25 +797,25 @@ formatTime(input){
             adds_website__lang_en?(<div className="info-item">
             
               <div className="info-title">
-              <Translate content="EIO.Official_Website" />: 
+              <Translate content="EIO.Official_Website" />
               </div>
               <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
             </div>):null
           )}
           {
             lang=='zh'?(
-              whitepaper?(<div className="info-item">
+              adds_whitepaper?(<div className="info-item">
                 <div className="info-title">
-                <Translate content="EIO.Whitepaper" />: 
+                <Translate content="EIO.Whitepaper" />
                 </div>
-                <div className="info-detail"><a href={whitepaper} target="_blank">{whitepaper}</a></div>
+                <div className="info-detail"><a href={adds_whitepaper} target="_blank">{adds_whitepaper}</a></div>
               </div>):null
             ):(
-              whitepaper__lang_en?(<div className="info-item">
+              adds_whitepaper__lang_en?(<div className="info-item">
                 <div className="info-title">
-                <Translate content="EIO.Whitepaper" />: 
+                <Translate content="EIO.Whitepaper" />
                 </div>
-                <div className="info-detail"><a href={whitepaper__lang_en} target="_blank">{whitepaper__lang_en}</a></div>
+                <div className="info-detail"><a href={adds_whitepaper__lang_en} target="_blank">{adds_whitepaper__lang_en}</a></div>
               </div>):null
             )
           }
@@ -821,14 +823,14 @@ formatTime(input){
             lang=='zh'?(
               adds_detail?(<div className="info-item">
                 <div className="info-title">
-                <Translate content="EIO.Project_Details" />: 
+                <Translate content="EIO.Project_Details" />
                 </div>
                 <div className="info-detail"><a href={adds_detail} target="_blank">{adds_detail}</a></div>
               </div>):null
             ):(
               adds_detail__lang_en?(<div className="info-item">
               <div className="info-title">
-              <Translate content="EIO.Project_Details" />: 
+              <Translate content="EIO.Project_Details" />
               </div>
               <div className="info-detail"><a href={adds_detail__lang_en} target="_blank">{adds_detail__lang_en}</a></div>
             </div>):null
