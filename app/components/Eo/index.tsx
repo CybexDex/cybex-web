@@ -18,6 +18,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
+import counterpart from 'counterpart';
 import moment from "moment";
 import * as humanize from "./humanize.js";
 import Swiper from 'react-id-swiper';
@@ -126,7 +127,7 @@ class EO extends React.Component<any, any> {
     // font-size: 14px;
     // line-height: 22px;
     // width: 200px;
-
+    let lang = counterpart.getLocale();
     return (
       <div>
         <div className="slider-holder">
@@ -195,10 +196,10 @@ class EO extends React.Component<any, any> {
         // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
         let remainStr;
         let projectStatus;
-
+        
         const shortEnglishHumanizer = humanize.humanizer({
-          language: 'shortEn',
-          units: ['mo', 'd', 'h', 'm'],
+          language: lang,
+          units: ['d', 'h', 'm'],
           unitMeasures: {
             y: 365 * 86400000,
             mo: 30 * 86400000,
@@ -210,13 +211,21 @@ class EO extends React.Component<any, any> {
           },
           round: true,
           languages: {
-            shortEn: {
+            zh: {
               y: function() { return '年' },
               mo: function() { return '月' },
               d: function() { return '天' },
               h: function() { return '小时' },
               m: function() { return '分钟' },
               s: function() { return '秒' }
+            },
+            en: {
+              y: function() { return 'Y' },
+              mo: function() { return 'M' },
+              d: function() { return 'D' },
+              h: function() { return 'H' },
+              m: function() { return 'M' },
+              s: function() { return 'S' }
             }
           }
         })
@@ -351,19 +360,19 @@ class EO extends React.Component<any, any> {
                 </div>
                 {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
                   // <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
-                  <p className="raised">当前完成认购: {e.current_base_token_count} {e.base_token_name}</p>
+                  <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
                 ):null}
                 <p className={`raised ${e.status}`}><Icon name="time" />
                 {e.status == 'ok'? (
-                  <span className={`sub-time ${e.status}`}> 剩余 </span>
+                  <span className={`sub-time ${e.status}`}> <Translate content="EIO.Time_remains" /> </span>
                 ):(
                   (e.status == 'pre')? (
-                    <span className={`sub-time ${e.status}`}> 距离开始 </span>
+                    <span className={`sub-time ${e.status}`}> <Translate content="EIO.In" /> </span>
                   ):(
                     e.status == 'finish'? (
-                      <span className={`sub-time ${e.status}`}> 完成时间 </span>
+                      <span className={`sub-time ${e.status}`}> <Translate content="EIO.Ended" /> </span>
                     ):(
-                      <span className={`sub-time ${e.status}`}> 完成时间 </span>
+                      <span className={`sub-time ${e.status}`}> <Translate content="EIO.Ended" /> </span>
                     )
                   )
                 )}
@@ -382,7 +391,7 @@ class EO extends React.Component<any, any> {
         )
       })}
       </div>
-        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>加载更多</div>
+        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}><Translate content="EIO.Load_more" /></div>
       </div>
     );
   }

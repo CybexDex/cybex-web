@@ -24,8 +24,6 @@ export class BaseModal extends React.Component {
     
     let timePassed = window.localStorage.getItem('timePassed');
     let timeNow = new Date().valueOf();
-    // console.log((timePassed - timeNow)/1000);
-    console.log((timeNow - timePassed)/1000)
     let countDown = -1;
     let _countDown = parseInt((timeNow - timePassed)/1000);
     
@@ -54,7 +52,6 @@ export class BaseModal extends React.Component {
     // }
   };
   componentDidMount(){
-    console.log(Trigger);
     
     // let countDown = (30 - timePassed) > -1 ? 30 - timePassed : -1;
     // this.state = {
@@ -138,7 +135,7 @@ export class BaseModal extends React.Component {
           <div className="flex-item flex-button-holder">
           {this.state.countDown<0?
             (
-              <div className="button primery-button" onClick={this.submits.bind(this)}>添加</div>
+              <div className="button primery-button" onClick={this.submits.bind(this)}><Translate content="EIO.Add" /></div>
             ):(
               <div className="button primery-button disabled">{`${this.state.countDown}秒后重试`}</div>
             )}

@@ -117,7 +117,14 @@
     "no_login": "Login",
     "End_at": "End at",
     "Hard_cap":"Hard Cap",
-    "Start_date": "Start date"
+    "Start_date": "Start date",
+    "Load_more": "Load more",
+    "man": "people",
+    "Not_login":"You haven't logged in",
+    "Stop_reserve":"Stop reserving",
+    "IHaveRead":"I have read and fully aware of and agree to these terms and conditions and the subsequent relevant amendments",
+    "ReserveSuccessful":"Reservation Succeeds!",
+    "WaitForApp":"Please wait for the Whitelist approval"
   },
   "static":{
     "Augu":"August 11th 11:00 (GMT +8, Singapore time)",
