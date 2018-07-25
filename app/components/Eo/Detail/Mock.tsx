@@ -24,7 +24,6 @@ import "./detail.scss";
 import "./mock.scss";
 import { TokenKind } from "graphql";
 import counterpart from "counterpart";
-let logo_demo = require("assets/img_demo_1.jpg");
 let time = require("assets/time.png");
 let zh = require(`assets/sb_zh.png`);
 let en = require(`assets/sb_en.png`);

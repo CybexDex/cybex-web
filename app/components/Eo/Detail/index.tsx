@@ -26,7 +26,7 @@ import "./mock.scss";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import LegalModal from "./LegalModal";
 import { TokenKind } from "graphql";
-let logo_demo = require('assets/img_demo_1.jpg');
+// let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
 
 class Detail extends React.Component<any, any> {
