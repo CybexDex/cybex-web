@@ -496,6 +496,7 @@ formatTime(input){
       end_at,
       adds_on_market_time,
       adds_advantage,
+      adds_advantage__lang_en,
       offer_at,
       base_token_count,
       district_restriction,
@@ -505,10 +506,14 @@ formatTime(input){
       adds_detail,
       current_percent,
       adds_banner,
+      adds_banner__lang_en,
       token,
       adds_keyword,
       create_user_type,
       current_token_count,
+      adds_website__lang_en,
+      whitepaper__lang_en,
+      adds_detail__lang_en,
       token_name,
       finish_at
     } = data;
@@ -585,7 +590,13 @@ formatTime(input){
     return (
       <div className="detail">
         <div className="left-part">
-        <img src={adds_banner} />
+        
+        {lang=='zh'?(
+          <img src={adds_banner} />
+        ):(
+          <img src={adds_banner__lang_en} />
+        )}
+        
         {percent?(<div className="info-item">
           <div className="percent">
             <div className={`percent-in ${status}`} style={{width: showPercent}}></div>
@@ -721,14 +732,23 @@ formatTime(input){
             </div>
             <div className="info-detail">{adds_on_market_time}</div>
           </div>):null}
-          
-          {adds_advantage?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Project_Strengths" />: 
-            </div>
-            <div className="info-detail">{adds_advantage}</div>
-          </div>):null}
-          
+          {
+            lang=='zh'?(
+              adds_advantage?(<div className="info-item">
+                <div className="info-title">
+                <Translate content="EIO.Project_Strengths" />: 
+                </div>
+                <div className="info-detail">{adds_advantage}</div>
+              </div>):null
+            ):(
+              adds_advantage__lang_en?(<div className="info-item">
+                <div className="info-title">
+                <Translate content="EIO.Project_Strengths" />: 
+                </div>
+                <div className="info-detail">{adds_advantage__lang_en}</div>
+              </div>):null
+            )
+          }
           {offer_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Token_Releasing_Time" />: 
@@ -763,27 +783,61 @@ formatTime(input){
               // })
             }</div>
           </div>
+          {lang=='zh'?(
+            adds_website?(<div className="info-item">
+            
+              <div className="info-title">
+              <Translate content="EIO.Official_Website" />: 
+              </div>
+              <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
+            </div>):null
+          ):(
+            adds_website__lang_en?(<div className="info-item">
+            
+              <div className="info-title">
+              <Translate content="EIO.Official_Website" />: 
+              </div>
+              <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
+            </div>):null
+          )}
+          {
+            lang=='zh'?(
+              whitepaper?(<div className="info-item">
+                <div className="info-title">
+                <Translate content="EIO.Whitepaper" />: 
+                </div>
+                <div className="info-detail"><a href={whitepaper} target="_blank">{whitepaper}</a></div>
+              </div>):null
+            ):(
+              whitepaper__lang_en?(<div className="info-item">
+                <div className="info-title">
+                <Translate content="EIO.Whitepaper" />: 
+                </div>
+                <div className="info-detail"><a href={whitepaper__lang_en} target="_blank">{whitepaper__lang_en}</a></div>
+              </div>):null
+            )
+          }
+          {
+            lang=='zh'?(
+              adds_detail?(<div className="info-item">
+                <div className="info-title">
+                <Translate content="EIO.Project_Details" />: 
+                </div>
+                <div className="info-detail"><a href={adds_detail} target="_blank">{adds_detail}</a></div>
+              </div>):null
+            ):(
+              adds_detail__lang_en?(<div className="info-item">
+              <div className="info-title">
+              <Translate content="EIO.Project_Details" />: 
+              </div>
+              <div className="info-detail"><a href={adds_detail__lang_en} target="_blank">{adds_detail__lang_en}</a></div>
+            </div>):null
+            )
+          }
+            
+            
           
-          {adds_website?(<div className="info-item">
           
-            <div className="info-title">
-            <Translate content="EIO.Official_Website" />: 
-            </div>
-            <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
-          </div>):null}
-          {whitepaper?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Whitepaper" />: 
-            </div>
-            <div className="info-detail"><a href={whitepaper} target="_blank">{whitepaper}</a></div>
-          </div>):null}
-          
-          {adds_detail?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Project_Details" />: 
-            </div>
-            <div className="info-detail"><a href={adds_detail} target="_blank">{adds_detail}</a></div>
-          </div>):null}
 
 
 

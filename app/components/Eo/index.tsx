@@ -301,7 +301,7 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_keyword}</h4>
+                }>{lang=='zh'?e.adds_keyword:e.adds_keyword__lang_en}</h4>
                 <p className="proj-desc" style={
                   {
                     overflow: 'hidden', 
@@ -310,7 +310,7 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_advantage}</p>
+                }>{lang=='zh'?e.adds_advantage:e.adds_advantage__lang_en}</p>
                 </div>
               ):(
                 // <div className={`keyword-holder ${e.status}`}>
@@ -322,7 +322,7 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_keyword}</h4>
+                }>{lang=='zh'?e.adds_keyword:e.adds_keyword__lang_en}</h4>
                 // </div>
               )}
               </div>
