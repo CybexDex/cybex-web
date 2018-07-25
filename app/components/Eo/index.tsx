@@ -18,6 +18,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
+import counterpart from 'counterpart';
 import moment from "moment";
 import * as humanize from "./humanize.js";
 import Swiper from 'react-id-swiper';
@@ -126,7 +127,7 @@ class EO extends React.Component<any, any> {
     // font-size: 14px;
     // line-height: 22px;
     // width: 200px;
-
+    let lang = counterpart.getLocale();
     return (
       <div>
         <div className="slider-holder">
@@ -153,7 +154,7 @@ class EO extends React.Component<any, any> {
           <h2 className="base-title">
           | <Translate content="EIO.Popular_ETOs" />
           </h2>
-          <a href="https://www.icoape.com/" target="_blank">
+          <a href={__ICOAPE__} target="_blank">
           <div className="kyc-btn button primery-button">
           
             {/* <Translate content="EIO.KYC_Verification" /> */}
@@ -195,10 +196,10 @@ class EO extends React.Component<any, any> {
         // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
         let remainStr;
         let projectStatus;
-
+        
         const shortEnglishHumanizer = humanize.humanizer({
-          language: 'shortEn',
-          units: ['mo', 'd', 'h', 'm'],
+          language: lang,
+          units: ['d', 'h', 'm'],
           unitMeasures: {
             y: 365 * 86400000,
             mo: 30 * 86400000,
@@ -210,13 +211,21 @@ class EO extends React.Component<any, any> {
           },
           round: true,
           languages: {
-            shortEn: {
+            zh: {
               y: function() { return '年' },
               mo: function() { return '月' },
               d: function() { return '天' },
               h: function() { return '小时' },
               m: function() { return '分钟' },
               s: function() { return '秒' }
+            },
+            en: {
+              y: function() { return 'Y' },
+              mo: function() { return 'M' },
+              d: function() { return 'D' },
+              h: function() { return 'H' },
+              m: function() { return 'M' },
+              s: function() { return 'S' }
             }
           }
         })
@@ -254,7 +263,14 @@ class EO extends React.Component<any, any> {
             <div className={`pin${(j==0&&i==0)?' special':''}`} key={i}>
             <div className="info-holder">
             <div className="top-holder">
-              <img src={e.adds_logo||logo_demo} width={100} height={100} />
+            {
+              lang=='zh'?(
+                <img src={e.adds_log||logo_demo} width={100} height={100} />
+              ):(
+                <img src={e.adds_logo__lang_en||logo_demo} width={100} height={100} />
+              )
+            }
+              
 
               <h3 className="title"><span className="main-title-large"
                  style={
@@ -292,7 +308,7 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_keyword}</h4>
+                }>{lang=='zh'?e.adds_keyword:e.adds_keyword__lang_en}</h4>
                 <p className="proj-desc" style={
                   {
                     overflow: 'hidden', 
@@ -301,7 +317,7 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_advantage}</p>
+                }>{lang=='zh'?e.adds_advantage:e.adds_advantage__lang_en}</p>
                 </div>
               ):(
                 // <div className={`keyword-holder ${e.status}`}>
@@ -313,7 +329,7 @@ class EO extends React.Component<any, any> {
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
                   }
-                }>{e.adds_keyword}</h4>
+                }>{lang=='zh'?e.adds_keyword:e.adds_keyword__lang_en}</h4>
                 // </div>
               )}
               </div>
@@ -351,19 +367,19 @@ class EO extends React.Component<any, any> {
                 </div>
                 {((j%2==0&&i%4==0)||(j%2==1&&i%4==2))?(
                   // <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
-                  <p className="raised">当前完成认购: {e.current_base_token_count} {e.base_token_name}</p>
+                  <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
                 ):null}
                 <p className={`raised ${e.status}`}><Icon name="time" />
                 {e.status == 'ok'? (
-                  <span className={`sub-time ${e.status}`}> 剩余 </span>
+                  <span className={`sub-time ${e.status}`}> <Translate content="EIO.Time_remains" /> </span>
                 ):(
                   (e.status == 'pre')? (
-                    <span className={`sub-time ${e.status}`}> 距离开始 </span>
+                    <span className={`sub-time ${e.status}`}> <Translate content="EIO.In" /> </span>
                   ):(
                     e.status == 'finish'? (
-                      <span className={`sub-time ${e.status}`}> 完成时间 </span>
+                      <span className={`sub-time ${e.status}`}> <Translate content="EIO.Ended" /> </span>
                     ):(
-                      <span className={`sub-time ${e.status}`}> 完成时间 </span>
+                      <span className={`sub-time ${e.status}`}> <Translate content="EIO.Ended" /> </span>
                     )
                   )
                 )}
@@ -382,7 +398,7 @@ class EO extends React.Component<any, any> {
         )
       })}
       </div>
-        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}>加载更多</div>
+        <div className="btn-coming-soon" style={{display: this.state.showMore}} onClick={this.addMore.bind(this)}><Translate content="EIO.Load_more" /></div>
       </div>
     );
   }
