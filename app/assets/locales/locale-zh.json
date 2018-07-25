@@ -158,15 +158,17 @@
     "Quota_Remaining": "每个账号限额",
     "participate": "参与ETO",
     "End_at": "结束时间",
-    "Hard_cap":"硬顶",
+    "Hard_cap": "硬顶",
     "Start_date": "开始日期"
   },
-  "static":{
-    "Augu":"8月11日11:00 (GMT +8, 新加坡时间）",
-    "billions":"20亿，每年增发5%",
-    "plan_time":"计划2018年11月，某知名交易所",
-    "Genesis":"Genesis Space是首个ETO项目，额度小，海外市场火爆，史上首个基石轮公开的项目。Genesis Space有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性，且用RUST语言开发。一个侧链就是一个虚拟空间，每个虚拟空间可以有完全不同的治理机制，可实现无限的可能性",
-    "Genesis2":"团队皆为国际名校毕业，如哈佛、哥伦比亚、伯克利、卡耐基梅隆。由以太坊核心开发者，以太坊黄皮书主要撰写者Christoph亲自指导",
+  "static": {
+    "Augu": "8月11日11:00 (GMT +8, 新加坡时间）",
+    "billions": "20亿，每年增发5%",
+    "plan_time": "计划2018年11月，某知名交易所",
+    "Genesis":
+      "Genesis Space是首个ETO项目，额度小，海外市场火爆，史上首个基石轮公开的项目。Genesis Space有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性，且用RUST语言开发。一个侧链就是一个虚拟空间，每个虚拟空间可以有完全不同的治理机制，可实现无限的可能性",
+    "Genesis2":
+      "团队皆为国际名校毕业，如哈佛、哥伦比亚、伯克利、卡耐基梅隆。由以太坊核心开发者，以太坊黄皮书主要撰写者Christoph亲自指导",
     "EoC": "ETH",
     "what_is_eto": "ETO是什么",
     "why_eto": "ETO的优势",
@@ -1904,7 +1906,7 @@
     "take_in": "参与众筹",
     "cybex_in":
       "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
-    "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
+    "confirm": "您将通过Cybex转账参与%(project)s项目的ETO众筹",
     "complete_tip_1": "该项目众筹完成后，对应项目资产将于格林尼治时间",
     "complete_tip_2": "发送至您的帐号(%(account)s)中",
     "local_time": "即本机时间",
@@ -1921,7 +1923,7 @@
       "ieo_status": "状态",
       "ieo_type": "操作类型",
       "token_count": "Token数量",
-      "no_data": "暂无IEO参与记录"
+      "no_data": "暂无ETO参与记录"
     }
   },
   "training": {
