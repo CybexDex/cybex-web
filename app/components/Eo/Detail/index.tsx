@@ -231,7 +231,7 @@ formatTime(input){
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
       res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
-      
+      res.result.lock_at = res.result.lock_at ? this.formatTime(res.result.lock_at) : null;
 
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       
@@ -526,7 +526,7 @@ formatTime(input){
       finish_at,
       adds_on_market_time__lang_en,
       base_hard_cap,
-      lock
+      lock_at
     } = data;
     let base_tokens = data.base_tokens ||[]
 
@@ -748,13 +748,13 @@ formatTime(input){
                 <div className="info-detail">{base_hard_cap}</div>
               </div>
             ) : null}
-          {lock ? (
+          {lock_at ? (
               <div className="info-item">
                 <div className="info-title">
                   <Translate content="EIO.Lock-up_Period" />
                 </div>
 
-                <div className="info-detail">{lock}</div>
+                <div className="info-detail">{lock_at}</div>
               </div>
             ) : null}
           {start_at?(<div className="info-item">
