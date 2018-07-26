@@ -7,11 +7,20 @@
       width: 60%;
       position: relative;
       box-sizing: border-box;
-      .info-title {
+      .info-title{
         text-align: justify;
+        width: 17%;
+        min-width: 100px;
       }
       .info-detail {
-        width: 80%;
+        // width: 80%;
+      }
+      .large-time{
+        .info-title{
+        	text-align: justify;
+        	width: auto;
+        	min-width: auto;
+        }
       }
     }
     .right-part {

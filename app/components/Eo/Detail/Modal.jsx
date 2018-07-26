@@ -15,7 +15,7 @@ import { connect } from "alt-react";
 import "./Modal.scss";
 import Translate from "react-translate-component";
 import * as fetchJson from "../service";
-
+import counterpart from 'counterpart';
 
 
 export class BaseModal extends React.Component {
@@ -24,8 +24,6 @@ export class BaseModal extends React.Component {
     
     let timePassed = window.localStorage.getItem('timePassed');
     let timeNow = new Date().valueOf();
-    // console.log((timePassed - timeNow)/1000);
-    console.log((timeNow - timePassed)/1000)
     let countDown = -1;
     let _countDown = parseInt((timeNow - timePassed)/1000);
     
@@ -54,7 +52,6 @@ export class BaseModal extends React.Component {
     // }
   };
   componentDidMount(){
-    console.log(Trigger);
     
     // let countDown = (30 - timePassed) > -1 ? 30 - timePassed : -1;
     // this.state = {
@@ -84,7 +81,7 @@ export class BaseModal extends React.Component {
     fetchJson.fetchCreatUser(data, (res)=>{
       if(res.code !== 0){
         this.setState({
-          errorMsg: res.result,
+          errorMsg: counterpart.getLocale() == 'zh'? res.result.zh: res.result.en,
           countDown: 30
         });
         window.localStorage.setItem('timePassed', new Date().valueOf());
@@ -108,6 +105,7 @@ export class BaseModal extends React.Component {
         // window.localStorage.setItem('timePassed', new Date().valueOf());
       },1000);
     }
+    let lang = counterpart.getLocale();
     // let { fade, overlay, noCloseBtn, overlayClose } = this.props;
     // let { fadeOut, isShow } = this.state;
     return (
@@ -123,13 +121,16 @@ export class BaseModal extends React.Component {
         <div className="modal-content">
         {/* <button className="cancel detail-modal-btn" onClick={this.cao}>Cancel</button> */}
           <div className="title-holder">
-            <h3>请添加邀请码</h3>
+            <h3>
+            <Translate content="EIO.PleaseEnterCode" />
+              {/* 请添加邀请码 */}
+            </h3>
             
           </div>
           {/* <div className="input-item"> */}
           <div className="flex-container">
           <div className="flex-item flex-input-holder">
-          <input type="text" className="enter-info" ref="codeInput" placeholder="请输入邀请码" defaultValue="" />
+          <input type="text" className="enter-info" ref="codeInput" placeholder={lang=="zh"?"请输入邀请码":"Please enter invitation code"} defaultValue="" />
           {this.state.errorMsg?(
             <icon className="icon icon-error"><p>!</p></icon>
           ):null}
@@ -138,9 +139,9 @@ export class BaseModal extends React.Component {
           <div className="flex-item flex-button-holder">
           {this.state.countDown<0?
             (
-              <div className="button primery-button" onClick={this.submits.bind(this)}>添加</div>
+              <div className="button primery-button" onClick={this.submits.bind(this)}><Translate content="EIO.Add" /></div>
             ):(
-              <div className="button primery-button disabled">{`${this.state.countDown}秒后重试`}</div>
+              <div className="button primery-button disabled">{`${this.state.countDown} sec`}</div>
             )}
           
           </div>
@@ -156,7 +157,10 @@ export class BaseModal extends React.Component {
           {/* <Button ButtonSize="xsmall" ButtonType="secondary">submit</Button> */}
         </div>
         <p className="error-msg-holder">{this.state.errorMsg}</p>
-        <p className="footer-msg">邀请码获取方式请联系小助手微信：CybexServiceA</p>
+        <p className="footer-msg">
+        <Translate content="EIO.helpTips" />
+        {/* 邀请码获取方式请联系小助手微信：CybexServiceA */}
+        </p>
       </div>
       
       <Trigger close={this.props.id}>

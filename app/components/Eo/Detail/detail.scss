@@ -66,8 +66,8 @@
 				background: transparent;
 				background-image: none;
 				color: #e7ac5f;
-				padding-left: 50px;
-				padding-right: 50px;
+				// padding-left: 50px;
+				// padding-right: 50px;
 			}
 		}
 	}
@@ -121,6 +121,8 @@
 		position: relative;
 		.info-title{
 			text-align: justify;
+			// width: 17%;
+			// min-width: 100px;
 		}
 		.info-detail{
 			width: 80%;
@@ -135,6 +137,11 @@
 			width: auto;
 			margin-right: 5px;
 		}
+		// .info-title{
+		// 	text-align: justify;
+		// 	width: auto;
+		// 	min-width: auto;
+		// }
 		.icon-time{
 			width: 22px;
 			height: 22px;

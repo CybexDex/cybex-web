@@ -117,7 +117,17 @@
     "no_login": "Login",
     "End_at": "End at",
     "Hard_cap":"Hard Cap",
-    "Start_date": "Start date"
+    "Start_date": "Start date",
+    "Load_more": "Load more",
+    "Add":"Confirm",
+    "man": "people",
+    "Not_login":"You haven't logged in",
+    "Stop_reserve":"Stop reserving",
+    "IHaveRead":"I have read and fully aware of and agree to these terms and conditions and the subsequent relevant amendments",
+    "ReserveSuccessful":"Reservation succeeded!",
+    "WaitForApp":"Please wait for the Whitelist approval",
+    "PleaseEnterCode":"Please enter invitation code",
+    "helpTips":"Contact official assistant to obtain invitation code. WeChat account: CybexServiceA"
   },
   "static":{
     "Augu":"August 11th 11:00 (GMT +8, Singapore time)",
