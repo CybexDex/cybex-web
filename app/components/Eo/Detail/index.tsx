@@ -231,7 +231,7 @@ formatTime(input){
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
       res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
-      
+      res.result.lock = res.result.lock ? this.formatTime(res.result.lock) : null;
 
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       
