@@ -809,7 +809,14 @@ formatTime(input){
             <Translate content="EIO.Token_Releasing_Time" />
             </div>
             <div className="info-detail">{offer_at}</div>
-          </div>):null}
+          </div>):(
+            <div className="info-item">
+              <div className="info-title">
+              <Translate content="EIO.Token_Releasing_Time" />
+              </div>
+              <div className="info-detail"><Translate content="EIO.Offer_any_time" /></div>
+            </div>
+          )}
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">

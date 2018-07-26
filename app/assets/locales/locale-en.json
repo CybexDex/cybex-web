@@ -75,7 +75,7 @@
     "Popular_ETOs": "Popular ETOs",
     "Coming Soon": "Coming Soon",
     "KYC_Verification": "KYC Verification",
-    "Accept_KYC_Verification": "Please make KYC certification for ETO.",
+    "Accept_KYC_Verification": "Please make KYC certification for ETO",
     "Join_in_ETO": "Join in ETO",
     "Details": "Details",
     "Reserve_ETO": "Reserve ETO",
@@ -127,7 +127,8 @@
     "ReserveSuccessful":"Reservation succeeded!",
     "WaitForApp":"Please wait for the Whitelist approval",
     "PleaseEnterCode":"Please enter invitation code",
-    "helpTips":"Contact official assistant to obtain invitation code. WeChat account: CybexServiceA"
+    "helpTips":"Contact official assistant to obtain invitation code. WeChat account: CybexServiceA",
+    "Offer_any_time": "Immediate Release"
   },
   "static":{
     "Augu":"August 11th 11:00 (GMT +8, Singapore time)",
