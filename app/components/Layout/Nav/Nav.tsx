@@ -34,7 +34,7 @@ interface NavLink {
 const NavLinks: Array<NavLink> = [
   {
     id: "eto",
-    routeTo: "/eto/genesis-space",
+    routeTo: "/eto",
     activeMatcher: /^\/eto/,
     name: "eto",
     icon: "ETO"

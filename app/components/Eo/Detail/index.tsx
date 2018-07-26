@@ -164,14 +164,16 @@ class Detail extends React.Component<any, any> {
                             className="legal-input"
                           />
                           <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                          <div className="button primery-button ok">
+                          
                           {this.state.canBeReserve?(
+                            <div className="button primery-button ok">
                             <Trigger open="ieo-detail-modal"><div><Translate content="EIO.Reserve_Now" /></div></Trigger>
+                            </div>
                           ):(
-                            <div><Translate content="EIO.Reserve_Now" /></div>
+                            <div className="button primery-button disabled"><Translate content="EIO.Reserve_Now" /></div>
                           )}
                             
-                          </div>
+                          
                         </div>
                         ):(
                           <div>
@@ -221,7 +223,8 @@ formatTime(input){
 
     fetchJson.fetchDetails(data,(res)=>{
       if(res.result.control !== 'online'){
-        alert('go-back')
+        console.log(this)
+        this.props.router.push('/eto')
       }
       res.result.end_at = this.formatTime(res.result.end_at);
       res.result.start_at = this.formatTime(res.result.start_at);
@@ -394,14 +397,16 @@ formatTime(input){
                             className="legal-input"
                           />
                           <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                          <div className="button primery-button ok">
+                          
                           {this.state.canBeReserve?(
+                            <div className="button primery-button ok">
                             <Trigger open="ieo-detail-modal"><div><Translate content="EIO.Reserve_Now" /></div></Trigger>
+                            </div>
                           ):(
-                            <div><Translate content="EIO.Reserve_Now" /></div>
+                            <div className="button primery-button disabled"><Translate content="EIO.Reserve_Now" /></div>
                           )}
                             
-                          </div>
+                          
                         </div>
                         ):(
                           <div>
@@ -415,7 +420,7 @@ formatTime(input){
                             <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
                               <Translate content="EIO.Reserve_Now" />
                             </div>):(
-                              <div className="button primery-button can-reserve">
+                              <div className="button primery-button disabled">
                               <Translate content="EIO.Reserve_Now" />
                             </div>
                             )}
@@ -491,6 +496,7 @@ formatTime(input){
       base_min_quota,
       rate,
       adds_token_total,
+      adds_token_total__lang_en,
       adds_ico_total,
       start_at,
       end_at,
@@ -517,7 +523,10 @@ formatTime(input){
       whitepaper__lang_en,
       adds_detail__lang_en,
       token_name,
-      finish_at
+      finish_at,
+      adds_on_market_time__lang_en,
+      base_hard_cap,
+      lock
     } = data;
     let base_tokens = data.base_tokens ||[]
 
@@ -620,17 +629,17 @@ formatTime(input){
           <div className="info-detail">{current_user_count} <Translate content="EIO.man" /></div>
         </div>):null}
         
-        {current_token_count?(<div className="info-item">
+        {current_base_token_count?(<div className="info-item">
           <div className="info-title">
             <span><Translate content="EIO.Raised" />: </span>
             {/* <Translate content="EIO.Raised" />: */}
           </div>
-          <div className="info-detail">{adds_token_total + current_token_count}{base_token_name}</div>
+          <div className="info-detail">{current_base_token_count}{base_token_name}</div>
           {/* <div className="info-detail">{current_base_token_count}{base_token_name}</div> */}
           {/* <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count}NES</p> */}
         </div>):null}
         
-        {base_tokens?(<div className="info-item">
+        {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
@@ -705,15 +714,47 @@ formatTime(input){
             </div>
             <div className="info-detail">{name}</div>
           </div>):null}
+          {token_name?(<div className="info-item">
+            <div className="info-title">
+              <Translate content="EIO.Token_Name" />
+            </div>
+            <div className="info-detail">{token_name}</div>
+          </div>):null}
           
-          {adds_token_total?(<div className="info-item">
+          {lang=='zh'?(
+            adds_token_total?(<div className="info-item">
             <div className="info-title">
               <Translate content="EIO.Total_Token_Supply" /> 
             </div>
-            <div className="info-detail">{numeral(adds_token_total).format('0,0.[0000000000]')}</div>
-          </div>):null}
+            <div className="info-detail">{adds_token_total}</div>
+          </div>):null
+          ):(
+            adds_token_total__lang_en?(<div className="info-item">
+            <div className="info-title">
+              <Translate content="EIO.Total_Token_Supply" /> 
+            </div>
+            <div className="info-detail">{adds_token_total__lang_en}</div>
+          </div>):null
+          )}
 
-          
+          {base_hard_cap ? (
+              <div className="info-item">
+                <div className="info-title">
+                  <Translate content="EIO.Hard_cap" />
+                </div>
+
+                <div className="info-detail">{base_hard_cap}</div>
+              </div>
+            ) : null}
+          {lock ? (
+              <div className="info-item">
+                <div className="info-title">
+                  <Translate content="EIO.Lock-up_Period" />
+                </div>
+
+                <div className="info-detail">{lock}</div>
+              </div>
+            ) : null}
           {start_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Period" />
@@ -727,13 +768,23 @@ formatTime(input){
             </div>
             <div className="info-detail">{end_at}</div>
           </div>):null}
-
-          {adds_on_market_time?(<div className="info-item">
+          {
+            lang=='zh'?(
+              adds_on_market_time?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.Listing_Time" />
             </div>
             <div className="info-detail">{adds_on_market_time}</div>
-          </div>):null}
+          </div>):null
+            ):(
+              adds_on_market_time__lang_en?(<div className="info-item">
+            <div className="info-title">
+            <Translate content="EIO.Listing_Time" />
+            </div>
+            <div className="info-detail">{adds_on_market_time__lang_en}</div>
+          </div>):null
+            )
+          }
           {
             lang=='zh'?(
               adds_advantage?(<div className="info-item">
@@ -785,6 +836,15 @@ formatTime(input){
               // })
             }</div>
           </div>
+          {rate?(<div className="info-item">
+          <div className="info-title">
+            <Translate content="EIO.Redeeming_Ratio" />
+          </div>
+          <div className="info-detail">
+            1 {base_token_name} = {rate} {token_name}
+            
+          </div>
+        </div>):null}
           {lang=='zh'?(
             adds_website?(<div className="info-item">
             
