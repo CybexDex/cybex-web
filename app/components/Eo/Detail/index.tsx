@@ -223,7 +223,8 @@ formatTime(input){
 
     fetchJson.fetchDetails(data,(res)=>{
       if(res.result.control !== 'online'){
-        this.props.history.push('/eto')
+        console.log(this)
+        this.props.router.push('/eto')
       }
       res.result.end_at = this.formatTime(res.result.end_at);
       res.result.start_at = this.formatTime(res.result.start_at);
