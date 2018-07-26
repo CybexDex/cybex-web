@@ -13,7 +13,14 @@
         min-width: 100px;
       }
       .info-detail {
-        width: 80%;
+        // width: 80%;
+      }
+      .large-time{
+        .info-title{
+        	text-align: justify;
+        	width: auto;
+        	min-width: auto;
+        }
       }
       .large-time{
         .info-title{
