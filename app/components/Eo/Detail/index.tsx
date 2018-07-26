@@ -656,12 +656,14 @@ formatTime(input){
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null} */}
         
-        {base_max_quota?(<div className="info-item">
+
+        {/*waiting for start*/}
+        {/* {base_max_quota?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_min_quota}-{base_max_quota} {base_token_name}</div>
-        </div>):null}
+        </div>):null} */}
         
         {remainStr?(<div className="info-item large-time">
           <div className="info-title">
@@ -755,7 +757,8 @@ formatTime(input){
                 <div className="info-detail">{lock}</div>
               </div>
             ) : null}
-          {start_at?(<div className="info-item">
+          {/*waiting for start*/}
+          {/* {start_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Period" />
             </div>
@@ -767,7 +770,7 @@ formatTime(input){
             <Translate content="EIO.End_at" />
             </div>
             <div className="info-detail">{end_at}</div>
-          </div>):null}
+          </div>):null} */}
           {
             lang=='zh'?(
               adds_on_market_time?(<div className="info-item">
