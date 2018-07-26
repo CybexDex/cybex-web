@@ -138,7 +138,12 @@ class EO extends React.Component<any, any> {
                 <div className="item">
                 <Link to={`/eto/detail/${e.id}`}>
                   <div className="img-content">
-                  <img src={`${e.adds_banner}`} width={1280} height={656} />
+                  {lang=='zh'?(
+                    <img src={`${e.adds_banner}`} width={1280} height={656} />
+                  ):(
+                    <img src={`${e.adds_banner__lang_en}`} width={1280} height={656} />
+                  )}
+                  
                   </div>
                 </Link>
                 </div>
@@ -265,7 +270,7 @@ class EO extends React.Component<any, any> {
             <div className="top-holder">
             {
               lang=='zh'?(
-                <img src={e.adds_log||logo_demo} width={100} height={100} />
+                <img src={e.adds_logo||logo_demo} width={100} height={100} />
               ):(
                 <img src={e.adds_logo__lang_en||logo_demo} width={100} height={100} />
               )
