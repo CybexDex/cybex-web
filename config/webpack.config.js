@@ -24,8 +24,12 @@ const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
   __TEST__: isTest,
   __STAGING__: isTestStaging,
-  __ICOAPE__: isTestStaging ? JSON.stringify("http://47.91.242.71:8083/") : JSON.stringify("https://www.icoape.com/"),
-  __BASE_URL__ : JSON.stringify("/")
+  __ICOAPE__: isTestStaging
+    ? JSON.stringify("https://www.icoape.com/")
+    : isTest
+      ? JSON.stringify("http://47.91.242.71:8083/")
+      : JSON.stringify("https://www.icoape.com/"),
+  __BASE_URL__: JSON.stringify("/")
 };
 
 var outputPath = path.join(BASE_URL, "assets");

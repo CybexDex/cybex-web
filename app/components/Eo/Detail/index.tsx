@@ -748,15 +748,7 @@ formatTime(input){
                 <div className="info-detail">{base_hard_cap}</div>
               </div>
             ) : null}
-          {lock_at ? (
-              <div className="info-item">
-                <div className="info-title">
-                  <Translate content="EIO.Lock-up_Period" />
-                </div>
-
-                <div className="info-detail">{lock_at}</div>
-              </div>
-            ) : null}
+          
           {start_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Period" />
@@ -770,6 +762,15 @@ formatTime(input){
             </div>
             <div className="info-detail">{end_at}</div>
           </div>):null}
+          {lock_at ? (
+              <div className="info-item">
+                <div className="info-title">
+                  <Translate content="EIO.Lock-up_Period" />
+                </div>
+
+                <div className="info-detail">{lock_at}</div>
+              </div>
+            ) : null}
           {
             lang=='zh'?(
               adds_on_market_time?(<div className="info-item">
