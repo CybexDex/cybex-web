@@ -523,7 +523,9 @@ formatTime(input){
       adds_detail__lang_en,
       token_name,
       finish_at,
-      adds_on_market_time__lang_en
+      adds_on_market_time__lang_en,
+      base_hard_cap,
+      lock
     } = data;
     let base_tokens = data.base_tokens ||[]
 
@@ -636,7 +638,7 @@ formatTime(input){
           {/* <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count}NES</p> */}
         </div>):null}
         
-        {base_tokens?(<div className="info-item">
+        {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
           </div>
@@ -711,6 +713,13 @@ formatTime(input){
             </div>
             <div className="info-detail">{name}</div>
           </div>):null}
+          {token_name?(<div className="info-item">
+            <div className="info-title">
+              <Translate content="EIO.Token_Name" />
+            </div>
+            <div className="info-detail">{token_name}</div>
+          </div>):null}
+          
           {lang=='zh'?(
             adds_token_total?(<div className="info-item">
             <div className="info-title">
@@ -727,7 +736,24 @@ formatTime(input){
           </div>):null
           )}
 
-          
+          {base_hard_cap ? (
+              <div className="info-item">
+                <div className="info-title">
+                  <Translate content="EIO.Hard_cap" />
+                </div>
+
+                <div className="info-detail">{base_hard_cap}</div>
+              </div>
+            ) : null}
+          {lock ? (
+              <div className="info-item">
+                <div className="info-title">
+                  <Translate content="EIO.Lock-up_Period" />
+                </div>
+
+                <div className="info-detail">{lock}</div>
+              </div>
+            ) : null}
           {start_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Period" />
@@ -809,6 +835,15 @@ formatTime(input){
               // })
             }</div>
           </div>
+          {rate?(<div className="info-item">
+          <div className="info-title">
+            <Translate content="EIO.Redeeming_Ratio" />
+          </div>
+          <div className="info-detail">
+            1 {base_token_name} = {rate} {token_name}
+            
+          </div>
+        </div>):null}
           {lang=='zh'?(
             adds_website?(<div className="info-item">
             

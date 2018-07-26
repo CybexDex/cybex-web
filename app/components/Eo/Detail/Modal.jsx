@@ -81,7 +81,7 @@ export class BaseModal extends React.Component {
     fetchJson.fetchCreatUser(data, (res)=>{
       if(res.code !== 0){
         this.setState({
-          errorMsg: counterpart.getLocale() == 'zh'? res.result: res.result__lang_en,
+          errorMsg: counterpart.getLocale() == 'zh'? res.result.zh: res.result.en,
           countDown: 30
         });
         window.localStorage.setItem('timePassed', new Date().valueOf());
