@@ -757,8 +757,7 @@ formatTime(input){
                 <div className="info-detail">{lock}</div>
               </div>
             ) : null}
-          {/*waiting for start*/}
-          {/* {start_at?(<div className="info-item">
+          {start_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Period" />
             </div>
@@ -770,7 +769,7 @@ formatTime(input){
             <Translate content="EIO.End_at" />
             </div>
             <div className="info-detail">{end_at}</div>
-          </div>):null} */}
+          </div>):null}
           {
             lang=='zh'?(
               adds_on_market_time?(<div className="info-item">
