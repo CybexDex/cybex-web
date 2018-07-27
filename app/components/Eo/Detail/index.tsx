@@ -231,7 +231,7 @@ formatTime(input){
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
       res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
-      
+      res.result.lock_at = res.result.lock_at ? this.formatTime(res.result.lock_at) : null;
 
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       
@@ -526,7 +526,7 @@ formatTime(input){
       finish_at,
       adds_on_market_time__lang_en,
       base_hard_cap,
-      lock
+      lock_at
     } = data;
     let base_tokens = data.base_tokens ||[]
 
@@ -656,12 +656,14 @@ formatTime(input){
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null} */}
         
-        {base_max_quota?(<div className="info-item">
+
+        {/*waiting for start*/}
+        {/* {base_max_quota?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Personal_Limit" />: 
           </div>
           <div className="info-detail">{base_min_quota}-{base_max_quota} {base_token_name}</div>
-        </div>):null}
+        </div>):null} */}
         
         {remainStr?(<div className="info-item large-time">
           <div className="info-title">
@@ -746,13 +748,13 @@ formatTime(input){
                 <div className="info-detail">{base_hard_cap}</div>
               </div>
             ) : null}
-          {lock ? (
+          {lock_at ? (
               <div className="info-item">
                 <div className="info-title">
                   <Translate content="EIO.Lock-up_Period" />
                 </div>
 
-                <div className="info-detail">{lock}</div>
+                <div className="info-detail">{lock_at}</div>
               </div>
             ) : null}
           {start_at?(<div className="info-item">
@@ -807,7 +809,14 @@ formatTime(input){
             <Translate content="EIO.Token_Releasing_Time" />
             </div>
             <div className="info-detail">{offer_at}</div>
-          </div>):null}
+          </div>):(
+            <div className="info-item">
+              <div className="info-title">
+              <Translate content="EIO.Token_Releasing_Time" />
+              </div>
+              <div className="info-detail"><Translate content="EIO.Offer_any_time" /></div>
+            </div>
+          )}
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">
