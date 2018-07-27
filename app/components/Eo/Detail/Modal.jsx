@@ -16,10 +16,13 @@ import "./Modal.scss";
 import Translate from "react-translate-component";
 import * as fetchJson from "../service";
 import counterpart from 'counterpart';
+import ChainTypes from "components/Utility/ChainTypes";
 
 
 export class BaseModal extends React.Component {
-
+  // static propTypes = {
+  //   currentAccount: ChainTypes.ChainAccount
+  // };
   constructor(props) {
     
     let timePassed = window.localStorage.getItem('timePassed');
@@ -52,7 +55,7 @@ export class BaseModal extends React.Component {
     // }
   };
   componentDidMount(){
-    
+    console.log(this);
     // let countDown = (30 - timePassed) > -1 ? 30 - timePassed : -1;
     // this.state = {
     //   fadeOut: false,
@@ -69,7 +72,7 @@ export class BaseModal extends React.Component {
   }
   submits() {
     this.sentdata({
-      user:this.props.accountsWithAuthState[0],
+      user: this.props.currentAccount,
       project: this.props.project,
       msg: {
         code: this.refs.codeInput.value
@@ -200,7 +203,8 @@ export default connect(BaseModal,{
       return {
         myAccounts: AccountStore.getMyAccounts(),
         accountsWithAuthState: AccountStore.getMyAccountsWithAuthState(),
-        isMyAccount: AccountStore.getState()
+        isMyAccount: AccountStore.getState(),
+        currentAccount: AccountStore.getState().currentAccount
       }
       // let assets = Map(),
       //   assetsList = List();
