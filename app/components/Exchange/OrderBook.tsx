@@ -167,7 +167,9 @@ let OrderBookRowVertical = class extends React.Component<
     );
     let yuanPrice = withYuan
       ? parseFloat(
-          (unitYuan * order.getPrice(order.sell_price, digits)).toFixed(digits - 3)
+          (unitYuan * order.getPrice(order.sell_price, digits)).toFixed(
+            digits - 3
+          )
         )
       : NaN;
     // console.debug("ORDER: ", total, order, order.totalToReceive());
@@ -601,7 +603,8 @@ let OrderBook = class extends React.Component<any, any> {
               if (!orderSet.has(orderPrice)) {
                 orderSet.set(orderPrice, order);
               } else {
-                orderSet.set(orderPrice, orderSet.get(orderPrice).sum(order));
+                let newOrder = orderSet.get(orderPrice).sum(order);
+                orderSet.set(orderPrice, newOrder);
               }
               return orderSet;
             }, new Map<string, LimitOrder>())

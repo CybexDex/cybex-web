@@ -61,7 +61,6 @@ export const $styleSelect = (type = "base") => ({
     };
   },
   option: (styles, state) => {
-    console.debug("State: ", state);
     let { data, isDisabled, isFocused, isSelected } = state;
     return {
       ...styles,
