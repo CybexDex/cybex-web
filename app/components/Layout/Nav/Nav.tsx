@@ -39,15 +39,14 @@ const NavLinks: Array<NavLink> = [
     name: "eto",
     icon: "ETO"
   },
-  // {
-  //   id: "account",
-  //   routeTo: accountName => `/account/${accountName}/dashboard`,
-  //   activeMatcher: /^\/account/,
-  //   name: "account",
-  //   icon: "wallet",
-  //   displayOnlyWhen: "currentAccount"
-  // },
-
+  {
+    id: "account",
+    routeTo: accountName => `/account/${accountName}/dashboard`,
+    activeMatcher: /^\/account/,
+    name: "account",
+    icon: "wallet",
+    displayOnlyWhen: "currentAccount"
+  },
   {
     id: "exchange",
     routeTo: lastMarket => `/market/${lastMarket}`,

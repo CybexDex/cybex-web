@@ -142,7 +142,7 @@ let EO = class extends React.Component<any, any> {
         </div>
         <div className="title-container">
           <h2 className="base-title">
-            | <Translate content="EIO.Popular_IEOs" />
+            | <Translate content="EIO.Popular_ETOs" />
           </h2>
           <Link to="/ieo/training">
             <div className="kyc-btn button primery-button">
@@ -313,9 +313,9 @@ let EO = class extends React.Component<any, any> {
                                 className={`button primery-button ${e.status}`}
                               >
                                 {e.status == "ok" ? (
-                                  <Translate content="EIO.Join_in_IEO" />
+                                  <Translate content="EIO.Join_in_ETO" />
                                 ) : e.status == "pre" ? (
-                                  <Translate content="EIO.Reserve_IEO" />
+                                  <Translate content="EIO.Reserve_ETO" />
                                 ) : e.status == "finish" ? (
                                   <Translate content="EIO.Details" />
                                 ) : (
