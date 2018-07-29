@@ -293,8 +293,6 @@ let App = class extends React.Component<any, any> {
     // Todo
     this.showBackupTip();
     this._rebuildTooltips();
-
-    
   }
 
   _onIgnoreIncognitoWarning() {
@@ -405,6 +403,7 @@ let App = class extends React.Component<any, any> {
           {/* <Nav isVertical={true} hideLabel={true} /> */}
           <div className="main-body">
             <Switch>
+              <Redirect from="*missing*" to="/dashboard" />
               <Route path="/dashboard" exact component={DashboardPage} />
 
               <Route path="/account/:account_name" component={AccountPage} />
@@ -447,7 +446,6 @@ let App = class extends React.Component<any, any> {
               <Route exact path="/help/:path1" component={Help} />
               <Route exact path="/help/:path1/:path2" component={Help} />
               <Route exact path="/help/:path1/:path2/:path3" component={Help} />
-              {/* <Route path="*" component={Page404} /> */}
               <Redirect from="/" to="/dashboard" />
             </Switch>
           </div>
