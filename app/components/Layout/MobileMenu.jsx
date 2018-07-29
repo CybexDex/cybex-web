@@ -90,7 +90,7 @@ class MobileMenu extends React.Component {
         <Translate content="header.exchange" />
       </a>
     ) : (
-      <a onClick={this._onNavigate.bind(this, "/explorer/markets")}>
+      <a onClick={this._onNavigate.bind(this, "/market/CYB_JADE.ETH")}>
         <Translate content="header.exchange" />
       </a>
     );
@@ -104,10 +104,10 @@ class MobileMenu extends React.Component {
           <section style={{ marginTop: "3rem" }} className="block-list">
             <ul>
               <li>{linkToAccountOrDashboard}</li>
-              <li onClick={this.onClick}>
-                <Link to="transfer">
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/transfer")}>
                   <Translate content="header.payments" />
-                </Link>
+                </a>
               </li>
               {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
@@ -130,10 +130,10 @@ class MobileMenu extends React.Component {
                   <Translate content="nav.eto" />
                 </a>
               </li>
-              <li onClick={this.onClick}>
-                <Link to="settings">
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/settings")}>
                   <Translate content="header.settings" />
-                </Link>
+                </a>
               </li>
             </ul>
           </section>
