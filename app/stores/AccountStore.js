@@ -539,7 +539,6 @@ class AccountStore extends BaseStore {
   }
 
   setCurrentAccount(name) {
-    console.debug("AccountName: ", name);
     if (this.state.passwordAccount) name = this.state.passwordAccount;
     const key = this._getStorageKey();
     if (!name) {

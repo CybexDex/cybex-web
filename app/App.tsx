@@ -56,7 +56,7 @@ const Gateway = Loadable({
   loading: LoadingIndicator
 });
 const Eto = Loadable({
-  loader: () => import(/* webpackChunkName: "gateway" */ "./components/Eo"),
+  loader: () => import(/* webpackChunkName: "ETO" */ "./components/Eo/index"),
   loading: LoadingIndicator
 });
 
