@@ -34,7 +34,7 @@ interface NavLink {
 const NavLinks: Array<NavLink> = [
   {
     id: "eto",
-    routeTo: "/eto",
+    routeTo: "/eto/detail/1025",
     activeMatcher: /^\/eto/,
     name: "eto",
     icon: "ETO"

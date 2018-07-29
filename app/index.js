@@ -2,11 +2,15 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 import AppInit from "./AppInit";
 
-// if (__PERFORMANCE_DEVTOOL__) {
-//   console.debug("DEVTOOL", "PERFORMANCE");
-//   const { registerObserver } = require("react-perf-devtool");
-//   registerObserver();
-// }
+if (__PERFORMANCE_DEVTOOL__) {
+  console.debug("DEVTOOL", "PERFORMANCE");
+  const { registerObserver } = require("react-perf-devtool");
+  registerObserver();
+} else {
+  console.debug = () => null;
+
+}
+
 (function initApp() {
   const rootEl = document.getElementById("content");
   const render = () => {

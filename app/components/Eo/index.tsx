@@ -125,7 +125,7 @@ let EO = class extends React.Component<any, any> {
               return (
                 <div key={i}>
                   <div className="item">
-                    <Link to={`/ieo/detail/${e.id}`}>
+                    <Link to={`/eto/detail/${e.id}`}>
                       <div className="img-content">
                         <img
                           src={`${e.adds_banner}`}
@@ -144,7 +144,7 @@ let EO = class extends React.Component<any, any> {
           <h2 className="base-title">
             | <Translate content="EIO.Popular_ETOs" />
           </h2>
-          <Link to="/ieo/training">
+          <Link to="/eto/training">
             <div className="kyc-btn button primery-button">
               <Translate content="EIO.Accept_KYC_Verification" />
             </div>
@@ -308,7 +308,7 @@ let EO = class extends React.Component<any, any> {
                         </div>
                         <div className="bottom-holder">
                           {!!e && (
-                            <Link to={`/ieo/detail/${e.id}`}>
+                            <Link to={`/eto/detail/${e.id}`}>
                               <div
                                 className={`button primery-button ${e.status}`}
                               >
