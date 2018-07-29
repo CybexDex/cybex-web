@@ -1,10 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-// import { Provider } from 'react-redux';
-// import configureStore from './configureStore.js';
-// import EOComponent from './Eo';
-// import EoStore from "stores/EoStore";
-// const store = configureStore();
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
 import { Link } from "react-router-dom"; 

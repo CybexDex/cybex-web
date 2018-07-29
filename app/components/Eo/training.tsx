@@ -1,10 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-// import { Provider } from 'react-redux';
-// import configureStore from './configureStore.js';
-// import EOComponent from './Eo';
-// import EoStore from "stores/EoStore";
-// const store = configureStore();
 import { Link } from "react-router-dom"; 
 import './training.scss';
 import Translate from "react-translate-component";
