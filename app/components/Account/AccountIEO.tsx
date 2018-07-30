@@ -34,8 +34,9 @@ const ReasonsType = {
 
 let AccountIEO = class extends React.Component<{ account }, {}> {
 
-  componentDidMount() {
-    ReactTooltip.rebuild();
+
+  componentDidUpdate() {
+    ReactTooltip.rebuild();    
   }
 
   render() {
@@ -88,7 +89,7 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                       accessor: (d: ETO.IEORecord) => d.update_at,
                       id: "update_at",
                       Cell: row => (
-                        <DateTime dateTime={row.original.update_at}/>
+                        <DateTime id={row.original.id} dateTime={row.original.update_at}/>
                       )
                     },
                     {
