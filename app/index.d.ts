@@ -8,6 +8,7 @@ declare namespace ETO {
   type IEORecord = {
     token: string;
     project_id: string;
+    project_name: string;
     block_num: number;
     memo?: string;
     user_id: string;
