@@ -24,8 +24,10 @@ const defines = {
   __TEST__: isTest || isTestStaging,
   __STAGING__: isTestStaging,
   __ICOAPE__: isTestStaging
-    ? JSON.stringify("http://47.91.242.71:8083/")
-    : JSON.stringify("https://www.icoape.com/"),
+    ? JSON.stringify("https://www.icoape.com/")
+    : isTest
+      ? JSON.stringify("http://47.91.242.71:8083/")
+      : JSON.stringify("https://www.icoape.com/"),
   __BASE_URL__: JSON.stringify("/")
 };
 
