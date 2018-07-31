@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import Panel from "react-foundation-apps/src/panel";
 import Trigger from "react-foundation-apps/src/trigger";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Translate from "react-translate-component";
 import AccountStore from "stores/AccountStore";
@@ -28,7 +28,7 @@ class MobileMenu extends React.Component {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.context.router.push(route);
+    this.context.router.history.push(route);
     ZfApi.publish("mobile-menu", "close");
   }
 
@@ -90,7 +90,7 @@ class MobileMenu extends React.Component {
         <Translate content="header.exchange" />
       </a>
     ) : (
-      <a onClick={this._onNavigate.bind(this, "/explorer/markets")}>
+      <a onClick={this._onNavigate.bind(this, "/market/CYB_JADE.ETH")}>
         <Translate content="header.exchange" />
       </a>
     );
@@ -104,10 +104,10 @@ class MobileMenu extends React.Component {
           <section style={{ marginTop: "3rem" }} className="block-list">
             <ul>
               <li>{linkToAccountOrDashboard}</li>
-              <li onClick={this.onClick}>
-                <Link to="transfer">
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/transfer")}>
                   <Translate content="header.payments" />
-                </Link>
+                </a>
               </li>
               {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
@@ -126,14 +126,14 @@ class MobileMenu extends React.Component {
                 </a>
               </li>
               <li>
-                <a onClick={this._onNavigate.bind(this, "/eto/genesis-space")}>
+                <a onClick={this._onNavigate.bind(this, "/eto/detail/1025")}>
                   <Translate content="nav.eto" />
                 </a>
               </li>
-              <li onClick={this.onClick}>
-                <Link to="settings">
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/settings")}>
                   <Translate content="header.settings" />
-                </Link>
+                </a>
               </li>
             </ul>
           </section>

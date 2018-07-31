@@ -82,7 +82,7 @@ let Join = class extends React.Component<
 
   updateProject = () => {
     let data = {
-      project: this.props.params.id,
+      project: this.props.match.params.id,
       cybex_name: this.props.currentAccount.get("name")
     };
     Promise.all([

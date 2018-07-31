@@ -481,7 +481,7 @@ let MyMarkets = class extends React.Component<any, any> {
   }
 
   _goMarkets() {
-    this.context.router.push("/markets");
+    this.context.router.history.push("/markets");
   }
 
   _changeTab(tab) {

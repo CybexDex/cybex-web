@@ -1,7 +1,7 @@
 import * as React from "react";
 import Radium from "radium";
 import { Button } from "components/Common";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 
 export let CreateSwitcher = Radium(
@@ -9,17 +9,21 @@ export let CreateSwitcher = Radium(
     render() {
       let { mode, style } = this.props;
       return (
-        <Button size="xsmall" type="white-primary" style={style}>
+        <div style={style}>
           {mode === 1 ? (
             <Link to="/create-account/password">
-              <Translate content="login.switch_to_cloud" />
+              <Button size="xsmall" type="white-primary">
+                <Translate content="login.switch_to_cloud" />
+              </Button>
             </Link>
           ) : (
             <Link to="/create-account/wallet">
-              <Translate content="login.switch_to_local" />
+              <Button size="xsmall" type="white-primary">
+                <Translate content="login.switch_to_local" />
+              </Button>
             </Link>
           )}
-        </Button>
+        </>
       );
     }
   }

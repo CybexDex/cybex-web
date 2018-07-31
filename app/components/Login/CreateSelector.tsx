@@ -1,11 +1,13 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import RestoreWallet from "components/Account/RestoreWallet";
 import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { LeftSlide } from "components/Common/LeftSlide";
+import LoadingIndicator from "components/LoadingIndicator";
+import Loadable from "react-loadable";
 import {
   Input,
   Button,
@@ -31,6 +33,12 @@ import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
 import { LoginSelector } from "components/Login/LoginSelector";
 import { CreateSwitcher } from "components/Login/CreateSwitcher";
+
+import { Route, Switch } from "react-router-dom";
+
+import { CreateAccountPassword } from "components/Account/CreateAccountPassword";
+import CreateAccount from "components/Account/CreateAccount";
+
 export const WalletInfo = Radium(
   class extends React.PureComponent<{ mode; withSwitcher?; style? }, any> {
     static defaultProps = {
@@ -139,7 +147,7 @@ export const WalletInfo = Radium(
   }
 );
 
-export default class CreateSelector extends React.Component<any, { mode }> {
+export class CreateSelector extends React.Component<any, { mode }> {
   constructor(props) {
     super(props);
     this.state = {
@@ -168,7 +176,7 @@ export default class CreateSelector extends React.Component<any, { mode }> {
   };
 
   onSelect(route) {
-    this.props.router.push("/create-account/" + route);
+    this.props.history.push("/create-account/" + route);
   }
 
   switchMode = () => {
@@ -220,7 +228,7 @@ export default class CreateSelector extends React.Component<any, { mode }> {
                   type="primary"
                   onClick={() => {
                     this.onSelect.bind(this, "wallet");
-                    this.props.router.push("/create-account/wallet");
+                    this.props.history.push("/create-account/wallet");
                   }}
                   style={{ width: "100%" }}
                 >
@@ -263,7 +271,7 @@ export default class CreateSelector extends React.Component<any, { mode }> {
                   type="primary"
                   onClick={() => {
                     this.onSelect.bind(this, "password");
-                    this.props.router.push("/create-account/password");
+                    this.props.history.push("/create-account/password");
                   }}
                   style={{ width: "100%" }}
                 >
@@ -296,3 +304,18 @@ export default class CreateSelector extends React.Component<any, { mode }> {
     );
   }
 }
+
+export const CreateWrapper = () => {
+  return (
+    <Switch>
+      <Route path="/create-account" exact component={CreateSelector} />
+      <Route
+        path="/create-account/password"
+        component={CreateAccountPassword}
+      />
+      <Route path="/create-account/wallet" component={CreateAccount} />
+    </Switch>
+  );
+};
+
+export default CreateWrapper;

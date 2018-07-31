@@ -7,7 +7,7 @@ import * as PropTypes from "prop-types";
 // const store = configureStore();
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
-import { Link } from "react-router"; 
+import { Link } from "react-router-dom"; 
 import DetalModal from "./Modal.jsx";
 import AlertModal from './AlertModal.jsx';
 import Trigger from "react-foundation-apps/src/trigger";
@@ -28,7 +28,7 @@ import counterpart from 'counterpart';
 import LegalModal from "./LegalModal";
 import LegalModalEn from "./LegalModalEn";
 import { TokenKind } from "graphql";
-let logo_demo = require('assets/img_demo_1.jpg');
+// let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
 
 class Detail extends React.Component<any, any> {
@@ -43,7 +43,7 @@ class Detail extends React.Component<any, any> {
     }
   }
   reserve(){
-    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
+    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.match.params.id,create:1}, (res2) => {
       switch(res2.result.status){
         case 'ok':
               this.setState({reserve_status:()=>{
@@ -218,7 +218,7 @@ formatTime(input){
 }
   componentDidMount(){
     let data = {
-      project: this.props.params.id
+      project: this.props.match.params.id
     }
 
     fetchJson.fetchDetails(data,(res)=>{
@@ -231,7 +231,7 @@ formatTime(input){
       res.result.created_at = this.formatTime(res.result.created_at);
       res.result.finish_at = this.formatTime(res.result.finish_at);
       res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
-      
+      res.result.lock_at = res.result.lock_at ? this.formatTime(res.result.lock_at) : null;
 
       // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
       
@@ -271,7 +271,7 @@ formatTime(input){
           )
         }});
       }else{
-        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.params.id}, (res2)=>{
+        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.match.params.id}, (res2)=>{
           switch(res2.result.status){
             case 'ok':
               this.setState({reserve_status:()=>{
@@ -526,7 +526,7 @@ formatTime(input){
       finish_at,
       adds_on_market_time__lang_en,
       base_hard_cap,
-      lock
+      lock_at
     } = data;
     let base_tokens = data.base_tokens ||[]
 
@@ -748,13 +748,13 @@ formatTime(input){
                 <div className="info-detail">{base_hard_cap}</div>
               </div>
             ) : null}
-          {lock ? (
+          {lock_at ? (
               <div className="info-item">
                 <div className="info-title">
                   <Translate content="EIO.Lock-up_Period" />
                 </div>
 
-                <div className="info-detail">{lock}</div>
+                <div className="info-detail">{lock_at}</div>
               </div>
             ) : null}
           {start_at?(<div className="info-item">
@@ -809,7 +809,14 @@ formatTime(input){
             <Translate content="EIO.Token_Releasing_Time" />
             </div>
             <div className="info-detail">{offer_at}</div>
-          </div>):null}
+          </div>):(
+            <div className="info-item">
+              <div className="info-title">
+              <Translate content="EIO.Token_Releasing_Time" />
+              </div>
+              <div className="info-detail"><Translate content="EIO.Offer_any_time" /></div>
+            </div>
+          )}
           
           {base_token_count?(<div className="info-item">
             <div className="info-title">
@@ -943,7 +950,7 @@ formatTime(input){
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              // <Link to={`/eto/join/${this.props.params.id}`}>
+              // <Link to={`/eto/join/${this.props.match.params.id}`}>
               <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>
@@ -963,9 +970,9 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showModal}>
+          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showModal}>
           </DetalModal>
-          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showAlertModal}>
+          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showAlertModal}>
           </AlertModal>
           {lang=='zh'?(
             <LegalModal id="ieo-legal-modal">

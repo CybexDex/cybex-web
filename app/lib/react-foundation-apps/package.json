@@ -56,7 +56,7 @@
     "react-hot-loader": "^1.2.3",
     "react-layer-mixin": "*",
     "react-responsive-mixin": "^0.3.*",
-    "react-router": ">=0.12",
+    "react-router-dom": ">=0.12",
     "run-sequence": "^1.0.2",
     "style-loader": "^0.8.2",
     "webpack": "^1.4.13",

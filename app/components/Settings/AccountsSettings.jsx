@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
 import { connect } from "alt-react";

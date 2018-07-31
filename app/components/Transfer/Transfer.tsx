@@ -28,7 +28,7 @@ class Transfer extends React.Component<any, any> {
   constructor(props) {
     super(props);
     let initState: { [s: string]: any } = Transfer.getInitialState();
-    let { query } = this.props.location;
+    let { params: query } = this.props.match;
     if (query.from) {
       initState.from_name = query.from;
       ChainStore.getAccount(query.from);
@@ -147,7 +147,8 @@ class Transfer extends React.Component<any, any> {
   }
 
   _checkFeeStatus(account = this.state.from_account) {
-    if (!account) return;
+    console.debug("CheckFeeStatue: ", account);
+    if (!account || !account.get) return;
 
     const assets = Object.keys(account.get("balances").toJS()).sort(
       utils.sortID
@@ -225,6 +226,7 @@ class Transfer extends React.Component<any, any> {
   }
 
   onFromAccountChanged(from_account) {
+    console.debug("FromAccountChanged: ", from_account);
     this.setState({ from_account, error: null }, () => {
       this._updateFee();
       this._checkFeeStatus();

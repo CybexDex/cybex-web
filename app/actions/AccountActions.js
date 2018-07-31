@@ -37,6 +37,7 @@ class AccountActions {
    *  TODO:  The concept of current accounts is deprecated and needs to be removed
    */
   setCurrentAccount(name) {
+    console.debug("Account: ", name);
     return name;
   }
 

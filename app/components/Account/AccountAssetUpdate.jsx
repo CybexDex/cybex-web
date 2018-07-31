@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
 import classnames from "classnames";
 import AssetActions from "actions/AssetActions";
@@ -21,6 +22,7 @@ import { Tabs, Tab } from "../Utility/Tabs";
 import { BitAssetOptions } from "./AccountAssetCreate";
 import assetConstants from "chain/asset_constants";
 import AssetWhitelist from "./AssetWhitelist";
+import { withRouter } from "react-router-dom";
 
 let GRAPHENE_MAX_SHARE_SUPPLY = new big(
   assetConstants.GRAPHENE_MAX_SHARE_SUPPLY
@@ -1214,9 +1216,9 @@ AccountAssetUpdate = BindToChainState(AccountAssetUpdate);
 
 class AssetUpdateWrapper extends React.Component {
   render() {
-    let asset = this.props.params.asset;
+    let asset = this.props.match.params.asset;
     return <AccountAssetUpdate asset={asset} {...this.props} />;
   }
 }
 
-export default AssetUpdateWrapper;
+export default withRouter(AssetUpdateWrapper);

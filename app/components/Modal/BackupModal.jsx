@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import BaseModal from "../Modal/BaseModal";
 import Trigger from "react-foundation-apps/src/trigger";
 import utils from "common/utils";
