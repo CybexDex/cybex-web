@@ -5,9 +5,24 @@ declare const __DEV__;
 declare const __GATEWAY_URL__;
 declare const __ICOAPE__;
 declare namespace ETO {
-  type IEORecord = {
+  type AccountStatus = {
+    base_received: number;
+    base_received_invalid: number;
+    base_received_invalid_other: number;
+    delay: number;
+    fail: number;
+    freezing: number;
+    project_id: string;
+    sent: number;
+    stop: number;
+    user_id: string;
+    verify: number;
+  };
+
+  type Record = {
     token: string;
     project_id: string;
+    project_name: string;
     block_num: number;
     memo?: string;
     user_id: string;
@@ -20,7 +35,7 @@ declare namespace ETO {
     token_count: number;
     reason: string;
   };
-  
+
   type Optional = string | number | null;
 
   type EtoBase = {
@@ -58,7 +73,7 @@ declare namespace ETO {
     score: 0;
     control: string;
     banner: 0;
-    is_user_in: "1" ;
+    is_user_in: "1";
     _id: string;
     project: string;
     timestamp: string;

@@ -4,8 +4,10 @@ const {
   plugins,
   BASE_URL,
   outputPath,
-  defines
+  defines,
+  externals
 } = require("./webpack.config");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 console.log("Webpack Config for Dev");
 const webpack = require("webpack");
@@ -65,6 +67,10 @@ const def = {
 };
 console.log("DEF: ", def);
 const devPlugins = [
+  new HtmlWebpackPlugin({
+    filename: "index.html",
+    template: path.resolve(BASE_URL, "app/assets/index-dev.html")
+  }),
   new webpack.DefinePlugin(def),
   new webpack.HotModuleReplacementPlugin()
 ].concat(plugins);
@@ -83,6 +89,7 @@ const config = {
     publicPath: "/",
     path: outputPath,
     filename: "[name]-[hash:7].js",
+    chunkFilename: "[name]-[chunkhash:7].js",
     pathinfo: true,
     sourceMapFilename: "[name].js.map"
   },
@@ -94,6 +101,7 @@ const config = {
   node: {
     fs: "empty"
   },
+  externals,
   resolve,
   plugins: devPlugins,
   optimization: {}

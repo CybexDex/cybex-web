@@ -1,10 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-// import { Provider } from 'react-redux';
-// import configureStore from './configureStore.js';
-// import EOComponent from './Eo';
-// import EoStore from "stores/EoStore";
-// const store = configureStore();
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
 import { Link } from "react-router-dom"; 
@@ -291,6 +286,7 @@ fetchDatas(){
               }else if(res.result.status == 'pre'){
                 return(
                   <div>
+
                     <input
                       type="checkbox"
                       checked={true}
@@ -301,6 +297,7 @@ fetchDatas(){
                   <div className="button primery-button disabled pre">
                   <Translate content="EIO.Wait_for_ETO" />
                     {/* 等待众筹开始 */}
+
                   </div>
                   </div>
                 )
@@ -462,7 +459,7 @@ fetchDatas(){
     
     window.cao = setInterval(()=>{
       this.fetchDatas();
-    },1000)
+    },3000)
   }
 
   public openModal = () => {
@@ -751,15 +748,7 @@ fetchDatas(){
                 <div className="info-detail">{base_hard_cap}</div>
               </div>
             ) : null}
-          {lock_at ? (
-              <div className="info-item">
-                <div className="info-title">
-                  <Translate content="EIO.Lock-up_Period" />
-                </div>
-
-                <div className="info-detail">{lock_at}</div>
-              </div>
-            ) : null}
+          
           {start_at?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Period" />
@@ -773,6 +762,15 @@ fetchDatas(){
             </div>
             <div className="info-detail">{end_at}</div>
           </div>):null}
+          {lock_at ? (
+              <div className="info-item">
+                <div className="info-title">
+                  <Translate content="EIO.Lock-up_Period" />
+                </div>
+
+                <div className="info-detail">{lock_at}</div>
+              </div>
+            ) : null}
           {
             lang=='zh'?(
               adds_on_market_time?(<div className="info-item">
@@ -920,7 +918,7 @@ fetchDatas(){
           {/* {create_user_type?(
             <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
           ):null} */}
-          <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
+          {/* <Trigger open="ieo-detail-modal"><div>123</div></Trigger> */}
           
           {
             (status == 'ok'||status == 'pre') ? (
@@ -998,6 +996,7 @@ fetchDatas(){
   getProps(props) {
     return {
       myAccounts: AccountStore.getMyAccounts(),
+      currentAccount: AccountStore.getState().currentAccount,
       accountsWithAuthState: AccountStore.getMyAccountsWithAuthState(),
       isMyAccount: AccountStore.getState(),
       currentAccount: AccountStore.getState().currentAccount

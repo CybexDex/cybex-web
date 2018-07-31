@@ -24,7 +24,7 @@
     "nextText": "Next",
     "loadingText": "Loading...",
     "pageText": "Page",
-    "ofText": "of",
+    "ofText": "of ",
     "rowsText": "rows"
   },
   "incognito": {
@@ -67,7 +67,7 @@
     "account_value": "Account value"
   },
   "EIO": {
-        "ok": "Current ETO Project",
+    "ok": "Current ETO Project",
     "pre": "Coming Soon",
     "finish": "Concluded ETO",
     "pause": "failed",
@@ -116,27 +116,31 @@
     "participate": "Participate",
     "no_login": "Login",
     "End_at": "End at",
-    "Hard_cap":"Hard Cap",
+    "Hard_cap": "Hard Cap",
     "Start_date": "Start Date",
     "Load_more": "Load More",
-    "Add":"Confirm",
+    "Add": "Confirm",
     "man": "people",
-    "Not_login":"You haven't logged in",
-    "Stop_reserve":"Stop Reserving",
-    "IHaveRead":"I have read and fully aware of and agree to these terms and conditions and the subsequent relevant amendments",
-    "ReserveSuccessful":"Reservation Succeeded!",
-    "WaitForApp":"Please wait for the whitelist approval",
-    "PleaseEnterCode":"Please enter invitation code",
-    "helpTips":"Contact official assistant to obtain invitation code. WeChat account: CybexServiceA",
-    "Offer_any_time": "Instant Release"
+    "Not_login": "You haven't logged in",
+    "Stop_reserve": "Stop Reserving",
+    "IHaveRead":
+      "I have read and fully aware of and agree to these terms and conditions and the subsequent relevant amendments",
+    "ReserveSuccessful": "Reservation Succeeded!",
+    "WaitForApp": "Please wait for the whitelist approval",
+    "PleaseEnterCode": "Please enter invitation code",
+    "helpTips":
+      "Contact official assistant to obtain invitation code. WeChat account: CybexServiceA",
+    "Offer_any_time": "Immediate"
   },
-  "static":{
-    "Augu":"August 11th 11:00 (GMT +8, Singapore time)",
-    "billions":"2 billion, 5% increase per year",
-    "plan_time":"Planned for November 2018, a well-known exchange",
-    "Genesis":"Project Strengths:  Genesis Space as the first ETO project ever is limited in quota. It is world’s first project doing crowdfunding at cornerstone round. Genesis has a more advanced DDPOS consensus mechanism than DPOS, with a built-in voting-based system upgrade mechanism. Its high scalability is realized through sidechains. The codes are written in RUST. Each sidechain is a virtual world, and each one can adopt completely different governance mechanisms to achieve unlimited possibilities. ",
-    "Genesis2": "The team consists of alumni from Harvard, Columbia, UC Berkeley, CMU, etc. Christoph, an important developer and Yellowpaper writer of Ethereum, is an ardent advisor of Genesis.",
-    "EoC": "ETH",  
+  "static": {
+    "Augu": "August 11th 11:00 (GMT +8, Singapore time)",
+    "billions": "2 billion, 5% increase per year",
+    "plan_time": "Planned for November 2018, a well-known exchange",
+    "Genesis":
+      "Project Strengths:  Genesis Space as the first ETO project ever is limited in quota. It is world’s first project doing crowdfunding at cornerstone round. Genesis has a more advanced DDPOS consensus mechanism than DPOS, with a built-in voting-based system upgrade mechanism. Its high scalability is realized through sidechains. The codes are written in RUST. Each sidechain is a virtual world, and each one can adopt completely different governance mechanisms to achieve unlimited possibilities. ",
+    "Genesis2":
+      "The team consists of alumni from Harvard, Columbia, UC Berkeley, CMU, etc. Christoph, an important developer and Yellowpaper writer of Ethereum, is an ardent advisor of Genesis.",
+    "EoC": "ETH",
     "what_is_eto": "What is ETO?",
     "why_eto": "The Beauty of ETO",
     "kyc_first": "Please make KYC certification for reservations",
@@ -612,7 +616,7 @@
     "eq_value_header": "Value ({asset})",
     "qty": "Qty",
     "total": "Total ({asset})",
-    "crowdfund": "Crowd Fund"
+    "crowdfund": "ETO Records"
   },
   "pagination": {
     "newer": "Newer",
@@ -1919,7 +1923,7 @@
     "label": "Verify Code",
     "click": "Refersh Code"
   },
-  
+
   "eto": {
     "crowd_project": "ETO of %(project)s",
     "amount_remain": "Remaining Quota: %(amount)s",
@@ -1940,6 +1944,8 @@
     "local_time": "Local time",
     "int_times":
       "The quantity has to be the integral multiple of the minimum purchasing unit",
+    "warning_lower":
+      "Your subscription cannot lower than the minimum one-time quota of the project",
     "warning_overflow":
       "Your subscription cannot exceed the remaning quota of the project",
     "overflow":
@@ -1947,13 +1953,25 @@
     "be_patient":
       "The final ETO participation result takes time to be confirmed. Please wait patiently. If you have any questions, please contact our community assistant through WeChat account: CybexServiceA",
     "records": {
-      "project_id": "项目名称",
-      "block_num": "关联区块",
-      "update_at": "更新时间",
-      "ieo_status": "状态",
-      "ieo_type": "操作类型",
-      "token_count": "Token数量",
-      "no_data": "暂无ETO参与记录"
+      "project_id": "Project",
+      "block_num": "Block",
+      "update_at": "Update At (UTC)",
+      "ieo_status": "Status",
+      "ieo_type": "Opeartion",
+      "token_count": "Token Amount",
+      "token": "Asset",
+      "no_data": "No available records",
+      "status_invalid_sub": "Invalid Subscription",
+      "status_invalid_partly_sub": "Subscription partly invalid",
+      "status_valid_sub": "Valid subscription",
+      "status_failed_to_receive": "Failed to receive",
+      "status_received": "Received",
+      "status_undefined": "Received",
+      "fund_type": {
+        "receive": "Join ETO",
+        "send": "Receive Token",
+        "refund": "Refund"
+      }
     }
   },
   "training": {

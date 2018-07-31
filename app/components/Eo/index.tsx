@@ -1,10 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-// import { Provider } from 'react-redux';
-// import configureStore from './configureStore.js';
-// import EOComponent from './Eo';
-// import EoStore from "stores/EoStore";
-// const store = configureStore();
 import Anthem from "./anthem";
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
@@ -18,7 +13,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
-import moment from "moment";
+import * as moment from "moment";
 import Swiper from "react-id-swiper";
 import Icon from "../Icon/Icon";
 import "./swiper.scss";
@@ -342,15 +337,32 @@ let EO = class extends React.Component<any, any> {
                                 </div>
                               </div>
                             </div>
-                            {(j % 2 == 0 && i % 4 == 0) ||
-                            (j % 2 == 1 && i % 4 == 2) ? (
-                              <p className="raised">
-                                <Translate content="EIO.Raised" />:{" "}
-                                {e.current_base_token_count} {e.base_token_name}
-                              </p>
-                            ) : null}
+
                             <p className="raised">
                               <Icon name="time" />
+
+                              {e.status == "ok" ? (
+                                <span className={`sub-time ${e.status}`}>
+                                  {" "}
+                                  <Translate content="EIO.Time_remains" />{" "}
+                                </span>
+                              ) : e.status == "pre" ? (
+                                <span className={`sub-time ${e.status}`}>
+                                  {" "}
+                                  <Translate content="EIO.In" />{" "}
+                                </span>
+                              ) : e.status == "finish" ? (
+                                <span className={`sub-time ${e.status}`}>
+                                  {" "}
+                                  <Translate content="EIO.Ended" />{" "}
+                                </span>
+                              ) : (
+                                <span className={`sub-time ${e.status}`}>
+                                  {" "}
+                                  <Translate content="EIO.Ended" />{" "}
+                                </span>
+                              )}
+
                               {remainStr}
                             </p>
                           </div>

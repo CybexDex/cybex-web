@@ -23,6 +23,17 @@ import * as moment from "moment";
 import ReactTooltip from "react-tooltip";
 import ErrorTipBox from "components/Utility/ErrorTipBox";
 
+class ProjectStat {
+  constructor(
+    private pDetail: ETO.ProjectDetail,
+    private pStatus: ETO.AccountStatus
+  ) {}
+
+  get used(){
+    return (this.pDetail.base_received + " " + base_token_name);
+  } 
+}
+
 let Join = class extends React.Component<
   any,
   {
@@ -110,9 +121,9 @@ let Join = class extends React.Component<
         })
       )
     ]).then(([projectData, personalStatus]) => {
-      let isOpen = moment
-        .utc()
-        .isBefore(moment.utc((projectData as any).end_at));
+      let isOpen =
+        moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
+        moment.utc().isAfter(moment.utc((projectData as any).start_at));
       this.setState({ projectData, personalStatus, isOpen });
     });
     this._updateFee();
@@ -378,6 +389,18 @@ let Join = class extends React.Component<
       });
   };
 
+  _getPrecision(digits: number) {
+    return new BigNumber(1)
+      .dividedBy(new BigNumber(1).toPower(-digits))
+      .toNumber();
+  }
+
+  _getProjectStat({ base_received, base_max_quota, base_token_name }) {
+    return {
+      used: base_max_quota - base_received
+    };
+  }
+
   render() {
     console.log(this.state);
     const data = this.state.projectData || {};
@@ -391,7 +414,8 @@ let Join = class extends React.Component<
       base_token_count,
       base_token_name,
       end_at,
-      base_token
+      base_token,
+      base_accuracy
     } = data;
     const statusData = this.state.personalStatus || {};
     const { base_received } = statusData;
@@ -452,20 +476,23 @@ let Join = class extends React.Component<
       String.prototype.replace.call(amount, /,/g, "")
     );
     const isAmountValid = amountValue && !isNaN(amountValue);
-    const isAmountIntTimes =
-      new BigNumber(amountValue || 1)
-        .dividedBy(base_min_quota || 1)
-        .toString()
-        .indexOf(".") === -1;
+    const precision = this._getPrecision(base_accuracy);
+    console.debug("Precision: ", precision);
+    const isAmountIntTimes = new BigNumber(amountValue || 1)
+      .mod(precision)
+      .isZero();
     console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
     const avail = base_max_quota - base_received;
     const isOverflow = amountValue > avail;
+    const isTooLow = amountValue < base_min_quota;
     const isSendNotValid =
       !isAmountValid ||
       !asset ||
       balanceError ||
       !isAmountIntTimes ||
+      isTooLow ||
+      // !isOpen ||
       isOverflow;
     return (
       <div
@@ -507,7 +534,7 @@ let Join = class extends React.Component<
               content="eto.current_state"
               component="section"
               used={base_received + " " + base_token_name}
-              avail={base_max_quota - base_received + " " + base_token_name}
+              avail={+" " + base_token_name}
             />
           </div>
           <div className="content-block transfer-input">
@@ -533,6 +560,12 @@ let Join = class extends React.Component<
                   isError: intTimeError,
                   isI18n: true,
                   message: "eto.int_times"
+                },
+                {
+                  name: "too_low",
+                  isError: isTooLow,
+                  isI18n: true,
+                  message: "eto.warning_lower"
                 },
                 {
                   name: "isOverflow",
@@ -648,7 +681,7 @@ let Join = class extends React.Component<
               justifyContent: "center"
             }}
           >
-              <Translate component="h4" content="eto.closed_tip" project={name}/>
+            <Translate component="h4" content="eto.closed_tip" project={name} />
           </div>
         )}
       </div>

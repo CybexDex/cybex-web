@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const git = require("git-rev-sync");
 require("es6-promise").polyfill();
@@ -16,26 +15,31 @@ const isTest =
 const isTestStaging =
   process.env.NODE_ENV_TEST &&
   process.env.NODE_ENV_TEST.toLowerCase() === "staging";
+const isForSecruity =
+  process.env.NODE_ENV_TEST &&
+  process.env.NODE_ENV_TEST.toLowerCase() === "security";
 
 const BASE_URL = path.resolve(__dirname, "./..");
 let root_dir = BASE_URL;
 console.log("ROOT: ", root_dir);
 const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
-  __TEST__: isTest || isTestStaging,
+  __TEST__: isTest,
+  __FOR_SECURITY__: isForSecruity,
   __STAGING__: isTestStaging,
-  __ICOAPE__: isTestStaging ? JSON.stringify("http://47.91.242.71:8083/") : JSON.stringify("https://www.icoape.com/"),
-  __BASE_URL__ : JSON.stringify("/")
+  __ICOAPE__: isTestStaging
+    ? JSON.stringify("https://www.icoape.com/")
+    : isTest
+      ? JSON.stringify("http://47.91.242.71:8083/")
+      : JSON.stringify("https://www.icoape.com/"),
+  __BASE_URL__: JSON.stringify("/")
 };
 
 var outputPath = path.join(BASE_URL, "assets");
 
 var plugins = [
   // new webpack.optimize.OccurrenceOrderPlugin(),
-  new HtmlWebpackPlugin({
-    filename: "index.html",
-    template: path.resolve(root_dir, "app/assets/index.html")
-  })
+  
 ];
 
 const loaders = [
@@ -235,5 +239,11 @@ module.exports = {
   defines,
   loaders,
   resolve,
-  plugins
+  plugins,
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM",
+    "react-router": "ReactRouter",
+    "react-router-dom": "ReactRouterDOM"
+  }
 };

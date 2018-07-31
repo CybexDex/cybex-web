@@ -71,8 +71,8 @@
     "previousText": "上一页",
     "nextText": "下一页",
     "loadingText": "载入中...",
-    "pageText": "页",
-    "ofText": "共",
+    "pageText": "第",
+    "ofText": "页 / 共",
     "rowsText": "行"
   },
   "incognito": {
@@ -158,26 +158,29 @@
     "Quota_Remaining": "每个账号限额",
     "participate": "参与ETO",
     "End_at": "结束时间",
-    "Hard_cap":"硬顶",
+    "Hard_cap": "硬顶",
     "Start_date": "开始日期",
     "Load_more": "加载更多",
     "man": "人",
-    "Add":"添加",
-    "Not_login":"请登录后参与",
-    "Stop_reserve":"停止预约",
-    "IHaveRead":"我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容",
-    "ReserveSuccessful":"预约成功！",
-    "WaitForApp":"请等待白名单审核",
-    "PleaseEnterCode":"请添加邀请码",
-    "helpTips":"邀请码获取方式请联系小助手微信：CybexServiceA",
-    "Offer_any_time": "实时发币"
+    "Add": "添加",
+    "Not_login": "请登录后参与",
+    "Stop_reserve": "停止预约",
+    "IHaveRead":
+      "我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容",
+    "ReserveSuccessful": "预约成功！",
+    "WaitForApp": "请等待白名单审核",
+    "PleaseEnterCode": "请添加邀请码",
+    "helpTips": "邀请码获取方式请联系小助手微信：CybexServiceA",
+    "Offer_any_time": "实时"
   },
-  "static":{
-    "Augu":"8月11日11:00 (GMT +8, 新加坡时间）",
-    "billions":"20亿，每年增发5%",
-    "plan_time":"计划2018年11月，某知名交易所",
-    "Genesis":"Genesis Space是首个ETO项目，额度小，海外市场火爆，史上首个基石轮公开的项目。Genesis Space有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性，且用RUST语言开发。一个侧链就是一个虚拟空间，每个虚拟空间可以有完全不同的治理机制，可实现无限的可能性",
-    "Genesis2":"团队皆为国际名校毕业，如哈佛、哥伦比亚、伯克利、卡耐基梅隆。由以太坊核心开发者，以太坊黄皮书主要撰写者Christoph亲自指导",
+  "static": {
+    "Augu": "8月11日11:00 (GMT +8, 新加坡时间）",
+    "billions": "20亿，每年增发5%",
+    "plan_time": "计划2018年11月，某知名交易所",
+    "Genesis":
+      "Genesis Space是首个ETO项目，额度小，海外市场火爆，史上首个基石轮公开的项目。Genesis Space有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性，且用RUST语言开发。一个侧链就是一个虚拟空间，每个虚拟空间可以有完全不同的治理机制，可实现无限的可能性",
+    "Genesis2":
+      "团队皆为国际名校毕业，如哈佛、哥伦比亚、伯克利、卡耐基梅隆。由以太坊核心开发者，以太坊黄皮书主要撰写者Christoph亲自指导",
     "EoC": "ETH",
     "what_is_eto": "ETO是什么",
     "why_eto": "ETO的优势",
@@ -600,7 +603,7 @@
       "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
     "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。",
     "vested": "锁定期资产",
-    "crowdfund": "众筹项目记录"
+    "crowdfund": "ETO项目记录"
   },
   "transfer": {
     "from": "来自",
@@ -1915,11 +1918,12 @@
     "take_in": "参与众筹",
     "cybex_in":
       "您将使用您Cybex账号内的%(asset)s参与本次众筹，本操作将消耗一定手续费",
-    "confirm": "您将通过Cybex转账参与%(project)s项目的IEO众筹",
+    "confirm": "您将通过Cybex转账参与%(project)s项目的ETO众筹",
     "complete_tip_1": "该项目众筹完成后，对应项目资产将于格林尼治时间",
     "complete_tip_2": "发送至您的帐号(%(account)s)中",
     "local_time": "即本机时间",
     "int_times": "众筹参与金额需为最小认购单位的整数倍",
+    "warning_lower": "本次认购金额需小大于单次最小可认购额度",
     "warning_overflow": "本次认购金额需小于剩余可认购额度",
     "overflow":
       "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“众筹项目记录—成功认购”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
@@ -1928,11 +1932,23 @@
     "records": {
       "project_id": "项目名称",
       "block_num": "关联区块",
-      "update_at": "更新时间",
+      "update_at": "更新时间（UTC）",
       "ieo_status": "状态",
       "ieo_type": "操作类型",
       "token_count": "Token数量",
-      "no_data": "暂无IEO参与记录"
+      "token": "资产",
+      "no_data": "暂无ETO参与记录",
+      "status_invalid_sub": "无效认购",
+      "status_invalid_partly_sub": "部分无效",
+      "status_valid_sub": "有效认购",
+      "status_failed_to_receive": "到账失败",
+      "status_received": "到账成功",
+      "status_undefined": "到账成功",
+      "fund_type": {
+        "receive": "参与ETO",
+        "send": "收到Token",
+        "refund": "收到退款"
+      }
     }
   },
   "training": {
