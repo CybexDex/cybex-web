@@ -1,5 +1,4 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const git = require("git-rev-sync");
 require("es6-promise").polyfill();
@@ -40,10 +39,7 @@ var outputPath = path.join(BASE_URL, "assets");
 
 var plugins = [
   // new webpack.optimize.OccurrenceOrderPlugin(),
-  new HtmlWebpackPlugin({
-    filename: "index.html",
-    template: path.resolve(root_dir, "app/assets/index.html")
-  })
+  
 ];
 
 const loaders = [
@@ -243,5 +239,11 @@ module.exports = {
   defines,
   loaders,
   resolve,
-  plugins
+  plugins,
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM",
+    "react-router": "ReactRouter",
+    "react-router-dom": "ReactRouterDOM"
+  }
 };
