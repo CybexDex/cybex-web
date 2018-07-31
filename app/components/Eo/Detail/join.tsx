@@ -23,6 +23,17 @@ import * as moment from "moment";
 import ReactTooltip from "react-tooltip";
 import ErrorTipBox from "components/Utility/ErrorTipBox";
 
+class ProjectStat {
+  constructor(
+    private pDetail: ETO.ProjectDetail,
+    private pStatus: ETO.AccountStatus
+  ) {}
+
+  get used(){
+    return (this.pDetail.base_received + " " + base_token_name);
+  } 
+}
+
 let Join = class extends React.Component<
   any,
   {
@@ -384,6 +395,12 @@ let Join = class extends React.Component<
       .toNumber();
   }
 
+  _getProjectStat({ base_received, base_max_quota, base_token_name }) {
+    return {
+      used: base_max_quota - base_received
+    };
+  }
+
   render() {
     console.log(this.state);
     const data = this.state.projectData || {};
@@ -468,11 +485,13 @@ let Join = class extends React.Component<
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
     const avail = base_max_quota - base_received;
     const isOverflow = amountValue > avail;
+    const isTooLow = amountValue < base_min_quota;
     const isSendNotValid =
       !isAmountValid ||
       !asset ||
       balanceError ||
       !isAmountIntTimes ||
+      isTooLow ||
       // !isOpen ||
       isOverflow;
     return (
@@ -515,7 +534,7 @@ let Join = class extends React.Component<
               content="eto.current_state"
               component="section"
               used={base_received + " " + base_token_name}
-              avail={base_max_quota - base_received + " " + base_token_name}
+              avail={+" " + base_token_name}
             />
           </div>
           <div className="content-block transfer-input">
@@ -541,6 +560,12 @@ let Join = class extends React.Component<
                   isError: intTimeError,
                   isI18n: true,
                   message: "eto.int_times"
+                },
+                {
+                  name: "too_low",
+                  isError: isTooLow,
+                  isI18n: true,
+                  message: "eto.warning_lower"
                 },
                 {
                   name: "isOverflow",

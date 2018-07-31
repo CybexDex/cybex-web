@@ -67,7 +67,7 @@
     "account_value": "Account value"
   },
   "EIO": {
-        "ok": "Current ETO Project",
+    "ok": "Current ETO Project",
     "pre": "Coming Soon",
     "finish": "Concluded ETO",
     "pause": "failed",
@@ -116,27 +116,31 @@
     "participate": "Participate",
     "no_login": "Login",
     "End_at": "End at",
-    "Hard_cap":"Hard Cap",
+    "Hard_cap": "Hard Cap",
     "Start_date": "Start Date",
     "Load_more": "Load More",
-    "Add":"Confirm",
+    "Add": "Confirm",
     "man": "people",
-    "Not_login":"You haven't logged in",
-    "Stop_reserve":"Stop Reserving",
-    "IHaveRead":"I have read and fully aware of and agree to these terms and conditions and the subsequent relevant amendments",
-    "ReserveSuccessful":"Reservation Succeeded!",
-    "WaitForApp":"Please wait for the whitelist approval",
-    "PleaseEnterCode":"Please enter invitation code",
-    "helpTips":"Contact official assistant to obtain invitation code. WeChat account: CybexServiceA",
+    "Not_login": "You haven't logged in",
+    "Stop_reserve": "Stop Reserving",
+    "IHaveRead":
+      "I have read and fully aware of and agree to these terms and conditions and the subsequent relevant amendments",
+    "ReserveSuccessful": "Reservation Succeeded!",
+    "WaitForApp": "Please wait for the whitelist approval",
+    "PleaseEnterCode": "Please enter invitation code",
+    "helpTips":
+      "Contact official assistant to obtain invitation code. WeChat account: CybexServiceA",
     "Offer_any_time": "Immediate"
   },
-  "static":{
-    "Augu":"August 11th 11:00 (GMT +8, Singapore time)",
-    "billions":"2 billion, 5% increase per year",
-    "plan_time":"Planned for November 2018, a well-known exchange",
-    "Genesis":"Project Strengths:  Genesis Space as the first ETO project ever is limited in quota. It is world’s first project doing crowdfunding at cornerstone round. Genesis has a more advanced DDPOS consensus mechanism than DPOS, with a built-in voting-based system upgrade mechanism. Its high scalability is realized through sidechains. The codes are written in RUST. Each sidechain is a virtual world, and each one can adopt completely different governance mechanisms to achieve unlimited possibilities. ",
-    "Genesis2": "The team consists of alumni from Harvard, Columbia, UC Berkeley, CMU, etc. Christoph, an important developer and Yellowpaper writer of Ethereum, is an ardent advisor of Genesis.",
-    "EoC": "ETH",  
+  "static": {
+    "Augu": "August 11th 11:00 (GMT +8, Singapore time)",
+    "billions": "2 billion, 5% increase per year",
+    "plan_time": "Planned for November 2018, a well-known exchange",
+    "Genesis":
+      "Project Strengths:  Genesis Space as the first ETO project ever is limited in quota. It is world’s first project doing crowdfunding at cornerstone round. Genesis has a more advanced DDPOS consensus mechanism than DPOS, with a built-in voting-based system upgrade mechanism. Its high scalability is realized through sidechains. The codes are written in RUST. Each sidechain is a virtual world, and each one can adopt completely different governance mechanisms to achieve unlimited possibilities. ",
+    "Genesis2":
+      "The team consists of alumni from Harvard, Columbia, UC Berkeley, CMU, etc. Christoph, an important developer and Yellowpaper writer of Ethereum, is an ardent advisor of Genesis.",
+    "EoC": "ETH",
     "what_is_eto": "What is ETO?",
     "why_eto": "The Beauty of ETO",
     "kyc_first": "Please make KYC certification for reservations",
@@ -1919,7 +1923,7 @@
     "label": "Verify Code",
     "click": "Refersh Code"
   },
-  
+
   "eto": {
     "crowd_project": "ETO of %(project)s",
     "amount_remain": "Remaining Quota: %(amount)s",
@@ -1940,6 +1944,8 @@
     "local_time": "Local time",
     "int_times":
       "The quantity has to be the integral multiple of the minimum purchasing unit",
+    "warning_lower":
+      "Your subscription cannot lower than the minimum one-time quota of the project",
     "warning_overflow":
       "Your subscription cannot exceed the remaning quota of the project",
     "overflow":
