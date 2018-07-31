@@ -110,9 +110,9 @@ let Join = class extends React.Component<
         })
       )
     ]).then(([projectData, personalStatus]) => {
-      let isOpen = moment
-        .utc()
-        .isBefore(moment.utc((projectData as any).end_at));
+      let isOpen =
+        moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
+        moment.utc().isAfter(moment.utc((projectData as any).start_at));
       this.setState({ projectData, personalStatus, isOpen });
     });
     this._updateFee();
@@ -467,6 +467,7 @@ let Join = class extends React.Component<
       !asset ||
       balanceError ||
       !isAmountIntTimes ||
+      // !isOpen ||
       isOverflow;
     return (
       <div
@@ -649,7 +650,7 @@ let Join = class extends React.Component<
               justifyContent: "center"
             }}
           >
-              <Translate component="h4" content="eto.closed_tip" project={name}/>
+            <Translate component="h4" content="eto.closed_tip" project={name} />
           </div>
         )}
       </div>

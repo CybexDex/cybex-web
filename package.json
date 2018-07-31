@@ -28,6 +28,7 @@
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js --env.prod",
     "build:test": "cross-env NODE_ENV=production NODE_ENV_TEST=test webpack --config config/webpack.prod.js --env.prod",
     "build:test-staging": "cross-env NODE_ENV=production NODE_ENV_TEST=staging webpack --config config/webpack.prod.js --env.prod",
+    "build:test-security": "cross-env NODE_ENV=production NODE_ENV_TEST=security webpack --config config/webpack.prod.js --env.prod",
     "build-hash": "cross-env NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl=''",
     "build-hash-nougly": "cross-env NODE_ENV=production webpack --env.prod --env.hash --env.noUgly --env.baseUrl=''",
     "build-github": "cross-env NODE_ENV=production webpack --env.prod --env.hash --env.baseUrl='/wallet/'",
