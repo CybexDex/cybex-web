@@ -159,7 +159,7 @@ let EO = class extends React.Component<any, any> {
               }
             }
             return (
-              <div className="waterfall">
+              <div className="waterfall" key={j}>
                 {f.map((e, i) => {
                   let percent = e.current_percent * 100;
                   percent = percent.toFixed(2);
