@@ -1,6 +1,6 @@
 export const API_URL = __DEV__
-  ? "http://106.14.159.224:3049/api/cybex/"
-  : __TEST__
+  ? "https://ieo-apitest.cybex.io/api/cybex/"
+  : __TEST__ 
     ? "https://ieo-apitest.cybex.io/api/cybex/"
     : "https://ieo.cybex.io/api/cybex/";
 
