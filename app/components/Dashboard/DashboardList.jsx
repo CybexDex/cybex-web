@@ -90,7 +90,7 @@ class DashboardList extends React.Component {
   }
 
   _goAccount(name) {
-    this.context.router.push(`/account/${name}`);
+    this.context.router.history.push(`/account/${name}`);
   }
 
   _onFilter(e) {

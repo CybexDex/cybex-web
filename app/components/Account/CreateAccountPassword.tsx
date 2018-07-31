@@ -7,7 +7,7 @@ import AccountStore from "stores/AccountStore";
 import AccountNameInput from "./../Forms/AccountNameInput";
 import WalletDb from "stores/WalletDb";
 import notify from "actions/NotificationActions";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AccountSelect from "../Forms/AccountSelect";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
 import LoadingIndicator from "../LoadingIndicator";
@@ -120,7 +120,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
       FetchChain("getAccount", this.state.accountName, undefined, {
         [this.state.accountName]: true
       }).then(() => {
-        this.props.router.push("/wallet/backup/create?newAccount=true");
+        this.props.history.push("/wallet/backup/create?newAccount=true");
       });
     }
   }

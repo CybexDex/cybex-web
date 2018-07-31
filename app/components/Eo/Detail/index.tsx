@@ -7,7 +7,7 @@ import * as PropTypes from "prop-types";
 // const store = configureStore();
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
-import { Link } from "react-router"; 
+import { Link } from "react-router-dom"; 
 import DetalModal from "./Modal.jsx";
 import AlertModal from './AlertModal.jsx';
 import Trigger from "react-foundation-apps/src/trigger";
@@ -28,7 +28,7 @@ import counterpart from 'counterpart';
 import LegalModal from "./LegalModal";
 import LegalModalEn from "./LegalModalEn";
 import { TokenKind } from "graphql";
-let logo_demo = require('assets/img_demo_1.jpg');
+// let logo_demo = require('assets/img_demo_1.jpg');
 let time = require('assets/time.png');
 
 class Detail extends React.Component<any, any> {
@@ -43,7 +43,7 @@ class Detail extends React.Component<any, any> {
     }
   }
   reserve(){
-    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.params.id,create:1}, (res2) => {
+    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.match.params.id,create:1}, (res2) => {
       switch(res2.result.status){
         case 'ok':
               this.setState({reserve_status:()=>{
@@ -57,7 +57,7 @@ class Detail extends React.Component<any, any> {
                       className="legal-input"
                     />
                     <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <Link to={`/eto/join/${this.props.match.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
                       </div>
@@ -218,7 +218,7 @@ formatTime(input){
 }
   componentDidMount(){
     let data = {
-      project: this.props.params.id
+      project: this.props.match.params.id
     }
 
     fetchJson.fetchDetails(data,(res)=>{
@@ -271,7 +271,7 @@ formatTime(input){
           )
         }});
       }else{
-        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.params.id}, (res2)=>{
+        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.match.params.id}, (res2)=>{
           switch(res2.result.status){
             case 'ok':
               this.setState({reserve_status:()=>{
@@ -285,7 +285,7 @@ formatTime(input){
                       className="legal-input"
                     />
                     <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                      <Link to={`/eto/join/${this.props.params.id}`}>
+                      <Link to={`/eto/join/${this.props.match.params.id}`}>
                       <div className="button primery-button ok">
                       <Translate content="EIO.Join_ETO_now" />
                       </div>
@@ -951,7 +951,7 @@ formatTime(input){
             </Link>
           ): (
             this.state.kyc_status !== "not_start"? (
-              // <Link to={`/eto/join/${this.props.params.id}`}>
+              // <Link to={`/eto/join/${this.props.match.params.id}`}>
               <div className="button primery-button disabled" onClick={this.kycNotPass.bind(this)}>
               <Translate content="EIO.Reserve_Now" />
               </div>
@@ -971,9 +971,9 @@ formatTime(input){
           
           
         </div>
-          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showModal}>
+          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showModal}>
           </DetalModal>
-          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.params.id} isShow={this.state.showAlertModal}>
+          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showAlertModal}>
           </AlertModal>
           {lang=='zh'?(
             <LegalModal id="ieo-legal-modal">

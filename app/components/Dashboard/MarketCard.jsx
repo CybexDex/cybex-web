@@ -77,7 +77,7 @@ class MarketCard extends React.Component {
 
   goToMarket(e) {
     e.preventDefault();
-    this.context.router.push(
+    this.context.router.history.push(
       `/market/${this.props.base.get("symbol")}_${this.props.quote.get(
         "symbol"
       )}`

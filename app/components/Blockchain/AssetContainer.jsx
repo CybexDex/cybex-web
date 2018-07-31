@@ -7,7 +7,8 @@ import Asset from "./Asset";
 
 class AssetContainer extends React.Component {
   render() {
-    let symbol = this.props.params.symbol;
+    let symbol = this.props.match.params.symbol.toUpperCase();
+
     return (
       <AltContainer
         stores={[AccountStore, AssetStore]}

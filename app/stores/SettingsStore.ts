@@ -257,7 +257,7 @@ class SettingsStore extends AbstractStore<any> {
       };
 
       let defaultMarkets = [];
-      let chainMarkets = topMarkets[this.starredKey] || [];
+      let chainMarkets = MARKETS;
       this.preferredBases.forEach(base => {
         addMarkets(defaultMarkets, base, chainMarkets);
       });

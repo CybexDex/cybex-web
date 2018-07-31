@@ -26,8 +26,6 @@ import { debounce } from "lodash";
 import { DecimalChecker } from "../Exchange/ExchangeInput";
 import { blockTradesAPIs } from "api/apiConfig";
 
-// import DepositFiatOpenLedger from "components/DepositWithdraw/openledger/DepositFiatOpenLedger";
-// import WithdrawFiatOpenLedger from "components/DepositWithdraw/openledger/WithdrawFiatOpenLedger";
 
 class DepositWithdrawContent extends DecimalChecker {
   static propTypes = {

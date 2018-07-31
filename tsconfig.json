@@ -9,8 +9,8 @@
       "dom"
     ],
     "noImplicitAny": false,
-    "sourceMap": true,
-    "removeComments": false,
+    "sourceMap": false,
+    "removeComments": true,
     "typeRoots": [
       "node_modules/@types"
     ],

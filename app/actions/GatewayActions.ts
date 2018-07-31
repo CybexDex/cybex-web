@@ -101,7 +101,7 @@ class GatewayActions {
     account: Map<string, any>,
     login,
     offset = 0,
-    size = 20
+    size = 200
   ) {
     debug("[QueryFundRecord]", account);
     const tx = new CustomTx({

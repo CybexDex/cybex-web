@@ -91,7 +91,7 @@ let Join = class extends React.Component<
   updateProject = () => {
     if (!this.props.currentAccount || !this.props.currentAccount.get) return;
     let data = {
-      project: this.props.params.id,
+      project: this.props.match.params.id,
       cybex_name: this.props.currentAccount.get("name")
     };
     Promise.all([
@@ -110,14 +110,13 @@ let Join = class extends React.Component<
         })
       )
     ]).then(([projectData, personalStatus]) => {
-      let isOpen = moment
-        .utc()
-        .isBefore(moment.utc((projectData as any).end_at));
+      let isOpen =
+        moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
+        moment.utc().isAfter(moment.utc((projectData as any).start_at));
       this.setState({ projectData, personalStatus, isOpen });
     });
     this._updateFee();
   };
-
   onAmountChanged({ amount, asset }) {
     if (!asset) {
       return;
@@ -467,6 +466,7 @@ let Join = class extends React.Component<
       !asset ||
       balanceError ||
       !isAmountIntTimes ||
+      // !isOpen ||
       isOverflow;
     return (
       <div
@@ -649,7 +649,7 @@ let Join = class extends React.Component<
               justifyContent: "center"
             }}
           >
-              <Translate component="h4" content="eto.closed_tip" project={name}/>
+            <Translate component="h4" content="eto.closed_tip" project={name} />
           </div>
         )}
       </div>

@@ -16,6 +16,9 @@ const isTest =
 const isTestStaging =
   process.env.NODE_ENV_TEST &&
   process.env.NODE_ENV_TEST.toLowerCase() === "staging";
+const isForSecruity =
+  process.env.NODE_ENV_TEST &&
+  process.env.NODE_ENV_TEST.toLowerCase() === "security";
 
 const BASE_URL = path.resolve(__dirname, "./..");
 let root_dir = BASE_URL;
@@ -23,6 +26,7 @@ console.log("ROOT: ", root_dir);
 const defines = {
   APP_VERSION: JSON.stringify(git.tag()),
   __TEST__: isTest,
+  __FOR_SECURITY__: isForSecruity,
   __STAGING__: isTestStaging,
   __ICOAPE__: isTestStaging
     ? JSON.stringify("https://www.icoape.com/")
@@ -161,7 +165,22 @@ const loaders = [
   {
     test: /.*\.svg$/,
     exclude: [path.resolve(root_dir, "app/components/Common")],
-    loaders: ["svg-inline-loader", "svgo-loader"]
+    use: [
+      {
+        loader: "svg-inline-loader"
+      },
+      {
+        loader: "svgo-loader",
+        options: {
+          plugins: [
+            { cleanupAttrs: true },
+            { removeMetadata: true },
+            { removeXMLNS: true },
+            { removeViewBox: false }
+          ]
+        }
+      }
+    ]
   },
   {
     test: /\.md/,
