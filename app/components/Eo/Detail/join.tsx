@@ -378,6 +378,12 @@ let Join = class extends React.Component<
       });
   };
 
+  _getPrecision(digits: number) {
+    return new BigNumber(1)
+      .dividedBy(new BigNumber(1).toPower(-digits))
+      .toNumber();
+  }
+
   render() {
     console.log(this.state);
     const data = this.state.projectData || {};
@@ -391,7 +397,8 @@ let Join = class extends React.Component<
       base_token_count,
       base_token_name,
       end_at,
-      base_token
+      base_token,
+      base_accuracy
     } = data;
     const statusData = this.state.personalStatus || {};
     const { base_received } = statusData;
@@ -452,11 +459,11 @@ let Join = class extends React.Component<
       String.prototype.replace.call(amount, /,/g, "")
     );
     const isAmountValid = amountValue && !isNaN(amountValue);
-    const isAmountIntTimes =
-      new BigNumber(amountValue || 1)
-        .dividedBy(base_min_quota || 1)
-        .toString()
-        .indexOf(".") === -1;
+    const precision = this._getPrecision(base_accuracy);
+    console.debug("Precision: ", precision);
+    const isAmountIntTimes = new BigNumber(amountValue || 1)
+      .mod(precision)
+      .isZero();
     console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
     const avail = base_max_quota - base_received;

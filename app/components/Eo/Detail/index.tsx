@@ -38,7 +38,7 @@ class Detail extends React.Component<any, any> {
     }
   }
   reserve(){
-    fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0],project:this.props.match.params.id,create:1}, (res2) => {
+    fetchJson.fetchKYC({cybex_name: this.props.currentAccount,project:this.props.match.params.id,create:1}, (res2) => {
       switch(res2.result.status){
         case 'ok':
               this.setState({reserve_status:()=>{
@@ -244,7 +244,7 @@ formatTime(input){
 
         
       });
-      if(!this.props.myAccounts[0]){
+      if(!this.props.currentAccount){
         this.setState({reserve_status: ()=>{
           return (
             <div>
@@ -266,7 +266,7 @@ formatTime(input){
           )
         }});
       }else{
-        fetchJson.fetchKYC({cybex_name: this.props.myAccounts[0], project:this.props.match.params.id}, (res2)=>{
+        fetchJson.fetchKYC({cybex_name: this.props.currentAccount, project:this.props.match.params.id}, (res2)=>{
           switch(res2.result.status){
             case 'ok':
               this.setState({reserve_status:()=>{
@@ -991,6 +991,7 @@ formatTime(input){
   getProps(props) {
     return {
       myAccounts: AccountStore.getMyAccounts(),
+      currentAccount: AccountStore.getState().currentAccount,
       accountsWithAuthState: AccountStore.getMyAccountsWithAuthState(),
       isMyAccount: AccountStore.getState()
     }
