@@ -1575,6 +1575,7 @@
       "address": "提现到地址",
       "to_eos": "提现到EOS账户",
       "submit": "提现",
+      "with_memo": "使用提币附言",
       "cyb_fee": "使用CYB支付此次提现所需的Cybex内部转账手续费"
     },
     "ok": "确定",
@@ -1681,6 +1682,8 @@
     "asset_to_withdraw": "提现资产:",
     "support_block": "获得客户支持，请联络Jadepool:",
     "valid_address": "请输入合法的 %(coin_type)s 地址",
+    "space_in_memo": "您的地址或附言中存在空白符，请确认其格式是否正确",
+    "withdraw_memo": "提币附言",
     "valid_service":
       "网关链接错误，暂时无法有效验证提取地址，请稍检查您的网络链接",
     "loading": "地址规则验证中...",

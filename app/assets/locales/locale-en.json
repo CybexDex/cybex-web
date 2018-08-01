@@ -1748,6 +1748,8 @@
     "intermediate": "Intermediate account",
     "asset_to_withdraw": "Asset to withdraw:",
     "support_block": "For support, please contact Jadepool at:",
+    "space_in_memo": "There are empty letters in your memo, please reconfirm it",
+    "withdraw_memo": "Withdraw Memo",
     "valid_address": "Please enter a valid %(coin_type)s address",
     "valid_service": "Network error, check your network status, please.",
     "loading": "Verifing the rule of address...",
