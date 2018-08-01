@@ -39,7 +39,6 @@ var outputPath = path.join(BASE_URL, "assets");
 
 var plugins = [
   // new webpack.optimize.OccurrenceOrderPlugin(),
-  
 ];
 
 const loaders = [
@@ -240,10 +239,5 @@ module.exports = {
   loaders,
   resolve,
   plugins,
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
-    "react-router": "ReactRouter",
-    "react-router-dom": "ReactRouterDOM"
-  }
+  externals: {}
 };

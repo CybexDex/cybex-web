@@ -421,13 +421,14 @@ let Join = class extends React.Component<
             className="confirm-tip text-center"
             content="eto.confirm"
             component="h5"
+            style={{marginTop: "1em"}}
             project={name}
           />
 
           <Translate
-            className="confirm-tip text-justify"
+            className="confirm-tip text-center"
             content="eto.dont_repeat"
-            style={{ maxWidth: "20em" }}
+            style={{ maxWidth: "40em", margin: "auto" }}
             component="p"
           />
         </>
