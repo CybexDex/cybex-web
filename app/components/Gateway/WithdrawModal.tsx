@@ -197,7 +197,6 @@ class WithdrawModal extends React.Component<props, state> {
   };
 
   onWithdrawAddressChanged(e) {
-    console.debug("E: ", e);
     this.setState({
       withdraw_address: e.target.value,
       withdraw_address_loading: true,
@@ -509,7 +508,6 @@ class WithdrawModal extends React.Component<props, state> {
     let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
       .name;
     let isEOS = assetName.indexOf("EOS") !== -1;
-    console.debug("AssetName: ", assetName);
     return (
       <BaseModal modalId={modalId}>
         <div className="content-block">
@@ -755,7 +753,6 @@ WithdrawModalWrapper = connect(
     },
     getProps(props) {
       let { modalId } = props;
-      debug("connect", props);
       let withdrawInfo = GatewayStore.getState().withdrawInfo;
       return {
         open: GatewayStore.getState().modals.get(modalId),
