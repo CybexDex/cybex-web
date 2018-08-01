@@ -23,6 +23,8 @@ import * as moment from "moment";
 import ReactTooltip from "react-tooltip";
 import ErrorTipBox from "components/Utility/ErrorTipBox";
 
+const KYC_STATUS_OK = "ok";
+
 const getPrecision = (digits: number = 0) => {
   return new BigNumber(1).dividedBy(Math.pow(10, digits)).toNumber();
 };
@@ -54,9 +56,9 @@ class ProjectStat {
     if (!this.pDetail.base_token_count) {
       return this.pDetail.base_token_count;
     }
-    return new BigNumber(this.pDetail.base_token_count).sub(
-      this.pDetail.current_base_token_count
-    ).toNumber();
+    return new BigNumber(this.pDetail.base_token_count)
+      .sub(this.pDetail.current_base_token_count)
+      .toNumber();
   }
 
   get pAvail() {
@@ -91,6 +93,8 @@ let Join = class extends React.Component<
     personalStatus;
     balanceError;
     isOpen;
+    btnTimer;
+    canJoin;
   }
 > {
   static propTypes = {
@@ -102,6 +106,7 @@ let Join = class extends React.Component<
   // };
 
   nestedRef;
+  btnTimer;
 
   constructor(props) {
     super(props);
@@ -121,7 +126,9 @@ let Join = class extends React.Component<
       projectData: null,
       personalStatus: null,
       memo: null,
-      isOpen: true
+      isOpen: true,
+      btnTimer: 0,
+      canJoin: true
     };
 
     this._updateFee = this._updateFee.bind(this);
@@ -137,6 +144,14 @@ let Join = class extends React.Component<
   componentWillUnmount() {
     ChainStore.unsubscribe(this.updateProject);
   }
+
+  checkUserStatue = () => {
+    if (!this.props.currentAccount || !this.props.currentAccount.get) return;
+    let data = {
+      project: this.props.match.params.id,
+      cybex_name: this.props.currentAccount.get("name")
+    };
+  };
 
   updateProject = () => {
     if (!this.props.currentAccount || !this.props.currentAccount.get) return;
@@ -158,12 +173,20 @@ let Join = class extends React.Component<
         fetchJson.fetchUserProjectStatus(data, res => {
           resolve(res.result);
         })
+      ),
+      new Promise(resolve =>
+        fetchJson.fetchKYC(data, res => {
+          resolve(res.result);
+        })
       )
-    ]).then(([projectData, personalStatus]) => {
+    ]).then(([projectData, personalStatus, kycStatus]) => {
       let isOpen =
         moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
         moment.utc().isAfter(moment.utc((projectData as any).start_at));
-      this.setState({ projectData, personalStatus, isOpen });
+      let canJoin =
+        (kycStatus as any).status &&
+        (kycStatus as any).status === KYC_STATUS_OK;
+      this.setState({ projectData, personalStatus, isOpen, canJoin });
     });
     this._updateFee();
   };
@@ -362,12 +385,24 @@ let Join = class extends React.Component<
     this.nestedRef = ref;
   }
 
+  setButtonLock() {
+    this.setState({
+      btnTimer: 40
+    });
+    this.btnTimer = setInterval(() => {
+      if (this.state.btnTimer >= 1) {
+        this.setState(state => ({ btnTimer: state.btnTimer - 1 }));
+      } else {
+        clearInterval(this.btnTimer);
+      }
+    }, 1000);
+  }
+
   onTrxIncluded = confirm_store_state => {
     if (
       confirm_store_state.included &&
       confirm_store_state.broadcasted_transaction
     ) {
-      // this.setState(Transfer.getInitialState());
       TransactionConfirmStore.unlisten(this.onTrxIncluded);
       TransactionConfirmStore.reset();
     } else if (confirm_store_state.closed) {
@@ -381,12 +416,21 @@ let Join = class extends React.Component<
     let { name } = projectData;
     if (name) {
       return (
-        <Translate
-          className="confirm-tip text-center"
-          content="eto.confirm"
-          component="h5"
-          project={name}
-        />
+        <>
+          <Translate
+            className="confirm-tip text-center"
+            content="eto.confirm"
+            component="h5"
+            project={name}
+          />
+
+          <Translate
+            className="confirm-tip text-justify"
+            content="eto.dont_repeat"
+            style={{ maxWidth: "20em" }}
+            component="p"
+          />
+        </>
       );
     } else return null;
   };
@@ -420,6 +464,7 @@ let Join = class extends React.Component<
       .then(() => {
         TransactionConfirmStore.unlisten(this.onTrxIncluded);
         TransactionConfirmStore.listen(this.onTrxIncluded);
+        this.setButtonLock();
       })
       .catch(e => {
         let msg = e.message ? e.message.split("\n")[1] : null;
@@ -457,7 +502,8 @@ let Join = class extends React.Component<
       feeAsset,
       fee_asset_id,
       isOpen,
-      balanceError
+      balanceError,
+      canJoin
     } = this.state;
 
     //
@@ -472,7 +518,6 @@ let Join = class extends React.Component<
       if (asset_types.length > 0) {
         let current_asset_id = asset ? asset.get("id") : asset_types[0];
         let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
-        console.debug("AccountBalances: ", account_balances[current_asset_id]);
         balance = (
           <span
             style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }}
@@ -507,7 +552,6 @@ let Join = class extends React.Component<
     const isAmountIntTimes = new BigNumber(amountValue || 1)
       .mod(projectStat.precision)
       .isZero();
-    console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
     const avail = base_max_quota - base_received;
     const isOverflow = amountValue > avail;
@@ -676,14 +720,22 @@ let Join = class extends React.Component<
 
             <Button
               className={classnames("button float-right no-margin", {
-                disabled: isSendNotValid
+                disabled: isSendNotValid || this.state.btnTimer > 0
               })}
               style={{ padding: "0 1em" }}
-              disabled={isSendNotValid}
+              disabled={isSendNotValid || this.state.btnTimer > 0}
               type="primary"
               value="Submit"
             >
-              <Translate component="span" content="eto.take_in" />
+              {this.state.btnTimer > 0 ? (
+                <Translate
+                  component="span"
+                  content="eto.waiting"
+                  timer={this.state.btnTimer}
+                />
+              ) : (
+                <Translate component="span" content="eto.take_in" />
+              )}
             </Button>
           </div>
 
@@ -739,7 +791,7 @@ let Join = class extends React.Component<
           <Translate content="eto.overflow" unsafe component="li" />
           <Translate content="eto.be_patient" component="li" />
         </ul>
-        {!isOpen && (
+        {!isOpen || !canJoin && (
           <div
             className="closed-mask"
             style={{
@@ -755,7 +807,8 @@ let Join = class extends React.Component<
               justifyContent: "center"
             }}
           >
-            <Translate component="h4" content="eto.closed_tip" project={name} />
+            {!isOpen && <Translate component="h4" content="eto.closed_tip" project={name} />}
+            {!canJoin && <Translate component="h4" content="eto.invalid_user" project={name} />}
           </div>
         )}
       </div>

@@ -1,4 +1,6 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
+import { Button } from "components/Common";
 
 export type TimerButtonProps = {
   timeToCount: number;
@@ -28,10 +30,10 @@ export class TimerButton extends React.Component<TimerButtonProps, any> {
   render() {
     let className = "button" + (this.state.time <= 0 ? "" : " disabled");
     return (
-      <button className={className} disabled={this.state.time > 0} onClick={this.props.onClick} >
-        {this.state.time > 0 && (this.state.time + "s ")}
+      <Button {...this.props} disabled={this.state.time > 0}>
+        {this.state.time > 0 && this.state.time + "s "}
         {this.props.children}
-      </button>
+      </Button>
     );
   }
-} 
+}

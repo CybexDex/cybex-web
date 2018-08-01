@@ -1919,6 +1919,9 @@
     "current_state_avail": "剩余可认购额度：",
     "closed_tip": "当前项目 %(project)s ETO已结束,请谅解",
     "take_in": "参与ETO",
+    "waiting": "等待ETO确认（%(timer)ss）",
+    "dont_repeat": "您的转账需要经过ETO服务审核确认，可能需要大约数分钟的时间。在此期间内，您的有效参与金额不会发生变化，无需重复转账。",
+    "invalid_user": "未完成ETO资格认证",
     "cybex_in":
       "您将使用您Cybex账号内的%(asset)s参与本次ETO，本操作将消耗一定手续费",
     "confirm": "您将通过Cybex转账参与%(project)s项目的ETO",

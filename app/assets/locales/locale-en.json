@@ -1935,6 +1935,9 @@
     "closed_tip":
       "The current project %(project)s has ended, please understand",
     "take_in": "JOIN ETO",
+    "invalid_user": "The qualification for join the ETO has not been confirmed",
+    "dont_repeat": "It may take a few minutes for your transfer to go through ETO service audit and confirmation. During this period, your valid transfer amount won't change and there's no need to do it twice.",
+    "waiting": "Waiting For Comfirmation（%(timer)ss）",
     "cybex_in":
       "You will participate in the ETO by your %(asset)s balance in your CYBEX account, and the process may consume certain fees.",
     "confirm":
