@@ -51,13 +51,21 @@ class ProjectStat {
   }
 
   get amountRemained() {
-    return (
-      this.pDetail.base_token_count - this.pDetail.current_base_token_count
-    );
+    if (!this.pDetail.base_token_count) {
+      return this.pDetail.base_token_count;
+    }
+    return new BigNumber(this.pDetail.base_token_count).sub(
+      this.pDetail.current_base_token_count
+    ).toNumber();
   }
 
   get pAvail() {
-    return this.pDetail.base_max_quota - this.pStatus.base_received;
+    if (!this.pDetail.base_max_quota) {
+      return this.pDetail.base_max_quota;
+    }
+    return new BigNumber(this.pDetail.base_max_quota)
+      .sub(this.pStatus.base_received)
+      .toNumber();
   }
 
   get precision() {
