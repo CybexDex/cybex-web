@@ -24,9 +24,7 @@ import ReactTooltip from "react-tooltip";
 import ErrorTipBox from "components/Utility/ErrorTipBox";
 
 const getPrecision = (digits: number = 0) => {
-  return new BigNumber(1)
-    .dividedBy(new BigNumber(1).toPower(-digits))
-    .toNumber();
+  return new BigNumber(1).dividedBy(Math.pow(10, digits)).toNumber();
 };
 
 const getProjectStat = (
