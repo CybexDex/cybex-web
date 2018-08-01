@@ -23,15 +23,48 @@ import * as moment from "moment";
 import ReactTooltip from "react-tooltip";
 import ErrorTipBox from "components/Utility/ErrorTipBox";
 
+const getPrecision = (digits: number = 0) => {
+  return new BigNumber(1)
+    .dividedBy(new BigNumber(1).toPower(-digits))
+    .toNumber();
+};
+
+const getProjectStat = (
+  project: ETO.ProjectDetail,
+  status: ETO.AccountStatus
+) => {
+  return new ProjectStat(project, status);
+};
+
 class ProjectStat {
   constructor(
     private pDetail: ETO.ProjectDetail,
     private pStatus: ETO.AccountStatus
   ) {}
 
-  get used(){
-    return (this.pDetail.base_received + " " + base_token_name);
-  } 
+  get pUsed() {
+    return this.pStatus.base_received;
+  }
+
+  // get accountLimit
+
+  get isDelay() {
+    return !!this.pDetail.offer_at;
+  }
+
+  get amountRemained() {
+    return (
+      this.pDetail.base_token_count - this.pDetail.current_base_token_count
+    );
+  }
+
+  get pAvail() {
+    return this.pDetail.base_max_quota - this.pStatus.base_received;
+  }
+
+  get precision() {
+    return getPrecision(this.pDetail.base_accuracy);
+  }
 }
 
 let Join = class extends React.Component<
@@ -389,18 +422,6 @@ let Join = class extends React.Component<
       });
   };
 
-  _getPrecision(digits: number) {
-    return new BigNumber(1)
-      .dividedBy(new BigNumber(1).toPower(-digits))
-      .toNumber();
-  }
-
-  _getProjectStat({ base_received, base_max_quota, base_token_name }) {
-    return {
-      used: base_max_quota - base_received
-    };
-  }
-
   render() {
     console.log(this.state);
     const data = this.state.projectData || {};
@@ -476,10 +497,9 @@ let Join = class extends React.Component<
       String.prototype.replace.call(amount, /,/g, "")
     );
     const isAmountValid = amountValue && !isNaN(amountValue);
-    const precision = this._getPrecision(base_accuracy);
-    console.debug("Precision: ", precision);
+    const projectStat = getProjectStat(data, statusData);
     const isAmountIntTimes = new BigNumber(amountValue || 1)
-      .mod(precision)
+      .mod(projectStat.precision)
       .isZero();
     console.debug("A: ", isAmountIntTimes, amountValue, base_min_quota);
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
@@ -515,27 +535,66 @@ let Join = class extends React.Component<
             project={name}
             style={{ marginBottom: "2rem" }}
           />
-          {/*  A M O U N T   */}
+          {/* Project Stat */}
           <div className="illustration-list">
-            <Translate
-              content="eto.amount_remain"
-              component="section"
-              amount={
-                base_token_count - current_base_token_count + base_token_name
-              }
-            />
-            <Translate
-              content="eto.account_limit"
-              component="section"
-              cap={base_max_quota}
-              unit={base_min_quota}
-            />
-            <Translate
-              content="eto.current_state"
-              component="section"
-              used={base_received + " " + base_token_name}
-              avail={+" " + base_token_name}
-            />
+            <table>
+              <tbody>
+                <tr>
+                  <Translate
+                    className="item-lable"
+                    content="eto.amount_remain"
+                    component="td"
+                  />
+                  <td className="text-right" data-unit={base_token_name}>
+                    {projectStat.amountRemained}
+                  </td>
+                </tr>
+                <tr>
+                  <Translate
+                    className="item-lable"
+                    content="eto.account_limit_cap"
+                    component="td"
+                  />
+                  <td className="text-right" data-unit={base_token_name}>
+                    {base_max_quota}
+                  </td>
+                  <Translate
+                    className="item-lable"
+                    content="eto.account_limit_lower"
+                    component="td"
+                  />
+                  <td className="text-right" data-unit={base_token_name}>
+                    {base_min_quota}
+                  </td>
+                  <Translate
+                    className="item-lable"
+                    content="eto.account_limit_unit"
+                    component="td"
+                  />
+                  <td className="text-right" data-unit={base_token_name}>
+                    {projectStat.precision}
+                  </td>
+                </tr>
+                <tr>
+                  <Translate
+                    className="item-lable"
+                    content="eto.current_state_used"
+                    component="td"
+                  />
+                  <td className="text-right" data-unit={base_token_name}>
+                    {projectStat.pUsed}
+                  </td>
+                  <Translate
+                    className="item-lable"
+                    content="eto.current_state_avail"
+                    component="td"
+                  />
+                  <td className="text-right" data-unit={base_token_name}>
+                    {projectStat.pAvail}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div className="content-block transfer-input">
             <AmountSelector
@@ -636,32 +695,41 @@ let Join = class extends React.Component<
             component="li"
             asset={base_token_name}
           />
-          <li>
-            <Translate
-              content="eto.complete_tip_1"
-              account={currentAccount && currentAccount.get("name")}
-            />
-            <span
-              className="highlight tooltip"
-              data-for="time"
-              data-offset="{ 'left': -50 }"
-              data-tip
-              data-place="top"
-            >
-              {moment.utc(end_at).format("YYYY-MM-DD HH:mm:ss")}
-            </span>
-            <ReactTooltip id="time" effect="solid">
-              <Translate content="eto.local_time" />：
-              {moment
-                .utc(end_at)
-                .toDate()
-                .toString()}
-            </ReactTooltip>
-            <Translate
-              content="eto.complete_tip_2"
-              account={currentAccount && currentAccount.get("name")}
-            />
-          </li>
+          {projectStat.isDelay ? (
+            <li>
+              <Translate
+                content="eto.complete_offer"
+                account={currentAccount && currentAccount.get("name")}
+              />
+              <span
+                className="highlight tooltip"
+                data-for="time"
+                data-offset="{ 'left': -50 }"
+                data-tip
+                data-place="top"
+              >
+                {moment.utc(end_at).format("YYYY-MM-DD HH:mm:ss")}
+              </span>
+              <ReactTooltip id="time" effect="solid">
+                <Translate content="eto.local_time" />：
+                {moment
+                  .utc(end_at)
+                  .toDate()
+                  .toString()}
+              </ReactTooltip>
+              <Translate
+                content="eto.complete_tip_2"
+                account={currentAccount && currentAccount.get("name")}
+              />
+            </li>
+          ) : (
+            <li>
+              <Translate
+                content="eto.complete_offer"
+                account={currentAccount && currentAccount.get("name")}
+              />
+            </li>
+          )}
           <Translate content="eto.overflow" unsafe component="li" />
           <Translate content="eto.be_patient" component="li" />
         </ul>

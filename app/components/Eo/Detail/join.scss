@@ -1,65 +1,75 @@
-.join-container{
-	width: 90%;
-	margin: 3rem auto;
-	.detail-join-btn{
-		width: 8rem;
-		height: 30px;
-		color: #000;
-		margin-right: 1rem;
-		&:hover{
-			background: #eee
-		}
-		&:active{
-			background: #ccc
-		}
-	}
-	.input-item{
-		position: relative;
-		overflow: hidden;
-	}
-	.error-msg{
-		width: 100%;
-		float: left;
-		color: red;
-		font-weight: 500;
-	}
-	.enter-info{
-		border: 1px solid #fff;
-		margin-right: 1rem;
-		float: left;
-		width: 60%;
-	}
-	.btn-group{
-		float: left;
-		width: 30%;
-	}
-	.description{
-		color: #ffd400;
-	}
+.join-container {
+  width: 90%;
+  margin: 3rem auto;
+  .detail-join-btn {
+    width: 8rem;
+    height: 30px;
+    color: #000;
+    margin-right: 1rem;
+    &:hover {
+      background: #eee;
+    }
+    &:active {
+      background: #ccc;
+    }
+  }
+  .input-item {
+    position: relative;
+    overflow: hidden;
+  }
+  .error-msg {
+    width: 100%;
+    float: left;
+    color: red;
+    font-weight: 500;
+  }
+  .enter-info {
+    border: 1px solid #fff;
+    margin-right: 1rem;
+    float: left;
+    width: 60%;
+  }
+  .btn-group {
+    float: left;
+    width: 30%;
+  }
+  .description {
+    color: #ffd400;
+  }
 }
 
 .join-wrapper {
-	padding: 0 1em;
-	.illustration-list {
-		line-height: 1.5;
-		margin-bottom: 2em;
-	}
+  padding: 0 1em;
+  .illustration-list {
+    line-height: 1.5;
+    margin-bottom: 2em;
+  }
 
-	li {
-		list-style-type: initial;
-		.highlight {
-			background: unset;
-			color: unset;
-			filter: brightness(1.36);
-		}
-	}
+  li {
+    list-style-type: initial;
+    .highlight {
+      background: unset;
+      color: unset;
+      filter: brightness(1.36);
+    }
+  }
 
-	.input-group {
-		height: 3.3334em !important;
-	}
+  .input-group {
+    height: 3.3334em !important;
+  }
 
-	.error-wrapper {
-		margin-top: 1em;
-	}
-	
+  .error-wrapper {
+    margin-top: 1em;
+  }
+}
+
+[data-unit]::after {
+  content: attr(data-unit);
+  padding-left: 0.4em;
+}
+
+.illustration-list {
+  .item-lable:not(:first-of-type) {
+    padding-left: 1.5em;
+  }
 }

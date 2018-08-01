@@ -1926,11 +1926,12 @@
 
   "eto": {
     "crowd_project": "ETO of %(project)s",
-    "amount_remain": "Remaining Quota: %(amount)s",
-    "account_limit":
-      "Personal Hard Cap: %(cap)s, Minimum Purchasing Unit: %(unit)s",
-    "current_state":
-      "You have subscribed: %(used)s, Remaining Quota: %(avail)s",
+    "amount_remain": "Remaining Quota:",
+    "account_limit_cap": "Personal Hard Cap:",
+    "account_limit_unit": "Minimum Purchasing Unit: ",
+    "account_limit_lower": "Minimum Purchasing: ",
+    "current_state_used": "You have subscribed: ",
+    "current_state_avail": "Remaining Quota: ",
     "closed_tip":
       "The current project %(project)s has ended, please understand",
     "take_in": "JOIN ETO",
@@ -1940,6 +1941,8 @@
       "You will participate in the %(project)s ETO by transferring in CYBEX",
     "complete_tip_1":
       "When ETO completes, project assets will be given away by ",
+    "complete_offer":
+      "The assets of this project will be deposited to your account (%(account)s) after successful subscription.",
     "complete_tip_2": " to your CYBEX account(%(account)s)",
     "local_time": "Local time",
     "int_times":
@@ -1949,9 +1952,9 @@
     "warning_overflow":
       "Your subscription cannot exceed the remaning quota of the project",
     "overflow":
-      "Your final subscription will be subject to the verification by the project holder. You can check through <span class=\"highlight\">\"ETO Project History---Subscribed\"</span>. When circumstances like personal hard cap exceeded or project.Quota oversubscription happens, the unconfirmed excess quota will be refunded to relevant CYBEX accounts when project ETO ends. ",
+      "Your final subscription will be subject to the verification by the project holder. You can check through <span class=\"highlight\">\"ETO Project History\"</span>. When circumstances like personal hard cap exceeded or project.Quota oversubscription happens, the unconfirmed excess quota will be refunded to relevant CYBEX accounts when project ETO ends. ",
     "be_patient":
-      "The final ETO participation result takes time to be confirmed. Please wait patiently. If you have any questions, please contact our community assistant through WeChat account: CybexServiceA",
+      "The final ETO participation result takes time to be confirmed. Please wait patiently. If you have any questions, please contact our community assistant through WeChat account: CybexServiceA.",
     "records": {
       "project_id": "Project",
       "block_num": "Block",
