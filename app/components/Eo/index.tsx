@@ -465,7 +465,6 @@ let EO = class extends React.Component<any, any> {
                                       ><span>{`${percent}%`}</span></div>
                                     )
                                   }
-                                  
                                 </div>
                               </div>
                             </div>

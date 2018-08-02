@@ -211,7 +211,6 @@ formatTime(input){
   // console.log(moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss'))
   return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss');
 }
-
 fetchDatas(){
   let data = {
     project: this.props.match.params.id
@@ -589,7 +588,9 @@ fetchDatas(){
     
     // let remainStr = this.state.remainStr;
     return (
-      <div className={`detail ${lang}`}>
+      <div>
+      {name?(
+        <div className={`detail ${lang}`}>
         <div className="left-part">
         
         {lang=='zh'?(
@@ -963,6 +964,21 @@ fetchDatas(){
           </LegalModalEn>
           )}
           
+      </div>
+      ):(
+        <div className="loading-detail-holder">
+        <div className="loading-detail">
+          <span className="line1"></span>
+          <span className="line2"></span>
+          <span className="line3"></span>
+          <span className="line4"></span>
+          <span className="line5"></span>
+          <span className="line6"></span>
+          <span className="line7"></span>
+          <span className="line8"></span>
+        </div>
+        </div>
+      )}
       </div>
     );
   }
