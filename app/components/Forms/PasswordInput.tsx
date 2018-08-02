@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import { Component } from "react";
 import cname from "classnames";
 import Translate from "react-translate-component";
-import pw from "zxcvbn";
+// import pw from "zxcvbn";
 import { Input } from "components/Common";
 
 class PasswordInput extends React.Component<any, any> {
@@ -135,20 +135,21 @@ class PasswordInput extends React.Component<any, any> {
 
     let strength: any = 0,
       score;
-    if (this.props.checkStrength) {
-      strength =
-        this.state.value.length > 100
-          ? { score: 4 }
-          : pw(this.state.value || "");
-      /* Require a length of passwordLength + 50% for the max score */
-      score = Math.min(
-        5,
-        strength.score +
-          Math.floor(
-            this.state.value.length / (this.props.passwordLength * 1.5)
-          )
-      );
-    }
+    // Todo: Hide strength for temp
+    // if (this.props.checkStrength) {
+    //   strength =
+    //     this.state.value.length > 100
+    //       ? { score: 4 }
+    //       : pw(this.state.value || "");
+    //   /* Require a length of passwordLength + 50% for the max score */
+    //   score = Math.min(
+    //     5,
+    //     strength.score +
+    //       Math.floor(
+    //         this.state.value.length / (this.props.passwordLength * 1.5)
+    //       )
+    //   );
+    // }
 
     return (
       <div className="account-selector">
@@ -161,7 +162,7 @@ class PasswordInput extends React.Component<any, any> {
             style={{
               fontSize: "1.25rem",
               height: "3.66667em",
-              marginBottom: this.props.checkStrength ? 0 : null
+              // marginBottom: this.props.checkStrength ? 0 : null
             }}
             icon="lock"
             iconStyle={{ transform: "scale(0.8)" }}
@@ -172,7 +173,7 @@ class PasswordInput extends React.Component<any, any> {
             onChange={this.handleChange}
             onKeyDown={this.onKeyDown}
           />
-          {this.props.checkStrength ? (
+          {/* {this.props.checkStrength ? (
             <progress
               style={{ height: 10, width: "100%" }}
               className={score === 5 ? "high" : score === 4 ? "medium" : "low"}
@@ -180,7 +181,7 @@ class PasswordInput extends React.Component<any, any> {
               max="5"
               // min="0"
             />
-          ) : null}
+          ) : null} */}
 
           {password_error}
         </div>

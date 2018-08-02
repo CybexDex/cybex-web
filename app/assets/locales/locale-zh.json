@@ -1953,6 +1953,7 @@
       "status_invalid_partly_sub": "部分无效",
       "status_valid_sub": "有效认购",
       "status_failed_to_receive": "到账失败",
+      "status_refund": "退款",
       "status_received": "到账成功",
       "status_undefined": "到账成功",
       "fund_type": {

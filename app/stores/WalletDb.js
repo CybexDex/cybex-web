@@ -316,16 +316,18 @@ class WalletDb extends BaseStore {
           });
       });
     };
+    console.debug("BrainDict brainkey_plaintext: ", brainkey_plaintext);
 
     let dictionaryPromise = brainkey_plaintext
       ? null
-      : require("common/dictionary.json");
+      : import("common/dictionary.json");
     // console.debug("DICT: ", dictionaryPromise);
     return Promise.all([dictionaryPromise])
       .then(res => {
+        console.debug("BrainDict: ", res);
         return brainkey_plaintext
           ? walletCreateFct(null)
-          : walletCreateFct(dictionaryPromise);
+          : walletCreateFct(res[0]);
       })
       .catch(err => {
         console.log("unable to fetch dictionary.json", err);

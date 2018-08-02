@@ -7,6 +7,9 @@ const {
   externals,
   defines
 } = require("./webpack.config");
+
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Clean = require("clean-webpack-plugin");
 const PreloadWebpackPlugin = require("preload-webpack-plugin");
@@ -92,12 +95,8 @@ const prodPlugins = plugins.concat([
     // both options are optional
     filename: "[name]-[hash:7].css",
     chunkFilename: "[id]-[hash:7].css"
-  })
-  // new webpack.LoaderOptionsPlugin({
-  //   minimize: true,
-  //   debug: false
-  // })
-  // new webpack.optimize.ModuleConcatenationPlugin(),
+  }),
+  new BundleAnalyzerPlugin()
 ]);
 
 const config = {

@@ -286,7 +286,7 @@ let CreateAccount = Radium(
                 confirmation={true}
                 onChange={this.onPasswordChange.bind(this)}
                 noLabel
-                checkStrength
+                // checkStrength
               />
             )}
 

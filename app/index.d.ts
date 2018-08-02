@@ -84,6 +84,23 @@ declare namespace ETO {
     type: "nomal";
     update_at: "2018-07-21 05:22:12";
   };
+  type ETORecord = {
+    block_num: number | null;
+    created_at: string;
+    id: string;
+    ieo_status: string;
+    ieo_type: string;
+    lock_at: null;
+    memo: string;
+    project_id: number;
+    project_name: string;
+    reason: string;
+    token: string;
+    token_count: number;
+    trade_num: number | null;
+    update_at: string;
+    user_id: string;
+  };
   // type ProjectDetail = {
   //   soft_cap: Optional;
   //   created_at: string;

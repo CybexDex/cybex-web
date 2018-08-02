@@ -23,13 +23,13 @@ const ReasonsType = {
   "7": "invalid_sub",
   "8": "invalid_sub",
   "9": "invalid_sub",
-  "10": "invalid_partly_sub",
-  "11": "invalid_partly_sub",
+  "10": "invalid_sub",
+  "11": "invalid_sub",
   "12": "invalid_partly_sub",
   "13": "invalid_partly_sub",
-  "16": "valid_sub",
-  "14": "valid_sub",
-  "15": "valid_sub"
+  "14": "invalid_partly_sub",
+  "15": "valid_sub",
+  "16": "refund",
 };
 
 let AccountIEO = class extends React.Component<{ account }, {}> {
@@ -54,12 +54,12 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                   columns={[
                     {
                       Header: counterpart.translate("eto.records.project_id"),
-                      accessor: (d: ETO.IEORecord) => d.project_name,
+                      accessor: (d: ETO.ETORecord) => d.project_name,
                       id: "project_id"
                     },
                     {
                       Header: counterpart.translate("eto.records.ieo_type"),
-                      accessor: (d: ETO.IEORecord) =>
+                      accessor: (d: ETO.ETORecord) =>
                         counterpart.translate(
                           `eto.records.fund_type.${d.ieo_type}`
                         ),
@@ -67,18 +67,18 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                     },
                     {
                       Header: counterpart.translate("eto.records.token"),
-                      accessor: (d: ETO.IEORecord) =>
+                      accessor: (d: ETO.ETORecord) =>
                         utils.replaceName(d.token).name,
                       id: "token"
                     },
                     {
                       Header: counterpart.translate("eto.records.token_count"),
-                      accessor: (d: ETO.IEORecord) => d.token_count,
+                      accessor: (d: ETO.ETORecord) => d.token_count,
                       id: "token_count"
                     },
                     {
                       Header: counterpart.translate("eto.records.ieo_status"),
-                      accessor: (d: ETO.IEORecord) =>
+                      accessor: (d: ETO.ETORecord) =>
                         counterpart.translate(
                           `eto.records.status_${ReasonsType[d.reason]}`
                         ),
@@ -86,7 +86,7 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                     },
                     {
                       Header: counterpart.translate("eto.records.update_at"),
-                      accessor: (d: ETO.IEORecord) => d.update_at,
+                      accessor: (d: ETO.ETORecord) => d.update_at,
                       id: "update_at",
                       Cell: row => (
                         <DateTime id={row.original.id} dateTime={row.original.update_at}/>
@@ -94,7 +94,7 @@ let AccountIEO = class extends React.Component<{ account }, {}> {
                     },
                     {
                       Header: counterpart.translate("eto.records.block_num"),
-                      accessor: (d: ETO.IEORecord) => d.block_num,
+                      accessor: (d: ETO.ETORecord) => d.block_num,
                       id: "block_num",
                       Cell: row => (
                         <Link to={`/block/${row.original.block_num}`}>

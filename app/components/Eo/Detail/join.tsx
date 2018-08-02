@@ -57,7 +57,7 @@ class ProjectStat {
       return this.pDetail.base_token_count;
     }
     return new BigNumber(this.pDetail.base_token_count)
-      .sub(this.pDetail.current_base_token_count)
+      .minus(this.pDetail.current_base_token_count)
       .toNumber();
   }
 
@@ -66,7 +66,7 @@ class ProjectStat {
       return this.pDetail.base_max_quota;
     }
     return new BigNumber(this.pDetail.base_max_quota)
-      .sub(this.pStatus.base_received)
+      .minus(this.pStatus.base_received)
       .toNumber();
   }
 

@@ -6,7 +6,7 @@ import { merge } from "lodash";
 import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
-import * as FingerPrint from "fingerprintjs2";
+// import * as FingerPrint from "fingerprintjs2";
 import { AbstractStore } from "./AbstractStore";
 
 export const MARKETS = [
@@ -203,9 +203,10 @@ class SettingsStore extends AbstractStore<any> {
       if (this.initDone) resolve();
       this.starredKey = this._getChainKey("markets");
       this.marketsKey = this._getChainKey("userMarkets");
-      let fp = new FingerPrint().get(result => {
-        this.fp = result;
-      });
+      this.fp = Math.floor(Math.random() * 100) + Date.now();
+
+      // let fp = new FingerPrint().get(result => {
+      // });
 
       // Default markets setup
       let topMarkets = {
