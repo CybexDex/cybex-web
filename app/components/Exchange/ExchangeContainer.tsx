@@ -200,7 +200,7 @@ let ExchangeSubscriber = class extends React.Component<any, any> {
       nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
     ) {
       /* Prediction markets should only be shown in one direction, if the link goes to the wrong one we flip it */
-      this.props.history.push(
+      this.props.router.push(
         `/market/${nextProps.baseAsset.get(
           "symbol"
         )}_${nextProps.quoteAsset.get("symbol")}`
@@ -211,7 +211,7 @@ let ExchangeSubscriber = class extends React.Component<any, any> {
       !nextProps.quoteAsset.getIn(["bitasset", "is_prediction_market"])
     ) {
       // console.debug("SwapMarket: ", baseAsset, quoteAsset, pair);
-      this.props.history.push(
+      this.props.router.push(
         `/market/${nextProps.baseAsset.get(
           "symbol"
         )}_${nextProps.quoteAsset.get("symbol")}`

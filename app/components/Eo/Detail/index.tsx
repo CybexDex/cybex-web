@@ -212,12 +212,10 @@ formatTime(input){
   return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss');
 }
 
-
 fetchDatas(){
   let data = {
     project: this.props.match.params.id
   }
-
   fetchJson.fetchDetails(data,(res)=>{
     if(res.result.control !== 'online'){
       console.log(this)
@@ -229,7 +227,6 @@ fetchDatas(){
     res.result.finish_at = this.formatTime(res.result.finish_at);
     res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
     res.result.lock_at = res.result.lock_at ? this.formatTime(res.result.lock_at) : null;
-
     // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
     
 
@@ -286,7 +283,6 @@ fetchDatas(){
               }else if(res.result.status == 'pre'){
                 return(
                   <div>
-
                     <input
                       type="checkbox"
                       checked={true}
@@ -297,7 +293,6 @@ fetchDatas(){
                   <div className="button primery-button disabled pre">
                   <Translate content="EIO.Wait_for_ETO" />
                     {/* 等待众筹开始 */}
-
                   </div>
                   </div>
                 )
@@ -461,13 +456,11 @@ fetchDatas(){
       this.fetchDatas();
     },3000)
   }
-
   public openModal = () => {
     this.setState({
       showModal: true
     })
   }
-
   sentdata(){
     ZfApi.publish("ieo-detail-modal", "close");
     ZfApi.publish("ieo-alert-modal", "open");
@@ -484,7 +477,6 @@ fetchDatas(){
       canBeReserve: e.target.checked
     })
   }
-
   render() {
     const data = this.state.data || {}
     const {
@@ -529,13 +521,11 @@ fetchDatas(){
       lock_at
     } = data;
     let base_tokens = data.base_tokens ||[]
-
     let percent = current_percent*100;
         percent = percent.toFixed(2);
     // let showPercent = `${percent>100?100:percent}%`;
     let showPercent = `${percent>99?99:(percent<2?(percent==0?0:2):percent)}%`;
     let now = moment();
-
     let countDownTime = moment(end_at).valueOf() - moment().valueOf();
       let endAt = moment(end_at);
       let startAt = moment(start_at);
@@ -648,7 +638,6 @@ fetchDatas(){
             
           </div>
         </div>):null}
-
         {/* {rate?(<div className="info-item">
           <div className="info-title">
             <Translate content="EIO.Redeeming_Ratio" />: 
@@ -656,7 +645,6 @@ fetchDatas(){
           <div className="info-detail">1{base_token_name}={rate}{token}</div>
         </div>):null} */}
         
-
         {/*waiting for start*/}
         {/* {base_max_quota?(<div className="info-item">
           <div className="info-title">
@@ -738,13 +726,11 @@ fetchDatas(){
             <div className="info-detail">{adds_token_total__lang_en}</div>
           </div>):null
           )}
-
           {base_hard_cap ? (
               <div className="info-item">
                 <div className="info-title">
                   <Translate content="EIO.Hard_cap" />
                 </div>
-
                 <div className="info-detail">{base_hard_cap}</div>
               </div>
             ) : null}
@@ -767,7 +753,6 @@ fetchDatas(){
                 <div className="info-title">
                   <Translate content="EIO.Lock-up_Period" />
                 </div>
-
                 <div className="info-detail">{lock_at}</div>
               </div>
             ) : null}
@@ -910,10 +895,6 @@ fetchDatas(){
             
           
           
-
-
-
-
           <div className="button-holder">
           {/* {create_user_type?(
             <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
@@ -957,7 +938,6 @@ fetchDatas(){
               </div>
               // </Link>
             ):(
-
               <div className="button primery-button disabled">
               <Translate content="EIO.Verifying" />
               </div>
@@ -988,7 +968,6 @@ fetchDatas(){
   }
 }
 //  export default Detail;
-
  export default connect(Detail,{
   listenTo() {
     return [AccountStore];
@@ -1003,5 +982,3 @@ fetchDatas(){
     }
   }
 })
-
-
