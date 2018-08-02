@@ -1,3 +1,90 @@
+.loading-detail-holder{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+.loading-detail {
+    width: 80px;
+    height: 60px;
+    margin: 0 auto;
+	position: relative;
+	top: 35%;
+	span {
+		width: 5px;
+		height: 10px;
+		background-color: #ccc;
+		position: absolute;
+		left: 38px;
+		animation: loading 1s infinite;
+		border-radius: 5px;
+	}
+	
+	.line1 {
+		background-color: #000;
+		transform: rotate(0deg);
+				transform: rotate(0deg);
+		animation-delay: .3s;
+	}
+	.line2 {
+		top: 5px;
+		left: 52px;
+		transform: rotate(45deg);
+				transform: rotate(45deg);
+		animation-delay: .4s;
+	}
+	.line3 {
+		top: 18px;
+		left: 57px;
+		transform: rotate(90deg);
+				transform: rotate(90deg);
+		animation-delay: .5s;
+	}
+	.line4 {
+		top: 31px;
+		left: 52px;
+		transform: rotate(135deg);
+				transform: rotate(135deg);
+		animation-delay: .6s;
+	}
+	.line5 {
+		top: 37px;
+		animation-delay: .7s;
+	}
+	.line6 {
+		top: 32px;
+		left: 24px;
+		transform: rotate(-135deg);
+				transform: rotate(-135deg);
+		animation-delay: .8s;
+	}
+	.line7 {
+		top: 18px;
+		left: 19px;
+		transform: rotate(-90deg);
+				transform: rotate(-90deg);
+		animation-delay: .9s;
+	}
+	.line8 {
+		top: 5px;
+		left: 24px;
+		transform: rotate(-45deg);
+				transform: rotate(-45deg);
+		animation-delay: 1s;
+	}
+	
+	@keyframes loading {
+		0% {
+			background-color: #ccc;
+		}
+		50% {
+			background-color: #000;
+		}
+		100% {
+			background-color: #ccc;
+		}
+	}
+}
+}
+
 .detail {
 	width: 1280px;
 	margin-top: 50px;

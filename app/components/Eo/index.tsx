@@ -435,10 +435,36 @@ let EO = class extends React.Component<any, any> {
                                     />
                                     {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
                                   </div>
-                                  <div
-                                    className="info-text"
-                                    style={{ left: showPercent }}
-                                  >{`${percent}%`}</div>
+                                  {
+                                    percent>93?(
+                                      <div
+                                        className="info-text"
+                                        style={{
+                                          left: showPercent,
+                                          transform:`rotateY(180deg)`,
+                                          marginLeft: '-47px'
+                                          
+                                          // percent
+                                        }}
+                                      ><span
+                                        style={{
+                                          transform:`rotateY(180deg)`,
+                                          display: 'block'
+                                        }}
+                                      >{`${percent}%`}</span></div>
+                                    ):(
+                                      <div
+                                        className="info-text"
+                                        style={{
+                                          left: showPercent,
+
+                                          // transform: percent>93?`rotateY(180deg)`:'auto'
+                                          
+                                          // percent
+                                        }}
+                                      ><span>{`${percent}%`}</span></div>
+                                    )
+                                  }
                                 </div>
                               </div>
                             </div>
