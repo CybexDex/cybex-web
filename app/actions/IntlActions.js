@@ -6,15 +6,15 @@ class IntlActions {
   switchLocale(locale) {
     // var locale = "cn"
     // console.debug("[IntlStore]Translate: ", locale);
-    if (/cn|en/.test(locale)) {
-      return { locale };
-    }
+    // if (/cn|zh/.test(locale)) {
+    //   return { locale };
+    // }
     return dispatch => {
       import("assets/locales/locale-" + locale + ".json")
         .then(result => {
           dispatch({
             locale,
-            localeData: result
+            localeData: result.default
           });
         })
         .catch(err => {

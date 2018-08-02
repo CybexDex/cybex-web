@@ -1,1 +1,0 @@
-[İşçiler](introduction/workers) Cybex'e özgü bir kavramdır. İşçiler, blok zincirinin kendisinden aldıkları maaş karşılığında hizmet sağlayan tekliflerdir. Teklifin amacını açıklayan bir web veya forum bağlantısı teklifin içine dahil edilmelidir, teklifleri burada görebilirsiniz :  [Cybextalk - Stakeholder Proposals Board](https://Cybextalk.org/index.php/board,75.0.html).

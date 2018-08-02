@@ -10,7 +10,6 @@ import BuySell from "./BuySell";
 import utils from "common/utils";
 import PriceChartD3 from "./PriceChartD3";
 import assetUtils from "common/asset_utils";
-import DepthHighChart from "./DepthHighChart";
 import { debounce, cloneDeep } from "lodash";
 import BorrowModal from "../Modal/BorrowModal";
 import notify from "actions/NotificationActions";
@@ -24,7 +23,6 @@ import { Asset, Price, LimitOrderCreate } from "common/MarketClasses";
 import ConfirmOrderModal from "./ConfirmOrderModal";
 // import IndicatorModal from "./IndicatorModal";
 import OpenSettleOrders from "./OpenSettleOrders";
-import Highcharts from "highcharts/highstock";
 import ExchangeHeader from "./ExchangeHeader";
 import Translate from "react-translate-component";
 import { Apis } from "cybexjs-ws";
@@ -42,12 +40,6 @@ import { Tabs } from "./Tabs/Tabs";
 import { Button, Colors } from "components/Common";
 import { Icon } from "components/Common";
 import { Checkbox, Radio, getId, BaseColors } from "components/Common";
-
-Highcharts.setOptions({
-  global: {
-    useUTC: false
-  }
-});
 
 const INFO_TAB_MYORDER = "my-order",
   INFO_TAB_MARKET_HISTORY = "market-history",

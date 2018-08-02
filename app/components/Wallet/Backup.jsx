@@ -36,7 +36,7 @@ const connectObject = {
 class BackupCreate extends React.Component {
   render() {
     return (
-      <div style={{ maxWidth: "40rem" }}>
+      <div className="readable">
         <Create
           noText={this.props.noText}
           newAccount={

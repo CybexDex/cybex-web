@@ -7,7 +7,7 @@ const {
   externals,
   defines
 } = require("./webpack.config");
-
+const CompressionPlugin = require("compression-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -96,7 +96,8 @@ const prodPlugins = plugins.concat([
     filename: "[name]-[hash:7].css",
     chunkFilename: "[id]-[hash:7].css"
   }),
-  new BundleAnalyzerPlugin()
+  new BundleAnalyzerPlugin(),
+  new CompressionPlugin()
 ]);
 
 const config = {
@@ -210,9 +211,15 @@ const config = {
           enforce: true
         },
         "lib-chart": {
-          test: /lib\/react-stockcharts/,
+          test: /react-stockcharts/,
           name: "lib-chart",
           chunks: "initial",
+          enforce: true
+        },
+        "lib-chart-base": {
+          test: /highcharts/,
+          name: "lib-chart-base",
+          chunks: "all",
           enforce: true
         },
         "lib-container": {
@@ -222,29 +229,48 @@ const config = {
           enforce: true
         },
         "lib-theme": {
-          test: /lib\/react-foundation-apps/,
-          name: "lib-chart",
+          test: /lib\/react-foundation-apps|radium/,
+          name: "lib-theme",
           chunks: "initial",
           enforce: true
         },
-        commons: {
-          test: /node_modules\/[^(react)|(d3)]/,
-          name: "commons",
+        "lib-crypto": {
+          test: /core-js|elliptic/,
+          name: "lib-crypto",
           chunks: "initial",
+          enforce: true
+        },
+        "lib-moment": {
+          test: /moment/,
+          name: "lib-moment",
+          chunks: "all",
           enforce: true
         },
         react: {
-          test: /node_modules\/react.*/,
+          test: /react/,
           name: "framework",
           chunks: "initial",
           enforce: true
         },
-        d3: {
-          test: /node_modules\/d3.*/,
-          name: "d3",
-          chunks: "initial",
+        asset: {
+          test: /asset/,
+          name: "asset",
+          chunks: "all",
           enforce: true
-        }
+        },
+        d3: {
+          test: /d3/,
+          name: "d3",
+          chunks: "all",
+          enforce: true
+        },
+        commons: {
+          test: /node_modules/,
+          name: "commons",
+          chunks: "initial",
+          enforce: true,
+          priority: -20
+        },
       }
     },
     minimizer: [
