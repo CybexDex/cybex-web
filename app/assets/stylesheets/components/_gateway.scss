@@ -4,7 +4,8 @@
     background: inherit;
   }
 
-  input, select {
+  input,
+  select {
     margin-bottom: 0;
   }
   .ReactTable .-pagination .-btn {
@@ -22,15 +23,20 @@
     display: flex;
     align-items: center;
   }
-  
+
   .ReactTable .-pageJump input {
     width: 2em;
   }
   .ReactTable .-totalPages {
     margin: 0 0.5em;
     &::after {
-      content: attr("data-tail")
+      content: attr("data-tail");
     }
   }
-  
+
+  .ReactTable {
+    .rt-thead {
+      font-weight: bold;
+    }
+  }
 }
