@@ -280,7 +280,7 @@ let Header = class extends React.Component<any, any> {
       ) : null;
 
     let lock_unlock =
-      !!this.props.current_wallet || passwordLogin ? (
+      !!this.props.current_wallet || currentAccount ? (
         <div className="grp-menu-item">
           {this.props.locked ? (
             <a
