@@ -6,6 +6,7 @@ export const JadePool = __TEST__
       ADDRESS_TYPES: {
         "TEST.ETH": "ETH",
         "TEST.BTC": "BTC",
+        "TEST.VET": "VET",
         // "TEST.EOS": "EOS",
         "TEST.USDT": "USDT",
         "TEST.BAT": "BAT",
@@ -30,6 +31,7 @@ export const JadePool = __TEST__
       ADDRESS_ASSETS: {
         ETH: "TEST.ETH",
         BTC: "TEST.BTC",
+        VET: "TEST.VET",
         // ERC20
         // "EOS": "TEST.EOS",
         USDT: "TEST.USDT",
