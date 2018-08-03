@@ -28,7 +28,7 @@ const ReasonsType = {
   "12": "invalid_partly_sub",
   "13": "invalid_partly_sub",
   "14": "invalid_partly_sub",
-  "15": "valid_sub",
+  "15": "invalid_sub",
   "16": "refund"
 };
 
