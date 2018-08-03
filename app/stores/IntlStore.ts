@@ -17,7 +17,7 @@ import localeCodes from "assets/locales";
 import { AbstractStore } from "./AbstractStore";
 for (let localeCode of localeCodes) {
   import(`react-intl/locale-data/${localeCode}`).then(res => {
-    addLocaleData(res);
+    addLocaleData(res.default);
   });
 }
 

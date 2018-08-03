@@ -520,7 +520,7 @@
 							}
 						}
 						.title{
-							width: 315px;
+							// width: 315px;
 							height: 42px;
 							font-size: 32px;
 							font-weight: 500;
@@ -717,11 +717,11 @@
 	}
 		
 	.pin img {
-		padding-bottom: 1em;
+		padding-bottom: 0.2em;
 		margin-bottom: 0.5em;
 		width: 80px;
 		height: 80px;
-		border: .5px solid #aaa;
+		// border: .5px solid #aaa;
 		border-radius: 50%;
 		background: #fff;
 	}

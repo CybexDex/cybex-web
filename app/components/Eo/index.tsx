@@ -16,6 +16,7 @@ import * as humanize from "./humanize.js";
 import Swiper from "react-id-swiper";
 import Icon from "../Icon/Icon";
 import "./swiper.scss";
+import TextTruncate from "react-text-truncate";
 
 let EO = class extends React.Component<any, any> {
   // nestedRef;
@@ -374,7 +375,7 @@ let EO = class extends React.Component<any, any> {
                                   ? e.adds_keyword
                                   : e.adds_keyword__lang_en}
                               </h4>
-                              <p
+                              <TextTruncate
                                 className="proj-desc"
                                 style={{
                                   overflow: "hidden",
@@ -383,11 +384,14 @@ let EO = class extends React.Component<any, any> {
                                   WebkitLineClamp: 2,
                                   WebkitBoxOrient: "vertical"
                                 }}
-                              >
-                                {lang == "zh"
-                                  ? e.adds_advantage
-                                  : e.adds_advantage__lang_en}
-                              </p>
+                                line={lang == "zh" ? 4 : 2}
+                                truncateText="…"
+                                text={
+                                  lang == "zh"
+                                    ? e.adds_advantage
+                                    : e.adds_advantage__lang_en
+                                }
+                              />
                             </div>
                           ) : (
                             // <div className={`keyword-holder ${e.status}`}>
@@ -408,7 +412,7 @@ let EO = class extends React.Component<any, any> {
                             // </div>
                           )}
                         </div>
-                        <div className="bottom-holder">
+                        <div className="bottom-holder" style={{marginTop: "1em"}}>
                           <Link to={`/eto/detail/${e.id}`}>
                             <div
                               className={`button primery-button ${e.status}`}
@@ -435,36 +439,38 @@ let EO = class extends React.Component<any, any> {
                                     />
                                     {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
                                   </div>
-                                  {
-                                    percent>93?(
-                                      <div
-                                        className="info-text"
-                                        style={{
-                                          left: showPercent,
-                                          transform:`rotateY(180deg)`,
-                                          marginLeft: '-47px'
-                                          
-                                          // percent
-                                        }}
-                                      ><span
-                                        style={{
-                                          transform:`rotateY(180deg)`,
-                                          display: 'block'
-                                        }}
-                                      >{`${percent}%`}</span></div>
-                                    ):(
-                                      <div
-                                        className="info-text"
-                                        style={{
-                                          left: showPercent,
+                                  {percent > 93 ? (
+                                    <div
+                                      className="info-text"
+                                      style={{
+                                        left: showPercent,
+                                        transform: `rotateY(180deg)`,
+                                        marginLeft: "-47px"
 
-                                          // transform: percent>93?`rotateY(180deg)`:'auto'
-                                          
-                                          // percent
+                                        // percent
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          transform: `rotateY(180deg)`,
+                                          display: "block"
                                         }}
-                                      ><span>{`${percent}%`}</span></div>
-                                    )
-                                  }
+                                      >{`${percent}%`}</span>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="info-text"
+                                      style={{
+                                        left: showPercent
+
+                                        // transform: percent>93?`rotateY(180deg)`:'auto'
+
+                                        // percent
+                                      }}
+                                    >
+                                      <span>{`${percent}%`}</span>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>
