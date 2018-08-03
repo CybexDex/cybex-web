@@ -416,7 +416,7 @@ let EO = class extends React.Component<any, any> {
                               {e.status == "ok" ? (
                                 <Translate content="EIO.Join_in_ETO" />
                               ) : e.status == "pre" ? (
-                                <Translate content="EIO.Reserve_ETO" />
+                                <Translate content="EIO.Join_in_ETO" />
                               ) : e.status == "finish" ? (
                                 <Translate content="EIO.Details" />
                               ) : (

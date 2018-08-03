@@ -805,12 +805,12 @@ fetchDatas(){
             </div>
           )}
           
-          {base_token_count?(<div className="info-item">
+          {/* {base_token_count?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Quota" />
             </div>
             <div className="info-detail">{base_token_count}{base_token_name}</div>
-          </div>):null}
+          </div>):null} */}
           
           {district_restriction?(<div className="info-item">
             <div className="info-title">
