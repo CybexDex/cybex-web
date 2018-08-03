@@ -28,12 +28,16 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
     // if (this.props.balances === undefined || !this.props.total_by_account_asset.size)
     //   return <div></div>;
     // console.debug("total_by_account_asset: ", this.props.total_by_account_asset);
+    let sortFn = (pre, next) => (pre["id"] < next["id"] ? -1 : 1);
     let unclaimed =
       this.props.total_by_account_asset &&
-      this.props.total_by_account_asset.toArray()[0];
+      this.props.total_by_account_asset.toArray();
+    console.debug("Unclamed: ");
     let balances =
-      unclaimed &&
-      unclaimed.balances.sort((pre, next) => (pre["id"] < next["id"] ? -1 : 1));
+      unclaimed.length &&
+      unclaimed
+        .map(unc => unc.balances.sort(sortFn))
+        .reduce((prev, next) => [...prev, ...next]);
     return (
       <div>
         <table className="table dashboard-table vest-table">
@@ -65,64 +69,61 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
           </thead>
           <tbody>
             {balances &&
-              balances
-                .filter(v => !!v.vesting_policy)
-                .map(vestingItem => {
-                  let index = vestingItem["id"];
-                  let { vesting_policy, public_key_string } = vestingItem;
-                  let endDate = moment
-                    .utc(vesting_policy.begin_timestamp)
-                    .add(vesting_policy.vesting_cliff_seconds, "s");
-                  let now = moment.utc();
-                  let progress =
-                    vesting_policy.vesting_cliff_seconds -
-                    (endDate.valueOf() - now.valueOf()) / 1000;
-                  return (
-                    <tr key={index}>
-                      <td>
-                        <input
-                          type="checkbox"
-                          // checked={!!this.props.checked.get(index)}
-                          onChange={e => this.onCheckbox(index, vestingItem, e)}
-                          disabled={now.isBefore(endDate)}
+              balances.filter(v => !!v.vesting_policy).map(vestingItem => {
+                let index = vestingItem["id"];
+                let { vesting_policy, public_key_string } = vestingItem;
+                let endDate = moment
+                  .utc(vesting_policy.begin_timestamp)
+                  .add(vesting_policy.vesting_cliff_seconds, "s");
+                let now = moment.utc();
+                let progress =
+                  vesting_policy.vesting_cliff_seconds -
+                  (endDate.valueOf() - now.valueOf()) / 1000;
+                return (
+                  <tr key={index}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        // checked={!!this.props.checked.get(index)}
+                        onChange={e => this.onCheckbox(index, vestingItem, e)}
+                        disabled={now.isBefore(endDate)}
+                      />
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      {vesting_policy.begin_balance ? (
+                        <FormattedAsset
+                          amount={vestingItem.balance.amount}
+                          asset={vestingItem.balance.asset_id}
+                          hide_amount
                         />
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        {vesting_policy.begin_balance ? (
+                      ) : null}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      {vesting_policy.begin_balance ? (
+                        <div>
                           <FormattedAsset
                             amount={vestingItem.balance.amount}
                             asset={vestingItem.balance.asset_id}
-                            hide_amount
+                            hide_asset
                           />
-                        ) : null}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        {vesting_policy.begin_balance ? (
-                          <div>
-                            <FormattedAsset
-                              amount={vestingItem.balance.amount}
-                              asset={vestingItem.balance.asset_id}
-                              hide_asset
-                            />
-                          </div>
-                        ) : null}
-                      </td>
-                      <td style={{ textAlign: "center" }}>
-                        {endDate.format("YYYY-MM-DD HH:mm:ss zZ")}
-                      </td>
-                      <td>
-                        {vesting_policy.begin_timestamp && (
-                          <progress
-                            value={progress}
-                            max={vesting_policy.vesting_cliff_seconds}
-                          />
-                        )}
-                      </td>
-                      <td>{public_key_string}</td>
-                    </tr>
-                  );
-                })
-                .toArray()}
+                        </div>
+                      ) : null}
+                    </td>
+                    <td style={{ textAlign: "center" }}>
+                      {endDate.format("YYYY-MM-DD HH:mm:ss zZ")}
+                    </td>
+                    <td>
+                      {vesting_policy.begin_timestamp && (
+                        <progress
+                          value={progress}
+                          max={vesting_policy.vesting_cliff_seconds}
+                        />
+                      )}
+                    </td>
+                    <td>{public_key_string}</td>
+                  </tr>
+                );
+              })}
             {!this.props.total_by_account_asset ||
               (this.props.total_by_account_asset.size === 0 && (
                 <tr>
