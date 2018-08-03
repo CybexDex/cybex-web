@@ -563,7 +563,7 @@ let Join = class extends React.Component<
       balanceError ||
       !isAmountIntTimes ||
       isTooLow ||
-      // !isOpen ||
+      !isOpen ||
       isOverflow;
     return (
       <div
@@ -792,7 +792,7 @@ let Join = class extends React.Component<
           <Translate content="eto.overflow" unsafe component="li" />
           <Translate content="eto.be_patient" component="li" />
         </ul>
-        {!isOpen || !canJoin && (
+        {(!isOpen || !canJoin) && (
           <div
             className="closed-mask"
             style={{
@@ -808,7 +808,7 @@ let Join = class extends React.Component<
               justifyContent: "center"
             }}
           >
-            {!isOpen && <Translate component="h4" content="eto.closed_tip" project={name} />}
+            {canJoin && !isOpen && <Translate component="h4" content="eto.closed_tip" project={name} />}
             {!canJoin && <Translate component="h4" content="eto.invalid_user" project={name} />}
           </div>
         )}
