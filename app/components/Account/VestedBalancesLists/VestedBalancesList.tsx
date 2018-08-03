@@ -34,6 +34,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
       this.props.total_by_account_asset.toArray();
     console.debug("Unclamed: ");
     let balances =
+      unclaimed &&
       unclaimed.length &&
       unclaimed
         .map(unc => unc.balances.sort(sortFn))
