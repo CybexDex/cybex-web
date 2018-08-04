@@ -1965,7 +1965,7 @@
       "block_num": "Block",
       "update_at": "Update At (UTC)",
       "ieo_status": "Status",
-      "ieo_type": "Opeartion",
+      "ieo_type": "Operation",
       "token_count": "Token Amount",
       "token": "Asset",
       "no_data": "No available records",
