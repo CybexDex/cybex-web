@@ -453,7 +453,7 @@ fetchDatas(){
     
     window.cao = setInterval(()=>{
       this.fetchDatas();
-    },3000)
+    },60000)
   }
   public openModal = () => {
     this.setState({

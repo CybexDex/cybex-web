@@ -107,6 +107,7 @@ let Join = class extends React.Component<
 
   nestedRef;
   btnTimer;
+  timerCounter = 0;
 
   constructor(props) {
     super(props);
@@ -138,7 +139,11 @@ let Join = class extends React.Component<
 
   componentDidMount() {
     this.updateProject();
-    ChainStore.subscribe(this.updateProject);
+    ChainStore.subscribe(() => {
+      if (this.timerCounter++ % 20 === 0) {
+        this.updateProject();
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -421,7 +426,7 @@ let Join = class extends React.Component<
             className="confirm-tip text-center"
             content="eto.confirm"
             component="h5"
-            style={{marginTop: "1em"}}
+            style={{ marginTop: "1em" }}
             project={name}
           />
 
@@ -808,8 +813,21 @@ let Join = class extends React.Component<
               justifyContent: "center"
             }}
           >
-            {canJoin && !isOpen && <Translate component="h4" content="eto.closed_tip" project={name} />}
-            {!canJoin && <Translate component="h4" content="eto.invalid_user" project={name} />}
+            {canJoin &&
+              !isOpen && (
+                <Translate
+                  component="h4"
+                  content="eto.closed_tip"
+                  project={name}
+                />
+              )}
+            {!canJoin && (
+              <Translate
+                component="h4"
+                content="eto.invalid_user"
+                project={name}
+              />
+            )}
           </div>
         )}
       </div>
