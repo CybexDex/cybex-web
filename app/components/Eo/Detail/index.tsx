@@ -450,7 +450,7 @@ fetchDatas(){
   });
 }
   componentDidMount(){
-    
+    this.fetchDatas();    
     window.cao = setInterval(()=>{
       this.fetchDatas();
     },60000)
@@ -572,7 +572,7 @@ fetchDatas(){
         break;
         case 'finish':
         // countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
-        remainStr = shortEnglishHumanizer(endAt.diff(startAt)).replace(/[\,]/g,'');
+        remainStr = shortEnglishHumanizer(finishAt.diff(startAt)).replace(/[\,]/g,'');
         break;
         case 'ok':
         // countDownTime = moment(endAt).valueOf() - moment().valueOf();

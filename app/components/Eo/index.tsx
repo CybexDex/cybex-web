@@ -277,7 +277,7 @@ let EO = class extends React.Component<any, any> {
                       countDownTime =
                         moment(finishAt).valueOf() - moment(endAt).valueOf();
                       remainStr = shortEnglishHumanizer(
-                        endAt.diff(startAt)
+                        finishAt.diff(startAt)
                       ).replace(/[\,]/g, "");
                       break;
                     case "ok":

@@ -45,14 +45,21 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
     return (
       open && (
         <BaseModal modalId={this.props.modalId}>
-          <Translate
+          {/* <Translate
             className="text-center"
             unsafe
             component="h3"
             content="first.title"
-          />
+          /> */}
+          <h3 className="text-center">【ETO时间调整通知】</h3>
           <div className="modal-content game-modal">
-            <Translate
+            <p className="text-center">
+              ETO参与页面已完全恢复正常，请大家积极参与！
+            </p>
+            <p className="text-center">首轮结束时间延迟至12:45结束！</p>
+            <p className="text-center">第二轮参与开始时间13:00</p>
+            <p className="text-center">感谢您的参与！</p>
+            {/* <Translate
               className="text-center"
               unsafe
               component="section"
@@ -87,7 +94,7 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
               unsafe
               component="section"
               content="first.footer"
-            />
+            /> */}
           </div>
           <div className="modal-footer">
             <p className="text-center">
@@ -103,16 +110,19 @@ class EthModal extends React.Component<props, { fadeOut?; neverShow? }> {
   }
 }
 
-const GameModalWapper = connect(EthModal, {
-  listenTo() {
-    return [ModalStore];
-  },
-  getProps(props) {
-    let { modalId } = props;
-    return {
-      open: ModalStore.getState().showingModals.has(modalId)
-    };
+const GameModalWapper = connect(
+  EthModal,
+  {
+    listenTo() {
+      return [ModalStore];
+    },
+    getProps(props) {
+      let { modalId } = props;
+      return {
+        open: ModalStore.getState().showingModals.has(modalId)
+      };
+    }
   }
-});
+);
 
 export default GameModalWapper;
