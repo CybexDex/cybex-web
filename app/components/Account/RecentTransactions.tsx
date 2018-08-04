@@ -8,7 +8,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import utils from "common/utils";
 import { ChainTypes as grapheneChainTypes } from "cybexjs";
 import TransitionWrapper from "../Utility/TransitionWrapper";
-import ps from "perfect-scrollbar";
+import * as ps from "perfect-scrollbar";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 
@@ -28,7 +28,7 @@ function textContent(n) {
   return n ? `"${n.textContent.replace(/[\s\t\r\n]/gi, " ")}"` : "";
 }
 
-class RecentTransactions extends React.Component {
+let RecentTransactions = class extends React.Component<any, any> {
   static propTypes = {
     accountsList: ChainTypes.ChainAccountsList.isRequired,
     compactView: PropTypes.bool,
@@ -46,7 +46,7 @@ class RecentTransactions extends React.Component {
   };
 
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       limit: props.limit || 20,
       csvExport: false,
@@ -58,14 +58,14 @@ class RecentTransactions extends React.Component {
   componentDidMount() {
     if (!this.props.fullHeight) {
       let t = this.refs.transactions;
-      ps.initialize(t);
+      ps.initialize(t as any);
 
       this._setHeaderHeight();
     }
   }
 
   _setHeaderHeight() {
-    let height = this.refs.header.offsetHeight;
+    let height = (this.refs.header as any).offsetHeight;
 
     if (height !== this.state.headerHeight) {
       this.setState({
@@ -113,13 +113,13 @@ class RecentTransactions extends React.Component {
 
   componentDidUpdate() {
     if (this.state.csvExport) {
-      this.state.csvExport = false;
+      (this.state as any).csvExport = false;
       const csv_export_container = document.getElementById(
         "csv_export_container"
       );
       const nodes = csv_export_container.childNodes;
       let csv = "";
-      for (const n of nodes) {
+      for (const n of nodes as any) {
         //console.log("-- RecentTransactions._downloadCSV -->", n);
         const cn = n.childNodes;
         if (csv !== "") csv += "\n";
@@ -149,7 +149,7 @@ class RecentTransactions extends React.Component {
 
     if (!this.props.fullHeight) {
       let t = this.refs.transactions;
-      ps.update(t);
+      ps.update(t as any);
 
       this._setHeaderHeight();
     }
@@ -162,6 +162,7 @@ class RecentTransactions extends React.Component {
   }
 
   _getHistory(accountsList, filterOp, customFilter) {
+    let { showFullHistory } = this.state;
     let history = [];
     let seen_ops = new Set();
     // console.debug("AccountList: ", accountsList);
@@ -201,8 +202,19 @@ class RecentTransactions extends React.Component {
     return history;
   }
 
-  _downloadCSV() {
-    this.setState({ csvExport: true });
+  async _downloadCSV() {
+    let { accountsList } = this.props;
+    let current_account_id =
+      accountsList.length === 1 && accountsList[0]
+        ? accountsList[0].get("id")
+        : null;
+    if (current_account_id) {
+      let fullHistory = await utils.getAccountFullHistory(current_account_id);
+      this.setState({
+        csvExport: true,
+        fullHistory
+      });
+    }
   }
 
   _onChangeFilter(e) {
@@ -220,7 +232,7 @@ class RecentTransactions extends React.Component {
       style,
       maxHeight
     } = this.props;
-    let { limit, headerHeight } = this.state;
+    let { limit, headerHeight, fullHistory } = this.state;
     let current_account_id =
       accountsList.length === 1 && accountsList[0]
         ? accountsList[0].get("id")
@@ -263,7 +275,7 @@ class RecentTransactions extends React.Component {
 
     let display_history = history.length
       ? history.slice(0, limit).map(o => {
-        return (
+          return (
             <Operation
               style={alignLeft}
               key={o.id}
@@ -276,18 +288,18 @@ class RecentTransactions extends React.Component {
               hideOpLabel={compactView}
             />
           );
-      })
+        })
       : [
-        <tr key="no_recent">
-            <td colSpan={compactView ? "2" : "3"}>
+          <tr key="no_recent">
+            <td colSpan={compactView ? 2 : 3}>
               <Translate content="operation.no_recent" />
             </td>
           </tr>
-      ];
+        ];
     display_history.push(
       <tr className="total-value" key="total_value">
         <td className="column-hide-tiny" />
-        <td style={alignRight}>
+        <td style={alignRight as any}>
           {historyCount > 0 ? (
             <span>
               <a
@@ -334,8 +346,8 @@ class RecentTransactions extends React.Component {
             style={
               !this.props.fullHeight
                 ? {
-                  maxHeight: maxHeight - headerHeight
-                }
+                    maxHeight: maxHeight - headerHeight
+                  }
                 : null
             }
             ref="transactions"
@@ -350,7 +362,7 @@ class RecentTransactions extends React.Component {
               <thead>
                 <tr>
                   {compactView ? null : (
-                    <th style={alignLeft} className="column-hide-tiny">
+                    <th style={alignLeft as any} className="column-hide-tiny">
                       {this.props.showFilters ? (
                         <select
                           data-place="left"
@@ -365,7 +377,7 @@ class RecentTransactions extends React.Component {
                       ) : null}
                     </th>
                   )}
-                  <th style={alignLeft}>
+                  <th style={alignLeft as any}>
                     <Translate content="account.votes.info" />
                   </th>
                   <th />
@@ -385,7 +397,7 @@ class RecentTransactions extends React.Component {
                   <div>MEMO</div>
                   <div>AMOUNT</div>
                 </div>
-                {history.map(o => {
+                {fullHistory.map(o => {
                   return (
                     <Operation
                       key={o.id}
@@ -403,12 +415,12 @@ class RecentTransactions extends React.Component {
       </div>
     );
   }
-}
+};
 RecentTransactions = BindToChainState(RecentTransactions, {
   keep_updating: true
 });
 
-class TransactionWrapper extends React.Component {
+let TransactionWrapper = class extends React.Component {
   static propTypes = {
     asset: ChainTypes.ChainAsset.isRequired,
     to: ChainTypes.ChainAccount.isRequired,
@@ -420,9 +432,13 @@ class TransactionWrapper extends React.Component {
   };
 
   render() {
-    return <span className="wrapper">{this.props.children(this.props)}</span>;
+    return (
+      <span className="wrapper">
+        {(this.props.children as any)(this.props)}
+      </span>
+    );
   }
-}
+};
 TransactionWrapper = BindToChainState(TransactionWrapper);
 
 export { RecentTransactions, TransactionWrapper };

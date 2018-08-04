@@ -124,7 +124,7 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
                     <td>{public_key_string}</td>
                   </tr>
                 );
-              })}
+              }) || null}
             {!this.props.total_by_account_asset ||
               (this.props.total_by_account_asset.size === 0 && (
                 <tr>

@@ -289,7 +289,7 @@ let App = class extends React.Component<any, any> {
       console.debug("Show Support Modal");
       ModalActions.showModal(DEFAULT_SUPPORT_MODAL, true);
     }
-    ModalActions.showModal("ETO_MODAL", true);
+    // ModalActions.showModal("ETO_MODAL", true);
     console.debug("Context: ", this);
     this.context.router.history.listen(this._rebuildTooltips);
     // Todo
