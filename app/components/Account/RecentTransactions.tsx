@@ -11,10 +11,14 @@ import TransitionWrapper from "../Utility/TransitionWrapper";
 import * as ps from "perfect-scrollbar";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
+import { uniq } from "lodash";
+import { Button } from "../Common";
 
 const { operations } = grapheneChainTypes;
 const alignLeft = { textAlign: "left" };
 const alignRight = { textAlign: "right" };
+
+const cache = {};
 
 function compareOps(b, a) {
   if (a.block_num === b.block_num) {
@@ -162,16 +166,18 @@ let RecentTransactions = class extends React.Component<any, any> {
   }
 
   _getHistory(accountsList, filterOp, customFilter) {
-    let { showFullHistory } = this.state;
     let history = [];
     let seen_ops = new Set();
     // console.debug("AccountList: ", accountsList);
     for (let account of accountsList) {
-      if (account) {
-        let h = account.get("history");
+      if (account && account.get && account.get("history")) {
+        let fullH = cache[account.get("id")] || [];
+        let accountH = account.get("history").toJS();
+        let h = uniq(accountH.concat(fullH), tx => (tx as any).id);
+        console.debug("AccountH: ", fullH, accountH, h);
         if (h)
           history = history.concat(
-            h.toJS().filter(op => !seen_ops.has(op.id) && seen_ops.add(op.id))
+            h.filter((op: any) => !seen_ops.has(op.id) && seen_ops.add(op.id))
           );
       }
     }
@@ -203,18 +209,9 @@ let RecentTransactions = class extends React.Component<any, any> {
   }
 
   async _downloadCSV() {
-    let { accountsList } = this.props;
-    let current_account_id =
-      accountsList.length === 1 && accountsList[0]
-        ? accountsList[0].get("id")
-        : null;
-    if (current_account_id) {
-      let fullHistory = await utils.getAccountFullHistory(current_account_id);
-      this.setState({
-        csvExport: true,
-        fullHistory
-      });
-    }
+    this.setState({
+      csvExport: true
+    });
   }
 
   _onChangeFilter(e) {
@@ -222,6 +219,21 @@ let RecentTransactions = class extends React.Component<any, any> {
       filter: e.target.value
     });
   }
+
+  handleTryMore = async e => {
+    let { accountsList } = this.props;
+    let current_account_id =
+      accountsList.length === 1 && accountsList[0]
+        ? accountsList[0].get("id")
+        : null;
+    if (current_account_id) {
+      let fullHistory;
+      if (!cache[current_account_id]) {
+        fullHistory = await utils.getAccountFullHistory(current_account_id);
+        cache[current_account_id] = fullHistory;
+      }
+    }
+  };
 
   render() {
     let {
@@ -232,7 +244,7 @@ let RecentTransactions = class extends React.Component<any, any> {
       style,
       maxHeight
     } = this.props;
-    let { limit, headerHeight, fullHistory } = this.state;
+    let { limit, headerHeight } = this.state;
     let current_account_id =
       accountsList.length === 1 && accountsList[0]
         ? accountsList[0].get("id")
@@ -298,7 +310,11 @@ let RecentTransactions = class extends React.Component<any, any> {
         ];
     display_history.push(
       <tr className="total-value" key="total_value">
-        <td className="column-hide-tiny" />
+        <td className="column-hide-tiny text-center">
+          <a href="javascript:;" onClick={this.handleTryMore}>
+            <Translate content="account.try_more" />
+          </a>
+        </td>
         <td style={alignRight as any}>
           {historyCount > 0 ? (
             <span>
@@ -397,7 +413,7 @@ let RecentTransactions = class extends React.Component<any, any> {
                   <div>MEMO</div>
                   <div>AMOUNT</div>
                 </div>
-                {fullHistory.map(o => {
+                {history.map(o => {
                   return (
                     <Operation
                       key={o.id}
