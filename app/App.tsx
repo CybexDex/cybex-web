@@ -487,7 +487,7 @@ let App = class extends React.Component<any, any> {
             }}
           />
           <WalletUnlockModal />
-          <EthModal modalId={"ETO_MODAL"}/>
+          {/* <EthModal modalId={"ETO_MODAL"}/> */}
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />

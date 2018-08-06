@@ -231,6 +231,7 @@ let RecentTransactions = class extends React.Component<any, any> {
       if (!cache[current_account_id]) {
         fullHistory = await utils.getAccountFullHistory(current_account_id);
         cache[current_account_id] = fullHistory;
+        this.forceUpdate();
       }
     }
   };
@@ -311,9 +312,11 @@ let RecentTransactions = class extends React.Component<any, any> {
     display_history.push(
       <tr className="total-value" key="total_value">
         <td className="column-hide-tiny text-center">
-          <a href="javascript:;" onClick={this.handleTryMore}>
-            <Translate content="account.try_more" />
-          </a>
+          {!cache[current_account_id] && (
+            <a href="javascript:;" onClick={this.handleTryMore}>
+              <Translate content="account.try_more" />
+            </a>
+          )}
         </td>
         <td style={alignRight as any}>
           {historyCount > 0 ? (
