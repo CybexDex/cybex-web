@@ -184,6 +184,9 @@ async function queryImpl(
 }
 
 async function impl(method: string, params: any, dataName: string) {
+  if (dataName === "newDepositAddress") {
+    await client.resetStore();
+  }
   try {
     return (await client[method](params)).data[dataName];
   } catch (error) {
