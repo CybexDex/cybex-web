@@ -309,7 +309,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
                 passwordLength={12}
                 onChange={this.onPasswordChange.bind(this)}
                 noLabel
-                // checkStrength
+                checkStrength
               />
             </div>
             <div className="confirm-checks">

@@ -341,7 +341,7 @@ let InputValidator = props => {};
 const ACCOUNT_NAME_SET = /^[a-z0-9\.-]*$/;
 
 let LoginAccountInput = class extends React.PureComponent<
-  { onValidChange; errorMsgs? },
+  { onValidChange; errorMsgs?, accountName? },
   any
 > {
   valid = false;
@@ -352,6 +352,12 @@ let LoginAccountInput = class extends React.PureComponent<
       valid: false,
       onError: false
     };
+  }
+
+  componentDidMount() {
+    if (this.props.accountName) {
+      this.handleNameChange(this.props.accountName);
+    }
   }
 
   handleNameChange = async name => {

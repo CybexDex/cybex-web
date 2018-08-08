@@ -5,6 +5,7 @@ import Trigger from "react-foundation-apps/src/trigger";
 import BaseModal from "../Modal/BaseModal";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import PasswordInput from "../Forms/PasswordInput";
+import { Button } from "components/Common";
 import notify from "actions/NotificationActions";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -64,11 +65,12 @@ class WalletUnlockModal extends React.Component {
         //if(this.props.reject) this.props.reject()
         WalletUnlockActions.cancel();
       } else if (msg === "open") {
+
+        if (this.refs.password_input) {
+          this.refs.password_input.clear();
+          this.refs.password_input.focus();
+        }
         if (!this.props.passwordLogin) {
-          if (this.refs.password_input) {
-            this.refs.password_input.clear();
-            this.refs.password_input.focus();
-          }
           if (
             WalletDb.getWallet() &&
             Apis.instance().chain_id !== WalletDb.getWallet().chain_id
@@ -91,6 +93,7 @@ class WalletUnlockModal extends React.Component {
     });
 
     if (this.props.passwordLogin) {
+      this.refs.password_input.clear();
       if (this.state.account_name) {
         this.refs.password_input.focus();
       } else if (
@@ -113,9 +116,8 @@ class WalletUnlockModal extends React.Component {
   onPasswordEnter(e) {
     const { passwordLogin } = this.props;
     e.preventDefault();
-    const password = passwordLogin
-      ? this.refs.password_input.value
-      : this.refs.password_input.value();
+    console.debug("This Ref: ", this);
+    const password = this.refs.password_input.value();
     const account = passwordLogin
       ? this.state.account && this.state.account.get("name")
       : null;
@@ -129,10 +131,8 @@ class WalletUnlockModal extends React.Component {
       this.setState({ password_error: true });
       return false;
     } else {
+      this.refs.password_input.clear();
       if (!passwordLogin) {
-        this.refs.password_input.clear();
-      } else {
-        this.refs.password_input.value = "";
         AccountActions.setPasswordAccount(account);
       }
       ZfApi.publish(this.props.modalId, "close");
@@ -228,7 +228,7 @@ class WalletUnlockModal extends React.Component {
       <form
         onSubmit={this.onPasswordEnter}
         noValidate
-        style={{ paddingTop: 20, marginRight: "3.5rem" }}
+        style={{ paddingTop: 20 }}
       >
         {/* Dummy input to trick Chrome into disabling auto-complete */}
         <input
@@ -236,61 +236,72 @@ class WalletUnlockModal extends React.Component {
           className="no-padding no-margin"
           style={{ visibility: "hidden", height: 0 }}
         />
+        <div className="form-wrapper" style={{ marginRight: "3.5rem" }}>
+          <div className="content-block">
+            <AccountSelector
+              label="account.name"
+              ref="account_input"
+              accountName={account_name}
+              onChange={this.accountChanged.bind(this)}
+              onAccountChanged={this.onAccountChanged.bind(this)}
+              account={account_name}
+              size={60}
+              styleSize="normal"
+              error={from_error}
+              tabIndex={tabIndex++}
+            />
+          </div>
 
-        <div className="content-block">
-          <AccountSelector
-            label="account.name"
-            ref="account_input"
-            accountName={account_name}
-            onChange={this.accountChanged.bind(this)}
-            onAccountChanged={this.onAccountChanged.bind(this)}
-            account={account_name}
-            size={60}
-            error={from_error}
-            tabIndex={tabIndex++}
-          />
-        </div>
-
-        <div className="content-block">
-          <div className="account-selector">
-            <div className="content-area">
-              <div className="header-area">
-                <label className="left-label">
-                  <Translate content="settings.password" />
-                </label>
-              </div>
-              <div className="input-area" style={{ marginLeft: "3.5rem" }}>
-                <input
+          <div className="content-block">
+            <div className="account-selector">
+              <div className="content-area">
+                <div className="header-area">
+                  <label className="left-label">
+                    <Translate content="settings.password" />
+                  </label>
+                </div>
+                <div className="input-area" style={{ marginLeft: "3.5rem" }}>
+                  <PasswordInput
+                    ref="password_input"
+                    name="password"
+                    id="password"
+                    wrongPassword={this.state.password_error}
+                    noValidation
+                    noLabel
+                    checkStrength
+                    showStrengthTip
+                    isSimple
+                  />
+                  {/* <input
                   ref="password_input"
                   name="password"
                   id="password"
                   type="password"
                   tabIndex={tabIndex++}
-                />
-              </div>
-              {this.state.password_error ? (
-                <div className="error-area">
-                  <Translate content="wallet.pass_incorrect" />
+                /> */}
                 </div>
-              ) : null}
+                {/* {this.state.password_error ? (
+                  <div className="error-area">
+                    <Translate content="wallet.pass_incorrect" />
+                  </div>
+                ) : null} */}
+              </div>
             </div>
           </div>
         </div>
 
-        <div style={{ marginLeft: "3.5rem" }}>
-          <div className="button-group">
-            <button
-              tabIndex={tabIndex++}
-              className="button"
-              type="submit"
-              onClick={this.onPasswordEnter}
-            >
-              <Translate content="header.unlock_short" />
-            </button>
+        <div className="grid-block shrink">
+          <div
+            className="grid-block full-width-content"
+            style={{ alignItems: "center" }}
+          >
+            <Button type="primary" onClick={this.onPasswordEnter}>
+              <Translate content="header.unlock" />
+            </Button>
             <Trigger close={this.props.modalId}>
-              <div tabIndex={tabIndex++} className=" button">
+              <Button type="secondary" onClick={this.onPasswordEnter}>
                 <Translate content="account.perm.cancel" />
-              </div>
+              </Button>
             </Trigger>
           </div>
           {/* <div onClick={this._toggleLoginType.bind(this)} className="button small outline float-right"><Translate content="wallet.switch_model_wallet" /></div> */}

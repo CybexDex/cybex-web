@@ -173,6 +173,11 @@ class AccountSelector extends React.Component {
                     height: this.props.size || 80,
                     width: this.props.size || 80
                   }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
                   account={
                     this.props.account ? this.props.account.get("name") : null
                   }
@@ -185,7 +190,7 @@ class AccountSelector extends React.Component {
                   fontVariant: "initial",
                   zIndex: "1"
                 }}
-                size="small"
+                size={this.props.styleSize || "small"}
                 type="text"
                 name="username"
                 valueFromOuter
