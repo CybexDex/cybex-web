@@ -30,6 +30,7 @@ import { CurrentBalance } from "./Common";
 import AccountActions from "actions/AccountActions";
 import { calcAmount } from "utils//Asset";
 import { BigNumber } from "bignumber.js";
+import { NotificationActions } from "actions/NotificationActions";
 
 const debug = debugGen("WithdrawModal");
 
@@ -419,7 +420,11 @@ class WithdrawModal extends React.Component<props, state> {
       this._withdrawMemo(),
       null,
       useCybAsFee ? "1.3.0" : this.props.asset.get("id")
-    );
+    ).catch(error => {
+      NotificationActions.error(
+        counterpart.translate("modal.withdraw.lack_memo")
+      );
+    });
   };
 
   _withdrawMemo = () => {

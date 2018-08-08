@@ -1620,6 +1620,7 @@
       "amount": "Amount to Withdraw",
       "address": "Withdraw to Address",
       "to_eos": "Withdraw to EOS account",
+      "lack_memo": "Missing private memo key for sender.",
       "submit": "Withdraw",
       "cyb_fee": "Use CYB as the Cybex transfer fee for this operation"
     },
