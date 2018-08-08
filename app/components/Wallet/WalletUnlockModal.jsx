@@ -49,6 +49,10 @@ class WalletUnlockModal extends React.Component {
     if (np.passwordAccount && !this.state.account_name) {
       this.setState({ account_name: np.passwordAccount });
     }
+    if (np.resolve != this.props.resolve) {
+      console.debug("WillReceive", np);
+      this.refs.password_input.clear();
+    }
   }
 
   shouldComponentUpdate(np, ns) {
@@ -63,14 +67,14 @@ class WalletUnlockModal extends React.Component {
       if (name !== this.props.modalId) return;
       if (msg === "close") {
         //if(this.props.reject) this.props.reject()
+        this.refs.password_input.clear();
         WalletUnlockActions.cancel();
       } else if (msg === "open") {
-
-        if (this.refs.password_input) {
-          this.refs.password_input.clear();
-          this.refs.password_input.focus();
-        }
         if (!this.props.passwordLogin) {
+          if (this.refs.password_input) {
+            this.refs.password_input.focus();
+            this.refs.password_input.clear();
+          }
           if (
             WalletDb.getWallet() &&
             Apis.instance().chain_id !== WalletDb.getWallet().chain_id
@@ -93,7 +97,7 @@ class WalletUnlockModal extends React.Component {
     });
 
     if (this.props.passwordLogin) {
-      this.refs.password_input.clear();
+      // this.refs.password_input.clear();
       if (this.state.account_name) {
         this.refs.password_input.focus();
       } else if (
@@ -132,9 +136,9 @@ class WalletUnlockModal extends React.Component {
       return false;
     } else {
       this.refs.password_input.clear();
-      if (!passwordLogin) {
-        AccountActions.setPasswordAccount(account);
-      }
+      // if (!passwordLogin) {
+      // }
+      AccountActions.setPasswordAccount(account);
       ZfApi.publish(this.props.modalId, "close");
       this.props.resolve();
       WalletUnlockActions.change();

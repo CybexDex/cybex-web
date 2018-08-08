@@ -215,6 +215,8 @@ class PasswordInput extends React.Component<any, any> {
                 type="password"
                 inputRef={input => (this.passwordInput = input)}
                 autoComplete="off"
+                valueFromOuter
+                value={this.props.value || this.state.value}
                 onChange={this.handleChange}
                 onKeyDown={this.onKeyDown}
               />

@@ -6,6 +6,7 @@ import { connect } from "alt-react";
 import willTransitionTo from "../../routerTransition";
 import Translate from "react-translate-component";
 import ReactTooltip from "react-tooltip";
+import WalletUnlockActions from "actions/WalletUnlockActions";
 import { getClassName } from "utils";
 
 type ReconnectProps = {
@@ -71,13 +72,15 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
     ReactTooltip.show(findDOMNode(this.refs.toggle));
 
     this.timer = setTimeout(
-      () =>
+      () =>{
+        WalletUnlockActions.lock();
         willTransitionTo(
           this.props.history,
           this.props.history.replace,
           () => {},
           false
-        ),
+        );
+      }
       6000
     );
   }

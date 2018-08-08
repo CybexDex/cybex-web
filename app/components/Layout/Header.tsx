@@ -7,6 +7,7 @@ import AccountActions from "actions/AccountActions";
 import AccountStore from "stores/AccountStore";
 import MarketsStore from "stores/MarketsStore";
 import SettingsStore from "stores/SettingsStore";
+import { NetworkStore } from "stores/NetworkStore";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
@@ -529,6 +530,7 @@ Header = connect(
         SettingsStore,
         MarketsStore,
         ContextMenuStore,
+        NetworkStore,
         VolumnStore
       ];
     },
