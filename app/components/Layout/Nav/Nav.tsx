@@ -226,6 +226,13 @@ let Nav = class extends React.PureComponent<
               />
             ];
           })}
+          <NavItem
+            name="cybex_bet"
+            key={getNavId("cybex_bet")}
+            id={getNavId("cybex_bet")}
+            hideIcon
+            onClick={() => window.open("https://cybet.cybex.io", "_blank")}
+          />
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>
