@@ -7,19 +7,18 @@
       width: 60%;
       position: relative;
       box-sizing: border-box;
-      .info-title{
+      .info-title {
         text-align: justify;
-        width: 17%;
         min-width: 100px;
       }
       .info-detail {
         // width: 80%;
       }
-      .large-time{
-        .info-title{
-        	text-align: justify;
-        	width: auto;
-        	min-width: auto;
+      .large-time {
+        .info-title {
+          text-align: justify;
+          width: auto;
+          min-width: auto;
         }
       }
     }
@@ -71,14 +70,14 @@
   &.en,
   &.zh {
     padding: 0;
-    width: 96%;
+    width: 90%;
     padding: 1em;
     .left-part,
     .right-part {
       min-width: 300px;
       float: none;
       flex: 1;
-      padding-top: 2em;
+      padding: 2em;
     }
     .separate {
       width: 1em;
@@ -103,7 +102,7 @@
           vertical-align: bottom;
           overflow-wrap: break-word;
           flex: 1 1;
-          min-width: 300px;
+          min-width: 280px;
         }
       }
       .button-holder {

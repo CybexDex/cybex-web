@@ -2,29 +2,25 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import jdenticon from "jdenticon";
 import sha256 from "js-sha256";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import DetalModal from "./Modal.jsx";
-import AlertModal from './AlertModal.jsx';
+import AlertModal from "./AlertModal.jsx";
 import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
 import Translate from "react-translate-component";
 import * as moment from "moment";
 // import * as humanize from "humanize-duration";
 import * as humanize from "../humanize.js";
-import * as numeral from "numeral";
-import BindToChainState from "../../Utility/BindToChainState";
-import AccountInfo from "../../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import "./detail.scss";
 import "./mock.scss";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
-import counterpart from 'counterpart';
+import counterpart from "counterpart";
 import LegalModal from "./LegalModal";
 import LegalModalEn from "./LegalModalEn";
-import { TokenKind } from "graphql";
-// let logo_demo = require('assets/img_demo_1.jpg');
-let time = require('assets/time.png');
+import { ProgressBar } from "components/Common/ProgressBar";
+let time = require("assets/time.png");
 
 class Detail extends React.Component<any, any> {
   // nestedRef;
@@ -32,55 +28,24 @@ class Detail extends React.Component<any, any> {
     super(props);
     this.state = {
       showModal: false,
-      reserve_status: ()=>null,
-      kyc_status: ()=>null,
+      reserve_status: () => null,
+      kyc_status: () => null,
       canBeReserve: false
-    }
+    };
   }
-  reserve(){
-    fetchJson.fetchKYC({cybex_name: this.props.currentAccount,project:this.props.match.params.id,create:1}, (res2) => {
-      switch(res2.result.status){
-        case 'ok':
-              this.setState({reserve_status:()=>{
-                if(this.state.data.status == 'ok'){
-                  return (
-                        <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                      className="legal-input"
-                    />
-                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                      <Link to={`/eto/join/${this.props.match.params.id}`}>
-                      <div className="button primery-button ok">
-                      <Translate content="EIO.Join_ETO_now" />
-                      </div>
-                      </Link>
-                      </div>
-                    
-                  )
-                }else if(this.state.data.status == 'pre'){
-                  <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                      className="legal-input"
-                    />
-                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                  <div className="button primery-button disabled pre">
-                  <Translate content="EIO.Wait_for_ETO" />
-                  </div>
-                  </div>
-                }else{
-                  return null;
-                }
-              }})
-            break;
-            case 'waiting':
-              this.setState({reserve_status:()=>{
-                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
+  reserve() {
+    fetchJson.fetchKYC(
+      {
+        cybex_name: this.props.currentAccount,
+        project: this.props.match.params.id,
+        create: 1
+      },
+      res2 => {
+        switch (res2.result.status) {
+          case "ok":
+            this.setState({
+              reserve_status: () => {
+                if (this.state.data.status == "ok") {
                   return (
                     <div>
                       <input
@@ -89,198 +54,23 @@ class Detail extends React.Component<any, any> {
                         readOnly={true}
                         className="legal-input"
                       />
-                      <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                    <div className="button primery-button disabled waiting">
-                      <Translate content="EIO.Verifying" />
-                    </div>
-                    </div>
-                  )
-                }else{
-                  return null 
-                }
-              }})
-            break;
-            case 'reject':
-              this.setState({reserve_status:()=>{
-                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
-                  return (
-                  <div>
-                  <div className="button primery-button disabled reject">
-                    {/* 审核不通过 */}
-                    <Translate content="EIO.Reservation_failed" />
-                  </div>
-                  <p>{res2.result.reason}</p>
-                  </div>
-                )}else{
-                  return null
-                }
-              }})
-            break;
-            case 'pending':
-              this.setState({reserve_status:()=>{
-                if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
-                return (
-                  <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                      className="legal-input"
-                    />
-                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                  <div className="button primery-button disabled waiting">
-                  <Translate content="EIO.Verifying" />
-                  </div>
-                  </div>
-                )
-              }else{
-                return null;
-              }
-              }})
-            break;
-            default:
-            this.setState({reserve_status:()=>{
-              if(res2.result.kyc_status == 'ok'){
-                if(this.state.data.is_user_in == 0){
-                  return(
-                  <div className="button primery-button disabled can-not-reserve">
-                    {/* 停止预约 */}
-                    <Translate content="EIO.Stop_reserve" />
-                  </div>
-                  )
-                }else{
-                  if(this.state.data.status == 'ok' || this.state.data.status == 'pre'){
-                    return (
-                      this.state.data.create_user_type == 'code'?(
-                        <div>
-                          <input
-                            type="checkbox" 
-                            onChange={this.changeCheckbox.bind(this)} 
-                            className="legal-input"
-                          />
-                          <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                          
-                          {this.state.canBeReserve?(
-                            <div className="button primery-button ok">
-                            <Trigger open="ieo-detail-modal"><div><Translate content="EIO.Reserve_Now" /></div></Trigger>
-                            </div>
-                          ):(
-                            <div className="button primery-button disabled"><Translate content="EIO.Reserve_Now" /></div>
-                          )}
-                            
-                          
+                      <label className="legal-label">
+                        <Trigger open="ieo-legal-modal">
+                          <div className="legal-info">
+                            <a href="#">
+                              <Translate content="EIO.IHaveRead" />
+                            </a>
+                          </div>
+                        </Trigger>
+                      </label>
+                      <Link to={`/eto/join/${this.props.match.params.id}`}>
+                        <div className="button primery-button ok">
+                          <Translate content="EIO.Join_ETO_now" />
                         </div>
-                        ):(
-                          <div>
-                            <input
-                              type="checkbox" 
-                              onChange={this.changeCheckbox.bind(this)} 
-                              className="legal-input"
-                            />
-                            <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                            {this.state.canBeReserve?(
-                            <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
-                              <Translate content="EIO.Reserve_Now" />
-                            </div>):(
-                              <div className="button primery-button can-reserve">
-                              <Translate content="EIO.Reserve_Now" />
-                            </div>
-                            )}
-                          </div>
-                      )
-                    )
-                  }else{
-                    return null;
-                  }
-                } 
-              }else{
-                return(
-                  null
-                  // <div className="button primery-button disabled can-not-reserve">
-                  //   立即预约
-                  // </div>
-                )
-              }
-              
-            }})
-      }
-    })
-}
-formatTime(input){
-  // console.log(moment(moment(moment.utc(input).toDate()).local()).format('YYYY-MM-DD hh:mm:ss'))
-  // console.log(moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss'))
-  return moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss');
-}
-fetchDatas(){
-  let data = {
-    project: this.props.match.params.id
-  }
-  fetchJson.fetchDetails(data,(res)=>{
-    if(res.result.control !== 'online'){
-      console.log(this)
-      this.props.history.push('/eto')
-    }
-    res.result.end_at = this.formatTime(res.result.end_at);
-    res.result.start_at = this.formatTime(res.result.start_at);
-    res.result.created_at = this.formatTime(res.result.created_at);
-    res.result.finish_at = this.formatTime(res.result.finish_at);
-    res.result.offer_at = res.result.offer_at ? this.formatTime(res.result.offer_at) : null;
-    res.result.lock_at = res.result.lock_at ? this.formatTime(res.result.lock_at) : null;
-    // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
-    
-
-    this.setState({
-      data: res.result,
-    }, ()=>{
-
-      
-    });
-    if(!this.props.currentAccount){
-      this.setState({reserve_status: ()=>{
-        return (
-          <div>
-          {res.result.status !== 'ok' || res.result.status !== 'pre'? (
-          <Link to={`/login`}>
-            <div className="button primery-button">
-            
-              {/* <span>请登录后参与</span> */}
-              <Translate content="EIO.Not_login" />
-            
-            </div>
-            </Link>
-          ):(
-              
-            null
-            
-          )}
-          </div>
-        )
-      }});
-    }else{
-      fetchJson.fetchKYC({cybex_name: this.props.currentAccount, project:this.props.match.params.id}, (res2)=>{
-        switch(res2.result.status){
-          case 'ok':
-            this.setState({reserve_status:()=>{
-              if(res.result.status == 'ok'){
-                return (
-                      <div>
-                  <input
-                    type="checkbox"
-                    checked={true}
-                    readOnly={true}
-                    className="legal-input"
-                  />
-                  <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                    <Link to={`/eto/join/${this.props.match.params.id}`}>
-                    <div className="button primery-button ok">
-                    <Translate content="EIO.Join_ETO_now" />
+                      </Link>
                     </div>
-                    </Link>
-                    </div>
-                  
-                )
-              }else if(res.result.status == 'pre'){
-                return(
+                  );
+                } else if (this.state.data.status == "pre") {
                   <div>
                     <input
                       type="checkbox"
@@ -288,198 +78,570 @@ fetchDatas(){
                       readOnly={true}
                       className="legal-input"
                     />
-                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                  <div className="button primery-button disabled pre">
-                  <Translate content="EIO.Wait_for_ETO" />
-                    {/* 等待众筹开始 */}
-                  </div>
-                  </div>
-                )
-              }else{
-                return null;
-              }
-            }})
-          break;
-          case 'waiting':
-            this.setState({reserve_status:()=>{
-              if(res.result.status == 'ok' || res.result.status == 'pre'){
-                return (
-                  <div>
-                    <input
-                      type="checkbox"
-                      checked={true}
-                      readOnly={true}
-                      className="legal-input"
-                    />
-                    <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                  <div className="button primery-button disabled waiting">
-                    {/* 审核中 */}
-                    <Translate content="EIO.Verifying" />
-                  </div>
-                  </div>
-                )
-              }else{
-                return null 
-              }
-            }})
-          break;
-          case 'reject':
-            this.setState({reserve_status:()=>{
-              if(res.result.status == 'ok' || res.result.status == 'pre'){
-                return (
-                <div>
-                <div className="button primery-button disabled reject">
-                  {/* 审核不通过 */}
-                  <Translate content="EIO.Reservation_failed" />
-                </div>
-                <p>{res2.result.reason}</p>
-                </div>
-              )}else{
-                return null
-              }
-            }})
-          break;
-          case 'pending':
-            this.setState({reserve_status:()=>{
-              if(res.result.status == 'ok' || res.result.status == 'pre'){
-              return (
-                <div>
-                  <input
-                    type="checkbox"
-                    checked={true}
-                    readOnly={true}
-                    className="legal-input"
-                  />
-                  <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                <div className="button primery-button disabled waiting">
-                  {/* 审核中 */}
-                  <Translate content="EIO.Verifying" />
-                </div>
-                </div>
-              )
-            }else{
-              return null;
-            }
-            }})
-          break;
-          default:
-          this.setState({reserve_status:()=>{
-            if(res2.result.kyc_status == 'ok'){
-              if(res.result.is_user_in == 0){
-                return(
-                <div className="button primery-button disabled can-not-reserve">
-                  {/* 停止预约 */}
-                  <Translate content="EIO.Stop_reserve" />
-                </div>
-                )
-              }else{
-                if(res.result.status == 'ok' || res.result.status == 'pre'){
-                  return (
-                    res.result.create_user_type == 'code'?(
-                      <div>
-                        <input
-                          type="checkbox" 
-                          onChange={this.changeCheckbox.bind(this)} 
-                          className="legal-input"
-                        />
-                        <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                        
-                        {this.state.canBeReserve?(
-                          <div className="button primery-button ok">
-                          <Trigger open="ieo-detail-modal"><div><Translate content="EIO.Reserve_Now" /></div></Trigger>
-                          </div>
-                        ):(
-                          <div className="button primery-button disabled"><Translate content="EIO.Reserve_Now" /></div>
-                        )}
-                          
-                        
-                      </div>
-                      ):(
-                        <div>
-                          <input
-                            type="checkbox" 
-                            onChange={this.changeCheckbox.bind(this)} 
-                            className="legal-input"
-                          />
-                          <label className="legal-label"><Trigger open="ieo-legal-modal"><div className="legal-info"><a href="#"><Translate content="EIO.IHaveRead" /></a></div></Trigger></label>
-                          {this.state.canBeReserve?(
-                          <div className="button primery-button can-reserve" onClick={this.reserve.bind(this)}>
-                            <Translate content="EIO.Reserve_Now" />
-                          </div>):(
-                            <div className="button primery-button disabled">
-                            <Translate content="EIO.Reserve_Now" />
-                          </div>
-                          )}
+                    <label className="legal-label">
+                      <Trigger open="ieo-legal-modal">
+                        <div className="legal-info">
+                          <a href="#">
+                            <Translate content="EIO.IHaveRead" />
+                          </a>
                         </div>
-                    )
-                  )
-                }else{
+                      </Trigger>
+                    </label>
+                    <div className="button primery-button disabled pre">
+                      <Translate content="EIO.Wait_for_ETO" />
+                    </div>
+                  </div>;
+                } else {
                   return null;
                 }
               }
-            }else{
-              return(
-                null
-                // <div className="button primery-button disabled can-not-reserve">
-                //   立即预约
-                // </div>
-              )
-            }
-            
-          }})
+            });
+            break;
+          case "waiting":
+            this.setState({
+              reserve_status: () => {
+                if (
+                  this.state.data.status == "ok" ||
+                  this.state.data.status == "pre"
+                ) {
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                        className="legal-input"
+                      />
+                      <label className="legal-label">
+                        <Trigger open="ieo-legal-modal">
+                          <div className="legal-info">
+                            <a href="#">
+                              <Translate content="EIO.IHaveRead" />
+                            </a>
+                          </div>
+                        </Trigger>
+                      </label>
+                      <div className="button primery-button disabled waiting">
+                        <Translate content="EIO.Verifying" />
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              }
+            });
+            break;
+          case "reject":
+            this.setState({
+              reserve_status: () => {
+                if (
+                  this.state.data.status == "ok" ||
+                  this.state.data.status == "pre"
+                ) {
+                  return (
+                    <div>
+                      <div className="button primery-button disabled reject">
+                        {/* 审核不通过 */}
+                        <Translate content="EIO.Reservation_failed" />
+                      </div>
+                      <p>{res2.result.reason}</p>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              }
+            });
+            break;
+          case "pending":
+            this.setState({
+              reserve_status: () => {
+                if (
+                  this.state.data.status == "ok" ||
+                  this.state.data.status == "pre"
+                ) {
+                  return (
+                    <div>
+                      <input
+                        type="checkbox"
+                        checked={true}
+                        readOnly={true}
+                        className="legal-input"
+                      />
+                      <label className="legal-label">
+                        <Trigger open="ieo-legal-modal">
+                          <div className="legal-info">
+                            <a href="#">
+                              <Translate content="EIO.IHaveRead" />
+                            </a>
+                          </div>
+                        </Trigger>
+                      </label>
+                      <div className="button primery-button disabled waiting">
+                        <Translate content="EIO.Verifying" />
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              }
+            });
+            break;
+          default:
+            this.setState({
+              reserve_status: () => {
+                if (res2.result.kyc_status == "ok") {
+                  if (this.state.data.is_user_in == 0) {
+                    return (
+                      <div className="button primery-button disabled can-not-reserve">
+                        {/* 停止预约 */}
+                        <Translate content="EIO.Stop_reserve" />
+                      </div>
+                    );
+                  } else {
+                    if (
+                      this.state.data.status == "ok" ||
+                      this.state.data.status == "pre"
+                    ) {
+                      return this.state.data.create_user_type == "code" ? (
+                        <div>
+                          <input
+                            type="checkbox"
+                            onChange={this.changeCheckbox.bind(this)}
+                            className="legal-input"
+                          />
+                          <label className="legal-label">
+                            <Trigger open="ieo-legal-modal">
+                              <div className="legal-info">
+                                <a href="#">
+                                  <Translate content="EIO.IHaveRead" />
+                                </a>
+                              </div>
+                            </Trigger>
+                          </label>
+
+                          {this.state.canBeReserve ? (
+                            <div className="button primery-button ok">
+                              <Trigger open="ieo-detail-modal">
+                                <div>
+                                  <Translate content="EIO.Reserve_Now" />
+                                </div>
+                              </Trigger>
+                            </div>
+                          ) : (
+                            <div className="button primery-button disabled">
+                              <Translate content="EIO.Reserve_Now" />
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div>
+                          <input
+                            type="checkbox"
+                            onChange={this.changeCheckbox.bind(this)}
+                            className="legal-input"
+                          />
+                          <label className="legal-label">
+                            <Trigger open="ieo-legal-modal">
+                              <div className="legal-info">
+                                <a href="#">
+                                  <Translate content="EIO.IHaveRead" />
+                                </a>
+                              </div>
+                            </Trigger>
+                          </label>
+                          {this.state.canBeReserve ? (
+                            <div
+                              className="button primery-button can-reserve"
+                              onClick={this.reserve.bind(this)}
+                            >
+                              <Translate content="EIO.Reserve_Now" />
+                            </div>
+                          ) : (
+                            <div className="button primery-button can-reserve">
+                              <Translate content="EIO.Reserve_Now" />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                } else {
+                  return null;
+                  // <div className="button primery-button disabled can-not-reserve">
+                  //   立即预约
+                  // </div>
+                }
+              }
+            });
         }
-        if(res2.result.kyc_status=='ok'){
-          this.setState({kyc_status:()=>null})
-        }else{
-          this.setState({kyc_status:()=>{
+      }
+    );
+  }
+  formatTime(input) {
+    // console.log(moment(moment(moment.utc(input).toDate()).local()).format('YYYY-MM-DD hh:mm:ss'))
+    // console.log(moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss'))
+    return moment(moment.utc(input).toDate())
+      .local()
+      .format("YYYY-MM-DD HH:mm:ss");
+  }
+  fetchDatas() {
+    let data = {
+      project: this.props.match.params.id
+    };
+    fetchJson.fetchDetails(data, res => {
+      if (res.result.control !== "online") {
+        console.log(this);
+        this.props.history.push("/eto");
+      }
+      res.result.end_at = this.formatTime(res.result.end_at);
+      res.result.start_at = this.formatTime(res.result.start_at);
+      res.result.created_at = this.formatTime(res.result.created_at);
+      res.result.finish_at = this.formatTime(res.result.finish_at);
+      res.result.offer_at = res.result.offer_at
+        ? this.formatTime(res.result.offer_at)
+        : null;
+      res.result.lock_at = res.result.lock_at
+        ? this.formatTime(res.result.lock_at)
+        : null;
+      // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
+
+      this.setState(
+        {
+          data: res.result
+        },
+        () => {}
+      );
+      if (!this.props.currentAccount) {
+        this.setState({
+          reserve_status: () => {
             return (
-              <div className="kyc-btn-holder">
-                <a href={__ICOAPE__} target="_blank">
-                <div className="kyc-btn button primery-button">
-                  <Translate content="EIO.Accept_KYC_Verification" />
-                </div>
-                </a>
+              <div>
+                {res.result.status !== "ok" || res.result.status !== "pre" ? (
+                  <Link to={`/login`}>
+                    <div className="button primery-button">
+                      {/* <span>请登录后参与</span> */}
+                      <Translate content="EIO.Not_login" />
+                    </div>
+                  </Link>
+                ) : null}
               </div>
-            )
-          }})
-        }
-      });
-      // res.result.kyc_status = 'ok'
-      
-    }
-  });
-}
-  componentDidMount(){
-    this.fetchDatas();    
-    window.cao = setInterval(()=>{
+            );
+          }
+        });
+      } else {
+        fetchJson.fetchKYC(
+          {
+            cybex_name: this.props.currentAccount,
+            project: this.props.match.params.id
+          },
+          res2 => {
+            switch (res2.result.status) {
+              case "ok":
+                this.setState({
+                  reserve_status: () => {
+                    if (res.result.status == "ok") {
+                      return (
+                        <div>
+                          <input
+                            type="checkbox"
+                            checked={true}
+                            readOnly={true}
+                            className="legal-input"
+                          />
+                          <label className="legal-label">
+                            <Trigger open="ieo-legal-modal">
+                              <div className="legal-info">
+                                <a href="#">
+                                  <Translate content="EIO.IHaveRead" />
+                                </a>
+                              </div>
+                            </Trigger>
+                          </label>
+                          <Link to={`/eto/join/${this.props.match.params.id}`}>
+                            <div className="button primery-button ok">
+                              <Translate content="EIO.Join_ETO_now" />
+                            </div>
+                          </Link>
+                        </div>
+                      );
+                    } else if (res.result.status == "pre") {
+                      return (
+                        <div>
+                          <input
+                            type="checkbox"
+                            checked={true}
+                            readOnly={true}
+                            className="legal-input"
+                          />
+                          <label className="legal-label">
+                            <Trigger open="ieo-legal-modal">
+                              <div className="legal-info">
+                                <a href="#">
+                                  <Translate content="EIO.IHaveRead" />
+                                </a>
+                              </div>
+                            </Trigger>
+                          </label>
+                          <div className="button primery-button disabled pre">
+                            <Translate content="EIO.Wait_for_ETO" />
+                            {/* 等待众筹开始 */}
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                });
+                break;
+              case "waiting":
+                this.setState({
+                  reserve_status: () => {
+                    if (
+                      res.result.status == "ok" ||
+                      res.result.status == "pre"
+                    ) {
+                      return (
+                        <div>
+                          <input
+                            type="checkbox"
+                            checked={true}
+                            readOnly={true}
+                            className="legal-input"
+                          />
+                          <label className="legal-label">
+                            <Trigger open="ieo-legal-modal">
+                              <div className="legal-info">
+                                <a href="#">
+                                  <Translate content="EIO.IHaveRead" />
+                                </a>
+                              </div>
+                            </Trigger>
+                          </label>
+                          <div className="button primery-button disabled waiting">
+                            {/* 审核中 */}
+                            <Translate content="EIO.Verifying" />
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                });
+                break;
+              case "reject":
+                this.setState({
+                  reserve_status: () => {
+                    if (
+                      res.result.status == "ok" ||
+                      res.result.status == "pre"
+                    ) {
+                      return (
+                        <div>
+                          <div className="button primery-button disabled reject">
+                            {/* 审核不通过 */}
+                            <Translate content="EIO.Reservation_failed" />
+                          </div>
+                          <p>{res2.result.reason}</p>
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                });
+                break;
+              case "pending":
+                this.setState({
+                  reserve_status: () => {
+                    if (
+                      res.result.status == "ok" ||
+                      res.result.status == "pre"
+                    ) {
+                      return (
+                        <div>
+                          <input
+                            type="checkbox"
+                            checked={true}
+                            readOnly={true}
+                            className="legal-input"
+                          />
+                          <label className="legal-label">
+                            <Trigger open="ieo-legal-modal">
+                              <div className="legal-info">
+                                <a href="#">
+                                  <Translate content="EIO.IHaveRead" />
+                                </a>
+                              </div>
+                            </Trigger>
+                          </label>
+                          <div className="button primery-button disabled waiting">
+                            {/* 审核中 */}
+                            <Translate content="EIO.Verifying" />
+                          </div>
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  }
+                });
+                break;
+              default:
+                this.setState({
+                  reserve_status: () => {
+                    if (res2.result.kyc_status == "ok") {
+                      if (res.result.is_user_in == 0) {
+                        return (
+                          <div className="button primery-button disabled can-not-reserve">
+                            {/* 停止预约 */}
+                            <Translate content="EIO.Stop_reserve" />
+                          </div>
+                        );
+                      } else {
+                        if (
+                          res.result.status == "ok" ||
+                          res.result.status == "pre"
+                        ) {
+                          return res.result.create_user_type == "code" ? (
+                            <div>
+                              <input
+                                type="checkbox"
+                                onChange={this.changeCheckbox.bind(this)}
+                                className="legal-input"
+                              />
+                              <label className="legal-label">
+                                <Trigger open="ieo-legal-modal">
+                                  <div className="legal-info">
+                                    <a href="#">
+                                      <Translate content="EIO.IHaveRead" />
+                                    </a>
+                                  </div>
+                                </Trigger>
+                              </label>
+
+                              {this.state.canBeReserve ? (
+                                <div className="button primery-button ok">
+                                  <Trigger open="ieo-detail-modal">
+                                    <div>
+                                      <Translate content="EIO.Reserve_Now" />
+                                    </div>
+                                  </Trigger>
+                                </div>
+                              ) : (
+                                <div className="button primery-button disabled">
+                                  <Translate content="EIO.Reserve_Now" />
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div>
+                              <input
+                                type="checkbox"
+                                onChange={this.changeCheckbox.bind(this)}
+                                className="legal-input"
+                              />
+                              <label className="legal-label">
+                                <Trigger open="ieo-legal-modal">
+                                  <div className="legal-info">
+                                    <a href="#">
+                                      <Translate content="EIO.IHaveRead" />
+                                    </a>
+                                  </div>
+                                </Trigger>
+                              </label>
+                              {this.state.canBeReserve ? (
+                                <div
+                                  className="button primery-button can-reserve"
+                                  onClick={this.reserve.bind(this)}
+                                >
+                                  <Translate content="EIO.Reserve_Now" />
+                                </div>
+                              ) : (
+                                <div className="button primery-button disabled">
+                                  <Translate content="EIO.Reserve_Now" />
+                                </div>
+                              )}
+                            </div>
+                          );
+                        } else {
+                          return null;
+                        }
+                      }
+                    } else {
+                      return null;
+                      // <div className="button primery-button disabled can-not-reserve">
+                      //   立即预约
+                      // </div>
+                    }
+                  }
+                });
+            }
+            if (res2.result.kyc_status == "ok") {
+              this.setState({ kyc_status: () => null });
+            } else {
+              this.setState({
+                kyc_status: () => {
+                  return (
+                    <div className="kyc-btn-holder">
+                      <a href={__ICOAPE__} target="_blank">
+                        <div className="kyc-btn button primery-button">
+                          <Translate content="EIO.Accept_KYC_Verification" />
+                        </div>
+                      </a>
+                    </div>
+                  );
+                }
+              });
+            }
+          }
+        );
+        // res.result.kyc_status = 'ok'
+      }
+    });
+  }
+
+  fetchProgress() {
+    
+  }
+
+  componentDidMount() {
+    this.fetchDatas();
+    window.cao = setInterval(() => {
       this.fetchDatas();
-    },60000)
+    }, 3000);
   }
   public openModal = () => {
     this.setState({
       showModal: true
-    })
-  }
-  sentdata(){
+    });
+  };
+  sentdata() {
     ZfApi.publish("ieo-detail-modal", "close");
     ZfApi.publish("ieo-alert-modal", "open");
-    setTimeout(()=>{
+    setTimeout(() => {
       ZfApi.publish("ieo-alert-modal", "close");
       this.reserve();
-    },3000)
+    }, 3000);
   }
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(window.cao);
   }
-  changeCheckbox(e){
+  changeCheckbox(e) {
     this.setState({
       canBeReserve: e.target.checked
-    })
+    });
   }
   render() {
-    const data = this.state.data || {}
+    const data = this.state.data || {};
     const {
-      name, 
+      name,
       status,
       current_user_count,
       current_base_token_count,
@@ -519,401 +681,441 @@ fetchDatas(){
       base_hard_cap,
       lock_at
     } = data;
-    let base_tokens = data.base_tokens ||[]
-    let percent = current_percent*100;
-        percent = percent.toFixed(2);
+    let base_tokens = data.base_tokens || [];
+    let percent = current_percent * 100;
+    percent = percent.toFixed(2);
     // let showPercent = `${percent>100?100:percent}%`;
-    let showPercent = `${percent>99?99:(percent<2?(percent==0?0:2):percent)}%`;
+    // let showPercent = `${
+    //   percent > 99 ? 99 : percent < 2 ? (percent == 0 ? 0 : 2) : percent
+    // }%`;
     let now = moment();
     let countDownTime = moment(end_at).valueOf() - moment().valueOf();
-      let endAt = moment(end_at);
-      let startAt = moment(start_at);
-      let finishAt = moment(finish_at);
-    
+    let endAt = moment(end_at);
+    let startAt = moment(start_at);
+    let finishAt = moment(finish_at);
+
     let remainStr;
-      let projectStatus;
-      let lang = counterpart.getLocale();
-      const shortEnglishHumanizer = humanize.humanizer({
-        language: lang,
-        units: [ 'd', 'h', 'm'],
-        unitMeasures: {
-          y: 365 * 86400000,
-          mo: 30 * 86400000,
-          w: 7 * 86400000,
-          d: 86400000,
-          h: 3600000,
-          m: 60000,
-          s: 1000
-        },
-        round: true,
-        languages: {
-          zh: {
-            y: function() { return '年' },
-            mo: function() { return '月' },
-            d: function() { return '天' },
-            h: function() { return '小时' },
-            m: function() { return '分钟' },
-            s: function() { return '秒' }
+    let projectStatus;
+    let lang = counterpart.getLocale();
+    const shortEnglishHumanizer = humanize.humanizer({
+      language: lang,
+      units: ["d", "h", "m"],
+      unitMeasures: {
+        y: 365 * 86400000,
+        mo: 30 * 86400000,
+        w: 7 * 86400000,
+        d: 86400000,
+        h: 3600000,
+        m: 60000,
+        s: 1000
+      },
+      round: true,
+      languages: {
+        zh: {
+          y: function() {
+            return "年";
           },
-          en: {
-            y: function() { return 'Y' },
-            mo: function() { return 'M' },
-            d: function() { return 'D' },
-            h: function() { return 'H' },
-            m: function() { return 'M' },
-            s: function() { return 'S' }
+          mo: function() {
+            return "月";
+          },
+          d: function() {
+            return "天";
+          },
+          h: function() {
+            return "小时";
+          },
+          m: function() {
+            return "分钟";
+          },
+          s: function() {
+            return "秒";
+          }
+        },
+        en: {
+          y: function() {
+            return "Y";
+          },
+          mo: function() {
+            return "M";
+          },
+          d: function() {
+            return "D";
+          },
+          h: function() {
+            return "H";
+          },
+          m: function() {
+            return "M";
+          },
+          s: function() {
+            return "S";
           }
         }
-      })
-      switch(status){
-        case 'pre':
-        // countDownTime = moment(startAt).valueOf() - moment().valueOf();
-        remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(/[\,]/g,'');
-        break;
-        case 'finish':
-        // countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
-        remainStr = shortEnglishHumanizer(finishAt.diff(startAt)).replace(/[\,]/g,'');
-        break;
-        case 'ok':
-        // countDownTime = moment(endAt).valueOf() - moment().valueOf();
-        remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g,'');
-        break;
-        case 'fail':
-        // countDownTime = moment(finishAt).valueOf();
-        remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(/[\,]/g,'');
-        break;
-        default:
       }
-    
-    
+    });
+    switch (status) {
+      case "pre":
+        // countDownTime = moment(startAt).valueOf() - moment().valueOf();
+        remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(
+          /[\,]/g,
+          ""
+        );
+        break;
+      case "finish":
+        // countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
+        remainStr = shortEnglishHumanizer(finishAt.diff(startAt)).replace(
+          /[\,]/g,
+          ""
+        );
+        break;
+      case "ok":
+        // countDownTime = moment(endAt).valueOf() - moment().valueOf();
+        remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g, "");
+        break;
+      case "fail":
+        // countDownTime = moment(finishAt).valueOf();
+        remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(
+          /[\,]/g,
+          ""
+        );
+        break;
+      default:
+    }
+
     // let remainStr = this.state.remainStr;
     return (
       <div>
-      {name?(
-        <div className={`detail ${lang}`}>
-        <div className="left-part">
-        
-        {lang=='zh'?(
-          <img src={adds_banner} />
-        ):(
-          <img src={adds_banner__lang_en} />
-        )}
-        
-        {percent?(<div className="info-item">
-          <div className="percent">
-            <div className={`percent-in ${status}`} style={{width: showPercent}}></div>
-          </div>
-          <div className="info-text">{percent}%</div>
-        </div>):null}
-        
-        {/* {name?(<div className="info-item">
-          <div className="info-title">
-            <Translate content="EIO.Project_Name" />: 
-          </div>
-          <div className="info-detail">{name}</div>
-        </div>):null} */}
-        
-        {current_user_count?(<div className="info-item">
-          <div className="info-title">
-            <Translate content="EIO.Participants" />: 
-          </div>
-          <div className="info-detail">{current_user_count} <Translate content="EIO.man" /></div>
-        </div>):null}
-        
-        {current_base_token_count?(<div className="info-item">
-          <div className="info-title">
-            <span><Translate content="EIO.Raised" />: </span>
-            {/* <Translate content="EIO.Raised" />: */}
-          </div>
-          <div className="info-detail">{current_base_token_count}{base_token_name}</div>
-          {/* <div className="info-detail">{current_base_token_count}{base_token_name}</div> */}
-          {/* <p className="raised">当前完成认购: {e.adds_token_total + e.current_token_count}NES</p> */}
-        </div>):null}
-        
-        {rate?(<div className="info-item">
-          <div className="info-title">
-            <Translate content="EIO.Redeeming_Ratio" />: 
-          </div>
-          <div className="info-detail">
-            1 {base_token_name} = {rate} {token_name}
-            
-          </div>
-        </div>):null}
-        {/* {rate?(<div className="info-item">
-          <div className="info-title">
-            <Translate content="EIO.Redeeming_Ratio" />: 
-          </div>
-          <div className="info-detail">1{base_token_name}={rate}{token}</div>
-        </div>):null} */}
-        
-        {/*waiting for start*/}
-        {/* {base_max_quota?(<div className="info-item">
-          <div className="info-title">
-            <Translate content="EIO.Personal_Limit" />: 
-          </div>
-          <div className="info-detail">{base_min_quota}-{base_max_quota} {base_token_name}</div>
-        </div>):null} */}
-        
-        {remainStr?(<div className="info-item large-time">
-          <div className="info-title">
-          <img className="icon-time" src={time} />
-          {status == 'ok'? (
-              <span className={`sub-time ${status}`}> <Translate content="EIO.Time_remains" /> </span>
-            ):(
-              (status == 'pre')? (
-                <span className={`sub-time ${status}`}> <Translate content="EIO.In" /> </span>
-              ):(
-                status == 'finish'? (
-                  <span className={`sub-time ${status}`}> <Translate content="EIO.Ended" /> </span>
-                ):(
-                  <span className={`sub-time ${status}`}> <Translate content="EIO.Ended" /> </span>
-                )
-              )
-            )}
-          </div>
-          <div className="info-detail">{remainStr}</div>
-        </div>):null}
-        </div>
-        <div className="right-part">
-          <h3 className="title">
-            <span className="main">
-              <Translate content="EIO.Project_Details" />
-            </span>
-            {status == 'ok'? (
-              <span className="sub ok">[ <Translate content="EIO.ok" />...]</span>
-            ):(
-              (status == 'pre')? (
-                <span className="sub pre">[ <Translate content="EIO.pre" /> ]</span>
-              ):(
-                status == 'finish'? (
-                  <span className="sub finish">[ <Translate content="EIO.finish" /> ]</span>
-                ):(
-                  status == 'pause')? (
-                    <span className="sub finish">[ <Translate content="EIO.pause" /> ]</span>
-                  ):(
-                    null
-                  )
-                  
-                )
-              )
-            }
-          </h3>
-          
-          {name?(<div className="info-item">
-            <div className="info-title">
-              <Translate content="EIO.Project_Name" />
-            </div>
-            <div className="info-detail">{name}</div>
-          </div>):null}
-          {token_name?(<div className="info-item">
-            <div className="info-title">
-              <Translate content="EIO.Token_Name" />
-            </div>
-            <div className="info-detail">{token_name}</div>
-          </div>):null}
-          
-          {lang=='zh'?(
-            adds_token_total?(<div className="info-item">
-            <div className="info-title">
-              <Translate content="EIO.Total_Token_Supply" /> 
-            </div>
-            <div className="info-detail">{adds_token_total}</div>
-          </div>):null
-          ):(
-            adds_token_total__lang_en?(<div className="info-item">
-            <div className="info-title">
-              <Translate content="EIO.Total_Token_Supply" /> 
-            </div>
-            <div className="info-detail">{adds_token_total__lang_en}</div>
-          </div>):null
-          )}
-          {base_hard_cap ? (
-              <div className="info-item">
-                <div className="info-title">
-                  <Translate content="EIO.Hard_cap" />
+        {name ? (
+          <div className={`detail ${lang}`}>
+            <div className="left-part">
+              <img src={lang == "zh" ? adds_banner : adds_banner__lang_en} />
+              {percent && (
+                <ProgressBar
+                  styleType="primary"
+                  percent={60}
+                  withLabel
+                  labelStyle={{ marginLeft: "2em", fontSize: "1.6em" }}
+                />
+              )}
+
+              {rate ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Redeeming_Ratio" />:
+                  </div>
+                  <div className="info-detail">
+                    1 {base_token_name} = {rate} {token_name}
+                  </div>
                 </div>
-                <div className="info-detail">{base_hard_cap}</div>
-              </div>
-            ) : null}
-          
-          {start_at?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.ETO_Period" />
-            </div>
-            <div className="info-detail">{start_at}</div>
-          </div>):null}
-          
-          {end_at?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.End_at" />
-            </div>
-            <div className="info-detail">{end_at}</div>
-          </div>):null}
-          {lock_at ? (
-              <div className="info-item">
-                <div className="info-title">
-                  <Translate content="EIO.Lock-up_Period" />
+              ) : null}
+
+              {remainStr ? (
+                <div className="info-item large-time">
+                  <div className="info-title">
+                    <img className="icon-time" src={time} />
+                    {status == "ok" ? (
+                      <span className={`sub-time ${status}`}>
+                        {" "}
+                        <Translate content="EIO.Time_remains" />{" "}
+                      </span>
+                    ) : status == "pre" ? (
+                      <span className={`sub-time ${status}`}>
+                        {" "}
+                        <Translate content="EIO.In" />{" "}
+                      </span>
+                    ) : status == "finish" ? (
+                      <span className={`sub-time ${status}`}>
+                        {" "}
+                        <Translate content="EIO.Ended" />{" "}
+                      </span>
+                    ) : (
+                      <span className={`sub-time ${status}`}>
+                        {" "}
+                        <Translate content="EIO.Ended" />{" "}
+                      </span>
+                    )}
+                  </div>
+                  <div className="info-detail">{remainStr}</div>
                 </div>
-                <div className="info-detail">{lock_at}</div>
-              </div>
-            ) : null}
-          {
-            lang=='zh'?(
-              adds_on_market_time?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Listing_Time" />
+              ) : null}
             </div>
-            <div className="info-detail">{adds_on_market_time}</div>
-          </div>):null
-            ):(
-              adds_on_market_time__lang_en?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Listing_Time" />
-            </div>
-            <div className="info-detail">{adds_on_market_time__lang_en}</div>
-          </div>):null
-            )
-          }
-          {
-            lang=='zh'?(
-              adds_advantage?(<div className="info-item">
-                <div className="info-title">
-                <Translate content="EIO.Project_Strengths" />
+            <div className="right-part">
+              <h3 className="title">
+                <span className="main">
+                  <Translate content="EIO.Project_Details" />
+                </span>
+                {status == "ok" ? (
+                  <span className="sub ok">
+                    [ <Translate content="EIO.ok" />...]
+                  </span>
+                ) : status == "pre" ? (
+                  <span className="sub pre">
+                    [ <Translate content="EIO.pre" /> ]
+                  </span>
+                ) : status == "finish" ? (
+                  <span className="sub finish">
+                    [ <Translate content="EIO.finish" /> ]
+                  </span>
+                ) : status == "pause" ? (
+                  <span className="sub finish">
+                    [ <Translate content="EIO.pause" /> ]
+                  </span>
+                ) : null}
+              </h3>
+
+              {name ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Project_Name" />
+                  </div>
+                  <div className="info-detail">{name}</div>
                 </div>
-                <div className="info-detail">{adds_advantage}</div>
-              </div>):null
-            ):(
-              adds_advantage__lang_en?(<div className="info-item">
-                <div className="info-title">
-                <Translate content="EIO.Project_Strengths" />
+              ) : null}
+              {token_name ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Token_Name" />
+                  </div>
+                  <div className="info-detail">{token_name}</div>
                 </div>
-                <div className="info-detail">{adds_advantage__lang_en}</div>
-              </div>):null
-            )
-          }
-          {offer_at?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.Token_Releasing_Time" />
-            </div>
-            <div className="info-detail">{offer_at}</div>
-          </div>):(
-            <div className="info-item">
-              <div className="info-title">
-              <Translate content="EIO.Token_Releasing_Time" />
-              </div>
-              <div className="info-detail"><Translate content="EIO.Offer_any_time" /></div>
-            </div>
-          )}
-          
-          {/* {base_token_count?(<div className="info-item">
+              ) : null}
+
+              {lang == "zh" ? (
+                adds_token_total ? (
+                  <div className="info-item">
+                    <div className="info-title">
+                      <Translate content="EIO.Total_Token_Supply" />
+                    </div>
+                    <div className="info-detail">{adds_token_total}</div>
+                  </div>
+                ) : null
+              ) : adds_token_total__lang_en ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Total_Token_Supply" />
+                  </div>
+                  <div className="info-detail">{adds_token_total__lang_en}</div>
+                </div>
+              ) : null}
+              {base_hard_cap ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Hard_cap" />
+                  </div>
+                  <div className="info-detail">{base_hard_cap}</div>
+                </div>
+              ) : null}
+
+              {start_at ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.ETO_Period" />
+                  </div>
+                  <div className="info-detail">{start_at}</div>
+                </div>
+              ) : null}
+
+              {end_at ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.End_at" />
+                  </div>
+                  <div className="info-detail">{end_at}</div>
+                </div>
+              ) : null}
+              {lock_at ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Lock-up_Period" />
+                  </div>
+                  <div className="info-detail">{lock_at}</div>
+                </div>
+              ) : null}
+              {lang == "zh" ? (
+                adds_on_market_time ? (
+                  <div className="info-item">
+                    <div className="info-title">
+                      <Translate content="EIO.Listing_Time" />
+                    </div>
+                    <div className="info-detail">{adds_on_market_time}</div>
+                  </div>
+                ) : null
+              ) : adds_on_market_time__lang_en ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Listing_Time" />
+                  </div>
+                  <div className="info-detail">
+                    {adds_on_market_time__lang_en}
+                  </div>
+                </div>
+              ) : null}
+              {lang == "zh" ? (
+                adds_advantage ? (
+                  <div className="info-item">
+                    <div className="info-title">
+                      <Translate content="EIO.Project_Strengths" />
+                    </div>
+                    <div className="info-detail">{adds_advantage}</div>
+                  </div>
+                ) : null
+              ) : adds_advantage__lang_en ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Project_Strengths" />
+                  </div>
+                  <div className="info-detail">{adds_advantage__lang_en}</div>
+                </div>
+              ) : null}
+              {offer_at ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Token_Releasing_Time" />
+                  </div>
+                  <div className="info-detail">{offer_at}</div>
+                </div>
+              ) : (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Token_Releasing_Time" />
+                  </div>
+                  <div className="info-detail">
+                    <Translate content="EIO.Offer_any_time" />
+                  </div>
+                </div>
+              )}
+
+              {/* {base_token_count?(<div className="info-item">
             <div className="info-title">
             <Translate content="EIO.ETO_Quota" />
             </div>
             <div className="info-detail">{base_token_count}{base_token_name}</div>
           </div>):null} */}
-          
-          {district_restriction?(<div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.District_Restriction" />
-            </div>
-            <div className="info-detail">{district_restriction}</div>
-          </div>):null}
-          
-          <div className="info-item">
-            <div className="info-title">
-            <Translate content="EIO.ETO_token" />
-            </div>
-            <div className="info-detail">{
-              base_token_name
-              // base_tokens.map((e,i)=>{
-              //   return (
-              //     <span key={i}>{e.base_token_name} </span>
-              //   )
-              // })
-            }</div>
-          </div>
-          {rate?(<div className="info-item">
-          <div className="info-title">
-            <Translate content="EIO.Redeeming_Ratio" />
-          </div>
-          <div className="info-detail">
-            1 {base_token_name} = {rate} {token_name}
-            
-          </div>
-        </div>):null}
-          {lang=='zh'?(
-            adds_website?(<div className="info-item">
-            
-              <div className="info-title">
-              <Translate content="EIO.Official_Website" />
-              </div>
-              <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
-            </div>):null
-          ):(
-            adds_website__lang_en?(<div className="info-item">
-            
-              <div className="info-title">
-              <Translate content="EIO.Official_Website" />
-              </div>
-              <div className="info-detail"><a href={adds_website} target="_blank">{adds_website}</a></div>
-            </div>):null
-          )}
-          {
-            lang=='zh'?(
-              adds_whitepaper?(<div className="info-item">
-                <div className="info-title">
-                <Translate content="EIO.Whitepaper" />
+
+              {district_restriction ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.District_Restriction" />
+                  </div>
+                  <div className="info-detail">{district_restriction}</div>
                 </div>
-                <div className="info-detail"><a href={adds_whitepaper} target="_blank">{adds_whitepaper}</a></div>
-              </div>):null
-            ):(
-              adds_whitepaper__lang_en?(<div className="info-item">
+              ) : null}
+
+              <div className="info-item">
                 <div className="info-title">
-                <Translate content="EIO.Whitepaper" />
+                  <Translate content="EIO.ETO_token" />
                 </div>
-                <div className="info-detail"><a href={adds_whitepaper__lang_en} target="_blank">{adds_whitepaper__lang_en}</a></div>
-              </div>):null
-            )
-          }
-          {
-            lang=='zh'?(
-              adds_detail?(<div className="info-item">
-                <div className="info-title">
-                <Translate content="EIO.Project_Details" />
+                <div className="info-detail">
+                  {
+                    base_token_name
+                    // base_tokens.map((e,i)=>{
+                    //   return (
+                    //     <span key={i}>{e.base_token_name} </span>
+                    //   )
+                    // })
+                  }
                 </div>
-                <div className="info-detail"><a href={adds_detail} target="_blank">{adds_detail}</a></div>
-              </div>):null
-            ):(
-              adds_detail__lang_en?(<div className="info-item">
-              <div className="info-title">
-              <Translate content="EIO.Project_Details" />
               </div>
-              <div className="info-detail"><a href={adds_detail__lang_en} target="_blank">{adds_detail__lang_en}</a></div>
-            </div>):null
-            )
-          }
-            
-            
-          
-          
-          <div className="button-holder">
-          {/* {create_user_type?(
+              {rate ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Redeeming_Ratio" />
+                  </div>
+                  <div className="info-detail">
+                    1 {base_token_name} = {rate} {token_name}
+                  </div>
+                </div>
+              ) : null}
+              {lang == "zh" ? (
+                adds_website ? (
+                  <div className="info-item">
+                    <div className="info-title">
+                      <Translate content="EIO.Official_Website" />
+                    </div>
+                    <div className="info-detail">
+                      <a href={adds_website} target="_blank">
+                        {adds_website}
+                      </a>
+                    </div>
+                  </div>
+                ) : null
+              ) : adds_website__lang_en ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Official_Website" />
+                  </div>
+                  <div className="info-detail">
+                    <a href={adds_website} target="_blank">
+                      {adds_website}
+                    </a>
+                  </div>
+                </div>
+              ) : null}
+              {lang == "zh" ? (
+                adds_whitepaper ? (
+                  <div className="info-item">
+                    <div className="info-title">
+                      <Translate content="EIO.Whitepaper" />
+                    </div>
+                    <div className="info-detail">
+                      <a href={adds_whitepaper} target="_blank">
+                        {adds_whitepaper}
+                      </a>
+                    </div>
+                  </div>
+                ) : null
+              ) : adds_whitepaper__lang_en ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Whitepaper" />
+                  </div>
+                  <div className="info-detail">
+                    <a href={adds_whitepaper__lang_en} target="_blank">
+                      {adds_whitepaper__lang_en}
+                    </a>
+                  </div>
+                </div>
+              ) : null}
+              {lang == "zh" ? (
+                adds_detail ? (
+                  <div className="info-item">
+                    <div className="info-title">
+                      <Translate content="EIO.Project_Details" />
+                    </div>
+                    <div className="info-detail">
+                      <a href={adds_detail} target="_blank">
+                        {adds_detail}
+                      </a>
+                    </div>
+                  </div>
+                ) : null
+              ) : adds_detail__lang_en ? (
+                <div className="info-item">
+                  <div className="info-title">
+                    <Translate content="EIO.Project_Details" />
+                  </div>
+                  <div className="info-detail">
+                    <a href={adds_detail__lang_en} target="_blank">
+                      {adds_detail__lang_en}
+                    </a>
+                  </div>
+                </div>
+              ) : null}
+
+              <div className="button-holder">
+                {/* {create_user_type?(
             <Trigger open="ieo-detail-modal"><div>123</div></Trigger>
           ):null} */}
-          {/* <Trigger open="ieo-detail-modal"><div>123</div></Trigger> */}
-          
-          {
-            (status == 'ok'||status == 'pre') ? (
-                this.state.reserve_status()
-            ):null 
-          }
-          {
-            (status == 'ok'||status == 'pre') ? (
-              this.state.kyc_status()
-             ):null 
-          }
-          
-          {/* {this.state.kyc_status()}
+                {/* <Trigger open="ieo-detail-modal"><div>123</div></Trigger> */}
+
+                {status == "ok" || status == "pre"
+                  ? this.state.reserve_status()
+                  : null}
+                {status == "ok" || status == "pre"
+                  ? this.state.kyc_status()
+                  : null}
+
+                {/* {this.state.kyc_status()}
           {
             (status == 'ok'||status == 'pre') ? (
                 this.state.reserve_status()
@@ -944,57 +1146,62 @@ fetchDatas(){
               </div>
             )
           )} */}
-          
-          
-          {/* </Trigger> */}
-          
+
+                {/* </Trigger> */}
+              </div>
+            </div>
+            <DetalModal
+              id="ieo-detail-modal"
+              cb={this.sentdata.bind(this)}
+              project={this.props.match.params.id}
+              isShow={this.state.showModal}
+            />
+            <AlertModal
+              ref="caos"
+              id="ieo-alert-modal"
+              cb={this.sentdata.bind(this)}
+              project={this.props.match.params.id}
+              isShow={this.state.showAlertModal}
+            />
+            {lang == "zh" ? (
+              <LegalModal id="ieo-legal-modal" />
+            ) : (
+              <LegalModalEn id="ieo-legal-modal" />
+            )}
           </div>
-          
-          
-        </div>
-          <DetalModal id="ieo-detail-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showModal}>
-          </DetalModal>
-          <AlertModal ref="caos" id="ieo-alert-modal" cb={this.sentdata.bind(this)} project={this.props.match.params.id} isShow={this.state.showAlertModal}>
-          </AlertModal>
-          {lang=='zh'?(
-            <LegalModal id="ieo-legal-modal">
-            </LegalModal>
-          ):(
-            <LegalModalEn id="ieo-legal-modal">
-          </LegalModalEn>
-          )}
-          
-      </div>
-      ):(
-        <div className="loading-detail-holder">
-        <div className="loading-detail">
-          <span className="line1"></span>
-          <span className="line2"></span>
-          <span className="line3"></span>
-          <span className="line4"></span>
-          <span className="line5"></span>
-          <span className="line6"></span>
-          <span className="line7"></span>
-          <span className="line8"></span>
-        </div>
-        </div>
-      )}
+        ) : (
+          <div className="loading-detail-holder">
+            <div className="loading-detail">
+              <span className="line1" />
+              <span className="line2" />
+              <span className="line3" />
+              <span className="line4" />
+              <span className="line5" />
+              <span className="line6" />
+              <span className="line7" />
+              <span className="line8" />
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 }
 //  export default Detail;
- export default connect(Detail,{
-  listenTo() {
-    return [AccountStore];
-  },
-  getProps(props) {
-    return {
-      myAccounts: AccountStore.getMyAccounts(),
-      currentAccount: AccountStore.getState().currentAccount,
-      accountsWithAuthState: AccountStore.getMyAccountsWithAuthState(),
-      isMyAccount: AccountStore.getState(),
-      currentAccount: AccountStore.getState().currentAccount
+export default connect(
+  Detail,
+  {
+    listenTo() {
+      return [AccountStore];
+    },
+    getProps(props) {
+      return {
+        myAccounts: AccountStore.getMyAccounts(),
+        currentAccount: AccountStore.getState().currentAccount,
+        accountsWithAuthState: AccountStore.getMyAccountsWithAuthState(),
+        isMyAccount: AccountStore.getState(),
+        currentAccount: AccountStore.getState().currentAccount
+      };
     }
   }
-})
+);
