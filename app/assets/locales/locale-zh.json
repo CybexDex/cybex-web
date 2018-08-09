@@ -645,11 +645,11 @@
   "operation": {
     "qtb": {
       "fill_order":
-        "成功参与一次世界杯竞猜，部分竞猜资金被确认，详情可查看世界杯竞猜页面",
-      "asset_global_settle": "公布了一场世界杯竞猜结果",
+        "成功参与一次足球竞猜，部分竞猜资金被确认，详情可查看竞猜页面",
+      "asset_global_settle": "公布了一场足球竞猜结果",
       "call_order_update": "调整了竞猜资金配置",
-      "asset_settle": "确认了一次世界杯竞猜结果，详情可查看世界杯竞猜页面",
-      "limit_order_create": "申请加入一场世界杯竞猜",
+      "asset_settle": "确认了一次足球竞猜结果，详情可查看竞猜页面",
+      "limit_order_create": "申请加入一场足球竞猜",
       "limit_order_cancel": "撤销未确认的竞猜申请"
     },
     "pending": " %(blocks)s 个区块待定",
@@ -1993,7 +1993,7 @@
   },
   "assets": {
     "banner":
-      "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/ETObanner1-CN0717.jpg",
+      "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/Herdius_banner0809-CN.jpeg",
     "eto_step_1":
       "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-1.jpg",
     "eto_step_2":

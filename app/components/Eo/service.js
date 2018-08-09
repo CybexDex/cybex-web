@@ -40,18 +40,18 @@ export const fetchJson = options => {
 };
 
 function toJson(resp, options) {
-  if(resp.status == 500){}
+  if (resp.status == 500) {
+  }
   return resp.json();
 }
 function resHandler(resData, options) {
   // console.log(resData);
-  
+
   options.success(resData);
 }
 function errorHandler(error, options, status) {
   isFlag = false;
   if (options.error) {
-    
     options.error(error);
   } else {
     console.error(error);
@@ -59,9 +59,11 @@ function errorHandler(error, options, status) {
   return false;
 }
 
-export function fetchJsonList(offset, cb) {
+export function fetchJsonList({ offset, type }, cb) {
   fetchJson({
-    url: `/cybex/projects?limit=4&offset=${offset}`,
+    url: `/cybex/projects?limit=4&offset=${offset}${
+      type ? "&type=" + type : ""
+    }`,
     type: "GET",
     success: data => {
       cb(data);
@@ -82,6 +84,16 @@ export function fetchBanner(cb) {
 export function fetchDetails(data, cb) {
   fetchJson({
     url: "/cybex/project/detail",
+    type: "GET",
+    success: res => {
+      cb(res);
+    },
+    data: data
+  });
+}
+export function updateStatus(data, cb) {
+  fetchJson({
+    url: "/cybex/project/current",
     type: "GET",
     success: res => {
       cb(res);

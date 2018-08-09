@@ -164,7 +164,10 @@
     width: 60%;
     float: left;
     position: relative;
-    box-sizing: border-box;
+		box-sizing: border-box;
+		.row {
+			margin-bottom: 1em;
+		}
   }
   .right-part {
     width: 40%;
@@ -254,19 +257,16 @@
   .info-item {
     overflow: hidden;
     .info-title {
-      float: left;
       font-weight: bold;
     }
   }
   .info-text {
-    float: left;
     width: 20%;
     text-align: left;
     padding-left: 10px;
     color: #ff9143;
   }
   .percent {
-    float: left;
     width: 80%;
     height: 10px;
     position: relative;

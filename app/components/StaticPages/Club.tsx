@@ -83,8 +83,8 @@ let Feature = ({
 Feature = Radium(Feature);
 
 let Banner = () => (
-  <div>
-    <img src={counterpart.translate("assets.banner")} />
+  <div style={{textAlign: "center"}}>
+    <img width="100%" src={counterpart.translate("assets.banner")} />
   </div>
 );
 

@@ -26,6 +26,7 @@ export interface ProgressBarProps {
   current?;
   labelStyle?;
   withLabel?;
+  flagLabel?;
 }
 
 let ProgressBar = class extends React.Component<ProgressBarProps, any> {
@@ -48,25 +49,52 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
         borderRadius: "0.5em"
       },
       container: {
-        ...FlexContainer({alignItems: "center"})
+        ...FlexContainer({ alignItems: "center" })
       },
       outer: {
         boxShadow: "inset 0 1px 3px rgba(0, 0, 0, 0.6)",
         width: "100%",
-        overflow: "hidden",
-        backgroundColor: "rgba(8, 10, 16, 0.6)",
+        backgroundColor: "rgba(8, 10, 16, 0.2)",
         padding: "2px"
       },
       inner: {
-        height: "0.6em"
+        height: "0.6em",
+        position: "relative"
+      },
+      flag: {
+        position: "absolute",
+        bottom: "155%",
+        padding: "0.4em 0.4em 0.8em 0.4em",
+        width: "4em",
+        fontSize: "1.4em",
+        fontWeight: "bold",
+        transition: "0.2s all",
+        fontFamily: "PingFangSC-Medium, sans-serif"
       }
+    },
+    flagLeft: {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 80%, 20% 80%, 0% 100%, 0% 50%)",
+      borderRadius: "4px 4px 12px 0",
+      left: "100%",
+      right: "unset"
+    },
+    flagRight: {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 80% 80%, 0% 80%, 0% 100%)",
+      borderRadius: "4px 4px 0 10px",
+      left: "calc(100% - 4.2em)"
+
+      // right: "100%"
     },
     primary: {
       inner: {
         background: Colors.$colorGradientGoldex
       },
       label: {
-        color: Colors.$colorOrange
+        color: Colors.$colorOrange,
+        fontWeight: "bold"
+      },
+      flag: {
+        background: "linear-gradient(300deg, rgba(255, 255, 255, 0.5), #ffffff)"
       }
     },
     secondary: {
@@ -110,6 +138,7 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
       loading,
       max,
       current,
+      flagLabel,
       labelStyle,
       withLabel
     } = this.props;
@@ -144,7 +173,26 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
                 { width: `${percent}%` }
               ] as any
             }
-          />
+          >
+            {flagLabel && (
+              <span
+                style={
+                  [
+                    ProgressBar.Styles[styleType].label,
+                    flagLabel ? ProgressBar.Styles.base.flag : {},
+                    flagLabel &&
+                      (percent > 50
+                        ? ProgressBar.Styles.flagRight
+                        : ProgressBar.Styles.flagLeft),
+                    ProgressBar.Styles[styleType].flag,
+                    labelStyle
+                  ] as any
+                }
+              >
+                {percent}%
+              </span>
+            )}
+          </div>
         </div>
         {withLabel && (
           <span
@@ -152,7 +200,7 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
               [
                 ProgressBar.Styles[styleType].label,
                 { marginLeft: "1em" },
-                labelStyle,
+                labelStyle
               ] as any
             }
           >

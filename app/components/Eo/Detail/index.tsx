@@ -608,13 +608,21 @@ class Detail extends React.Component<any, any> {
   }
 
   fetchProgress() {
-    
+    let data = {
+      project: this.props.match.params.id,
+      cybex_name: this.props.currentAccount
+    };
+    fetchJson.updateStatus(data, res => {
+      let result = res.result;
+      if (!result) return;
+      console.debug("RESULT: ", result);
+    });
   }
 
   componentDidMount() {
     this.fetchDatas();
     window.cao = setInterval(() => {
-      this.fetchDatas();
+      this.fetchProgress();
     }, 3000);
   }
   public openModal = () => {
@@ -788,29 +796,30 @@ class Detail extends React.Component<any, any> {
         {name ? (
           <div className={`detail ${lang}`}>
             <div className="left-part">
-              <img src={lang == "zh" ? adds_banner : adds_banner__lang_en} />
+              <div className="row">
+                <img src={lang == "zh" ? adds_banner : adds_banner__lang_en} />
+              </div>
               {percent && (
-                <ProgressBar
-                  styleType="primary"
-                  percent={60}
-                  withLabel
-                  labelStyle={{ marginLeft: "2em", fontSize: "1.6em" }}
-                />
+                <div className="row">
+                  <ProgressBar
+                    styleType="primary"
+                    percent={percent}
+                    withLabel
+                    labelStyle={{ marginLeft: "1.4em", fontSize: "1.6em" }}
+                  />
+                </div>
               )}
-
               {rate ? (
-                <div className="info-item">
-                  <div className="info-title">
-                    <Translate content="EIO.Redeeming_Ratio" />:
-                  </div>
-                  <div className="info-detail">
-                    1 {base_token_name} = {rate} {token_name}
-                  </div>
+                <div className="row info-item">
+                  <Translate
+                    style={{ fontWeight: "bold" }}
+                    content="EIO.Redeeming_Ratio"
+                  />: 1 {base_token_name} = {rate} {token_name}
                 </div>
               ) : null}
 
               {remainStr ? (
-                <div className="info-item large-time">
+                <div className="row info-item large-time">
                   <div className="info-title">
                     <img className="icon-time" src={time} />
                     {status == "ok" ? (
@@ -834,8 +843,8 @@ class Detail extends React.Component<any, any> {
                         <Translate content="EIO.Ended" />{" "}
                       </span>
                     )}
+                    <span className="info-detail">{remainStr}</span>
                   </div>
-                  <div className="info-detail">{remainStr}</div>
                 </div>
               ) : null}
             </div>

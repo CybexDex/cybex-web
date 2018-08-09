@@ -46,7 +46,7 @@ const WS_NODE_LIST = __TEST__
   ];
 
 export const IEO_API = __FOR_SECURITY__
-  ? "//eto-pre.cybex.io"
+  ? "//eto-pre.cybex.io/api"
   : __STAGING__
     ? "///eto.cybex.io/api"
     : __DEV__ || __TEST__

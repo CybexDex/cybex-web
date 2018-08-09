@@ -17,6 +17,7 @@ import Swiper from "react-id-swiper";
 import Icon from "../Icon/Icon";
 import "./swiper.scss";
 import TextTruncate from "react-text-truncate";
+import { ProgressBar } from "components/Common/ProgressBar";
 
 let EO = class extends React.Component<any, any> {
   // nestedRef;
@@ -29,8 +30,12 @@ let EO = class extends React.Component<any, any> {
     };
   }
   canClick = true;
-  componentDidMount() {
-    fetchJson.fetchJsonList(this.state.offset, data => {
+  componentWillMount() {
+    let type =
+      this.props.location.search.indexOf("pre") === -1
+        ? "online"
+        : "online,pre_online";
+    fetchJson.fetchJsonList({ type, offset: this.state.offset }, data => {
       let showMore = "block";
       if (data.result.length < 4) {
         showMore = "none";
@@ -48,15 +53,18 @@ let EO = class extends React.Component<any, any> {
         // bannerData
       });
     });
+
     fetchJson.fetchBanner(res => {
       this.setState({
         bannerData: res.result
       });
     });
+
     fetchJson.fetchKYC({ cybex_name: this.props.myAccounts[0] }, res => {
       this.setState({ kyc_status: res.result });
     });
   }
+  // componentDidMount() {}
   next() {
     this.reactSwipe.next();
   }
@@ -68,7 +76,11 @@ let EO = class extends React.Component<any, any> {
   addMore() {
     if (this.canClick) {
       this.canClick = false;
-      fetchJson.fetchJsonList(this.state.offset, data => {
+      let type =
+        this.props.location.search.indexOf("pre") === -1
+          ? "online"
+          : "online,pre_online";
+      fetchJson.fetchJsonList({ type, offset: this.state.offset }, data => {
         let showMore = "block";
         if (data.result.length < 4) {
           showMore = "none";
@@ -131,21 +143,12 @@ let EO = class extends React.Component<any, any> {
                 <div key={i}>
                   <div className="item">
                     <Link to={`/eto/detail/${e.id}`}>
-                      <div className="img-content">
-                        {lang == "zh" ? (
-                          <img
-                            src={`${e.adds_banner}`}
-                            width={1280}
-                            height={656}
-                          />
-                        ) : (
-                          <img
-                            src={`${e.adds_banner__lang_en}`}
-                            width={1280}
-                            height={656}
-                          />
-                        )}
-                      </div>
+                      <img
+                        src={`${
+                          lang == "zh" ? e.adds_banner : e.adds_banner__lang_en
+                        }`}
+                        width="100%"
+                      />
                     </Link>
                   </div>
                 </div>
@@ -412,7 +415,10 @@ let EO = class extends React.Component<any, any> {
                             // </div>
                           )}
                         </div>
-                        <div className="bottom-holder" style={{marginTop: "1em"}}>
+                        <div
+                          className="bottom-holder"
+                          style={{ marginTop: "1em" }}
+                        >
                           <Link to={`/eto/detail/${e.id}`}>
                             <div
                               className={`button primery-button ${e.status}`}
@@ -429,51 +435,13 @@ let EO = class extends React.Component<any, any> {
                             </div>
                           </Link>
                           <div className="percent-holder-out">
-                            <div className="percent-holder">
-                              <div className="info-item">
-                                <div className="percent-holder-in">
-                                  <div className="percent">
-                                    <div
-                                      className={`percent-in ${e.status}`}
-                                      style={{ width: showPercent }}
-                                    />
-                                    {/* <div className="info-text" style={{left: `${percent}%`}}>{`${percent}%`}</div> */}
-                                  </div>
-                                  {percent > 93 ? (
-                                    <div
-                                      className="info-text"
-                                      style={{
-                                        left: showPercent,
-                                        transform: `rotateY(180deg)`,
-                                        marginLeft: "-47px"
-
-                                        // percent
-                                      }}
-                                    >
-                                      <span
-                                        style={{
-                                          transform: `rotateY(180deg)`,
-                                          display: "block"
-                                        }}
-                                      >{`${percent}%`}</span>
-                                    </div>
-                                  ) : (
-                                    <div
-                                      className="info-text"
-                                      style={{
-                                        left: showPercent
-
-                                        // transform: percent>93?`rotateY(180deg)`:'auto'
-
-                                        // percent
-                                      }}
-                                    >
-                                      <span>{`${percent}%`}</span>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
+                            <ProgressBar
+                              styleType="primary"
+                              percent={percent}
+                              labelStyle={i !== 0 ? {color: "#fff"} : {}}
+                              flagLabel={i === 0}
+                              withLabel={i !== 0}
+                            />
                             {(j % 2 == 0 && i % 4 == 0) ||
                             (j % 2 == 1 && i % 4 == 2) ? (
                               // <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
