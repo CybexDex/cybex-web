@@ -383,11 +383,12 @@ let EO = class extends React.Component<any, any> {
                                 style={{
                                   overflow: "hidden",
                                   textOverflow: "ellipsis",
+                                  textAlign: "justify",
                                   display: "-webkit-box",
-                                  WebkitLineClamp: 2,
+                                  WebkitLineClamp: 4,
                                   WebkitBoxOrient: "vertical"
                                 }}
-                                line={lang == "zh" ? 4 : 2}
+                                line={lang == "zh" ? 6 : 4}
                                 truncateText="…"
                                 text={
                                   lang == "zh"
@@ -404,7 +405,7 @@ let EO = class extends React.Component<any, any> {
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                                 display: "-webkit-box",
-                                WebkitLineClamp: 2,
+                                WebkitLineClamp: 4,
                                 WebkitBoxOrient: "vertical"
                               }}
                             >
@@ -442,14 +443,14 @@ let EO = class extends React.Component<any, any> {
                               flagLabel={i === 0}
                               withLabel={i !== 0}
                             />
-                            {(j % 2 == 0 && i % 4 == 0) ||
+                            {/* {(j % 2 == 0 && i % 4 == 0) ||
                             (j % 2 == 1 && i % 4 == 2) ? (
                               // <p className="raised"><Translate content="EIO.Raised" />: {e.current_base_token_count} {e.base_token_name}</p>
                               <p className="raised">
                                 <Translate content="EIO.Raised" />:{" "}
                                 {e.current_base_token_count} {e.base_token_name}
                               </p>
-                            ) : null}
+                            ) : null} */}
                             <p className={`raised ${e.status}`}>
                               <Icon name="time" />
                               {e.status == "ok" ? (

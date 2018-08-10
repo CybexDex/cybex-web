@@ -629,7 +629,7 @@ class Detail extends React.Component<any, any> {
     this.fetchDatas();
     window.cao = setInterval(() => {
       this.fetchProgress();
-    }, 3000);
+    }, 30000);
   }
   public openModal = () => {
     this.setState({
