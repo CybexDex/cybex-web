@@ -34,10 +34,11 @@
 	}
 	.kyc-btn{
 		border: .5px solid #ffd400; 
-		float: right;
+		// float: right;
+		width: 400px;
 		padding: .5rem 2rem;
 		border-radius: 3rem;
-		margin-top: 1.5rem;
+		margin-bottom: 1rem;
 		cursor: pointer;
 		p{
 			margin: 0;
@@ -86,7 +87,7 @@
 	width: 1024px;
 	// width: 80%;
 	// max-width: 800px;
-	margin: 20px auto;
+	margin: auto;
 	}
 	
 	.waterfall {

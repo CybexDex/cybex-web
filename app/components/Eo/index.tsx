@@ -159,15 +159,32 @@ let EO = class extends React.Component<any, any> {
         {/* {this.state.kyc_status=="not_start"?( */}
         <div className="title-container">
           {/* <Link to="/eto/training"> */}
-          <h2 className="base-title">
+          <h2 className="base-title" style={{float: "left"}}>
             | <Translate content="EIO.Popular_ETOs" />
           </h2>
-          <a href={__ICOAPE__} target="_blank">
-            <div className="kyc-btn button primery-button">
-              {/* <Translate content="EIO.KYC_Verification" /> */}
-              <Translate content="EIO.Accept_KYC_Verification" />
-            </div>
-          </a>
+          <div className="row text-right">
+            <a href={__ICOAPE__} target="_blank">
+              <div className="kyc-btn button primery-button">
+                {/* <Translate content="EIO.KYC_Verification" /> */}
+                <Translate content="EIO.Accept_KYC_Verification" />
+              </div>
+            </a>
+          </div>
+          <div className="row text-right">
+            <a
+              href={
+                lang == "zh"
+                  ? "https://integral.cybex.io/integral.html"
+                  : "https://medium.com/@herdiusofficial/details-on-the-herdius-pre-sale-airdrop-8862ecbcea60"
+              }
+              target="_blank"
+            >
+              <div className="kyc-btn button primery-button">
+                {/* <Translate content="EIO.KYC_Verification" /> */}
+                <Translate content="EIO.get_whitelist" />
+              </div>
+            </a>
+          </div>
           {/* </Link> */}
         </div>
         {/* ):null */}
