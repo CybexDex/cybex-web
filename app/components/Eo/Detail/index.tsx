@@ -294,8 +294,14 @@ class Detail extends React.Component<any, any> {
       project: this.props.match.params.id
     };
     fetchJson.fetchDetails(data, res => {
-      if (res.result.control !== "online") {
-        console.log(this);
+      if (
+        res.result.control !== "online" &&
+        !(
+          location.search.indexOf("pre") !== -1 &&
+          res.result.control === "pre_online"
+        )
+      ) {
+        console.info("Visit a invalid project");
         this.props.history.push("/eto");
       }
       res.result.end_at = this.formatTime(res.result.end_at);

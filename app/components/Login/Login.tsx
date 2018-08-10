@@ -40,6 +40,14 @@ let LoginMain = Radium(
       };
     }
 
+    componentWillMount() {
+      SettingsActions.changeSetting({
+        setting: "passwordLogin",
+        value: true
+      });
+      WalletUnlockActions.lock();
+    }
+
     onPasswordEnter = async e => {
       e.preventDefault();
       this.setState({
@@ -73,7 +81,7 @@ let LoginMain = Radium(
           this.props.resolve();
           WalletUnlockActions.change();
         }
-      }, 1000);
+      }, 500);
       return false;
     };
 

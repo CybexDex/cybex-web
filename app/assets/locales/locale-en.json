@@ -1471,6 +1471,7 @@
     "change_backup":
       "Now that you've changed your password, we highly recommend making a new backup.",
     "paste_private": "Paste private keys here (Wallet Import Format - WIF)",
+    "has_encrypted": "Need to decrypt an encrypted WIF key? Click here",
     "totals": "Asset Totals",
     "claim_later":
       "Once you've imported the keys, you can claim these balances to an account of your choosing.",
@@ -1683,6 +1684,14 @@
     "claim_refcode": "Claim Referral Code",
     "refcode_optional": "Referral Code (optional)",
     "enter_refcode": "Enter referral code"
+  },
+  "decode": {
+    "title": "Decrypt WIF text",
+    "secret": "Decrypt Password",
+    "crypto": "Encrypted WIF Text",
+    "wif": "Decrypted WIF",
+    "tip": "Type in your encrypted text and the password you've used to encrypt the WIF",
+    "do": "Decrypt"
   },
   "proposal_create": {
     "review_period": "Review period begin",

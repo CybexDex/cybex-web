@@ -37,12 +37,13 @@ const WS_NODE_LIST = __TEST__
     new ApiNode("shenzhen.51nebula.com/", "Shenzhen")
   ]
   : [
-    new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
-    new ApiNode("korea-01.cybex.io/", "Korea"),
-    new ApiNode("singapore-01.cybex.io/", "Singapore"),
-    new ApiNode("hongkong.cybex.io/", "Hongkong"),
     new ApiNode("beijing.51nebula.com/", "Beijing"),
-    new ApiNode("shanghai.51nebula.com/", "Shanghai")
+    new ApiNode("shanghai.51nebula.com/", "Shanghai"),
+    new ApiNode("hongkong.cybex.io/", "Hongkong"),
+    new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
+    new ApiNode("singapore-01.cybex.io/", "Singapore"),
+    new ApiNode("europe01.cybex.io/", "Europe"),
+    new ApiNode("korea-01.cybex.io/", "Korea"),
   ];
 
 export const IEO_API = __FOR_SECURITY__

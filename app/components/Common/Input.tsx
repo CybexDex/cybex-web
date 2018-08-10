@@ -62,6 +62,7 @@ let Input = Radium(
         margin: 0,
         padding: 0,
         flex: "1 1",
+        border: 0,
         fontSize: "1em",
         backgroundColor: "transparent",
         ":focus": {

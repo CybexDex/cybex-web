@@ -1441,6 +1441,7 @@
     "change_success": "密码更改成功！",
     "change_backup": "你已经修改了密码，强烈建议你创建一个新的备份文件。",
     "paste_private": "将私钥黏贴在这里 (钱包导入格式 - WIF)",
+    "has_encrypted": "需要解密一个已加密的WIF格式私钥? 点击这里解密",
     "totals": "资产总计",
     "claim_later": "导入私钥后，你可以将私钥拥有的余额申领到你选择的账户中去。",
     "cyb_09_export": "CYB 0.9.3c 私钥导出文件 (.json)",
@@ -1642,6 +1643,14 @@
     "claim_refcode": "领取推荐码",
     "refcode_optional": "推荐码 (可选)",
     "enter_refcode": "输入推荐码"
+  },
+  "decode": {
+    "title": "解密私钥密文",
+    "secret": "密码",
+    "crypto": "待解密密文",
+    "tip": "请输入您所持有的加密后密文与加密时所用密码，点击解密按钮尝试解密。解密后Cybex账户的WIF格式私钥应以5开头。",
+    "wif": "解密后密文",
+    "do": "解密"
   },
   "gateway": {
     "fee": "网关执行手续费",

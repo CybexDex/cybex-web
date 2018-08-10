@@ -52,7 +52,7 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
         ...FlexContainer({ alignItems: "center" })
       },
       outer: {
-        boxShadow: "inset 0 1px 3px rgba(0, 0, 0, 0.6)",
+        boxShadow: "inset 0 1px 3px rgba(0, 0, 0, 0.2)",
         width: "100%",
         backgroundColor: "rgba(8, 10, 16, 0.2)",
         padding: "2px"

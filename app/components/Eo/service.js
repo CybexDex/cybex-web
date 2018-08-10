@@ -71,9 +71,10 @@ export function fetchJsonList({ offset, type }, cb) {
   });
 }
 
-export function fetchBanner(cb) {
+export function fetchBanner(cb, pre) {
+  let suffix = pre ? "?type=pre_online,online" : "";
   fetchJson({
-    url: "/cybex/projects/banner",
+    url: "/cybex/projects/banner" + suffix,
     type: "GET",
     success: data => {
       cb(data);

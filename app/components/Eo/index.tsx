@@ -58,7 +58,7 @@ let EO = class extends React.Component<any, any> {
       this.setState({
         bannerData: res.result
       });
-    });
+    }, location.search.indexOf("pre") !== -1);
 
     fetchJson.fetchKYC({ cybex_name: this.props.myAccounts[0] }, res => {
       this.setState({ kyc_status: res.result });
@@ -438,7 +438,7 @@ let EO = class extends React.Component<any, any> {
                             <ProgressBar
                               styleType="primary"
                               percent={percent}
-                              labelStyle={i !== 0 ? {color: "#fff"} : {}}
+                              labelStyle={i !== 0 ? { color: "#fff" } : {}}
                               flagLabel={i === 0}
                               withLabel={i !== 0}
                             />

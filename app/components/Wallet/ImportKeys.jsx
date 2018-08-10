@@ -8,6 +8,10 @@ import PrivateKeyStore from "stores/PrivateKeyStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { WalletCreate } from "components/Wallet/WalletCreate";
 import LoadingIndicator from "components/LoadingIndicator";
+import { ModalActions } from "actions/ModalActions";
+import DecodeModal, {
+  DEFAULT_DECODE_MODAL_ID
+} from "components/Modal/DecodeModal";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
 
@@ -598,6 +602,10 @@ class ImportKeys extends React.Component {
   //     });
   // }
 
+  showDecordModal = () => {
+    ModalActions.showModal(DEFAULT_DECODE_MODAL_ID);
+  };
+
   _renderBalanceClaims() {
     return (
       <div>
@@ -752,10 +760,21 @@ class ImportKeys extends React.Component {
                       id="wif"
                       tabIndex={tabIndex++}
                     />
-                    <button className="button" type="submit">
-                      <Translate content="wallet.submit" />
-                    </button>
-                    {cancelButton}
+                    <div className="form-group">
+                      <Translate
+                        component="a"
+                        content="wallet.has_encrypted"
+                        href="javascript:;"
+                        onClick={this.showDecordModal}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <button className="button" type="submit">
+                        <Translate content="wallet.submit" />
+                      </button>
+                      {cancelButton}
+                    </div>
+                    <DecodeModal modalId={DEFAULT_DECODE_MODAL_ID} />
                   </form>
                 ) : (
                   <form onSubmit={this._passwordCheck.bind(this)}>
