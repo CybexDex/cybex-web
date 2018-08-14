@@ -159,7 +159,7 @@ let EO = class extends React.Component<any, any> {
         {/* {this.state.kyc_status=="not_start"?( */}
         <div className="title-container">
           {/* <Link to="/eto/training"> */}
-          <h2 className="base-title" style={{float: "left"}}>
+          <h2 className="base-title" style={{ float: "left" }}>
             | <Translate content="EIO.Popular_ETOs" />
           </h2>
           <div className="row text-right">
@@ -231,7 +231,7 @@ let EO = class extends React.Component<any, any> {
 
                   const shortEnglishHumanizer = humanize.humanizer({
                     language: lang,
-                    units: ["d", "h", "m"],
+                    units: ["d", "h", "m", "s"],
                     unitMeasures: {
                       y: 365 * 86400000,
                       mo: 30 * 86400000,
@@ -297,7 +297,9 @@ let EO = class extends React.Component<any, any> {
                       countDownTime =
                         moment(finishAt).valueOf() - moment(endAt).valueOf();
                       remainStr = shortEnglishHumanizer(
-                        finishAt.diff(startAt)
+                        e.t_total_time
+                          ? e.t_total_time * 1000
+                          : finishAt.diff(startAt)
                       ).replace(/[\,]/g, "");
                       break;
                     case "ok":
@@ -358,26 +360,29 @@ let EO = class extends React.Component<any, any> {
                             >
                               {e.name}
                             </span>
-                            <span className="span-status">
-                              {e.status == "ok" ? (
-                                <p className="status-label ok">
-                                  [ <Translate content="EIO.ok" />... ]
-                                </p>
-                              ) : e.status == "pre" ? (
-                                <p className="status-label pre">
-                                  [ <Translate content="EIO.pre" /> ]
-                                </p>
-                              ) : e.status == "finish" ? (
-                                <p className="status-label finish">
-                                  [ <Translate content="EIO.finish" /> ]
-                                </p>
-                              ) : (
-                                <p className="status-label finish">
-                                  [ <Translate content="EIO.pause" /> ]
-                                </p>
-                              )}
-                            </span>
                           </h3>
+                          <span
+                            className="span-status"
+                            style={{ color: "white" }}
+                          >
+                            {e.status == "ok" ? (
+                              <p className="status-label ok">
+                                [ <Translate content="EIO.ok" />... ]
+                              </p>
+                            ) : e.status == "pre" ? (
+                              <p className="status-label pre">
+                                [ <Translate content="EIO.pre" /> ]
+                              </p>
+                            ) : e.status == "finish" ? (
+                              <p className="status-label finish">
+                                [ <Translate content="EIO.finish" /> ]
+                              </p>
+                            ) : (
+                              <p className="status-label finish">
+                                [ <Translate content="EIO.pause" /> ]
+                              </p>
+                            )}
+                          </span>
                           {(j % 2 == 0 && i % 4 == 0) ||
                           (j % 2 == 1 && i % 4 == 2) ? (
                             <div>

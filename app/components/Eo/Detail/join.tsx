@@ -56,8 +56,10 @@ class ProjectStat {
     if (!this.pDetail.base_token_count) {
       return this.pDetail.base_token_count;
     }
+    let { current_base_token_count } = this.pDetail;
+
     return new BigNumber(this.pDetail.base_token_count)
-      .minus(this.pDetail.current_base_token_count)
+      .minus(current_base_token_count)
       .toNumber();
   }
 
@@ -140,9 +142,9 @@ let Join = class extends React.Component<
   componentDidMount() {
     this.updateProject();
     ChainStore.subscribe(() => {
-      if (this.timerCounter++ % 20 === 0) {
-        this.updateProject();
-      }
+      // if (this.timerCounter++ % 1 === 0) {
+      this.updateState();
+      // }
     });
   }
 
@@ -156,6 +158,55 @@ let Join = class extends React.Component<
       project: this.props.match.params.id,
       cybex_name: this.props.currentAccount.get("name")
     };
+  };
+
+  updateState = () => {
+    let data = {
+      project: this.props.match.params.id,
+      cybex_name: this.props.currentAccount.get("name")
+    };
+    Promise.all([
+      new Promise(resolve => {
+        fetchJson.updateStatus(data, res => {
+          let currentState = res.result;
+          if (!currentState) resolve({});
+        });
+      }),
+      new Promise(resolve => {
+        fetchJson.updateUserStatus(data, res => {
+          let currentState = res.result;
+          if (!currentState) resolve({});
+        });
+      })
+    ])
+      .then(
+        ([projectData, personalStatusRaw]: [
+          ETO.CurrentState,
+          { current_base_token_count }
+        ]) => {
+          let { current_base_token_count: base_received } = personalStatusRaw;
+          let personalStatus = { base_received };
+
+          this.setState(prevState => ({
+            projectData: {
+              ...prevState.projectData,
+              ...projectData
+            },
+            personalStatus: {
+              ...prevState.personalStatus,
+              ...personalStatus
+            }
+          }));
+          console.debug(
+            "Latest State of Join: ",
+            projectData,
+            personalStatusRaw
+          );
+        }
+      )
+      .catch(error => {
+        console.error("Fetch Latest State Error: ", error);
+      });
   };
 
   updateProject = () => {
@@ -496,7 +547,6 @@ let Join = class extends React.Component<
       base_accuracy
     } = data;
     const statusData = this.state.personalStatus || {};
-    const { base_received } = statusData;
 
     let { currentAccount } = this.props;
     let {
@@ -559,7 +609,7 @@ let Join = class extends React.Component<
       .mod(projectStat.precision)
       .isZero();
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
-    const avail = base_max_quota - base_received;
+    const avail = projectStat.pAvail;
     const isOverflow = amountValue > avail;
     const isTooLow = amountValue < base_min_quota;
     const isSendNotValid =
@@ -595,7 +645,7 @@ let Join = class extends React.Component<
           <div className="illustration-list">
             <table>
               <tbody>
-                <tr>
+                {/* <tr>
                   <Translate
                     className="item-lable"
                     content="eto.amount_remain"
@@ -604,7 +654,7 @@ let Join = class extends React.Component<
                   <td className="text-right" data-unit={base_token_name}>
                     {projectStat.amountRemained}
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <Translate
                     className="item-lable"

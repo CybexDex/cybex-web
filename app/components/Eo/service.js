@@ -102,6 +102,16 @@ export function updateStatus(data, cb) {
     data: data
   });
 }
+export function updateUserStatus(data, cb) {
+  fetchJson({
+    url: "/cybex/user/current",
+    type: "GET",
+    success: res => {
+      cb(res);
+    },
+    data: data
+  });
+}
 export function fetchKYC(data, cb) {
   fetchJson({
     url: "/cybex/user/check_status",

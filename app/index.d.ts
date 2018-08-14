@@ -84,6 +84,14 @@ declare namespace ETO {
     type: "nomal";
     update_at: "2018-07-21 05:22:12";
   };
+
+  type CurrentState = {
+    current_base_token_count: number;
+    current_percent: number;
+    current_user_count: number;
+    real: boolean;
+    status: "pre";
+  } | {};
   type ETORecord = {
     block_num: number | null;
     created_at: string;

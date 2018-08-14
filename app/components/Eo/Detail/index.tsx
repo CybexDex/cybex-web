@@ -23,6 +23,7 @@ import { ProgressBar } from "components/Common/ProgressBar";
 let time = require("assets/time.png");
 
 class Detail extends React.Component<any, any> {
+  updateTimer;
   // nestedRef;
   constructor(props) {
     super(props);
@@ -30,7 +31,8 @@ class Detail extends React.Component<any, any> {
       showModal: false,
       reserve_status: () => null,
       kyc_status: () => null,
-      canBeReserve: false
+      canBeReserve: false,
+      currentState: {}
     };
   }
   reserve() {
@@ -619,17 +621,20 @@ class Detail extends React.Component<any, any> {
       cybex_name: this.props.currentAccount
     };
     fetchJson.updateStatus(data, res => {
-      let result = res.result;
-      if (!result) return;
-      console.debug("RESULT: ", result);
+      let currentState = res.result;
+      if (!currentState) return;
+      this.setState({
+        currentState
+      });
+      console.debug("Latest State: ", currentState);
     });
   }
 
   componentDidMount() {
     this.fetchDatas();
-    window.cao = setInterval(() => {
+    this.updateTimer = setInterval(() => {
       this.fetchProgress();
-    }, 30000);
+    }, 3000);
   }
   public openModal = () => {
     this.setState({
@@ -645,7 +650,7 @@ class Detail extends React.Component<any, any> {
     }, 3000);
   }
   componentWillUnmount() {
-    clearInterval(window.cao);
+    clearInterval(this.updateTimer);
   }
   changeCheckbox(e) {
     this.setState({
@@ -656,34 +661,21 @@ class Detail extends React.Component<any, any> {
     const data = this.state.data || {};
     const {
       name,
-      status,
-      current_user_count,
-      current_base_token_count,
-      base_max_quota,
-      base_min_quota,
       rate,
       adds_token_total,
       adds_token_total__lang_en,
-      adds_ico_total,
       start_at,
       end_at,
       adds_on_market_time,
       adds_advantage,
       adds_advantage__lang_en,
       offer_at,
-      base_token_count,
       district_restriction,
       base_token_name,
       adds_website,
-      whitepaper,
       adds_detail,
-      current_percent,
       adds_banner,
       adds_banner__lang_en,
-      token,
-      adds_keyword,
-      create_user_type,
-      current_token_count,
       adds_website__lang_en,
       adds_whitepaper,
       adds_whitepaper__lang_en,
@@ -693,8 +685,19 @@ class Detail extends React.Component<any, any> {
       finish_at,
       adds_on_market_time__lang_en,
       base_hard_cap,
-      lock_at
+      lock_at,
+      t_finish_block,
+      t_finish_tx,
+      t_total_time
     } = data;
+    let current_percent =
+      "current_percent" in this.state.currentState
+        ? this.state.currentState.current_percent
+        : data.current_percent;
+    let status =
+      "status" in this.state.currentState
+        ? this.state.currentState.status
+        : data.status;
     let base_tokens = data.base_tokens || [];
     let percent = current_percent * 100;
     percent = percent.toFixed(2);
@@ -713,16 +716,17 @@ class Detail extends React.Component<any, any> {
     let lang = counterpart.getLocale();
     const shortEnglishHumanizer = humanize.humanizer({
       language: lang,
-      units: ["d", "h", "m"],
-      unitMeasures: {
-        y: 365 * 86400000,
-        mo: 30 * 86400000,
-        w: 7 * 86400000,
-        d: 86400000,
-        h: 3600000,
-        m: 60000,
-        s: 1000
-      },
+      units: ["d", "h", "m", "s"],
+      // unitMeasures: {
+      //   y: 365 * 86400000,
+      //   mo: 30 * 86400000,
+      //   w: 7 * 86400000,
+      //   d: 86400000,
+      //   h: 3600000,
+      //   m: 60000,
+      //   s: 1000,
+      //   ms: 1
+      // },
       round: true,
       languages: {
         zh: {
@@ -777,10 +781,9 @@ class Detail extends React.Component<any, any> {
         break;
       case "finish":
         // countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
-        remainStr = shortEnglishHumanizer(finishAt.diff(startAt)).replace(
-          /[\,]/g,
-          ""
-        );
+        remainStr = shortEnglishHumanizer(
+          t_total_time ? t_total_time * 1000 : finishAt.diff(startAt)
+        ).replace(/[\,]/g, "");
         break;
       case "ok":
         // countDownTime = moment(endAt).valueOf() - moment().valueOf();
