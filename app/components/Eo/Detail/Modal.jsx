@@ -55,7 +55,7 @@ export class BaseModal extends React.Component {
     // }
   };
   componentDidMount(){
-    console.log(this);
+    // console.log(this);
     // let countDown = (30 - timePassed) > -1 ? 30 - timePassed : -1;
     // this.state = {
     //   fadeOut: false,

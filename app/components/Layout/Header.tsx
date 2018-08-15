@@ -238,7 +238,7 @@ let Header = class extends React.Component<any, any> {
 
     let walletBalance =
       myAccounts.length && this.props.currentAccount ? (
-        <div className="grp-menu-item header-balance">
+        <div className="grp-menu-item header-balance hide-column-small">
           <a>
             <TotalBalanceValue.AccountWrapper
               label="exchange.balance"
@@ -479,7 +479,7 @@ let Header = class extends React.Component<any, any> {
             </div>
 
             {!myAccountCount ? null : (
-              <div className="grp-menu-item overflow-visible account-drop-down">
+              <div className="grp-menu-item overflow-visible account-drop-down hide-column-small">
                 {
                   <FlagDropdown
                     locales={this.props.locales}

@@ -257,6 +257,7 @@
     "existing_user": "老用户",
     "restore": "还原",
     "try_more": "尝试加载更多",
+    "show_more": "一次性显示最多",
     "advanced": "高级",
     "intro_text_title": "欢迎来到Cybex去中心化交易所！",
     "intro_text_1":
@@ -2030,5 +2031,9 @@
       "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-12.jpg",
     "eto_step_13":
       "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-13.jpg"
+  },
+  "fallback": {
+    "title": "正在排队中，请稍等...",
+    "tip": "抱歉，由于本次活动参与人数太多，服务器压力较大，请耐心排队等待。排队成功后页面会自动更新。"
   }
 }

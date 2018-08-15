@@ -39,7 +39,7 @@ export class AlertModal extends React.Component {
     // }
   };
   componentDidMount(){
-    console.log(Trigger);
+    // console.debug(Trigger);
   }
   componentWillReceiveProps(n){
     this.setState({

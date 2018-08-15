@@ -18,6 +18,8 @@ import Icon from "../Icon/Icon";
 import "./swiper.scss";
 import TextTruncate from "react-text-truncate";
 import { ProgressBar } from "components/Common/ProgressBar";
+import { Fallback } from "./Fallback";
+import LoadingIndicator from "components/LoadingIndicator";
 
 let EO = class extends React.Component<any, any> {
   // nestedRef;
@@ -26,43 +28,85 @@ let EO = class extends React.Component<any, any> {
     this.state = {
       data: [[]],
       offset: 0,
-      showMore: "block"
+      showMore: "block",
+      loading: true
     };
   }
   canClick = true;
+  errorTimer;
+
+  handleError = error => {
+    this.setState({ error: true, loading: false });
+    if (!this.errorTimer) {
+      this.errorTimer = setTimeout(() => {
+        this.componentWillMount();
+        this.errorTimer = undefined;
+      }, 3000);
+    }
+  };
+
   componentWillMount() {
     let type =
       this.props.location.search.indexOf("pre") === -1
         ? "online"
         : "online,pre_online";
-    fetchJson.fetchJsonList({ type, offset: this.state.offset }, data => {
-      let showMore = "block";
-      if (data.result.length < 4) {
-        showMore = "none";
-      }
-      let newDate = this.state.data;
-      newDate[0] = data.result;
-      let bannerData = [];
-      data.result.map(e => {
-        e.adds_banner && bannerData.push(e.adds_banner);
-      });
-      this.setState({
-        offset: this.state.offset + 4,
-        data: newDate,
-        showMore: showMore
-        // bannerData
-      });
-    });
 
-    fetchJson.fetchBanner(res => {
-      this.setState({
-        bannerData: res.result
-      });
-    }, location.search.indexOf("pre") !== -1);
-
-    fetchJson.fetchKYC({ cybex_name: this.props.myAccounts[0] }, res => {
-      this.setState({ kyc_status: res.result });
-    });
+    Promise.all([
+      new Promise((resolve, reject) => {
+        fetchJson.fetchJsonList(
+          { type, offset: this.state.offset },
+          data => {
+            let showMore = "block";
+            if (data.result.length < 4) {
+              showMore = "none";
+            }
+            let newDate = this.state.data;
+            newDate[0] = data.result;
+            let bannerData = [];
+            data.result.map(e => {
+              e.adds_banner && bannerData.push(e.adds_banner);
+            });
+            resolve({
+              offset: this.state.offset + 4,
+              data: newDate,
+              loading: false,
+              showMore: showMore
+              // bannerData
+            });
+          },
+          reject
+        );
+      }),
+      new Promise((resolve, reject) => {
+        fetchJson.fetchBanner(
+          res => {
+            resolve({
+              bannerData: res.result
+            });
+          },
+          location.search.indexOf("pre") !== -1,
+          reject
+        );
+      }),
+      new Promise((resolve, reject) => {
+        fetchJson.fetchKYC(
+          { cybex_name: this.props.myAccounts[0] },
+          res => {
+            resolve({ kyc_status: res.result });
+          },
+          reject
+        );
+      })
+    ])
+      .then(([jsonList, banner, kyc]) => {
+        this.setState({
+          ...jsonList,
+          ...banner,
+          ...kyc,
+          error: false
+        });
+      })
+      .catch(this.handleError);
   }
   // componentDidMount() {}
   next() {
@@ -112,6 +156,10 @@ let EO = class extends React.Component<any, any> {
       .format("YYYY-MM-DD HH:mm:ss");
   }
   render() {
+    if (this.state.error) {
+      return <Fallback />;
+    }
+
     const data = this.state.data || [];
     const bannerData = this.state.bannerData || [];
     const params = {
@@ -136,6 +184,7 @@ let EO = class extends React.Component<any, any> {
     let lang = counterpart.getLocale();
     return (
       <div>
+        {this.state.loading && <LoadingIndicator />}
         <div className="slider-holder">
           <Swiper {...params}>
             {bannerData.map((e, i) => {
@@ -538,6 +587,7 @@ import Mock from "./Detail/Mock";
 import Detail from "./Detail";
 import Join from "./Detail/join";
 import { Switch, Route } from "react-router-dom";
+import { resolve } from "path";
 // export default EO;
 export const EoWrapper = () => (
   <Switch>

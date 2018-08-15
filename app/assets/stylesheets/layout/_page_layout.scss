@@ -546,8 +546,14 @@ a {
 .page-layout {
   height: 100%;
 }
-.volume-wrapper {
+.volume-wrapper,
+.logo-normal {
   @media screen and (max-width: 75em) {
+    display: none !important;
+  }
+}
+.logo-short {
+  @media screen and (min-width: 75em) {
     display: none !important;
   }
 }

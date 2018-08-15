@@ -237,6 +237,7 @@
     "intro_text_title": "Welcome to the Cybex DEX",
     "new_user": "New user?",
     "existing_user": "Existing user",
+    "show_more": "Display more...",
     "try_more": "Try to load more",
     "restore": "Restore",
     "advanced": "Advanced",
@@ -1691,7 +1692,8 @@
     "secret": "Decrypt Password",
     "crypto": "Encrypted WIF Text",
     "wif": "Decrypted WIF",
-    "tip": "Type in your encrypted text and the password you've used to encrypt the WIF",
+    "tip":
+      "Type in your encrypted text and the password you've used to encrypt the WIF",
     "do": "Decrypt"
   },
   "proposal_create": {
@@ -1760,7 +1762,8 @@
     "intermediate": "Intermediate account",
     "asset_to_withdraw": "Asset to withdraw:",
     "support_block": "For support, please contact Jadepool at:",
-    "space_in_memo": "There are empty letters in your memo, please reconfirm it",
+    "space_in_memo":
+      "There are empty letters in your memo, please reconfirm it",
     "withdraw_memo": "Withdraw Memo",
     "valid_address": "Please enter a valid %(coin_type)s address",
     "valid_service": "Network error, check your network status, please.",
@@ -1950,7 +1953,8 @@
       "The current project %(project)s has ended, please understand",
     "take_in": "JOIN ETO",
     "invalid_user": "The qualification for join the ETO has not been confirmed",
-    "dont_repeat": "It may take a few minutes for your transfer to go through ETO service audit and confirmation. During this period, your valid transfer amount won't change and there's no need to do it twice.",
+    "dont_repeat":
+      "It may take a few minutes for your transfer to go through ETO service audit and confirmation. During this period, your valid transfer amount won't change and there's no need to do it twice.",
     "waiting": "Waiting For Comfirmation（%(timer)ss）",
     "cybex_in":
       "You will participate in the ETO by your %(asset)s balance in your CYBEX account, and the process may consume certain fees.",
@@ -2046,5 +2050,10 @@
       "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-12.jpg",
     "eto_step_13":
       "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717EN-13.jpg"
+  },
+  "fallback": {
+    "title": "Waiting in line, please wait...",
+    "tip":
+      "Sorry, the number of participants in this activity is too large, and the server is under great pressure. Please wait in line patiently. The page is automatically updated when the queue is successful."
   }
 }

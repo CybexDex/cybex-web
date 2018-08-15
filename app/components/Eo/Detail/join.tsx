@@ -22,6 +22,8 @@ import { NotificationActions } from "actions//NotificationActions";
 import * as moment from "moment";
 import ReactTooltip from "react-tooltip";
 import ErrorTipBox from "components/Utility/ErrorTipBox";
+import { Fallback } from "./../Fallback";
+import LoadingIndicator from "components/LoadingIndicator";
 
 const KYC_STATUS_OK = "ok";
 
@@ -95,8 +97,10 @@ let Join = class extends React.Component<
     personalStatus;
     balanceError;
     isOpen;
+    fetchError;
     btnTimer;
     canJoin;
+    loading;
   }
 > {
   static propTypes = {
@@ -109,6 +113,7 @@ let Join = class extends React.Component<
 
   nestedRef;
   btnTimer;
+  timer;
   timerCounter = 0;
 
   constructor(props) {
@@ -130,8 +135,10 @@ let Join = class extends React.Component<
       personalStatus: null,
       memo: null,
       isOpen: true,
+      fetchError: false,
       btnTimer: 0,
-      canJoin: true
+      canJoin: true,
+      loading: true
     };
 
     this._updateFee = this._updateFee.bind(this);
@@ -141,15 +148,15 @@ let Join = class extends React.Component<
 
   componentDidMount() {
     this.updateProject();
-    ChainStore.subscribe(() => {
-      // if (this.timerCounter++ % 1 === 0) {
+    this.timer = setInterval(() => {
       this.updateState();
-      // }
-    });
+    }, 3000);
   }
 
   componentWillUnmount() {
-    ChainStore.unsubscribe(this.updateProject);
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
 
   checkUserStatue = () => {
@@ -167,16 +174,36 @@ let Join = class extends React.Component<
     };
     Promise.all([
       new Promise(resolve => {
-        fetchJson.updateStatus(data, res => {
-          let currentState = res.result;
-          if (!currentState) resolve({});
-        });
+        fetchJson.updateStatus(
+          data,
+          res => {
+            let currentState = res.result;
+            if (!currentState || !currentState.real) {
+              resolve({});
+            } else {
+              resolve(currentState);
+            }
+          },
+          error => {
+            throw error;
+          }
+        );
       }),
       new Promise(resolve => {
-        fetchJson.updateUserStatus(data, res => {
-          let currentState = res.result;
-          if (!currentState) resolve({});
-        });
+        fetchJson.updateUserStatus(
+          data,
+          res => {
+            let currentState = res.result;
+            if (!currentState || !currentState.real) {
+              resolve({});
+            } else {
+              resolve(currentState);
+            }
+          },
+          error => {
+            throw error;
+          }
+        );
       })
     ])
       .then(
@@ -185,7 +212,13 @@ let Join = class extends React.Component<
           { current_base_token_count }
         ]) => {
           let { current_base_token_count: base_received } = personalStatusRaw;
-          let personalStatus = { base_received };
+          console.debug("PStatus: ", projectData, personalStatusRaw);
+          let personalStatus;
+          if (base_received) {
+            personalStatus = { base_received };
+          } else {
+            personalStatus = {};
+          }
 
           this.setState(prevState => ({
             projectData: {
@@ -216,34 +249,65 @@ let Join = class extends React.Component<
       cybex_name: this.props.currentAccount.get("name")
     };
     Promise.all([
-      new Promise(resolve =>
-        fetchJson.fetchDetails(data, res => {
-          let targetAccount = FetchChain(
-            "getAccount",
-            res.result.receive_address
-          );
-          resolve(res.result);
-        })
+      new Promise((resolve, reject) =>
+        fetchJson.fetchDetails(
+          {
+            project: this.props.match.params.id
+          },
+          res => {
+            resolve(res.result);
+          },
+          error => {
+            reject(error);
+          }
+        )
       ),
-      new Promise(resolve =>
-        fetchJson.fetchUserProjectStatus(data, res => {
-          resolve(res.result);
-        })
+      new Promise((resolve, reject) =>
+        fetchJson.fetchUserProjectStatus(
+          data,
+          res => {
+            resolve(res.result);
+          },
+          error => {
+            reject(error);
+          }
+        )
       ),
-      new Promise(resolve =>
-        fetchJson.fetchKYC(data, res => {
-          resolve(res.result);
-        })
+      new Promise((resolve, reject) =>
+        fetchJson.fetchKYC(
+          data,
+          res => {
+            resolve(res.result);
+          },
+          error => {
+            reject(error);
+          }
+        )
       )
-    ]).then(([projectData, personalStatus, kycStatus]) => {
-      let isOpen =
-        moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
-        moment.utc().isAfter(moment.utc((projectData as any).start_at));
-      let canJoin =
-        (kycStatus as any).status &&
-        (kycStatus as any).status === KYC_STATUS_OK;
-      this.setState({ projectData, personalStatus, isOpen, canJoin });
-    });
+    ])
+      .then(([projectData, personalStatus, kycStatus]) => {
+        let isOpen =
+          moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
+          moment.utc().isAfter(moment.utc((projectData as any).start_at));
+        let canJoin =
+          (kycStatus as any).status &&
+          (kycStatus as any).status === KYC_STATUS_OK;
+        this.setState({
+          projectData,
+          personalStatus,
+          isOpen,
+          canJoin,
+          loading: false,
+          fetchError: false
+        });
+      })
+      .catch(error => {
+        console.debug("Fetch Error: ", error);
+        this.setState({ fetchError: true, loading: false });
+        setTimeout(() => {
+          this.updateProject();
+        }, 3000);
+      });
     this._updateFee();
   };
   onAmountChanged({ amount, asset }) {
@@ -532,6 +596,14 @@ let Join = class extends React.Component<
 
   render() {
     console.log(this.state);
+    if (this.state.loading) {
+      return <LoadingIndicator />;
+    }
+
+    if (this.state.fetchError) {
+      return <Fallback />;
+    }
+
     const data = this.state.projectData || {};
     const {
       name,
@@ -642,65 +714,67 @@ let Join = class extends React.Component<
             style={{ marginBottom: "2rem" }}
           />
           {/* Project Stat */}
-          <div className="illustration-list">
-            <table>
-              <tbody>
-                {/* <tr>
+          <div className="top-list">
+            {/* <div>
                   <Translate
-                    className="item-lable"
+                    className="item-label"
                     content="eto.amount_remain"
                     component="td"
                   />
                   <td className="text-right" data-unit={base_token_name}>
                     {projectStat.amountRemained}
                   </td>
-                </tr> */}
-                <tr>
-                  <Translate
-                    className="item-lable"
-                    content="eto.account_limit_cap"
-                    component="td"
-                  />
-                  <td className="text-right" data-unit={base_token_name}>
-                    {base_max_quota}
-                  </td>
-                  <Translate
-                    className="item-lable"
-                    content="eto.account_limit_lower"
-                    component="td"
-                  />
-                  <td className="text-right" data-unit={base_token_name}>
-                    {base_min_quota}
-                  </td>
-                  <Translate
-                    className="item-lable"
-                    content="eto.account_limit_unit"
-                    component="td"
-                  />
-                  <td className="text-right" data-unit={base_token_name}>
-                    {projectStat.precision}
-                  </td>
-                </tr>
-                <tr>
-                  <Translate
-                    className="item-lable"
-                    content="eto.current_state_used"
-                    component="td"
-                  />
-                  <td className="text-right" data-unit={base_token_name}>
-                    {projectStat.pUsed}
-                  </td>
-                  <Translate
-                    className="item-lable"
-                    content="eto.current_state_avail"
-                    component="td"
-                  />
-                  <td className="text-right" data-unit={base_token_name}>
-                    {projectStat.pAvail}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                </div> */}
+            <div className="list-item">
+              <Translate
+                className="item-label"
+                content="eto.account_limit_cap"
+                component="span"
+              />
+              <span className="text-right" data-unit={base_token_name}>
+                {base_max_quota}
+              </span>
+            </div>
+            <div className="list-item">
+              <Translate
+                className="item-label"
+                content="eto.account_limit_lower"
+                component="span"
+              />
+              <span className="text-right" data-unit={base_token_name}>
+                {base_min_quota}
+              </span>
+            </div>
+            <div className="list-item">
+              <Translate
+                className="item-label"
+                content="eto.account_limit_unit"
+                component="span"
+              />
+              <span className="text-right" data-unit={base_token_name}>
+                {projectStat.precision}
+              </span>
+            </div>
+            <div className="list-item">
+              <Translate
+                className="item-label"
+                content="eto.current_state_used"
+                component="span"
+              />
+              <span className="text-right" data-unit={base_token_name}>
+                {projectStat.pUsed}
+              </span>
+            </div>
+            <div className="list-item">
+              <Translate
+                className="item-label"
+                content="eto.current_state_avail"
+                component="span"
+              />
+              <span className="text-right" data-unit={base_token_name}>
+                {projectStat.pAvail}
+              </span>
+            </div>
           </div>
           <div className="content-block transfer-input">
             <AmountSelector

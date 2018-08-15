@@ -40,8 +40,6 @@ export const fetchJson = options => {
 };
 
 function toJson(resp, options) {
-  if (resp.status == 500) {
-  }
   return resp.json();
 }
 function resHandler(resData, options) {
@@ -59,7 +57,11 @@ function errorHandler(error, options, status) {
   return false;
 }
 
-export function fetchJsonList({ offset, type }, cb) {
+export function fetchJsonList(
+  { offset, type },
+  cb,
+  errorHandler = () => void 0
+) {
   fetchJson({
     url: `/cybex/projects?limit=4&offset=${offset}${
       type ? "&type=" + type : ""
@@ -67,27 +69,36 @@ export function fetchJsonList({ offset, type }, cb) {
     type: "GET",
     success: data => {
       cb(data);
+    },
+    error: err => {
+      errorHandler(err);
     }
   });
 }
 
-export function fetchBanner(cb, pre) {
+export function fetchBanner(cb, pre, errorHandler = () => void 0) {
   let suffix = pre ? "?type=pre_online,online" : "";
   fetchJson({
     url: "/cybex/projects/banner" + suffix,
     type: "GET",
     success: data => {
       cb(data);
+    },
+    error: err => {
+      errorHandler(err);
     }
   });
 }
 
-export function fetchDetails(data, cb) {
+export function fetchDetails(data, cb, errorHandler = () => void 0) {
   fetchJson({
     url: "/cybex/project/detail",
     type: "GET",
     success: res => {
       cb(res);
+    },
+    error: err => {
+      errorHandler(err);
     },
     data: data
   });
@@ -112,12 +123,15 @@ export function updateUserStatus(data, cb) {
     data: data
   });
 }
-export function fetchKYC(data, cb) {
+export function fetchKYC(data, cb, errorHandler = () => void 0) {
   fetchJson({
     url: "/cybex/user/check_status",
     type: "GET",
     success: res => {
       cb(res);
+    },
+    error: err => {
+      errorHandler(err);
     },
     data: data
   });
@@ -134,12 +148,15 @@ export function fetchCreatUser(data, cb) {
   });
 }
 
-export function fetchUserProjectStatus(data, cb) {
+export function fetchUserProjectStatus(data, cb, errorHandler = () => void 0) {
   fetchJson({
     url: "/cybex/user/status",
     type: "GET",
     success: res => {
       cb(res);
+    },
+    error: err => {
+      errorHandler(err);
     },
     data: data
   });

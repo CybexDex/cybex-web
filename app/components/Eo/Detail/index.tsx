@@ -20,6 +20,9 @@ import counterpart from "counterpart";
 import LegalModal from "./LegalModal";
 import LegalModalEn from "./LegalModalEn";
 import { ProgressBar } from "components/Common/ProgressBar";
+import { Fallback } from "./../Fallback";
+import LoadingIndicator from "components/LoadingIndicator";
+
 let time = require("assets/time.png");
 
 class Detail extends React.Component<any, any> {
@@ -281,6 +284,12 @@ class Detail extends React.Component<any, any> {
               }
             });
         }
+      },
+      error => {
+        this.setState({ error: true });
+        setTimeout(() => {
+          this.reserve();
+        }, 3000);
       }
     );
   }
@@ -291,329 +300,343 @@ class Detail extends React.Component<any, any> {
       .local()
       .format("YYYY-MM-DD HH:mm:ss");
   }
-  fetchDatas() {
+  fetchDatas = () => {
     let data = {
       project: this.props.match.params.id
     };
-    fetchJson.fetchDetails(data, res => {
-      if (
-        res.result.control !== "online" &&
-        !(
-          location.search.indexOf("pre") !== -1 &&
-          res.result.control === "pre_online"
-        )
-      ) {
-        console.info("Visit a invalid project");
-        this.props.history.push("/eto");
-      }
-      res.result.end_at = this.formatTime(res.result.end_at);
-      res.result.start_at = this.formatTime(res.result.start_at);
-      res.result.created_at = this.formatTime(res.result.created_at);
-      res.result.finish_at = this.formatTime(res.result.finish_at);
-      res.result.offer_at = res.result.offer_at
-        ? this.formatTime(res.result.offer_at)
-        : null;
-      res.result.lock_at = res.result.lock_at
-        ? this.formatTime(res.result.lock_at)
-        : null;
-      // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
+    fetchJson.fetchDetails(
+      data,
+      res => {
+        if (
+          res.result.control !== "online" &&
+          !(
+            location.search.indexOf("pre") !== -1 &&
+            res.result.control === "pre_online"
+          )
+        ) {
+          console.info("Visit a invalid project");
+          this.props.history.push("/eto");
+        }
+        res.result.end_at = this.formatTime(res.result.end_at);
+        res.result.start_at = this.formatTime(res.result.start_at);
+        res.result.created_at = this.formatTime(res.result.created_at);
+        res.result.finish_at = this.formatTime(res.result.finish_at);
+        res.result.offer_at = res.result.offer_at
+          ? this.formatTime(res.result.offer_at)
+          : null;
+        res.result.lock_at = res.result.lock_at
+          ? this.formatTime(res.result.lock_at)
+          : null;
+        // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
 
-      this.setState(
-        {
-          data: res.result
-        },
-        () => {}
-      );
-      if (!this.props.currentAccount) {
-        this.setState({
-          reserve_status: () => {
-            return (
-              <div>
-                {res.result.status !== "ok" || res.result.status !== "pre" ? (
-                  <Link to={`/login`}>
-                    <div className="button primery-button">
-                      {/* <span>请登录后参与</span> */}
-                      <Translate content="EIO.Not_login" />
-                    </div>
-                  </Link>
-                ) : null}
-              </div>
-            );
-          }
-        });
-      } else {
-        fetchJson.fetchKYC(
+        this.setState(
           {
-            cybex_name: this.props.currentAccount,
-            project: this.props.match.params.id
+            data: res.result
           },
-          res2 => {
-            switch (res2.result.status) {
-              case "ok":
-                this.setState({
-                  reserve_status: () => {
-                    if (res.result.status == "ok") {
-                      return (
-                        <div>
-                          <input
-                            type="checkbox"
-                            checked={true}
-                            readOnly={true}
-                            className="legal-input"
-                          />
-                          <label className="legal-label">
-                            <Trigger open="ieo-legal-modal">
-                              <div className="legal-info">
-                                <a href="#">
-                                  <Translate content="EIO.IHaveRead" />
-                                </a>
-                              </div>
-                            </Trigger>
-                          </label>
-                          <Link to={`/eto/join/${this.props.match.params.id}`}>
-                            <div className="button primery-button ok">
-                              <Translate content="EIO.Join_ETO_now" />
-                            </div>
-                          </Link>
-                        </div>
-                      );
-                    } else if (res.result.status == "pre") {
-                      return (
-                        <div>
-                          <input
-                            type="checkbox"
-                            checked={true}
-                            readOnly={true}
-                            className="legal-input"
-                          />
-                          <label className="legal-label">
-                            <Trigger open="ieo-legal-modal">
-                              <div className="legal-info">
-                                <a href="#">
-                                  <Translate content="EIO.IHaveRead" />
-                                </a>
-                              </div>
-                            </Trigger>
-                          </label>
-                          <div className="button primery-button disabled pre">
-                            <Translate content="EIO.Wait_for_ETO" />
-                            {/* 等待众筹开始 */}
-                          </div>
-                        </div>
-                      );
-                    } else {
-                      return null;
-                    }
-                  }
-                });
-                break;
-              case "waiting":
-                this.setState({
-                  reserve_status: () => {
-                    if (
-                      res.result.status == "ok" ||
-                      res.result.status == "pre"
-                    ) {
-                      return (
-                        <div>
-                          <input
-                            type="checkbox"
-                            checked={true}
-                            readOnly={true}
-                            className="legal-input"
-                          />
-                          <label className="legal-label">
-                            <Trigger open="ieo-legal-modal">
-                              <div className="legal-info">
-                                <a href="#">
-                                  <Translate content="EIO.IHaveRead" />
-                                </a>
-                              </div>
-                            </Trigger>
-                          </label>
-                          <div className="button primery-button disabled waiting">
-                            {/* 审核中 */}
-                            <Translate content="EIO.Verifying" />
-                          </div>
-                        </div>
-                      );
-                    } else {
-                      return null;
-                    }
-                  }
-                });
-                break;
-              case "reject":
-                this.setState({
-                  reserve_status: () => {
-                    if (
-                      res.result.status == "ok" ||
-                      res.result.status == "pre"
-                    ) {
-                      return (
-                        <div>
-                          <div className="button primery-button disabled reject">
-                            {/* 审核不通过 */}
-                            <Translate content="EIO.Reservation_failed" />
-                          </div>
-                          <p>{res2.result.reason}</p>
-                        </div>
-                      );
-                    } else {
-                      return null;
-                    }
-                  }
-                });
-                break;
-              case "pending":
-                this.setState({
-                  reserve_status: () => {
-                    if (
-                      res.result.status == "ok" ||
-                      res.result.status == "pre"
-                    ) {
-                      return (
-                        <div>
-                          <input
-                            type="checkbox"
-                            checked={true}
-                            readOnly={true}
-                            className="legal-input"
-                          />
-                          <label className="legal-label">
-                            <Trigger open="ieo-legal-modal">
-                              <div className="legal-info">
-                                <a href="#">
-                                  <Translate content="EIO.IHaveRead" />
-                                </a>
-                              </div>
-                            </Trigger>
-                          </label>
-                          <div className="button primery-button disabled waiting">
-                            {/* 审核中 */}
-                            <Translate content="EIO.Verifying" />
-                          </div>
-                        </div>
-                      );
-                    } else {
-                      return null;
-                    }
-                  }
-                });
-                break;
-              default:
-                this.setState({
-                  reserve_status: () => {
-                    if (res2.result.kyc_status == "ok") {
-                      if (res.result.is_user_in == 0) {
+          () => {}
+        );
+        if (!this.props.currentAccount) {
+          this.setState({
+            reserve_status: () => {
+              return (
+                <div>
+                  {res.result.status !== "ok" || res.result.status !== "pre" ? (
+                    <Link to={`/login`}>
+                      <div className="button primery-button">
+                        {/* <span>请登录后参与</span> */}
+                        <Translate content="EIO.Not_login" />
+                      </div>
+                    </Link>
+                  ) : null}
+                </div>
+              );
+            }
+          });
+        } else {
+          fetchJson.fetchKYC(
+            {
+              cybex_name: this.props.currentAccount,
+              project: this.props.match.params.id
+            },
+            res2 => {
+              switch (res2.result.status) {
+                case "ok":
+                  this.setState({
+                    reserve_status: () => {
+                      if (res.result.status == "ok") {
                         return (
-                          <div className="button primery-button disabled can-not-reserve">
-                            {/* 停止预约 */}
-                            <Translate content="EIO.Stop_reserve" />
+                          <div>
+                            <input
+                              type="checkbox"
+                              checked={true}
+                              readOnly={true}
+                              className="legal-input"
+                            />
+                            <label className="legal-label">
+                              <Trigger open="ieo-legal-modal">
+                                <div className="legal-info">
+                                  <a href="#">
+                                    <Translate content="EIO.IHaveRead" />
+                                  </a>
+                                </div>
+                              </Trigger>
+                            </label>
+                            <Link
+                              to={`/eto/join/${this.props.match.params.id}`}
+                            >
+                              <div className="button primery-button ok">
+                                <Translate content="EIO.Join_ETO_now" />
+                              </div>
+                            </Link>
+                          </div>
+                        );
+                      } else if (res.result.status == "pre") {
+                        return (
+                          <div>
+                            <input
+                              type="checkbox"
+                              checked={true}
+                              readOnly={true}
+                              className="legal-input"
+                            />
+                            <label className="legal-label">
+                              <Trigger open="ieo-legal-modal">
+                                <div className="legal-info">
+                                  <a href="#">
+                                    <Translate content="EIO.IHaveRead" />
+                                  </a>
+                                </div>
+                              </Trigger>
+                            </label>
+                            <div className="button primery-button disabled pre">
+                              <Translate content="EIO.Wait_for_ETO" />
+                              {/* 等待众筹开始 */}
+                            </div>
                           </div>
                         );
                       } else {
-                        if (
-                          res.result.status == "ok" ||
-                          res.result.status == "pre"
-                        ) {
-                          return res.result.create_user_type == "code" ? (
-                            <div>
-                              <input
-                                type="checkbox"
-                                onChange={this.changeCheckbox.bind(this)}
-                                className="legal-input"
-                              />
-                              <label className="legal-label">
-                                <Trigger open="ieo-legal-modal">
-                                  <div className="legal-info">
-                                    <a href="#">
-                                      <Translate content="EIO.IHaveRead" />
-                                    </a>
-                                  </div>
-                                </Trigger>
-                              </label>
-
-                              {this.state.canBeReserve ? (
-                                <div className="button primery-button ok">
-                                  <Trigger open="ieo-detail-modal">
-                                    <div>
-                                      <Translate content="EIO.Reserve_Now" />
-                                    </div>
-                                  </Trigger>
+                        return null;
+                      }
+                    }
+                  });
+                  break;
+                case "waiting":
+                  this.setState({
+                    reserve_status: () => {
+                      if (
+                        res.result.status == "ok" ||
+                        res.result.status == "pre"
+                      ) {
+                        return (
+                          <div>
+                            <input
+                              type="checkbox"
+                              checked={true}
+                              readOnly={true}
+                              className="legal-input"
+                            />
+                            <label className="legal-label">
+                              <Trigger open="ieo-legal-modal">
+                                <div className="legal-info">
+                                  <a href="#">
+                                    <Translate content="EIO.IHaveRead" />
+                                  </a>
                                 </div>
-                              ) : (
-                                <div className="button primery-button disabled">
-                                  <Translate content="EIO.Reserve_Now" />
-                                </div>
-                              )}
+                              </Trigger>
+                            </label>
+                            <div className="button primery-button disabled waiting">
+                              {/* 审核中 */}
+                              <Translate content="EIO.Verifying" />
                             </div>
-                          ) : (
-                            <div>
-                              <input
-                                type="checkbox"
-                                onChange={this.changeCheckbox.bind(this)}
-                                className="legal-input"
-                              />
-                              <label className="legal-label">
-                                <Trigger open="ieo-legal-modal">
-                                  <div className="legal-info">
-                                    <a href="#">
-                                      <Translate content="EIO.IHaveRead" />
-                                    </a>
-                                  </div>
-                                </Trigger>
-                              </label>
-                              {this.state.canBeReserve ? (
-                                <div
-                                  className="button primery-button can-reserve"
-                                  onClick={this.reserve.bind(this)}
-                                >
-                                  <Translate content="EIO.Reserve_Now" />
+                          </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    }
+                  });
+                  break;
+                case "reject":
+                  this.setState({
+                    reserve_status: () => {
+                      if (
+                        res.result.status == "ok" ||
+                        res.result.status == "pre"
+                      ) {
+                        return (
+                          <div>
+                            <div className="button primery-button disabled reject">
+                              {/* 审核不通过 */}
+                              <Translate content="EIO.Reservation_failed" />
+                            </div>
+                            <p>{res2.result.reason}</p>
+                          </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    }
+                  });
+                  break;
+                case "pending":
+                  this.setState({
+                    reserve_status: () => {
+                      if (
+                        res.result.status == "ok" ||
+                        res.result.status == "pre"
+                      ) {
+                        return (
+                          <div>
+                            <input
+                              type="checkbox"
+                              checked={true}
+                              readOnly={true}
+                              className="legal-input"
+                            />
+                            <label className="legal-label">
+                              <Trigger open="ieo-legal-modal">
+                                <div className="legal-info">
+                                  <a href="#">
+                                    <Translate content="EIO.IHaveRead" />
+                                  </a>
                                 </div>
-                              ) : (
-                                <div className="button primery-button disabled">
-                                  <Translate content="EIO.Reserve_Now" />
-                                </div>
-                              )}
+                              </Trigger>
+                            </label>
+                            <div className="button primery-button disabled waiting">
+                              {/* 审核中 */}
+                              <Translate content="EIO.Verifying" />
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return null;
+                      }
+                    }
+                  });
+                  break;
+                default:
+                  this.setState({
+                    reserve_status: () => {
+                      if (res2.result.kyc_status == "ok") {
+                        if (res.result.is_user_in == 0) {
+                          return (
+                            <div className="button primery-button disabled can-not-reserve">
+                              {/* 停止预约 */}
+                              <Translate content="EIO.Stop_reserve" />
                             </div>
                           );
                         } else {
-                          return null;
+                          if (
+                            res.result.status == "ok" ||
+                            res.result.status == "pre"
+                          ) {
+                            return res.result.create_user_type == "code" ? (
+                              <div>
+                                <input
+                                  type="checkbox"
+                                  onChange={this.changeCheckbox.bind(this)}
+                                  className="legal-input"
+                                />
+                                <label className="legal-label">
+                                  <Trigger open="ieo-legal-modal">
+                                    <div className="legal-info">
+                                      <a href="#">
+                                        <Translate content="EIO.IHaveRead" />
+                                      </a>
+                                    </div>
+                                  </Trigger>
+                                </label>
+
+                                {this.state.canBeReserve ? (
+                                  <div className="button primery-button ok">
+                                    <Trigger open="ieo-detail-modal">
+                                      <div>
+                                        <Translate content="EIO.Reserve_Now" />
+                                      </div>
+                                    </Trigger>
+                                  </div>
+                                ) : (
+                                  <div className="button primery-button disabled">
+                                    <Translate content="EIO.Reserve_Now" />
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <div>
+                                <input
+                                  type="checkbox"
+                                  onChange={this.changeCheckbox.bind(this)}
+                                  className="legal-input"
+                                />
+                                <label className="legal-label">
+                                  <Trigger open="ieo-legal-modal">
+                                    <div className="legal-info">
+                                      <a href="#">
+                                        <Translate content="EIO.IHaveRead" />
+                                      </a>
+                                    </div>
+                                  </Trigger>
+                                </label>
+                                {this.state.canBeReserve ? (
+                                  <div
+                                    className="button primery-button can-reserve"
+                                    onClick={this.reserve.bind(this)}
+                                  >
+                                    <Translate content="EIO.Reserve_Now" />
+                                  </div>
+                                ) : (
+                                  <div className="button primery-button disabled">
+                                    <Translate content="EIO.Reserve_Now" />
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          } else {
+                            return null;
+                          }
                         }
+                      } else {
+                        return null;
+                        // <div className="button primery-button disabled can-not-reserve">
+                        //   立即预约
+                        // </div>
                       }
-                    } else {
-                      return null;
-                      // <div className="button primery-button disabled can-not-reserve">
-                      //   立即预约
-                      // </div>
                     }
+                  });
+              }
+              if (res2.result.kyc_status == "ok") {
+                this.setState({ kyc_status: () => null });
+              } else {
+                this.setState({
+                  kyc_status: () => {
+                    return (
+                      <div className="kyc-btn-holder">
+                        <a href={__ICOAPE__} target="_blank">
+                          <div className="kyc-btn button primery-button">
+                            <Translate content="EIO.Accept_KYC_Verification" />
+                          </div>
+                        </a>
+                      </div>
+                    );
                   }
                 });
+              }
             }
-            if (res2.result.kyc_status == "ok") {
-              this.setState({ kyc_status: () => null });
-            } else {
-              this.setState({
-                kyc_status: () => {
-                  return (
-                    <div className="kyc-btn-holder">
-                      <a href={__ICOAPE__} target="_blank">
-                        <div className="kyc-btn button primery-button">
-                          <Translate content="EIO.Accept_KYC_Verification" />
-                        </div>
-                      </a>
-                    </div>
-                  );
-                }
-              });
-            }
-          }
-        );
-        // res.result.kyc_status = 'ok'
+          );
+          // res.result.kyc_status = 'ok'
+        }
+        this.setState({
+          error: false
+        });
+      },
+      error => {
+        this.setState({ error: true });
+        setTimeout(() => {
+          this.fetchDatas();
+        }, 3000);
       }
-    });
-  }
+    );
+  };
 
   fetchProgress() {
     let data = {
@@ -622,7 +645,7 @@ class Detail extends React.Component<any, any> {
     };
     fetchJson.updateStatus(data, res => {
       let currentState = res.result;
-      if (!currentState) return;
+      if (!currentState || !currentState.real) return;
       this.setState({
         currentState
       });
@@ -652,6 +675,14 @@ class Detail extends React.Component<any, any> {
   componentWillUnmount() {
     clearInterval(this.updateTimer);
   }
+
+  componentDidCatch() {
+    console.error("ETO Details Error");
+    this.setState({
+      error: true
+    });
+  }
+
   changeCheckbox(e) {
     this.setState({
       canBeReserve: e.target.checked
@@ -717,16 +748,6 @@ class Detail extends React.Component<any, any> {
     const shortEnglishHumanizer = humanize.humanizer({
       language: lang,
       units: ["d", "h", "m", "s"],
-      // unitMeasures: {
-      //   y: 365 * 86400000,
-      //   mo: 30 * 86400000,
-      //   w: 7 * 86400000,
-      //   d: 86400000,
-      //   h: 3600000,
-      //   m: 60000,
-      //   s: 1000,
-      //   ms: 1
-      // },
       round: true,
       languages: {
         zh: {
@@ -800,7 +821,9 @@ class Detail extends React.Component<any, any> {
     }
 
     // let remainStr = this.state.remainStr;
-    return (
+    return this.state.error ? (
+      <Fallback />
+    ) : (
       <div>
         {name ? (
           <div className={`detail ${lang}`}>
@@ -1188,18 +1211,7 @@ class Detail extends React.Component<any, any> {
             )}
           </div>
         ) : (
-          <div className="loading-detail-holder">
-            <div className="loading-detail">
-              <span className="line1" />
-              <span className="line2" />
-              <span className="line3" />
-              <span className="line4" />
-              <span className="line5" />
-              <span className="line6" />
-              <span className="line7" />
-              <span className="line8" />
-            </div>
-          </div>
+          <LoadingIndicator />
         )}
       </div>
     );

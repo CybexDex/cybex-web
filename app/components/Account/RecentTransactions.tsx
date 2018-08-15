@@ -165,6 +165,12 @@ let RecentTransactions = class extends React.Component<any, any> {
     });
   }
 
+  _onIncreaseUnlimit = () => {
+    this.setState({
+      limit: this.state.limit + 100000
+    });
+  }
+
   _getHistory(accountsList, filterOp, customFilter) {
     let history = [];
     let seen_ops = new Set();
@@ -312,10 +318,16 @@ let RecentTransactions = class extends React.Component<any, any> {
     display_history.push(
       <tr className="total-value" key="total_value">
         <td className="column-hide-tiny text-center">
-          {!cache[current_account_id] && (
+          {!cache[current_account_id] ? (
             <a href="javascript:;" onClick={this.handleTryMore}>
               <Translate content="account.try_more" />
             </a>
+          ) : (
+            limit < historyCount && (
+              <a href="javascript:;" onClick={this._onIncreaseUnlimit}>
+                <Translate content="account.show_more" />
+              </a>
+            )
           )}
         </td>
         <td style={alignRight as any}>
