@@ -294,9 +294,8 @@ class Detail extends React.Component<any, any> {
     );
   }
   formatTime(input) {
-    // console.log(moment(moment(moment.utc(input).toDate()).local()).format('YYYY-MM-DD hh:mm:ss'))
-    // console.log(moment(moment.utc(input).toDate()).local().format('YYYY-MM-DD HH:mm:ss'))
-    return moment(moment.utc(input).toDate())
+    return moment
+      .utc(input)
       .local()
       .format("YYYY-MM-DD HH:mm:ss");
   }
@@ -317,18 +316,6 @@ class Detail extends React.Component<any, any> {
           console.info("Visit a invalid project");
           this.props.history.push("/eto");
         }
-        res.result.end_at = this.formatTime(res.result.end_at);
-        res.result.start_at = this.formatTime(res.result.start_at);
-        res.result.created_at = this.formatTime(res.result.created_at);
-        res.result.finish_at = this.formatTime(res.result.finish_at);
-        res.result.offer_at = res.result.offer_at
-          ? this.formatTime(res.result.offer_at)
-          : null;
-        res.result.lock_at = res.result.lock_at
-          ? this.formatTime(res.result.lock_at)
-          : null;
-        // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
-
         this.setState(
           {
             data: res.result
@@ -341,7 +328,7 @@ class Detail extends React.Component<any, any> {
               return (
                 <div>
                   {res.result.status !== "ok" || res.result.status !== "pre" ? (
-                    <Link to={`/login`}>
+                    <Link to={"/login"}>
                       <div className="button primery-button">
                         {/* <span>请登录后参与</span> */}
                         <Translate content="EIO.Not_login" />
@@ -713,7 +700,6 @@ class Detail extends React.Component<any, any> {
       whitepaper__lang_en,
       adds_detail__lang_en,
       token_name,
-      finish_at,
       adds_on_market_time__lang_en,
       base_hard_cap,
       lock_at,
@@ -721,6 +707,7 @@ class Detail extends React.Component<any, any> {
       t_finish_tx,
       t_total_time
     } = data;
+    let finish_at = this.state.currentState.finish_at || data.finish_at;
     let current_percent =
       "current_percent" in this.state.currentState
         ? this.state.currentState.current_percent
@@ -736,11 +723,11 @@ class Detail extends React.Component<any, any> {
     // let showPercent = `${
     //   percent > 99 ? 99 : percent < 2 ? (percent == 0 ? 0 : 2) : percent
     // }%`;
-    let now = moment();
-    let countDownTime = moment(end_at).valueOf() - moment().valueOf();
-    let endAt = moment(end_at);
-    let startAt = moment(start_at);
-    let finishAt = moment(finish_at);
+    let now = moment.utc();
+    let countDownTime = moment.utc(end_at).valueOf() - moment.utc().valueOf();
+    let endAt = moment.utc(end_at);
+    let startAt = moment.utc(start_at);
+    let finishAt = moment.utc(finish_at);
 
     let remainStr;
     let projectStatus;
@@ -794,24 +781,25 @@ class Detail extends React.Component<any, any> {
     });
     switch (status) {
       case "pre":
-        // countDownTime = moment(startAt).valueOf() - moment().valueOf();
+        // countDownTime = moment.utc(startAt).valueOf() - moment.utc().valueOf();
         remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(
           /[\,]/g,
           ""
         );
         break;
       case "finish":
-        // countDownTime = moment(finishAt).valueOf() - moment(endAt).valueOf();
+        // countDownTime = moment.utc(finishAt).valueOf() - moment.utc(endAt).valueOf();
+        console.debug("finishAt: ", finishAt.toString(), startAt.toString());
         remainStr = shortEnglishHumanizer(
           t_total_time ? t_total_time * 1000 : finishAt.diff(startAt)
         ).replace(/[\,]/g, "");
         break;
       case "ok":
-        // countDownTime = moment(endAt).valueOf() - moment().valueOf();
+        // countDownTime = moment.utc(endAt).valueOf() - moment.utc().valueOf();
         remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g, "");
         break;
       case "fail":
-        // countDownTime = moment(finishAt).valueOf();
+        // countDownTime = moment.utc(finishAt).valueOf();
         remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(
           /[\,]/g,
           ""

@@ -151,7 +151,7 @@ let EO = class extends React.Component<any, any> {
     }
   }
   formatTime(input) {
-    return moment(moment.utc(input).toDate())
+    return moment.utc(input)
       .local()
       .format("YYYY-MM-DD HH:mm:ss");
   }
@@ -259,22 +259,22 @@ let EO = class extends React.Component<any, any> {
                           : 2
                         : percent
                   }%`;
-                  let end_at = this.formatTime(e.end_at);
-                  let start_at = this.formatTime(e.start_at);
-                  let created_at = this.formatTime(e.created_at);
-                  let finish_at = this.formatTime(e.finish_at);
-                  // let endAt = moment(e.end_at);
-                  // let now = moment();
-                  // let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment(moment(e.end_at).valueOf() - moment().valueOf()).format('hh')}小时`
+                  // let end_at = this.formatTime(e.end_at);
+                  // let start_at = this.formatTime(e.start_at);
+                  // let created_at = this.formatTime(e.created_at);
+                  // let finish_at = this.formatTime(e.finish_at);
+                  // let endAt = moment.utc(e.end_at);
+                  // let now = moment.utc();
+                  // let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment.utc(moment.utc(e.end_at).valueOf() - moment.utc().valueOf()).format('hh')}小时`
 
                   let countDownTime =
-                    moment(end_at).valueOf() - moment().valueOf();
-                  let endAt = moment(end_at);
-                  let startAt = moment(start_at);
-                  let finishAt = moment(finish_at);
-                  let createAt = moment(created_at);
-                  let now = moment();
-                  // let remainStr = `${endAt.diff(now,'days')} ${moment(this.state.countDownTime).format('hh:mm')}`
+                    moment.utc(e.end_at).valueOf() - moment.utc().valueOf();
+                  let endAt = moment.utc(e.end_at);
+                  let startAt = moment.utc(e.start_at);
+                  let finishAt = moment.utc(e.finish_at);
+                  let createAt = moment.utc(e.created_at);
+                  let now = moment.utc();
+                  // let remainStr = `${endAt.diff(now,'days')} ${moment.utc(this.state.countDownTime).format('hh:mm')}`
                   let remainStr;
                   let projectStatus;
 
@@ -337,14 +337,14 @@ let EO = class extends React.Component<any, any> {
                   switch (e.status) {
                     case "pre":
                       countDownTime =
-                        moment(startAt).valueOf() - moment().valueOf();
+                        moment.utc(startAt).valueOf() - moment.utc().valueOf();
                       remainStr = shortEnglishHumanizer(
                         startAt.diff(now)
                       ).replace(/[\,]/g, "");
                       break;
                     case "finish":
                       countDownTime =
-                        moment(finishAt).valueOf() - moment(endAt).valueOf();
+                        moment.utc(finishAt).valueOf() - moment.utc(endAt).valueOf();
                       remainStr = shortEnglishHumanizer(
                         e.t_total_time
                           ? e.t_total_time * 1000
@@ -353,13 +353,13 @@ let EO = class extends React.Component<any, any> {
                       break;
                     case "ok":
                       countDownTime =
-                        moment(endAt).valueOf() - moment().valueOf();
+                        moment.utc(endAt).valueOf() - moment.utc().valueOf();
                       remainStr = shortEnglishHumanizer(
                         endAt.diff(now)
                       ).replace(/[\,]/g, "");
                       break;
                     case "fail":
-                      countDownTime = moment(finishAt).valueOf();
+                      countDownTime = moment.utc(finishAt).valueOf();
                       remainStr = shortEnglishHumanizer(
                         finishAt.diff(now)
                       ).replace(/[\,]/g, "");
