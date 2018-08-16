@@ -13,6 +13,7 @@ import * as moment from "moment";
 import * as humanize from "../humanize.js";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
+import TimerStore from "stores/TimerStore";
 import "./detail.scss";
 import "./mock.scss";
 import ZfApi from "react-foundation-apps/src/utils/foundation-api";
@@ -1210,7 +1211,7 @@ export default connect(
   Detail,
   {
     listenTo() {
-      return [AccountStore];
+      return [AccountStore, TimerStore];
     },
     getProps(props) {
       return {

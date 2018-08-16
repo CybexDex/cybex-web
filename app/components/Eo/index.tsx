@@ -10,6 +10,7 @@ import BindToChainState from "../Utility/BindToChainState";
 import AccountInfo from "../Account/AccountInfo";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
+import TimerStore from "stores/TimerStore";
 import counterpart from "counterpart";
 import * as moment from "moment";
 import * as humanize from "./humanize.js";
@@ -108,14 +109,6 @@ let EO = class extends React.Component<any, any> {
       })
       .catch(this.handleError);
   }
-  // componentDidMount() {}
-  next() {
-    this.reactSwipe.next();
-  }
-
-  prev() {
-    this.reactSwipe.prev();
-  }
 
   addMore() {
     if (this.canClick) {
@@ -151,7 +144,8 @@ let EO = class extends React.Component<any, any> {
     }
   }
   formatTime(input) {
-    return moment.utc(input)
+    return moment
+      .utc(input)
       .local()
       .format("YYYY-MM-DD HH:mm:ss");
   }
@@ -159,51 +153,26 @@ let EO = class extends React.Component<any, any> {
     if (this.state.error) {
       return <Fallback />;
     }
-
     const data = this.state.data || [];
     const bannerData = this.state.bannerData || [];
-    const params = {
-      spaceBetween: 30,
-      autoplay: {
-        delay: 2500
-      }
-      // pagination: {
-      //   el: '.swiper-pagination',
-      //   clickable: true,
-      // }
-    };
 
-    // overflow: hidden;
-    // text-overflow: ellipsis;
-    // display: -webkit-box;
-    // -webkit-line-clamp: 2;
-    // -webkit-box-orient: vertical;
-    // font-size: 14px;
-    // line-height: 22px;
-    // width: 200px;
     let lang = counterpart.getLocale();
     return (
       <div>
         {this.state.loading && <LoadingIndicator />}
         <div className="slider-holder">
-          <Swiper {...params}>
-            {bannerData.map((e, i) => {
-              return (
-                <div key={i}>
-                  <div className="item">
-                    <Link to={`/eto/detail/${e.id}`}>
-                      <img
-                        src={`${
-                          lang == "zh" ? e.adds_banner : e.adds_banner__lang_en
-                        }`}
-                        width="100%"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-          </Swiper>
+          {bannerData[0] && (
+            <Link to={`/eto/detail/${bannerData[0].id}`}>
+              <img
+                src={`${
+                  lang == "zh"
+                    ? bannerData[0].adds_banner
+                    : bannerData[0].adds_banner__lang_en
+                }`}
+                width="100%"
+              />
+            </Link>
+          )}
         </div>
         {/* {this.state.kyc_status=="not_start"?( */}
         <div className="title-container">
@@ -248,25 +217,7 @@ let EO = class extends React.Component<any, any> {
             return (
               <div key={`w-${j}`} className="waterfall">
                 {f.map((e, i) => {
-                  let percent = e.current_percent * 100;
-                  percent = percent.toFixed(2);
-                  let showPercent = `${
-                    percent > 99
-                      ? 99
-                      : percent < 2
-                        ? percent == 0
-                          ? 0
-                          : 2
-                        : percent
-                  }%`;
-                  // let end_at = this.formatTime(e.end_at);
-                  // let start_at = this.formatTime(e.start_at);
-                  // let created_at = this.formatTime(e.created_at);
-                  // let finish_at = this.formatTime(e.finish_at);
-                  // let endAt = moment.utc(e.end_at);
-                  // let now = moment.utc();
-                  // let remainStr = ` 剩余 ${endAt.diff(now,'days')}天  ${moment.utc(moment.utc(e.end_at).valueOf() - moment.utc().valueOf()).format('hh')}小时`
-
+                  let percent = (e.current_percent * 100).toFixed(2);
                   let countDownTime =
                     moment.utc(e.end_at).valueOf() - moment.utc().valueOf();
                   let endAt = moment.utc(e.end_at);
@@ -274,7 +225,6 @@ let EO = class extends React.Component<any, any> {
                   let finishAt = moment.utc(e.finish_at);
                   let createAt = moment.utc(e.created_at);
                   let now = moment.utc();
-                  // let remainStr = `${endAt.diff(now,'days')} ${moment.utc(this.state.countDownTime).format('hh:mm')}`
                   let remainStr;
                   let projectStatus;
 
@@ -344,7 +294,8 @@ let EO = class extends React.Component<any, any> {
                       break;
                     case "finish":
                       countDownTime =
-                        moment.utc(finishAt).valueOf() - moment.utc(endAt).valueOf();
+                        moment.utc(finishAt).valueOf() -
+                        moment.utc(endAt).valueOf();
                       remainStr = shortEnglishHumanizer(
                         e.t_total_time
                           ? e.t_total_time * 1000
@@ -489,7 +440,7 @@ let EO = class extends React.Component<any, any> {
                         </div>
                         <div
                           className="bottom-holder"
-                          style={{ marginTop: "1em" }}
+                          style={{ marginTop: "2em" }}
                         >
                           <Link to={`/eto/detail/${e.id}`}>
                             <div
@@ -572,7 +523,7 @@ EO = connect(
   EO,
   {
     listenTo() {
-      return [AccountStore];
+      return [AccountStore, TimerStore];
     },
     getProps(props) {
       return {

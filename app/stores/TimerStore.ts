@@ -25,7 +25,7 @@ class TimerStore extends AbstractStore<State> {
       this.setState({
         basicTimer: Date.now()
       });
-    }, 900);
+    }, 100);
   }
 }
 
