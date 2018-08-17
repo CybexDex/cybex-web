@@ -51,7 +51,7 @@ class Detail extends React.Component<any, any> {
           case "ok":
             this.setState({
               reserve_status: () => {
-                if (this.state.data.status == "ok") {
+                if (this.pStatus == "ok") {
                   return (
                     <div>
                       <input
@@ -76,7 +76,7 @@ class Detail extends React.Component<any, any> {
                       </Link>
                     </div>
                   );
-                } else if (this.state.data.status == "pre") {
+                } else if (this.pStatus == "pre") {
                   <div>
                     <input
                       type="checkbox"
@@ -106,10 +106,7 @@ class Detail extends React.Component<any, any> {
           case "waiting":
             this.setState({
               reserve_status: () => {
-                if (
-                  this.state.data.status == "ok" ||
-                  this.state.data.status == "pre"
-                ) {
+                if (this.pStatus == "ok" || this.pStatus == "pre") {
                   return (
                     <div>
                       <input
@@ -141,10 +138,7 @@ class Detail extends React.Component<any, any> {
           case "reject":
             this.setState({
               reserve_status: () => {
-                if (
-                  this.state.data.status == "ok" ||
-                  this.state.data.status == "pre"
-                ) {
+                if (this.pStatus == "ok" || this.pStatus == "pre") {
                   return (
                     <div>
                       <div className="button primery-button disabled reject">
@@ -163,10 +157,7 @@ class Detail extends React.Component<any, any> {
           case "pending":
             this.setState({
               reserve_status: () => {
-                if (
-                  this.state.data.status == "ok" ||
-                  this.state.data.status == "pre"
-                ) {
+                if (this.pStatus == "ok" || this.pStatus == "pre") {
                   return (
                     <div>
                       <input
@@ -207,10 +198,7 @@ class Detail extends React.Component<any, any> {
                       </div>
                     );
                   } else {
-                    if (
-                      this.state.data.status == "ok" ||
-                      this.state.data.status == "pre"
-                    ) {
+                    if (this.pStatus == "ok" || this.pStatus == "pre") {
                       return this.state.data.create_user_type == "code" ? (
                         <div>
                           <input
@@ -328,7 +316,7 @@ class Detail extends React.Component<any, any> {
             reserve_status: () => {
               return (
                 <div>
-                  {res.result.status !== "ok" || res.result.status !== "pre" ? (
+                  {this.pStatus !== "ok" || this.pStatus !== "pre" ? (
                     <Link to={"/login"}>
                       <div className="button primery-button">
                         {/* <span>请登录后参与</span> */}
@@ -351,7 +339,7 @@ class Detail extends React.Component<any, any> {
                 case "ok":
                   this.setState({
                     reserve_status: () => {
-                      if (res.result.status == "ok") {
+                      if (this.pStatus == "ok") {
                         return (
                           <div>
                             <input
@@ -378,7 +366,7 @@ class Detail extends React.Component<any, any> {
                             </Link>
                           </div>
                         );
-                      } else if (res.result.status == "pre") {
+                      } else if (this.pStatus == "pre") {
                         return (
                           <div>
                             <input
@@ -411,10 +399,7 @@ class Detail extends React.Component<any, any> {
                 case "waiting":
                   this.setState({
                     reserve_status: () => {
-                      if (
-                        res.result.status == "ok" ||
-                        res.result.status == "pre"
-                      ) {
+                      if (this.pStatus == "ok" || this.pStatus == "pre") {
                         return (
                           <div>
                             <input
@@ -447,10 +432,7 @@ class Detail extends React.Component<any, any> {
                 case "reject":
                   this.setState({
                     reserve_status: () => {
-                      if (
-                        res.result.status == "ok" ||
-                        res.result.status == "pre"
-                      ) {
+                      if (this.pStatus == "ok" || this.pStatus == "pre") {
                         return (
                           <div>
                             <div className="button primery-button disabled reject">
@@ -469,10 +451,7 @@ class Detail extends React.Component<any, any> {
                 case "pending":
                   this.setState({
                     reserve_status: () => {
-                      if (
-                        res.result.status == "ok" ||
-                        res.result.status == "pre"
-                      ) {
+                      if (this.pStatus == "ok" || this.pStatus == "pre") {
                         return (
                           <div>
                             <input
@@ -514,10 +493,7 @@ class Detail extends React.Component<any, any> {
                             </div>
                           );
                         } else {
-                          if (
-                            res.result.status == "ok" ||
-                            res.result.status == "pre"
-                          ) {
+                          if (this.pStatus == "ok" || this.pStatus == "pre") {
                             return res.result.create_user_type == "code" ? (
                               <div>
                                 <input
@@ -633,7 +609,8 @@ class Detail extends React.Component<any, any> {
     };
     fetchJson.updateStatus(data, res => {
       let currentState = res.result;
-      if (!currentState || !currentState.real) return;
+      if (!currentState) return;
+      // if (!currentState || !currentState.real) return;
       this.setState({
         currentState
       });
@@ -676,6 +653,13 @@ class Detail extends React.Component<any, any> {
       canBeReserve: e.target.checked
     });
   }
+
+  get pStatus() {
+    return "status" in this.state.currentState
+      ? this.state.currentState.status
+      : this.state.data.status;
+  }
+
   render() {
     const data = this.state.data || {};
     const {
@@ -728,6 +712,7 @@ class Detail extends React.Component<any, any> {
     let countDownTime = moment.utc(end_at).valueOf() - moment.utc().valueOf();
     let endAt = moment.utc(end_at);
     let startAt = moment.utc(start_at);
+    let lockAt = moment.utc(lock_at);
     let finishAt = moment.utc(finish_at);
 
     let remainStr;
@@ -783,10 +768,11 @@ class Detail extends React.Component<any, any> {
     switch (status) {
       case "pre":
         // countDownTime = moment.utc(startAt).valueOf() - moment.utc().valueOf();
-        remainStr = shortEnglishHumanizer(startAt.diff(now)).replace(
-          /[\,]/g,
-          ""
-        );
+        remainStr = shortEnglishHumanizer(
+          startAt.diff(
+            startAt.isAfter(new Date().toUTCString()) ? now : startAt
+          )
+        ).replace(/[\,]/g, "");
         break;
       case "finish":
         // countDownTime = moment.utc(finishAt).valueOf() - moment.utc(endAt).valueOf();
@@ -941,7 +927,9 @@ class Detail extends React.Component<any, any> {
                   <div className="info-title">
                     <Translate content="EIO.ETO_Period" />
                   </div>
-                  <div className="info-detail">{start_at}</div>
+                  <div className="info-detail">
+                    {startAt.local().format("YYYY-MM-DD HH:mm:ss")}
+                  </div>
                 </div>
               ) : null}
 
@@ -950,7 +938,9 @@ class Detail extends React.Component<any, any> {
                   <div className="info-title">
                     <Translate content="EIO.End_at" />
                   </div>
-                  <div className="info-detail">{end_at}</div>
+                  <div className="info-detail">
+                    {endAt.local().format("YYYY-MM-DD HH:mm:ss")}
+                  </div>
                 </div>
               ) : null}
               {lock_at ? (
@@ -958,7 +948,9 @@ class Detail extends React.Component<any, any> {
                   <div className="info-title">
                     <Translate content="EIO.Lock-up_Period" />
                   </div>
-                  <div className="info-detail">{lock_at}</div>
+                  <div className="info-detail">
+                    {lockAt.local().format("YYYY-MM-DD HH:mm:ss")}
+                  </div>
                 </div>
               ) : null}
               {lang == "zh" ? (

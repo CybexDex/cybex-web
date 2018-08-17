@@ -178,7 +178,8 @@ let Join = class extends React.Component<
           data,
           res => {
             let currentState = res.result;
-            if (!currentState || !currentState.real) {
+            if (!currentState) {
+            // if (!currentState || !currentState.real) {
               resolve({});
             } else {
               resolve(currentState);
@@ -194,7 +195,8 @@ let Join = class extends React.Component<
           data,
           res => {
             let currentState = res.result;
-            if (!currentState || !currentState.real) {
+            if (!currentState) {
+            // if (!currentState || !currentState.real) {
               resolve({});
             } else {
               resolve(currentState);
@@ -286,9 +288,7 @@ let Join = class extends React.Component<
       )
     ])
       .then(([projectData, personalStatus, kycStatus]) => {
-        let isOpen =
-          moment.utc().isBefore(moment.utc((projectData as any).end_at)) &&
-          moment.utc().isAfter(moment.utc((projectData as any).start_at));
+        let isOpen = projectData["status"] === "ok";
         let canJoin =
           (kycStatus as any).status &&
           (kycStatus as any).status === KYC_STATUS_OK;
@@ -616,6 +616,7 @@ let Join = class extends React.Component<
       base_token_name,
       end_at,
       base_token,
+      status,
       base_accuracy
     } = data;
     const statusData = this.state.personalStatus || {};
@@ -629,11 +630,11 @@ let Join = class extends React.Component<
       error,
       feeAsset,
       fee_asset_id,
-      isOpen,
+      
       balanceError,
       canJoin
     } = this.state;
-
+    let isOpen = status === "ok";
     //
     let { asset_types, fee_asset_types } = this._getAvailableAssets();
     let balance = null;

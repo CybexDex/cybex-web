@@ -289,7 +289,7 @@ let EO = class extends React.Component<any, any> {
                       countDownTime =
                         moment.utc(startAt).valueOf() - moment.utc().valueOf();
                       remainStr = shortEnglishHumanizer(
-                        startAt.diff(now)
+                        startAt.diff(startAt.isAfter(now) ? now : startAt)
                       ).replace(/[\,]/g, "");
                       break;
                     case "finish":

@@ -31,7 +31,7 @@ class ApiNode {
   }
 }
 
-const WS_NODE_LIST = __TEST__
+const WS_NODE_LIST = __TEST__ || __FOR_SECURITY__
   ? [
     new ApiNode("hangzhou.51nebula.com/", "Hangzhou"),
     new ApiNode("shenzhen.51nebula.com/", "Shenzhen")
