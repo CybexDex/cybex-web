@@ -65,7 +65,7 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
         position: "absolute",
         bottom: "155%",
         padding: "0.4em 0.4em 0.8em 0.4em",
-        width: "4em",
+        width: "4.4em",
         fontSize: "1.4em",
         fontWeight: "bold",
         transition: "0.2s all",
@@ -81,7 +81,7 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
     flagRight: {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 80% 80%, 0% 80%, 0% 100%)",
       borderRadius: "4px 4px 0 10px",
-      left: "calc(100% - 4.2em)"
+      left: "calc(100% - 4.6em)"
 
       // right: "100%"
     },

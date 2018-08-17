@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 let logo_demo = require("assets/cybex_rainbow_lg.png");
 import ReactSwipe from "react-swipe";
 import * as fetchJson from "./service";
+import { shortEnglishHumanizer } from "./service";
 import "./transfer.scss";
 import Translate from "react-translate-component";
 import BindToChainState from "../Utility/BindToChainState";
@@ -13,7 +14,6 @@ import AccountStore from "stores/AccountStore";
 import TimerStore from "stores/TimerStore";
 import counterpart from "counterpart";
 import * as moment from "moment";
-import * as humanize from "./humanize.js";
 import Swiper from "react-id-swiper";
 import Icon from "../Icon/Icon";
 import "./swiper.scss";
@@ -228,67 +228,11 @@ let EO = class extends React.Component<any, any> {
                   let remainStr;
                   let projectStatus;
 
-                  const shortEnglishHumanizer = humanize.humanizer({
-                    language: lang,
-                    units: ["d", "h", "m", "s"],
-                    unitMeasures: {
-                      y: 365 * 86400000,
-                      mo: 30 * 86400000,
-                      w: 7 * 86400000,
-                      d: 86400000,
-                      h: 3600000,
-                      m: 60000,
-                      s: 1000
-                    },
-                    round: true,
-                    languages: {
-                      zh: {
-                        y: function() {
-                          return "年";
-                        },
-                        mo: function() {
-                          return "月";
-                        },
-                        d: function() {
-                          return "天";
-                        },
-                        h: function() {
-                          return "小时";
-                        },
-                        m: function() {
-                          return "分钟";
-                        },
-                        s: function() {
-                          return "秒";
-                        }
-                      },
-                      en: {
-                        y: function() {
-                          return "Y";
-                        },
-                        mo: function() {
-                          return "M";
-                        },
-                        d: function() {
-                          return "D";
-                        },
-                        h: function() {
-                          return "H";
-                        },
-                        m: function() {
-                          return "M";
-                        },
-                        s: function() {
-                          return "S";
-                        }
-                      }
-                    }
-                  });
                   switch (e.status) {
                     case "pre":
                       countDownTime =
                         moment.utc(startAt).valueOf() - moment.utc().valueOf();
-                      remainStr = shortEnglishHumanizer(
+                      remainStr = shortEnglishHumanizer(false, lang)(
                         startAt.diff(startAt.isAfter(now) ? now : startAt)
                       ).replace(/[\,]/g, "");
                       break;
@@ -296,7 +240,7 @@ let EO = class extends React.Component<any, any> {
                       countDownTime =
                         moment.utc(finishAt).valueOf() -
                         moment.utc(endAt).valueOf();
-                      remainStr = shortEnglishHumanizer(
+                      remainStr = shortEnglishHumanizer(true, lang)(
                         e.t_total_time
                           ? e.t_total_time * 1000
                           : finishAt.diff(startAt)
@@ -305,13 +249,13 @@ let EO = class extends React.Component<any, any> {
                     case "ok":
                       countDownTime =
                         moment.utc(endAt).valueOf() - moment.utc().valueOf();
-                      remainStr = shortEnglishHumanizer(
+                      remainStr = shortEnglishHumanizer(false, lang)(
                         endAt.diff(now)
                       ).replace(/[\,]/g, "");
                       break;
                     case "fail":
                       countDownTime = moment.utc(finishAt).valueOf();
-                      remainStr = shortEnglishHumanizer(
+                      remainStr = shortEnglishHumanizer(false, lang)(
                         finishAt.diff(now)
                       ).replace(/[\,]/g, "");
                       break;

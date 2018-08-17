@@ -179,7 +179,7 @@ let Join = class extends React.Component<
           res => {
             let currentState = res.result;
             if (!currentState) {
-            // if (!currentState || !currentState.real) {
+              // if (!currentState || !currentState.real) {
               resolve({});
             } else {
               resolve(currentState);
@@ -196,7 +196,7 @@ let Join = class extends React.Component<
           res => {
             let currentState = res.result;
             if (!currentState) {
-            // if (!currentState || !currentState.real) {
+              // if (!currentState || !currentState.real) {
               resolve({});
             } else {
               resolve(currentState);
@@ -536,22 +536,19 @@ let Join = class extends React.Component<
     let { name } = projectData;
     if (name) {
       return (
-        <>
-          <Translate
+        <>"         "<Translate
             className="confirm-tip text-center"
             content="eto.confirm"
             component="h5"
             style={{ marginTop: "1em" }}
             project={name}
-          />
-
-          <Translate
+          />"
+         "<Translate
             className="confirm-tip text-center"
             content="eto.dont_repeat"
             style={{ maxWidth: "40em", margin: "auto" }}
             component="p"
-          />
-        </>
+          />"       "</>
       );
     } else return null;
   };
@@ -569,7 +566,7 @@ let Join = class extends React.Component<
       this.state.projectData.receive_address
     );
     if (!targetAccount) {
-      return NotificationActions.error(`Project address error`);
+      return NotificationActions.error("Project address error");
     }
     AccountActions.transfer(
       this.props.currentAccount.get("id"),
@@ -630,7 +627,7 @@ let Join = class extends React.Component<
       error,
       feeAsset,
       fee_asset_id,
-      
+
       balanceError,
       canJoin
     } = this.state;

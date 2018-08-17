@@ -7,10 +7,10 @@ import DetalModal from "./Modal.jsx";
 import AlertModal from "./AlertModal.jsx";
 import Trigger from "react-foundation-apps/src/trigger";
 import * as fetchJson from "../service";
+import { shortEnglishHumanizer } from "../service";
+
 import Translate from "react-translate-component";
 import * as moment from "moment";
-// import * as humanize from "humanize-duration";
-import * as humanize from "../humanize.js";
 import { connect } from "alt-react";
 import AccountStore from "stores/AccountStore";
 import TimerStore from "stores/TimerStore";
@@ -704,71 +704,20 @@ class Detail extends React.Component<any, any> {
     let base_tokens = data.base_tokens || [];
     let percent = current_percent * 100;
     percent = percent.toFixed(2);
-    // let showPercent = `${percent>100?100:percent}%`;
-    // let showPercent = `${
-    //   percent > 99 ? 99 : percent < 2 ? (percent == 0 ? 0 : 2) : percent
-    // }%`;
     let now = moment.utc();
     let countDownTime = moment.utc(end_at).valueOf() - moment.utc().valueOf();
     let endAt = moment.utc(end_at);
     let startAt = moment.utc(start_at);
     let lockAt = moment.utc(lock_at);
     let finishAt = moment.utc(finish_at);
-
     let remainStr;
     let projectStatus;
     let lang = counterpart.getLocale();
-    const shortEnglishHumanizer = humanize.humanizer({
-      language: lang,
-      units: ["d", "h", "m", "s"],
-      round: true,
-      languages: {
-        zh: {
-          y: function() {
-            return "年";
-          },
-          mo: function() {
-            return "月";
-          },
-          d: function() {
-            return "天";
-          },
-          h: function() {
-            return "小时";
-          },
-          m: function() {
-            return "分钟";
-          },
-          s: function() {
-            return "秒";
-          }
-        },
-        en: {
-          y: function() {
-            return "Y";
-          },
-          mo: function() {
-            return "M";
-          },
-          d: function() {
-            return "D";
-          },
-          h: function() {
-            return "H";
-          },
-          m: function() {
-            return "M";
-          },
-          s: function() {
-            return "S";
-          }
-        }
-      }
-    });
+
     switch (status) {
       case "pre":
         // countDownTime = moment.utc(startAt).valueOf() - moment.utc().valueOf();
-        remainStr = shortEnglishHumanizer(
+        remainStr = shortEnglishHumanizer(false, lang)(
           startAt.diff(
             startAt.isAfter(new Date().toUTCString()) ? now : startAt
           )
@@ -777,20 +726,22 @@ class Detail extends React.Component<any, any> {
       case "finish":
         // countDownTime = moment.utc(finishAt).valueOf() - moment.utc(endAt).valueOf();
         console.debug("finishAt: ", finishAt.toString(), startAt.toString());
-        remainStr = shortEnglishHumanizer(
+        remainStr = shortEnglishHumanizer(true, lang)(
           t_total_time ? t_total_time * 1000 : finishAt.diff(startAt)
         ).replace(/[\,]/g, "");
         break;
       case "ok":
         // countDownTime = moment.utc(endAt).valueOf() - moment.utc().valueOf();
-        remainStr = shortEnglishHumanizer(endAt.diff(now)).replace(/[\,]/g, "");
-        break;
-      case "fail":
-        // countDownTime = moment.utc(finishAt).valueOf();
-        remainStr = shortEnglishHumanizer(finishAt.diff(now)).replace(
+        remainStr = shortEnglishHumanizer(false, lang)(endAt.diff(now)).replace(
           /[\,]/g,
           ""
         );
+        break;
+      case "fail":
+        // countDownTime = moment.utc(finishAt).valueOf();
+        remainStr = shortEnglishHumanizer(false, lang)(
+          finishAt.diff(now)
+        ).replace(/[\,]/g, "");
         break;
       default:
     }

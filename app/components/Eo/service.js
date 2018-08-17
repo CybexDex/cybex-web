@@ -161,3 +161,54 @@ export function fetchUserProjectStatus(data, cb, errorHandler = () => void 0) {
     data: data
   });
 }
+
+
+import * as humanize from "./humanize.js";
+
+export const shortEnglishHumanizer = (isFullTime = false, lang = "zh") => humanize.humanizer({
+  language: lang,
+  units: isFullTime ? ["d", "h", "m", "s"] : ["d", "h", "m"],
+  round: true,
+  languages: {
+    zh: {
+      y: function() {
+        return "年";
+      },
+      mo: function() {
+        return "月";
+      },
+      d: function() {
+        return "天";
+      },
+      h: function() {
+        return "小时";
+      },
+      m: function() {
+        return "分钟";
+      },
+      s: function() {
+        return "秒";
+      }
+    },
+    en: {
+      y: function() {
+        return "Y";
+      },
+      mo: function() {
+        return "M";
+      },
+      d: function() {
+        return "D";
+      },
+      h: function() {
+        return "H";
+      },
+      m: function() {
+        return "M";
+      },
+      s: function() {
+        return "S";
+      }
+    }
+  }
+});
