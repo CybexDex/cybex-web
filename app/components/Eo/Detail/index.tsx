@@ -620,6 +620,7 @@ class Detail extends React.Component<any, any> {
 
   componentDidMount() {
     this.fetchDatas();
+    this.fetchProgress();
     this.updateTimer = setInterval(() => {
       this.fetchProgress();
     }, 3000);

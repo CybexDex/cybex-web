@@ -251,19 +251,38 @@ let Join = class extends React.Component<
       cybex_name: this.props.currentAccount.get("name")
     };
     Promise.all([
-      new Promise((resolve, reject) =>
-        fetchJson.fetchDetails(
-          {
-            project: this.props.match.params.id
-          },
-          res => {
-            resolve(res.result);
-          },
-          error => {
-            reject(error);
-          }
+      Promise.all([
+        new Promise((resolve, reject) =>
+          fetchJson.fetchDetails(
+            {
+              project: this.props.match.params.id
+            },
+            res => {
+              resolve(res.result);
+            },
+            error => {
+              reject(error);
+            }
+          )
+        ),
+        new Promise((resolve, reject) =>
+          fetchJson.updateStatus(
+            data,
+            res => {
+              let currentState = res.result;
+              if (!currentState) {
+                // if (!currentState || !currentState.real) {
+                resolve({});
+              } else {
+                resolve(currentState);
+              }
+            },
+            error => {
+              throw error;
+            }
+          )
         )
-      ),
+      ]).then(([detail, latest]) => ({ ...detail, ...latest })),
       new Promise((resolve, reject) =>
         fetchJson.fetchUserProjectStatus(
           data,
@@ -536,19 +555,19 @@ let Join = class extends React.Component<
     let { name } = projectData;
     if (name) {
       return (
-        <>"         "<Translate
+        <>"          \" "<Translate
             className="confirm-tip text-center"
             content="eto.confirm"
             component="h5"
             style={{ marginTop: "1em" }}
             project={name}
-          />"
-         "<Translate
+          />" "<Translate
             className="confirm-tip text-center"
             content="eto.dont_repeat"
             style={{ maxWidth: "40em", margin: "auto" }}
             component="p"
-          />"       "</>
+          />" "
+        </>
       );
     } else return null;
   };
