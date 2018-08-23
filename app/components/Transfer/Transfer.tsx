@@ -505,9 +505,9 @@ class Transfer extends React.Component<any, any> {
     let tabIndex = 1;
 
     return (
-      <div className="grid-block vertical">
+      <div className="grid-block vertical page-layout">
         <div
-          className="grid-block shrink vertical medium-horizontal"
+          className="grid-block shrink vertical medium-horizontal page-layout"
           style={{ paddingTop: "2rem" }}
         >
           <form
@@ -572,7 +572,11 @@ class Transfer extends React.Component<any, any> {
             <div className="content-block">
               <label htmlFor="issueVesting">
                 <Translate component="span" content="transfer.vesting_period" />
-                <input type="checkbox" onChange={this.onPeriodSwitchChange} />
+                <input
+                  style={{ marginLeft: "0.5em" }}
+                  type="checkbox"
+                  onChange={this.onPeriodSwitchChange}
+                />
               </label>
               <PublicKeySelector
                 disabled={!enableVesting}
@@ -679,8 +683,7 @@ class Transfer extends React.Component<any, any> {
                             allows adjusting of the memo to / from parameters.
                         */}
             {propose ? (
-              <>
-                <div className="full-width-content form-group transfer-input">
+              <>"                \" \" \" "<div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="account.propose_from" />
                   </label>
@@ -689,8 +692,7 @@ class Transfer extends React.Component<any, any> {
                     onChange={this.onProposeAccount.bind(this)}
                     tabIndex={tabIndex++}
                   />
-                </div>
-                <div className="full-width-content form-group transfer-input">
+                </div>" "<div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="proposal.expires" />
                   </label>
@@ -702,7 +704,7 @@ class Transfer extends React.Component<any, any> {
                     tabIndex={(tabIndex += 2)}
                     onPeriodChange={time => ChainConfig.setProposalExpire(time)}
                   />
-                </div>
+                </div>" "
               </>
             ) : null}
 
@@ -726,16 +728,21 @@ class Transfer extends React.Component<any, any> {
 
             {/* TODO: show remaining balance */}
           </form>
-          <div className="grid-content small-12 medium-6 large-4 large-offset-1 right-column">
-            <div className="grid-content no-padding">
-              <RecentTransactions
-                accountsList={accountsList}
-                limit={25}
-                compactView={true}
-                filter="transfer"
-                fullHeight={true}
-              />
-            </div>
+          <div
+            className="grid-content small-12 medium-6 large-4 large-offset-1 right-column page-layout"
+            style={{
+              height: "calc(100% - 2rem)"
+            }}
+          >
+            {/* <Translate component="h3" content="transfer.records" /> */}
+            <RecentTransactions
+              accountsList={accountsList}
+              limit={25}
+              compactView={true}
+              filter="transfer"
+              fullHeight={true}
+              noHeader
+            />
           </div>
 
           <div className="grid-content medium-6 large-4" />

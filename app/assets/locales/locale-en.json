@@ -1099,6 +1099,7 @@
       "The faucet address is used to pay the registration fee for new users.",
     "showSettles": "Show settle orders in depth chart",
     "showAssetPercent": "Show asset percentages on the account page",
+    "advancedMode": "Advanced Mode",
     "yes": "Yes",
     "no": "No",
     "walletLockTimeout": "Wallet auto-lock time (seconds, 0 to disable)",

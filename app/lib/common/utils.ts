@@ -640,7 +640,7 @@ var Utils = {
       .history_api()
       .exec("get_account_history", [
         accountId,
-        "1.11.0",
+        "1.11.1",
         numOfRecord,
         "1.11.0"
       ]);
@@ -654,7 +654,7 @@ var Utils = {
         .history_api()
         .exec("get_account_history", [
           accountId,
-          "1.11.0",
+          "1.11.1",
           numOfRecord,
           "1.11." + lastId
         ]);

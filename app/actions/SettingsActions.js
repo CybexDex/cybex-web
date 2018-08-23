@@ -39,7 +39,6 @@ class SettingsActions {
     }
 
     hideAsset(id, status) {
-
         return {id, status};
     }
 

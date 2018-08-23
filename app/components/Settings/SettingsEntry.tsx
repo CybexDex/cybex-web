@@ -3,11 +3,13 @@ import * as PropTypes from "prop-types";
 import counterpart from "counterpart";
 import Translate from "react-translate-component";
 import SettingsActions from "actions/SettingsActions";
+import { Button } from "components/Common";
 import AssetName from "../Utility/AssetName";
-export default class SettingsEntry extends React.Component {
-  constructor() {
-    super();
+export default class SettingsEntry extends React.Component<any, any> {
+  timer;
 
+  constructor(props) {
+    super(props);
     this.state = {
       message: null
     };
@@ -78,6 +80,7 @@ export default class SettingsEntry extends React.Component {
         input = (
           <input
             type="text"
+            style={{width: "100%"}}
             value={selected}
             onChange={this.props.onChange.bind(this, setting)}
           />
@@ -88,9 +91,9 @@ export default class SettingsEntry extends React.Component {
         value = true;
 
         input = (
-          <div
-            style={{ height: 60, width: "100%", paddingTop: 20 }}
-            className="button"
+          <Button
+            type="secondary"
+            style={{ width: "100%" }}
             onClick={() => {
               SettingsActions.clearSettings().then(() => {
                 this._setMessage("settings.restore_default_success");
@@ -98,7 +101,7 @@ export default class SettingsEntry extends React.Component {
             }}
           >
             {counterpart.translate("settings.reset")}
-          </div>
+          </Button>
         );
 
         noHeader = true;

@@ -743,6 +743,7 @@ let AccountOverview = class extends React.Component<any, any> {
       );
       hiddenBalances = hidden;
     }
+    if (!hiddenBalances || !includedBalances) return null;
 
     let totalBalanceList = includedBalancesList.concat(hiddenBalancesList);
 
@@ -803,7 +804,7 @@ let AccountOverview = class extends React.Component<any, any> {
       />
     );
 
-    includedBalances.push(
+    includedBalances && includedBalances.push(
       <tr key="portfolio" className="total-value">
         <td style={{ textAlign: "left", paddingLeft: 10 }}>{totalValueText}</td>
         <td />

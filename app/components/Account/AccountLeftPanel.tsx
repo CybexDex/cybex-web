@@ -23,13 +23,19 @@ class AccountLeftPanel extends React.Component<
     linkedAccounts;
     isMyAccount;
     passwordLogin;
+    advancedMode: boolean;
   },
   any
 > {
   last_path = null;
   static propTypes = {
     account: PropTypes.object.isRequired,
+    advancedMode: PropTypes.bool.isRequired,
     linkedAccounts: PropTypes.object
+  };
+
+  static defaultProps = {
+    advancedMode: false
   };
 
   constructor(props) {
@@ -254,14 +260,16 @@ class AccountLeftPanel extends React.Component<
                       <Translate content="account.permissions" />
                     </NavLink>
                   </li>
-                  {/* <li>
-                    <Link
-                      to={`/account/${account_name}/whitelist/`}
-                      activeClassName="active"
-                    >
-                      <Translate content="account.whitelist.title" />
-                    </Link>
-                  </li> */}
+                  {this.props.advancedMode && (
+                    <li>
+                      <NavLink
+                        to={`/account/${account_name}/whitelist/`}
+                        activeClassName="active"
+                      >
+                        <Translate content="account.whitelist.title" />
+                      </NavLink>
+                    </li>
+                  )}
                   {isMyAccount ? (
                     <li>
                       <NavLink

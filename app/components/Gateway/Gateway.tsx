@@ -13,6 +13,8 @@ import { FundRecordEntry, FundRecordRes } from "services//GatewayModels";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
 import ReactTooltip from "react-tooltip";
+import DateTime from "components/Common/DateTime";
+import { getId } from "components/Common/utils";
 
 import counterpart from "counterpart";
 import { List } from "immutable";
@@ -60,7 +62,7 @@ let AssetRow = class extends React.Component<any, any> {
     // let canWithdraw = !!asset.get("balance") && asset.get("balance") > 0;
     return (
       <>
-        <tr>
+      <tr>
           <td>
             <LinkToAssetById asset={asset.get("id")} />
           </td>
@@ -114,13 +116,12 @@ let AssetRow = class extends React.Component<any, any> {
               </a>
             )}
           </td>
-        </tr>
-        {!canWithdraw && (
+        </tr>{!canWithdraw && (
           <ReactTooltip id="noBalance" effect="solid">
             {noBalanceTip}
           </ReactTooltip>
         )}
-      </>
+        </>
     );
   }
 };
@@ -266,7 +267,7 @@ let GatewayRecords = class extends React.Component<
               </table> */}
         <Table
           data={records}
-          noDataText={counterpart.translate(`gateway.no_record_one_month`)}
+          noDataText={counterpart.translate("gateway.no_record_one_month")}
           style={
             isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
           }
@@ -316,7 +317,13 @@ let GatewayRecords = class extends React.Component<
               Header: counterpart.translate("gateway.last_update"),
               maxWidth: 180,
               id: "update",
-              accessor: d => d.updateAt
+              accessor: d => d.updateAt,
+              Cell: row => (
+                <DateTime
+                  id={getId("gateway")}
+                  dateTime={row.original.updateAt}
+                />
+              )
             }
           ]}
         />

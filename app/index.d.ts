@@ -45,24 +45,25 @@ declare namespace ETO {
     rate: number;
     base_token_name: string;
   };
+  
   type ProjectDetail = {
     account: "testroot";
-    banner: 0;
+    banner: 0; // 
     base_accuracy: 1;
     base_max_quota: 20;
     base_min_quota: 0.5;
-    base_soft_cap: null;
+    base_soft_cap: null; //
     base_token: "JADE.ETH";
     base_token_count: 1000;
     base_token_name: "ETH";
     close_at: null;
-    control: "online";
-    control_status: "unstart";
-    created_at: "2018-07-21 05:22:12";
+    control: "online"; // 
+    control_status: "unstart"; //
+    created_at: "2018-07-21 05:22:12"; //
     current_base_token_count: 0;
     current_percent: 0;
     current_user_count: 0;
-    deleted: 0;
+    deleted: 0; // 
     end_at: "2018-08-28 04:00:00";
     finish_at: null;
     id: "1004";
@@ -70,14 +71,14 @@ declare namespace ETO {
     lock_at: null;
     name: "会员组";
     offer_at: null;
-    parent: "1000";
+    parent: "1000"; // 
     project: "1004";
     rate: 5000;
     receive_address: "";
-    score: 5;
+    score: 5; // 
     start_at: "2018-07-08 12:00:00";
     status: "ok";
-    timestamp: "2018-07-21 13:22:12";
+    timestamp: "2018-07-21 13:22:12"; //
     token: "JADE.TCT";
     token_count: 0;
     token_name: "TCT";

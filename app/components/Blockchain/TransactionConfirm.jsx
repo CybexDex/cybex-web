@@ -11,6 +11,7 @@ import Icon from "../Icon/Icon";
 import LoadingIndicator from "../LoadingIndicator";
 import WalletDb from "stores/WalletDb";
 import AccountStore from "stores/AccountStore";
+import SettingsStore from "stores/SettingsStore";
 import AccountSelect from "components/Forms/AccountSelect";
 import { ChainStore } from "cybexjs";
 import utils from "common/utils";
@@ -177,11 +178,14 @@ class TransactionConfirm extends React.Component {
       );
       button_group = (
         <div className="button-group">
-          <div className="grid-block full-width-content" style={{alignItems: "center"}}>
+          <div
+            className="grid-block full-width-content"
+            style={{ alignItems: "center" }}
+          >
             <Button
               onClick={this.onConfirmClick.bind(this)}
               type="primary"
-              style={{whiteSpace: "nowrap", marginRight: "0.5em"}}
+              style={{ whiteSpace: "nowrap", marginRight: "0.5em" }}
             >
               {this.props.propose ? (
                 <Translate content="propose" />
@@ -189,7 +193,11 @@ class TransactionConfirm extends React.Component {
                 <Translate content="transfer.confirm" />
               )}
             </Button>
-            <Button type="secondary" style={{minHeight: 42}} onClick={this.onCloseClick.bind(this)}>
+            <Button
+              type="secondary"
+              style={{ minHeight: 42 }}
+              onClick={this.onCloseClick.bind(this)}
+            >
               <Translate content="account.perm.cancel" />
             </Button>
           </div>
@@ -236,30 +244,13 @@ class TransactionConfirm extends React.Component {
                 no_links={true}
               />
             </div>
-
-            {/* P R O P O S E   F R O M */}
-            {this.props.propose ? (
-              <div className="full-width-content form-group">
-                <label>
-                  <Translate content="account.propose_from" />
-                </label>
-                <AccountSelect
-                  account_names={AccountStore.getMyAccounts()}
-                  onChange={this.onProposeAccount.bind(this)}
-                />
-              </div>
-            ) : null}
-
-            <div className="grid-block shrink" style={{ paddingTop: "1rem" }}>
-              {button_group}
-
+            <div className="grid-content shrink" style={{ padding: "1rem" }}>
               {/* P R O P O S E   T O G G L E */}
-              {null && !this.props.transaction.has_proposed_operation() &&
+              {this.props.enabledProposal &&
+              !this.props.transaction.has_proposed_operation() &&
               !(broadcast || broadcasting) ? (
-                <div className="align-right grid-block">
-                  <label
-                    style={{ paddingTop: "0.5rem", paddingRight: "0.5rem" }}
-                  >
+                <div className="grid-block form-group" style={{justifyContent: "space-between", alignItems: "flex-end"}}>
+                  <label style={{paddingLeft: "5px"}}>
                     <Translate content="propose" />:
                   </label>
                   <div
@@ -271,6 +262,21 @@ class TransactionConfirm extends React.Component {
                   </div>
                 </div>
               ) : null}
+              {/* P R O P O S E   F R O M */}
+              {this.props.propose ? (
+                <div className="full-width-content"  style={{ paddingTop: "0.6rem" }}>
+                  <label style={{paddingLeft: "5px"}}>
+                    <Translate content="account.propose_from" />
+                  </label>
+                  <AccountSelect
+                    account_names={AccountStore.getMyAccounts()}
+                    onChange={this.onProposeAccount.bind(this)}
+                  />
+                </div>
+              ) : null}
+            </div>
+            <div className="grid-block shrink" style={{ paddingTop: "1rem" }}>
+              {button_group}
             </div>
           </div>
         </BaseModal>
@@ -283,10 +289,20 @@ TransactionConfirm = connect(
   TransactionConfirm,
   {
     listenTo() {
-      return [TransactionConfirmStore];
+      return [TransactionConfirmStore, SettingsStore];
     },
     getProps() {
-      return TransactionConfirmStore.getState();
+      let enabledProposal = SettingsStore.getState().settings.get(
+        "advancedMode"
+      );
+      // console.group();
+      // console.debug("TransactionConfirm: ");
+      // console.dir(enabledProposal);
+      // console.groupEnd();
+      return {
+        ...TransactionConfirmStore.getState(),
+        enabledProposal
+      };
     }
   }
 );

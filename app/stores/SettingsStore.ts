@@ -114,6 +114,7 @@ class SettingsStore extends AbstractStore<any> {
       walletLockTimeout: 60 * 10,
       themes: "cybexDarkTheme",
       disableChat: false,
+      advancedMode: false,
       navState: true,
       passwordLogin: true
     });
@@ -128,6 +129,7 @@ class SettingsStore extends AbstractStore<any> {
       unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "CNY", "BTC", "EUR"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
       showAssetPercent: [{ translate: "yes" }, { translate: "no" }],
+      advancedMode: [{ translate: "yes" }, { translate: "no" }],
       themes: ["cybexDarkTheme"],
       passwordLogin: [
         { translate: "cloud_login" },

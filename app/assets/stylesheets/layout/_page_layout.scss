@@ -158,6 +158,11 @@ div.bordered-header {
 
 .readable {
   max-width: 70em;
+  &.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
 }
 
 .left-panel {

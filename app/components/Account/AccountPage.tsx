@@ -165,6 +165,7 @@ let AccountPage = class extends React.Component<Props, any> {
             linkedAccounts={linkedAccounts}
             myAccounts={myAccounts}
             viewSettings={this.props.viewSettings}
+            advancedMode={settings.get("advancedMode")}
             passwordLogin={settings.get("passwordLogin")}
           />
         </div>

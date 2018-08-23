@@ -174,13 +174,11 @@ let RecentTransactions = class extends React.Component<any, any> {
   _getHistory(accountsList, filterOp, customFilter) {
     let history = [];
     let seen_ops = new Set();
-    // console.debug("AccountList: ", accountsList);
     for (let account of accountsList) {
       if (account && account.get && account.get("history")) {
         let fullH = cache[account.get("id")] || [];
         let accountH = account.get("history").toJS();
         let h = uniq(accountH.concat(fullH), tx => (tx as any).id);
-        console.debug("AccountH: ", fullH, accountH, h);
         if (h)
           history = history.concat(
             h.filter((op: any) => !seen_ops.has(op.id) && seen_ops.add(op.id))
@@ -358,7 +356,7 @@ let RecentTransactions = class extends React.Component<any, any> {
     return (
       <div className="recent-transactions no-overflow" style={style}>
         <div className="generic-bordered-box">
-          {this.props.dashboard ? null : (
+          {this.props.dashboard || this.props.noHeader ? null : (
             <div ref="header">
               <div className="block-content-header">
                 <span>
