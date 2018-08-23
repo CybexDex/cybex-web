@@ -163,7 +163,7 @@ let CreateAccount = Radium(
                 }
               );
             }
-            Gtag.eventRegisterDone(name);
+            Gtag.eventRegisterDone(name, "bin");
           })
           .catch(error => {
             console.log("ERROR AccountActions.createAccount", error);
@@ -175,7 +175,7 @@ let CreateAccount = Radium(
             });
             this.cap && this.cap.updateCaptcha();
             this.setState({ loading: false });
-            Gtag.eventRegisterFailed(name);
+            Gtag.eventRegisterFailed(`Failed to create account: ${name} - ${error_msg}`);
           });
       });
     }

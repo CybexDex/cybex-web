@@ -169,7 +169,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
             }
           );
         }
-        Gtag.eventRegisterDone(name);
+        Gtag.eventRegisterDone(name, "cloud");
       })
       .catch(error => {
         console.log("ERROR AccountActions.createAccount", error);

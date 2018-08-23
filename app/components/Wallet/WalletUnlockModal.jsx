@@ -19,6 +19,8 @@ import SettingsActions from "actions/SettingsActions";
 import { Apis } from "cybexjs-ws";
 import utils from "common/utils";
 import AccountSelector from "../Account/AccountSelector";
+import { Gtag } from "services/Gtag";
+
 var logo = require("assets/cybex-logo.png");
 
 class WalletUnlockModal extends React.Component {
@@ -146,6 +148,9 @@ class WalletUnlockModal extends React.Component {
         password_input_reset: Date.now(),
         password_error: false
       });
+      try {
+        Gtag.eventUnlock(account, passwordLogin ? "cloud" : "bin");
+      } catch (e) {}
     }
     return false;
   }

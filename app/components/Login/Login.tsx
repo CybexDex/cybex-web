@@ -23,6 +23,8 @@ import WalletDb from "stores/WalletDb";
 import WalletUnlockStore from "stores/WalletUnlockStore";
 import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
+import { Gtag } from "services/Gtag";
+
 let LoginMain = Radium(
   class extends React.Component<
     any,
@@ -80,6 +82,7 @@ let LoginMain = Radium(
           AccountActions.setPasswordAccount(account);
           this.props.resolve();
           WalletUnlockActions.change();
+          Gtag.eventLoginDone(account, "cloud");
         }
       }, 500);
       return false;

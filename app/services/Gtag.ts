@@ -1,25 +1,69 @@
+import { debugGen } from "utils";
 const $w = window as typeof window & { gtag };
-export class Gtag {
-  static EVENT_REGISTER_DONE = "register_done";
-  static EVENT_REGISTER_FAILED = "register_FAILED";
+const debug = debugGen("Gtag");
 
-  static eventRegisterDone(accountName: string) {
+const EVENT_CATE = {
+  ACCOUNT: "ACCOUNT",
+  TRANSACTION: "TRANSACTION"
+};
+
+export class Gtag {
+  static eventRegisterDone(accountName: string, method: string) {
+    Gtag.reportEvent(
+      `REGISTER_DONE:${method}`,
+      EVENT_CATE.ACCOUNT,
+      accountName
+    );
+  }
+  static eventLoginDone(accountName: string, method: string) {
+    Gtag.reportEvent(
+      `LOGIN_DONE:${method}`,
+      EVENT_CATE.ACCOUNT,
+      accountName
+    );
+  }
+
+  static reportEvent(
+    eventName: string,
+    category: string,
+    label: string,
+    value = 1
+  ) {
+    debug("[Event]", eventName, label);
     if ("gtag" in $w) {
-      $w.gtag("event", "REGISTER_DONE", {
-        event_category: "ACCOUNT",
-        event_label: accountName,
-        value: 1
+      $w.gtag("event", eventName.toUpperCase(), {
+        event_category: category.toUpperCase(),
+        event_label: label,
+        value
       });
     }
   }
+
+  static eventUnlock(accountName: string, method: string) {
+    Gtag.reportEvent(`UNLOCK:${method}`, EVENT_CATE.ACCOUNT, accountName);
+  }
+
+  static eventTracactionBroadcast(accountName: string, operation: string) {
+    Gtag.reportEvent(
+      `BROADCAST:${operation}`,
+      EVENT_CATE.TRANSACTION,
+      accountName
+    );
+  }
+
+  static eventTracactionBroadcastFailed(
+    accountName: string,
+    operation: string
+  ) {
+    Gtag.reportEvent(
+      `BROADCAST_FAILED:${operation}`,
+      EVENT_CATE.TRANSACTION,
+      accountName
+    );
+  }
+
   static eventRegisterFailed(accountName: string) {
-    if ("gtag" in $w) {
-      $w.gtag("event", "REGISTER_FAILED", {
-        event_category: "ACCOUNT",
-        event_label: accountName,
-        value: 1
-      });
-    }
+    Gtag.reportEvent("REGISTER_FAILED", EVENT_CATE.ACCOUNT, accountName);
   }
 }
 

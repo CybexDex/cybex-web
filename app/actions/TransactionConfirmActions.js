@@ -1,6 +1,8 @@
 import alt from "alt-instance";
 import { ChainConfig } from "cybexjs-ws";
 import counterpart from "counterpart";
+import { Gtag } from "services/Gtag";
+import AccountStore from "stores/AccountStore";
 
 class TransactionConfirmActions {
   confirm(transaction, resolve, reject, appendParams) {
@@ -36,6 +38,13 @@ class TransactionConfirmActions {
             trx_block_num: res[0].block_num,
             broadcasted_transaction: true
           });
+          try {
+            let op = res[0].trx.operations[0][0];
+            Gtag.eventTracactionBroadcast(
+              AccountStore.getState().currentAccount,
+              op
+            );
+          } catch (e) {}
           if (resolve) resolve();
         })
         .catch(error => {
