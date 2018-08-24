@@ -7,7 +7,8 @@ import WalletManagerStore from "stores/WalletManagerStore";
 import Translate from "react-translate-component";
 import cname from "classnames";
 import counterpart from "counterpart";
-
+import { withRouter } from "react-router-dom";
+import "./WalletManager.scss";
 const connectObject = {
   listenTo() {
     return [WalletManagerStore];
@@ -19,6 +20,7 @@ const connectObject = {
 
 class WalletManager extends React.Component {
   getTitle() {
+    console.debug("ManagerPath: ", this.props);
     switch (this.props.location.pathname) {
       case "/wallet/create":
         return "wallet.create_wallet";
@@ -53,14 +55,29 @@ class WalletManager extends React.Component {
         break;
     }
   }
+  _renderCancel = () => {
+    if (this.props.location.pathname === "/wallet") {
+      return null;
+    }
+    return (
+      <a
+        href="javascripts:;"
+        onClick={() => window.history.back()}
+        style={{ position: "absolute", right: 0, top: "50%" }}
+      >
+        <Translate content="transfer.back" />
+      </a>
+    );
+  };
 
   render() {
     return (
       <div className="grid-block vertical">
         <div className="grid-container" style={{ maxWidth: "40rem" }}>
           <div className="content-block center-content">
-            <div className="page-header">
+            <div className="page-header" style={{ position: "relative" }}>
               <Translate component="h3" content={this.getTitle()} />
+              {this._renderCancel()}
             </div>
             <div className="content-block">{this.props.children}</div>
           </div>
@@ -73,6 +90,7 @@ WalletManager = connect(
   WalletManager,
   connectObject
 );
+WalletManager = withRouter(WalletManager);
 
 class WalletOptions extends React.Component {
   render() {
@@ -82,7 +100,7 @@ class WalletOptions extends React.Component {
       ? this.props.current_wallet.toUpperCase()
       : "";
     return (
-      <span>
+      <div className="wallet-options">
         <div className="grid-block">
           <div className="grid-content">
             <div className="card">
@@ -93,10 +111,8 @@ class WalletOptions extends React.Component {
                 <div>{current_wallet}</div>
                 <br />
                 {has_wallets ? (
-                  <Link to="/wallet/change">
-                    <div className="button outline success">
-                      <Translate content="wallet.change_wallet" />
-                    </div>
+                  <Link to="/wallet/change" className="button outline success">
+                    <Translate content="wallet.change_wallet" />
                   </Link>
                 ) : null}
               </div>
@@ -109,11 +125,11 @@ class WalletOptions extends React.Component {
                 <label>
                   <Translate content="wallet.import_keys_tool" />
                 </label>
-                <div style={{ visibility: "hidden" }}>Dummy</div>
-                <br />
+                {/* <div style={{ visibility: "hidden" }}>Dummy</div> */}
+                {/* <br /> */}
                 {has_wallet ? (
                   <Link to="/wallet/import-keys">
-                    <div className="button outline success">
+                    <div className="button outline success readable container">
                       <Translate content="wallet.import_keys" />
                     </div>
                   </Link>
@@ -129,10 +145,10 @@ class WalletOptions extends React.Component {
                   <label>
                     <Translate content="wallet.balance_claims" />
                   </label>
-                  <div style={{ visibility: "hidden" }}>Dummy</div>
-                  <br />
+                  {/* <div style={{ visibility: "hidden" }}>Dummy</div> */}
+                  {/* <br /> */}
                   <Link to="wallet/balance-claims">
-                    <div className="button outline success">
+                    <div className="button outline success readable container">
                       <Translate content="wallet.balance_claim_lookup" />
                     </div>
                   </Link>
@@ -147,55 +163,46 @@ class WalletOptions extends React.Component {
             </div>
           ) : null}
         </div>
-
-        {has_wallet ? (
-          <Link to="wallet/backup/create">
-            <div className="button outline success">
+        <div className="backup-links">
+          {has_wallet ? (
+            <Link to="wallet/backup/create" className="button outline success">
               <Translate content="wallet.create_backup" />
-            </div>
-          </Link>
-        ) : null}
+            </Link>
+          ) : null}
 
-        {has_wallet ? (
-          <Link to="wallet/backup/brainkey">
-            <div className="button outline success">
+          {has_wallet ? (
+            <Link
+              to="wallet/backup/brainkey"
+              className="button outline success"
+            >
               <Translate content="wallet.backup_brainkey" />
-            </div>
-          </Link>
-        ) : null}
+            </Link>
+          ) : null}
 
-        <Link to="wallet/backup/restore">
-          <div className="button outline success">
+          <Link to="wallet/backup/restore" className="button outline success">
             <Translate content="wallet.restore_backup" />
-          </div>
-        </Link>
+          </Link>
 
-        <br />
-
-        {has_wallet ? <br /> : null}
-
-        <Link to="wallet/create">
-          <div className="button outline success">
+          <Link to="wallet/create" className="button outline success">
             <Translate content="wallet.new_wallet" />
-          </div>
-        </Link>
+          </Link>
 
-        {has_wallet ? (
-          <Link to="wallet/delete">
-            <div className="button outline success">
+          {has_wallet ? (
+            <Link to="wallet/delete" className="button outline success">
               <Translate content="wallet.delete_wallet" />
-            </div>
-          </Link>
-        ) : null}
+            </Link>
+          ) : null}
 
-        {has_wallet ? (
-          <Link to="wallet/change-password">
-            <div className="button outline success">
+          {has_wallet ? (
+            <Link
+              to="wallet/change-password"
+              className="button outline success"
+            >
               <Translate content="wallet.change_password" />
-            </div>
-          </Link>
-        ) : null}
-      </span>
+            </Link>
+          ) : null}
+        </div>
+      </div>
     );
   }
 }
@@ -425,22 +432,24 @@ import WalletChangePassword from "components/Wallet/WalletChangePassword";
 import ImportKeys from "components/Wallet/ImportKeys";
 import Brainkey from "components/Wallet/Brainkey";
 import { WalletCreate } from "components/Wallet/WalletCreate";
+import { BalanceClaimActive } from "components/Wallet/BalanceClaimActive";
 import Backup from "components/Wallet/Backup";
 import { Switch, Route } from "react-router-dom";
 
 export const WalletWrapper = () => (
-  <div style={{ margin: "1em auto" }}>
+  <WalletManager style={{ margin: "1em auto" }}>
     <Switch>
       <Route path="/wallet/" exact component={WalletOptions} />
       <Route path="/wallet/change" component={ChangeActiveWallet} />
       <Route path="/wallet/change-password" component={WalletChangePassword} />
       <Route path="/wallet/import-keys" component={ImportKeys} />
+      <Route path="/wallet/balance-claims" component={BalanceClaimActive} />
       <Route path="/wallet/brainkey" component={Brainkey} />
       <Route path="/wallet/create" component={WalletCreate} />
       <Route path="/wallet/delete" component={WalletDelete} />
       <Route path="/wallet/backup" component={Backup} />
     </Switch>
-  </div>
+  </WalletManager>
 );
 export default WalletWrapper;
 

@@ -20,6 +20,7 @@ import { ChainConfig } from "cybexjs-ws";
 import { PrivateKey } from "cybexjs";
 import SettingsActions from "actions/SettingsActions";
 import { TimerButton } from "components/Utility/TimerButton";
+import { WalletManager } from "components/Wallet/WalletManager";
 
 const connectObject = {
   listenTo() {
@@ -36,11 +37,13 @@ const connectObject = {
 class BackupCreate extends React.Component {
   render() {
     return (
-      <div className="readable">
+      <div className="readable container">
         <Create
           noText={this.props.noText}
           newAccount={
-            this.props.location ? this.props.location.query.newAccount : null
+            this.props.location
+              ? this.props.location.search.indexOf("newAccount") === -1
+              : null
           }
         >
           <NameSizeModified />
