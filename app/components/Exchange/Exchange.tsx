@@ -1291,16 +1291,14 @@ class Exchange extends React.Component<any, any> {
       this.state.height > 1100 ? chartHeight : chartHeight - 125,
       minChartHeight
     );
-
+    console.debug("Props: ", this.props);
     let buyForm = isFrozen ? null : (
       <BuySell
         onBorrow={
           !isNullAccount && baseIsBitAsset ? this._borrowBase.bind(this) : null
         }
         currentAccount={currentAccount}
-        backedCoin={this.props.backedCoins.find(
-          a => a.symbol === base.get("symbol")
-        )}
+        backedCoin={base.get("symbol") in this.props.backedCoins}
         currentBridges={this.props.bridgeCoins.get(base.get("symbol")) || null}
         smallScreen={smallScreen}
         isOpen={this.state.buySellOpen}
@@ -1360,9 +1358,7 @@ class Exchange extends React.Component<any, any> {
             : null
         }
         currentAccount={currentAccount}
-        backedCoin={this.props.backedCoins.find(
-          a => a.symbol === quote.get("symbol")
-        )}
+        backedCoin={quote.get("symbol") in this.props.backedCoins}
         currentBridges={this.props.bridgeCoins.get(quote.get("symbol")) || null}
         smallScreen={smallScreen}
         isOpen={this.state.buySellOpen}

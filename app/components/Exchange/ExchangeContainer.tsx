@@ -91,7 +91,7 @@ let ExchangeContainer = class extends React.Component<any, any> {
             return MarketsStore.getState().marketReady;
           },
           backedCoins: () => {
-            return GatewayStore.getState().backedCoins.get("OPEN", []);
+            return GatewayStore.getState().backedCoins.get("JADE", []);
           },
           bridgeCoins: () => {
             return GatewayStore.getState().bridgeCoins;

@@ -195,6 +195,8 @@ async function impl(method: string, params: any, dataName: string) {
   }
 }
 
+
+
 export const GatewayService = {
   getDepositInfo,
   getWithdrawInfo,

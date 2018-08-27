@@ -60,69 +60,68 @@ let AssetRow = class extends React.Component<any, any> {
     let { asset, balance } = this.props;
     let canWithdraw = balance && balance.get && balance.get("balance") > 0;
     // let canWithdraw = !!asset.get("balance") && asset.get("balance") > 0;
-    return (
-      <>
+    return [
       <tr>
-          <td>
-            <LinkToAssetById asset={asset.get("id")} />
-          </td>
-          <td>
-            {canWithdraw ? (
-              <BalanceComponent
-                balance={asset.get("balance")}
-                hide_asset={true}
-              />
-            ) : (
-              "-"
+        <td>
+          <LinkToAssetById asset={asset.get("id")} />
+        </td>
+        <td>
+          {canWithdraw ? (
+            <BalanceComponent
+              balance={asset.get("balance")}
+              hide_asset={true}
+            />
+          ) : (
+            "-"
+          )}
+        </td>
+        <td>
+          <a
+            onClick={this._showDepositWithdraw.bind(
+              this,
+              asset.get("symbol"),
+              false
             )}
-          </td>
-          <td>
+          >
+            <Icon name="deposit" className="icon-14px" />
+          </a>
+        </td>
+        <td>
+          {(canWithdraw && (
             <a
-              onClick={this._showDepositWithdraw.bind(
-                this,
-                asset.get("symbol"),
-                false
-              )}
+              className={!canWithdraw ? "disabled" : ""}
+              onClick={
+                canWithdraw
+                  ? this._showWithdrawModal.bind(
+                      this,
+                      asset.get("symbol"),
+                      false
+                    )
+                  : () => {}
+              }
             >
-              <Icon name="deposit" className="icon-14px" />
+              <Icon name="withdraw" className="icon-14px" />
             </a>
-          </td>
-          <td>
-            {(canWithdraw && (
-              <a
-                className={!canWithdraw ? "disabled" : ""}
-                onClick={
-                  canWithdraw
-                    ? this._showWithdrawModal.bind(
-                        this,
-                        asset.get("symbol"),
-                        false
-                      )
-                    : () => {}
-                }
-              >
-                <Icon name="withdraw" className="icon-14px" />
-              </a>
-            )) || (
-              <a
-                href="javascript:;"
-                data-for="noBalance"
-                data-place="right"
-                data-offset="{ 'left': -6 }"
-                style={{ opacity: 0.3 }}
-                data-tip
-              >
-                <Icon name="withdraw" className="icon-14px" />
-              </a>
-            )}
-          </td>
-        </tr>{!canWithdraw && (
-          <ReactTooltip id="noBalance" effect="solid">
-            {noBalanceTip}
-          </ReactTooltip>
-        )}
-        </>
-    );
+          )) || (
+            <a
+              href="javascript:;"
+              data-for="noBalance"
+              data-place="right"
+              data-offset="{ 'left': -6 }"
+              style={{ opacity: 0.3 }}
+              data-tip
+            >
+              <Icon name="withdraw" className="icon-14px" />
+            </a>
+          )}
+        </td>
+      </tr>,
+      !canWithdraw && (
+        <ReactTooltip id="noBalance" effect="solid">
+          {noBalanceTip}
+        </ReactTooltip>
+      )
+    ];
   }
 };
 
@@ -138,6 +137,8 @@ let GatewayTable = class extends React.Component<any, any> {
   };
 
   render() {
+    console.debug("GatewayTable Render");
+
     let { assets, balances, filter, account } = this.props;
     let assetRows = assets.filter(a => !!a).map(asset => {
       let a = asset.set("balance", balances.get(asset.get("id")));
@@ -211,6 +212,8 @@ let GatewayRecords = class extends React.Component<
     GatewayActions.loginGatewayQuery(this.props.account);
   };
   render() {
+    console.debug("GatewayRecords Render");
+
     let { fundRecords, isLocked } = this.props;
     let records = fundRecords.records || [];
     return (
@@ -383,6 +386,7 @@ let GatewayContainer = class extends React.Component<any, any> {
       nameFilter: "",
       onlyCanWithdraw: false
     };
+    console.debug("GatewayCotainer");
   }
 
   static propTypes = {
