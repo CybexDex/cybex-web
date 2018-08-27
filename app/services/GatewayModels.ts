@@ -23,7 +23,27 @@ export type FundRecordEntry = {
   fee: number;
   fundType: string;
   state: string;
+  hash?: string;
   updateAt: string;
+  details: FundRecordDetail[];
+};
+
+export type FundRecordDetail = {
+  bizType: "WITHDRAW" | "DEPOSIT";
+  coinType: string;
+  confirmations: number;
+  create_at: number;
+  data: {};
+  extraData: any;
+  fee: string;
+  from: string;
+  hash: string;
+  id: string;
+  sendAgain: boolean;
+  state: string;
+  to: string;
+  update_at: number;
+  value: string;
 };
 
 export class QueryResult implements Result {

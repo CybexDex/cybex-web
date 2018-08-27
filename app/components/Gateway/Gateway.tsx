@@ -8,7 +8,7 @@ import GatewayStore from "stores/GatewayStore";
 import AccountStore from "stores/AccountStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import WalletUnlockStore from "stores/WalletUnlockStore";
-import { JadePool } from "services//GatewayConfig";
+import { JadePool, GatewayAsset } from "services//GatewayConfig";
 import { FundRecordEntry, FundRecordRes } from "services//GatewayModels";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
@@ -127,6 +127,22 @@ let AssetRow = class extends React.Component<any, any> {
 
 AssetRow = BindToChainState(AssetRow);
 
+const GatewayOperaions = ({
+  address,
+  hash,
+  asset
+}: {
+  address: string;
+  hash: string;
+  asset: GatewayAsset;
+}) => {
+  return hash && asset ? (
+    <a href={asset.getExplorerUrlByTx(hash)} target="_blank">
+      查看详情
+    </a>
+  ) : "-";
+};
+
 let GatewayTable = class extends React.Component<any, any> {
   static propTypes = {
     assets: ChainTypes.ChainAssetsList.isRequired
@@ -169,6 +185,7 @@ let GatewayTable = class extends React.Component<any, any> {
     );
   }
 };
+
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
 let GatewayRecords = class extends React.Component<
@@ -218,56 +235,6 @@ let GatewayRecords = class extends React.Component<
     let records = fundRecords.records || [];
     return (
       <div className="cybex-records" style={{ position: "relative" }}>
-        {/*<table
-          className="table gateway-table dashboard-table"
-          style={
-            isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
-          }
-        >
-          <thead>
-            <tr>
-              <Translate component="th" content="account.asset" />
-              <Translate component="th" content="gateway.type" />
-              <Translate component="th" content="transfer.amount" />
-              <Translate component="th" content="gateway.address" />
-              <Translate component="th" content="proposal.status" />
-              <Translate component="th" content="gateway.last_update" />
-            </tr>
-          </thead>
-          <tbody>
-            {fundRecords.records &&
-              fundRecords.records.map(record => (
-                <tr key={record.updateAt}>
-                  <td>{record.coinType}</td>
-                  <Translate
-                    component="td"
-                    content={`gateway.${record.fundType.toLowerCase()}`}
-                  />
-                  <td>
-                    <FormattedAsset
-                      asset={record.asset}
-                      amount={record.amount}
-                      hide_asset
-                    />
-                  </td>
-                  <td>{record.address}</td>
-                  <td>{record.state}</td>
-                  <td>{record.updateAt}</td>
-                </tr>
-              ))}
-            {!fundRecords.records ||
-              (!fundRecords.records.length &&
-                !isLocked && (
-                  <tr>
-                    <Translate
-                      component="td"
-                      colSpan={6}
-                      content={`gateway.no_record_one_month`}
-                    />
-                  </tr>
-                ))}
-          </tbody>
-              </table> */}
         <Table
           data={records}
           noDataText={counterpart.translate("gateway.no_record_one_month")}
@@ -325,6 +292,19 @@ let GatewayRecords = class extends React.Component<
                 <DateTime
                   id={getId("gateway")}
                   dateTime={row.original.updateAt}
+                />
+              )
+            },
+            {
+              Header: counterpart.translate("gateway.operation"),
+              maxWidth: 180,
+              id: "operation",
+              accessor: d => null,
+              Cell: row => (
+                <GatewayOperaions
+                  address={row.original.address}
+                  hash={row.original.hash}
+                  asset={ADDRESS_TYPES[row.original.asset]}
                 />
               )
             }

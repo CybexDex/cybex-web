@@ -1659,6 +1659,7 @@
   "gateway": {
     "fee": "网关执行手续费",
     "find_asset": "按资产名称筛选",
+    "operation": "操作",
     "no_balance": "对应资产余额不足，无法提现",
     "title": "充值&提现",
     "your_account": "你的账户",
