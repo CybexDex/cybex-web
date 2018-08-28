@@ -140,7 +140,9 @@ const GatewayOperaions = ({
     <a href={asset.getExplorerUrlByTx(hash)} target="_blank">
       查看详情
     </a>
-  ) : "-";
+  ) : (
+    <span>-</span>
+  );
 };
 
 let GatewayTable = class extends React.Component<any, any> {
@@ -280,7 +282,7 @@ let GatewayRecords = class extends React.Component<
             {
               Header: counterpart.translate("proposal.status"),
               id: "state",
-              maxWidth: 80,
+              maxWidth: 60,
               accessor: d => d.state
             },
             {
@@ -297,7 +299,7 @@ let GatewayRecords = class extends React.Component<
             },
             {
               Header: counterpart.translate("gateway.operation"),
-              maxWidth: 180,
+              maxWidth: 80,
               id: "operation",
               accessor: d => null,
               Cell: row => (
