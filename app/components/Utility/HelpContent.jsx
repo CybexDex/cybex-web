@@ -7,7 +7,6 @@ import utils from "common/utils";
 import { withRouter } from "react-router-dom";
 
 let req = require.context("help", true, /\.md/);
-console.debug("REQ: ", req);
 let HelpData = {};
 
 function endsWith(str, suffix) {

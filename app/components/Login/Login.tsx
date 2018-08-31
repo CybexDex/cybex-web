@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Translate from "react-translate-component";
 import RestoreWallet from "components/Account/RestoreWallet";
 import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
+import WalletManagerStore from "stores/WalletManagerStore";
 import counterpart from "counterpart";
 import { LeftSlide } from "components/Common/LeftSlide";
 import {
@@ -24,6 +25,29 @@ import WalletUnlockStore from "stores/WalletUnlockStore";
 import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
 import { Gtag } from "services/Gtag";
+import { connect } from "alt-react";
+
+let LoginCheck: any = class extends React.Component<any, any> {
+  componentWillMount() {
+    console.debug("PO: ", WalletManagerStore.getState(), AccountStore.getState());
+    if (
+      AccountStore.getState().currentAccount
+    ) {
+      this.props.history.push("/dashboard");
+    } else {
+      SettingsActions.changeSetting({
+        setting: "passwordLogin",
+        value: true
+      });
+      WalletUnlockActions.lock();
+    }
+  }
+  render() {
+    return <span style={{ display: "none" }} />;
+  }
+};
+
+LoginCheck = withRouter(LoginCheck);
 
 let LoginMain = Radium(
   class extends React.Component<
@@ -40,14 +64,6 @@ let LoginMain = Radium(
         errorPass: false,
         checking: false
       };
-    }
-
-    componentWillMount() {
-      SettingsActions.changeSetting({
-        setting: "passwordLogin",
-        value: true
-      });
-      WalletUnlockActions.lock();
     }
 
     onPasswordEnter = async e => {
@@ -172,7 +188,7 @@ let LoginMain = Radium(
   }
 );
 
-export default class Login extends React.Component<any, any> {
+let Login = class extends React.Component<any, any> {
   onSelect(route) {
     this.props.history.push("/create-account/" + route);
   }
@@ -181,7 +197,8 @@ export default class Login extends React.Component<any, any> {
     if (this.props.children) {
       return this.props.children;
     }
-    return (
+    return [
+      <LoginCheck />,
       <div
         className="login-wrapper anim-fade"
         style={{ width: "100%", display: "flex", height: "100%" }}
@@ -189,6 +206,8 @@ export default class Login extends React.Component<any, any> {
         <LeftSlide />
         <LoginMain resolve={() => this.props.history.push("/dashboard")} />
       </div>
-    );
+    ];
   }
-}
+};
+
+export default Login;

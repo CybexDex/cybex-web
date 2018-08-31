@@ -11,7 +11,6 @@ import SettingsStore from "stores/SettingsStore";
 import { connect } from "alt-react";
 import ChainTypes from "../Utility/ChainTypes";
 
-console.debug("Market: ", MARKETS);
 
 let AssetDetail = class extends React.PureComponent<{ asset; vol }> {
   static propTypes = {

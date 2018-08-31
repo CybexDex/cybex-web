@@ -305,7 +305,7 @@ class WalletUnlockModal extends React.Component {
             style={{ alignItems: "center" }}
           >
             <Button type="primary" onClick={this.onPasswordEnter}>
-              <Translate content="header.unlock" />
+              <Translate content="header.unlock_password" />
             </Button>
             <Trigger close={this.props.modalId}>
               <Button type="secondary" onClick={this.onPasswordEnter}>

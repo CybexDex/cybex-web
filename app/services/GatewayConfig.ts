@@ -188,6 +188,8 @@ export const JadePool: {
       "JADE.GET": new GatewayAsset("JADE.GET", "GET", ProtocolType.ETH),
       "JADE.MAD": new GatewayAsset("JADE.MAD", "MAD", ProtocolType.ETH),
       "JADE.TCT": new GatewayAsset("JADE.TCT", "TCT", ProtocolType.ETH),
+      "JADE.MCO": new GatewayAsset("JADE.MCO", "MCO", ProtocolType.ETH),
+      "JADE.JCT": new GatewayAsset("JADE.JCT", "JCT", ProtocolType.ETH),
       "JADE.HER": new GatewayAsset("JADE.HER", "HER", ProtocolType.ETH),
       "JADE.CTXC": new GatewayAsset("JADE.CTXC", "CTXC", ProtocolType.ETH),
       "JADE.NES": new GatewayAsset("JADE.NES", "NES", ProtocolType.ETH),

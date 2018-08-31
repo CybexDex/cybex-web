@@ -165,16 +165,10 @@ class RouterTransitioner {
             current + 1,
             current + range
           );
-          console.log(
-            current,
-            range,
-            thiz._connectionManager.url,
-            thiz._connectionManager.urls
-          );
           thiz._connectionManager
             .checkConnections("", "", undefined, undefined, race)
             .then(res => {
-              console.log(res);
+              // console.log(res);
               // update the latencies object
               const apiLatencies = SettingsStore.getState().apiLatencies;
               for (var nodeUrl in res) {
