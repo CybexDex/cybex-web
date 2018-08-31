@@ -1667,7 +1667,15 @@
       "input_message":
         "Please enter a password used to encrypt the QR code.<br />An empty password will show an unencrypted QR code."
     },
-    "never": "Don't show me this tip again"
+    "never": "Don't show me this tip again",
+    "jct": {
+      "jct_one_title": "JCT Air Drop",
+      "jct_one_alt": "Click here to join in the JCT airdrop",
+      "jct_one_img": "https://static-assets.51nebula.com/activities/JCT_StepOne_EN_08311739.jpeg",
+      "jct_two_title": "JCT Candy Application",
+      "jct_two_alt": "Click here to join in the JCT candy application",
+      "jct_two_img": "https://static-assets.51nebula.com/activities/JCT_StepTwo_EN_08311739.jpeg"
+    }
   },
   "init_error": {
     "title": "Application initialization issues",

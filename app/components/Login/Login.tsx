@@ -198,13 +198,14 @@ let Login = class extends React.Component<any, any> {
       return this.props.children;
     }
     return [
-      <LoginCheck />,
+      <LoginCheck key="loginCheck" />,
       <div
+        key="loginSecond"
         className="login-wrapper anim-fade"
         style={{ width: "100%", display: "flex", height: "100%" }}
       >
-        <LeftSlide />
-        <LoginMain resolve={() => this.props.history.push("/dashboard")} />
+        <LeftSlide key="loginSlide"/>
+        <LoginMain key="loginMain" resolve={() => this.props.history.push("/dashboard")} />
       </div>
     ];
   }

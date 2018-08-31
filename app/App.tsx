@@ -28,7 +28,8 @@ import LogoutModal, {
 import Loadable from "react-loadable";
 import titleUtils from "common/titleUtils";
 import { LoadComponent } from "./Routes";
-import EthModal, { DEFAULT_ETH_MODAL_ID } from "components/Modal/EthModal";
+import JCTModalOne from "components/Modal/JCTModalOne";
+import JCTModalTwo from "components/Modal/JCTModalTwo";
 
 import { Route, Switch, Redirect } from "react-router-dom";
 let patch = false;
@@ -289,7 +290,8 @@ let App = class extends React.Component<any, any> {
       console.debug("Show Support Modal");
       ModalActions.showModal(DEFAULT_SUPPORT_MODAL, true);
     }
-    // ModalActions.showModal("ETO_MODAL", true);
+    ModalActions.showModal("JCT_MODAL_ONE", true);
+    ModalActions.showModal("JCT_MODAL_TWO", true);
     console.debug("Context: ", this);
     this.context.router.history.listen(this._rebuildTooltips);
     // Todo
@@ -487,7 +489,8 @@ let App = class extends React.Component<any, any> {
             }}
           />
           <WalletUnlockModal />
-          {/* <EthModal modalId={"ETO_MODAL"}/> */}
+          <JCTModalOne modalId={"JCT_MODAL_ONE"}/>
+          <JCTModalTwo modalId={"JCT_MODAL_TWO"}/>
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />

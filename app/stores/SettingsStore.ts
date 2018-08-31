@@ -30,7 +30,7 @@ export const MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
-  // "JADE.JCT",
+  "JADE.JCT",
   "JADE.MCO",
   // "JADE.HER",
   "JADE.CTXC",
