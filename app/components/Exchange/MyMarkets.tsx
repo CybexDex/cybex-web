@@ -71,7 +71,7 @@ const BTC_MARKETS = [
   "JADE.ENG"
 ];
 const FilteredMarkets = {
-  // "JADE.BTC": new Set(["JADE.LTC"]),
+  "CYB": new Set(["JADE.JCT"]),
   "JADE.ETH": new Set(["JADE.LTC"]),
   "JADE.EOS": new Set(["JADE.LTC"]),
   "JADE.BTC": new Set(BTC_MARKETS)
@@ -79,7 +79,7 @@ const FilteredMarkets = {
 };
 const FixedMarkets = {
   // CYB: { "JADE.MVP": -1 },
-  // "JADE.ETH": { "JADE.MVP": -1 },
+  "JADE.ETH": { "JADE.JCT": -1 },
   // "JADE.BTC": { "JADE.MVP": -1 },
   // "JADE.EOS": { "JADE.MVP": -1 }
 };
