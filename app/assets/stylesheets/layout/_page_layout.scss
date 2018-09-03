@@ -582,3 +582,27 @@ a {
 .cybex-records .__react_component_tooltip {
   white-space: pre-wrap;
 }
+
+#JCT_MODAL_ONE,
+#JCT_MODAL_TWO {
+  margin: 0;
+  max-width: 400px;
+  padding: 0;
+}
+#JCT_MODAL_ONE.modal .modal-content,
+#JCT_MODAL_TWO.modal .modal-content {
+  min-height: 200px;
+  padding: 0;
+}
+#JCT_MODAL_ONE.modal .close-button,
+#JCT_MODAL_TWO.modal .close-button {
+  color: #787878;
+}
+#JCT_MODAL_ONE.modal .modal-footer p,
+#JCT_MODAL_TWO.modal .modal-footer p {
+  margin: 0;
+}
+#JCT_MODAL_ONE.modal .modal-footer label,
+#JCT_MODAL_TWO.modal .modal-footer label {
+  margin: 2px;
+}

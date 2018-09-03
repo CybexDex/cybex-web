@@ -37,7 +37,7 @@ class CommonModal extends React.Component<
     let now = moment();
     let stepOne = {
       title: "modal.jct.jct_one_title",
-      href: "https://www.cybex.io",
+      href: "modal.jct.jct_one_href",
       img: "modal.jct.jct_one_img",
       alt: "modal.jct.jct_one_alt"
     };
@@ -70,17 +70,13 @@ class CommonModal extends React.Component<
       open &&
       current && (
         <BaseModal modalId={this.props.modalId}>
-          <Translate
-            className="text-center"
-            unsafe
-            component="h3"
-            content={current.title}
-            style={{ marginTop: "1rem" }}
-          />
           <div className="modal-content game-modal">
             <div className="img-container">
-              <a href={current.href} target="_blank" rel="noopener noreferrer">
-                <img src={counterpart.translate(current.img)} alt={counterpart.translate(current.alt)} />
+              <a href={counterpart.translate(current.href)} target="_blank">
+                <img
+                  src={counterpart.translate(current.img)}
+                  alt={counterpart.translate(current.alt)}
+                />
               </a>
             </div>
           </div>
