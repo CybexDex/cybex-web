@@ -280,7 +280,7 @@ let RecentTransactions = class extends React.Component<any, any> {
         "account_update",
         "asset_create",
         "witness_withdraw_pay",
-        "claim_balance"
+        "balance_claim"
       ].map(type => {
         return (
           <option value={type} key={type}>
