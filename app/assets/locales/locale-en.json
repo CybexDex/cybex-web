@@ -1671,10 +1671,12 @@
     "jct": {
       "jct_one_title": "JCT Air Drop",
       "jct_one_alt": "Click here to join in the JCT airdrop",
-      "jct_one_img": "https://static-assets.51nebula.com/activities/JCT_StepOne_EN_08311739.jpeg",
+      "jct_one_img": "https://static-assets.51nebula.com/activities/JCT_StepOne_EN_09011151.jpeg",
+      "jct_one_href": "https://mp.weixin.qq.com/s/HavYfxasOLSFO7-tRTUIIA",
       "jct_two_title": "JCT Candy Application",
       "jct_two_alt": "Click here to join in the JCT candy application",
-      "jct_two_img": "https://static-assets.51nebula.com/activities/JCT_StepTwo_EN_08311739.jpeg"
+      "jct_two_img": "https://static-assets.51nebula.com/activities/JCT_StepTwo_EN_09011151.jpeg",
+      "jct_two_href": "https://mp.weixin.qq.com/s/HavYfxasOLSFO7-tRTUIIA"
     }
   },
   "init_error": {

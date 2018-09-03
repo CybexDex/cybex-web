@@ -240,8 +240,10 @@ let Header = class extends React.Component<any, any> {
       myAccounts.length && this.props.currentAccount ? (
         <div className="grp-menu-item header-balance hide-column-small">
           <a>
+            <span className="font-secondary">
+              <Translate content="exchange.balance" />:{" "}
+            </span>
             <TotalBalanceValue.AccountWrapper
-              label="exchange.balance"
               accounts={[this.props.currentAccount]}
               inHeader={true}
             />

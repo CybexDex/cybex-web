@@ -522,11 +522,7 @@ let AccountWrapper = class extends React.Component<any, any> {
     ) {
       return (
         <span>
-          {!!this.props.label ? (
-            <span className="font-secondary">
-              <Translate content={this.props.label} />:{" "}
-            </span>
-          ) : null}{" "}
+          {" "}
           0
         </span>
       );

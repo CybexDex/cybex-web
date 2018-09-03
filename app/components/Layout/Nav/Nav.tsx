@@ -17,6 +17,7 @@ import LogoutModal, {
 import { NavItem } from "components/Common";
 import { Colors } from "components/Common/Colors";
 import { ExplorerNav } from "components/Explorer/ExplorerNav";
+import IntlStore from "stores/IntlStore";
 
 interface NavLink {
   id: string;
@@ -244,11 +245,12 @@ Nav = connect(
   Nav,
   {
     listenTo() {
-      return [AccountStore, SettingsStore];
+      return [AccountStore, SettingsStore, IntlStore];
     },
     getProps() {
       const chainID = Apis.instance().chain_id;
       return {
+        locale: IntlStore.getState(),
         settings: SettingsStore.getState().settings,
         currentAccount:
           AccountStore.getState().currentAccount ||

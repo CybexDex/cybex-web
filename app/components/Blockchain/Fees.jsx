@@ -39,12 +39,12 @@ class FeeGroup extends React.Component {
     super(props);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (
-      !Immutable.is(nextProps.globalObject, this.props.globalObject) ||
-      !Immutable.is(nextProps.settings, this.props.settings)
-    );
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   return (
+  //     !Immutable.is(nextProps.globalObject, this.props.globalObject) ||
+  //     !Immutable.is(nextProps.settings, this.props.settings)
+  //   );
+  // }
 
   render() {
     let { globalObject, settings, opIds, title } = this.props;
