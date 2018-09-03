@@ -12,6 +12,7 @@ import counterpart from "counterpart";
 import utils from "lib/common/utils";
 import { BaseModal } from "./BaseModalNew";
 import * as moment from "moment";
+import { Gtag } from "services/Gtag";
 
 const style = {
   position: "fixed",
@@ -62,6 +63,10 @@ class CommonModal extends React.Component<
     return e.target.value;
   };
 
+  reportEvent = () => {
+    Gtag.eventActivity("JCT", "AirDrop");
+  }
+
   render() {
     let { modalId, open, locale, accountName } = this.props;
     let current = this.state.current;
@@ -72,7 +77,7 @@ class CommonModal extends React.Component<
         <BaseModal modalId={this.props.modalId}>
           <div className="modal-content game-modal">
             <div className="img-container">
-              <a href={counterpart.translate(current.href)} target="_blank">
+              <a href={counterpart.translate(current.href)} target="_blank" onClick={this.reportEvent}>
                 <img
                   src={counterpart.translate(current.img)}
                   alt={counterpart.translate(current.alt)}

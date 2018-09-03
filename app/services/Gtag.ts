@@ -4,6 +4,7 @@ const debug = debugGen("Gtag");
 
 const EVENT_CATE = {
   ACCOUNT: "ACCOUNT",
+  ACTIVITY: "ACTIVITY",
   TRANSACTION: "TRANSACTION"
 };
 
@@ -20,6 +21,14 @@ export class Gtag {
       `LOGIN_DONE:${method}`,
       EVENT_CATE.ACCOUNT,
       accountName
+    );
+  }
+
+  static eventActivity(name: string, subContent: string) {
+    Gtag.reportEvent(
+      `${EVENT_CATE.ACTIVITY}:${name}`,
+      EVENT_CATE.ACTIVITY,
+      subContent
     );
   }
 
