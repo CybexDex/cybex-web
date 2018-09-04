@@ -537,7 +537,7 @@ Header = connect(
       ];
     },
     getProps() {
-      // console.debug("AccountStore: ", AccountStore.getState());
+      console.debug("AccountStore: ", AccountStore.getState());
       const chainID = Apis.instance().chain_id;
       return {
         contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],

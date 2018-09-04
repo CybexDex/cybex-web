@@ -14,7 +14,7 @@ import SettingsStore from "stores/SettingsStore";
 import ls from "common/localStorage";
 
 let accountStorage = new ls("__graphene__");
-
+const PASSWORD_WALLET_NAME = "$password";
 /**
  *  This Store holds information about accounts in this wallet
  *
@@ -110,6 +110,7 @@ class AccountStore extends BaseStore {
   setWallet(wallet_name) {
     // If wallet is not the same as current wallet
     if (wallet_name !== this.state.wallet_name) {
+      console.debug("SetWallet: ", wallet_name);
       this.setState({
         wallet_name: wallet_name,
         passwordAccount: accountStorage.get(
@@ -517,13 +518,22 @@ class AccountStore extends BaseStore {
   tryToSetCurrentAccount() {
     const passwordAccountKey = this._getStorageKey("passwordAccount");
     const currentAccountKey = this._getStorageKey("currentAccount");
+    console.debug(
+      "TryToSetCurrentAccount: ",
+      passwordAccountKey,
+      currentAccountKey,
+      accountStorage
+    );
     if (accountStorage.has(passwordAccountKey)) {
       const acc = accountStorage.get(passwordAccountKey, null);
       this.setState({
         passwordAccount: acc
       });
       return this.setCurrentAccount(acc);
-    } else if (accountStorage.has(currentAccountKey)) {
+    } else if (
+      accountStorage.has(currentAccountKey) &&
+      !SettingsStore.getState().settings.get("passwordLogin")
+    ) {
       return this.setCurrentAccount(
         accountStorage.get(currentAccountKey, null)
       );
@@ -533,13 +543,21 @@ class AccountStore extends BaseStore {
     if (starredAccounts.size) {
       return this.setCurrentAccount(starredAccounts.first().name);
     }
-    if (this.state.linkedAccounts.size) {
+    if (
+      this.state.linkedAccounts.size &&
+      !SettingsStore.getState().settings.get("passwordLogin")
+    ) {
+      console.debug("LinkAccount: ", this.state.linkedAccounts.first());
       return this.setCurrentAccount(this.state.linkedAccounts.first());
     }
+    this.setCurrentAccount(null);
   }
 
   setCurrentAccount(name) {
-    if (this.state.passwordAccount) name = this.state.passwordAccount;
+    let isPasswordMode = SettingsStore.getState().settings.get("passwordLogin");
+    console.debug("CurrentWalletMode: ", isPasswordMode, name);
+    if (this.state.passwordAccount && isPasswordMode)
+      name = this.state.passwordAccount;
     const key = this._getStorageKey();
     if (!name) {
       name = null;
@@ -671,6 +689,10 @@ class AccountStore extends BaseStore {
     if (payload.setting === "passwordLogin" && payload.value === false) {
       this.onSetPasswordAccount(null);
       accountStorage.remove(this._getStorageKey());
+    }
+    if (payload.setting === "passwordLogin" && payload.value === true) {
+      this.setWallet(PASSWORD_WALLET_NAME);
+      console.debug("Switch To Password: ", this.state);
     }
   }
 }
