@@ -986,7 +986,6 @@ Join = connect(
     getProps(props) {
       return {
         currentAccount: AccountStore.getState().currentAccount,
-        passwordAccount: AccountStore.getState().passwordAccount
       };
     }
   }

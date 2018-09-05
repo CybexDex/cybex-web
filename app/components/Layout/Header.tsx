@@ -268,71 +268,51 @@ let Header = class extends React.Component<any, any> {
       </a>
     );
 
-    let createAccountLink =
-      myAccountCount === 0 ? (
-        <ActionSheet.Button title="" setActiveState={() => {}}>
+    let createAccountLink = !currentAccount ? (
+      <ActionSheet.Button title="" setActiveState={() => {}}>
+        <a
+          className="button create-account"
+          onClick={this._onNavigate.bind(this, "/login")}
+          style={{ padding: "1rem", border: "none" }}
+        >
+          <Icon className="icon-14px" name="user" />{" "}
+          <Translate content="account.create_login" />
+        </a>
+      </ActionSheet.Button>
+    ) : null;
+
+    let lock_unlock = currentAccount ? (
+      <div className="grp-menu-item">
+        {this.props.locked ? (
           <a
-            className="button create-account"
-            onClick={this._onNavigate.bind(this, "/login")}
-            style={{ padding: "1rem", border: "none" }}
+            style={{ padding: "1rem" }}
+            className="button"
+            href="javascript:;"
+            onClick={this._toggleLock.bind(this)}
+            data-class="unlock-tooltip"
+            data-tip={locked_tip}
+            data-place="bottom"
+            data-html
           >
-            <Icon className="icon-14px" name="user" />{" "}
-            <Translate content="account.create_login" />
+            <Icon className="icon-14px" name="locked" />
           </a>
-        </ActionSheet.Button>
-      ) : null;
-
-    let lock_unlock =
-      !!this.props.current_wallet || currentAccount ? (
-        <div className="grp-menu-item">
-          {this.props.locked ? (
-            <a
-              style={{ padding: "1rem" }}
-              className="button"
-              href="javascript:;"
-              onClick={this._toggleLock.bind(this)}
-              data-class="unlock-tooltip"
-              data-tip={locked_tip}
-              data-place="bottom"
-              data-html
-            >
-              <Icon className="icon-14px" name="locked" />
-            </a>
-          ) : (
-            <a
-              style={{ padding: "1rem" }}
-              href="javascript:;"
-              className="button"
-              onClick={this._toggleLock.bind(this)}
-              data-class="unlock-tooltip"
-              data-tip={unlocked_tip}
-              data-place="bottom"
-              data-html
-            >
-              <Icon className="icon-14px" name="unlocked" />
-            </a>
-          )}
-        </div>
-      ) : null;
-
-    let tradeLink = this.props.lastMarket ? (
-      <a
-        className={cnames({ active: active.indexOf("market/") !== -1 })}
-        onClick={this._onNavigate.bind(
-          this,
-          `/market/${this.props.lastMarket}`
+        ) : (
+          <a
+            style={{ padding: "1rem" }}
+            href="javascript:;"
+            className="button"
+            onClick={this._toggleLock.bind(this)}
+            data-class="unlock-tooltip"
+            data-tip={unlocked_tip}
+            data-place="bottom"
+            data-html
+          >
+            <Icon className="icon-14px" name="unlocked" />
+          </a>
         )}
-      >
-        <Translate component="span" content="header.exchange" />
-      </a>
-    ) : (
-      <a
-        className={cnames({ active: active.indexOf("market/") !== -1 })}
-        onClick={this._onNavigate.bind(this, "/market/CYB_JADE.ETH")}
-      >
-        <Translate component="span" content="header.exchange" />
-      </a>
-    );
+      </div>
+    ) : null;
+
 
     // Account selector: Only active inside the exchange
     let accountsDropDown = null,
@@ -381,30 +361,15 @@ let Header = class extends React.Component<any, any> {
       }
     }
 
-    accountsDropDown = createAccountLink ? (
-      createAccountLink
-    ) : tradingAccounts.length === 1 ? (
-      <ActionSheet.Button title="" setActiveState={() => {}}>
-        <a
-          onClick={this._accountClickHandler.bind(this, account_display_name)}
-          style={{ padding: "1rem", border: "none" }}
-          className="button"
-        >
-          <span className="table-cell">
-            <AccountImage
-              style={{ display: "inline-block" }}
-              size={{ height: 20, width: 20 }}
-              account={account_display_name}
-            />
-          </span>
-          {/* <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span>{account_display_name}</span></div></span> */}
-          <AccountName account_display_name={account_display_name} />
-        </a>
-      </ActionSheet.Button>
-    ) : (
-      <ActionSheet>
-        <ActionSheet.Button title="">
-          <a style={{ padding: "1rem", border: "none" }} className="button">
+    accountsDropDown =
+      !createAccountLink &&
+      (tradingAccounts.length === 1 ? (
+        <ActionSheet.Button title="" setActiveState={() => {}}>
+          <a
+            onClick={this._accountClickHandler.bind(this, account_display_name)}
+            style={{ padding: "1rem", border: "none" }}
+            className="button"
+          >
             <span className="table-cell">
               <AccountImage
                 style={{ display: "inline-block" }}
@@ -412,16 +377,31 @@ let Header = class extends React.Component<any, any> {
                 account={account_display_name}
               />
             </span>
+            {/* <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span>{account_display_name}</span></div></span> */}
             <AccountName account_display_name={account_display_name} />
           </a>
         </ActionSheet.Button>
-        {tradingAccounts.length > 1 ? (
-          <ActionSheet.Content>
-            <ul className="no-first-element-top-border">{accountsList}</ul>
-          </ActionSheet.Content>
-        ) : null}
-      </ActionSheet>
-    );
+      ) : (
+        <ActionSheet>
+          <ActionSheet.Button title="">
+            <a style={{ padding: "1rem", border: "none" }} className="button">
+              <span className="table-cell">
+                <AccountImage
+                  style={{ display: "inline-block" }}
+                  size={{ height: 20, width: 20 }}
+                  account={account_display_name}
+                />
+              </span>
+              <AccountName account_display_name={account_display_name} />
+            </a>
+          </ActionSheet.Button>
+          {tradingAccounts.length > 1 ? (
+            <ActionSheet.Content>
+              <ul className="no-first-element-top-border">{accountsList}</ul>
+            </ActionSheet.Content>
+          ) : null}
+        </ActionSheet>
+      ));
 
     let settingsDropdown = (
       <a
@@ -497,6 +477,11 @@ let Header = class extends React.Component<any, any> {
               </div>
             )}
             {lock_unlock}
+            {
+              <div className="grp-menu-item overflow-visible">
+                {createAccountLink}
+              </div>
+            }
             {currentAccount && (
               <div className="grp-menu-item">
                 <a
@@ -543,8 +528,7 @@ Header = connect(
         contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],
         linkedAccounts: AccountStore.getState().linkedAccounts,
         currentAccount:
-          AccountStore.getState().currentAccount ||
-          AccountStore.getState().passwordAccount,
+          AccountStore.getState().currentAccount,
         locked: WalletUnlockStore.getState().locked,
         current_wallet: WalletManagerStore.getState().current_wallet,
         lastMarket: SettingsStore.getState().viewSettings.get(

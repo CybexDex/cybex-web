@@ -138,9 +138,9 @@ class WalletUnlockModal extends React.Component {
       return false;
     } else {
       this.refs.password_input.clear();
-      // if (!passwordLogin) {
-      // }
-      AccountActions.setPasswordAccount(account);
+      if (passwordLogin) {
+        AccountActions.setPasswordAccount(account);
+      }
       ZfApi.publish(this.props.modalId, "close");
       this.props.resolve();
       WalletUnlockActions.change();

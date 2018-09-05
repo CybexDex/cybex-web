@@ -36,7 +36,7 @@ let Dashboard = class extends React.Component<any, any> {
 
   componentWillMount() {
     let { linkedAccounts, myIgnoredAccounts, passwordAccount } = this.props;
-
+    
     let accountCount =
       linkedAccounts.size + myIgnoredAccounts.size + (passwordAccount ? 1 : 0);
     if (!accountCount) {

@@ -129,7 +129,9 @@ class WalletManagerStore extends BaseStore {
 
   init() {
     return iDB.root.getProperty("current_wallet").then(current_wallet => {
+      console.debug("WalletManagerStoreInit: ", current_wallet);
       return iDB.root.getProperty("wallet_names", []).then(wallet_names => {
+        console.debug("WalletManagerStoreInit: ", wallet_names);
         this.setState({
           wallet_names: Immutable.Set(wallet_names),
           current_wallet

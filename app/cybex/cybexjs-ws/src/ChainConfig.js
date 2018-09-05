@@ -32,7 +32,7 @@ let ecc_config = {
 _this = {
   core_asset: "CORE",
   address_prefix: ADDRESS_PREFIX,
-  expire_in_secs: 15,
+  expire_in_secs: 30,
   expire_in_secs_proposal: 24 * 60 * 60,
   review_in_secs_committee: 24 * 60 * 60,
   networks: {
@@ -81,7 +81,7 @@ _this = {
     _this.core_asset = "CORE";
     _this.address_prefix = ADDRESS_PREFIX;
     ecc_config.address_prefix = ADDRESS_PREFIX;
-    _this.expire_in_secs = 15;
+    _this.expire_in_secs = 30;
     _this.expire_in_secs_proposal = 24 * 60 * 60;
 
     console.log("Chain config reset");

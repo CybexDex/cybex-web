@@ -113,12 +113,12 @@ class AccountStore extends BaseStore {
       console.debug("SetWallet: ", wallet_name);
       this.setState({
         wallet_name: wallet_name,
-        passwordAccount: accountStorage.get(
-          this._getStorageKey("passwordAccount", {
-            wallet_name
-          }),
-          null
-        ),
+        // passwordAccount: accountStorage.get(
+        //   this._getStorageKey("passwordAccount", {
+        //     wallet_name
+        //   }),
+        //   null
+        // ),
         starredAccounts: Immutable.Map(
           accountStorage.get(
             this._getStorageKey("starredAccounts", {
@@ -147,6 +147,7 @@ class AccountStore extends BaseStore {
         })
       )
     );
+    console.debug("GetAccountStoreInititalState");
     return {
       update: false,
       subbed: false,
@@ -155,9 +156,7 @@ class AccountStore extends BaseStore {
       currentAccount: null,
       referralAccount: accountStorage.get("referralAccount", ""),
       passwordAccount: accountStorage.get(
-        this._getStorageKey("passwordAccount", {
-          wallet_name
-        }),
+        this._getStorageKey("passwordAccount"),
         ""
       ),
       linkedAccounts: Immutable.Set(),
@@ -328,37 +327,39 @@ class AccountStore extends BaseStore {
     }
 
     let accounts = [];
-    for (let account_name of this.state.linkedAccounts) {
-      let account = ChainStore.getAccount(account_name);
-      if (account === undefined) {
-        // console.log(account_name, "account undefined");
-        continue;
-      }
-      if (account == null) {
-        console.log(
-          "WARN: non-chain account name in linkedAccounts",
-          account_name
-        );
-        continue;
-      }
-      let auth = this.getMyAuthorityForAccount(account);
+    if (!this.isPasswordMode) {
+      for (let account_name of this.state.linkedAccounts) {
+        let account = ChainStore.getAccount(account_name);
+        if (account === undefined) {
+          // console.log(account_name, "account undefined");
+          continue;
+        }
+        if (account == null) {
+          console.log(
+            "WARN: non-chain account name in linkedAccounts",
+            account_name
+          );
+          continue;
+        }
+        let auth = this.getMyAuthorityForAccount(account);
 
-      if (auth === undefined) {
-        // console.log(account_name, "auth undefined");
-        continue;
-      }
+        if (auth === undefined) {
+          // console.log(account_name, "auth undefined");
+          continue;
+        }
 
-      if (auth === "full" || auth === "partial") {
-        accounts.push(account_name);
-      }
+        if (auth === "full" || auth === "partial") {
+          accounts.push(account_name);
+        }
 
-      // console.debug("account:", account.toJS(), "auth:", auth);
-    }
-    if (
+        // console.debug("account:", account.toJS(), "auth:", auth);
+      }
+    } else if (
       this.state.passwordAccount &&
       accounts.indexOf(this.state.passwordAccount) === -1
-    )
+    ) {
       accounts.push(this.state.passwordAccount);
+    }
     // console.log("accounts:", accounts, "linkedAccounts:", this.state.linkedAccounts && this.state.linkedAccounts.toJS());
     return accounts.sort();
   }
@@ -368,40 +369,39 @@ class AccountStore extends BaseStore {
     }
 
     let accounts = [];
-    for (let account_name of this.state.linkedAccounts) {
-      let account = ChainStore.getAccount(account_name);
-      if (account === undefined) {
-        // console.log(account_name, "account undefined");
-        continue;
-      }
-      if (account == null) {
-        console.log(
-          "WARN: non-chain account name in linkedAccounts",
-          account_name
-        );
-        continue;
-      }
-      let auth = this.getMyAuthorityForAccount(account);
+    if (!this.isPasswordMode) {
+      for (let account_name of this.state.linkedAccounts) {
+        let account = ChainStore.getAccount(account_name);
+        if (account === undefined) {
+          // console.log(account_name, "account undefined");
+          continue;
+        }
+        if (account == null) {
+          console.log(
+            "WARN: non-chain account name in linkedAccounts",
+            account_name
+          );
+          continue;
+        }
+        let auth = this.getMyAuthorityForAccount(account);
 
-      if (auth === undefined) {
-        // console.log(account_name, "auth undefined");
-        continue;
+        if (auth === undefined) {
+          // console.log(account_name, "auth undefined");
+          continue;
+        }
+        if (auth === "full") {
+          accounts.push({ account_name, auth: "full" });
+        }
+        if (auth === "partial") {
+          accounts.push({ account_name, auth: "partial" });
+        }
       }
-
-      if (auth === "full") {
-        accounts.push({ account_name, auth: "full" });
-      }
-      if (auth === "partial") {
-        accounts.push({ account_name, auth: "partial" });
-      }
-
-      // console.debug("account:", account.toJS(), "auth:", auth);
-    }
-    if (
+    } else if (
       this.state.passwordAccount &&
       accounts.indexOf(this.state.passwordAccount) === -1
-    )
+    ) {
       accounts.push(this.state.passwordAccount);
+    }
     // console.log("accounts:", accounts, "linkedAccounts:", this.state.linkedAccounts && this.state.linkedAccounts.toJS());
     return accounts.sort(
       (prev, next) =>
@@ -515,6 +515,10 @@ class AccountStore extends BaseStore {
     );
   }
 
+  get isPasswordMode() {
+    return SettingsStore.getState().settings.get("passwordLogin");
+  }
+
   tryToSetCurrentAccount() {
     const passwordAccountKey = this._getStorageKey("passwordAccount");
     const currentAccountKey = this._getStorageKey("currentAccount");
@@ -524,18 +528,23 @@ class AccountStore extends BaseStore {
       currentAccountKey,
       accountStorage
     );
-    if (accountStorage.has(passwordAccountKey)) {
+    let isPasswordMode = SettingsStore.getState().settings.get("passwordLogin");
+    console.debug("IS PASSWORD MODE: ", this.isPasswordMode, isPasswordMode);
+
+    if (accountStorage.has(passwordAccountKey) && isPasswordMode) {
       const acc = accountStorage.get(passwordAccountKey, null);
+      console.debug("PasswordAccountKey: ", passwordAccountKey, acc, isPasswordMode);
       this.setState({
         passwordAccount: acc
       });
       return this.setCurrentAccount(acc);
     } else if (
       accountStorage.has(currentAccountKey) &&
+      typeof accountStorage.get(currentAccountKey) !== "object" &&
       !SettingsStore.getState().settings.get("passwordLogin")
     ) {
       return this.setCurrentAccount(
-        accountStorage.get(currentAccountKey, null)
+        accountStorage.get(currentAccountKey)
       );
     }
 
@@ -545,7 +554,7 @@ class AccountStore extends BaseStore {
     }
     if (
       this.state.linkedAccounts.size &&
-      !SettingsStore.getState().settings.get("passwordLogin")
+      !this.isPasswordMode
     ) {
       console.debug("LinkAccount: ", this.state.linkedAccounts.first());
       return this.setCurrentAccount(this.state.linkedAccounts.first());
@@ -687,11 +696,11 @@ class AccountStore extends BaseStore {
 
   onChangeSetting(payload) {
     if (payload.setting === "passwordLogin" && payload.value === false) {
-      this.onSetPasswordAccount(null);
+      // this.onSetPasswordAccount(null);
       accountStorage.remove(this._getStorageKey());
     }
     if (payload.setting === "passwordLogin" && payload.value === true) {
-      this.setWallet(PASSWORD_WALLET_NAME);
+      // this.setWallet(PASSWORD_WALLET_NAME);
       console.debug("Switch To Password: ", this.state);
     }
   }

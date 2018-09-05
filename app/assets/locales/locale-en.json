@@ -1844,7 +1844,7 @@
     "transfer": "TRANSFER",
     "exchange": "EXCHANGE",
     "account": "ACCOUNT",
-    "gateway": "DEPOSIT/WITHDRAW",
+    "gateway": "FUND",
     "bazaar": "BAZAAR",
     "explorer": "EXPLORER",
     "swap": "Atomic Swap",

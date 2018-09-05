@@ -441,9 +441,7 @@ class Transfer extends React.Component<any, any> {
     } = this.state;
     let from_my_account =
       !from_account ||
-      AccountStore.getState().currentAccount === from_account.get("name") ||
-      from_name === this.props.passwordAccount;
-    // let from_my_account = AccountStore.isMyAccount(from_account) || from_name === this.props.passwordAccount;
+      AccountStore.getState().currentAccount === from_account.get("name") 
     if (from_account && !from_my_account && !propose) {
       from_error = (
         <span>
@@ -760,8 +758,7 @@ export default connect(
     },
     getProps() {
       return {
-        currentAccount: AccountStore.getState().currentAccount,
-        passwordAccount: AccountStore.getState().passwordAccount
+        currentAccount: AccountStore.getState().currentAccount
       };
     }
   }
