@@ -110,7 +110,6 @@ class AccountStore extends BaseStore {
   setWallet(wallet_name) {
     // If wallet is not the same as current wallet
     if (wallet_name !== this.state.wallet_name) {
-      console.debug("SetWallet: ", wallet_name);
       this.setState({
         wallet_name: wallet_name,
         // passwordAccount: accountStorage.get(
@@ -147,7 +146,6 @@ class AccountStore extends BaseStore {
         })
       )
     );
-    console.debug("GetAccountStoreInititalState");
     return {
       update: false,
       subbed: false,
@@ -352,7 +350,6 @@ class AccountStore extends BaseStore {
           accounts.push(account_name);
         }
 
-        // console.debug("account:", account.toJS(), "auth:", auth);
       }
     } else if (
       this.state.passwordAccount &&
@@ -522,18 +519,10 @@ class AccountStore extends BaseStore {
   tryToSetCurrentAccount() {
     const passwordAccountKey = this._getStorageKey("passwordAccount");
     const currentAccountKey = this._getStorageKey("currentAccount");
-    console.debug(
-      "TryToSetCurrentAccount: ",
-      passwordAccountKey,
-      currentAccountKey,
-      accountStorage
-    );
     let isPasswordMode = SettingsStore.getState().settings.get("passwordLogin");
-    console.debug("IS PASSWORD MODE: ", this.isPasswordMode, isPasswordMode);
 
     if (accountStorage.has(passwordAccountKey) && isPasswordMode) {
       const acc = accountStorage.get(passwordAccountKey, null);
-      console.debug("PasswordAccountKey: ", passwordAccountKey, acc, isPasswordMode);
       this.setState({
         passwordAccount: acc
       });
@@ -556,7 +545,6 @@ class AccountStore extends BaseStore {
       this.state.linkedAccounts.size &&
       !this.isPasswordMode
     ) {
-      console.debug("LinkAccount: ", this.state.linkedAccounts.first());
       return this.setCurrentAccount(this.state.linkedAccounts.first());
     }
     this.setCurrentAccount(null);
@@ -564,7 +552,6 @@ class AccountStore extends BaseStore {
 
   setCurrentAccount(name) {
     let isPasswordMode = SettingsStore.getState().settings.get("passwordLogin");
-    console.debug("CurrentWalletMode: ", isPasswordMode, name);
     if (this.state.passwordAccount && isPasswordMode)
       name = this.state.passwordAccount;
     const key = this._getStorageKey();

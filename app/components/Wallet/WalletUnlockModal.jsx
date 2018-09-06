@@ -52,7 +52,6 @@ class WalletUnlockModal extends React.Component {
       this.setState({ account_name: np.passwordAccount });
     }
     if (np.resolve != this.props.resolve) {
-      console.debug("WillReceive", np);
       this.refs.password_input.clear();
     }
   }
@@ -122,7 +121,6 @@ class WalletUnlockModal extends React.Component {
   onPasswordEnter(e) {
     const { passwordLogin } = this.props;
     e.preventDefault();
-    console.debug("This Ref: ", this);
     const password = this.refs.password_input.value();
     const account = passwordLogin
       ? this.state.account && this.state.account.get("name")

@@ -30,7 +30,7 @@ class CommonModal extends React.Component<
 > {
   constructor(props) {
     super(props);
-    let stepTwoStart = moment("2018-09-07T15:59:59Z");
+    let stepTwoStart = moment("2018-09-06T04:59:59Z");
     let stepTwoEnd = moment("2018-09-16T15:59:59Z");
     let now = moment();
 

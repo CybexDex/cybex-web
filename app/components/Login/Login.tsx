@@ -130,6 +130,17 @@ let LoginMain = Radium(
               style={[$styleFlexContainer("column"), { width: "100%" }] as any}
               onSubmit={this.onPasswordEnter}
             >
+              <input
+                style={{"display":"none"}}
+                type="text"
+                name="fakeusernameremembered"
+              />
+              <input
+                style={{"display":"none"}}
+                type="password"
+                name="fakepasswordremembered"
+              />
+
               <Translate component="h1" content="account.welcome" />
               <h4 style={{ marginBottom: "3rem" }}>
                 <Translate content="account.login_prefix" />
@@ -204,8 +215,11 @@ let Login = class extends React.Component<any, any> {
         className="login-wrapper anim-fade"
         style={{ width: "100%", display: "flex", height: "100%" }}
       >
-        <LeftSlide key="loginSlide"/>
-        <LoginMain key="loginMain" resolve={() => this.props.history.push("/dashboard")} />
+        <LeftSlide key="loginSlide" />
+        <LoginMain
+          key="loginMain"
+          resolve={() => this.props.history.push("/dashboard")}
+        />
       </div>
     ];
   }

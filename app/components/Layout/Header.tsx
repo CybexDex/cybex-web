@@ -106,7 +106,6 @@ let Header = class extends React.Component<any, any> {
 
   constructor(props, context) {
     super(props);
-    console.debug("Component: ", this);
     this.state = {
       active: props.location.pathname
     };
@@ -522,7 +521,6 @@ Header = connect(
       ];
     },
     getProps() {
-      console.debug("AccountStore: ", AccountStore.getState());
       const chainID = Apis.instance().chain_id;
       return {
         contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],

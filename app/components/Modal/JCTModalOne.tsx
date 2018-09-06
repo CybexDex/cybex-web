@@ -34,7 +34,7 @@ class CommonModal extends React.Component<
     let stepOneStart = moment("2018-09-01T05:00:00Z");
     // let stepOneStart = moment("2018-08-31T10:19:00Z");
     // let stepOneEnd = moment("2018-08-31T10:20:59Z");
-    let stepOneEnd = moment("2018-09-07T15:59:59Z");
+    let stepOneEnd = moment("2018-09-05T15:59:59Z");
     let now = moment();
     let stepOne = {
       title: "modal.jct.jct_one_title",

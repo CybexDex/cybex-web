@@ -489,8 +489,8 @@ let App = class extends React.Component<any, any> {
             }}
           />
           <WalletUnlockModal />
-          <JCTModalOne modalId={"JCT_MODAL_ONE"}/>
-          <JCTModalTwo modalId={"JCT_MODAL_TWO"}/>
+          <JCTModalOne modalId={"JCT_MODAL_ONE"} />
+          <JCTModalTwo modalId={"JCT_MODAL_TWO"} />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />

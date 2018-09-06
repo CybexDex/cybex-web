@@ -43,7 +43,7 @@ let Input = Radium(
     static defaultProps = {
       size: "normal",
       valueFromOuter: false,
-      autoComplete: "off",
+      autoComplete: "false",
       inputRef: () => void 0
     };
     static styles = {
@@ -470,6 +470,7 @@ let LoginPasswordInput = class extends React.PureComponent<
         icon="lock"
         type="password"
         onBlur={this.checkError}
+        autocomplete="new-password"
         error={errorPass && counterpart.translate("login.error_password")}
         onChange={this.handleChange}
         keepPlaceholder
