@@ -20,6 +20,7 @@ import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
 import * as moment from "moment";
 import { AssetIcon } from "components/Gateway/AssetIcon";
+import { AssetInfo } from "./AssetInfo";
 
 const style = {
   position: "fixed",
@@ -92,48 +93,18 @@ class DepositModal extends React.Component<props, { fadeOut }> {
           <Translate content={"gateway.deposit"} />{" "}
           {utils.replaceName(asset.get("symbol"), false).name}({assetName})
         </h3>
-        <div className="deposit-info flex-wrapper">
-          <div className="asset-section flex-wrapper-main">
-            <ul className="deposit-info-asset no-margin">
-              {name && (
-                <li>
-                  <Translate
-                    content={"gateway.project_name"}
-                    className="with-colon"
-                  />
-                  <strong>{name}</strong>
-                </li>
-              )}
-              {contractAddress && (
-                <li>
-                  <Translate
-                    content={"gateway.contract_address"}
-                    className="with-colon"
-                  />
-                  <a
-                    href={depositInfo.meta.contractExplorer}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <strong>{contractAddress}</strong>
-                  </a>
-                </li>
-              )}
-            </ul>
-            <hr />
-            <p className="deposit-info-common">
-              {
-                <Translate
-                  unsafe
-                  content="gateway.add_funds"
-                  type={assetName}
-                  account={depositInfo.accountName}
-                />
-              }
-            </p>
-          </div>
-          <AssetIcon symbol={assetName} />
-        </div>
+        <AssetInfo gatewayAsset={depositInfo.meta}>
+          <p className="gateway-info-common">
+            {
+              <Translate
+                unsafe
+                content="gateway.add_funds"
+                type={assetName}
+                account={depositInfo.accountName}
+              />
+            }
+          </p>
+        </AssetInfo>
         {currentBalance && (
           <CurrentBalance currentBalance={balance} asset={asset} />
         )}

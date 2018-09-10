@@ -27,10 +27,9 @@ export const CONTRACT_URLS = __TEST__
   };
 
 declare const __TEST__;
-export const GATEWAY_URI =
-  __TEST__
-    ? "https://gatewaytest.cybex.io/gateway"
-    : "https://gateway.cybex.io/gateway";
+export const GATEWAY_URI = __TEST__
+  ? "https://gatewaytest.cybex.io/gateway"
+  : "https://gateway.cybex.io/gateway";
 export const GATEWAY_QUERY_URI = !__DEV__
   ? "https://gateway-query.cybex.io/"
   : "///localhost:5684/";
@@ -156,8 +155,6 @@ export class GatewayAsset {
     }
   }
   getExplorerUrlByContract(contractAddress: string): string | null {
-    console.debug("Contract: ", contractAddress);
-    console.debug("Contract: ", GatewayAsset.ContractAddress[this.protocol]);
     if (!GatewayAsset.ContractAddress[this.protocol]) return null;
     try {
       return (
