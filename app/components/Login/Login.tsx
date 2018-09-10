@@ -130,7 +130,7 @@ let LoginMain = Radium(
               style={[$styleFlexContainer("column"), { width: "100%" }] as any}
               onSubmit={this.onPasswordEnter}
             >
-              <input
+              {/* <input
                 style={{"display":"none"}}
                 type="text"
                 name="fakeusernameremembered"
@@ -139,7 +139,7 @@ let LoginMain = Radium(
                 style={{"display":"none"}}
                 type="password"
                 name="fakepasswordremembered"
-              />
+              /> */}
 
               <Translate component="h1" content="account.welcome" />
               <h4 style={{ marginBottom: "3rem" }}>

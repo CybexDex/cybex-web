@@ -681,7 +681,7 @@ class Transfer extends React.Component<any, any> {
                             allows adjusting of the memo to / from parameters.
                         */}
             {propose ? (
-              <>"                \" \" \" "<div className="full-width-content form-group transfer-input">
+              <><div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="account.propose_from" />
                   </label>
@@ -690,7 +690,7 @@ class Transfer extends React.Component<any, any> {
                     onChange={this.onProposeAccount.bind(this)}
                     tabIndex={tabIndex++}
                   />
-                </div>" "<div className="full-width-content form-group transfer-input">
+                </div><div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="proposal.expires" />
                   </label>
@@ -702,7 +702,7 @@ class Transfer extends React.Component<any, any> {
                     tabIndex={(tabIndex += 2)}
                     onPeriodChange={time => ChainConfig.setProposalExpire(time)}
                   />
-                </div>" "
+                </div>
               </>
             ) : null}
 

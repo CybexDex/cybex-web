@@ -70,8 +70,13 @@ class GatewayStore extends BaseStore implements Store<State> {
     });
   }
 
-  handleDepositUpdate(depositInfo) {
-    debug("Open: ", depositInfo);
+  handleDepositUpdate(_depositInfo) {
+    let meta = JADE_COINS[_depositInfo.asset] || {};
+    let depositInfo = {
+      ..._depositInfo,
+      meta
+    };
+    debug("Open: ", JADE_COINS, depositInfo);
     this.setState({
       depositInfo
     });

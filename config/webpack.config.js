@@ -131,7 +131,7 @@ const loaders = [
   {
     test: /\.png$/,
     exclude: [
-      path.resolve(root_dir, "app/assets/asset-symbols"),
+      // path.resolve(root_dir, "app/assets/asset-symbols"),
       path.resolve(root_dir, "app/assets/images"),
       path.resolve(root_dir, "app/assets/language-dropdown/img")
     ],

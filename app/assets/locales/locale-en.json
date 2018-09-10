@@ -1732,7 +1732,7 @@
     "website": "Visit the website",
     "deposit_to": "Please send your %(asset)s to the address below",
     "add_funds":
-      "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>. This service is provided by Jadepool.<br>* The timeliness of this transfer cannot be promised.<br> * The deposit address display on this page is only available for %(type)s, please don't deposit other asset into it, otherwise, it will be lost and cannot be found back",
+      "Quickly and easily add funds to your Cybex account <strong>%(account)s</strong>.<br>This service is provided by Jadepool.<br>* The timeliness of this transfer cannot be promised.<br> * The deposit address display on this page is only available for %(type)s, please don't deposit other asset into it, otherwise, it will be lost and cannot be found back",
     "withdraw_funds":
       "You are going to withdraw funds from your Cybex account to your external %(type)s account. <br>* The timeliness of this transfer cannot be promised. <br>* Please make sure that your withdrawal address is correct, otherwise you may lose your tokens permanently. <br>* It may take some time for each transfer to confirm, please kindly be patient. <br>* For the withdrawal operation, please use your personal wallet address only. <br>* Any smart contract address, exchange deposit address or ICO related address used for withdrawal could result in failed contract execution and transfer, and your funds would be sent back to your Cybex account, which may keep you waiting for longer time. Please kindly understand this.",
     "balance_asset": "Current %(asset)s balance",
@@ -1784,6 +1784,8 @@
     "limit": "Limit: %(amount)s %(symbol)s",
     "low_limit": "The value must be higher than %(amount)s %(symbol)s",
     "deposit_limit": "Deposit limit",
+    "contract_address": "Protocol Address",
+    "project_name": "Project Name",
     "address_with_memo":
       "%(address)s <span class=\"blocktrades-with-memo\">with memo</span> %(memo)s",
     "unavailable":
