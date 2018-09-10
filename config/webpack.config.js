@@ -79,22 +79,20 @@ const loaders = [
     loader: "json-loader",
     type: "javascript/auto"
   },
-  // {
-  //   test: /\.json$/,
-  //   type: "javascript/auto",
-  //   include: [
-  //     path.resolve(root_dir, "app/lib/common"),
-  //     path.resolve(root_dir, "app/assets/locales")
-  //   ],
-  //   use: [
-  //     {
-  //       loader: "file-loader",
-  //       options: {
-  //         name: "./[name].[ext]"
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    test: /\.png/,
+    include: [
+      path.resolve(root_dir, "app/assets/asset-symbols")
+    ],
+    use: [
+      {
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[ext]"
+        }
+      }
+    ]
+  },
   {
     test: /\.coffee$/,
     loader: "coffee-loader"
@@ -103,7 +101,6 @@ const loaders = [
     test: /\.(coffee\.md|litcoffee)$/,
     loader: "coffee-loader?literate"
   },
-
   {
     test: /\.(gif|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
     include: [path.resolve(root_dir, "app/assets/")],
@@ -131,7 +128,7 @@ const loaders = [
   {
     test: /\.png$/,
     exclude: [
-      // path.resolve(root_dir, "app/assets/asset-symbols"),
+      path.resolve(root_dir, "app/assets/asset-symbols"),
       path.resolve(root_dir, "app/assets/images"),
       path.resolve(root_dir, "app/assets/language-dropdown/img")
     ],

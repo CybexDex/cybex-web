@@ -1012,7 +1012,7 @@
     }
   },
   "settings": {
-    "passwordLogin": "使用云钱包模式登录",
+    "passwordLogin": "账户登录模式",
     "inverseMarket": "市场交易对视角",
     "unit": "显示记账单位",
     "confirmMarketOrder": "市场订单要求确认",

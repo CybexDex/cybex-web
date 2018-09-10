@@ -2,6 +2,7 @@
 
 declare const __TEST__;
 declare const __DEV__;
+declare const __BASE_URL__;
 declare const __GATEWAY_URL__;
 declare const __ICOAPE__;
 declare namespace ETO {
