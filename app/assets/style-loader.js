@@ -6,6 +6,8 @@ require("react-table/react-table.css");
 require("./asset-symbols/CYB.png");
 require("./asset-symbols/ETH.png");
 require("./asset-symbols/BTC.png");
+require("./asset-symbols/DPY.png");
+require("./asset-symbols/GNX.png");
 require("./asset-symbols/LTC.png");
 require("./asset-symbols/EOS.png");
 require("./asset-symbols/USDT.png");

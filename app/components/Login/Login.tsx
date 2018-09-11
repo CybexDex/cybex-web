@@ -29,18 +29,18 @@ import { connect } from "alt-react";
 
 let LoginCheck: any = class extends React.Component<any, any> {
   componentWillMount() {
-    // console.debug("PO: ", WalletManagerStore.getState(), AccountStore.getState());
-    // if (
-    //   AccountStore.getState().currentAccount
-    // ) {
-    //   this.props.history.push("/dashboard");
-    // } else {
-    //   SettingsActions.changeSetting({
-    //     setting: "passwordLogin",
-    //     value: true
-    //   });
-    //   WalletUnlockActions.lock();
-    // }
+    console.debug("PO: ", WalletManagerStore.getState(), AccountStore.getState());
+    if (
+      AccountStore.getState().currentAccount
+    ) {
+      this.props.history.push("/dashboard");
+    } else {
+      // SettingsActions.changeSetting({
+      //   setting: "passwordLogin",
+      //   value: true
+      // });
+      WalletUnlockActions.lock();
+    }
   }
   render() {
     return <span style={{ display: "none" }} />;
