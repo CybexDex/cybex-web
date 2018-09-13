@@ -1558,6 +1558,8 @@
     "service": "Transfer Service",
     "bridge": "Bridge",
     "gateway": "Gateway",
+    "operation": "Operation",
+    "details": "Check details",
     "fund_records": "Records",
     "symbol": "Symbol",
     "website": "Visit the website",
@@ -1615,7 +1617,14 @@
     "address_with_memo": "%(address)s <span class=\"blocktrades-with-memo\">with memo</span> %(memo)s",
     "unavailable": "The gateway service for this asset is currently down, please try again later",
     "unavailable_bridge": "The bridge service for this asset is currently down, please try again later",
-    "unavailable_jade": "The Jadepool Gateway is down or not responding"
+    "unavailable_jade": "The Jadepool Gateway is down or not responding",
+    "state": {
+      "init": "Init",
+      "new": "New",
+      "pending": "Pending",
+      "done": "Done",
+      "failed": "Failed"
+    }
   },
   "chat": {
     "title": "Chat",

@@ -1579,6 +1579,7 @@
     "your_account": "你的账户",
     "bridge": "桥接",
     "gateway": "承兑商",
+    "details": "查看详情",
     "symbol": "资产",
     "deposit_to": "请将你的%(asset)s转账至以下地址",
     "balance": "余额",
@@ -1635,7 +1636,14 @@
     "withdraw_funds": "您将提出您的 %(type)s 到外部账号中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> * 网关服务需要一定的手续费支持运行，其中需要执行一次Cybex内盘转账，该部分手续费您可选择使用CYB支付或%(asset)s支付 <br> * 网关执行手续费将以您希望取出的目标资产(%(type)s)支付，并从您提取金额中扣除 <br> * 请务必确认您的提币地址正确，一旦填写错误，您的提币将丢失 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 提币操作请使用您的个人钱包地址, 提币到合约地址、交易所地址、ICO项目地址可能会发生合约执行失败，将导致转账失败，资产将退回到您的Cybex账户，处理时间较长，请您谅解。",
     "balance_asset": "当前您 %(asset)s 资产的的可用余额为",
     "withdraw_placeholder": "Please enter your %(asset)s address",
-    "unavailable_jade": "The gateway service for this asset is currently down, please try again later"
+    "unavailable_jade": "The gateway service for this asset is currently down, please try again later",
+    "state": {
+      "init": "正在上链",
+      "new": "新建",
+      "pending": "待确认",
+      "done": "成功",
+      "failed": "失败"
+    }
   },
   "or": "或",
   "I_know": "我知道了",
