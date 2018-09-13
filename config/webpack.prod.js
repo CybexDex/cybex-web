@@ -97,6 +97,8 @@ const prodPlugins = plugins.concat([
     chunkFilename: "[id]-[hash:7].css"
   }),
   new BundleAnalyzerPlugin(),
+  // Here is useful when use some spec lib, eg. Rxjs6
+  new webpack.optimize.ModuleConcatenationPlugin(),
   new CompressionPlugin()
 ]);
 

@@ -29,12 +29,6 @@ import { Apis } from "cybexjs-ws";
 import GatewayActions from "actions/GatewayActions";
 import { checkFeeStatusAsync } from "common/trxHelper";
 import SettingsStore from "stores/SettingsStore";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import { Subject } from "rxjs/Subject";
-import "rxjs/add/observable/fromEvent";
-import "rxjs/add/observable/merge";
-import "rxjs/add/operator/debounceTime";
 import { Tabs } from "./Tabs/Tabs";
 
 import { Button, Colors } from "components/Common";
@@ -77,8 +71,6 @@ const InfoTabs = [
 ];
 
 class Exchange extends React.Component<any, any> {
-  resizeSubscription;
-  resizeSubject;
   psInit;
   static propTypes = {
     marketCallOrders: PropTypes.object.isRequired,
@@ -98,8 +90,6 @@ class Exchange extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
-    this.resizeSubscription = null;
-    this.resizeSubject = new Subject();
     this.state = this._initialState(props);
     this._getWindowSize = debounce(this._getWindowSize.bind(this), 150);
     this._checkFeeStatus = this._checkFeeStatus.bind(this);
@@ -199,13 +189,10 @@ class Exchange extends React.Component<any, any> {
   }
 
   componentWillMount() {
-    if (Apis.instance().chain_id.substr(0, 8) === "4018d784") {
-      (GatewayActions as any).fetchCoins.defer();
-      (GatewayActions as any).fetchBridgeCoins.defer();
-    }
-
+    window.removeEventListener("optimizedResize", this._getWindowSize);
     this._checkFeeStatus();
   }
+
   settingListener;
   componentDidMount() {
     SettingsActions.changeViewSetting.defer({
@@ -214,12 +201,7 @@ class Exchange extends React.Component<any, any> {
         "_" +
         this.props.baseAsset.get("symbol")
     });
-
-    this.resizeSubscription = Observable.merge(
-      Observable.fromEvent(window, "resize", { capture: false, passive: true }),
-      // .debounceTime(500),
-      this.resizeSubject
-    ).subscribe(resizeEvent => this._getWindowSize);
+    window.addEventListener("optimizedResize", this._getWindowSize);
   }
 
   // shouldComponentUpdate(nextProps) {
@@ -1084,13 +1066,6 @@ class Exchange extends React.Component<any, any> {
         currentMouseItem
       })
     );
-  }
-
-  _handleTabClick(currentInfoTab) {
-    this.resizeSubject.next(true);
-    this.setState({
-      currentInfoTab
-    });
   }
 
   render() {
