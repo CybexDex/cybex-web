@@ -2,14 +2,12 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import SVGInline from "react-svg-inline";
 import SettingsStore from "stores/SettingsStore";
-import { NotificationActions } from "actions//NotificationActions";
+import { NotificationActions } from "actions/NotificationActions";
 import counterpart from "counterpart";
 import { connect } from "alt-react";
 import { Input } from "components/Common";
 
-let faucetAddress = SettingsStore.getSetting("faucet_address");
-
-export let Captcha = class extends React.Component<
+export let Captcha = class Captcha extends React.Component<
   { onCapthaChange },
   {
     cap: string;
@@ -20,7 +18,8 @@ export let Captcha = class extends React.Component<
 > {
   id: string;
   captcha: string;
-
+  faucetAddress: string;
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -29,13 +28,17 @@ export let Captcha = class extends React.Component<
       captchaSvg: "<svg></svg>",
       captcha: ""
     };
+    this.faucetAddress = SettingsStore.getSetting("faucet_address")
+    this.setCaptcha = this.setCaptcha.bind(this)
+    this.updateCaptcha = this.updateCaptcha.bind(this)
+    this.send = this.send.bind(this)
   }
 
   componentDidMount() {
     this.updateCaptcha();
   }
 
-  setCaptcha = captcha => {
+  setCaptcha(captcha) {
     this.setState({
       captcha
     });
@@ -43,8 +46,8 @@ export let Captcha = class extends React.Component<
     this.props.onCapthaChange({ id: this.state.cap, captcha });
   };
 
-  updateCaptcha = () => {
-    fetch(`${faucetAddress}/captcha`)
+  updateCaptcha() {
+    fetch(`${this.faucetAddress}/captcha`)
       .then(res => {
         return res.json();
       })
@@ -70,10 +73,10 @@ export let Captcha = class extends React.Component<
       });
   };
 
-  send = () => {
+  send() {
     let { captcha, cap } = this.state;
     console.debug("Captcha: ", captcha);
-    fetch(`${faucetAddress}/register`, {
+    fetch(`${this.faucetAddress}/register`, {
       method: "post",
       mode: "cors",
       headers: {
@@ -89,7 +92,7 @@ export let Captcha = class extends React.Component<
 
   render() {
     return (
-      <div className="captcha">
+      <div className="captcha" ref = "test"> 
         <Input
           type="text"
           value={this.state.captcha}
@@ -120,15 +123,15 @@ export let Captcha = class extends React.Component<
   }
 };
 
-Captcha = connect(Captcha, {
-  listenTo() {
-    return [SettingsStore];
-  },
-  getProps() {
-    return {
-      ...SettingsStore.getState()
-    };
-  }
-});
+// Captcha = connect(Captcha, {
+//   listenTo() {
+//     return [SettingsStore];
+//   },
+//   getProps() {
+//     return {
+//       ...SettingsStore.getState()
+//     };
+//   }
+// });
 
 export default Captcha;

@@ -135,6 +135,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
     let referralAccount = AccountStore.getState().referralAccount;
     this.setState({ loading: true });
     let { cap } = this.state;
+    let that = this
     AccountActions.createAccountWithPassword(
       name,
       password,
@@ -172,20 +173,22 @@ let CreateAccountPassword = class extends React.Component<any, any> {
         Gtag.eventRegisterDone(name, "cloud");
       })
       .catch(error => {
-        console.log("ERROR AccountActions.createAccount", error);
-        let error_msg = error ? error : "unknown error";
+        console.error("ERROR AccountActions.createAccount", error);
+        let error_msg = error || "unknown error";
         // let error_msg =
         //   error.base && error.base.length && error.base.length > 0
         //     ? error.base[0]
         //     : "unknown error";
         // if (error.remote_ip) error_msg = error.remote_ip[0];
         notify.addNotification({
-          message: `Failed to create account: ${name} - ${error_msg}`,
+          message: counterpart.translate("notify.create_account_failed", {
+            message: `${name} - ${error_msg}`
+          }),
           level: "error",
           autoDismiss: 5
         });
-        this.cap && this.cap.updateCaptcha();
-        this.setState({ loading: false });
+        that.refs.captcha.updateCaptcha();
+        that.setState({ loading: false });
         Gtag.eventRegisterFailed(name);
       });
   }
@@ -361,7 +364,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
               <label>
                 <Translate content="captcha.label" />
               </label>
-              <Captcha onCapthaChange={this.setCaptcha} />
+              <Captcha onCapthaChange={this.setCaptcha} ref = "captcha" />
             </div>
 
             {/* If this is not the first account, show dropdown for fee payment account */}
@@ -486,11 +489,12 @@ let CreateAccountPassword = class extends React.Component<any, any> {
       </div>
     );
   }
+
   _onBackupDownload = () => {
     this.setState({
       step: 3
     });
-  };
+  }
 
   _renderBackupText() {
     return (

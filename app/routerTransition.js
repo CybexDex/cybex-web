@@ -1,6 +1,6 @@
-import { Apis, Manager, ChainConfig } from "cybexjs-ws";
+import { Apis, Manager } from "cybexjs-ws";
 import { ChainStore } from "cybexjs";
-import chainIds from "chain/chainIds";
+// import chainIds from "chain/chainIds";
 
 // Stores
 import iDB from "idb-instance";
@@ -134,7 +134,7 @@ class RouterTransitioner {
    * @returns {Promise}
    */
   doLatencyUpdate(refresh = true, range = null, race = false) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // if for some reason this method is called before connections are setup via willTransitionTo,
       // initialize the manager
       console.debug("Latency Update", "Start");
@@ -212,7 +212,7 @@ class RouterTransitioner {
     // decide where to connect to first
     let connectionString = this._getFirstToTry(urls);
     this._willTransitionToInProgress = connectionString;
-
+    // TODO 初始化参数过多，原始类只有url、urls参数
     this._connectionManager = new Manager({
       url: connectionString,
       urls: urls,

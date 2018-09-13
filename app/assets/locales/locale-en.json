@@ -1848,5 +1848,8 @@
   "fallback": {
     "title": "Waiting in line, please wait...",
     "tip": "Sorry, the number of participants in this activity is too large, and the server is under great pressure. Please wait in line patiently. The page is automatically updated when the queue is successful."
+  },
+  "notify": {
+    "create_account_failed": "Failed to create account: %(message)s"
   }
 }

@@ -19,18 +19,18 @@ import Radium from "radium";
 
 let { StyleRoot } = Radium;
 
-class Test extends React.Component<any> {
-  static contextTypes = {
-    router: PropTypes.shape({
-      route: PropTypes.object.isRequired
-    }).isRequired
-  };
+// class Test extends React.Component<any> {
+//   static contextTypes = {
+//     router: PropTypes.shape({
+//       route: PropTypes.object.isRequired
+//     }).isRequired
+//   };
 
-  render() {
-    console.debug("TestComponent: ", this.props, this.context, this);
-    return <h1>Test</h1>;
-  }
-}
+//   render() {
+//     console.debug("TestComponent: ", this.props, this.context, this);
+//     return <h1>Test</h1>;
+//   }
+// }
 
 /*
 * Electron does not support browserHistory, so we need to use hashHistory.
@@ -84,17 +84,19 @@ let AppInit = class extends React.Component<any, any> {
 
   componentWillMount() {
     // Node Connection Init
-    willTransitionTo(true, this._statusCallback.bind(this))
+    willTransitionTo(
+      true, 
+      this._statusCallback.bind(this)
+    )
       .then(() => {
         this.setState({
           apiConnected: true,
           apiError: false,
           syncError: null
         });
-        this.removeLoadingMask();
       })
       .catch(err => {
-        console.log("willTransitionTo err:", err);
+        console.error("willTransitionTo err:", err);
         this.setState({
           apiConnected: false,
           apiError: true,
@@ -102,8 +104,10 @@ let AppInit = class extends React.Component<any, any> {
             ? null
             : (err && err.message).indexOf("ChainStore sync error") !== -1
         });
+      })
+      .finally(() => {
         this.removeLoadingMask();
-      });
+      })
   }
 
   componentDidMount() {

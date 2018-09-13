@@ -8,6 +8,13 @@ const EVENT_CATE = {
   TRANSACTION: "TRANSACTION"
 };
 
+
+/**
+ * 主动触发谷歌分析工具特定方法
+ *
+ * @export
+ * @class Gtag
+ */
 export class Gtag {
   static eventRegisterDone(accountName: string, method: string) {
     Gtag.reportEvent(
