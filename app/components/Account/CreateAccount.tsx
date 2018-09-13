@@ -129,6 +129,7 @@ let CreateAccount = Radium(
       let { cap } = this.state;
       let refcode = this.refs.refcode ? this.refs.refcode.value() : null;
       let referralAccount = AccountStore.getState().referralAccount;
+      let that = this
       WalletUnlockActions.unlock().then(() => {
         this.setState({ loading: true });
 
@@ -173,8 +174,8 @@ let CreateAccount = Radium(
               level: "error",
               autoDismiss: 5
             });
-            this.cap && this.cap.updateCaptcha();
-            this.setState({ loading: false });
+            that.refs.captcha.updateCaptcha();
+            that.setState({ loading: false });
             Gtag.eventRegisterFailed(`Failed to create account: ${name} - ${error_msg}`);
           });
       });
@@ -312,7 +313,7 @@ let CreateAccount = Radium(
                 <label>
                   <Translate content="captcha.label" />
                 </label>
-                <Captcha onCapthaChange={this.setCaptcha} />
+                <Captcha onCapthaChange={this.setCaptcha} ref = "captcha" />
               </div>
             )}
             <div style={{ marginTop: "1em" }} />
