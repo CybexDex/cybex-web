@@ -131,6 +131,7 @@ let ExchangeSubscriber = class extends React.Component<any, any> {
 
   static defaultProps = {
     currentAccount: "1.2.3",
+    // 缴纳的手续费（cyb）金额
     coreAsset: "1.3.0"
   };
 

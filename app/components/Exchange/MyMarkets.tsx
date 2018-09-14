@@ -368,6 +368,9 @@ export class MarketGroup extends React.Component<any, any> {
               return 0;
             }
         }
+      })
+      .sort((a, b) => {
+        return b.props.starred ? 1 : -1;
       });
 
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
@@ -406,6 +409,7 @@ let MyMarkets = class extends React.Component<any, any> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+  filterName: any;
 
   constructor(props) {
     super(props);
@@ -437,7 +441,6 @@ let MyMarkets = class extends React.Component<any, any> {
     ) {
       this._lookupAssets("OPEN.", true);
     }
-
     return (
       !Immutable.is(nextProps.searchAssets, this.props.searchAssets) ||
       !Immutable.is(nextProps.markets, this.props.markets) ||
@@ -885,7 +888,8 @@ let MyMarkets = class extends React.Component<any, any> {
               <Icon icon="star" />
             </Checkbox>
             <FlexGrowDivider />
-            <div className="float-right" style={{ paddingLeft: 20 }}>
+            <Translate content="exchange.filter_name" style = {{ lineHeight: "18px" }}/>
+            <div className="float-right">
               <input
                 style={{
                   fontSize: "0.9rem",
@@ -894,7 +898,7 @@ let MyMarkets = class extends React.Component<any, any> {
                 }}
                 className="no-margin"
                 type="text"
-                placeholder="Filter"
+                placeholder={this.context.filterName}
                 value={this.state.myMarketFilter}
                 onChange={e => {
                   this.setState({
