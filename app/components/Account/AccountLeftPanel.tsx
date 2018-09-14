@@ -208,10 +208,10 @@ class AccountLeftPanel extends React.Component<
                 {/* <li><Link to={`/account/${account_name}/orders/`} activeClassName="active"><Translate content="account.open_orders"/></Link></li> */}
                 <li>
                   <NavLink
-                    to={`/account/${account_name}/voting/`}
+                    to={`/account/${account_name}/permissions/`}
                     activeClassName="active"
                   >
-                    <Translate content="account.voting" />
+                    <Translate content="account.permissions" />
                   </NavLink>
                 </li>
 
@@ -225,79 +225,81 @@ class AccountLeftPanel extends React.Component<
             </section>
 
             {/* Advanced features*/}
-            <div style={{ paddingBottom: 10, paddingTop: 20 }}>
-              <div className="grid-container no-margin advanced-toggle">
-                <a
-                  onClick={this._toggleAdvanced.bind(this)}
-                  className="button outline small block-button"
-                  style={{
-                    border: "none",
-                    textAlign: "left",
-                    paddingLeft: "1.75rem"
-                  }}
-                >
-                  <Translate content="account.user_issued_assets.advanced" />
-                  <span> {caret}</span>
-                </a>
-              </div>
-            </div>
-            <section className="block-list">
-              {this.state.showAdvanced ? (
-                <ul className="account-left-menu">
-                  <li>
-                    <NavLink
-                      to={`/account/${account_name}/assets/`}
-                      activeClassName="active"
-                    >
-                      <Translate content="account.user_issued_assets.issued_assets" />
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      to={`/account/${account_name}/permissions/`}
-                      activeClassName="active"
-                    >
-                      <Translate content="account.permissions" />
-                    </NavLink>
-                  </li>
-                  {this.props.advancedMode && (
-                    <li>
-                      <NavLink
-                        to={`/account/${account_name}/whitelist/`}
-                        activeClassName="active"
-                      >
-                        <Translate content="account.whitelist.title" />
-                      </NavLink>
-                    </li>
-                  )}
-                  {isMyAccount ? (
-                    <li>
-                      <NavLink
-                        to={`/account/${account_name}/vesting/`}
-                        activeClassName="active"
-                      >
-                        <Translate content="account.vesting.title" />
-                      </NavLink>
-                    </li>
-                  ) : null}
-                </ul>
-              ) : null}
-            </section>
-
-            {isMyAccount &&
-              !passwordLogin && (
-                <div className="regular-padding vertical-center">
-                  <div className="button block-button create-account-button">
-                    <Link
-                      to={`/create-account/${
-                        this.props.passwordLogin ? "password" : "wallet"
-                      }`}
-                    >
-                      <Translate content="account.create_new" />
-                    </Link>
-                  </div>
+            {this.props.advancedMode && [
+              <div style={{ paddingBottom: 10, paddingTop: 20 }}>
+                <div className="grid-container no-margin advanced-toggle">
+                  <a
+                    onClick={this._toggleAdvanced.bind(this)}
+                    className="button outline small block-button"
+                    style={{
+                      border: "none",
+                      textAlign: "left",
+                      paddingLeft: "1.75rem"
+                    }}
+                  >
+                    <Translate content="account.user_issued_assets.advanced" />
+                    <span> {caret}</span>
+                  </a>
                 </div>
-              )}
+              </div>,
+              <section className="block-list">
+                {this.state.showAdvanced ? (
+                  <ul className="account-left-menu">
+                    <li>
+                      <NavLink
+                        to={`/account/${account_name}/voting/`}
+                        activeClassName="active"
+                      >
+                        <Translate content="account.voting" />
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to={`/account/${account_name}/assets/`}
+                        activeClassName="active"
+                      >
+                        <Translate content="account.user_issued_assets.issued_assets" />
+                      </NavLink>
+                    </li>
+
+                    {
+                      <li>
+                        <NavLink
+                          to={`/account/${account_name}/whitelist/`}
+                          activeClassName="active"
+                        >
+                          <Translate content="account.whitelist.title" />
+                        </NavLink>
+                      </li>
+                    }
+                    {isMyAccount ? (
+                      <li>
+                        <NavLink
+                          to={`/account/${account_name}/vesting/`}
+                          activeClassName="active"
+                        >
+                          <Translate content="account.vesting.title" />
+                        </NavLink>
+                      </li>
+                    ) : null}
+                  </ul>
+                ) : null}
+              </section>,
+              isMyAccount &&
+                !passwordLogin && (
+                  <div className="regular-padding vertical-center">
+                    <div className="button block-button create-account-button">
+                      <Link
+                        to={`/create-account/${
+                          this.props.passwordLogin ? "password" : "wallet"
+                        }`}
+                      >
+                        <Translate content="account.create_new" />
+                      </Link>
+                    </div>
+                  </div>
+                )
+            ]}
           </div>
         </div>
       </div>
