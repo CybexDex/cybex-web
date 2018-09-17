@@ -94,130 +94,138 @@ let GatewayTable = class extends React.Component<any, any> {
           [bal.get("asset_type")]: bal
         };
       }, {});
-    let assetRows = assets.filter(a => !!a && a.get).map(asset => {
-      let balOfAsset = balancesMap[asset.get("id")];
-      let a = asset
-        .set("balance", balOfAsset ? balOfAsset.get("id") : balOfAsset)
-        .set(
-          "balanceAmount",
-          balOfAsset ? balOfAsset.get("balance") : balOfAsset
-        )
-        .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0);
-      return a;
-    });
+    let assetRows =
+      assets.filter(a => !!a && a.get).map(asset => {
+        let balOfAsset = balancesMap[asset.get("id")];
+        let a = asset
+          .set("balance", balOfAsset ? balOfAsset.get("id") : balOfAsset)
+          .set(
+            "balanceAmount",
+            balOfAsset ? balOfAsset.get("balance") : balOfAsset
+          )
+          .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0);
+        return a;
+      }) || [];
     return (
-      <Table
-        showPagination={false}
-        defaultPageSize={assetRows.length}
-        className="text-center"
-        data={assetRows}
-        columns={[
-          {
-            Header: counterpart.translate("account.asset"),
-            id: "symbol",
-            accessor: asset => asset.get("symbol"),
-            Cell: row => {
-              return <LinkToAssetById asset={row.original.get("id")} />;
+      <div className="cybex-records">
+        <Table
+          showPagination={false}
+          defaultPageSize={assetRows.length}
+          noDataText={counterpart.translate("gateway.no_filterd_asset")}
+          className="text-center"
+          data={assetRows}
+          columns={[
+            {
+              Header: counterpart.translate("account.asset"),
+              id: "symbol",
+              accessor: asset => asset.get("symbol"),
+              Cell: row => {
+                return <LinkToAssetById asset={row.original.get("id")} />;
+              },
+              sortMethod: (_a, _b) => {
+                let [a, b] = [_a, _b].map(
+                  asset => utils.replaceName(asset).name
+                );
+                return a > b ? 1 : -1;
+              }
             },
-            sortMethod: (_a, _b) => {
-              let [a, b] = [_a, _b].map(asset => utils.replaceName(asset).name);
-              return a > b ? 1 : -1;
-            }
-          },
-          {
-            Header: counterpart.translate("account.qty"),
-            accessor: asset => asset,
-            id: "qty",
-            Cell: row => {
-              return row.original.get("canWithdraw") ? (
-                <BalanceComponent
-                  balance={row.original.get("balance")}
-                  hide_asset={true}
-                />
-              ) : (
-                "-"
-              );
+            {
+              Header: counterpart.translate("account.qty"),
+              accessor: asset => asset,
+              id: "qty",
+              Cell: row => {
+                return row.original.get("canWithdraw") ? (
+                  <BalanceComponent
+                    balance={row.original.get("balance")}
+                    hide_asset={true}
+                  />
+                ) : (
+                  "-"
+                );
+              },
+              sortMethod: (_a, _b) => {
+                let [a, b] = [_a, _b].map(asset =>
+                  utils.get_asset_amount(asset.get("balanceAmount"), asset)
+                );
+                return a > b ? 1 : -1;
+              }
             },
-            sortMethod: (_a, _b) => {
-              let [a, b] = [_a, _b].map(asset =>
-                utils.get_asset_amount(asset.get("balanceAmount"), asset)
-              );
-              return a > b ? 1 : -1;
-            }
-          },
-          {
-            Header: counterpart.translate("gateway.deposit"),
-            accessor: asset => asset.get("symbol"),
-            id: "deposit",
-            Cell: row => {
-              return (
-                <a
-                  onClick={this._showDepositWithdraw.bind(
-                    this,
-                    row.original.get("symbol"),
-                    false
-                  )}
-                >
-                  <Icon name="deposit" className="icon-14px" />
-                </a>
-              );
-            },
-            sortMethod: (_a, _b) => {
-              let [a, b] = [_a, _b].map(asset => utils.replaceName(asset).name);
-              return a > b ? 1 : -1;
-            }
-          },
-          {
-            Header: counterpart.translate("gateway.withdraw"),
-            id: "withdraw",
-            accessor: asset => asset,
-            Cell: row => {
-              let asset = row.original;
-              return asset.get("canWithdraw") ? (
-                <a
-                  onClick={this._showWithdrawModal.bind(
-                    this,
-                    asset.get("symbol"),
-                    false
-                  )}
-                >
-                  <Icon name="withdraw" className="icon-14px" />
-                </a>
-              ) : (
-                <a
-                  href="javascript:;"
-                  data-for={"noBalance" + asset.get("id")}
-                  data-place="right"
-                  data-offset="{ 'left': -6 }"
-                  className="disabled"
-                  style={{ opacity: 0.3 }}
-                  data-tip
-                >
-                  <Icon name="withdraw" className="icon-14px" />
-                  <ReactTooltip
-                    id={"noBalance" + asset.get("id")}
-                    effect="solid"
+            {
+              Header: counterpart.translate("gateway.deposit"),
+              accessor: asset => asset.get("symbol"),
+              id: "deposit",
+              Cell: row => {
+                return (
+                  <a
+                    onClick={this._showDepositWithdraw.bind(
+                      this,
+                      row.original.get("symbol"),
+                      false
+                    )}
                   >
-                    {noBalanceTip}
-                  </ReactTooltip>
-                </a>
-              );
+                    <Icon name="deposit" className="icon-14px" />
+                  </a>
+                );
+              },
+              sortMethod: (_a, _b) => {
+                let [a, b] = [_a, _b].map(
+                  asset => utils.replaceName(asset).name
+                );
+                return a > b ? 1 : -1;
+              }
             },
-            sortMethod: (_a, _b) => {
-              let [a, b] = [_a, _b].map(asset =>
-                utils.get_asset_amount(asset.get("balanceAmount"), asset)
-              );
-              return a > b ? 1 : -1;
+            {
+              Header: counterpart.translate("gateway.withdraw"),
+              id: "withdraw",
+              accessor: asset => asset,
+              Cell: row => {
+                let asset = row.original;
+                return asset.get("canWithdraw") ? (
+                  <a
+                    onClick={this._showWithdrawModal.bind(
+                      this,
+                      asset.get("symbol"),
+                      false
+                    )}
+                  >
+                    <Icon name="withdraw" className="icon-14px" />
+                  </a>
+                ) : (
+                  <a
+                    href="javascript:;"
+                    data-for={"noBalance" + asset.get("id")}
+                    data-place="right"
+                    data-offset="{ 'left': -6 }"
+                    className="disabled"
+                    style={{ opacity: 0.3 }}
+                    data-tip
+                  >
+                    <Icon name="withdraw" className="icon-14px" />
+                    <ReactTooltip
+                      id={"noBalance" + asset.get("id")}
+                      effect="solid"
+                    >
+                      {noBalanceTip}
+                    </ReactTooltip>
+                  </a>
+                );
+              },
+              sortMethod: (_a, _b) => {
+                let [a, b] = [_a, _b].map(asset =>
+                  utils.get_asset_amount(asset.get("balanceAmount"), asset)
+                );
+                return a > b ? 1 : -1;
+              }
             }
-          }
-        ]}
-        defaultSorted={[
-          {
-            id: "qty",
-            desc: true
-          }
-        ]}
-      />
+          ]}
+          defaultSorted={[
+            {
+              id: "qty",
+              desc: true
+            }
+          ]}
+        />
+      </div>
     );
   }
 };
@@ -369,8 +377,6 @@ let GatewayRecords = class extends React.Component<
             />
           </div>
         )}
-        {/* <button onClick={this.query}>Query</button> */}
-        {/* <button onClick={this.login}>Login</button> */}
       </div>
     );
   }
@@ -434,7 +440,7 @@ let GatewayContainer = class extends React.Component<any, any> {
     return (
       <div className="page-layout">
         <div className="grid-block main-content">
-          <div className="grid-container">
+          <div className="grid-container cybex-records">
             <Tabs
               defaultActiveTab={1}
               segmented={false}

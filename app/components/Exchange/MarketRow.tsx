@@ -51,6 +51,7 @@ let MarketRow = class extends React.Component<
     unitYuan?;
     tooltipPosition?;
     history?;
+    hideZeroVol?;
     location?;
   },
   any
@@ -126,12 +127,15 @@ let MarketRow = class extends React.Component<
       starred,
       unitYuan,
       tooltipPosition,
-      withYuan
+      withYuan,
+      hideZeroVol
     } = this.props;
 
     if (!quote || !base) {
       return null;
     }
+
+    if (hideZeroVol && stats && stats.volumeBase === 0) return null;
 
     let marketID = quote.get("symbol") + "_" + base.get("symbol");
     let marketName = quote.get("symbol") + ":" + base.get("symbol");

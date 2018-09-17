@@ -286,6 +286,7 @@ export class MarketGroup extends React.Component<any, any> {
             base={market.base}
             columns={columns}
             // leftAlign={true}
+            hideZeroVol={true}
             compact={true}
             noSymbols={true}
             stats={marketStats.get(market.id)}
