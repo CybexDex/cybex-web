@@ -554,21 +554,21 @@ let Join = class extends React.Component<
     let { projectData } = this.state || { projectData: {} };
     let { name } = projectData;
     if (name) {
-      return (
-        <>"          \" "<Translate
-            className="confirm-tip text-center"
-            content="eto.confirm"
-            component="h5"
-            style={{ marginTop: "1em" }}
-            project={name}
-          />" "<Translate
-            className="confirm-tip text-center"
-            content="eto.dont_repeat"
-            style={{ maxWidth: "40em", margin: "auto" }}
-            component="p"
-          />" "
-        </>
-      );
+      return [
+        <Translate
+          className="confirm-tip text-center"
+          content="eto.confirm"
+          component="h5"
+          style={{ marginTop: "1em" }}
+          project={name}
+        />,
+        <Translate
+          className="confirm-tip text-center"
+          content="eto.dont_repeat"
+          style={{ maxWidth: "40em", margin: "auto" }}
+          component="p"
+        />
+      ];
     } else return null;
   };
 
@@ -985,7 +985,7 @@ Join = connect(
     },
     getProps(props) {
       return {
-        currentAccount: AccountStore.getState().currentAccount,
+        currentAccount: AccountStore.getState().currentAccount
       };
     }
   }

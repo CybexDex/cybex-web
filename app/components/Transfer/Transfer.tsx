@@ -238,6 +238,7 @@ class Transfer extends React.Component<any, any> {
   }
 
   onAmountChanged({ amount, asset }) {
+    console.debug("Amount: ", amount);
     if (!asset) {
       return;
     }
@@ -556,6 +557,7 @@ class Transfer extends React.Component<any, any> {
                       ? asset_id
                       : asset_types[0]
                 }
+                isNumber
                 assets={asset_types}
                 display_balance={balance}
                 tabIndex={tabIndex++}
