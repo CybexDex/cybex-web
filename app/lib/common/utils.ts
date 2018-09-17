@@ -511,7 +511,7 @@ var Utils = {
 
     let eqValue =
       fromAsset.get("id") !== toAsset.get("id")
-        ? basePrecision * (amount / quotePrecision) / assetPrice
+        ? (basePrecision * (amount / quotePrecision)) / assetPrice
         : amount;
 
     if (isNaN(eqValue) || !isFinite(eqValue)) {
@@ -592,14 +592,22 @@ var Utils = {
   },
 
   get_percentage(a, b) {
-    return Math.round(a / b * 100) + "%";
+    return Math.round((a / b) * 100) + "%";
   },
 
   replaceName(_name, isBitAsset = false) {
     if (replacedName[_name]) {
       return replacedName[_name];
     }
-    let toReplace = ["JADE.", "TEST.", "TRADE.", "OPEN.", "METAEX.", "BRIDGE.", "RUDEX."];
+    let toReplace = [
+      "JADE.",
+      "TEST.",
+      "TRADE.",
+      "OPEN.",
+      "METAEX.",
+      "BRIDGE.",
+      "RUDEX."
+    ];
     const toHidden = {
       "JADE.": true,
       "TEST.": true
@@ -626,8 +634,34 @@ var Utils = {
     };
     replacedName[_name] = res;
     return res;
+  },
+  getAccountFullHistory: async (accountId, numOfRecord = 100) => {
+    let res = await Apis.instance()
+      .history_api()
+      .exec("get_account_history", [
+        accountId,
+        "1.11.1",
+        numOfRecord,
+        "1.11.0"
+      ]);
+    if (res.length < numOfRecord) {
+      return res;
+    }
+    let then;
+    do {
+      let lastId = parseInt(res[res.length - 1].id.split(".")[2]) - 1;
+      then = await Apis.instance()
+        .history_api()
+        .exec("get_account_history", [
+          accountId,
+          "1.11.1",
+          numOfRecord,
+          "1.11." + lastId
+        ]);
+      res = [...res, ...then];
+    } while (then.length);
+    return res;
   }
 };
-
 
 export default Utils;

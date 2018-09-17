@@ -19,6 +19,8 @@ import QRCode from "qrcode.react";
 import { BaseModal } from "./BaseModal";
 import { CurrentBalance } from "./Common";
 import * as moment from "moment";
+import { AssetIcon } from "components/Gateway/AssetIcon";
+import { AssetInfo } from "./AssetInfo";
 
 const style = {
   position: "fixed",
@@ -71,6 +73,13 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     let address, gatewayAccount;
     const gatewayRex = /^(.+)\[(.+)\]$/;
 
+    let name, contractAddress;
+
+    if (depositInfo.meta && depositInfo.meta.options) {
+      name = depositInfo.meta.options.name;
+      contractAddress = depositInfo.meta.options.contractAddress;
+    }
+
     if (gatewayRex.test(depositInfo.address)) {
       gatewayAccount = depositInfo.address.match(gatewayRex)[1];
       address = depositInfo.address.match(gatewayRex)[2];
@@ -84,16 +93,18 @@ class DepositModal extends React.Component<props, { fadeOut }> {
           <Translate content={"gateway.deposit"} />{" "}
           {utils.replaceName(asset.get("symbol"), false).name}({assetName})
         </h3>
-        <p>
-          {
-            <Translate
-              unsafe
-              content="gateway.add_funds"
-              type={assetName}
-              account={depositInfo.accountName}
-            />
-          }
-        </p>
+        <AssetInfo gatewayAsset={depositInfo.meta}>
+          <p className="gateway-info-common">
+            {
+              <Translate
+                unsafe
+                content="gateway.add_funds"
+                type={assetName}
+                account={depositInfo.accountName}
+              />
+            }
+          </p>
+        </AssetInfo>
         {currentBalance && (
           <CurrentBalance currentBalance={balance} asset={asset} />
         )}
@@ -106,10 +117,11 @@ class DepositModal extends React.Component<props, { fadeOut }> {
               account={gatewayAccount}
             />
           ) : (
-            <>
+            [
               <p
                 style={{ marginBottom: 10 }}
                 data-place="right"
+                key="deposit_tip"
                 data-tip={counterpart.translate("tooltip.deposit_tip", {
                   asset: assetName
                 })}
@@ -119,8 +131,8 @@ class DepositModal extends React.Component<props, { fadeOut }> {
                     asset: assetName
                   })}
                 </span>
-              </p>
-              <section className="text-center">
+              </p>,
+              <section key="deposit_qr_code" className="text-center">
                 <div
                   className="wrapper"
                   style={{
@@ -132,7 +144,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
                   <QRCode level="L" size={140} value={address} />
                 </div>
               </section>
-            </>
+            ]
           )}
 
           {!depositInfo ? (

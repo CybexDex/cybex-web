@@ -71,20 +71,18 @@
     "previousText": "上一页",
     "nextText": "下一页",
     "loadingText": "载入中...",
-    "pageText": "页",
-    "ofText": "共",
+    "pageText": "第",
+    "ofText": "页 / 共",
     "rowsText": "行"
   },
   "incognito": {
-    "no_support":
-      "当前Cybex钱包依赖于本地存储和IndexedDB，在使用隐身浏览时会导致不稳定。我们建议您使用常规浏览方式。",
+    "no_support": "当前Cybex钱包依赖于本地存储和IndexedDB，在使用隐身浏览时会导致不稳定。我们建议您使用常规浏览方式。",
     "ignore": "我了解，并继续。"
   },
   "sync_fail": {
     "title": "无法与API服务器同步连接",
     "sub_text_1": "请确认你的计算机系统时钟正确。",
-    "sub_text_2":
-      "同步你的计算机时钟后，请刷新本页面。如果你的时钟正确，那你连接的API服务器可能与区块链数据不同步，这种情况下，可尝试使用其他API服务器进行连接。"
+    "sub_text_2": "同步你的计算机时钟后，请刷新本页面。如果你的时钟正确，那你连接的API服务器可能与区块链数据不同步，这种情况下，可尝试使用其他API服务器进行连接。"
   },
   "header": {
     "title": "Cybex钱包",
@@ -102,7 +100,7 @@
     "update_asset": "更新资产",
     "lock": "锁定钱包",
     "unlock": "解锁",
-    "unlock_password": "使用密码登录云钱包账户",
+    "unlock_password": "解锁云钱包账户",
     "unlock_short": "登录",
     "help": "帮助",
     "locked_tip": "钱包已锁定，点击解锁。",
@@ -111,51 +109,124 @@
     "account_notify": "当前活跃账户为 %(account)s",
     "account_value": "账户价值"
   },
+  "EIO": {
+    "ok": "正在进行",
+    "pre": "即将开始",
+    "finish": "已经结束",
+    "pause": "暂停",
+    "current_ETH_balance": "当前您的ETH资产的可用余额为",
+    "Popular_ETOs": "热门ETO",
+    "Coming_Soon": "即将开始",
+    "KYC_Verification": "KYC认证",
+    "Accept_KYC_Verification": "预约ETO请先进行KYC认证",
+    "get_whitelist": "获取白名单",
+    "Join_in_ETO": "立即参与",
+    "Details": "查看详情",
+    "Reserve_ETO": "预约ETO",
+    "Reserve_Now": "立即预约",
+    "Verifying": "审核中",
+    "Wait_for_ETO": "等待ETO开始",
+    "Reservation_failed": "预约失败",
+    "Join_ETO_now": "立即ETO",
+    "Project_Name": "项目名称",
+    "Token_Name": "代币名称",
+    "Total_Token_Supply": "代币总量",
+    "ETO": "ETO",
+    "Total_ETO_Supply": "ETO 总量",
+    "Soft_cap": "软顶",
+    "Time_remains": "剩余时间",
+    "ETO_Period": "ETO时间",
+    "Listing_Time": "上市时间",
+    "Project_Strengths": "项目优势",
+    "ETO_Quota": "ETO额度",
+    "District_Restriction": "地区限制",
+    "ETO_token": "使用币种",
+    "Token_Releasing_Time": "发币时间",
+    "Lock-up_Period": "开放交易时间",
+    "Official_Website": "官方网站",
+    "Whitepaper": "白皮书",
+    "Project_Details": "项目详情",
+    "Participants": "参与人数",
+    "Raised": "当前完成认购",
+    "Redeeming_Ratio": "兑换比例",
+    "Personal_Limit": "个人限额",
+    "Left": "距离结束",
+    "In": "距离开始",
+    "Ended": "完成时间",
+    "Your_current_ETH_balance_is": "当前您的ETH资产的可用余额为",
+    "Quota_Remaining": "每个账号限额",
+    "participate": "参与ETO",
+    "End_at": "结束时间",
+    "Hard_cap": "硬顶",
+    "Start_date": "开始日期",
+    "Load_more": "加载更多",
+    "man": "人",
+    "Add": "添加",
+    "Not_login": "请登录后参与",
+    "Stop_reserve": "停止预约",
+    "IHaveRead": "我本人已阅读且完全知晓并同意接受这些 条款与条件以及其后的相关修订内容",
+    "ReserveSuccessful": "预约成功！",
+    "WaitForApp": "请等待白名单审核",
+    "PleaseEnterCode": "请添加邀请码",
+    "helpTips": "邀请码获取方式请联系小助手微信：CybexServiceA",
+    "Offer_any_time": "实时"
+  },
+  "static": {
+    "Augu": "8月11日11:00 (GMT +8, 新加坡时间）",
+    "billions": "20亿，每年增发5%",
+    "plan_time": "计划2018年11月，某知名交易所",
+    "Genesis": "Genesis Space是首个ETO项目，额度小，海外市场火爆，史上首个基石轮公开的项目。Genesis Space有比DPOS更先进的DDPOS共识机制，有内置的基于投票的系统升级机制，同时通过侧链提供高扩展性，且用RUST语言开发。一个侧链就是一个虚拟空间，每个虚拟空间可以有完全不同的治理机制，可实现无限的可能性",
+    "Genesis2": "团队皆为国际名校毕业，如哈佛、哥伦比亚、伯克利、卡耐基梅隆。由以太坊核心开发者，以太坊黄皮书主要撰写者Christoph亲自指导",
+    "EoC": "ETH",
+    "what_is_eto": "ETO是什么",
+    "why_eto": "ETO的优势",
+    "kyc_first": "预约ETO请先进行KYC认证",
+    "weixin": "关注公众号了解详情：cybexexchange",
+    "weixin_service_a": "赛贝CYBEX社区小助手A：CybexServiceA",
+    "weixin_service_b": "赛贝CYBEX社区小助手B：CybexServiceB",
+    "weixin_service_c": "赛贝CYBEX社区小助手C：CybexServiceC",
+    "eto_resume_one": "ETO（Earlybirds Token Offering）是一个通过去中心化交易所帮助优秀区块链项目募资的方式。我们会帮助那些真正有价值，有技术和有规划的区块链项目在Cybex上进行代币发行。对于有潜力的项目而言，在最开始就应该引入社区的力量，帮助项目快速筹集到第一笔资金的同时也建立起最初的项目社区。我们觉得这才是对于行业有价值，对于未来发展有帮助的事情。",
+    "eto_resume_two": "ETO是一种把项目融资有机的整合到项目发展中的全新尝试，让那些有志于参与到项目早期社区建设的投资者能够获得项目最初的参与份额，对于项目方能够在获得来自于社区的资金的同时快速建立和拓展项目社区，而Cybex将利用本身的资源和经验来挑选和赋能那些有潜力的项目，并且利用严格的管理流程来确保募资前后的项目资金管理。",
+    "feature_one_header": "对于那些希望参与项目早期的投资者",
+    "feature_one_content": "将会和项目团队建立更加紧密的联系，而不仅仅是一个二级市场的投资者。这不是一个口号或者一个美好的愿望，每个投资者都必须身体力行的参与到项目社区的建设中，包括通过推广项目、根据项目的发展以及各种对于项目社区建立有帮助的各类活动。通过这些方式，能够帮助项目团队充分了解市场的需求，改善产品的设计。通过社区与项目团队的充分互动，及时提供反馈来帮助整个项目快速演进和迭代。",
+    "feature_two_header": "而对于项目方而言",
+    "feature_two_content": "早期接受来自于社区的资金对于项目建立社区与共识是不二之选。从很多项目案例都可以看到，社区或者大量投资者的力量，是最能够帮助项目快速成长，实现从零到壹的突破。",
+    "feature_three_header": "对于募集到的数字货币",
+    "feature_three_content": "Cybex将会提供第三方托管审计服务。所有的资金消费都可以在链上进行查询，从而让每个参与到项目的投资者都可以了解资金的使用情况。Cybex提供的是一套完整的软硬件的多签名托管审计服务，能够确保所有资金的安全使用，并且通过独家专利开发的硬件系统，能够对几乎所有的主流数字货币进行多签名管理，在技术上彻底保证资金管理流程的安全和规范。"
+  },
   "tooltip": {
     "call_limit": "市场中最少抵押率头寸的平仓价",
     "margin_price": "这是触发平仓的最大价格。也被称为挤压价格。",
     "settle_price": "清算单执行时将使用的价格",
-    "sign_owner":
-      "如果你是账户的所有人，请检查签名是否正确。这只有在你使用所有者账户，而该账户未包括与活跃权限时需要关注。",
+    "sign_owner": "如果你是账户的所有人，请检查签名是否正确。这只有在你使用所有者账户，而该账户未包括与活跃权限时需要关注。",
     "latest_price": "市场最近的成交价",
     "no_price": "未找到该资产最近的成交价来评估价值",
     "hide_asset": "从列表中隐藏资产",
     "show_asset": "在主列表中显示资产",
-    "settle":
-      "使用清算你可以在24小时后以当时的喂价转换你的 %(asset)s 资产为 CYB",
+    "settle": "使用清算你可以在24小时后以当时的喂价转换你的 %(asset)s 资产为 CYB",
     "filter_ops": "根据操作类型过滤交易历史",
     "show_block": "显示收录交易的区块信息 #%(block)s ",
     "coll_ratio": "头寸抵押率计算公式为：抵押量 * 喂价 / 债务",
     "call_price": "头寸平仓价。如果喂价低于该价格，头寸将被强制平仓。",
     "close_position": "平仓。你至少需要 %(amount)s %(asset)s 进行平仓",
     "update_position": "更新头寸。你可随时更新借款及抵押水平。",
-    "cr_danger":
-      "该头寸目前抵押率不足。请考虑补仓已提高抵押率至少至 %(mr)s 或进行平仓。",
-    "cr_warning":
-      "该头寸接近强制平仓价，如果抵押率低于 %(mr)s，将被强制平仓，请考虑补仓或平仓。",
+    "cr_danger": "该头寸目前抵押率不足。请考虑补仓已提高抵押率至少至 %(mr)s 或进行平仓。",
+    "cr_warning": "该头寸接近强制平仓价，如果抵押率低于 %(mr)s，将被强制平仓，请考虑补仓或平仓。",
     "propose_scam": "该提案发起人是已知的诈骗嫌疑人，请不要批准该提案！",
-    "login":
-      "钱包并不提供传统的登录，而是通过锁定和解锁<b>只</b>存储于用户浏览器中的钱包。<br/><br/>当你关闭钱包时，钱包文件即被锁定，也就相当于登出了系统。",
-    "buy_min":
-      "你将至少收到这些金额。如果有定价低于你的设定的订单被撮合，你实际收到的金额会更多。",
-    "borrow":
-      "从系统借出 %(asset)s 。这将创建一个智能合约，冻结你的抵押物，直到你调整仓位或进行平仓。",
+    "login": "钱包并不提供传统的登录，而是通过锁定和解锁<b>只</b>存储于用户浏览器中的钱包。<br/><br/>当你关闭钱包时，钱包文件即被锁定，也就相当于登出了系统。",
+    "buy_min": "你将至少收到这些金额。如果有定价低于你的设定的订单被撮合，你实际收到的金额会更多。",
+    "borrow": "从系统借出 %(asset)s 。这将创建一个智能合约，冻结你的抵押物，直到你调整仓位或进行平仓。",
     "transfer_actions": "点击这里进行转账，或充值/提取支持充提功能资产。",
-    "deposit_tip":
-      "为了完成充值，请到 %(asset)s 的外盘钱包，进行转账操作，转账地址即列在当前页的地址。一旦转账得到确认，您将完成充值。如果此页转账信息中有memo出现，您需要在转账时也将memo包括进去。",
+    "deposit_tip": "为了完成充值，请到 %(asset)s 的外盘钱包，进行转账操作，转账地址即列在当前页的地址。一旦转账得到确认，您将完成充值。如果此页转账信息中有memo出现，您需要在转账时也将memo包括进去。",
     "copy_tip": "点击这里将你的内容复制到粘贴板上",
     "withdraw_full": "点击退还所有余额",
-    "withdraw_address":
-      "如果您还没有 %(asset)s 的钱包地址, 为了完成提币，请您找到钱包提供商并创建一个。",
-    "memo_tip":
-      "您可以在memo里留下任何信息. Memo不是必须的，但通常将资产转账到交易所时，需要填写。",
-    "generate":
-      "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 若需要使用该密码，可直接复制并粘贴到密码输入框，并在其他地方备份好该密码。",
+    "withdraw_address": "如果您还没有 %(asset)s 的钱包地址, 为了完成提币，请您找到钱包提供商并创建一个。",
+    "memo_tip": "您可以在memo里留下任何信息. Memo不是必须的，但通常将资产转账到交易所时，需要填写。",
+    "generate": "密码由您的浏览器生成,是本地的。<br /><br /><strong>只有您有此密码的获取权限</strong>.<br /><br /> 若需要使用该密码，可直接复制并粘贴到密码输入框，并在其他地方备份好该密码。",
     "copy_password": "点这里将您的密码复制到粘贴板上",
     "sync_yes": "当前节点已与区块链同步",
     "sync_no": "当前节点并未与区块链同步，请换一个节点。",
-    "disconnected":
-      "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
+    "disconnected": "您还没有连接到一个API节点,尝试重载或在设置页面设置一个新的接入点。"
   },
   "propose": "提议",
   "cancel": "取消",
@@ -163,19 +234,18 @@
     "new_user": "新用户吗？",
     "existing_user": "老用户",
     "restore": "还原",
+    "try_more": "尝试加载更多",
+    "show_more": "一次性显示最多",
     "advanced": "高级",
     "intro_text_title": "欢迎来到Cybex去中心化交易所！",
-    "intro_text_1":
-      "<b>Cybex</b>是一个基于区块链构建的去中心化交易所，该交易所通称DEX, DEX有着工业级的业务处理能力，能够永不停歇地提供公正和透明的服务，这里有bitCNY,bitUSD等智能货币，用户可以在这里根据自己的需要.",
-    "intro_text_2":
-      "发行用户定义资产（UIA）,也可以买卖通用的数字资产如BTC, ETH等。",
+    "intro_text_1": "<b>Cybex</b>是一个基于区块链构建的去中心化交易所，该交易所通称DEX, DEX有着工业级的业务处理能力，能够永不停歇地提供公正和透明的服务，这里有bitCNY,bitUSD等智能货币，用户可以在这里根据自己的需要.",
+    "intro_text_2": "发行用户定义资产（UIA）,也可以买卖通用的数字资产如BTC, ETH等。",
     "intro_text_3": "来Cybex尽情享受交易的乐趣吧！",
     "in_open": "这是你委单中 %(asset)s 资产的数量。",
     "in_open_value": "这是你委单中 %(asset)s 资产的大致价值。",
     "transfer_actions": "转账操作",
     "market_actions": "市场操作",
-    "total_estimate":
-      "这是你所有资产的估值， 包含了在界面中设置了隐藏的资产、委单中的资产、债仓及抵押物。估值采用实时获得的区块链上的价格，可能并不那么精确。",
+    "total_estimate": "这是你所有资产的估值， 包含了在界面中设置了隐藏的资产、委单中的资产、债仓及抵押物。估值采用实时获得的区块链上的价格，可能并不那么精确。",
     "see_open": "查看委单",
     "trade": "交易",
     "welcome": "欢迎使用 CybexDEX",
@@ -189,7 +259,7 @@
     "recent": "近期活动",
     "name": "账户名",
     "member": {
-      "stats": "资料",
+      "stats": "会员",
       "join": "加入于",
       "reg": "注册人",
       "ref": "推荐人",
@@ -289,8 +359,7 @@
       "precision_warning": "警告：创建后该数值将无法更改。",
       "visible": "在搜索与市场中隐去资产",
       "cer_warning_1": "警告",
-      "cer_warning_2":
-        "Make sure your core exchange rate is higher than the market price, otherwise people will buy your token from the market and drain your fee pool via implicit arbitrage. The core exchange rate should be updated regularly to reflect market pricing of your asset.",
+      "cer_warning_2": "Make sure your core exchange rate is higher than the market price, otherwise people will buy your token from the market and drain your fee pool via implicit arbitrage. The core exchange rate should be updated regularly to reflect market pricing of your asset.",
       "vesting": "设置锁定期",
       "vesting_period": "锁定周期",
       "sell_end": "销售周期"
@@ -314,12 +383,9 @@
       "account_name_or_key": "账户名或公钥",
       "memo_public_key": "备注公钥",
       "warning_title": "关于权限设置",
-      "warning_content":
-        "您所访问的功能将能查阅并修改您的账户有效权限，该功能属于Cybex高级功能，除非您明确知晓该功能逻辑，并明确知道自己在做什么，否则请不要随意更改当前页面的信息",
-      "warning1":
-        "活跃权限权重总和 %(weights_total)s 应不小于阀值设定 %(threshold)s",
-      "warning2":
-        "账户权限权重总和 %(weights_total)s 应不小于阀值设定 %(threshold)s",
+      "warning_content": "您所访问的功能将能查阅并修改您的账户有效权限，该功能属于Cybex高级功能，除非您明确知晓该功能逻辑，并明确知道自己在做什么，否则请不要随意更改当前页面的信息",
+      "warning1": "活跃权限权重总和 %(weights_total)s 应不小于阀值设定 %(threshold)s",
+      "warning2": "账户权限权重总和 %(weights_total)s 应不小于阀值设定 %(threshold)s",
       "warning3": "账户名被授权",
       "warning4": "公钥已被授权",
       "action": "操作",
@@ -332,14 +398,12 @@
       "from": "已从账户导入",
       "sign_owner": "以所有者身份签名",
       "password_model": "云钱包",
-      "password_model_1":
-        "如果你仅使用密码就能从任何地方（包括不同浏览器，不同的钱包提供网站）登录自己的账户，而不需要迁移钱包文件的话，你可以在本页面中进行设置操作，新增密钥到账户的权限中去。如果你同时想移除原来的密钥，可以在账户的活跃/账户权限标签中进行。",
+      "password_model_1": "如果你仅使用密码就能从任何地方（包括不同浏览器，不同的钱包提供网站）登录自己的账户，而不需要迁移钱包文件的话，你可以在本页面中进行设置操作，新增密钥到账户的权限中去。如果你同时想移除原来的密钥，可以在账户的活跃/账户权限标签中进行。",
       "password_model_2": "添加由密码衍生的密钥",
       "new_active": "新的活跃权限密钥",
       "new_owner": "新的账户权限密钥",
       "new_memo": "新的备注权限密钥",
-      "memo_warning":
-        "警告：如果你替换了备注权限密钥，那在你使用密码登录云钱包账户后，旧的交易消息你将无法再解密阅读。同样的，除非你将新的备注密钥导入到旧的钱包中，否则使用旧钱包时也将无法看到新的备注消息。",
+      "memo_warning": "警告：如果你替换了备注权限密钥，那在你使用密码登录云钱包账户后，旧的交易消息你将无法再解密阅读。同样的，除非你将新的备注密钥导入到旧的钱包中，否则使用旧钱包时也将无法看到新的备注消息。",
       "use_text": "使用",
       "remove_text": "移除",
       "valid_pub": "Valid Public Key"
@@ -450,10 +514,8 @@
       "row": "用户名的每个片段不应有连续呃连字符‘-’",
       "digit": "用户名的每个片段应以数字或字母结尾",
       "not_found": "账户未找到",
-      "premium_name_faucet":
-        "你使用的是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母",
-      "premium_name_warning":
-        "这是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母"
+      "premium_name_faucet": "你使用的是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母",
+      "premium_name_warning": "这是高级账户名。高级账户名的注册需要花费更多，因为无法通过免费水龙头服务进行注册。请选择其他名字，包含至少一个横杠、数字或者不含元音字母"
     },
     "propose_from": "发起账户",
     "percent": "供给占比",
@@ -489,8 +551,7 @@
       "title": "待解冻余额",
       "balance_number": "余额 #%(id)s",
       "no_balances": "该账户无待解冻余额",
-      "explain":
-        "待解冻金额包含通过推荐计划返现的手续费支出，以及通过预算计划获得的收入。待解冻金额在解冻期间逐渐释放，直到所有待解冻金额全部释放。"
+      "explain": "待解冻金额包含通过推荐计划返现的手续费支出，以及通过预算计划获得的收入。待解冻金额在解冻期间逐渐释放，直到所有待解冻金额全部释放。"
     },
     "show_hidden": "显示已忽略资产",
     "hide_hidden": "隐藏已忽略资产",
@@ -505,13 +566,11 @@
     "create_login": "创建/登录账户",
     "password_login": "使用密码登录云钱包账户",
     "estimate_value": "账户价值估算",
-    "polo_scam":
-      "注意：这个账户不是交易所 Poloniex 的存款账户，请发送至 poloniexwallet。",
-    "bittrex_scam":
-      "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
+    "polo_scam": "注意：这个账户不是交易所 Poloniex 的存款账户，请发送至 poloniexwallet。",
+    "bittrex_scam": "注意：这个账户不是交易所 Bittrex 的存款账户，请发送至 bittrex-deposit。",
     "other_scam": "这个账户不是已知的官方账号，请反复核实后进行转账操作。",
     "vested": "锁定期资产",
-    "crowdfund": "众筹"
+    "crowdfund": "ETO项目记录"
   },
   "transfer": {
     "from": "来自",
@@ -530,16 +589,15 @@
       "valid": "请输入一个合法的大于0的半角数字",
       "balance": "最终余额必须大于0",
       "insufficient": "余额不足",
-      "noFeeBalance":
-        "当前所选资产余额不足以支付手续费, 请换一种用来支付手续费的资产。",
-      "noPoolBalance":
-        "这个资产没有充足的手续费池余额用来支付手续费了，请联系资产所有者或换一种资产。"
+      "noFeeBalance": "当前所选资产余额不足以支付手续费, 请换一种用来支付手续费的资产。",
+      "noPoolBalance": "这个资产没有充足的手续费池余额用来支付手续费了，请联系资产所有者或换一种资产。"
     },
     "back": "返回",
     "confirm": "确认发送",
     "broadcast": "你的转账已经向网络广播",
     "again": "发起新的转账",
     "see": "查看我的转账记录",
+    "records": "近期转账记录",
     "available": "可用余额",
     "broadcasting": "交易广播中...",
     "close": "关闭",
@@ -551,12 +609,11 @@
   },
   "operation": {
     "qtb": {
-      "fill_order":
-        "成功参与一次世界杯竞猜，部分竞猜资金被确认，详情可查看世界杯竞猜页面",
-      "asset_global_settle": "公布了一场世界杯竞猜结果",
+      "fill_order": "成功参与一次足球竞猜，部分竞猜资金被确认，详情可查看竞猜页面",
+      "asset_global_settle": "公布了一场足球竞猜结果",
       "call_order_update": "调整了竞猜资金配置",
-      "asset_settle": "确认了一次世界杯竞猜结果，详情可查看世界杯竞猜页面",
-      "limit_order_create": "申请加入一场世界杯竞猜",
+      "asset_settle": "确认了一次足球竞猜结果，详情可查看竞猜页面",
+      "limit_order_create": "申请加入一场足球竞猜",
       "limit_order_cancel": "撤销未确认的竞猜申请"
     },
     "pending": " %(blocks)s 个区块待定",
@@ -573,12 +630,9 @@
     "publish_feed": "{account} 发布了喂价 {price}",
     "set_proxy": "{account} 设置 {proxy} 为他的投票代理",
     "update_account": "{account} 更新了它的账户信息",
-    "limit_order_sell":
-      "{account} 提交卖单，希望卖出 {amount_to_sell}{asset_to_sell}, 最少换取 {amount_to_buy}{asset_to_buy}, 卖出价格为：{price}",
-    "limit_order_buy":
-      "{account} 提交买单，希望至少买入 {amount_to_buy}{asset_to_buy}, 可以用 {amount_to_sell}{asset_to_sell} 交换, 购买价格为：{price}",
-    "call_order_update":
-      "{account} 调整了 {debtSymbol} 债务 {debt} ，以及抵押 {collateral}",
+    "limit_order_sell": "{account} 提交卖单，希望卖出 {amount_to_sell}{asset_to_sell}, 最少换取 {amount_to_buy}{asset_to_buy}, 卖出价格为：{price}",
+    "limit_order_buy": "{account} 提交买单，希望至少买入 {amount_to_buy}{asset_to_buy}, 可以用 {amount_to_sell}{asset_to_sell} 交换, 购买价格为：{price}",
+    "call_order_update": "{account} 调整了 {debtSymbol} 债务 {debt} ，以及抵押 {collateral}",
     "asset_reserve": "{account} 销毁了 {amount}",
     "asset_issue": "{account} 发行了 {amount} 到 {to}",
     "asset_create": "{account} 创建了资产 {asset}",
@@ -593,15 +647,13 @@
     "asset_update_feed_producers": "{account} 更新了资产 {asset} 的喂价者",
     "asset_fund_fee_pool": "{account} 向 {asset} 手续费池注入 {amount}",
     "asset_settle": "{account} 请求清算 {amount}",
-    "asset_global_settle":
-      "{account} 请求以 {price} 的价格进行全局清算 {asset}",
+    "asset_global_settle": "{account} 请求以 {price} 的价格进行全局清算 {asset}",
     "witness_create": "{account} 升级到见证人",
     "witness_update": "{account} 更新了见证人信息",
     "witness_pay": "提取见证人收入到账户",
     "witness_receive": "已从见证人处获取见证",
     "worker_create": "{account} 创建了预算提案，请求每日支付 {pay}",
-    "committee_member_update_global_parameters":
-      "{account} 更新了全局理事会参数",
+    "committee_member_update_global_parameters": "{account} 更新了全局理事会参数",
     "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
     "init_crowd": "{owner} 发起了对于 {asset} 的众筹",
     "part_crowd": "{account} 向一笔众筹投资了 {amount}",
@@ -771,8 +823,7 @@
       "symbol4": "资产符号长度4位",
       "long_symbol": "更长的资产符号"
     },
-    "asset_claim_fees":
-      "从 %(asset)s 资产手续费池中领取 %(balance_amount)s 资产手续费",
+    "asset_claim_fees": "从 %(asset)s 资产手续费池中领取 %(balance_amount)s 资产手续费",
     "settlement_date": "清算时间",
     "set_proxy": "设置 %(proxy)s 为投票代理人",
     "unlisted_by": "%(lister)s 从列表移除 %(listee)s",
@@ -879,8 +930,7 @@
         "unclaimed_issuer_income": "发行人未申领收入",
         "title": "手续费资金池",
         "claim_fees": "领取手续费",
-        "fund_text":
-          "手续费最终以%(core)s形态进行支付。手续费资金池用来承担从%(asset)s转换为%(core)s的费用，以便用户可以使用%(asset)s来支付手续费。",
+        "fund_text": "手续费最终以%(core)s形态进行支付。手续费资金池用来承担从%(asset)s转换为%(core)s的费用，以便用户可以使用%(asset)s来支付手续费。",
         "claim_text": "资产发行人可以在这里领取累积的资产手续费。"
       },
       "permissions": {
@@ -909,8 +959,7 @@
         "blacklist_authorities": "Blacklist authorities",
         "whitelist_markets": "Market whitelist",
         "blacklist_markets": "Market blacklist",
-        "enable_flag":
-          "The whitelist flag must be enabled in order to set whitelist authorities"
+        "enable_flag": "The whitelist flag must be enabled in order to set whitelist authorities"
       }
     },
     "witnesses": {
@@ -940,18 +989,13 @@
       "website": "网站",
       "vesting_pay": "工资解冻周期(天)",
       "create": "创建一个新的预算项目提案",
-      "create_text_1":
-        "请填写下表创建新的预算项目。项目将由你当前活跃账户的名义创建，它必须已取得终身会籍。",
+      "create_text_1": "请填写下表创建新的预算项目。项目将由你当前活跃账户的名义创建，它必须已取得终身会籍。",
       "create_text_2": "设置参数前请仔细估量，发布后将无法修改。",
       "name_text": "预算项目的名字应该简短明了，比如'目标：改进账户名体系'",
-      "date_text":
-        "开始时间应该至少设置在一周以后，这样留有足够的时间让用户股东们发现、评估并投票。",
-      "pay_text":
-        "每日支付设定的是每天你希望收到的酬劳，以CYB计价。目前的最佳实践是设定以美元或人民币计价的工资，并承诺销毁由于CYB升值导致的溢价部分。只要你的预算项目还是有效的，并且拥有足够的赞成票超过'回购项目'，那你就能每日持续收到工资。",
-      "url_text":
-        "你应该提供一个网址，github文档或者google文档来详细描述你的工作目标和资金使用计划。",
-      "vesting_text":
-        "解冻周期设定工作收入需要经过多少天的线性释放才能达到完全解冻并领取完毕。"
+      "date_text": "开始时间应该至少设置在一周以后，这样留有足够的时间让用户股东们发现、评估并投票。",
+      "pay_text": "每日支付设定的是每天你希望收到的酬劳，以CYB计价。目前的最佳实践是设定以美元或人民币计价的工资，并承诺销毁由于CYB升值导致的溢价部分。只要你的预算项目还是有效的，并且拥有足够的赞成票超过'回购项目'，那你就能每日持续收到工资。",
+      "url_text": "你应该提供一个网址，github文档或者google文档来详细描述你的工作目标和资金使用计划。",
+      "vesting_text": "解冻周期设定工作收入需要经过多少天的线性释放才能达到完全解冻并领取完毕。"
     },
     "proposals": {
       "title": "提案"
@@ -968,7 +1012,7 @@
     }
   },
   "settings": {
-    "passwordLogin": "使用云钱包模式登录",
+    "passwordLogin": "账户登录模式",
     "inverseMarket": "市场交易对视角",
     "unit": "显示记账单位",
     "confirmMarketOrder": "市场订单要求确认",
@@ -993,6 +1037,7 @@
     "reset": "恢复默认值",
     "disableChat": "禁用聊天",
     "showAssetPercent": "在账户页上显示资产/供给占比",
+    "advancedMode": "高级模式",
     "general": "通用设置",
     "wallet": "钱包",
     "accounts": "账户",
@@ -1019,14 +1064,12 @@
     "backupcreate_brainkey": "创建脑钱包备份",
     "lookup_text": "查看来自CYB 1.0的未领取余额",
     "delete_select": "选择要删除的钱包",
-    "restore_brainkey_text":
-      "从脑钱包恢复前，你需要新建一个新的钱包。你为新钱包提供一个密码，然后输入你的脑钱包密钥。",
+    "restore_brainkey_text": "从脑钱包恢复前，你需要新建一个新的钱包。你为新钱包提供一个密码，然后输入你的脑钱包密钥。",
     "restore_key_count": "# of 密钥",
     "restore_default_success": "已成功恢复默认设置",
     "api_closest": "自动选择最近的",
     "wallet_required": "要求钱包模式",
-    "wallet_required_text":
-      "你需要切换到钱包模式才能恢复旧的备份钱包文件，点击下方按钮继续。",
+    "wallet_required_text": "你需要切换到钱包模式才能恢复旧的备份钱包文件，点击下方按钮继续。",
     "enable_wallet": "启用钱包模式",
     "api_location_cybex": "Cybex测试服务器",
     "connection_error": "无法连接到 API 节点 %(url)s, 请撤回并使用已知可用节点",
@@ -1039,8 +1082,7 @@
     "available_nodes": "可用节点",
     "remove": "删除",
     "activate": "激活",
-    "confirm_remove":
-      "Are you sure you want to remove %(name)s from your available nodes?",
+    "confirm_remove": "Are you sure you want to remove %(name)s from your available nodes?",
     "valid_node_url": "Node URL must begin with ws:// or wss://",
     "low_latency": "延迟-低",
     "medium_latency": "延迟-中",
@@ -1142,10 +1184,8 @@
     "buy": "买入",
     "buy_min": "至少买",
     "sell": "卖出",
-    "confirm_no_orders_buy":
-      "你在一个没有委托卖单的市场下了一个买单，你确定么？",
-    "confirm_no_orders_sell":
-      "你在一个没有委托买单的市场下了一个卖单，你确定么？",
+    "confirm_no_orders_buy": "你在一个没有委托卖单的市场下了一个买单，你确定么？",
+    "confirm_no_orders_sell": "你在一个没有委托买单的市场下了一个卖单，你确定么？",
     "confirm_buy": "你的订单价格超出最低卖出价 %(diff)s 倍，你确定么？",
     "confirm_sell": "你的订单价低于最高买入价 %(diff)s 倍，你确定么？",
     "settle": "喂价",
@@ -1157,6 +1197,7 @@
     "vertical": "垂直布局",
     "horizontal": "水平布局",
     "market_name": "市场名称",
+    "filter_name": "筛选",
     "quote_supply": "报价资产供给量",
     "base_supply": "基础资产供给量",
     "more": "更多交易对",
@@ -1240,6 +1281,11 @@
     "title": "钱包",
     "confirm": "确认密码",
     "password": "密码",
+    "password_strength": "密码强度：",
+    "strength_high": "高",
+    "strength_medium": "中",
+    "strength_low": "低",
+    "strength_tip": "当前密码强度较低，被暴力破解的风险较高，推荐您采用更高强度的密码或本地钱包账户",
     "existing_password": "当前密码",
     "change_password": "修改密码",
     "change_wallet": "切换钱包",
@@ -1248,8 +1294,7 @@
     "setup_wallet": "设置钱包",
     "delete_wallet": "删除钱包",
     "delete_confirm_line1": "你确定么？",
-    "delete_confirm_line2":
-      "如果你不仔细阅读以下提示，可能发生无法预料的事情。",
+    "delete_confirm_line2": "如果你不仔细阅读以下提示，可能发生无法预料的事情。",
     "delete_confirm_line3": "本操作不可撤销",
     "delete_wallet_name": "删除钱包 (%(name)s)",
     "name": "钱包名字",
@@ -1286,11 +1331,9 @@
     "change": "切换到钱包 (%(name)s)",
     "balance_claims": "余额导入",
     "backup_brainkey": "备份脑钱包密钥",
-    "backup_accounts":
-      "以下是该备份中包含的Cybex账户，其中Full状态代表该钱包可完整控制该账户，而Partial状态代表对于该账号只有部分控制权（通常代表该账户为多签账户，本钱包仅包含其中的部分权限）",
+    "backup_accounts": "以下是该备份中包含的Cybex账户，其中Full状态代表该钱包可完整控制该账户，而Partial状态代表对于该账号只有部分控制权（通常代表该账户为多签账户，本钱包仅包含其中的部分权限）",
     "backup_refresh": "请先检查钱包内账户以便正确备份",
-    "need_reset":
-      "如果账户显示正确，请点击创建备份按钮进行备份。如果钱包内账户状态和您的预期不符，请尝试重置钱包，并更新页面",
+    "need_reset": "如果账户显示正确，请点击创建备份按钮进行备份。如果钱包内账户状态和您的预期不符，请尝试重置钱包，并更新页面",
     "backup_check": "查看钱包内账户",
     "account_state": "权限状态",
     "import_20_notice1": "请先导入你的CYB 2.0+ 钱包备份文件",
@@ -1316,26 +1359,18 @@
     "import_cyb1": "从Cybex 0.9.3c导入",
     "import_keys_tool": "私钥导入工具",
     "balance_claim_lookup": "查询余额",
-    "create_importkeys_text":
-      "导入私钥前，你需要创建一个新的钱包来存储私钥。请根据提示创建钱包。",
+    "create_importkeys_text": "导入私钥前，你需要创建一个新的钱包来存储私钥。请根据提示创建钱包。",
     "create_wallet_backup": "从备份创建新钱包",
     "delete_confirm_line4": "是的，删除钱包 %(name)s",
-    "import_backup_choose":
-      "请在对话框中选择备份文件。备份文件不会上传至远端服务器，只在本地浏览器中进行处理。",
+    "import_backup_choose": "请在对话框中选择备份文件。备份文件不会上传至远端服务器，只在本地浏览器中进行处理。",
     "restore": "从备份恢复钱包",
-    "create_text":
-      "钱包保存在你的浏览器中，而不是在云端。一个钱包中往往包含多个账户。通过备份文件的传输可以轻松实现钱包的跨浏览器或夸计算器的迁移。",
-    "account_create_wallet_text":
-      "这个密码将被用来创建你的钱包，并且仅保存在本地的浏览器中，而不是在云端。一个钱包中往往包含多个账户。通过备份文件的传输可以轻松实现钱包的跨浏览器或夸计算器的迁移。",
-    "create_account_text":
-      "请输入你期望的账户名。这个账户名将在区块链上进行注册，并将作为你的身份标识。",
-    "first_account_paid":
-      "由于这是你的第一个账户，水龙头服务将免费为你支付账户在区块链上的注册费用。",
+    "create_text": "钱包保存在你的浏览器中，而不是在云端。一个钱包中往往包含多个账户。通过备份文件的传输可以轻松实现钱包的跨浏览器或跨终端的迁移。",
+    "account_create_wallet_text": "这个密码将被用来创建你的钱包，并且仅保存在本地的浏览器中，而不是在云端。一个钱包中往往包含多个账户。通过备份文件的传输可以轻松实现钱包的跨浏览器或跨终端的迁移。",
+    "create_account_text": "请输入你期望的账户名。这个账户名将在区块链上进行注册，并将作为你的身份标识。",
+    "first_account_paid": "由于这是你的第一个账户，水龙头服务将免费为你支付账户在区块链上的注册费用。",
     "must_be_ltm": "费用的支付账户必须为一个终身会员账户。",
-    "backup_explain":
-      "备份钱包文件将生成一个后缀名为 .bin 的二进制文件。这个备份文件使用你的钱包密码进行加密。其中包含该钱包中的所有私钥。通过它可以恢复钱包，或者在不同浏览器或者计算机间进行钱包迁移。",
-    "backup_new_account":
-      "恭喜，你已经创建了一个新账户。强烈建议你立即备份你的钱包。如果你的计算机/浏览器发生意外，而你又没有备份文件，你将永久丢失钱包及其包含的数据、数字资产。",
+    "backup_explain": "备份钱包文件将生成一个后缀名为 .bin 的二进制文件。这个备份文件使用你的钱包密码进行加密。其中包含该钱包中的所有私钥。通过它可以恢复钱包，或者在不同浏览器或者计算机间进行钱包迁移。",
+    "backup_new_account": "恭喜，你已经创建了一个新账户。强烈建议你立即备份你的钱包。如果你的计算机/浏览器发生意外，而你又没有备份文件，你将永久丢失钱包及其包含的数据、数字资产。",
     "brainkey_not_backed_up": "该脑钱包密钥从未备份过。",
     "brainkey_backed_up": "该脑钱包密钥上次备份于",
     "new_password": "新密码",
@@ -1343,6 +1378,7 @@
     "change_success": "密码更改成功！",
     "change_backup": "你已经修改了密码，强烈建议你创建一个新的备份文件。",
     "paste_private": "将私钥黏贴在这里 (钱包导入格式 - WIF)",
+    "has_encrypted": "需要解密一个已加密的WIF格式私钥? 点击这里解密",
     "totals": "资产总计",
     "claim_later": "导入私钥后，你可以将私钥拥有的余额申领到你选择的账户中去。",
     "cyb_09_export": "CYB 0.9.3c 私钥导出文件 (.json)",
@@ -1353,14 +1389,11 @@
     "import_cyb": "导入一个 CYB 0.9.3c 私钥导出文件",
     "import_private_key": "导入私钥",
     "wallet_browser": "你的浏览器即你的钱包",
-    "has_wallet":
-      "当你创建第一个账户时，一个钱包也同时被创建，并保存在你的浏览器中。",
+    "has_wallet": "当你创建第一个账户时，一个钱包也同时被创建，并保存在你的浏览器中。",
     "go_get_started": "参见新手指南",
-    "wallet_crucial":
-      "你的钱包只保存在本地浏览器中，所以创建一个备份是至关重要的，在你的计算机或浏览器发生意外时，你将能够通过备份重新恢复钱包。",
+    "wallet_crucial": "你的钱包只保存在本地浏览器中，所以创建一个备份是至关重要的，在你的计算机或浏览器发生意外时，你将能够通过备份重新恢复钱包。",
     "wallet_move": "这个备份文件也可以用来实现夸浏览器或跨计算机的钱包迁移。",
-    "wallet_lose_warning":
-      "重要！如果你丢失了钱包或者忘记了钱包密码，你将无法访问钱包以及其中的私钥数据及相关数字资产。确保你已经创建了备份文件，并且备份文件放置在安全处，并且你的密码安全。",
+    "wallet_lose_warning": "重要！如果你丢失了钱包或者忘记了钱包密码，你将无法访问钱包以及其中的私钥数据及相关数字资产。确保你已经创建了备份文件，并且备份文件放置在安全处，并且你的密码安全。",
     "tips_deposit": "进行充值",
     "link_deposit": "充值",
     "link_deposit_asset": "充值 %(asset)s",
@@ -1379,29 +1412,20 @@
     "step_2": "第二步 - 创建备份",
     "step_3": "第三步 - 开始",
     "congrat": "恭喜，准备就绪！",
-    "tips_explore":
-      "现在你已经成功创建了一个账户，并且下载了备份文件，让我们开始吧。点击左侧的链接开始探索。",
-    "tips_header":
-      "这些链接也可以在页面顶部，或者右上方账户名右侧的下拉菜单中找到。",
-    "tips_login":
-      "重要！这里没有登录/注销的概念和功能，当你需要发生交易时解锁钱包，闲置或者手动选择进行钱包锁定。",
+    "tips_explore": "现在你已经成功创建了一个账户，并且下载了备份文件，让我们开始吧。点击左侧的链接开始探索。",
+    "tips_header": "这些链接也可以在页面顶部，或者右上方账户名右侧的下拉菜单中找到。",
+    "tips_login": "重要！这里没有登录/注销的概念和功能，当你需要发生交易时解锁钱包，闲置或者手动选择进行钱包锁定。",
     "import_key_success": "已成功导入 %(count)s 个密钥。",
     "brainkey_seq_reset": "重置脑秘钥序号",
-    "brainkey_seq_reset_text":
-      "脑密钥序号是用来协助钱包脑秘钥衍生私钥。<br />重置序号也可以用来强制刷新钱包内的私钥。",
+    "brainkey_seq_reset_text": "脑密钥序号是用来协助钱包脑秘钥衍生私钥。<br />重置序号也可以用来强制刷新钱包内的私钥。",
     "brainkey_seq_reset_button": "重置",
-    "brainkey_reset_success":
-      "脑秘钥序号已成功重置。为了重新刷新你的私钥，请点击浏览器刷新按钮刷新页面，并解锁钱包。",
+    "brainkey_reset_success": "脑秘钥序号已成功重置。为了重新刷新你的私钥，请点击浏览器刷新按钮刷新页面，并解锁钱包。",
     "wallet_password": "使用密码从任何地方登录",
-    "password_lose_warning":
-      "<strong>重要：如果你忘记了密码，你将无法登录自己的账户，即不能重置也无法取回密码！确保你已经记住自己的密码或是将其写下安放在合适的地方！</strong>",
-    "password_crucial":
-      "现在就请你将密码记下来，无论是写在纸上、使用密码管理软件或是别的什么可以在你忘记密码时能够取回的方法。这一点至关重要。一旦你忘记密码，你就无法再访问账户, <strong>我们没有办法帮助你恢复</strong>.",
+    "password_lose_warning": "<strong>重要：如果你忘记了密码，你将无法登录自己的账户，即不能重置也无法取回密码！确保你已经记住自己的密码或是将其写下安放在合适的地方！</strong>",
+    "password_crucial": "现在就请你将密码记下来，无论是写在纸上、使用密码管理软件或是别的什么可以在你忘记密码时能够取回的方法。这一点至关重要。一旦你忘记密码，你就无法再访问账户, <strong>我们没有办法帮助你恢复</strong>.",
     "password_show": "显示我的密码",
-    "tips_explore_pass":
-      "你成功地创建了一个账户并备份了密码，可以开始探索了。点击左侧链接进入。",
-    "create_account_password_text":
-      "新账户的相关密钥将从你的密码衍生出来。<strong>敏感信息不保存在浏览器的缓存或者是中央服务器上，你必须确保能记住或妥善保管好密码！！</strong>",
+    "tips_explore_pass": "你成功地创建了一个账户并备份了密码，可以开始探索了。点击左侧链接进入。",
+    "create_account_password_text": "新账户的相关密钥将从你的密码衍生出来。<strong>敏感信息不保存在浏览器的缓存或者是中央服务器上，你必须确保能记住或妥善保管好密码！！</strong>",
     "create_password": "使用密码创建一个账户",
     "login_type": "选择登录模式",
     "login_create_type": "创建Cybex账户",
@@ -1409,20 +1433,13 @@
     "wallet_model_about": "关于本地钱包",
     "password_model": "Cybex云钱包",
     "password_model_about": "关于Cybex云钱包",
-    "wallet_model_1":
-      "钱包模式下，使用你的密码对钱包文件进行加密后保存在浏览器的存储区域中。并可以通过脑秘钥或者加密的二进制文件进行备份，其中包含了账户中所有的私钥。",
-    "wallet_model_2":
-      "钱包模式的安全性最高，但在当期电脑及当前浏览器下使用。从其他电脑或者其他浏览器中使用的话，需要迁移钱包步骤，即先备份钱包，然后在目的地浏览器中导入该备份钱包或者导入脑秘钥进行恢复后才可使用。",
-    "wallet_model_4":
-      "钱包模式的安全性最高，并可以容纳多个账户。但如要在不同浏览器中使用，需要进行备份和恢复工作。",
-    "wallet_model_3":
-      "<li>多账户</li><li>要求钱包文件备份</li><li>安全性：高</li>",
-    "password_model_1":
-      "云钱包模式在创建和登录时将即时使用你所提供的密码和账户名衍生出私钥，因此在同一时间只可登录一个Cybex账户并加以使用。这种模式与传统的应用体验相近，一般用户推荐使用该模式。",
-    "password_model_2":
-      "<strong>但这将有一定暴露在暴力破解的黑客攻击风险中。所以，这种模式下，使用长密码很重要！推荐您使用20位以上的长密码。</strong>",
-    "password_model_4":
-      "你可以从任何地方登录自己的账户，包括了不同的电脑、不同的浏览器，只需要账户名和密码。但请务必使用一个较为安全的密码",
+    "wallet_model_1": "钱包模式下，使用你的密码对钱包文件进行加密后保存在浏览器的存储区域中。并可以通过脑秘钥或者加密的二进制文件进行备份，其中包含了账户中所有的私钥。",
+    "wallet_model_2": "钱包模式的安全性最高，但在当期电脑及当前浏览器下使用。从其他电脑或者其他浏览器中使用的话，需要迁移钱包步骤，即先备份钱包，然后在目的地浏览器中导入该备份钱包或者导入脑秘钥进行恢复后才可使用。",
+    "wallet_model_4": "钱包模式的安全性最高，并可以容纳多个账户。但如要在不同浏览器中使用，需要进行备份和恢复工作。",
+    "wallet_model_3": "<li>多账户</li><li>要求钱包文件备份</li><li>安全性：高</li>",
+    "password_model_1": "云钱包模式在创建和登录时将即时使用你所提供的密码和账户名衍生出私钥，因此在同一时间只可登录一个Cybex账户并加以使用。这种模式与传统的应用体验相近，一般用户推荐使用该模式。",
+    "password_model_2": "<strong>但这将有一定暴露在暴力破解的黑客攻击风险中。所以，这种模式下，使用长密码很重要！推荐您使用20位以上的长密码。</strong>",
+    "password_model_4": "你可以从任何地方登录自己的账户，包括了不同的电脑、不同的浏览器，只需要账户名和密码。但请务必使用一个较为安全的密码",
     "password_model_3": "<li>单一账户</li><li>简易登录</li><li>安全性：中</li>",
     "already_have_wallet": "如果您已有钱包，您可以：",
     "already_have_account": "如果您已有云钱包账户，您可以：",
@@ -1430,8 +1447,7 @@
     "use_wallet_create": "创建钱包模式账户",
     "use_password": "使用云钱包模式",
     "use_password_create": "创建云钱包账户",
-    "pass_length":
-      "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母。",
+    "pass_length": "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母。",
     "switch_model_wallet": "切换到钱包模式",
     "switch_model_password": "切换到云钱包模式",
     "account_public": "账户名称（公开可见）",
@@ -1440,21 +1456,16 @@
     "generated": "推荐密码",
     "understand_1": "我理解如果我忘记或丢失了密码，将没有任何人能够帮助我恢复",
     "understand_2": "我已经写下了或者用其它方式保存了我的密码",
-    "cyb_rules":
-      "Cybex法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。",
-    "answer_right":
-      "备份并保存好我的钱包——一个二进制文件，用于未来任何情况下的恢复",
+    "cyb_rules": "Cybex法则第一条: 不要弄丢自己的密码。<br/>第二条法则: 不要弄丢自己的密码。<br />第三条法则: 没有人能帮你恢复。<br />第四条法则: 如果你仅凭脑力就能记住自己的密码，那通常来说它不够强。<br />第五条法则: 只用随机生成的密码。<br />第六条法则: 别告诉别人你的密码。<br />第七条法则: 总是备份你的密码。",
+    "answer_right": "备份并保存好我的钱包——一个二进制文件，用于未来任何情况下的恢复",
     "answer_wrong_1": "可进入交易中心进行交易<br>获取投资收益",
     "answer_wrong_2": "向钱包充入资金<br>以备交易使用",
     "answer_wrong_3": "浏览和探索Cybex的各种功能<br>以便更好的使用平台",
     "go_on": "以知晓备份钱包的重要性，继续进行注册",
     "backup_primary": "请务必优先<br>备份并妥善保存钱包",
-    "not_first_account":
-      "因为您已经是Cybex交易所账户的持有者，如果您需要注册新的账户，则需要支付相应的注册费用，同时，用来支付该费用的账户必须是终身会员账户。终身会员，可以在用户信息页面中购买升级。",
-    "account_exp":
-      "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Cybex!</strong>",
-    "understand_3":
-      "我已经了解并知晓，一旦忘记该密码，我将会失去获取并使用该账户资金的途径"
+    "not_first_account": "因为您已经是Cybex交易所账户的持有者，如果您需要注册新的账户，则需要支付相应的注册费用，同时，用来支付该费用的账户必须是终身会员账户。终身会员，可以在用户信息页面中购买升级。",
+    "account_exp": "This account will be created on the blockchain and will be your address for any transfers you want to make! <strong>There are no long Bitcoin-style addresses in Cybex!</strong>",
+    "understand_3": "我已经了解并知晓，一旦忘记该密码，我将会失去获取并使用该账户资金的途径"
   },
   "borrow": {
     "title": "%(asset_symbol)s 保证金头寸",
@@ -1463,8 +1474,7 @@
     "adjust": "调整头寸",
     "errors": {
       "below": "保证金率低于维持保证金要求",
-      "close":
-        "你的抵押率已接近最低抵押率 %(mr)s ，这意味着如果价格继续下跌你的头寸有可能被强制平仓。",
+      "close": "你的抵押率已接近最低抵押率 %(mr)s ，这意味着如果价格继续下跌你的头寸有可能被强制平仓。",
       "collateral": "可用保证金不足"
     },
     "close": "平仓",
@@ -1483,6 +1493,8 @@
       "address": "提现到地址",
       "to_eos": "提现到EOS账户",
       "submit": "提现",
+      "lack_memo": "当前登录缺少备注权限，无法执行提现操作。如果您的账户有多个有效密钥，请使用其他有效密钥尝试提现",
+      "with_memo": "使用提币附言（MEMO）",
       "cyb_fee": "使用CYB支付此次提现所需的Cybex内部转账手续费"
     },
     "ok": "确定",
@@ -1522,7 +1534,17 @@
       "amount": "Amount to Convert",
       "submit": "Ok"
     },
-    "never": "不再显示此消息"
+    "never": "不再显示此消息",
+    "jct": {
+      "jct_one_title": "让我们和JaCKET一起去日本！",
+      "jct_one_alt": "点击参与JCT空投",
+      "jct_one_img": "https://static-assets.51nebula.com/activities/JCT_StepOne_CN_09011151.jpeg",
+      "jct_one_href": "https://mp.weixin.qq.com/s/HavYfxasOLSFO7-tRTUIIA",
+      "jct_two_title": "让我们和JaCKET一起去日本！",
+      "jct_two_alt": "点击参与JCT糖果申请",
+      "jct_two_img": "https://static-assets.51nebula.com/activities/JCT_StepTwo_CN_09011151.jpeg",
+      "jct_two_href": "https://www.cp.jct.world/"
+    }
   },
   "init_error": {
     "title": "系统初始化错误",
@@ -1531,10 +1553,8 @@
     "connected": "已连接",
     "not_connected": "未连接",
     "browser": "不推荐的浏览器",
-    "browser_version":
-      "您当前使用的是Chrome内核浏览器，但版本过低：%(version)s，推荐您使用Chrome最新版",
-    "browser_text":
-      "你使用的浏览器(版本)过于陈旧，可能存在安全或功能缺陷。Cybex强烈建议你备份钱包，并将其导入谷歌Chrome或火狐Firefox浏览器。您当前的浏览器或许可以正常使用Cybex功能，但可能会对你的操作造成风险。",
+    "browser_version": "您当前使用的是Chrome内核浏览器，但版本过低：%(version)s，推荐您使用Chrome最新版",
+    "browser_text": "你使用的浏览器(版本)过于陈旧，可能存在安全或功能缺陷。Cybex强烈建议你备份钱包，并将其导入谷歌Chrome或火狐Firefox浏览器。您当前的浏览器或许可以正常使用Cybex功能，但可能会对你的操作造成风险。",
     "understand": "我理解"
   },
   "refcode": {
@@ -1543,14 +1563,24 @@
     "refcode_optional": "推荐码 (可选)",
     "enter_refcode": "输入推荐码"
   },
+  "decode": {
+    "title": "解密私钥密文",
+    "secret": "密码",
+    "crypto": "待解密密文",
+    "tip": "请输入您所持有的加密后密文与加密时所用密码，点击解密按钮尝试解密。解密后Cybex账户的WIF格式私钥应以5开头。",
+    "wif": "解密后密文",
+    "do": "解密"
+  },
   "gateway": {
     "fee": "网关执行手续费",
     "find_asset": "按资产名称筛选",
+    "operation": "操作",
     "no_balance": "对应资产余额不足，无法提现",
     "title": "充值&提现",
     "your_account": "你的账户",
     "bridge": "桥接",
     "gateway": "承兑商",
+    "details": "查看详情",
     "symbol": "资产",
     "deposit_to": "请将你的%(asset)s转账至以下地址",
     "balance": "余额",
@@ -1560,8 +1590,7 @@
     "deposit": "充值",
     "withdraw": "提现",
     "deposit_eos_memo": "充值Memo",
-    "deposit_eos":
-      "请在EOS网上将您要充值的EOS转账至账户：%(account)s，并务必在转账memo中填入下面的验证码。请勿在memo中填入其他信息，以免您的充值不被认可。",
+    "deposit_eos": "请在EOS网上将您要充值的EOS转账至账户：%(account)s，并务必在转账memo中填入下面的验证码。请勿在memo中填入其他信息，以免您的充值不被认可。",
     "fund_records": "充提记录",
     "last_update": "更新时间",
     "unlock_first": "请先解锁钱包，以查看出入金记录",
@@ -1589,29 +1618,33 @@
     "asset_to_withdraw": "提现资产:",
     "support_block": "获得客户支持，请联络Jadepool:",
     "valid_address": "请输入合法的 %(coin_type)s 地址",
-    "valid_service":
-      "网关链接错误，暂时无法有效验证提取地址，请稍检查您的网络链接",
+    "space_in_memo": "您的地址或附言（MEMO）中存在空白符，请确认其格式是否正确",
+    "withdraw_memo": "提币附言（MEMO）",
+    "valid_service": "网关链接错误，暂时无法有效验证提取地址，请稍检查您的网络链接",
     "loading": "地址规则验证中...",
     "withdraw_coin": "提现 %(coin)s (%(symbol)s)",
     "limit": "限额: %(amount)s %(symbol)s",
     "low_limit": "单次提现金额不可低于最低限额: %(amount)s %(symbol)s",
-    "precision_error": "%(symbol) 提现金额需为其主网精度(%(amount))的整数倍",
-    "bridge_text":
-      "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
-    "gateway_text":
-      "网关能让你将Cybex中的资产与外部资产进行互换，比如JADE.BTC到BTC。",
-    "fiat_text":
-      "法币的冲提现服务由CCEDK提供。你必须先行在CCEDK上进行账户注册。下面是支持的货币：",
+    "precision_error": "%(symbol)s 提现金额需为其外部资产精度(%(amount)s)的整数倍",
+    "bridge_text": "桥接能让你将一种资产转变成另一种资产，比如从 BTC 转换到 CYB。",
+    "gateway_text": "网关能让你将Cybex中的资产与外部资产进行互换，比如JADE.BTC到BTC。",
+    "fiat_text": "法币的冲提现服务由CCEDK提供。你必须先行在CCEDK上进行账户注册。下面是支持的货币：",
     "service": "转账服务",
+    "contract_address": "协议地址",
+    "project_name": "项目名称",
     "deposit_limit": "充值限额",
-    "add_funds":
-      "您可以快速方便的充入资金到您的Cybex账号<strong>%(account)s</strong>中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> 同一账户同一资产充值地址需间隔五分钟才可重新生成 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 您当前所获取的资产地址用于充入%(type)s，请勿充入其他资产，否则可能无法到账且不可找回",
-    "withdraw_funds":
-      "您将提出您的 %(type)s 到外部账号中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> * 网关服务需要一定的手续费支持运行，其中需要执行一次Cybex内盘转账，该部分手续费您可选择使用CYB支付或%(asset)s支付 <br> * 网关执行手续费将以您希望取出的目标资产(%(type)s)支付，并从您提取金额中扣除 <br> * 请务必确认您的提币地址正确，一旦填写错误，您的提币将丢失 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 提币操作请使用您的个人钱包地址, 提币到合约地址、交易所地址、ICO项目地址可能会发生合约执行失败，将导致转账失败，资产将退回到您的Cybex账户，处理时间较长，请您谅解。",
+    "add_funds": "您可以快速方便的充入资金到您的Cybex账号<strong>%(account)s</strong>中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> 同一账户同一资产充值地址需间隔五分钟才可重新生成 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 您当前所获取的资产地址用于充入%(type)s，请勿充入其他资产，否则可能无法到账且不可找回",
+    "withdraw_funds": "您将提出您的 %(type)s 到外部账号中。<br>瑶池（Jadepool）作为Cybex推荐的网关将为您提供这一服务 <br> * 网关服务需要一定的手续费支持运行，其中需要执行一次Cybex内盘转账，该部分手续费您可选择使用CYB支付或%(asset)s支付 <br> * 网关执行手续费将以您希望取出的目标资产(%(type)s)支付，并从您提取金额中扣除 <br> * 请务必确认您的提币地址正确，一旦填写错误，您的提币将丢失 <br> * 所有出入金到账需要一定时限，请耐心等待 <br> * 提币操作请使用您的个人钱包地址, 提币到合约地址、交易所地址、ICO项目地址可能会发生合约执行失败，将导致转账失败，资产将退回到您的Cybex账户，处理时间较长，请您谅解。",
     "balance_asset": "当前您 %(asset)s 资产的的可用余额为",
     "withdraw_placeholder": "Please enter your %(asset)s address",
-    "unavailable_jade":
-      "The gateway service for this asset is currently down, please try again later"
+    "unavailable_jade": "The gateway service for this asset is currently down, please try again later",
+    "state": {
+      "init": "正在上链",
+      "new": "新建",
+      "pending": "待确认",
+      "done": "成功",
+      "failed": "失败"
+    }
   },
   "or": "或",
   "I_know": "我知道了",
@@ -1621,8 +1654,7 @@
   },
   "proposal": {
     "transfer": "从账户{from}发送{amount}到{to}, 锁定期为{vesting}",
-    "limit_order_create":
-      "为账户 {account} 下单，买入{buy_amount}，挂出{sell_amount}",
+    "limit_order_create": "为账户 {account} 下单，买入{buy_amount}，挂出{sell_amount}",
     "limit_order_sell": "为账户 {account} 下单，以价格{price}卖出 {amount}",
     "limit_order_buy": "为账户{account} 下单，以价格{price}买入 {amount}",
     "committee_member_update_global_parameters": "{account}更新理事会全局参数",
@@ -1647,10 +1679,8 @@
     "asset_issue": " 使用 {account} 发行 {amount} 到 {to}",
     "asset_reserve": "使用 {account} 销毁 {amount}",
     "vesting_balance_withdraw": "从{account}的冻结资产中提取 {amount} ",
-    "feed_producer":
-      "Update the feed producers for the asset {asset} using the {account} ",
-    "call_order_update":
-      "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
+    "feed_producer": "Update the feed producers for the asset {asset} using the {account} ",
+    "call_order_update": "Change {account} {debtSymbol} debt by {debt} and collateral by {collateral}",
     "limit_order_cancel": "{account}提议撤销订单"
   },
   "proposal_create": {
@@ -1668,29 +1698,24 @@
     "user": "用户名",
     "done": "完成",
     "welcome_user": "欢迎访问Cybex",
-    "welcome":
-      "这是P2P聊天室。没有管理员，也不能保证唯一的用户名。可以从设置中禁用聊天功能。发送消息的频率被限制在每2秒1条。输入 /help 获得命令帮助信息。",
+    "welcome": "这是P2P聊天室。没有管理员，也不能保证唯一的用户名。可以从设置中禁用聊天功能。发送消息的频率被限制在每2秒1条。输入 /help 获得命令帮助信息。",
     "disconnected": "你已从聊天室断开链接，请点击下方重新连接。",
     "rate": "请等待至少2秒发送新消息。",
     "reconnect": "重新连接",
     "users": "%(userCount)s 用户在线",
     "disabled": "聊天室禁用",
     "enable": "启用聊天室",
-    "telegram_link":
-      "参与更加活跃的讨论，请加人 Cybex Telegram group: <a href='https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg' target='blank' rel='noopener noreferrer'>https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg</a>"
+    "telegram_link": "参与更加活跃的讨论，请加人 Cybex Telegram group: <a href='https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg' target='blank' rel='noopener noreferrer'>https://t.me/joinchat/Fv6aLEQCdo0GZ4RUE1JXyg</a>"
   },
   "trx_error": {
-    "expire":
-      "你的交易账单确认超时，请检查您的网络链接。如果稍后仍未收到交易成功提示，请刷新当前页面更新区块信息，检查您的交易状态，并重新尝试执行交易。"
+    "expire": "你的交易账单确认超时，请检查您的网络链接。如果稍后仍未收到交易成功提示，请刷新当前页面更新区块信息，检查您的交易状态，并重新尝试执行交易。"
   },
   "backup": {
     "title": "您的钱包需要备份",
-    "content":
-      "恭喜您，您刚刚成功在Cybex分布式交易市场中得到了一个新的钱包。此刻起，您的所有虚拟资产将存于此钱包中。由于您参与的是分布式交易，所有个人资产完全由您个人进行保管。为保障您个人资产的安全性，在进行各项操作前，请务必备份您的钱包。在您的钱包未备份之前，本提示将重复出现，以最大程度的保证您的资金安全。点击“备份钱包”按钮，将进入备份页面，在您备份钱包操作完成后，本提示将不再出现。非常感谢您的配合。",
+    "content": "恭喜您，您刚刚成功在Cybex分布式交易市场中得到了一个新的钱包。此刻起，您的所有虚拟资产将存于此钱包中。由于您参与的是分布式交易，所有个人资产完全由您个人进行保管。为保障您个人资产的安全性，在进行各项操作前，请务必备份您的钱包。在您的钱包未备份之前，本提示将重复出现，以最大程度的保证您的资金安全。点击“备份钱包”按钮，将进入备份页面，在您备份钱包操作完成后，本提示将不再出现。非常感谢您的配合。",
     "go_backup": "备份钱包",
     "no_backup": "暂不备份",
-    "expire":
-      "Your transaction has expired without being confirmed, please try again later."
+    "expire": "Your transaction has expired without being confirmed, please try again later."
   },
   "home": {
     "icon-1": "基于区块链构建",
@@ -1717,15 +1742,15 @@
     "explorer": "区块浏览",
     "swap": "原子交换",
     "logout": "登出账户",
-    "worldcup": "世界杯竞猜",
-    "help": "帮助文档"
+    "cybex_bet": "足球竞猜",
+    "help": "帮助文档",
+    "eto": "ETO"
   },
   "vesting": {
     "progress": "解锁进度",
     "end_time": "锁定期到期时间",
     "detail": "详情",
-    "pubkey_tip":
-      "您的锁定资产与相应的公钥相关联，一旦失去对于此公钥的控制，则无法申领对应锁定资产",
+    "pubkey_tip": "您的锁定资产与相应的公钥相关联，一旦失去对于此公钥的控制，则无法申领对应锁定资产",
     "pubkey": "所属公钥"
   },
   "period": {
@@ -1742,12 +1767,9 @@
     "button": "了解更多"
   },
   "warningDetail": {
-    "p1":
-      "于大多数交易者来说，钱包模式是最为安全的选择。您的本地设备将依据您所设置的钱包密码生成一份二进制的钱包文件，使用这一钱包，您将能够对您的所有资产进行访问和管理。该钱包与钱包密码搭配，是访问您资产的唯一凭证。由于钱包只存在您本人当前的访问环境中，任何其他人无法接触，从而保证了您个人资产的安全性。",
-    "p2":
-      "但同时，钱包文件的意外丢失也将造成非常严重的后果——您存在于该钱包中的资产将丢失，并无法通过其他途径找回。",
-    "p3":
-      "因此，Cybex在协助您完成钱包账户的创建工作后，将推荐并引导您对您的钱包文件进行下载备份。请务必进行下载备份并保存好该文件，牢记该文件存放的位置，同时也推荐使用专用的物理设备，如U盘等，保存好该文件。这样在任何情况下，无论是遇到交易终端的意外情况还是您更换了交易设备，只需找到并恢复您所备份的钱包文件，您便可以继续方便安全的管理您的资产。"
+    "p1": "于大多数交易者来说，钱包模式是最为安全的选择。您的本地设备将依据您所设置的钱包密码生成一份二进制的钱包文件，使用这一钱包，您将能够对您的所有资产进行访问和管理。该钱包与钱包密码搭配，是访问您资产的唯一凭证。由于钱包只存在您本人当前的访问环境中，任何其他人无法接触，从而保证了您个人资产的安全性。",
+    "p2": "但同时，钱包文件的意外丢失也将造成非常严重的后果——您存在于该钱包中的资产将丢失，并无法通过其他途径找回。",
+    "p3": "因此，Cybex在协助您完成钱包账户的创建工作后，将推荐并引导您对您的钱包文件进行下载备份。请务必进行下载备份并保存好该文件，牢记该文件存放的位置，同时也推荐使用专用的物理设备，如U盘等，保存好该文件。这样在任何情况下，无论是遇到交易终端的意外情况还是您更换了交易设备，只需找到并恢复您所备份的钱包文件，您便可以继续方便安全的管理您的资产。"
   },
   "crowdfund": {
     "action": "当前状态/可用操作",
@@ -1775,17 +1797,14 @@
   },
   "logout": {
     "title": "Cybex登出",
-    "password_tip":
-      "您正在使用云账户登录，如果您确定要登出当前账户，请检查下方的安全提示并逐一确认。一旦所有提示被确认，并点击\"登出\"按钮，浏览器将刷新当前页面，您当前用户的登录信息将被清除。",
+    "password_tip": "您正在使用云账户登录，如果您确定要登出当前账户，请检查下方的安全提示并逐一确认。一旦所有提示被确认，并点击\"登出\"按钮，浏览器将刷新当前页面，您当前用户的登录信息将被清除。",
     "password_s1": "我知道一旦我的云账户密码丢失，将无法找回",
     "password_s2": "我已经妥善备份并保存了我的云账户密码",
     "password_s3": "我确实希望登出我的账户，并且我明确知道自己在做什么",
     "logout": "登出",
-    "clogout_with_wallet":
-      "您当前以云钱包模式登出，但似乎仍有本地钱包模式账户存在于当前浏览器中，这可能导致登出行为不正确，推荐在确认备份了相应本地钱包后，删除该钱包并完成登出操作",
+    "clogout_with_wallet": "您当前以云钱包模式登出，但似乎仍有本地钱包模式账户存在于当前浏览器中，这可能导致登出行为不正确，推荐在确认备份了相应本地钱包后，删除该钱包并完成登出操作",
     "reload": "更新",
-    "wallet_tip":
-      "您当前正在使用本地钱包模式。您可以从下方的列表中选择需要登出的钱包文件，删除该钱包，并点击“更新”按钮, 页面将刷新并使用现存的其他钱包。在删除相应钱包文件之前，请您确认对应的钱包文件或脑钱包密钥已经被妥善备份并保存，否则请关闭本窗口并优先备份钱包文件。否则一旦确认删除该钱包，将没有任何途径可以找回。"
+    "wallet_tip": "您当前正在使用本地钱包模式。您可以从下方的列表中选择需要登出的钱包文件，删除该钱包，并点击“更新”按钮, 页面将刷新并使用现存的其他钱包。在删除相应钱包文件之前，请您确认对应的钱包文件或脑钱包密钥已经被妥善备份并保存，否则请关闭本窗口并优先备份钱包文件。否则一旦确认删除该钱包，将没有任何途径可以找回。"
   },
   "contact": {
     "title": "联系我们",
@@ -1803,8 +1822,7 @@
   "first": {
     "title": "【关于CYBEX赛贝交易所开放EOS充提通知】",
     "p1": "<p>致赛贝CYBEX用户: </p>",
-    "p2":
-      "<p>CYBEX赛贝交易所现已开放EOS主网充提币业务，如有任何问题，请随时联系我们！</p>",
+    "p2": "<p>CYBEX赛贝交易所现已开放EOS主网充提币业务，如有任何问题，请随时联系我们！</p>",
     "p3": "<p>赛贝CYBEX社区助手A（CybexServiceA）</p>",
     "p4": "<p>赛贝CYBEX社区助手A（CybexServiceA）</p>",
     "p5": "<p>赛贝CYBEX社区助手A（CybexServiceA）</p>",
@@ -1814,5 +1832,88 @@
     "error": "获取验证码失败，请检查水龙头设置",
     "label": "验证码",
     "click": "点击更新验证码"
+  },
+  "eto": {
+    "crowd_project": "%(project)s 项目ETO",
+    "amount_remain": "项目剩余额度：",
+    "account_limit_cap": "每账号限额：",
+    "account_limit_unit": "最小认购单位：",
+    "account_limit_lower": "单笔最低限额：",
+    "current_state_used": "您已认购额度：",
+    "current_state_avail": "剩余可认购额度：",
+    "closed_tip": "当前项目 %(project)s ETO已结束,请谅解",
+    "take_in": "参与ETO",
+    "waiting": "等待ETO确认（%(timer)ss）",
+    "dont_repeat": "您的转账需要经过ETO服务审核确认，可能需要大约数分钟的时间。在此期间内，您的有效参与金额不会发生变化，无需重复转账。",
+    "invalid_user": "未完成ETO资格认证",
+    "cybex_in": "您将使用您Cybex账号内的%(asset)s参与本次ETO，本操作将消耗一定手续费",
+    "confirm": "您将通过Cybex转账参与%(project)s项目的ETO",
+    "complete_tip_1": "该项目ETO完成后，对应项目资产将于格林尼治时间",
+    "complete_offer": "该项目资产将于您成功认购后发放到您的账号(%(account)s)中",
+    "complete_tip_2": "发送至您的帐号(%(account)s)中",
+    "local_time": "即本机时间",
+    "int_times": "ETO参与金额需为最小认购单位的整数倍",
+    "warning_lower": "本次认购金额需大于单次最小可认购额度",
+    "warning_overflow": "本次认购金额需小于剩余可认购额度",
+    "overflow": "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“ETO项目记录”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
+    "be_patient": "最终确认ETO参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexServiceA",
+    "records": {
+      "project_id": "项目名称",
+      "block_num": "关联区块",
+      "update_at": "更新时间（UTC）",
+      "ieo_status": "状态",
+      "ieo_type": "操作类型",
+      "token_count": "Token数量",
+      "token": "资产",
+      "no_data": "暂无ETO参与记录",
+      "status_invalid_sub": "无效认购",
+      "status_invalid_partly_sub": "部分无效",
+      "status_valid_sub": "有效认购",
+      "status_failed_to_receive": "到账失败",
+      "status_refund": "退款",
+      "status_received": "到账成功",
+      "status_undefined": "到账成功",
+      "fund_type": {
+        "receive": "参与ETO",
+        "send": "收到Token",
+        "refund": "收到退款"
+      }
+    }
+  },
+  "training": {
+    "step_title": "如果您需要参与Cybex的ETO项目<br>请先进行KYC认证和账号绑定",
+    "step_one": "打开ICOAPE的网站并进行邮箱注册。",
+    "step_two": "在注册的邮箱里，您会收到一封验证邮件，点开验证链接进行登录。如果找不到验证邮件，也许它躲在垃圾邮件里。",
+    "step_three": "提交真实有效的个人KYC资料，请记得保存。个人信息均为必填项。",
+    "step_four": "提交成功KYC资料后，我们会对您提交的资料进行审核。审核结果会在3-7个工作日内以邮件形式发送给您。",
+    "step_four_sp": "注意：如果您的资料错误，请重新登录ICOAPE账号重新提交，我们会再次进行审核。",
+    "step_five": "成功通过审核后，恭喜您到了关联Cybex账号的最后步骤了！！请先确保您已注册了一个Cybex账号，登录ICOAPE，并将Cybex账号填入关联账号处。",
+    "step_five_sp": "同时，打开Cybex交易所<a href=\"https://dex.cybex.io/\" target=\"_blank\">https://dex.cybex.io/</a> 登录您的Cybex账号，在您的“账户名 – 活动记录”里将会收到一笔小额转账并附带一个验证码（verify code），将这个关键的verify code 填到ICOAPE的验证码处，就绑定成功啦！",
+    "step_six": "登录您绑定KYC的Cybex账号，然后选择您想众筹的项目，点击预约。搓搓小手就可以等待项目审核通过然后众筹了哟～ ",
+    "step_six_sp": "注意：部分项目可能会有众筹的地区限制，所以不同项目还需要在您申请“众筹预约”后再次审核，我们将在3-7个工作日内进行审核。通过审核且项目开始众筹后，您就可以开始众筹了～ ",
+    "step_six_sp_1": "请注意众筹前保证您的cybex账号里已有您预约项目众筹接受的币种，且数额不小于该项目的最低众筹额度。同时，不同项目的众筹限额不同，众筹超过限额部分也是无法成功众筹的。"
+  },
+  "assets": {
+    "banner": "https://ieo.oss-cn-hangzhou.aliyuncs.com/ETO-banner/Herdius_banner0809-CN.jpeg",
+    "eto_step_1": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-1.jpg",
+    "eto_step_2": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-2.jpg",
+    "eto_step_3": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-3.jpg",
+    "eto_step_4": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-4.jpg",
+    "eto_step_5": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-5.jpg",
+    "eto_step_6": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-6.jpg",
+    "eto_step_7": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-7.jpg",
+    "eto_step_8": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-8.jpg",
+    "eto_step_9": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-9.jpg",
+    "eto_step_10": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-10.jpg",
+    "eto_step_11": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-11.jpg",
+    "eto_step_12": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-12.jpg",
+    "eto_step_13": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/ICOAPE0717CN-13.jpg"
+  },
+  "fallback": {
+    "title": "正在排队中，请稍等...",
+    "tip": "抱歉，由于本次活动参与人数太多，服务器压力较大，请耐心排队等待。排队成功后页面会自动更新。"
+  },
+  "notify": {
+    "create_account_failed": "创建账户失败：%(message)s"
   }
 }

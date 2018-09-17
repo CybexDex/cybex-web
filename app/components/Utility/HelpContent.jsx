@@ -4,10 +4,9 @@ import * as PropTypes from "prop-types";
 import { zipObject } from "lodash";
 import counterpart from "counterpart";
 import utils from "common/utils";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 
 let req = require.context("help", true, /\.md/);
-console.debug("REQ: ", req);
 let HelpData = {};
 
 function endsWith(str, suffix) {
@@ -79,7 +78,7 @@ class HelpContent extends React.Component {
     let path = e.target.pathname.split("/").filter(p => p && p !== "#");
     if (path.length === 0) return false;
     let route = "/" + path.join("/");
-    this.props.router.push(route);
+    this.props.history.push(route);
     return false;
   }
 

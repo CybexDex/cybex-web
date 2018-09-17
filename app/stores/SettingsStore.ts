@@ -6,7 +6,7 @@ import { merge } from "lodash";
 import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
-import * as FingerPrint from "fingerprintjs2";
+// import * as FingerPrint from "fingerprintjs2";
 import { AbstractStore } from "./AbstractStore";
 
 export const MARKETS = [
@@ -20,7 +20,6 @@ export const MARKETS = [
   "JADE.LHT",
   "JADE.INK",
   "JADE.BAT",
-  "JADE.VEN",
   "JADE.OMG",
   "JADE.SNT",
   "JADE.NAS",
@@ -31,6 +30,14 @@ export const MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.JCT",
+  "JADE.MCO",
+  // "JADE.HER",
+  "JADE.CTXC",
+  "JADE.VET",
+  "JADE.NES",
+  "JADE.RHOC",
+  "JADE.PPT",
   "JADE.MKR",
   "JADE.FUN",
   // "JADE.SDT",
@@ -38,7 +45,7 @@ export const MARKETS = [
   // "JADE.ICX",
   // "JADE.BTM",
   "JADE.GNT",
-  "JADE.NKN",
+  // "JADE.NKN",
   "JADE.MVP",
   "JADE.USDT",
   "JADE.DPY",
@@ -109,6 +116,7 @@ class SettingsStore extends AbstractStore<any> {
       walletLockTimeout: 60 * 10,
       themes: "cybexDarkTheme",
       disableChat: false,
+      advancedMode: false,
       navState: true,
       passwordLogin: true
     });
@@ -123,6 +131,7 @@ class SettingsStore extends AbstractStore<any> {
       unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "CNY", "BTC", "EUR"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
       showAssetPercent: [{ translate: "yes" }, { translate: "no" }],
+      advancedMode: [{ translate: "yes" }, { translate: "no" }],
       themes: ["cybexDarkTheme"],
       passwordLogin: [
         { translate: "cloud_login" },
@@ -200,9 +209,10 @@ class SettingsStore extends AbstractStore<any> {
       if (this.initDone) resolve();
       this.starredKey = this._getChainKey("markets");
       this.marketsKey = this._getChainKey("userMarkets");
-      let fp = new FingerPrint().get(result => {
-        this.fp = result;
-      });
+      this.fp = Math.floor(Math.random() * 100) + Date.now();
+
+      // let fp = new FingerPrint().get(result => {
+      // });
 
       // Default markets setup
       let topMarkets = {
@@ -255,7 +265,7 @@ class SettingsStore extends AbstractStore<any> {
       };
 
       let defaultMarkets = [];
-      let chainMarkets = topMarkets[this.starredKey] || [];
+      let chainMarkets = MARKETS;
       this.preferredBases.forEach(base => {
         addMarkets(defaultMarkets, base, chainMarkets);
       });

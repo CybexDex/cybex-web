@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";
 import ChainTypes from "../Utility/ChainTypes";
@@ -999,7 +999,7 @@ AssetContainer = BindToChainState(AssetContainer, { keep_updating: true });
 
 export default class AssetSymbolSplitter extends React.Component {
   render() {
-    let symbol = this.props.params.symbol;
+    let symbol = this.props.match.params.symbol.toUpperCase();
     return <AssetContainer {...this.props} asset={symbol} />;
   }
 }

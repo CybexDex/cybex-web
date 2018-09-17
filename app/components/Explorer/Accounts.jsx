@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import AccountActions from "actions/AccountActions";
@@ -99,7 +99,7 @@ class Accounts extends React.Component {
 
     return (
       <div className="grid-block page-layout">
-        <div className="grid-block vertical medium-6 medium-offset-3">
+        <div className="grid-block vertical readable container">
           <div className="grid-content shrink">
             <Translate component="h3" content="explorer.accounts.title" />
             <input

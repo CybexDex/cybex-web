@@ -41,7 +41,7 @@ const BTC_MARKETS = [
   "JADE.EOS",
   "JADE.INK",
   "JADE.BAT",
-  "JADE.VEN",
+  "JADE.VET",
   "JADE.OMG",
   "JADE.SNT",
   "JADE.NAS",
@@ -52,11 +52,18 @@ const BTC_MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.JCT",
+  "JADE.MCO",
+  // "JADE.HER",
+  "JADE.CTXC",
+  "JADE.NES",
+  "JADE.RHOC",
+  "JADE.PPT",
   "JADE.MKR",
   "JADE.FUN",
   // "JADE.SDT",
   "JADE.GNT",
-  "JADE.NKN",
+  // "JADE.NKN",
   "JADE.MVP",
   // "JADE.ICX",
   // "JADE.BTM",
@@ -64,17 +71,17 @@ const BTC_MARKETS = [
   // "JADE.ENG"
 ];
 const FilteredMarkets = {
-  // "JADE.BTC": new Set(["JADE.LTC"]),
+  "CYB": new Set(["JADE.JCT"]),
   "JADE.ETH": new Set(["JADE.LTC"]),
   "JADE.EOS": new Set(["JADE.LTC"]),
   "JADE.BTC": new Set(BTC_MARKETS)
   // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
-  CYB: { "JADE.MVP": -1 },
-  "JADE.ETH": { "JADE.MVP": -1 },
-  "JADE.BTC": { "JADE.MVP": -1 },
-  "JADE.EOS": { "JADE.MVP": -1 }
+  // CYB: { "JADE.MVP": -1 },
+  "JADE.ETH": { "JADE.JCT": -1 },
+  // "JADE.BTC": { "JADE.MVP": -1 },
+  // "JADE.EOS": { "JADE.MVP": -1 }
 };
 
 export class MarketGroup extends React.Component<any, any> {
@@ -325,14 +332,14 @@ export class MarketGroup extends React.Component<any, any> {
 
         switch (sortBy) {
           case "name":
-            if (a_symbols[0] > b_symbols[0]) {
+            if (utils.replaceName(a_symbols[0]).name > utils.replaceName(b_symbols[0]).name) {
               return inverseSort ? -1 : 1;
             } else if (a_symbols[0] < b_symbols[0]) {
               return inverseSort ? 1 : -1;
             } else {
-              if (a_symbols[1] > b_symbols[1]) {
+              if (utils.replaceName(a_symbols[1]).name > utils.replaceName(b_symbols[1]).name) {
                 return inverseSort ? -1 : 1;
-              } else if (a_symbols[1] < b_symbols[1]) {
+              } else if (utils.replaceName(a_symbols[1]).name < utils.replaceName(b_symbols[1]).name) {
                 return inverseSort ? 1 : -1;
               } else {
                 return 0;
@@ -361,6 +368,9 @@ export class MarketGroup extends React.Component<any, any> {
               return 0;
             }
         }
+      })
+      .sort((a, b) => {
+        return b.props.starred ? 1 : -1;
       });
 
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
@@ -399,6 +409,7 @@ let MyMarkets = class extends React.Component<any, any> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
+  filterName: any;
 
   constructor(props) {
     super(props);
@@ -430,7 +441,6 @@ let MyMarkets = class extends React.Component<any, any> {
     ) {
       this._lookupAssets("OPEN.", true);
     }
-
     return (
       !Immutable.is(nextProps.searchAssets, this.props.searchAssets) ||
       !Immutable.is(nextProps.markets, this.props.markets) ||
@@ -479,7 +489,7 @@ let MyMarkets = class extends React.Component<any, any> {
   }
 
   _goMarkets() {
-    this.context.router.push("/markets");
+    this.context.router.history.push("/markets");
   }
 
   _changeTab(tab) {
@@ -878,7 +888,8 @@ let MyMarkets = class extends React.Component<any, any> {
               <Icon icon="star" />
             </Checkbox>
             <FlexGrowDivider />
-            <div className="float-right" style={{ paddingLeft: 20 }}>
+            <Translate content="exchange.filter_name" style = {{ lineHeight: "18px" }}/>
+            <div className="float-right">
               <input
                 style={{
                   fontSize: "0.9rem",
@@ -887,7 +898,7 @@ let MyMarkets = class extends React.Component<any, any> {
                 }}
                 className="no-margin"
                 type="text"
-                placeholder="Filter"
+                placeholder={this.context.filterName}
                 value={this.state.myMarketFilter}
                 onChange={e => {
                   this.setState({

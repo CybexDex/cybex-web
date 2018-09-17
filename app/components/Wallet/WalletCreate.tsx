@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import BrainkeyInput from "components/Wallet/BrainkeyInput";
 import PasswordConfirm from "components/Wallet/PasswordConfirm";
@@ -128,7 +128,7 @@ let CreateNewWallet = class extends React.Component<any, any> {
       this.state.wallet_public_name === this.props.current_wallet
     ) {
       return (
-        <div>
+        <div className="text-center" style={{ maxWidth: "40rem", margin: "auto" }}>
           <h4>
             <Translate content="wallet.wallet_created" />
           </h4>
@@ -142,105 +142,108 @@ let CreateNewWallet = class extends React.Component<any, any> {
     }
 
     return (
-      <div>
-        <form
-          style={{ maxWidth: "40rem" }}
-          onSubmit={this.onSubmit.bind(this)}
-          onChange={this.formChange.bind(this)}
-          noValidate
+      <form
+        style={{ maxWidth: "40rem", margin: "auto" }}
+        onSubmit={this.onSubmit.bind(this)}
+        onChange={this.formChange.bind(this)}
+        noValidate
+      >
+        <div
+          className="grid-content"
+          style={{
+            textAlign: "left"
+          }}
         >
-          <div
-            className="grid-content"
-            style={{
-              textAlign: "left"
-            }}
-          >
-            {!this.props.restoreBrainkey ? (
-              <Translate
-                component="p"
-                content="wallet.create_importkeys_text"
-              />
-            ) : null}
-            {!this.props.restoreBrainkey ? (
-              <Translate component="p" content="wallet.create_text" />
-            ) : null}
-          </div>
-          <PasswordConfirm onValid={this.onPassword.bind(this)} />
-          {has_wallet ? (
-            <div className="no-overflow">
-              <br />
-              <section>
-                <label>
-                  <Translate content="wallet.name" />
-                </label>
-                <input
-                  tabIndex={3}
-                  type="text"
-                  id="wallet_public_name"
-                  defaultValue={this.state.wallet_public_name}
-                />
-              </section>
-              <div className="has-error">{errors.wallet_public_name}</div>
-              <br />
-            </div>
+          {!this.props.restoreBrainkey ? (
+            <Translate component="p" content="wallet.create_importkeys_text" />
           ) : null}
-
+          {!this.props.restoreBrainkey ? (
+            <Translate component="p" content="wallet.create_text" />
+          ) : null}
+        </div>
+        <PasswordConfirm onValid={this.onPassword.bind(this)} />
+        {has_wallet ? (
           <div className="no-overflow">
-            {this.state.custom_brainkey ? (
-              <div>
-                <label>
-                  <Translate content="wallet.brainkey" />
-                </label>
-                <BrainkeyInput
-                  tabIndex={4}
-                  onChange={this.onBrainkey.bind(this)}
-                  errorCallback={warn => {
-                    let { errors } = this.state;
-                    errors.validBrainkey = warn;
-                    this.setState({
-                      errors
-                    });
-                  }}
-                />
-              </div>
-            ) : null}
-
-            <Button type="primary" size="small" disabled={!this.state.isValid} style={{marginRight: "1em"}}>
-              {counterpart.translate("wallet.create_wallet")}
-            </Button>
-
-            <Button
-              type="secondary"
-              size="small"
-              onClick={this.onBack.bind(this)}
-            >
-              {counterpart.translate("wallet.cancel")}
-            </Button>
-          </div>
-
-          {!this.state.custom_brainkey ? (
-            <div style={{ paddingTop: 20 }}>
+            <br />
+            <section>
               <label>
-                <a onClick={this.onCustomBrainkey.bind(this)}>
-                  <Translate content="wallet.custom_brainkey" />
-                </a>
+                <Translate content="wallet.name" />
               </label>
+              <input
+                tabIndex={3}
+                type="text"
+                id="wallet_public_name"
+                defaultValue={this.state.wallet_public_name}
+              />
+            </section>
+            <div className="has-error">{errors.wallet_public_name}</div>
+            <br />
+          </div>
+        ) : null}
+
+        <div className="no-overflow">
+          {this.state.custom_brainkey ? (
+            <div>
+              <label>
+                <Translate content="wallet.brainkey" />
+              </label>
+              <BrainkeyInput
+                tabIndex={4}
+                onChange={this.onBrainkey.bind(this)}
+                errorCallback={warn => {
+                  let { errors } = this.state;
+                  errors.validBrainkey = warn;
+                  this.setState({
+                    errors
+                  });
+                }}
+              />
             </div>
           ) : null}
-        </form>
-      </div>
+
+          <Button
+            type="primary"
+            size="small"
+            disabled={!this.state.isValid}
+            style={{ marginRight: "1em" }}
+          >
+            {counterpart.translate("wallet.create_wallet")}
+          </Button>
+
+          <Button
+            type="secondary"
+            size="small"
+            onClick={this.onBack.bind(this)}
+          >
+            {counterpart.translate("wallet.cancel")}
+          </Button>
+        </div>
+
+        {!this.state.custom_brainkey ? (
+          <div style={{ paddingTop: 20 }}>
+            <label>
+              <a onClick={this.onCustomBrainkey.bind(this)}>
+                <Translate content="wallet.custom_brainkey" />
+              </a>
+            </label>
+          </div>
+        ) : null}
+      </form>
     );
   }
 };
 
-CreateNewWallet = connect(CreateNewWallet, {
-  listenTo() {
-    return [WalletManagerStore];
-  },
-  getProps() {
-    return WalletManagerStore.getState();
+CreateNewWallet = connect(
+  CreateNewWallet,
+  {
+    listenTo() {
+      return [WalletManagerStore];
+    },
+    getProps() {
+      return WalletManagerStore.getState();
+    }
   }
-});
+);
 
 class WalletCreate extends React.Component {
   render() {

@@ -1,1 +1,0 @@
-Bir vekil adınıza oy kullanımını yönetir. Cybex forumunda vekil olarak görev almaya gnüllü kişileri bulabilirsiniz  [Cybextalk](https://Cybextalk.org/index.php/board,75.0.html). 

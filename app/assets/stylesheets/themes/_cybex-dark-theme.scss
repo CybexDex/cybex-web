@@ -1,60 +1,5 @@
 @import "theme-template";
-
-// Colors
-$color-white: #ffffff;
-$color-orange: #ff9143;
-$color-orange-light: #ffc478;
-$color-crimson: #d2323e;
-$color-grass: #6dbb49;
-$color-grass-light: #a9e06e;
-$color-blue: #2e5be2;
-$color-light: #f7f8fa;
-$color-grey-light: rgba(120, 129, 154, 0.3);
-$color-grey: #78819a;
-$color-dark: #171d2a;
-// Sub Colors
-$color-rosset: #c87b41;
-$color-Bronze: #c86443;
-$color-flame: #d24632;
-$color-flame-light: #d96250;
-//
-$color-warn: #c12121;
-$color-mahogany: #502d2d;
-$color-blush: #ff787c;
-//
-$color-cyan: #2b756c;
-$color-pine: #2d4134;
-//
-$color-aegean: #356da4;
-$color-cobalt: #2e51b0;
-$color-lapis: #3d5bb2;
-$color-purple: #7b44ae;
-$color-porcelain: #eff1f4;
-//
-$color-lilac: #8f9ab9;
-$color-fossil: #707481;
-//
-$color-lead: #1b2230;
-$color-anchor: #212939;
-$color-independence: #293246;
-$color-noir: #111621;
-
-//
-$color-gradient-foilex: linear-gradient(-135deg, #e7ac5f, #e76536);
-$color-gradient-goldex: linear-gradient(-131deg, #ffc478, #ff9143);
-$color-gradient-grass: linear-gradient(0deg, $color-grass-light, $color-grass);
-$color-gradient-flame: linear-gradient(0deg, $color-flame-light, $color-flame);
-
-$color-gradient-silvex: linear-gradient(
-  48deg,
-  rgba(255, 255, 255, 50),
-  rgba(255, 255, 255, 100)
-);
-$color-gradient-greyex: linear-gradient(
-  48deg,
-  rgba(120, 129, 154, 50),
-  rgba(120, 129, 154, 100)
-);
+@import "../colors";
 
 // variables
 
@@ -78,7 +23,7 @@ $input-background: lighten($bg-color, 8%);
 $alert-color: $error-text-color;
 $info-color: #4a90e2;
 $success-color: #18bc9c;
-$warning-color: #ff7f00;
+$warning-color: $color-orange;
 $fee-color: $secondary-text-color;
 
 // Exchange colors

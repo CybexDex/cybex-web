@@ -2,13 +2,13 @@ import alt from "alt-instance";
 import IntlActions from "actions/IntlActions";
 import SettingsActions from "actions/SettingsActions";
 import counterpart from "counterpart";
-var locale_en = require("assets/locales/locale-en.json");
+// var locale_en = require("assets/locales/locale-en.json");
 var locale_cn = require("assets/locales/locale-zh.json");
 import ls from "common/localStorage";
 let ss = new ls("__graphene__");
 
 counterpart.registerTranslations("zh", locale_cn);
-counterpart.registerTranslations("en", locale_en);
+// counterpart.registerTranslations("en", locale_en);
 counterpart.setFallbackLocale("zh");
 
 import { addLocaleData } from "react-intl";
@@ -16,7 +16,9 @@ import { addLocaleData } from "react-intl";
 import localeCodes from "assets/locales";
 import { AbstractStore } from "./AbstractStore";
 for (let localeCode of localeCodes) {
-  addLocaleData(require(`react-intl/locale-data/${localeCode}`));
+  import(`react-intl/locale-data/${localeCode}`).then(res => {
+    addLocaleData(res.default);
+  });
 }
 
 const langSet = {
@@ -33,8 +35,7 @@ const getLangFromNavi = () =>
 
 class IntlStore extends AbstractStore<{ currentLocale }> {
   locales = ["zh", "en"];
-  localesObject = {
-    en: locale_en,
+  localesObject: { [locale: string]: any } = {
     zh: locale_cn
   };
   currentLocale;
@@ -64,6 +65,11 @@ class IntlStore extends AbstractStore<{ currentLocale }> {
   }
 
   onSwitchLocale({ locale, localeData }: { locale; localeData? }) {
+    console.debug("new locale: ", locale, localeData);
+
+    if (!this.localesObject[locale] && localeData) {
+      this.localesObject[locale] = localeData;
+    }
     switch (locale) {
       case "en":
         counterpart.registerTranslations("en", this.localesObject.en);
@@ -71,7 +77,6 @@ class IntlStore extends AbstractStore<{ currentLocale }> {
       case "zh":
         counterpart.registerTranslations("zh", this.localesObject.zh);
         break;
-
       default:
         counterpart.registerTranslations(locale, localeData);
         break;

@@ -1,10 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link } from "react-router";
+import { Link, withRouter } from "react-router-dom";
 import Translate from "react-translate-component";
 import RestoreWallet from "components/Account/RestoreWallet";
 import SettingsActions from "actions/SettingsActions";
 import WalletUnlockActions from "actions/WalletUnlockActions";
+import WalletManagerStore from "stores/WalletManagerStore";
 import counterpart from "counterpart";
 import { LeftSlide } from "components/Common/LeftSlide";
 import {
@@ -23,6 +24,31 @@ import WalletDb from "stores/WalletDb";
 import WalletUnlockStore from "stores/WalletUnlockStore";
 import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
+import { Gtag } from "services/Gtag";
+import { connect } from "alt-react";
+
+let LoginCheck: any = class extends React.Component<any, any> {
+  componentWillMount() {
+    console.debug("PO: ", WalletManagerStore.getState(), AccountStore.getState());
+    if (
+      AccountStore.getState().currentAccount
+    ) {
+      this.props.history.push("/dashboard");
+    } else {
+      // SettingsActions.changeSetting({
+      //   setting: "passwordLogin",
+      //   value: true
+      // });
+      WalletUnlockActions.lock();
+    }
+  }
+  render() {
+    return <span style={{ display: "none" }} />;
+  }
+};
+
+LoginCheck = withRouter(LoginCheck);
+
 let LoginMain = Radium(
   class extends React.Component<
     any,
@@ -72,8 +98,9 @@ let LoginMain = Radium(
           AccountActions.setPasswordAccount(account);
           this.props.resolve();
           WalletUnlockActions.change();
+          Gtag.eventLoginDone(account, "cloud");
         }
-      }, 1000);
+      }, 500);
       return false;
     };
 
@@ -103,6 +130,17 @@ let LoginMain = Radium(
               style={[$styleFlexContainer("column"), { width: "100%" }] as any}
               onSubmit={this.onPasswordEnter}
             >
+              {/* <input
+                style={{"display":"none"}}
+                type="text"
+                name="fakeusernameremembered"
+              />
+              <input
+                style={{"display":"none"}}
+                type="password"
+                name="fakepasswordremembered"
+              /> */}
+
               <Translate component="h1" content="account.welcome" />
               <h4 style={{ marginBottom: "3rem" }}>
                 <Translate content="account.login_prefix" />
@@ -161,23 +199,30 @@ let LoginMain = Radium(
   }
 );
 
-export default class Login extends React.Component<any, any> {
+let Login = class extends React.Component<any, any> {
   onSelect(route) {
-    this.props.router.push("/create-account/" + route);
+    this.props.history.push("/create-account/" + route);
   }
 
   render() {
     if (this.props.children) {
       return this.props.children;
     }
-    return (
+    return [
+      <LoginCheck key="loginCheck" />,
       <div
+        key="loginSecond"
         className="login-wrapper anim-fade"
         style={{ width: "100%", display: "flex", height: "100%" }}
       >
-        <LeftSlide />
-        <LoginMain resolve={() => this.props.router.push("/dashboard")} />
+        <LeftSlide key="loginSlide" />
+        <LoginMain
+          key="loginMain"
+          resolve={() => this.props.history.push("/dashboard")}
+        />
       </div>
-    );
+    ];
   }
-}
+};
+
+export default Login;

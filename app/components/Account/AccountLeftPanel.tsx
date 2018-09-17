@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import AccountInfo from "./AccountInfo";
 import Translate from "react-translate-component";
@@ -23,13 +23,19 @@ class AccountLeftPanel extends React.Component<
     linkedAccounts;
     isMyAccount;
     passwordLogin;
+    advancedMode: boolean;
   },
   any
 > {
   last_path = null;
   static propTypes = {
     account: PropTypes.object.isRequired,
+    advancedMode: PropTypes.bool.isRequired,
     linkedAccounts: PropTypes.object
+  };
+
+  static defaultProps = {
+    advancedMode: false
   };
 
   constructor(props) {
@@ -184,29 +190,29 @@ class AccountLeftPanel extends React.Component<
             <section className="block-list">
               <ul className="account-left-menu" style={{ marginBottom: 0 }}>
                 <li>
-                  <Link
+                  <NavLink
                     to={`/account/${account_name}/dashboard/`}
                     activeClassName="active"
                   >
                     <Translate content="header.dashboard" />
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
-                  <Link
+                  <NavLink
                     to={`/account/${account_name}/member-stats/`}
                     activeClassName="active"
                   >
                     <Translate content="account.member.stats" />
-                  </Link>
+                  </NavLink>
                 </li>
                 {/* <li><Link to={`/account/${account_name}/orders/`} activeClassName="active"><Translate content="account.open_orders"/></Link></li> */}
                 <li>
-                  <Link
+                  <NavLink
                     to={`/account/${account_name}/voting/`}
                     activeClassName="active"
                   >
                     <Translate content="account.voting" />
-                  </Link>
+                  </NavLink>
                 </li>
 
                 {/* <li className="menu-subheader" >
@@ -239,37 +245,39 @@ class AccountLeftPanel extends React.Component<
               {this.state.showAdvanced ? (
                 <ul className="account-left-menu">
                   <li>
-                    <Link
+                    <NavLink
                       to={`/account/${account_name}/assets/`}
                       activeClassName="active"
                     >
                       <Translate content="account.user_issued_assets.issued_assets" />
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to={`/account/${account_name}/permissions/`}
                       activeClassName="active"
                     >
                       <Translate content="account.permissions" />
-                    </Link>
+                    </NavLink>
                   </li>
-                  <li>
-                    <Link
-                      to={`/account/${account_name}/whitelist/`}
-                      activeClassName="active"
-                    >
-                      <Translate content="account.whitelist.title" />
-                    </Link>
-                  </li>
+                  {this.props.advancedMode && (
+                    <li>
+                      <NavLink
+                        to={`/account/${account_name}/whitelist/`}
+                        activeClassName="active"
+                      >
+                        <Translate content="account.whitelist.title" />
+                      </NavLink>
+                    </li>
+                  )}
                   {isMyAccount ? (
                     <li>
-                      <Link
+                      <NavLink
                         to={`/account/${account_name}/vesting/`}
                         activeClassName="active"
                       >
                         <Translate content="account.vesting.title" />
-                      </Link>
+                      </NavLink>
                     </li>
                   ) : null}
                 </ul>

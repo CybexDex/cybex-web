@@ -35,6 +35,7 @@ class Settings extends React.Component {
           "walletLockTimeout",
           "themes",
           "showAssetPercent",
+          "advancedMode",
           "passwordLogin",
           "reset"
         ],
@@ -167,6 +168,7 @@ class Settings extends React.Component {
 
       case "showSettles":
       case "showAssetPercent":
+      case "advancedMode":
       case "passwordLogin":
         let reference = defaults[setting][0];
         if (reference.translate) reference = reference.translate;

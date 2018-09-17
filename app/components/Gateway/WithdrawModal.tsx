@@ -30,6 +30,7 @@ import { CurrentBalance } from "./Common";
 import AccountActions from "actions/AccountActions";
 import { calcAmount } from "utils//Asset";
 import { BigNumber } from "bignumber.js";
+import { NotificationActions } from "actions/NotificationActions";
 
 const debug = debugGen("WithdrawModal");
 
@@ -67,8 +68,11 @@ type state = {
   fadeOut;
   useCybAsFee?;
   withdraw_amount;
-  withdraw_address;
+  withdraw_address: string;
   eosPrecisionError;
+  withMemo;
+  withdraw_address_origin;
+  memoContent;
   outerPrecision: number;
 };
 
@@ -102,13 +106,16 @@ class WithdrawModal extends React.Component<props, state> {
       eosPrecisionError: false,
       withdraw_address_loading: false,
       withdraw_address_valid: false,
-      outerPrecision: 2
+      outerPrecision: 2,
+      withMemo: false,
+      withdraw_address_origin: "",
+      memoContent: ""
     };
   }
 
   onWithdrawAmountChange = ({ amount }) => {
     let eosPrecisionError = false;
-    let outerPrecision;
+    let outerPrecision, p;
     try {
       outerPrecision =
         this.props.withdrawInfo.type === "EOS"
@@ -118,18 +125,76 @@ class WithdrawModal extends React.Component<props, state> {
     } catch (e) {
       outerPrecision = 4;
     }
-    if (this.props.withdrawInfo.type === "EOS") {
-      eosPrecisionError =
-        new BigNumber(amount || 1)
-          .dividedBy(1 * Math.pow(10, outerPrecision))
-          .toString()
-          .indexOf(".") !== -1;
-    }
+    p = new BigNumber(1).dividedBy(Math.pow(10, outerPrecision));
+    eosPrecisionError =
+      new BigNumber(amount || 1)
+        .dividedBy(p)
+        .toString()
+        .indexOf(".") !== -1;
     this.setState({
       withdraw_amount: amount,
       eosPrecisionError,
-      outerPrecision
+      outerPrecision: p.toString()
     });
+  };
+
+  onMemoToggleChange = e => {
+    let withMemo = e.target.checked;
+    let fullAddress = this.state.withdraw_address;
+    let fakeE;
+    this.setState({
+      withMemo,
+      memoContent: ""
+    });
+    if (!withMemo) {
+      fakeE = {
+        target: {
+          value: this.state.withdraw_address_origin
+        }
+      };
+      this.onWithdrawAddressChanged(fakeE);
+    } else {
+      fakeE = {
+        target: {
+          value: this.state.withdraw_address
+        }
+      };
+      this.onWithdrawOriginAddrChange(fakeE);
+    }
+  };
+
+  onWithdrawMemoChange = e => {
+    if (!this.state.withMemo) return;
+    let memoContent = e.target.value;
+    this.setState({
+      memoContent
+    });
+    let value = memoContent
+      ? `${this.state.withdraw_address_origin}[${memoContent}]`
+      : this.state.withdraw_address_origin;
+    let fakeE = {
+      target: {
+        value
+      }
+    };
+    this.onWithdrawAddressChanged(fakeE);
+  };
+
+  onWithdrawOriginAddrChange = e => {
+    let withdraw_address_origin = e.target.value;
+    this.setState({
+      withdraw_address_origin
+    });
+    let value =
+      this.state.withMemo && this.state.memoContent
+        ? `${withdraw_address_origin}[${this.state.memoContent}]`
+        : withdraw_address_origin;
+    let fakeE = {
+      target: {
+        value
+      }
+    };
+    this.onWithdrawAddressChanged(fakeE);
   };
 
   onWithdrawAddressChanged(e) {
@@ -171,6 +236,18 @@ class WithdrawModal extends React.Component<props, state> {
   componentWillMount() {
     // this._updateFee();
     // this._checkFeeStatus();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.withdrawInfo &&
+      prevProps.withdraw &&
+      this.props.withdrawInfo.type != prevProps.withdrawInfo.type
+    ) {
+      this.setState({
+        withMemo: false
+      });
+    }
   }
 
   onFeeChanged({ asset }) {
@@ -343,7 +420,11 @@ class WithdrawModal extends React.Component<props, state> {
       this._withdrawMemo(),
       null,
       useCybAsFee ? "1.3.0" : this.props.asset.get("id")
-    );
+    ).catch(error => {
+      NotificationActions.error(
+        counterpart.translate("modal.withdraw.lack_memo")
+      );
+    });
   };
 
   _withdrawMemo = () => {
@@ -384,7 +465,10 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_address_error,
       useCybAsFee,
       eosPrecisionError,
-      memo
+      memo,
+      withdraw_address_origin,
+      withMemo,
+      memoContent
     } = this.state;
 
     let balance = null;
@@ -429,7 +513,6 @@ class WithdrawModal extends React.Component<props, state> {
     let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
       .name;
     let isEOS = assetName.indexOf("EOS") !== -1;
-    console.debug("AssetName: ", assetName);
     return (
       <BaseModal modalId={modalId}>
         <div className="content-block">
@@ -552,6 +635,27 @@ class WithdrawModal extends React.Component<props, state> {
             </div>
           </div>
         </div>
+        {isEOS && (
+          <div className="content-block">
+            <div className="inline-label use-cyb">
+              <Translate
+                className="left-label"
+                component="lebel"
+                content="modal.withdraw.with_memo"
+              />
+              <div className="switch">
+                <input
+                  id="withMemo"
+                  type="checkbox"
+                  value={withMemo}
+                  defaultChecked={false}
+                  onChange={this.onMemoToggleChange}
+                />
+                <label htmlFor="withMemo" />
+              </div>
+            </div>
+          </div>
+        )}
         <div className="content-block">
           <label className="left-label">
             {!isEOS ? (
@@ -564,18 +668,44 @@ class WithdrawModal extends React.Component<props, state> {
             <div className="inline-label">
               <input
                 type="text"
-                value={withdraw_address}
-                onChange={this.onWithdrawAddressChanged.bind(this)}
+                value={withMemo ? withdraw_address_origin : withdraw_address}
+                onChange={
+                  withMemo
+                    ? this.onWithdrawOriginAddrChange.bind(this)
+                    : this.onWithdrawAddressChanged.bind(this)
+                }
                 autoComplete="off"
               />
-              {/* <span onClick={this.onDropDownList.bind(this)} >&#9660;</span> */}
-              {/* <span onClick={this.onDropDownList.bind(this)} >&#9660;</span> */}
             </div>
           </div>
+
+          {withMemo && (
+            <div style={{ marginTop: 10 }}>
+              <label className="left-label">
+                <Translate component="span" content="gateway.withdraw_memo" />
+              </label>
+              <div className="blocktrades-select-dropdown">
+                <div className="inline-label">
+                  <input
+                    type="text"
+                    value={memoContent}
+                    onChange={this.onWithdrawMemoChange.bind(this)}
+                    autoComplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
           <ErrorTipBox
             isI18n={true}
             placeholder={true}
             tips={[
+              {
+                name: "withdraw-address",
+                isError: withdraw_address.indexOf(" ") !== -1,
+                isI18n: true,
+                message: "gateway.space_in_memo"
+              },
               {
                 name: "withdraw-address",
                 isError: addressInvalid,
@@ -628,7 +758,6 @@ WithdrawModalWrapper = connect(
     },
     getProps(props) {
       let { modalId } = props;
-      debug("connect", props);
       let withdrawInfo = GatewayStore.getState().withdrawInfo;
       return {
         open: GatewayStore.getState().modals.get(modalId),

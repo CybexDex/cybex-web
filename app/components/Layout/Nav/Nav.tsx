@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Link, withRouter, WithRouterProps } from "react-router";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { getClassName } from "utils/ClassName";
 import Icon from "components/Icon/Icon";
 import SettingsStore from "stores/SettingsStore";
@@ -17,6 +17,7 @@ import LogoutModal, {
 import { NavItem } from "components/Common";
 import { Colors } from "components/Common/Colors";
 import { ExplorerNav } from "components/Explorer/ExplorerNav";
+import IntlStore from "stores/IntlStore";
 
 interface NavLink {
   id: string;
@@ -33,6 +34,14 @@ interface NavLink {
 
 const NavLinks: Array<NavLink> = [
   {
+    id: "eto",
+    routeTo: "/eto",
+    // routeTo: "/eto",
+    activeMatcher: /^\/eto/,
+    name: "eto",
+    icon: "ETO"
+  },
+  {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
     activeMatcher: /^\/account/,
@@ -40,7 +49,6 @@ const NavLinks: Array<NavLink> = [
     icon: "wallet",
     displayOnlyWhen: "currentAccount"
   },
-
   {
     id: "exchange",
     routeTo: lastMarket => `/market/${lastMarket}`,
@@ -63,19 +71,12 @@ const NavLinks: Array<NavLink> = [
   },
   {
     id: "explorer",
-    routeTo: "/ledger",
+    routeTo: "/explorer/blocks",
     activeMatcher: /^\/ledger|explorer/,
     name: "explorer",
     icon: "explorer",
     children: <ExplorerNav />
   }
-  // {
-  //   id: "settings",
-  //   routeTo: "/settings",
-  //   name: "Settings",
-  //   icon: "settings",
-  //   down: true
-  // }
 ];
 
 let logoutItem = {
@@ -109,16 +110,17 @@ let sideStyles = {
   }
 };
 
-type NavProps = WithRouterProps & {
-  settings: any;
+type NavProps = {
+  settings?: any;
   isVertical?;
-  currentAccount: string;
-  [x: string]: string;
+  currentAccount?: string;
+  lastMarket?: string;
+  [x: string]: any;
 };
 
 const getNavId = id => `$nav__${id}`;
 
-export class Nav extends React.PureComponent<
+let Nav = class extends React.PureComponent<
   NavProps,
   { isExpand; siderTop; siderLeft }
 > {
@@ -214,7 +216,7 @@ export class Nav extends React.PureComponent<
                 key={id}
                 id={id}
                 onClick={e => {
-                  this.context.router.push(routeTo);
+                  this.props.history.push(routeTo);
                 }}
                 active={
                   link.activeMatcher
@@ -225,37 +227,30 @@ export class Nav extends React.PureComponent<
               />
             ];
           })}
-          {/* Logout Button */}
-          {
-            <NavItem
-              name="worldcup"
-              key={getNavId(logoutItem.id)}
-              id={getNavId(logoutItem.id)}
-              hideIcon
-              onClick={() =>
-                window.open(
-                  "https://2018.cybex.io",
-                  "_blank"
-                )
-              }
-            />
-          }
+          <NavItem
+            name="cybex_bet"
+            key={getNavId("cybex_bet")}
+            id={getNavId("cybex_bet")}
+            hideIcon
+            onClick={() => window.open("https://cybet.cybex.io", "_blank")}
+          />
         </div>
         {/* <i style={sideStyle as any} /> */}
       </nav>
     );
   }
-}
+};
 
-const NavWithProps = connect(
+Nav = connect(
   Nav,
   {
     listenTo() {
-      return [AccountStore, SettingsStore];
+      return [AccountStore, SettingsStore, IntlStore];
     },
     getProps() {
       const chainID = Apis.instance().chain_id;
       return {
+        locale: IntlStore.getState(),
         settings: SettingsStore.getState().settings,
         currentAccount:
           AccountStore.getState().currentAccount ||
@@ -268,4 +263,7 @@ const NavWithProps = connect(
   }
 );
 
-export default withRouter(NavWithProps);
+Nav = withRouter(Nav);
+
+export default Nav;
+export { Nav };

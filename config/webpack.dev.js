@@ -4,8 +4,10 @@ const {
   plugins,
   BASE_URL,
   outputPath,
-  defines
+  defines,
+  externals
 } = require("./webpack.config");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 console.log("Webpack Config for Dev");
 const webpack = require("webpack");
@@ -57,25 +59,29 @@ const def = {
     "process.env": {
       NODE_ENV: JSON.stringify("development")
     },
-    __DEV__: true
+    __DEV__: true,
+    __DEPRECATED__: false,
+    __PERFORMANCE_DEVTOOL__: true
   },
   ...defines
 };
 console.log("DEF: ", def);
 const devPlugins = [
+  new HtmlWebpackPlugin({
+    filename: "index.html",
+    template: path.resolve(BASE_URL, "app/assets/index-dev.html")
+  }),
   new webpack.DefinePlugin(def),
   new webpack.HotModuleReplacementPlugin()
 ].concat(plugins);
 
 const config = {
   entry: {
-    vendor: ["react", "react-dom", "highcharts/highstock", "lodash"],
     styles: path.resolve(BASE_URL, "app/assets/style-loader.js"),
-    assets: path.resolve(BASE_URL, "app/assets/loader-dev"),
     app: [
       "react-hot-loader/patch",
       "webpack-hot-middleware/client",
-      path.resolve(BASE_URL, "app/Main-dev.js")
+      path.resolve(BASE_URL, "app/Main.js")
     ]
   },
   context: path.resolve(BASE_URL, "app"),
@@ -83,6 +89,7 @@ const config = {
     publicPath: "/",
     path: outputPath,
     filename: "[name]-[hash:7].js",
+    chunkFilename: "[name]-[chunkhash:7].js",
     pathinfo: true,
     sourceMapFilename: "[name].js.map"
   },
@@ -91,11 +98,12 @@ const config = {
   module: {
     rules: loaders.concat(cssLoaders)
   },
-  resolve,
-  plugins: devPlugins,
   node: {
     fs: "empty"
   },
+  externals,
+  resolve,
+  plugins: devPlugins,
   optimization: {}
 };
 

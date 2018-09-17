@@ -3,12 +3,8 @@ let _this;
 const ADDRESS_PREFIX = "CYB"; // 修改此处会修改包括各种key生成在内的前缀；
 
 const PREFIX_OF_CHAIN = {
-  "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8": "BTS",
-  d3011619ed40beb302e3ef32b527fa36b89594d93b885fb226230988b47a12c5: "BTS",
-  a42af4f55e76505b97529e8be59ed549065fb9bf8d2edf2bb3707df231b0e5e0: "CYB",
-  "133572a395d5b12c7db7f2d5f0dadd347b68ccbd996defafcb5768954c6d46c5": "CYB",
-  "45ad2d3f9ef92a49b55c2227eb06123f613bb35dd08bd876f2aea21925a67a67": "MUSE",
-  "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447": "TEST"
+  "90be01e82b981c8f201c9a78a3d31f655743b29ff3274727b1439b093d04aa23": "CYB",
+  "59e27e3883fc5ec4dbff68855f83961303157df9a64a3ecf49982affd8e8d490": "CYB"
 };
 
 const Network = class {
@@ -36,44 +32,18 @@ let ecc_config = {
 _this = {
   core_asset: "CORE",
   address_prefix: ADDRESS_PREFIX,
-  expire_in_secs: 15,
+  expire_in_secs: 30,
   expire_in_secs_proposal: 24 * 60 * 60,
   review_in_secs_committee: 24 * 60 * 60,
   networks: {
-    BitShares: new Network(
-      "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8",
-      "BTS"
-    ),
-    CybexOpen: new Network(
-      "d3011619ed40beb302e3ef32b527fa36b89594d93b885fb226230988b47a12c5",
-      "BTS"
-    ),
-    Cybex: new Network(
-      "a42af4f55e76505b97529e8be59ed549065fb9bf8d2edf2bb3707df231b0e5e0",
-      ADDRESS_PREFIX
-    ),
     Cybex: new Network(
       "90be01e82b981c8f201c9a78a3d31f655743b29ff3274727b1439b093d04aa23",
-      ADDRESS_PREFIX
+      "CYB"
     ),
-    CybexTest: new Network(
-      "133572a395d5b12c7db7f2d5f0dadd347b68ccbd996defafcb5768954c6d46c5",
-      ADDRESS_PREFIX
-    ),
-    Muse: new Network(
-      "45ad2d3f9ef92a49b55c2227eb06123f613bb35dd08bd876f2aea21925a67a67",
-      "MUSE"
-    ),
-    Test: new Network(
-      "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447",
-      "TEST"
-    ),
-    Obelisk: {
-      core_asset: "GOV",
-      address_prefix: "FEW",
-      chain_id:
-        "1cfde7c388b9e8ac06462d68aadbd966b58f88797637d9af805b4560b0e9661e"
-    }
+    CybexOpen: new Network(
+      "59e27e3883fc5ec4dbff68855f83961303157df9a64a3ecf49982affd8e8d490",
+      "CYB"
+    )
   },
 
   /** Set a few properties for known chain IDs. */
@@ -111,7 +81,7 @@ _this = {
     _this.core_asset = "CORE";
     _this.address_prefix = ADDRESS_PREFIX;
     ecc_config.address_prefix = ADDRESS_PREFIX;
-    _this.expire_in_secs = 15;
+    _this.expire_in_secs = 30;
     _this.expire_in_secs_proposal = 24 * 60 * 60;
 
     console.log("Chain config reset");

@@ -38,7 +38,7 @@ const pickKeys = (keys: string[], count = 1) => {
 
 class GatewayActions {
   async showDepositModal(account, asset, modalId = DEPOSIT_MODAL_ID) {
-    let type = JadePool.ADDRESS_TYPES[asset];
+    let type = JadePool.ADDRESS_TYPES[asset] && JadePool.ADDRESS_TYPES[asset].type;
     if (!type) {
       return NotificationActions.error(
         `No suitable asset for ${asset} to be deposited`
@@ -51,7 +51,7 @@ class GatewayActions {
 
   async showWithdrawModal(asset) {
     debug("Withdraw: ", asset);
-    let type = JadePool.ADDRESS_TYPES[asset];
+    let type = JadePool.ADDRESS_TYPES[asset] && JadePool.ADDRESS_TYPES[asset].type;
     if (!type) {
       return NotificationActions.error(
         `No suitable asset for ${asset} to be withdrawn`
@@ -101,7 +101,7 @@ class GatewayActions {
     account: Map<string, any>,
     login,
     offset = 0,
-    size = 20
+    size = 200
   ) {
     debug("[QueryFundRecord]", account);
     const tx = new CustomTx({

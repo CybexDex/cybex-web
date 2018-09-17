@@ -1,0 +1,4412 @@
+[
+  {
+    "symbol": "BTC",
+    "name": "Bitcoin",
+    "currency": "BTC",
+    "logo": "https://cdn.mytoken.org/e04064b7f151008854f4f0d6c822b608"
+  },
+  {
+    "symbol": "ETH",
+    "name": "Ethereum",
+    "currency": "ETH",
+    "logo": "https://cdn.mytoken.org/FvKK2xxE7DNqbKHA9Dle2FPheJJe"
+  },
+  {
+    "symbol": "EOS",
+    "name": "EOS",
+    "currency": "EOS",
+    "logo": "https://cdn.mytoken.org/FjMXTFsqGTqS3rNEygtKl6BeBJeY"
+  },
+  {
+    "symbol": "LTC",
+    "name": "Litecoin",
+    "currency": "LTC",
+    "logo": "https://cdn.mytoken.org/f216d6148b3e959cc8993dfe432647ee"
+  },
+  {
+    "symbol": "BCH",
+    "name": "Bitcoin Cash",
+    "currency": "BCH",
+    "logo": "https://cdn.mytoken.org/FvZPoFqN3D7ghXaPMI21vcH6Rd1s"
+  },
+  {
+    "symbol": "XRP",
+    "name": "Ripple",
+    "currency": "XRP",
+    "logo": "https://cdn.mytoken.org/b806b2b93e583eca434a02008ae35f33"
+  },
+  {
+    "symbol": "BKK",
+    "name": "BKEX Token",
+    "currency": "BKK",
+    "logo": "https://cdn.mytoken.org/FvjcuCqQRVovtNt2hhyxlfZij_4j"
+  },
+  {
+    "symbol": "BTM",
+    "name": "Bytom",
+    "currency": "BTM",
+    "logo": "https://cdn.mytoken.org/FubiSzIgMv7Aj2suu8dbNEUeSYu-"
+  },
+  {
+    "symbol": "ADA",
+    "name": "Cardano",
+    "currency": "ADA",
+    "logo": "https://cdn.mytoken.org/e7f4b8f7f40dd261a2d566fe00d96a27"
+  },
+  {
+    "symbol": "AE",
+    "name": "Aeternity",
+    "currency": "AE",
+    "logo": "https://cdn.mytoken.org/Fu7PHI9jOBRz2bFnc09Qo2MG2Eav"
+  },
+  {
+    "symbol": "IOST",
+    "name": "IOStoken",
+    "currency": "IOST",
+    "logo": "https://cdn.mytoken.org/e85f62ed71c040870848bfb10e53ca21"
+  },
+  {
+    "symbol": "MIOTA",
+    "name": "IOTA",
+    "currency": "IOT",
+    "logo": "https://cdn.mytoken.org/FgGEQmcRoxTY-CceXJLpoWrKsEz0"
+  },
+  {
+    "symbol": "HT",
+    "name": "Huobi Token",
+    "currency": "HT",
+    "logo": "https://cdn.mytoken.org/FnjjYhzTi48HXz8t7BdHyKM2i5Cn"
+  },
+  {
+    "symbol": "QTUM",
+    "name": "Qtum",
+    "currency": "QTUM",
+    "logo": "https://cdn.mytoken.org/Fiy_sXNOqXfWVNrzY2r9F76S8y_T"
+  },
+  {
+    "symbol": "ONT",
+    "name": "Ontology",
+    "currency": "ONT",
+    "logo": "https://cdn.mytoken.org/da7ebdb2a43e3d583c0d479cbc6370e0"
+  },
+  {
+    "symbol": "BTS",
+    "name": "BitShares",
+    "currency": "BTS",
+    "logo": "https://cdn.mytoken.org/Fo5Syh3cIHTRHQ9uRcPMbcBtVZ-P"
+  },
+  {
+    "symbol": "ETC",
+    "name": "Ethereum Classic",
+    "currency": "ETC",
+    "logo": "https://cdn.mytoken.org/FkEEBMmwkrCw4G6acf9O48G2VY2T"
+  },
+  {
+    "symbol": "GXS",
+    "name": "GXChain",
+    "currency": "GXS",
+    "logo": "https://cdn.mytoken.org/214039f127f87983461636200cfa4233"
+  },
+  {
+    "symbol": "NEO",
+    "name": "NEO",
+    "currency": "NEO",
+    "logo": "https://cdn.mytoken.org/FlWLNqeMM_raZEVqpztI8NCuZ1IY"
+  },
+  {
+    "symbol": "TRX",
+    "name": "TRON",
+    "currency": "TRX",
+    "logo": "https://cdn.mytoken.org/4c08d7948d080fc77b361777c5af4b10"
+  },
+  {
+    "symbol": "ZIL",
+    "name": "Zilliqa",
+    "currency": "ZIL",
+    "logo": "https://cdn.mytoken.org/FkyROESe5wy9rAw_tYUsyCCeiNID"
+  },
+  {
+    "symbol": "HSR",
+    "name": "Hshare",
+    "currency": "HSR",
+    "logo": "https://cdn.mytoken.org/Fo0FA_gYRbiNmqz3TVyGrGSO8-JT"
+  },
+  {
+    "symbol": "LRC",
+    "name": "Loopring [ETH]",
+    "currency": "LRC",
+    "logo": "https://cdn.mytoken.org/Fi_RKHZJBoSJaqlzw_mcC862zcDm"
+  },
+  {
+    "symbol": "SNT",
+    "name": "Status",
+    "currency": "SNT",
+    "logo": "https://cdn.mytoken.org/FqzwcO7BRTyjUkKWOVWw6SdyDQHu"
+  },
+  {
+    "symbol": "BNB",
+    "name": "Binance Coin",
+    "currency": "BNB",
+    "logo": "https://cdn.mytoken.org/5c8c17dc50c6706533f658d685b3bd5d"
+  },
+  {
+    "symbol": "ELF",
+    "name": "aelf",
+    "currency": "ELF",
+    "logo": "https://cdn.mytoken.org/586fd5f2933e2e03f08b52d3d488a19a"
+  },
+  {
+    "symbol": "DOGE",
+    "name": "Dogecoin",
+    "currency": "DOGE",
+    "logo": "https://cdn.mytoken.org/Fo0AJ16ueLMz5Zd3Fh0WfkGj2870"
+  },
+  {
+    "symbol": "WICC",
+    "name": "WaykiChain",
+    "currency": "WICC",
+    "logo": "https://cdn.mytoken.org/FuOwrp9mXgWPlYXhdJx7Lnc91Mcv"
+  },
+  {
+    "symbol": "OKB",
+    "name": "OKB",
+    "currency": "OKB",
+    "logo": "https://cdn.mytoken.org/c7b49acda57163594bac46f268951660"
+  },
+  {
+    "symbol": "MT",
+    "name": "MyToken",
+    "currency": "MT",
+    "logo": "https://cdn.mytoken.org/6a9ce7554e145b54a79a775c9a14edd9"
+  },
+  {
+    "symbol": "RUFF",
+    "name": "Ruff",
+    "currency": "RUFF",
+    "logo": "https://cdn.mytoken.org/1f37d7bb27e7df3098ba093b8a2d12bc"
+  },
+  {
+    "symbol": "OMG",
+    "name": "OmiseGO",
+    "currency": "OMG",
+    "logo": "https://cdn.mytoken.org/b1fdfdfb1e3146d0868f85a38469bc6f"
+  },
+  {
+    "symbol": "KNC",
+    "name": "Kyber Network",
+    "currency": "KNC",
+    "logo": "https://cdn.mytoken.org/kyber-network.png"
+  },
+  {
+    "symbol": "FT",
+    "name": "FCoin Token",
+    "currency": "FT",
+    "logo": "https://cdn.mytoken.org/Fr9PQnKEzTZ4tu6CpWwLG8EhvQfF"
+  },
+  {
+    "symbol": "SOC",
+    "name": "All Sports",
+    "currency": "SOC",
+    "logo": "https://cdn.mytoken.org/FhZ1TkTGcpZu_pnEXaHDD0EQotb8"
+  },
+  {
+    "symbol": "ZB",
+    "name": "ZB",
+    "currency": "ZB",
+    "logo": "https://cdn.mytoken.org/742b3d53ee7625cb14f145f33b3ee0fc"
+  },
+  {
+    "symbol": "CMT",
+    "name": "CyberMiles",
+    "currency": "CMT",
+    "logo": "https://cdn.mytoken.org/6f5a69ea8e581baa0e006ba815c59d4e"
+  },
+  {
+    "symbol": "PAI",
+    "name": "Project PAI",
+    "currency": "PAI",
+    "logo": "https://cdn.mytoken.org/FruuNLtPZPkdAyannTTNCri46RoI"
+  },
+  {
+    "symbol": "USDT",
+    "name": "Tether",
+    "currency": "USDT",
+    "logo": "https://cdn.mytoken.org/tether.png"
+  },
+  {
+    "symbol": "NAS",
+    "name": "Nebulas",
+    "currency": "NAS",
+    "logo": "https://cdn.mytoken.org/FqBtmdbq0dM68Z9bawkaT-WEgK9S"
+  },
+  {
+    "symbol": "XLM",
+    "name": "Stellar",
+    "currency": "XLM",
+    "logo": "https://cdn.mytoken.org/519cdbf07cd778f982994c8132cc9865"
+  },
+  {
+    "symbol": "BLZ",
+    "name": "Bluzelle",
+    "currency": "BLZ",
+    "logo": "https://cdn.mytoken.org/FlzhEjRZfvgFDSO8VfG_SNShFSRR"
+  },
+  {
+    "symbol": "LOOM",
+    "name": "Loom Network",
+    "currency": "LOOM",
+    "logo": "https://cdn.mytoken.org/ef8accc8f4e048ca1b5c799b4c1fd2e3"
+  },
+  {
+    "symbol": "ACT",
+    "name": "Achain",
+    "currency": "ACT",
+    "logo": "https://cdn.mytoken.org/3278e3033f1e49792129f550a5a3b00c"
+  },
+  {
+    "symbol": "TNB",
+    "name": "Time New Bank",
+    "currency": "TNB",
+    "logo": "https://cdn.mytoken.org/time-new-bank.png"
+  },
+  {
+    "symbol": "MANA",
+    "name": "Decentraland",
+    "currency": "MANA",
+    "logo": "https://cdn.mytoken.org/decentraland.png"
+  },
+  {
+    "symbol": "ZRX",
+    "name": "0x",
+    "currency": "ZRX",
+    "logo": "https://cdn.mytoken.org/ce5a2273226f59877566b71b5d8e837a"
+  },
+  {
+    "symbol": "SMT",
+    "name": "SmartMesh",
+    "currency": "SMT",
+    "logo": "https://cdn.mytoken.org/FkWQfX7Hh1syoMe2j08EkIkRpKLH"
+  },
+  {
+    "symbol": "ELA",
+    "name": "Elastos",
+    "currency": "ELA",
+    "logo": "https://cdn.mytoken.org/Fth5mADFM_qradPAmm4W9Tz-9Ey0"
+  },
+  {
+    "symbol": "SC",
+    "name": "Siacoin",
+    "currency": "SC",
+    "logo": "https://cdn.mytoken.org/Fr_rMLn946zcJ16hS-HR4K3ShBql"
+  },
+  {
+    "symbol": "GTC",
+    "name": "Game.com",
+    "currency": "GTC",
+    "logo": "https://cdn.mytoken.org/057def8d5c56775220b8355f6e78fffe"
+  },
+  {
+    "symbol": "TRUE",
+    "name": "True Chain",
+    "currency": "TRUE",
+    "logo": "https://cdn.mytoken.org/FuRnyAPVeFzqLdGvylf63-w0Tc8J"
+  },
+  {
+    "symbol": "ZEC",
+    "name": "Zcash",
+    "currency": "ZEC",
+    "logo": "https://cdn.mytoken.org/a9495f21ae34a6741d0fd3c86e86c760"
+  },
+  {
+    "symbol": "ABT",
+    "name": "ArcBlock",
+    "currency": "ABT",
+    "logo": "https://cdn.mytoken.org/41c08336a3cf84361c550a565931db65"
+  },
+  {
+    "symbol": "DEW",
+    "name": "DEW",
+    "currency": "DEW",
+    "logo": "https://cdn.mytoken.org/dew.png"
+  },
+  {
+    "symbol": "DTA",
+    "name": "DATA",
+    "currency": "DTA",
+    "logo": "https://cdn.mytoken.org/578270635fa9ec47b4475899e65b7541"
+  },
+  {
+    "symbol": "CHAT",
+    "name": "ChatCoin",
+    "currency": "CHAT",
+    "logo": "https://cdn.mytoken.org/86271b52e7b73e812a094a328764b2e1"
+  },
+  {
+    "symbol": "DASH",
+    "name": "Dash",
+    "currency": "DASH",
+    "logo": "https://cdn.mytoken.org/dash.png"
+  },
+  {
+    "symbol": "CDT",
+    "name": "Blox",
+    "currency": "CDT",
+    "logo": "https://cdn.mytoken.org/FkGjBbmC2fmwEhvsgkBmsuon-OkY"
+  },
+  {
+    "symbol": "XVG",
+    "name": "Verge",
+    "currency": "XVG",
+    "logo": "https://cdn.mytoken.org/verge.png"
+  },
+  {
+    "symbol": "BCD",
+    "name": "Bitcoin Diamond",
+    "currency": "BCD",
+    "logo": "https://cdn.mytoken.org/FozGV47mM864BVXAK3NGwM1wOUQd"
+  },
+  {
+    "symbol": "PAY",
+    "name": "TenX",
+    "currency": "PAY",
+    "logo": "https://cdn.mytoken.org/FnAFrr7jvRPFNLDYZhixRZ0B7gae"
+  },
+  {
+    "symbol": "XAS",
+    "name": "Asch",
+    "currency": "XAS",
+    "logo": "https://cdn.mytoken.org/asch.png"
+  },
+  {
+    "symbol": "XEM",
+    "name": "NEM",
+    "currency": "XEM",
+    "logo": "https://cdn.mytoken.org/006c5e2eef5bf0b124c161572ba1a940"
+  },
+  {
+    "symbol": "ZIP",
+    "name": "Zipper",
+    "currency": "ZIP",
+    "logo": "https://cdn.mytoken.org/53a1c3c8aeb3c52c1ff5657e6beb7454"
+  },
+  {
+    "symbol": "THETA",
+    "name": "Theta Token",
+    "currency": "THETA",
+    "logo": "https://cdn.mytoken.org/FsLA4W1hzISepKoRMGAA8TrPij0H"
+  },
+  {
+    "symbol": "GNX",
+    "name": "Genaro Network",
+    "currency": "GNX",
+    "logo": "https://cdn.mytoken.org/FqgM_BxHQbaIItaunUgYdORLk9_l"
+  },
+  {
+    "symbol": "SWFTC",
+    "name": "SwftCoin",
+    "currency": "SWFTC",
+    "logo": "https://cdn.mytoken.org/f053d26aa648d569681da4be95e59c2a"
+  },
+  {
+    "symbol": "ITC",
+    "name": "IoT Chain",
+    "currency": "ITC",
+    "logo": "https://cdn.mytoken.org/iot-chain.png"
+  },
+  {
+    "symbol": "BTO",
+    "name": "Bottos",
+    "currency": "BTO",
+    "logo": "https://cdn.mytoken.org/FmHr5b0I4eUFWId6U432Jd21di6-"
+  },
+  {
+    "symbol": "DDD",
+    "name": "Scry.info",
+    "currency": "DDD",
+    "logo": "https://cdn.mytoken.org/FhsFozacX9QcGm62HyWt6RBrIeR0"
+  },
+  {
+    "symbol": "RCT",
+    "name": "RealChain",
+    "currency": "RCT",
+    "logo": "https://cdn.mytoken.org/a577bcce7303bcbf5a844a98e27a450a"
+  },
+  {
+    "symbol": "IHT",
+    "name": "IHT Real Estate Protocol",
+    "currency": "IHT",
+    "logo": "https://cdn.mytoken.org/a30fcc93c7b38f94fc301444e5e1bfd2"
+  },
+  {
+    "symbol": "ICX",
+    "name": "ICON",
+    "currency": "ICX",
+    "logo": "https://cdn.mytoken.org/FlICEhVLPpIwPNDd8Hi_PA4XHEKu"
+  },
+  {
+    "symbol": "HPY",
+    "name": "Hyper Pay",
+    "currency": "HPY",
+    "logo": "https://cdn.mytoken.org/da159732ef9522b13680306dda2433e3"
+  },
+  {
+    "symbol": "XMR",
+    "name": "Monero",
+    "currency": "XMR",
+    "logo": "https://cdn.mytoken.org/a654ceec9011a417d48ec2388f0c2e6f"
+  },
+  {
+    "symbol": "POA",
+    "name": "POA Network",
+    "currency": "POA",
+    "logo": "https://cdn.mytoken.org/FpktHINzBdTB9M-5b5_t8B_Ymq0C"
+  },
+  {
+    "symbol": "UIP",
+    "name": "UnlimitedIP",
+    "currency": "UIP",
+    "logo": "https://cdn.mytoken.org/9e97a65f14a6bfac5f9bb3e1f6509cd0"
+  },
+  {
+    "symbol": "RCN",
+    "name": "Ripio Credit Network",
+    "currency": "RCN",
+    "logo": "https://cdn.mytoken.org/ripio-credit-network.png"
+  },
+  {
+    "symbol": "NULS",
+    "name": "Nuls",
+    "currency": "NULS",
+    "logo": "https://cdn.mytoken.org/nuls.png"
+  },
+  {
+    "symbol": "YEE",
+    "name": "Yee",
+    "currency": "YEE",
+    "logo": "https://cdn.mytoken.org/FqwF_i6NVRR8pK8ASlyC_qLBiU-5"
+  },
+  {
+    "symbol": "GOT",
+    "name": "GoNetwork",
+    "currency": "GOT",
+    "logo": "https://cdn.mytoken.org/Fi6eeArbFWY_I9Y7vx2xEzjG_1eC"
+  },
+  {
+    "symbol": "CTXC",
+    "name": "Cortex",
+    "currency": "CTXC",
+    "logo": "https://cdn.mytoken.org/623a1e414f2426c06f499207c4383d37"
+  },
+  {
+    "symbol": "KCASH",
+    "name": "Kcash",
+    "currency": "KCASH",
+    "logo": "https://cdn.mytoken.org/FiNGfLkyt4lnSGJdVGFJLmvde5kq"
+  },
+  {
+    "symbol": "STORJ",
+    "name": "Storj",
+    "currency": "STORJ",
+    "logo": "https://cdn.mytoken.org/storj.png"
+  },
+  {
+    "symbol": "MDA",
+    "name": "Moeda Loyalty Points",
+    "currency": "MDA",
+    "logo": "https://cdn.mytoken.org/FvhDzpohoIrXBXRMwHImUKCOxrs6"
+  },
+  {
+    "symbol": "INK",
+    "name": "Ink [QTUM]",
+    "currency": "INK",
+    "logo": "https://cdn.mytoken.org/FrCNPihRp7fuGOW-wO9FVz6ynohF"
+  },
+  {
+    "symbol": "FUEL",
+    "name": "Etherparty",
+    "currency": "FUEL",
+    "logo": "https://cdn.mytoken.org/5a3cf1a6f63b8d9f5508ebf3085dbcd0"
+  },
+  {
+    "symbol": "BOT",
+    "name": "Bodhi [QTUM]",
+    "currency": "BOT",
+    "logo": "https://cdn.mytoken.org/Fp4SfzaMO8ej1r838xHsaNXEa5Gh"
+  },
+  {
+    "symbol": "RNT",
+    "name": "OneRoot Network",
+    "currency": "RNT",
+    "logo": "https://cdn.mytoken.org/de03d71e301ea05a7024de809299abb8"
+  },
+  {
+    "symbol": "RDN",
+    "name": "Raiden Network Token",
+    "currency": "RDN",
+    "logo": "https://cdn.mytoken.org/FkNzQPnPTpw3Kly2aEm5x6KghG0K"
+  },
+  {
+    "symbol": "BIG",
+    "name": "BigOne",
+    "currency": "BIG",
+    "logo": "https://cdn.mytoken.org/bc7528fcf4d4dba0058fd1bd9856d5a7"
+  },
+  {
+    "symbol": "QASH",
+    "name": "Qash",
+    "currency": "QASH",
+    "logo": "https://cdn.mytoken.org/FrtZ2pwPGXl3d6wsTF9HsDwf7wiN"
+  },
+  {
+    "symbol": "BCX",
+    "name": "BitcoinX",
+    "currency": "BCX",
+    "logo": "https://cdn.mytoken.org/bitcoinx.png"
+  },
+  {
+    "symbol": "INT",
+    "name": "Internet Node Token",
+    "currency": "INT",
+    "logo": "https://cdn.mytoken.org/FhINoJ2MGZ8rdTLTniFByX537dzV"
+  },
+  {
+    "symbol": "SHOW",
+    "name": "Show",
+    "currency": "SHOW",
+    "logo": "https://cdn.mytoken.org/4b95fd39144360034f4fecee93e8ebbc"
+  },
+  {
+    "symbol": "KEY",
+    "name": "Bihu KEY",
+    "currency": "KEY",
+    "logo": "https://cdn.mytoken.org/2a6af63df53a05f6b5309b89f2933674"
+  },
+  {
+    "symbol": "GTO",
+    "name": "Gifto",
+    "currency": "GTO",
+    "logo": "https://cdn.mytoken.org/56dd3882bd2892b6995e02e1eea24b9d"
+  },
+  {
+    "symbol": "TNT",
+    "name": "Tierion",
+    "currency": "TNT",
+    "logo": "https://cdn.mytoken.org/tierion.png"
+  },
+  {
+    "symbol": "MDS",
+    "name": "MediShares",
+    "currency": "MDS",
+    "logo": "https://cdn.mytoken.org/FhoEmvEQMJn0FeF8pgk59tIsyLGJ"
+  },
+  {
+    "symbol": "JEX",
+    "name": "JEX",
+    "currency": "JEX",
+    "logo": "https://cdn.mytoken.org/FmhplpFyG3WjSV01aLGB3lv3aYrL"
+  },
+  {
+    "symbol": "SWTC",
+    "name": "Jingtum Tech",
+    "currency": "SWTC",
+    "logo": "https://cdn.mytoken.org/ca780ad4e5373f45070c9677d3529056"
+  },
+  {
+    "symbol": "GNT",
+    "name": "Golem",
+    "currency": "GNT",
+    "logo": "https://cdn.mytoken.org/FjzrniQU7v3d2bk6TXWbspsHujUp"
+  },
+  {
+    "symbol": "DBC",
+    "name": "DeepBrain Chain",
+    "currency": "DBC",
+    "logo": "https://cdn.mytoken.org/Fi81HPaR2IDnrvu-_lMGc67g91xc"
+  },
+  {
+    "symbol": "BAT",
+    "name": "Basic Attention Token",
+    "currency": "BAT",
+    "logo": "https://cdn.mytoken.org/ea9f325c96f97a6ba5ad9ae765f5e35a"
+  },
+  {
+    "symbol": "LEND",
+    "name": "ETHLend",
+    "currency": "LEND",
+    "logo": "https://cdn.mytoken.org/ethlend.png"
+  },
+  {
+    "symbol": "JNT",
+    "name": "Jibrel Network",
+    "currency": "JNT",
+    "logo": "https://cdn.mytoken.org/67d1487b1c775ea8fbf2c509bd86d8f4"
+  },
+  {
+    "symbol": "SDA",
+    "name": "SixDomainChain",
+    "currency": "SDA",
+    "logo": "https://cdn.mytoken.org/f942e81d0e363eb77aa53e66eb96a0d5"
+  },
+  {
+    "symbol": "POE",
+    "name": "Po.et",
+    "currency": "POE",
+    "logo": "https://cdn.mytoken.org/poet.png"
+  },
+  {
+    "symbol": "NXT",
+    "name": "Nxt",
+    "currency": "NXT",
+    "logo": "https://cdn.mytoken.org/372283b4259af7cdc26ca51b0ffc33b7"
+  },
+  {
+    "symbol": "EOSDAC",
+    "name": "eosDAC",
+    "currency": "EOSDAC",
+    "logo": "https://cdn.mytoken.org/42a8e92da3b5c4c62a936fb11bf2e577"
+  },
+  {
+    "symbol": "ZSC",
+    "name": "Zeusshield",
+    "currency": "ZSC",
+    "logo": "https://cdn.mytoken.org/FptcTWmLlYQe89W4vblU1QD3Xp_N"
+  },
+  {
+    "symbol": "AIDOC",
+    "name": "AI Doctor",
+    "currency": "AIDOC",
+    "logo": "https://cdn.mytoken.org/FrPA8HtJRPHRtxLkBLP8nDSdkmy7"
+  },
+  {
+    "symbol": "YOYOW",
+    "name": "YOYOW",
+    "currency": "YOYOW",
+    "logo": "https://cdn.mytoken.org/FmIs_1_aFv4QX-KLdYYjGCx8-xPw"
+  },
+  {
+    "symbol": "TCT",
+    "name": "TokenClub",
+    "currency": "TCT",
+    "logo": "https://cdn.mytoken.org/Fi1-qHuN92DCsY380M18_jL-CMNc"
+  },
+  {
+    "symbol": "LSK",
+    "name": "Lisk",
+    "currency": "LSK",
+    "logo": "https://cdn.mytoken.org/765bbfb3cf0644775dbc3b83d856bf62"
+  },
+  {
+    "symbol": "CVC",
+    "name": "Civic",
+    "currency": "CVC",
+    "logo": "https://cdn.mytoken.org/civic.png"
+  },
+  {
+    "symbol": "OCN",
+    "name": "Odyssey",
+    "currency": "OCN",
+    "logo": "https://cdn.mytoken.org/Ft1iWksp9h2mOdN0hHBaxCTQvUNp"
+  },
+  {
+    "symbol": "APPC",
+    "name": "AppCoins",
+    "currency": "APPC",
+    "logo": "https://cdn.mytoken.org/21915995d8f0fbdccc4210b1a2da4e2b"
+  },
+  {
+    "symbol": "AAC",
+    "name": "Acute Angle Cloud",
+    "currency": "AAC",
+    "logo": "https://cdn.mytoken.org/FiiHNwBqhR-MfpaIpnYwr1StwqHa"
+  },
+  {
+    "symbol": "CANDY",
+    "name": "Candy",
+    "currency": "CANDY",
+    "logo": "https://cdn.mytoken.org/ccefacf0c33498ba6c64bd3587f3af67"
+  },
+  {
+    "symbol": "ENU",
+    "name": "EnuMivo",
+    "currency": "ENU",
+    "logo": "https://cdn.mytoken.org/FhyPZhAyJkmF53DZDV3Jbe3lCCmy"
+  },
+  {
+    "symbol": "ARDR",
+    "name": "Ardor",
+    "currency": "ARDR",
+    "logo": "https://cdn.mytoken.org/4596ba17cbe78e003f0765b978feebda"
+  },
+  {
+    "symbol": "FUN",
+    "name": "FunFair",
+    "currency": "FUN",
+    "logo": "https://cdn.mytoken.org/funfair.png"
+  },
+  {
+    "symbol": "OTB",
+    "name": "OTCBTC Token",
+    "currency": "OTB",
+    "logo": "https://cdn.mytoken.org/bc4588e5502545a4e34a45077525b25d"
+  },
+  {
+    "symbol": "QSP",
+    "name": "Quantstamp",
+    "currency": "QSP",
+    "logo": "https://cdn.mytoken.org/quantstamp.png"
+  },
+  {
+    "symbol": "LINK",
+    "name": "ChainLink",
+    "currency": "LINK",
+    "logo": "https://cdn.mytoken.org/0e3ed62447707537472d369d9bf5e347"
+  },
+  {
+    "symbol": "DPY",
+    "name": "Delphy",
+    "currency": "DPY",
+    "logo": "https://cdn.mytoken.org/FrEDw37__T3QXCC-O7kR_pJ_TxHD"
+  },
+  {
+    "symbol": "1ST",
+    "name": "FirstBlood",
+    "currency": "1ST",
+    "logo": "https://cdn.mytoken.org/3064ef29024d819c8c49cb0d1c95896f"
+  },
+  {
+    "symbol": "PST",
+    "name": "Primas",
+    "currency": "PST",
+    "logo": "https://cdn.mytoken.org/df67f21bbcee00b4acd415867f8cb8f0"
+  },
+  {
+    "symbol": "DCR",
+    "name": "Decred",
+    "currency": "DCR",
+    "logo": "https://cdn.mytoken.org/Fm84uYvRLP6d_nlEGJ6GCc9BUtkh"
+  },
+  {
+    "symbol": "GEM",
+    "name": "Gems",
+    "currency": "GEM",
+    "logo": "https://cdn.mytoken.org/aaac0eef6a88d972880e3346748c7e54"
+  },
+  {
+    "symbol": "SPC",
+    "name": "SpaceChain",
+    "currency": "SPC",
+    "logo": "https://cdn.mytoken.org/4f5251b557f141e54d88f57e2db4acde"
+  },
+  {
+    "symbol": "BTG",
+    "name": "Bitcoin Gold",
+    "currency": "BTG",
+    "logo": "https://cdn.mytoken.org/Fj4LJXQRCVp2jgdK40o1laTg1xro"
+  },
+  {
+    "symbol": "ATM",
+    "name": "ATMChain",
+    "currency": "ATM",
+    "logo": "https://cdn.mytoken.org/attention-token-of-media.png"
+  },
+  {
+    "symbol": "MCO",
+    "name": "Monaco",
+    "currency": "MCO",
+    "logo": "https://cdn.mytoken.org/75378f073392e37199fc944a4e6a6963"
+  },
+  {
+    "symbol": "MAG",
+    "name": "Maggie",
+    "currency": "MAG",
+    "logo": "https://cdn.mytoken.org/FiqvJ-i_7M6B0mtgi75ZBk6VfE2c"
+  },
+  {
+    "symbol": "TV",
+    "name": "Ti-Value",
+    "currency": "TV",
+    "logo": "https://cdn.mytoken.org/1cf8c662cbc941249846b607651103b1"
+  },
+  {
+    "symbol": "RHOC",
+    "name": "RChain",
+    "currency": "RHOC",
+    "logo": "https://cdn.mytoken.org/rchain.png"
+  },
+  {
+    "symbol": "PNT",
+    "name": "Penta",
+    "currency": "PNT",
+    "logo": "https://cdn.mytoken.org/FtFvgSWPzt3Hm2nBigj4WOmOw_bP"
+  },
+  {
+    "symbol": "BIX",
+    "name": "Bibox Token",
+    "currency": "BIX",
+    "logo": "https://cdn.mytoken.org/Fj0eXStOb0Z5PcBR5zh8ixU9s59w"
+  },
+  {
+    "symbol": "STEEM",
+    "name": "Steemit",
+    "currency": "STEEM",
+    "logo": "https://cdn.mytoken.org/FiPYAuGQod6GttnWE87Y2nBk2cuE"
+  },
+  {
+    "symbol": "LET",
+    "name": "LinkEye",
+    "currency": "LET",
+    "logo": "https://cdn.mytoken.org/a1a77a65c5800994dfac59264a2fa0e2"
+  },
+  {
+    "symbol": "STX",
+    "name": "Stox",
+    "currency": "STX",
+    "logo": "https://cdn.mytoken.org/stox.png"
+  },
+  {
+    "symbol": "NANO",
+    "name": "Nano",
+    "currency": "XRB",
+    "logo": "https://cdn.mytoken.org/FjwqDmfsWM9HtfyCOpcokwX4hl8Y"
+  },
+  {
+    "symbol": "AMB",
+    "name": "Ambrosus",
+    "currency": "AMB",
+    "logo": "https://cdn.mytoken.org/amber.png"
+  },
+  {
+    "symbol": "HOT",
+    "name": "HoloToken",
+    "currency": "HOT",
+    "logo": "https://cdn.mytoken.org/9a520918aaf7c3de3e95b328136842b1"
+  },
+  {
+    "symbol": "ENG",
+    "name": "Enigma",
+    "currency": "ENG",
+    "logo": "https://cdn.mytoken.org/FikiiE9zLpg6SH0LrKWol3ZpB83F"
+  },
+  {
+    "symbol": "SEELE",
+    "name": "Seele",
+    "currency": "SEELE",
+    "logo": "https://cdn.mytoken.org/Fhd2exDiFvTNDCo2Smnsa2YsgN1-"
+  },
+  {
+    "symbol": "HLC",
+    "name": "HalalChain [QTUM]",
+    "currency": "HLC",
+    "logo": "https://cdn.mytoken.org/50a746c4b6e680f062c525584e887aed"
+  },
+  {
+    "symbol": "DOCK",
+    "name": "Dock",
+    "currency": "DOCK",
+    "logo": "https://cdn.mytoken.org/2fedfa1eb7f08e869c4f4846acfc03bf"
+  },
+  {
+    "symbol": "PRS",
+    "name": "PressOne",
+    "currency": "PRS",
+    "logo": "https://cdn.mytoken.org/8f0cc9e1f63e1cd3743c39c872f40bd6"
+  },
+  {
+    "symbol": "XDAG",
+    "name": "Dagger",
+    "currency": "XDAG",
+    "logo": "https://cdn.mytoken.org/Fk6OyAXDYB9y37ZLxEuGmyYTKCLJ"
+  },
+  {
+    "symbol": "LBA",
+    "name": "Libra Credit",
+    "currency": "LBA",
+    "logo": "https://cdn.mytoken.org/Fv1uWIGmtHOioDKh0LXM4ljPsc0a"
+  },
+  {
+    "symbol": "XIN",
+    "name": "Mixin",
+    "currency": "XIN",
+    "logo": "https://cdn.mytoken.org/237755ecd0b10030ae2d1889e8107a7e"
+  },
+  {
+    "symbol": "IDT",
+    "name": "InvestDigital",
+    "currency": "IDT",
+    "logo": "https://cdn.mytoken.org/Ft70GYDjHjSvUE2VSvUlPjIGmSNV"
+  },
+  {
+    "symbol": "DATA",
+    "name": "Streamr DATAcoin",
+    "currency": "DATA",
+    "logo": "https://cdn.mytoken.org/streamr-datacoin.png"
+  },
+  {
+    "symbol": "AST",
+    "name": "AirSwap",
+    "currency": "AST",
+    "logo": "https://cdn.mytoken.org/airswap.png"
+  },
+  {
+    "symbol": "SEER",
+    "name": "Seer",
+    "currency": "SEER",
+    "logo": "https://cdn.mytoken.org/FiiF_Wp-HGSo_obNktvOb98UQlkK"
+  },
+  {
+    "symbol": "QUBE",
+    "name": "Qube",
+    "currency": "QUBE",
+    "logo": "https://cdn.mytoken.org/11098f7680f7e053aa66ee376be9d9ff"
+  },
+  {
+    "symbol": "HPB",
+    "name": "High Performance Blockchain",
+    "currency": "HPB",
+    "logo": "https://cdn.mytoken.org/FgtVMCH3zkB-xddX79qFfLsmxvtk"
+  },
+  {
+    "symbol": "BU",
+    "name": "BUMO",
+    "currency": "BU",
+    "logo": "https://cdn.mytoken.org/FgXw1byRW2oDr_-Fy44HEwFCqNmb"
+  },
+  {
+    "symbol": "WTC",
+    "name": "Waltonchain",
+    "currency": "WTC",
+    "logo": "https://cdn.mytoken.org/b3f4b9df4031a928e66a8728d62a4128"
+  },
+  {
+    "symbol": "DGD",
+    "name": "DigixDAO",
+    "currency": "DGD",
+    "logo": "https://cdn.mytoken.org/425fbe4e63df0c37d04cb72cda2b2c87"
+  },
+  {
+    "symbol": "CEO",
+    "name": "CEOcoin",
+    "currency": "CEO",
+    "logo": "https://cdn.mytoken.org/FjrBB0vFohXNR5egQMLWxa8_i8Jd"
+  },
+  {
+    "symbol": "WAN",
+    "name": "Wanchain",
+    "currency": "WAN",
+    "logo": "https://cdn.mytoken.org/FtuC9wg1ztcnhOyxPjXLl7QYZkfV"
+  },
+  {
+    "symbol": "HEC",
+    "name": "HeroChain",
+    "currency": "HEC",
+    "logo": "https://cdn.mytoken.org/Fi6bkpOTNcES9Uxo28tdf8O8xzvl"
+  },
+  {
+    "symbol": "BCN",
+    "name": "Bytecoin",
+    "currency": "BCN",
+    "logo": "https://cdn.mytoken.org/7430f7bbe354ec6e7189ae60bffb692a"
+  },
+  {
+    "symbol": "PIX",
+    "name": "Lampix",
+    "currency": "PIX",
+    "logo": "https://cdn.mytoken.org/03bb4f76d60d410ec6945260c372f181"
+  },
+  {
+    "symbol": "OCX",
+    "name": "OCX Token",
+    "currency": "OCX",
+    "logo": "https://cdn.mytoken.org/FgmVduUw_630mU2_V_GhH5LB73Wn"
+  },
+  {
+    "symbol": "CND",
+    "name": "Cindicator",
+    "currency": "CND",
+    "logo": "https://cdn.mytoken.org/FtOMAxfgiBjK139sJuXpYQ6Jphk6"
+  },
+  {
+    "symbol": "SBTC",
+    "name": "Super Bitcoin",
+    "currency": "SBTC",
+    "logo": "https://cdn.mytoken.org/super-bitcoin.png"
+  },
+  {
+    "symbol": "IFC",
+    "name": "Infinitecoin",
+    "currency": "IFC",
+    "logo": "https://cdn.mytoken.org/infinitecoin.png"
+  },
+  {
+    "symbol": "POWR",
+    "name": "Power Ledger",
+    "currency": "POWR",
+    "logo": "https://cdn.mytoken.org/power-ledger.png"
+  },
+  {
+    "symbol": "ETP",
+    "name": "Metaverse ETP",
+    "currency": "ETP",
+    "logo": "https://cdn.mytoken.org/metaverse.png"
+  },
+  {
+    "symbol": "AION",
+    "name": "Aion",
+    "currency": "AION",
+    "logo": "https://cdn.mytoken.org/FhY1JdB7sTUf2TqwFZJh4uV_S2Yr"
+  },
+  {
+    "symbol": "TOPC",
+    "name": "TopChain",
+    "currency": "TOPC",
+    "logo": "https://cdn.mytoken.org/5e5641122f930a4de6a79dadca1cc69d"
+  },
+  {
+    "symbol": "EKT",
+    "name": "EDUCare",
+    "currency": "EKT",
+    "logo": "https://cdn.mytoken.org/b266e3747a626f78eae3dac9324ce707"
+  },
+  {
+    "symbol": "KEY",
+    "name": "Selfkey",
+    "currency": "KEY",
+    "logo": "https://cdn.mytoken.org/Flc9l080IfUHOVxs2DUpg2-7zdZd"
+  },
+  {
+    "symbol": "XTZ",
+    "name": "Tezos",
+    "currency": "XTZ",
+    "logo": "https://cdn.mytoken.org/FiduE3ewz8IMTIRrxiT92SGWT3tJ"
+  },
+  {
+    "symbol": "MOT",
+    "name": "Olympus Labs",
+    "currency": "MOT",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/32x32/2327.png"
+  },
+  {
+    "symbol": "REQ",
+    "name": "Request Network",
+    "currency": "REQ",
+    "logo": "https://cdn.mytoken.org/Fqx06JfZOqyAdTYY00EoHu_tuddK"
+  },
+  {
+    "symbol": "EON",
+    "name": "EOS Network",
+    "currency": "EON",
+    "logo": "https://cdn.mytoken.org/Fh031dovYF01rUM8BMAWdx57tfXY"
+  },
+  {
+    "symbol": "SRN",
+    "name": "SIRIN LABS Token",
+    "currency": "SRN",
+    "logo": "https://cdn.mytoken.org/FiSmDjvRSaJgG-fNJi4yTrdqHjON"
+  },
+  {
+    "symbol": "INSUR",
+    "name": "InsurChain",
+    "currency": "INSUR",
+    "logo": "https://cdn.mytoken.org/2bce0ea8d70195b76b5f59f341ac3c6f"
+  },
+  {
+    "symbol": "DAT",
+    "name": "Datum",
+    "currency": "DAT",
+    "logo": "https://cdn.mytoken.org/datum.png"
+  },
+  {
+    "symbol": "GAS",
+    "name": "Gas",
+    "currency": "GAS",
+    "logo": "https://cdn.mytoken.org/FhhMG9VEUs_BGoU7AdbM2cBXip8W"
+  },
+  {
+    "symbol": "OF",
+    "name": "OFCOIN",
+    "currency": "OF",
+    "logo": "https://cdn.mytoken.org/c723f30dc1d0f2fd6224d79a1783eabb"
+  },
+  {
+    "symbol": "QKC",
+    "name": "QuarkChain",
+    "currency": "QKC",
+    "logo": "https://cdn.mytoken.org/13821cca73bf2cd7caf0a6f9859440d8"
+  },
+  {
+    "symbol": "WAX",
+    "name": "WAX",
+    "currency": "WAX",
+    "logo": "https://cdn.mytoken.org/4d50e218845b1a492786267b2c07eaa1"
+  },
+  {
+    "symbol": "CET",
+    "name": "CoinEx Token",
+    "currency": "CET",
+    "logo": "https://cdn.mytoken.org/FoLNhSCWDnYB9Lp1CEysvBMH_riq"
+  },
+  {
+    "symbol": "SHE",
+    "name": "ShineChain",
+    "currency": "SHE",
+    "logo": "https://cdn.mytoken.org/e1c11e84f32875592bb485bea09382c1"
+  },
+  {
+    "symbol": "MAN",
+    "name": "Matrix AI Network",
+    "currency": "MAN",
+    "logo": "https://cdn.mytoken.org/Fvro0Kz8j1cKmKjwW2wE5R6WEFaW"
+  },
+  {
+    "symbol": "MOAC",
+    "name": "Moac",
+    "currency": "MOAC",
+    "logo": "https://cdn.mytoken.org/FuvbH4JkhO8B2WVJ0jCXLxhRToex"
+  },
+  {
+    "symbol": "TNC",
+    "name": "Trinity Network Credit",
+    "currency": "TNC",
+    "logo": "https://cdn.mytoken.org/ed0712519f006a70389e6468e6058b95"
+  },
+  {
+    "symbol": "MOBI",
+    "name": "Mobius",
+    "currency": "MOBI",
+    "logo": "https://cdn.mytoken.org/b1cb288bcfd0c183734dcd5054bf531e"
+  },
+  {
+    "symbol": "BKX",
+    "name": "Bankex",
+    "currency": "BKX",
+    "logo": "https://cdn.mytoken.org/8b75c91118a78c797bdac1bfe456b76e"
+  },
+  {
+    "symbol": "CS",
+    "name": "Credits",
+    "currency": "CS",
+    "logo": "https://cdn.mytoken.org/Fhd2Roz5Wf0uKvwTvhlzpyXQkyqN"
+  },
+  {
+    "symbol": "FOTA",
+    "name": "Fortuna",
+    "currency": "FOTA",
+    "logo": "https://cdn.mytoken.org/f7f641504d3276274a4ff1b98b7bb58d"
+  },
+  {
+    "symbol": "FAIR",
+    "name": "FairGame",
+    "currency": "FAIR",
+    "logo": "https://cdn.mytoken.org/51847dcdf014b19eaa758c627a2086e2"
+  },
+  {
+    "symbol": "QUN",
+    "name": "QunQun",
+    "currency": "QUN",
+    "logo": "https://cdn.mytoken.org/8a7ff158152ecca82ac941d9e8b1f3b9"
+  },
+  {
+    "symbol": "QLC",
+    "name": "QLC Chain",
+    "currency": "QLC",
+    "logo": "https://cdn.mytoken.org/bd22d23ac0f9e027e366d88fdf47659b"
+  },
+  {
+    "symbol": "STC",
+    "name": "StarChain",
+    "currency": "STC",
+    "logo": "https://cdn.mytoken.org/FvcgljFxU-kJkvz_gpTkwC6GyPbf"
+  },
+  {
+    "symbol": "KIN",
+    "name": "Kin",
+    "currency": "KIN",
+    "logo": "https://cdn.mytoken.org/886334e83c0d80dac7d8d07bb300ff5f"
+  },
+  {
+    "symbol": "GCT",
+    "name": "GeekChain",
+    "currency": "GCT",
+    "logo": "https://cdn.mytoken.org/Fjf4GowS9LHN_hjO95vQmojZY1h-"
+  },
+  {
+    "symbol": "EDU",
+    "name": "EduCoin",
+    "currency": "EDU",
+    "logo": "https://cdn.mytoken.org/0f04adc741abb1279d83d645b933b096"
+  },
+  {
+    "symbol": "LLT",
+    "name": "LLToken",
+    "currency": "LLT",
+    "logo": "https://cdn.mytoken.org/lltoken.png"
+  },
+  {
+    "symbol": "CZR",
+    "name": "CanonChain",
+    "currency": "CZR",
+    "logo": "https://cdn.mytoken.org/Fs4HO5ViOZOrRieHMi3xOKpd1IA8"
+  },
+  {
+    "symbol": "BNT",
+    "name": "Bancor",
+    "currency": "BNT",
+    "logo": "https://cdn.mytoken.org/Fk9vkaj9TvOBGbQTk0MtJOSuytzs"
+  },
+  {
+    "symbol": "CAT",
+    "name": "BitClave",
+    "currency": "CAT",
+    "logo": "https://cdn.mytoken.org/bitclave.png"
+  },
+  {
+    "symbol": "NCASH",
+    "name": "Nucleus Vision",
+    "currency": "NCASH",
+    "logo": "https://cdn.mytoken.org/de4db82279d11a8175821876c8b163c8"
+  },
+  {
+    "symbol": "LYM",
+    "name": "Lympo",
+    "currency": "LYM",
+    "logo": "https://cdn.mytoken.org/4f168ede3a23762f72b35bf65f1f730a"
+  },
+  {
+    "symbol": "NPC",
+    "name": "Node Provide Community",
+    "currency": "NPC",
+    "logo": "https://cdn.mytoken.org/FlSR-TInrMQ8NRKRi0KMSH2CcCqx"
+  },
+  {
+    "symbol": "CONI",
+    "name": "Coni",
+    "currency": "CONI",
+    "logo": "https://cdn.mytoken.org/Fiw0s66iZ-ElU7e87Z_f4xhsLx7S"
+  },
+  {
+    "symbol": "XMX",
+    "name": "XMax",
+    "currency": "XMX",
+    "logo": "https://cdn.mytoken.org/FjOYCwxr83N-0Qqu7J-Qo73iMSa4"
+  },
+  {
+    "symbol": "ENJ",
+    "name": "Enjin Coin",
+    "currency": "ENJ",
+    "logo": "https://cdn.mytoken.org/enjin-coin.png"
+  },
+  {
+    "symbol": "DNT",
+    "name": "district0x",
+    "currency": "DNT",
+    "logo": "https://cdn.mytoken.org/373893383cbd08606840881c9c0015fb"
+  },
+  {
+    "symbol": "UGC",
+    "name": "ugChain",
+    "currency": "UGC",
+    "logo": "https://cdn.mytoken.org/0fe34977f9a8feff973afb24921e6a52"
+  },
+  {
+    "symbol": "SKM",
+    "name": "Skrumble Network",
+    "currency": "SKM",
+    "logo": "https://cdn.mytoken.org/FieCaaG9gn-Q9lQ6zsXKtyJv59mg"
+  },
+  {
+    "symbol": "CTR",
+    "name": "Centra",
+    "currency": "CTR",
+    "logo": "https://cdn.mytoken.org/centra.png"
+  },
+  {
+    "symbol": "CNN",
+    "name": "Content Neutrality Network",
+    "currency": "CNN",
+    "logo": "https://cdn.mytoken.org/Fg9qmcQrKlvo3i04ppjp99ZCskkC"
+  },
+  {
+    "symbol": "CVT",
+    "name": "CyberVein",
+    "currency": "CVT",
+    "logo": "https://cdn.mytoken.org/FrPio3Lp0s6ZnwkEI4de7pfKI4EL"
+  },
+  {
+    "symbol": "OAX",
+    "name": "OAX",
+    "currency": "OAX",
+    "logo": "https://cdn.mytoken.org/oax.png"
+  },
+  {
+    "symbol": "SSC",
+    "name": "SelfSell",
+    "currency": "SSC",
+    "logo": "https://cdn.mytoken.org/3f842f5705b92c58e0520b8868e9dc32"
+  },
+  {
+    "symbol": "ETF",
+    "name": "Ethereum Fog",
+    "currency": "ETF",
+    "logo": "https://cdn.mytoken.org/3d85c5dc4aa727e0106c1114d830769a"
+  },
+  {
+    "symbol": "MITH",
+    "name": "Mithril",
+    "currency": "MITH",
+    "logo": "https://cdn.mytoken.org/e423ca373385714d0af5aea8dcb11fa4"
+  },
+  {
+    "symbol": "WAVES",
+    "name": "Waves",
+    "currency": "WAVES",
+    "logo": "https://cdn.mytoken.org/FvwEOjrkm14JLAymoACsigRFNJeR"
+  },
+  {
+    "symbol": "MTH",
+    "name": "Monetha",
+    "currency": "MTH",
+    "logo": "https://cdn.mytoken.org/monetha.png"
+  },
+  {
+    "symbol": "MDT",
+    "name": "Measurable Data Token",
+    "currency": "MDT",
+    "logo": "https://cdn.mytoken.org/3cca422a82f7e241fe4b3b5243676b15"
+  },
+  {
+    "symbol": "ARN",
+    "name": "Aeron",
+    "currency": "ARN",
+    "logo": "https://cdn.mytoken.org/Fq1W5zn3OqoD8X25EWZurV5Y5pKf"
+  },
+  {
+    "symbol": "LRN",
+    "name": "Loopring [NEO]",
+    "currency": "LRN",
+    "logo": "https://cdn.mytoken.org/FlpbmRFr3FbXhN8bKu8Dihyiw9jy"
+  },
+  {
+    "symbol": "MTN",
+    "name": "Medicalchain",
+    "currency": "MTN ",
+    "logo": "https://cdn.mytoken.org/b30ada789d710d83eee94b9c16447ea4"
+  },
+  {
+    "symbol": "IOTX",
+    "name": "IoTeX",
+    "currency": "IOTX",
+    "logo": "https://cdn.mytoken.org/FiMxk-hyc1LRhpdBYpIz1Gn5dzZD"
+  },
+  {
+    "symbol": "EVX",
+    "name": "Everex",
+    "currency": "EVX",
+    "logo": "https://cdn.mytoken.org/everex.png"
+  },
+  {
+    "symbol": "GSC",
+    "name": "Global Social Chain",
+    "currency": "GSC",
+    "logo": "https://cdn.mytoken.org/ff35e60a3f6f9af1c162b0362ddd387e"
+  },
+  {
+    "symbol": "PRA",
+    "name": "ProChain",
+    "currency": "PRA",
+    "logo": "https://cdn.mytoken.org/prochain.png"
+  },
+  {
+    "symbol": "LEEK",
+    "name": "LEEKCOIN",
+    "currency": "LEEK",
+    "logo": "https://cdn.mytoken.org/621a2ccba6b8ab4974b5ce7383726253"
+  },
+  {
+    "symbol": "ARP",
+    "name": "App Rendering Power",
+    "currency": "ARP",
+    "logo": "https://cdn.mytoken.org/Fl_bS7ONBQzRKFoGvRO1iHMd_YUC"
+  },
+  {
+    "symbol": "ACAT",
+    "name": "Alphacat",
+    "currency": "ACAT",
+    "logo": "https://cdn.mytoken.org/FgSSQN2zMAOy2vqXy9MXljYiQ074"
+  },
+  {
+    "symbol": "AGI",
+    "name": "SingularityNET",
+    "currency": "AGI",
+    "logo": "https://cdn.mytoken.org/0fbec4e7d0ae3ec24603fa0fe889f7a1"
+  },
+  {
+    "symbol": "EKO",
+    "name": "EchoLink",
+    "currency": "EKO",
+    "logo": "https://cdn.mytoken.org/FvNCis4ORwFkRaILVHk9QVHZ0fQa"
+  },
+  {
+    "symbol": "LUN",
+    "name": "Lunyr",
+    "currency": "LUN",
+    "logo": "https://cdn.mytoken.org/lunyr.png"
+  },
+  {
+    "symbol": "COO",
+    "name": "COO",
+    "currency": "COO",
+    "logo": "https://cdn.mytoken.org/FpfCPC9Pw7L80mdqQF49lzfkBWry"
+  },
+  {
+    "symbol": "HOT",
+    "name": "Hydro Protocol",
+    "currency": "HOT",
+    "logo": "https://cdn.mytoken.org/Fl6Xc7DLCNhSZSbNrDf9UBFg63uW"
+  },
+  {
+    "symbol": "ENT",
+    "name": "ENTCash",
+    "currency": "ENT",
+    "logo": "https://cdn.mytoken.org/FoAAjF4BOGu3cUMxuZ53tVqtTyH8"
+  },
+  {
+    "symbol": "CAN",
+    "name": "Content and AD Network",
+    "currency": "CAN",
+    "logo": "https://cdn.mytoken.org/Fs-e85zVjp2GdMhP7JPxLlrdsunW"
+  },
+  {
+    "symbol": "NPXS",
+    "name": "Pundi X",
+    "currency": "NPXS",
+    "logo": "https://cdn.mytoken.org/Fs4R1VIJ9Zn6S_OsdyH07gGJNj01"
+  },
+  {
+    "symbol": "OCT",
+    "name": "OracleChain",
+    "currency": "OCT",
+    "logo": "https://cdn.mytoken.org/166e46969eca8d11cc347308b14c980f"
+  },
+  {
+    "symbol": "FSN",
+    "name": "Fusion",
+    "currency": "FSN",
+    "logo": "https://cdn.mytoken.org/Fom7FNC8_lKic4L-Q1pT5qVIcFok"
+  },
+  {
+    "symbol": "TSL",
+    "name": "Energo",
+    "currency": "TSL",
+    "logo": "https://cdn.mytoken.org/673d41cc11570c824582922cfb517263"
+  },
+  {
+    "symbol": "SALT",
+    "name": "SALT",
+    "currency": "SALT",
+    "logo": "https://cdn.mytoken.org/salt.png"
+  },
+  {
+    "symbol": "ZEN",
+    "name": "Horizen",
+    "currency": "ZEN",
+    "logo": "https://cdn.mytoken.org/Fkg6tebTDviK-jU_f5MRUbZSYns1"
+  },
+  {
+    "symbol": "VITE",
+    "name": "Vite",
+    "currency": "VITE",
+    "logo": "https://cdn.mytoken.org/Fh1VbAccIVMAE2TLb0qaEA3LLzkL"
+  },
+  {
+    "symbol": "OST",
+    "name": "OST",
+    "currency": "OST",
+    "logo": "https://cdn.mytoken.org/576c6ec894b9459ec079194ef2633407"
+  },
+  {
+    "symbol": "SNM",
+    "name": "SONM",
+    "currency": "SNM",
+    "logo": "https://cdn.mytoken.org/sonm.png"
+  },
+  {
+    "symbol": "INC",
+    "name": "Influence Chain",
+    "currency": "INC",
+    "logo": "https://cdn.mytoken.org/FkN2d0YQvQ6W36wKzuEHS9mf27a4"
+  },
+  {
+    "symbol": "DGB",
+    "name": "DigiByte",
+    "currency": "DGB",
+    "logo": "https://cdn.mytoken.org/FobEJiXD2AOHEBMIZ_-OEu00_tcK"
+  },
+  {
+    "symbol": "XPX",
+    "name": "ProximaX",
+    "currency": "XPX",
+    "logo": "https://cdn.mytoken.org/FnC3XmqO4VIFSf0qVoybIOWCCBf6"
+  },
+  {
+    "symbol": "EAC",
+    "name": "EarthCoin",
+    "currency": "EAC",
+    "logo": "https://cdn.mytoken.org/0c29cf3b7043219bfd54c94cb048eedc"
+  },
+  {
+    "symbol": "CRE",
+    "name": "Cybereits",
+    "currency": "CRE",
+    "logo": "https://cdn.mytoken.org/91cca19b76247174f6969773a9fccdbf"
+  },
+  {
+    "symbol": "KMC",
+    "name": "Koumei Cottage",
+    "currency": "KMC",
+    "logo": "https://cdn.mytoken.org/Fin0upR-9LK9joaT9yFXMS2gVSgl"
+  },
+  {
+    "symbol": "XZC",
+    "name": "ZCoin",
+    "currency": "XZC",
+    "logo": "https://cdn.mytoken.org/zcoin.png"
+  },
+  {
+    "symbol": "TIO",
+    "name": "trade.io",
+    "currency": "TIO",
+    "logo": "https://cdn.mytoken.org/ccfe20f8f36e9deede62413e6bc31d0c"
+  },
+  {
+    "symbol": "SENC",
+    "name": "Sentinel Chain",
+    "currency": "SENC",
+    "logo": "https://cdn.mytoken.org/670d816f6b91793c64a10fbd0a818b95"
+  },
+  {
+    "symbol": "FIL6",
+    "name": "Filecoin [Futures - 6 Months]",
+    "currency": "FIL6",
+    "logo": "https://cdn.mytoken.org/FiJiztr77d_o1H_70qxEKwuS5oH6"
+  },
+  {
+    "symbol": "LIGHT",
+    "name": "LightChain",
+    "currency": "LIGHT",
+    "logo": "https://cdn.mytoken.org/Fm_Mr1Wq4XlK9Rv2TNcLrSjTmc3y"
+  },
+  {
+    "symbol": "RPX",
+    "name": "Red Pulse",
+    "currency": "RPX",
+    "logo": "https://cdn.mytoken.org/red-pulse.png"
+  },
+  {
+    "symbol": "INF",
+    "name": "InfChain",
+    "currency": "INF",
+    "logo": "https://cdn.mytoken.org/infchain.png"
+  },
+  {
+    "symbol": "NEAL",
+    "name": "Neal",
+    "currency": "NEAL",
+    "logo": "https://cdn.mytoken.org/65131b53a7e95cb747761e1c2737c0e2"
+  },
+  {
+    "symbol": "NKN",
+    "name": "New Kind of Network",
+    "currency": "NKN",
+    "logo": "https://cdn.mytoken.org/fb7d6edaecf2b0c2b700088fb9b18ad6"
+  },
+  {
+    "symbol": "KAN",
+    "name": "BitKan",
+    "currency": "KAN",
+    "logo": "https://cdn.mytoken.org/FluuLrWMcMgS5NDr2jebkz0rx59O"
+  },
+  {
+    "symbol": "IPC",
+    "name": "IPChain",
+    "currency": "IPC",
+    "logo": "https://cdn.mytoken.org/42bc6e11a8b76c3f9eb633701031762c"
+  },
+  {
+    "symbol": "IIC",
+    "name": "Intelligent Investment Coin",
+    "currency": "IIC",
+    "logo": "https://cdn.mytoken.org/FoGZ21modEIVVgPa88emNJ0Wjes3"
+  },
+  {
+    "symbol": "HOTC",
+    "name": "HOT Chain",
+    "currency": "HOTC",
+    "logo": "https://cdn.mytoken.org/3a3069b1075638f58d6c03a7ae42d03c"
+  },
+  {
+    "symbol": "BTN",
+    "name": "BitNew Chain",
+    "currency": "BTN",
+    "logo": "https://cdn.mytoken.org/43be2aa2191380efbc363bd2f4308078"
+  },
+  {
+    "symbol": "SNGLS",
+    "name": "SingularDTV",
+    "currency": "SNGLS",
+    "logo": "https://cdn.mytoken.org/singulardtv.png"
+  },
+  {
+    "symbol": "WPR",
+    "name": "WePower",
+    "currency": "WPR",
+    "logo": "https://cdn.mytoken.org/b7447b80c56e096cef009df2436b982b"
+  },
+  {
+    "symbol": "YOU",
+    "name": "YOU Chain",
+    "currency": "YOU",
+    "logo": "https://cdn.mytoken.org/FoXG0-FkFF0zISYwmlpS6daRaRID"
+  },
+  {
+    "symbol": "MTL",
+    "name": "Metal",
+    "currency": "MTL",
+    "logo": "https://cdn.mytoken.org/metal.png"
+  },
+  {
+    "symbol": "TKY",
+    "name": "THEKEY",
+    "currency": "TKY",
+    "logo": "https://cdn.mytoken.org/Fs_yoaQa1_iIz0XhgePEBjZmnb2M"
+  },
+  {
+    "symbol": "STORM",
+    "name": "Storm",
+    "currency": "STORM",
+    "logo": "https://cdn.mytoken.org/a43130d36ffed3cb7cb7e77f7c06d785"
+  },
+  {
+    "symbol": "REP",
+    "name": "Augur",
+    "currency": "REP",
+    "logo": "https://cdn.mytoken.org/b5836975a49c8bd0dc6d7e3057df1343"
+  },
+  {
+    "symbol": "ADX",
+    "name": "AdEx",
+    "currency": "ADX",
+    "logo": "https://cdn.mytoken.org/adx-net.png"
+  },
+  {
+    "symbol": "BRD",
+    "name": "Bread",
+    "currency": "BRD",
+    "logo": "https://cdn.mytoken.org/3cc9f0c689e32591c06ab088f9d7efd5"
+  },
+  {
+    "symbol": "POLY",
+    "name": "Polymath",
+    "currency": "POLY",
+    "logo": "https://cdn.mytoken.org/724531d11da6ba739dec8cd729e27024"
+  },
+  {
+    "symbol": "ZLA",
+    "name": "Zilla",
+    "currency": "ZLA",
+    "logo": "https://cdn.mytoken.org/FtMojRsDOnH7HqmpHu4-swJmJR0e"
+  },
+  {
+    "symbol": "DENT",
+    "name": "Dent",
+    "currency": "DENT",
+    "logo": "https://cdn.mytoken.org/dent.png"
+  },
+  {
+    "symbol": "DADI",
+    "name": "DADI",
+    "currency": "DADI",
+    "logo": "https://cdn.mytoken.org/8d313f8a4c18ce4e0673784a0315f3b7"
+  },
+  {
+    "symbol": "VEE",
+    "name": "BLOCKv",
+    "currency": "VEE",
+    "logo": "https://cdn.mytoken.org/blockv.png"
+  },
+  {
+    "symbol": "MTN",
+    "name": "Motion",
+    "currency": "MTN",
+    "logo": "https://cdn.mytoken.org/96ad1378a4013c98c3fa8648dab0f3ea"
+  },
+  {
+    "symbol": "SAFE",
+    "name": "SAFE",
+    "currency": "SAFE",
+    "logo": "https://cdn.mytoken.org/Fu4F_wc_wPZMvjnFqnZ6Mg8hWwu3"
+  },
+  {
+    "symbol": "KCS",
+    "name": "KuCoin Shares",
+    "currency": "KCS",
+    "logo": "https://cdn.mytoken.org/a1ab6590d60d0612a9aaf71293580745"
+  },
+  {
+    "symbol": "YCC",
+    "name": "Yuan Chain",
+    "currency": "YCC",
+    "logo": "https://cdn.mytoken.org/f57ccc17577c2a3828228e3f765d4f73"
+  },
+  {
+    "symbol": "UCT",
+    "name": "Ubique Chain of Things",
+    "currency": "UCT",
+    "logo": "https://cdn.mytoken.org/44b6c39731708491b237f4a0bc3310f3"
+  },
+  {
+    "symbol": "MEET",
+    "name": "CoinMeet",
+    "currency": "MEET",
+    "logo": "https://cdn.mytoken.org/6d6a25492fd06d7263eb68ad1dfcc4ba"
+  },
+  {
+    "symbol": "FI",
+    "name": "FInsur",
+    "currency": "FI",
+    "logo": "https://cdn.mytoken.org/FrLCIy4ruGC8QxOi5PKEXzc_yM87"
+  },
+  {
+    "symbol": "WRC",
+    "name": "Worldcore",
+    "currency": "WRC",
+    "logo": "https://cdn.mytoken.org/worldcore.png"
+  },
+  {
+    "symbol": "GEC",
+    "name": "Ge-Chain",
+    "currency": "GEC",
+    "logo": "https://cdn.mytoken.org/bd1eb94b95b34c20ca392f20f6be00df"
+  },
+  {
+    "symbol": "AIT",
+    "name": "AICHAIN",
+    "currency": "AIT",
+    "logo": "https://cdn.mytoken.org/c8d30f20b058ef0dbb78f4f6c36f42c7"
+  },
+  {
+    "symbol": "UUU",
+    "name": "U Network",
+    "currency": "UUU",
+    "logo": "https://cdn.mytoken.org/7e7270999c1d3d703252674b8869b9a0"
+  },
+  {
+    "symbol": "EDT",
+    "name": "EtherDelta Token",
+    "currency": "EDT",
+    "logo": "https://cdn.mytoken.org/465c09dc1b7b6ff418f31d56a5237888"
+  },
+  {
+    "symbol": "GRAM",
+    "name": "Opengram",
+    "currency": "GRAM",
+    "logo": "https://cdn.mytoken.org/Fi1EnQ9WJHu_toRU6hn0rsY4SJ_d"
+  },
+  {
+    "symbol": "IGNIS",
+    "name": "Ignis",
+    "currency": "IGNIS",
+    "logo": "https://cdn.mytoken.org/c9836cd62150e7e7de787c46b5aa6098"
+  },
+  {
+    "symbol": "KMD",
+    "name": "Komodo",
+    "currency": "KMD",
+    "logo": "https://cdn.mytoken.org/c088fd8318c40aa33b82f590335ed948"
+  },
+  {
+    "symbol": "ETN",
+    "name": "Electroneum",
+    "currency": "ETN",
+    "logo": "https://cdn.mytoken.org/electroneum.png"
+  },
+  {
+    "symbol": "AVH",
+    "name": "Animation Vision Cash",
+    "currency": "AVH",
+    "logo": "https://cdn.mytoken.org/3cc456987e2ff2667af4d1a10ca0b4d6"
+  },
+  { "symbol": "VGS", "name": "LasVegasCoin", "currency": "VGS", "logo": null },
+  {
+    "symbol": "GBYTE",
+    "name": "Byteball Bytes",
+    "currency": "GBYTE",
+    "logo": "https://cdn.mytoken.org/Fn5GzJk1h6451XZ0CPgflHAnnkxW"
+  },
+  {
+    "symbol": "GCS",
+    "name": "GameChain System",
+    "currency": "GCS",
+    "logo": "https://cdn.mytoken.org/FhALt31xlEDFxfgmoBpahMPP2uc4"
+  },
+  {
+    "symbol": "RFR",
+    "name": "Refereum",
+    "currency": "RFR",
+    "logo": "https://cdn.mytoken.org/b10a536fbf57dca50a58c02a66659f25"
+  },
+  {
+    "symbol": "TEL",
+    "name": "Telcoin",
+    "currency": "TEL",
+    "logo": "https://cdn.mytoken.org/a5299e7a2aafc20e25c95527c55625bd"
+  },
+  {
+    "symbol": "OC",
+    "name": "OceanChain",
+    "currency": "OC",
+    "logo": "https://cdn.mytoken.org/FqKI1nOU9UjCqrWFmoljqFIFg4fR"
+  },
+  {
+    "symbol": "TMT",
+    "name": "Traxia",
+    "currency": "TMT",
+    "logo": "https://cdn.mytoken.org/FrH1rFb2U5OS_6z7bcEkkWzPNJ_a"
+  },
+  {
+    "symbol": "DCC",
+    "name": "Distributed Credit Chain",
+    "currency": "DCC",
+    "logo": "https://cdn.mytoken.org/Ft2B0e4X_KltYbdHCWcYsPGnJxcm"
+  },
+  {
+    "symbol": "TTT",
+    "name": "TrustNote",
+    "currency": "TTT",
+    "logo": "https://cdn.mytoken.org/c7f9ece595263e3525162ee174b27668"
+  },
+  {
+    "symbol": "BITE",
+    "name": "BitEthereum",
+    "currency": "BITE",
+    "logo": "https://cdn.mytoken.org/305c4f42f92c0a4cf41a8c56cc68bc54"
+  },
+  {
+    "symbol": "CDC",
+    "name": "CDC",
+    "currency": "CDC",
+    "logo": "https://cdn.mytoken.org/Fu7fsrEUvcG4bVwATrBJO9mpxbul"
+  },
+  {
+    "symbol": "PPT",
+    "name": "Populous",
+    "currency": "PPT",
+    "logo": "https://cdn.mytoken.org/30b00618e795949e0ab23653f9473fb6"
+  },
+  {
+    "symbol": "STRAT",
+    "name": "Stratis",
+    "currency": "STRAT",
+    "logo": "https://cdn.mytoken.org/stratis.png"
+  },
+  {
+    "symbol": "ZPT",
+    "name": "Zeepin",
+    "currency": "ZPT",
+    "logo": "https://cdn.mytoken.org/34b9872d0f4ef21f2ef309492a4ce81d"
+  },
+  {
+    "symbol": "SKY",
+    "name": "Skycoin",
+    "currency": "SKY",
+    "logo": "https://cdn.mytoken.org/352c0490c72c213e60bdf64721469c27"
+  },
+  {
+    "symbol": "KICK",
+    "name": "KickCoin",
+    "currency": "KICK",
+    "logo": "https://cdn.mytoken.org/ff713703b36048b322fb4dbbc6b045ba"
+  },
+  {
+    "symbol": "COFI",
+    "name": "CoinFi",
+    "currency": "COFI",
+    "logo": "https://cdn.mytoken.org/889410590ec99ec59a33abc815235e39"
+  },
+  {
+    "symbol": "BEC",
+    "name": "Beauty Chain",
+    "currency": "BEC",
+    "logo": "https://cdn.mytoken.org/5361a76df16b36ed414f38f00f0e2bf2"
+  },
+  {
+    "symbol": "INS",
+    "name": "INS Ecosystem",
+    "currency": "INS",
+    "logo": "https://cdn.mytoken.org/88befddbb2383fa10e67959327bcf032"
+  },
+  {
+    "symbol": "UTK",
+    "name": "UTRUST",
+    "currency": "UTK",
+    "logo": "https://cdn.mytoken.org/c4ca4b31599e9774bddf0bc6c3ce32f5"
+  },
+  {
+    "symbol": "BDB",
+    "name": "Btcdo",
+    "currency": "BDB",
+    "logo": "https://cdn.mytoken.org/ab26d592fc760197c064e1ff1f474121"
+  },
+  {
+    "symbol": "BCDN",
+    "name": "BlockCDN",
+    "currency": "BCDN",
+    "logo": "https://cdn.mytoken.org/blockcdn.png"
+  },
+  {
+    "symbol": "CYB",
+    "name": "Cybex",
+    "currency": "CYB",
+    "logo": "https://cdn.mytoken.org/Fu1FAeqRLhCIOOF3-cBTEi-GdGo1"
+  },
+  {
+    "symbol": "EDO",
+    "name": "Eidoo",
+    "currency": "EDO",
+    "logo": "https://cdn.mytoken.org/5ef97d9b6bde42aff4cb7d10f2d79911"
+  },
+  {
+    "symbol": "ESS",
+    "name": "Essentia",
+    "currency": "ESS",
+    "logo": "https://cdn.mytoken.org/FoNGucBc0DFIpGsnDx3iWc31lM_i"
+  },
+  {
+    "symbol": "CREDO",
+    "name": "Credo",
+    "currency": "CREDO",
+    "logo": "https://cdn.mytoken.org/FlDvoeCjKDTHdUBHJZS1eBnV7G9d"
+  },
+  {
+    "symbol": "HMC",
+    "name": "Hi Mutual Society",
+    "currency": "HMC",
+    "logo": "https://cdn.mytoken.org/b8bc5b50d043cdc99c82a7d47d06bb30"
+  },
+  {
+    "symbol": "VIB",
+    "name": "Viberate",
+    "currency": "VIB",
+    "logo": "https://cdn.mytoken.org/viberate.png"
+  },
+  {
+    "symbol": "LBTC",
+    "name": "Lightning Bitcoin",
+    "currency": "LBTC",
+    "logo": "https://cdn.mytoken.org/c747e692dd7739b4d960ccb7dbd33a0a"
+  },
+  {
+    "symbol": "NEBL",
+    "name": "Neblio",
+    "currency": "NEBL",
+    "logo": "https://cdn.mytoken.org/neblio.png"
+  },
+  {
+    "symbol": "DRGN",
+    "name": "Dragonchain",
+    "currency": "DRGN",
+    "logo": "https://cdn.mytoken.org/FtzyBKL5eEmkkJe656jh2-Xn7Tyd"
+  },
+  {
+    "symbol": "UBTC",
+    "name": "United Bitcoin",
+    "currency": "UBTC",
+    "logo": "https://cdn.mytoken.org/united-bitcoin.png"
+  },
+  {
+    "symbol": "MTX",
+    "name": "Matryx",
+    "currency": "MTX",
+    "logo": "https://cdn.mytoken.org/FvSADToGC9yxW-d8V-NcFIUhu_MR"
+  },
+  {
+    "symbol": "ZJLT",
+    "name": "ZhongJi Ledger",
+    "currency": "ZJLT",
+    "logo": "https://cdn.mytoken.org/FiAmVHdwRQYjUweYJS0gIktIwu-U"
+  },
+  {
+    "symbol": "PRO",
+    "name": "Propy",
+    "currency": "PRO",
+    "logo": "https://cdn.mytoken.org/propy.png"
+  },
+  {
+    "symbol": "HAND",
+    "name": "ShowHand",
+    "currency": "HAND",
+    "logo": "https://cdn.mytoken.org/a3ab98b67608aa0827d31a5a9df9b1ef"
+  },
+  {
+    "symbol": "MEX",
+    "name": "MEX",
+    "currency": "MEX",
+    "logo": "https://cdn.mytoken.org/f9ff6e9f5b671f7524c0984fc6e9fde8"
+  },
+  {
+    "symbol": "CIT",
+    "name": "CariNet",
+    "currency": "CIT",
+    "logo": "https://cdn.mytoken.org/FgxkCmvBqnqQMKk5Nc-lRAuDBAUr"
+  },
+  {
+    "symbol": "DLT",
+    "name": "Agrello",
+    "currency": "DLT",
+    "logo": "https://cdn.mytoken.org/4250461b2a2b90838cf1e28282ed9e53"
+  },
+  {
+    "symbol": "ATN",
+    "name": "ATN",
+    "currency": "ATN",
+    "logo": "https://cdn.mytoken.org/0383f3762b532306869df5195dfbb70d"
+  },
+  {
+    "symbol": "ARK",
+    "name": "Ark",
+    "currency": "ARK",
+    "logo": "https://cdn.mytoken.org/Fl50Xxixeom0S_28cObZhAHWuUkm"
+  },
+  {
+    "symbol": "HIT",
+    "name": "HitChain",
+    "currency": "HIT",
+    "logo": "https://cdn.mytoken.org/FpFJC_iiiu2oUpXzOW_sGRAdKKOs"
+  },
+  {
+    "symbol": "MED",
+    "name": "MediBloc [QTUM]",
+    "currency": "MED",
+    "logo": "https://cdn.mytoken.org/Fo5flqATqySy1FRFHiGUKdIHsnGN"
+  },
+  {
+    "symbol": "SUB",
+    "name": "Substratum",
+    "currency": "SUB",
+    "logo": "https://cdn.mytoken.org/substratum.png"
+  },
+  {
+    "symbol": "BTP",
+    "name": "Bitcoin Pay",
+    "currency": "BTP",
+    "logo": "https://cdn.mytoken.org/8e024da83b0d6842a82a03140e0e5996"
+  },
+  {
+    "symbol": "BCPT",
+    "name": "BlockMason Credit Protocol",
+    "currency": "BCPT",
+    "logo": "https://cdn.mytoken.org/bab9892d60d19e8ae17ee458f5fef1a9"
+  },
+  {
+    "symbol": "GVE",
+    "name": "Globalvillage Ecosystem",
+    "currency": "GVE",
+    "logo": "https://cdn.mytoken.org/FpoW9w2xW8YQMuGlEtzlmrnhzaf-"
+  },
+  {
+    "symbol": "OLT",
+    "name": "OneLedger",
+    "currency": "OLT",
+    "logo": "https://cdn.mytoken.org/FhvPi6jaYz-sRXtcqIaA4SJ5-S3u"
+  },
+  {
+    "symbol": "IQ",
+    "name": "Everipedia",
+    "currency": "IQ",
+    "logo": "https://cdn.mytoken.org/Fqbm1T8RQC848uU-RLB1UqHA8CT1"
+  },
+  {
+    "symbol": "GAT",
+    "name": "Global AEX Token",
+    "currency": "GAT",
+    "logo": "https://cdn.mytoken.org/Fka1dsVWpL7R0rlp5xjqKBIZD5Cb"
+  },
+  {
+    "symbol": "XNN",
+    "name": "Xenon",
+    "currency": "XNN",
+    "logo": "https://cdn.mytoken.org/xenon.png"
+  },
+  {
+    "symbol": "EGT",
+    "name": "Egretia",
+    "currency": "EGT",
+    "logo": "https://cdn.mytoken.org/Fr5L6YzDUxVAvNH-UsIcLBz4Rb2r"
+  },
+  {
+    "symbol": "SYS",
+    "name": "Syscoin",
+    "currency": "SYS",
+    "logo": "https://cdn.mytoken.org/syscoin.png"
+  },
+  {
+    "symbol": "PAI",
+    "name": "Pchain",
+    "currency": "PAI",
+    "logo": "https://cdn.mytoken.org/Flno-tPp62-iR0ly7WxAriXFnStu"
+  },
+  {
+    "symbol": "XMC",
+    "name": "Monero Classic",
+    "currency": "XMC",
+    "logo": "https://cdn.mytoken.org/FlQ0j0j0Bi_YF4_htcSPkTSP03wU"
+  },
+  {
+    "symbol": "BFT",
+    "name": "BnkToTheFuture",
+    "currency": "BFT",
+    "logo": "https://cdn.mytoken.org/857ecbc74e4e0c00a124476a33c5dab5"
+  },
+  {
+    "symbol": "READ",
+    "name": "Read",
+    "currency": "READ",
+    "logo": "https://cdn.mytoken.org/100377eeed556b4b369a3683877d2d9b"
+  },
+  {
+    "symbol": "HCC",
+    "name": "HCChain",
+    "currency": "HCC",
+    "logo": "https://cdn.mytoken.org/Fgfk-XeCEvS7ZTWyMItnMOrKnkQQ"
+  },
+  {
+    "symbol": "NEXO",
+    "name": "Nexo",
+    "currency": "NEXO",
+    "logo": "https://cdn.mytoken.org/08c29303e3a1495c577aaaa7a46acda7"
+  },
+  {
+    "symbol": "VET",
+    "name": "VeChain",
+    "currency": "VET",
+    "logo": "https://cdn.mytoken.org/FiripTjQ449yWgsd4FCvToKlJsvF"
+  },
+  {
+    "symbol": "RLC",
+    "name": "iExec RLC",
+    "currency": "RLC",
+    "logo": "https://cdn.mytoken.org/rlc.png"
+  },
+  {
+    "symbol": "UT",
+    "name": "Ulord",
+    "currency": "UT",
+    "logo": "https://cdn.mytoken.org/FpaGakdUTE_fr-x9RH2F1nSm07iR"
+  },
+  {
+    "symbol": "BQT",
+    "name": "Blockchain Quotations Index Token",
+    "currency": "BQT",
+    "logo": "https://cdn.mytoken.org/FpE-a8SfV0yVZE_Y30AFhNAkevva"
+  },
+  {
+    "symbol": "BKBT",
+    "name": "Meta-graph Chain",
+    "currency": "BKBT",
+    "logo": "https://cdn.mytoken.org/Fm7QWBF22IK0QOTdZ2gSLoQwPYZr"
+  },
+  {
+    "symbol": "GSE",
+    "name": "GSENetwork",
+    "currency": "GSE",
+    "logo": "https://cdn.mytoken.org/Fk0VuUwMSNiA_04cJEipGI5q1WH2"
+  },
+  {
+    "symbol": "DT",
+    "name": "Dragon Token",
+    "currency": "DT",
+    "logo": "https://cdn.mytoken.org/404eef16f2f81a7a0ee300e8a9df8755"
+  },
+  {
+    "symbol": "GO",
+    "name": "GoChain",
+    "currency": "GO",
+    "logo": "https://cdn.mytoken.org/Fpwx81dzn5YCDvKevvwMlYCWFNLP"
+  },
+  {
+    "symbol": "XUC",
+    "name": "Exchange Union",
+    "currency": "XUC",
+    "logo": "https://cdn.mytoken.org/exchange-union.png"
+  },
+  {
+    "symbol": "QBT",
+    "name": "Qbao",
+    "currency": "QBT",
+    "logo": "https://cdn.mytoken.org/qbao.png"
+  },
+  {
+    "symbol": "ICST",
+    "name": "Individual Content and Skill Token",
+    "currency": "ICST",
+    "logo": "https://cdn.mytoken.org/FvcXFpS8WhMDlBLMklW1Cqn8IgVJ"
+  },
+  {
+    "symbol": "BWT",
+    "name": "BitWest",
+    "currency": "BWT",
+    "logo": "https://cdn.mytoken.org/Fif81-_WxW-DlryJZOyhNTjBHY-J"
+  },
+  {
+    "symbol": "DCT",
+    "name": "DECENT",
+    "currency": "DCT",
+    "logo": "https://cdn.mytoken.org/FvpqJUHf_v0Sy3aVF4sVrByNqh6w"
+  },
+  {
+    "symbol": "CPX",
+    "name": "APEX",
+    "currency": "CPX",
+    "logo": "http://p20vt5ndn.bkt.clouddn.com/apexlogo.png"
+  },
+  {
+    "symbol": "NTK",
+    "name": "Neurotoken",
+    "currency": "NTK",
+    "logo": "https://cdn.mytoken.org/FuAfs19WtHSiYczqyj3LzNJiPgpl"
+  },
+  {
+    "symbol": "BBN",
+    "name": "Banyan Network",
+    "currency": "BBN",
+    "logo": "https://cdn.mytoken.org/96e397f2d1801fe94ebe449497af9346"
+  },
+  {
+    "symbol": "RED",
+    "name": "Red Community Token",
+    "currency": "RED",
+    "logo": "https://cdn.mytoken.org/53e24462624416f2f9eaec9f7694d68a"
+  },
+  {
+    "symbol": "TIPS",
+    "name": "FedoraCoin",
+    "currency": "TIPS",
+    "logo": "https://cdn.mytoken.org/fedoracoin.png"
+  },
+  {
+    "symbol": "BCV",
+    "name": "Bit Capital Vendor",
+    "currency": "BCV",
+    "logo": "https://cdn.mytoken.org/FhlSYBQLW12tHPrtJBEi4dqfH0F_"
+  },
+  {
+    "symbol": "MCC",
+    "name": "Moving Cloud Coin",
+    "currency": "MCC",
+    "logo": "https://cdn.mytoken.org/FkVcXKwd2wkaFl6IYPuqQCxV8GaY"
+  },
+  {
+    "symbol": "VIA",
+    "name": "Viacoin",
+    "currency": "VIA",
+    "logo": "https://cdn.mytoken.org/viacoin.png"
+  },
+  {
+    "symbol": "ABAO",
+    "name": "Aladdin Galaxy",
+    "currency": "ABAO",
+    "logo": "https://cdn.mytoken.org/53619bd94add6361ba8d3d342704308a"
+  },
+  {
+    "symbol": "MVC",
+    "name": "Maverick Chain",
+    "currency": "MVC",
+    "logo": "https://cdn.mytoken.org/Fllu6eTztHltEg5eVElj87wvpwJK"
+  },
+  {
+    "symbol": "EPC",
+    "name": "Electronic PK Chain",
+    "currency": "EPC",
+    "logo": "https://cdn.mytoken.org/a5da0f22ce72f5561e9ae31321c0290a"
+  },
+  {
+    "symbol": "MUSK",
+    "name": "MUSK",
+    "currency": "MUSK",
+    "logo": "https://cdn.mytoken.org/9c659fdb472f1bc7f3181121e98fda3d"
+  },
+  {
+    "symbol": "VTC",
+    "name": "Vertcoin",
+    "currency": "VTC",
+    "logo": "https://cdn.mytoken.org/vertcoin.png"
+  },
+  {
+    "symbol": "BOX",
+    "name": "ContentBox",
+    "currency": "BOX",
+    "logo": "https://cdn.mytoken.org/Friv5q7q3xgW45xCFBHzT_06AGIO"
+  },
+  {
+    "symbol": "EET",
+    "name": "Energy Eco Token",
+    "currency": "EET",
+    "logo": "https://cdn.mytoken.org/19c0badee52c9cafe8a7a915e07390e4"
+  },
+  {
+    "symbol": "SDZ",
+    "name": "SanDianZhong",
+    "currency": "SDZ",
+    "logo": "https://cdn.mytoken.org/FoHT2aM_WV4kPiqYjzX8uro1hJOD"
+  },
+  {
+    "symbol": "TOMO",
+    "name": "TomoChain",
+    "currency": "TOMO",
+    "logo": "https://cdn.mytoken.org/Fpp7hOR1jN2AZfrfOZewpu77J4wk"
+  },
+  {
+    "symbol": "TRIO",
+    "name": "Tripio",
+    "currency": "TRIO",
+    "logo": "https://cdn.mytoken.org/864f794f15e29c2af8c7563f409dde20"
+  },
+  {
+    "symbol": "MVP",
+    "name": "Merculet",
+    "currency": "MVP",
+    "logo": "https://cdn.mytoken.org/FlBjur7rJscxg8mSYnkdnxXidDYu"
+  },
+  {
+    "symbol": "CMS",
+    "name": "COMSA [ETH]",
+    "currency": "CMS",
+    "logo": "https://cdn.mytoken.org/FsrtqqO3NV8XngpbVpIDgHpSRLLW"
+  },
+  {
+    "symbol": "BIFI",
+    "name": "Bitcoin File",
+    "currency": "BIFI",
+    "logo": "https://cdn.mytoken.org/975a90c595a81a4e225d55ccddb2b083"
+  },
+  {
+    "symbol": "XWC",
+    "name": "WhiteCoin",
+    "currency": "XWC",
+    "logo": "https://cdn.mytoken.org/whitecoin.png"
+  },
+  {
+    "symbol": "KK",
+    "name": "KKCoin",
+    "currency": "KK",
+    "logo": "https://cdn.mytoken.org/828bdcf4a1ba35f8a3b68bbf5b27a38b"
+  },
+  {
+    "symbol": "TOS",
+    "name": "ThingsOpreatingSystem",
+    "currency": "TOS",
+    "logo": "https://cdn.mytoken.org/Fjen-QBNwvzmvkMrvFYriXRCihrJ"
+  },
+  {
+    "symbol": "DCN",
+    "name": "Dentacoin",
+    "currency": "DCN",
+    "logo": "https://cdn.mytoken.org/FqUtctCyuPgSfa8rg9r0mlGeKgs5"
+  },
+  {
+    "symbol": "FAB",
+    "name": "FAB Coin",
+    "currency": "FAB",
+    "logo": "https://cdn.mytoken.org/FgAwYOPybjJXEGcLOfX3Hv34yLDK"
+  },
+  { "symbol": "HLD", "name": "Hyperlending", "currency": "HLD", "logo": null },
+  {
+    "symbol": "VIBE",
+    "name": "VIBE",
+    "currency": "VIBE",
+    "logo": "https://cdn.mytoken.org/vibe.png"
+  },
+  {
+    "symbol": "BAIC",
+    "name": "BAIC",
+    "currency": "BAIC",
+    "logo": "https://cdn.mytoken.org/Fj4BwVKuxS5u-KTm7C2BTbnADAoy"
+  },
+  {
+    "symbol": "LFT",
+    "name": "Linfinity",
+    "currency": "LFT",
+    "logo": "https://cdn.mytoken.org/Fl_4s6N_cogJ5Zy_uTiw3RI0f5oQ"
+  },
+  {
+    "symbol": "ONE",
+    "name": "One",
+    "currency": "ONE",
+    "logo": "https://cdn.mytoken.org/FthwWCqPDQyO02t4Ki1vYIp3Bz-q"
+  },
+  {
+    "symbol": "UC",
+    "name": "YouLive",
+    "currency": "UC",
+    "logo": "https://cdn.mytoken.org/656b152de435d7b3d74507d410a6f524"
+  },
+  {
+    "symbol": "STAR",
+    "name": "Starbase",
+    "currency": "STAR",
+    "logo": "https://cdn.mytoken.org/starbase.png"
+  },
+  {
+    "symbol": "FTO",
+    "name": "FuturoCoin",
+    "currency": "FTO",
+    "logo": "https://cdn.mytoken.org/Fk62MjNIISLuygFHBi_EBmSj4U6n"
+  },
+  {
+    "symbol": "MFT",
+    "name": "Mainframe",
+    "currency": "MFT",
+    "logo": "https://cdn.mytoken.org/Fhr_c6ZzvnxD8fO-d8J-CHRcWyyq"
+  },
+  {
+    "symbol": "SSS",
+    "name": "Sharechain",
+    "currency": "SSS",
+    "logo": "https://cdn.mytoken.org/sharechain.png"
+  },
+  {
+    "symbol": "MGC",
+    "name": "MergeCoin",
+    "currency": "MGC",
+    "logo": "https://cdn.mytoken.org/0617049aca8e9d2883351878cf53f2b6"
+  },
+  {
+    "symbol": "VIU",
+    "name": "Viuly",
+    "currency": "VIU",
+    "logo": "https://cdn.mytoken.org/viuly.png"
+  },
+  {
+    "symbol": "DSCB",
+    "name": "Data Shield Coin Bank",
+    "currency": "DSCB",
+    "logo": "https://cdn.mytoken.org/d45bba059e8d4b080eb7b4be9bc0b284"
+  },
+  {
+    "symbol": "PMD",
+    "name": "Pyramid",
+    "currency": "PMD",
+    "logo": "https://cdn.mytoken.org/FsxePRUlxisAIowIctNCYolcp_7a"
+  },
+  {
+    "symbol": "SEXC",
+    "name": "ShareX",
+    "currency": "SEXC",
+    "logo": "https://cdn.mytoken.org/c6f94453bdf5de0925d6a93e409e3fcb"
+  },
+  {
+    "symbol": "CAI",
+    "name": "CAI.TODAY",
+    "currency": "CAI",
+    "logo": "https://cdn.mytoken.org/FnAfczC0_E_jNxw5R0aCAQDSzQYO"
+  },
+  {
+    "symbol": "MEET.ONE",
+    "name": "Meet.One",
+    "currency": "MEET.ONE",
+    "logo": "https://cdn.mytoken.org/FtXEIqmXdwUnuF-3ak_hFXJpFMMR"
+  },
+  {
+    "symbol": "CIC",
+    "name": "Cloud-Insurance Chain",
+    "currency": "CIC",
+    "logo": "https://cdn.mytoken.org/5d1481e6a5fa335ecfd5e22414a10481"
+  },
+  {
+    "symbol": "STK",
+    "name": "STK Token",
+    "currency": "STK",
+    "logo": "https://cdn.mytoken.org/07a0189de0e92b2d849de308420d0b13"
+  },
+  { "symbol": "ARTS", "name": "ARTS", "currency": "ARTS", "logo": null },
+  {
+    "symbol": "CNX",
+    "name": "Cryptonex",
+    "currency": "CNX",
+    "logo": "https://cdn.mytoken.org/cryptonex.png"
+  },
+  {
+    "symbol": "RATING",
+    "name": "DPRating",
+    "currency": "RATING",
+    "logo": "https://cdn.mytoken.org/FqkngLgVriysPg-Ua7OIpc8TKV6O"
+  },
+  {
+    "symbol": "REN",
+    "name": "Republic Protocol",
+    "currency": "REN",
+    "logo": "https://cdn.mytoken.org/fc0da79f9265fee86961924c6c0ad0c8"
+  },
+  {
+    "symbol": "AVT",
+    "name": "Aventus",
+    "currency": "AVT",
+    "logo": "https://cdn.mytoken.org/aventus.png"
+  },
+  {
+    "symbol": "MOF",
+    "name": "Molecular Future",
+    "currency": "MOF",
+    "logo": "https://cdn.mytoken.org/d76be010dd40bc1aaf5734eb1bf274e6"
+  },
+  {
+    "symbol": "VTC",
+    "name": "Vtcoin",
+    "currency": "VTC",
+    "logo": "https://cdn.mytoken.org/cc08f97a1b2bbe662e83c47969be15cc"
+  },
+  {
+    "symbol": "SOP",
+    "name": "SoPay",
+    "currency": "SOP",
+    "logo": "https://cdn.mytoken.org/FturXMhQAtmgzpLkjiLPSoR0GK1k"
+  },
+  { "symbol": "COINS", "name": "COINS", "currency": "COINS", "logo": null },
+  {
+    "symbol": "XP",
+    "name": "Experience Points",
+    "currency": "XP",
+    "logo": "https://cdn.mytoken.org/experience-points.png"
+  },
+  {
+    "symbol": "MGD",
+    "name": "MassGrid",
+    "currency": "MGD",
+    "logo": "https://cdn.mytoken.org/b535c4561f9b70ac0c37e705e5aff7b4"
+  },
+  {
+    "symbol": "ZXC",
+    "name": "0xcert",
+    "currency": "ZXC",
+    "logo": "https://cdn.mytoken.org/FiXyxO7Wxow_z_NqWbOp1-VnJPF8"
+  },
+  {
+    "symbol": "BLK",
+    "name": "BlackCoin",
+    "currency": "BLK",
+    "logo": "https://cdn.mytoken.org/blackcoin.png"
+  },
+  {
+    "symbol": "MYST",
+    "name": "Mysterium",
+    "currency": "MYST",
+    "logo": "https://cdn.mytoken.org/Fg7yO1Wj6ton-Ui1zWDOMTHtmSoF"
+  },
+  {
+    "symbol": "SPHTX",
+    "name": "SophiaTX",
+    "currency": "SPHTX",
+    "logo": "https://cdn.mytoken.org/sophiatx.png"
+  },
+  {
+    "symbol": "OPEN",
+    "name": "Open Platform",
+    "currency": "OPEN",
+    "logo": "https://cdn.mytoken.org/FnOYudfTsCkm9U6LpLsWusZKgp9l"
+  },
+  {
+    "symbol": "TAU",
+    "name": "Lamden",
+    "currency": "TAU",
+    "logo": "https://files.coinmarketcap.com/static/img/coins/32x32/lamden.png"
+  },
+  {
+    "symbol": "ICN",
+    "name": "Iconomi",
+    "currency": "ICN",
+    "logo": "https://cdn.mytoken.org/3fb20a934e5d3dc975a99d935bd49203"
+  },
+  {
+    "symbol": "BHC",
+    "name": "Black Hole Coin",
+    "currency": "BHC",
+    "logo": "https://cdn.mytoken.org/4c0a2dc673ee2c3f24c772f2077ccfc8"
+  },
+  {
+    "symbol": "NAV",
+    "name": "NavCoin",
+    "currency": "NAV",
+    "logo": "https://cdn.mytoken.org/3dd6610b6cdaa9ecdea7a03c8977e609"
+  },
+  {
+    "symbol": "RDD",
+    "name": "ReddCoin",
+    "currency": "RDD",
+    "logo": "https://cdn.mytoken.org/reddcoin.png"
+  },
+  {
+    "symbol": "ITS",
+    "name": "Intelligent Transportation System",
+    "currency": "ITS",
+    "logo": null
+  },
+  {
+    "symbol": "PPP",
+    "name": "PayPie",
+    "currency": "PPP",
+    "logo": "https://cdn.mytoken.org/a1c155071c3473ce5b703c4505629c6e"
+  },
+  {
+    "symbol": "BCW",
+    "name": "Bitcoin Wonder",
+    "currency": "BCW",
+    "logo": null
+  },
+  {
+    "symbol": "SNC",
+    "name": "SunContract",
+    "currency": "SNC",
+    "logo": "https://cdn.mytoken.org/suncontract.png"
+  },
+  {
+    "symbol": "CRPT",
+    "name": "Crypterium",
+    "currency": "CRPT",
+    "logo": "https://cdn.mytoken.org/Fii2Ha3Roi1jAOoTWM_m_jyQDJPq"
+  },
+  {
+    "symbol": "MKR",
+    "name": "Maker",
+    "currency": "MKR",
+    "logo": "https://cdn.mytoken.org/FtVGPotPRpKxMIddVuoqmFFT1AAA"
+  },
+  {
+    "symbol": "JRC",
+    "name": "Jinrong Coin",
+    "currency": "JRC",
+    "logo": "https://cdn.mytoken.org/FiN-ZvP0lnyPtqety1AKsNbFSsl_"
+  },
+  {
+    "symbol": "BIT",
+    "name": "BiShen",
+    "currency": "BIT",
+    "logo": "https://cdn.mytoken.org/30fb4a74e284a04847328b4b5bf007d2"
+  },
+  {
+    "symbol": "BITCNY",
+    "name": "bitCNY",
+    "currency": "BITCNY",
+    "logo": "https://cdn.mytoken.org/bitcny.png"
+  },
+  {
+    "symbol": "WABI",
+    "name": "WaBi",
+    "currency": "WABI",
+    "logo": "https://cdn.mytoken.org/wabi.png"
+  },
+  {
+    "symbol": "BTH",
+    "name": "Bitcoin Hot",
+    "currency": "BTH",
+    "logo": "https://cdn.mytoken.org/FrrrRroIBH8-mX1Fd_x2xIQLH_qJ"
+  },
+  {
+    "symbol": "RVN",
+    "name": "RavenCoin",
+    "currency": "RVN",
+    "logo": "https://cdn.mytoken.org/e0bf1a3c0a0593d6ed00454a83d755f1"
+  },
+  {
+    "symbol": "DFT",
+    "name": "DigiFinex Token",
+    "currency": "DFT",
+    "logo": "https://cdn.mytoken.org/1c097dab5d34dd59b33f1e216b1e648c"
+  },
+  {
+    "symbol": "BURST",
+    "name": "Burst",
+    "currency": "BURST",
+    "logo": "https://cdn.mytoken.org/burst.png"
+  },
+  {
+    "symbol": "EES",
+    "name": "Super Energy",
+    "currency": "EES",
+    "logo": "https://cdn.mytoken.org/dffd32a70d25f225693f9e2762acd1ab"
+  },
+  {
+    "symbol": "DDC",
+    "name": "DreamWorld",
+    "currency": "DDC",
+    "logo": "https://cdn.mytoken.org/2dfcadde13ca8b266329296e4876b5f1"
+  },
+  {
+    "symbol": "GVT",
+    "name": "Genesis Vision",
+    "currency": "GVT",
+    "logo": "https://cdn.mytoken.org/genesis-vision.png"
+  },
+  {
+    "symbol": "CAG",
+    "name": "Change",
+    "currency": "CAG",
+    "logo": "https://cdn.mytoken.org/change.png"
+  },
+  {
+    "symbol": "HGT",
+    "name": "HelloGold",
+    "currency": "HGT",
+    "logo": "https://cdn.mytoken.org/hellogold.png"
+  },
+  {
+    "symbol": "PGD",
+    "name": "PagodaCoin",
+    "currency": "PGD",
+    "logo": "https://cdn.mytoken.org/f0b6f2291c7dfa77b70a6d57f5d1ebbe"
+  },
+  {
+    "symbol": "MTC",
+    "name": "MTC Mesh",
+    "currency": "MTC",
+    "logo": "https://cdn.mytoken.org/e7945a85efb8412f92e2796e4a3d3beb"
+  },
+  {
+    "symbol": "WINGS",
+    "name": "Wings",
+    "currency": "WINGS",
+    "logo": "https://cdn.mytoken.org/6d5c71fee8d90b343ab1142f5fe30299"
+  },
+  {
+    "symbol": "MONA",
+    "name": "MonaCoin",
+    "currency": "MONA",
+    "logo": "https://cdn.mytoken.org/monacoin.png"
+  },
+  {
+    "symbol": "AMM",
+    "name": "MicroMoney",
+    "currency": "AMM",
+    "logo": "https://cdn.mytoken.org/micromoney.png"
+  },
+  {
+    "symbol": "WWB",
+    "name": "Wowbit",
+    "currency": "WWB",
+    "logo": "https://cdn.mytoken.org/FqDblfRRvLGzS3jmKFN6XkA9g_6f"
+  },
+  {
+    "symbol": "PC",
+    "name": "Promotion Chain",
+    "currency": "PC",
+    "logo": "https://cdn.mytoken.org/04a12d4b816a6bb0d492d25df02bdf4e"
+  },
+  {
+    "symbol": "EGCC",
+    "name": "Engine Chain Coin",
+    "currency": "EGCC",
+    "logo": "https://cdn.mytoken.org/8398ab19631a2dc73f065b6a669b20c6"
+  },
+  {
+    "symbol": "CPC",
+    "name": "Capricoin",
+    "currency": "CPC",
+    "logo": "https://cdn.mytoken.org/capricoin.png"
+  },
+  {
+    "symbol": "VNT",
+    "name": "VNT Chain",
+    "currency": "VNT",
+    "logo": "https://cdn.mytoken.org/FpP6LbZEwd8ekkRb8Rp1QjI3IH8l"
+  },
+  {
+    "symbol": "DAX",
+    "name": "DAEX",
+    "currency": "DAX",
+    "logo": "https://cdn.mytoken.org/FoBvBtnfbs8vi8WEcxV4vRgVdzJJ"
+  },
+  {
+    "symbol": "HTB",
+    "name": "HTB",
+    "currency": "HTB",
+    "logo": "https://cdn.mytoken.org/FhG9VA3wBa-IONvINu_8jzFxM8YR"
+  },
+  {
+    "symbol": "BTX",
+    "name": "Bitcore",
+    "currency": "BTX",
+    "logo": "https://cdn.mytoken.org/bitcore.png"
+  },
+  {
+    "symbol": "FTI",
+    "name": "FansTime",
+    "currency": "FTI",
+    "logo": "https://cdn.mytoken.org/FvkmBP63RwNbtf4JsBjAyIHlAKXV"
+  },
+  {
+    "symbol": "SAN",
+    "name": "Santiment Network Token",
+    "currency": "SAN",
+    "logo": "https://cdn.mytoken.org/santiment.png"
+  },
+  {
+    "symbol": "GARD",
+    "name": "Hashgard",
+    "currency": "GARD",
+    "logo": "https://cdn.mytoken.org/Fh4696XYnnZTagjFouiKm-rXY9Fu"
+  },
+  {
+    "symbol": "EMC",
+    "name": "Emercoin",
+    "currency": "EMC",
+    "logo": "https://cdn.mytoken.org/emercoin.png"
+  },
+  {
+    "symbol": "SPF",
+    "name": "SportyCo",
+    "currency": "SPF",
+    "logo": "https://cdn.mytoken.org/Fpx3AZ_6aND6tmUKHav7viNZ9uco"
+  },
+  {
+    "symbol": "TOP",
+    "name": "Top.One Coin",
+    "currency": "TOP",
+    "logo": "https://cdn.mytoken.org/FqDdXjdiUqcTfx9S76dkO040iMeE"
+  },
+  {
+    "symbol": "PXC",
+    "name": "PixieCoin",
+    "currency": "PXC",
+    "logo": "https://cdn.mytoken.org/f7b63d43cac25e56005b230c049ba8c0"
+  },
+  {
+    "symbol": "MXM",
+    "name": "MaxiMine",
+    "currency": "MXM",
+    "logo": "https://cdn.mytoken.org/Fj0hmQ6I0mhWdDR9Dtt24drLgz8V"
+  },
+  {
+    "symbol": "SEC",
+    "name": "Social Ecommerce Chain",
+    "currency": "SEC",
+    "logo": "https://cdn.mytoken.org/FvwDOtNL_Fl2NYZOHTuZa2FYdwXH"
+  },
+  {
+    "symbol": "GRS",
+    "name": "Groestlcoin",
+    "currency": "GRS",
+    "logo": "https://cdn.mytoken.org/1c5ad1ee84218b55c524018a63ab3fa6"
+  },
+  {
+    "symbol": "HOLD",
+    "name": "Hold",
+    "currency": "HOLD",
+    "logo": "https://cdn.mytoken.org/Fru78VJ4sNMApJEh9KDAzeap_62_"
+  },
+  {
+    "symbol": "ZCL",
+    "name": "ZClassic",
+    "currency": "ZCL",
+    "logo": "https://cdn.mytoken.org/zclassic.png"
+  },
+  {
+    "symbol": "PORTAL",
+    "name": "Portal",
+    "currency": "PORTAL",
+    "logo": "https://cdn.mytoken.org/FmiOvXxMuXp7MrnLZ72sVla_a2sC"
+  },
+  {
+    "symbol": "TRCT",
+    "name": "Tracto",
+    "currency": "TRCT",
+    "logo": "https://cdn.mytoken.org/tracto.png"
+  },
+  {
+    "symbol": "WGR",
+    "name": "Wagerr",
+    "currency": "WGR",
+    "logo": "https://cdn.mytoken.org/FgIAeIjqenuxQuYfuSF_jck7MaoU"
+  },
+  {
+    "symbol": "SER",
+    "name": "Seratio",
+    "currency": "SER",
+    "logo": "https://cdn.mytoken.org/53106be477fd770e4ec5b9f89dc83ce5"
+  },
+  {
+    "symbol": "AFC",
+    "name": "Anti-Fraud Chain",
+    "currency": "AFC",
+    "logo": null
+  },
+  {
+    "symbol": "BOE",
+    "name": "Bodhi [ETH]",
+    "currency": "BOE",
+    "logo": "https://cdn.mytoken.org/Fn0uAdeS5kVTAdUZxN-vM6gxBInU"
+  },
+  {
+    "symbol": "LMC",
+    "name": "LoMoCoin",
+    "currency": "LMC",
+    "logo": "https://cdn.mytoken.org/lomocoin.png"
+  },
+  {
+    "symbol": "MOD",
+    "name": "Modum",
+    "currency": "MOD",
+    "logo": "https://cdn.mytoken.org/modum.png"
+  },
+  {
+    "symbol": "NKC",
+    "name": "Nework",
+    "currency": "NKC",
+    "logo": "https://cdn.mytoken.org/a8ef87c53738a9a52c7efdc8cecb763d"
+  },
+  {
+    "symbol": "DFN",
+    "name": "Dfinity [Futures]",
+    "currency": "DFN",
+    "logo": "https://cdn.mytoken.org/FuNHhwig8d46pyvPK9IyooAXbY0e"
+  },
+  {
+    "symbol": "BOX",
+    "name": "BOX",
+    "currency": "BOX",
+    "logo": "https://cdn.mytoken.org/Frdw6OBZGQhL5WaU2zvJEBgrh3FK"
+  },
+  {
+    "symbol": "MAID",
+    "name": "MaidSafeCoin",
+    "currency": "MAID",
+    "logo": "https://cdn.mytoken.org/maidsafecoin.png"
+  },
+  {
+    "symbol": "TCASH",
+    "name": "EtherFlyer",
+    "currency": "TCASH",
+    "logo": "https://cdn.mytoken.org/FpyuxP_6ie3XUMXuneocqzIhB9yR"
+  },
+  {
+    "symbol": "UKG",
+    "name": "Unikoin Gold",
+    "currency": "UKG",
+    "logo": "https://cdn.mytoken.org/unikoin-gold.png"
+  },
+  {
+    "symbol": "SEN",
+    "name": "Consensus",
+    "currency": "SEN",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/32x32/2621.png"
+  },
+  {
+    "symbol": "CCT",
+    "name": "Crystal Clear",
+    "currency": "CCT",
+    "logo": "https://cdn.mytoken.org/crystal-clear.png"
+  },
+  {
+    "symbol": "PIVX",
+    "name": "PIVX",
+    "currency": "PIVX",
+    "logo": "https://cdn.mytoken.org/pivx.png"
+  },
+  {
+    "symbol": "AT",
+    "name": "ABCC Token",
+    "currency": "AT",
+    "logo": "https://cdn.mytoken.org/Fo4iOgjPzvTDkLIlzXZTi9Lg1ZXF"
+  },
+  {
+    "symbol": "IMT",
+    "name": "imWallet",
+    "currency": "IMT",
+    "logo": "https://cdn.mytoken.org/FtaBuFDocPTdP4MdAaWVidPx8GWR"
+  },
+  {
+    "symbol": "DAI",
+    "name": "Dai",
+    "currency": "DAI",
+    "logo": "https://cdn.mytoken.org/dai.png"
+  },
+  {
+    "symbol": "ANT",
+    "name": "Aragon",
+    "currency": "ANT",
+    "logo": "https://cdn.mytoken.org/FrWCs_CaFAe33dONaxHqGBSKd5fg"
+  },
+  {
+    "symbol": "GNO",
+    "name": "Gnosis",
+    "currency": "GNO",
+    "logo": "https://cdn.mytoken.org/FmJoSX_3B4J9Sx09SeAoXKDQvIec"
+  },
+  {
+    "symbol": "ETH.M",
+    "name": "ETH.M",
+    "currency": "ETH.M",
+    "logo": "https://cdn.mytoken.org/a4adc2a130744a22bb201ea6d7489fd5"
+  },
+  {
+    "symbol": "CFUN",
+    "name": "CFun",
+    "currency": "CFUN",
+    "logo": "https://cdn.mytoken.org/FkISLVmjTyls3RVplBYhnoMV4dyK"
+  },
+  {
+    "symbol": "BYC",
+    "name": "BiYuanCoin",
+    "currency": "BYC",
+    "logo": "https://cdn.mytoken.org/88719ef6e7ce4307498c5c7be626b3fb"
+  },
+  {
+    "symbol": "BOS",
+    "name": "BOScoin",
+    "currency": "BOS",
+    "logo": "https://cdn.mytoken.org/boscoin.png"
+  },
+  {
+    "symbol": "J8T",
+    "name": "JET8",
+    "currency": "J8T",
+    "logo": "https://cdn.mytoken.org/7c55b929f6a71790d38cacc7a1897643"
+  },
+  {
+    "symbol": "IOV",
+    "name": "CarLive Chain",
+    "currency": "IOV",
+    "logo": "https://cdn.mytoken.org/Fjl3LXjAJVvExd2PahXDVFXkdtAQ"
+  },
+  {
+    "symbol": "AISI",
+    "name": "Aisi",
+    "currency": "AISI",
+    "logo": "https://cdn.mytoken.org/FhccgIr-WmgnwDC4q1n36gDZzPAR"
+  },
+  {
+    "symbol": "ONION",
+    "name": "DeepOnion",
+    "currency": "ONION",
+    "logo": "https://cdn.mytoken.org/5418c90bb8796d6cb92718c4f1724437"
+  },
+  {
+    "symbol": "CP",
+    "name": "CoinPark",
+    "currency": "CP",
+    "logo": "https://cdn.mytoken.org/FhMsMpShi8tXbv2gBfpSdGlYIEKi"
+  },
+  {
+    "symbol": "58B",
+    "name": "58B",
+    "currency": "58B",
+    "logo": "https://cdn.mytoken.org/FjbJrYaW_Vx7pBVpryl5TRtcCZWp"
+  },
+  {
+    "symbol": "XPM",
+    "name": "Primecoin",
+    "currency": "XPM",
+    "logo": "https://cdn.mytoken.org/primecoin.png"
+  },
+  {
+    "symbol": "LUC",
+    "name": "Level-up Coin",
+    "currency": "LUC",
+    "logo": "https://cdn.mytoken.org/FtHyG2LfthKmglWoYCccIrT4EeAA"
+  },
+  {
+    "symbol": "FRD",
+    "name": "Farad",
+    "currency": "FRD",
+    "logo": "https://cdn.mytoken.org/ada7cf63ad8a65813dfd372c09b2f92a"
+  },
+  {
+    "symbol": "EOSRAM",
+    "name": "EOS RAM",
+    "currency": "EOSRAM",
+    "logo": "https://cdn.mytoken.org/FjMXTFsqGTqS3rNEygtKl6BeBJeY"
+  },
+  {
+    "symbol": "CSM",
+    "name": "Consentium",
+    "currency": "CSM",
+    "logo": "https://cdn.mytoken.org/d3526dfef1711b8751e337b52e29f1ea"
+  },
+  {
+    "symbol": "SSP",
+    "name": "Smartshare",
+    "currency": "SSP",
+    "logo": "https://cdn.mytoken.org/03a1823195307c3eeba70ca854c80faf"
+  },
+  {
+    "symbol": "EXT",
+    "name": "ExChain",
+    "currency": "EXT",
+    "logo": "https://cdn.mytoken.org/FmCWEzf3khzxSQ8L2wBdv-ZsowuW"
+  },
+  {
+    "symbol": "NGC",
+    "name": "NAGA",
+    "currency": "NGC",
+    "logo": "https://cdn.mytoken.org/FohpMVM_-dy8mpnYmDO07bfbuYpc"
+  },
+  {
+    "symbol": "HSC",
+    "name": "HashFuture",
+    "currency": "HSC",
+    "logo": "https://cdn.mytoken.org/FqfDcPNJAUQ50obY-AMXDmToTjFN"
+  },
+  {
+    "symbol": "PART",
+    "name": "Particl",
+    "currency": "PART",
+    "logo": "https://cdn.mytoken.org/particl.png"
+  },
+  {
+    "symbol": "ACE",
+    "name": "Ace",
+    "currency": "ACE",
+    "logo": "https://cdn.mytoken.org/47ac53be40441f72a3e4975556878bc8"
+  },
+  {
+    "symbol": "BANCA",
+    "name": "Banca",
+    "currency": "BANCA",
+    "logo": "https://cdn.mytoken.org/FifyFEtLYxL3y3PFWQassIYAqgOo"
+  },
+  {
+    "symbol": "XDN",
+    "name": "DigitalNote",
+    "currency": "XDN",
+    "logo": "https://cdn.mytoken.org/digitalnote.png"
+  },
+  {
+    "symbol": "RMESH",
+    "name": "RightMesh",
+    "currency": "RMESH",
+    "logo": "https://cdn.mytoken.org/Fh59cHSwZ7Q8VrC-0Y7VUZgzx25n"
+  },
+  {
+    "symbol": "AUTO",
+    "name": "CUBE",
+    "currency": "AUTO",
+    "logo": "https://cdn.mytoken.org/971ef36b40896710511bc0193aef30e7"
+  },
+  {
+    "symbol": "LBC",
+    "name": "LBRY Credits",
+    "currency": "LBC",
+    "logo": "https://cdn.mytoken.org/library-credit.png"
+  },
+  {
+    "symbol": "ONE",
+    "name": "OneChain",
+    "currency": "ONE",
+    "logo": "https://cdn.mytoken.org/FjYMx5JpBpgPMICHZh7R8wWG3F-H"
+  },
+  {
+    "symbol": "BTMC",
+    "name": "Bit Miner Chain",
+    "currency": "BTMC",
+    "logo": "https://cdn.mytoken.org/FhoJB9YHYKO8259vBE2QolxraDWD"
+  },
+  {
+    "symbol": "CPS",
+    "name": "CPSCOIN",
+    "currency": "CPS",
+    "logo": "https://cdn.mytoken.org/FmkmJfR8oRIOosm5tSE-rkBZ_pML"
+  },
+  {
+    "symbol": "LA",
+    "name": "LAToken",
+    "currency": "LA",
+    "logo": "https://cdn.mytoken.org/5fffe243645b5b5dac5a18ed254c9608"
+  },
+  {
+    "symbol": "PDX",
+    "name": "PDX Blockchain",
+    "currency": "PDX",
+    "logo": "https://cdn.mytoken.org/FlaHldnN4KOlaH048fL13i7KjOZU"
+  },
+  {
+    "symbol": "DATX",
+    "name": "DATx",
+    "currency": "DATX",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/32x32/2567.png"
+  },
+  {
+    "symbol": "NBAI",
+    "name": "Nebula AI",
+    "currency": "NBAI",
+    "logo": "https://cdn.mytoken.org/FvMuWX7aeDvXdh5FPfQ86TZx9oKH"
+  },
+  {
+    "symbol": "18T",
+    "name": "Block 18",
+    "currency": "18T",
+    "logo": "https://cdn.mytoken.org/7424934adaf8e053060f09ed92e7834c"
+  },
+  {
+    "symbol": "RVT",
+    "name": "Rivetz",
+    "currency": "RVT",
+    "logo": "https://cdn.mytoken.org/rivetz.png"
+  },
+  {
+    "symbol": "EOP",
+    "name": "EOSpace",
+    "currency": "EOP",
+    "logo": "https://cdn.mytoken.org/Fnj10SDWlxSUA1PQVAdO2PmOsFZu"
+  },
+  {
+    "symbol": "GAME",
+    "name": "GameCredits",
+    "currency": "GAME",
+    "logo": "https://cdn.mytoken.org/FtB9o69FczLSqlQYHEQ9VctlPQ0y"
+  },
+  {
+    "symbol": "FCT",
+    "name": "Factom",
+    "currency": "FCT",
+    "logo": "https://cdn.mytoken.org/39da0b0d7d752cf98517adfd287720dd"
+  },
+  {
+    "symbol": "TAC",
+    "name": "Traceability Chain",
+    "currency": "TAC",
+    "logo": "https://cdn.mytoken.org/Fi0qaWhQGAoxFxqxz0XGobeMnTFR"
+  },
+  {
+    "symbol": "CMT",
+    "name": "Comet",
+    "currency": "CMT",
+    "logo": "https://cdn.mytoken.org/Fu-9KMAcIXoSx2LNW4MS0yDrOuQU"
+  },
+  {
+    "symbol": "LIFE",
+    "name": "LIFE",
+    "currency": "LIFE",
+    "logo": "https://cdn.mytoken.org/life.png"
+  },
+  {
+    "symbol": "XEL",
+    "name": "Elastic",
+    "currency": "XEL",
+    "logo": "https://cdn.mytoken.org/elastic.png"
+  },
+  {
+    "symbol": "DACC",
+    "name": "DACC",
+    "currency": "DACC",
+    "logo": "https://cdn.mytoken.org/FlD0o3QG0Vvks6AfQksAo0n2kkNB"
+  },
+  {
+    "symbol": "MBT",
+    "name": "MyBridge Token",
+    "currency": "MBT",
+    "logo": null
+  },
+  {
+    "symbol": "FIL12",
+    "name": "Filecoin [Futures - 12 Months]",
+    "currency": "FIL12",
+    "logo": "https://cdn.mytoken.org/FiJiztr77d_o1H_70qxEKwuS5oH6"
+  },
+  {
+    "symbol": "OMX",
+    "name": "Shivom",
+    "currency": "OMX",
+    "logo": "https://cdn.mytoken.org/14fb6fa11f4785a5f0b5feab2f1e14fa"
+  },
+  {
+    "symbol": "AAT",
+    "name": "AAcoin Token",
+    "currency": "AAT",
+    "logo": "https://cdn.mytoken.org/Fs1nJz_D6IoVAbMRBYqXiawOhurq"
+  },
+  {
+    "symbol": "BMX",
+    "name": "BitMart Coin ",
+    "currency": "BMX",
+    "logo": "https://cdn.mytoken.org/d628bec8bf8edab626b65a95b114f643"
+  },
+  {
+    "symbol": "EDG",
+    "name": "Edgeless",
+    "currency": "EDG",
+    "logo": "https://cdn.mytoken.org/FlkHEKU3iklL4aVUtq4woBHq8E5X"
+  },
+  {
+    "symbol": "REM",
+    "name": "Remme",
+    "currency": "REM",
+    "logo": "https://cdn.mytoken.org/6df6439593717da2bf0cfbb6b13d0334"
+  },
+  {
+    "symbol": "BT",
+    "name": "Btcdo Token",
+    "currency": "BT",
+    "logo": "https://cdn.mytoken.org/Fkz9Q-MlSUueeSA6KbCtKMeR1kKp"
+  },
+  {
+    "symbol": "TCH",
+    "name": "Tiger Cash",
+    "currency": "TCH",
+    "logo": "https://cdn.mytoken.org/FuC53vY5KJmuvrri4AB8tvh6Xc9d"
+  },
+  {
+    "symbol": "ETZ",
+    "name": "EtherZero",
+    "currency": "ETZ",
+    "logo": "https://cdn.mytoken.org/6e9c280c2b3708d7a14a301abd0e874f"
+  },
+  {
+    "symbol": "CAN",
+    "name": "CanYaCoin",
+    "currency": "CAN",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/32x32/2343.png"
+  },
+  {
+    "symbol": "TUSD",
+    "name": "True USD",
+    "currency": "TUSD",
+    "logo": "https://cdn.mytoken.org/01b4f98aebbe8eb23205f16714f68919"
+  },
+  {
+    "symbol": "DDM",
+    "name": "DDM",
+    "currency": "DDM",
+    "logo": "https://cdn.mytoken.org/FtK63HsDaWrwthhyqam6FKvAPXW-"
+  },
+  {
+    "symbol": "COB",
+    "name": "Cobinhood",
+    "currency": "COB",
+    "logo": "https://cdn.mytoken.org/cobinhood.png"
+  },
+  {
+    "symbol": "FIL36",
+    "name": "Filecoin [Futures - 36 Months]",
+    "currency": "FIL36",
+    "logo": "https://cdn.mytoken.org/FiJiztr77d_o1H_70qxEKwuS5oH6"
+  },
+  {
+    "symbol": "RNTB",
+    "name": "BitRent",
+    "currency": "RNTB",
+    "logo": "https://cdn.mytoken.org/1aa26775b62b26051411047e06393154"
+  },
+  {
+    "symbol": "MST",
+    "name": "MustangCoin",
+    "currency": "MST",
+    "logo": "https://cdn.mytoken.org/FpXBRIfASSAIb0mmKaAoSJUN2pUM"
+  },
+  {
+    "symbol": "BDC",
+    "name": "BeidouChain",
+    "currency": "BDC",
+    "logo": "https://cdn.mytoken.org/e1547214e761354407132993892ff773"
+  },
+  {
+    "symbol": "COSS",
+    "name": "COSS",
+    "currency": "COSS",
+    "logo": "https://cdn.mytoken.org/coss.png"
+  },
+  {
+    "symbol": "HYB",
+    "name": "Hybrid Token",
+    "currency": "HYB",
+    "logo": "https://cdn.mytoken.org/FjuWiWw0xCeJgrHwtyH7PZQIaUqS"
+  },
+  {
+    "symbol": "GOOC",
+    "name": "Goocoin",
+    "currency": "GOOC",
+    "logo": "https://cdn.mytoken.org/Fs5WT239AgfKbrVz3j3idt5CeUDA"
+  },
+  {
+    "symbol": "WIN",
+    "name": "Winchain",
+    "currency": "WIN",
+    "logo": "https://cdn.mytoken.org/FlbEySWNArLqJRSzlLLuEkTBgjZw"
+  },
+  {
+    "symbol": "ZIB",
+    "name": "ZhiB",
+    "currency": "ZIB",
+    "logo": "https://cdn.mytoken.org/FtEvzQx7VbB9WbJ8IMx2MlcwNI8u"
+  },
+  {
+    "symbol": "CARD",
+    "name": "Cardstack",
+    "currency": "CARD",
+    "logo": "https://cdn.mytoken.org/FvONfD68gbsoCrEt8PAtGGSYT0Gn"
+  },
+  {
+    "symbol": "TRIG",
+    "name": "Triggers",
+    "currency": "TRIG",
+    "logo": "https://cdn.mytoken.org/triggers.png"
+  },
+  {
+    "symbol": "BMB",
+    "name": "BMBChain",
+    "currency": "BMB",
+    "logo": "https://cdn.mytoken.org/7f508ee76a29ab041f11d9032972e1e1"
+  },
+  {
+    "symbol": "DNA",
+    "name": "EncrypGen",
+    "currency": "DNA",
+    "logo": "https://cdn.mytoken.org/encrypgen.png"
+  },
+  {
+    "symbol": "LTS",
+    "name": "LiteShares",
+    "currency": "LTS",
+    "logo": "https://cdn.mytoken.org/FgQZa9HDcuCd3zpb9-HsPdep02Rn"
+  },
+  {
+    "symbol": "SCL",
+    "name": "Sociall",
+    "currency": "SCL",
+    "logo": "https://cdn.mytoken.org/7c01678db281d81de93f48d702e068ba"
+  },
+  {
+    "symbol": "CAF",
+    "name": "Charter",
+    "currency": "CAF",
+    "logo": "https://cdn.mytoken.org/5c3776a88d05b653ac0b696d0b540081"
+  },
+  {
+    "symbol": "VCT",
+    "name": "ValueCyberToken",
+    "currency": "VCT",
+    "logo": "https://cdn.mytoken.org/FnUlyrlq1XeCEAznDVkR4EkWMr3t"
+  },
+  {
+    "symbol": "LXT",
+    "name": "Litex Token",
+    "currency": "LXT",
+    "logo": "https://cdn.mytoken.org/FpwHFA2ztO0sTAZxg3WnhuUChWaV"
+  },
+  {
+    "symbol": "CPC",
+    "name": "CPChain",
+    "currency": "CPC",
+    "logo": "https://cdn.mytoken.org/FhND-S9fC7Q2r3E1RoDhKiqyJFQi"
+  },
+  {
+    "symbol": "BUT",
+    "name": "BitUP",
+    "currency": "BUT",
+    "logo": "https://cdn.mytoken.org/d0368247de907e32728bfbc6dc3ed738"
+  },
+  {
+    "symbol": "ORS",
+    "name": "Origin Sport",
+    "currency": "ORS",
+    "logo": "https://cdn.mytoken.org/FveHV0tvFRS7yDCigpf19PhwmNKg"
+  },
+  {
+    "symbol": "BNTY",
+    "name": "Bounty0x",
+    "currency": "BNTY",
+    "logo": "https://cdn.mytoken.org/bounty0x.png"
+  },
+  {
+    "symbol": "KNT",
+    "name": "Kora Network Token",
+    "currency": "KNT",
+    "logo": "https://cdn.mytoken.org/Fqld-jg0lg1aTbDWZfm5fGWDhoGg"
+  },
+  {
+    "symbol": "VLC",
+    "name": "ValueChain",
+    "currency": "VLC",
+    "logo": "https://cdn.mytoken.org/Frcmdmo-hWuxdAAXTuRe3VgBWFgA"
+  },
+  {
+    "symbol": "CWV",
+    "name": "CryptoWorld.VIP",
+    "currency": "CWV",
+    "logo": "https://cdn.mytoken.org/FnE1G_dLseiFA_kYEPAXgwZfnlKS"
+  },
+  {
+    "symbol": "OSCH",
+    "name": "OpenSourceChain",
+    "currency": "OSCH",
+    "logo": "https://cdn.mytoken.org/Fr7GHXB7kjnWZbZ5Y3SoQSjqucBm"
+  },
+  {
+    "symbol": "PPC",
+    "name": "Peercoin",
+    "currency": "PPC",
+    "logo": "https://cdn.mytoken.org/peercoin.png"
+  },
+  {
+    "symbol": "NXS",
+    "name": "Nexus",
+    "currency": "NXS",
+    "logo": "https://cdn.mytoken.org/nexus.png"
+  },
+  {
+    "symbol": "SIGMA",
+    "name": "SIGMAcoin",
+    "currency": "SIGMA",
+    "logo": "https://cdn.mytoken.org/sigmacoin.png"
+  },
+  {
+    "symbol": "OK",
+    "name": "OKCash",
+    "currency": "OK",
+    "logo": "https://cdn.mytoken.org/FpZs_go9LE-BpCtckHE6yFeWPr4y"
+  },
+  {
+    "symbol": "ECT",
+    "name": "SuperEdge",
+    "currency": "ECT",
+    "logo": "https://cdn.mytoken.org/FqVBlYfY4ZAbywVugr4jgQFkjXyD"
+  },
+  { "symbol": "SY", "name": "SY", "currency": "SY", "logo": null },
+  {
+    "symbol": "TRA",
+    "name": "Travel",
+    "currency": "TRA",
+    "logo": "https://cdn.mytoken.org/7d60954e2a99c9c55186bda034253c4b"
+  },
+  {
+    "symbol": "BZNT",
+    "name": "Bezant",
+    "currency": "BZNT",
+    "logo": "https://cdn.mytoken.org/FvOA6kiSNG5LjSEvzq0FpIC7000C"
+  },
+  {
+    "symbol": "SOAR",
+    "name": "Soarcoin",
+    "currency": "SOAR",
+    "logo": "https://cdn.mytoken.org/soarcoin.png"
+  },
+  {
+    "symbol": "CAT",
+    "name": "BlockCAT",
+    "currency": "CAT",
+    "logo": "https://cdn.mytoken.org/blockcat.png"
+  },
+  {
+    "symbol": "BDG",
+    "name": "BitDegree",
+    "currency": "BDG",
+    "logo": "https://cdn.mytoken.org/c1d6627feee578964c970c47d5b79802"
+  },
+  { "symbol": "BTW", "name": "BitcoinWorld", "currency": "BTW", "logo": null },
+  {
+    "symbol": "AID",
+    "name": "AidCoin",
+    "currency": "AID",
+    "logo": "https://cdn.mytoken.org/10a29d6bbf06a703c4a6a88f18a9800e"
+  },
+  {
+    "symbol": "HER",
+    "name": "Hero Node",
+    "currency": "HER",
+    "logo": "https://cdn.mytoken.org/1e42744c9aeb671d7718db71da58f81d"
+  },
+  {
+    "symbol": "FGC",
+    "name": "FoundGame",
+    "currency": "FGC",
+    "logo": "https://cdn.mytoken.org/FqqZGh55V_deO2FCjGPfqm16g_p9"
+  },
+  {
+    "symbol": "GOD",
+    "name": "Bitcoin God",
+    "currency": "GOD",
+    "logo": "https://cdn.mytoken.org/2f3d98f4aa2adff8305b9b8d9cf94510"
+  },
+  {
+    "symbol": "WAC",
+    "name": "WeAreChain",
+    "currency": "WAC",
+    "logo": "https://cdn.mytoken.org/Fm60CnlBJM-JruiWUjI1KtyHifnB"
+  },
+  {
+    "symbol": "BCAT",
+    "name": "BCAT",
+    "currency": "BCAT",
+    "logo": "https://cdn.mytoken.org/Ft1HK7BFoofWmf8UZlkkg3KWSERv"
+  },
+  {
+    "symbol": "FCANDY",
+    "name": "FCoin Candy",
+    "currency": "FCANDY",
+    "logo": "https://cdn.mytoken.org/Fr9PQnKEzTZ4tu6CpWwLG8EhvQfF"
+  },
+  {
+    "symbol": "NPW",
+    "name": "New Power Coin",
+    "currency": "NPW",
+    "logo": "https://cdn.mytoken.org/FrXHb4xUiDPg_Q9EdwwoMun6n1sp"
+  },
+  {
+    "symbol": "ENSA",
+    "name": "Energy Saving",
+    "currency": "ENSA",
+    "logo": "https://cdn.mytoken.org/fe13d896890b2e20003536a3bbdf3e56"
+  },
+  {
+    "symbol": "BTM",
+    "name": "Bitmark",
+    "currency": "BTM",
+    "logo": "https://cdn.mytoken.org/FnNQAySODXAaauKkYbbwrGivAPyV"
+  },
+  {
+    "symbol": "GST",
+    "name": "Ginseng Chain",
+    "currency": "GST",
+    "logo": "https://cdn.mytoken.org/3fcf548fd4812e7958807bf58a253648"
+  },
+  {
+    "symbol": "ATMI",
+    "name": "Atonomi",
+    "currency": "ATMI",
+    "logo": "https://cdn.mytoken.org/FhonJGLz-2PvxZsb4HlM__IAvnz7"
+  },
+  {
+    "symbol": "AT",
+    "name": "Aware",
+    "currency": "AT",
+    "logo": "https://cdn.mytoken.org/FlkB2lrOu8aHyJDzLvBh3ImJe9QS"
+  },
+  {
+    "symbol": "CTE",
+    "name": "CTEChain",
+    "currency": "CTE",
+    "logo": "https://cdn.mytoken.org/5d5cf26e02763fb6b05b183086377f82"
+  },
+  {
+    "symbol": "IPT",
+    "name": "IPTChain",
+    "currency": "IPT",
+    "logo": "https://cdn.mytoken.org/0697f337a5f821165b720199b344e17c"
+  },
+  {
+    "symbol": "EDR",
+    "name": "Endor Protocol",
+    "currency": "EDR",
+    "logo": "https://cdn.mytoken.org/FvwzzHu3hy61Q5J2HeZV7zSn_2Fr"
+  },
+  {
+    "symbol": "CLOAK",
+    "name": "CloakCoin",
+    "currency": "CLOAK",
+    "logo": "https://cdn.mytoken.org/cloakcoin.png"
+  },
+  {
+    "symbol": "NCT",
+    "name": "PolySwarm",
+    "currency": "NCT",
+    "logo": "https://cdn.mytoken.org/FrGqHjlxWgdT1aavNHAlAX0WeC5T"
+  },
+  {
+    "symbol": "DIME",
+    "name": "Dimecoin",
+    "currency": "DIME",
+    "logo": "https://cdn.mytoken.org/dimecoin.png"
+  },
+  {
+    "symbol": "BTY",
+    "name": "BitYuan",
+    "currency": "BTY",
+    "logo": "https://cdn.mytoken.org/FmuAvAHDo49YLUTs9DHhGfDJeMsd"
+  },
+  {
+    "symbol": "ZGC",
+    "name": "ZenGold",
+    "currency": "ZGC",
+    "logo": "https://cdn.mytoken.org/5aa6b1addba81533edd3021912f7d177"
+  },
+  { "symbol": "YBCT", "name": "YBCT", "currency": "YBCT", "logo": null },
+  {
+    "symbol": "LEMO",
+    "name": "LemoChain",
+    "currency": "LEMO",
+    "logo": "https://cdn.mytoken.org/FknjRXpxINxuPMnulKqNV4nm3qBu"
+  },
+  {
+    "symbol": "ADD",
+    "name": "EOS Add",
+    "currency": "ADD",
+    "logo": "https://cdn.mytoken.org/Fmv94KEM0gqSSkv0Be9gctKMJ7-R"
+  },
+  {
+    "symbol": "SDD",
+    "name": "Super Diamond",
+    "currency": "SDD",
+    "logo": "https://cdn.mytoken.org/051cca7212e39376554548fa3edd5435"
+  },
+  {
+    "symbol": "REAL",
+    "name": "REAL",
+    "currency": "REAL",
+    "logo": "https://cdn.mytoken.org/da223255f1db60700c7b3be5669607b3"
+  },
+  {
+    "symbol": "ENT",
+    "name": "Eternity",
+    "currency": "ENT",
+    "logo": "https://cdn.mytoken.org/eternity.png"
+  },
+  {
+    "symbol": "SMART",
+    "name": "SmartCash",
+    "currency": "SMART",
+    "logo": "https://cdn.mytoken.org/smartcash.png"
+  },
+  {
+    "symbol": "VNS",
+    "name": "Venus",
+    "currency": "VNS",
+    "logo": "https://cdn.mytoken.org/FgHsweizs88DE0czfsGcA-ar5mpA"
+  },
+  {
+    "symbol": "PTOY",
+    "name": "Patientory",
+    "currency": "PTOY",
+    "logo": "https://cdn.mytoken.org/6cce78eb13f371b80451486f339f2850"
+  },
+  {
+    "symbol": "BASH",
+    "name": "LuckChain",
+    "currency": "BASH",
+    "logo": "https://cdn.mytoken.org/luckchain.png"
+  },
+  {
+    "symbol": "MOON",
+    "name": "Mooncoin",
+    "currency": "MOON",
+    "logo": "https://cdn.mytoken.org/mooncoin.png"
+  },
+  {
+    "symbol": "SWT",
+    "name": "Swarm City",
+    "currency": "SWT",
+    "logo": "https://cdn.mytoken.org/eefd22e2fd921b3bebd8ded740154fbb"
+  },
+  {
+    "symbol": "UPP",
+    "name": "Sentinel Protocol",
+    "currency": "UPP",
+    "logo": "https://cdn.mytoken.org/FiQbhRvE2ykQqk2duSZgQAi7V1OZ"
+  },
+  {
+    "symbol": "LEDU",
+    "name": "Education Ecosystem",
+    "currency": "LEDU",
+    "logo": "https://cdn.mytoken.org/Fi8J_bgtB43z3f4drFc6O-XoYWih"
+  },
+  {
+    "symbol": "PPS",
+    "name": "Prophet Set",
+    "currency": "PPS",
+    "logo": "https://cdn.mytoken.org/FrZMvzYEXc9WziRtStvYf2nolpW3"
+  },
+  {
+    "symbol": "NXCT",
+    "name": "XChain",
+    "currency": "NXCT",
+    "logo": "https://cdn.mytoken.org/Fo7hD7u8GLHOMJ6nsGPBSjNPi97h"
+  },
+  {
+    "symbol": "AIX",
+    "name": "Aigang",
+    "currency": "AIX",
+    "logo": "https://files.coinmarketcap.com/static/img/coins/32x32/aigang.png"
+  },
+  {
+    "symbol": "DEL",
+    "name": "Double Entry Ledger",
+    "currency": "DEL",
+    "logo": "https://cdn.mytoken.org/FhAA2b0JdDqP96ka_sjojfvuf0Et"
+  },
+  {
+    "symbol": "WDC",
+    "name": "WorldCoin",
+    "currency": "WDC",
+    "logo": "https://cdn.mytoken.org/worldcoin.png"
+  },
+  {
+    "symbol": "PCH",
+    "name": "PopChain",
+    "currency": "PCH",
+    "logo": "https://cdn.mytoken.org/FhS3DNZYilS7L_U9UgZbkc-Qq_IQ"
+  },
+  {
+    "symbol": "GEN",
+    "name": "DAOstack",
+    "currency": "GEN",
+    "logo": "https://cdn.mytoken.org/4e3d783bdd8c64e0c9a001ff11732e6a"
+  },
+  {
+    "symbol": "BDS",
+    "name": "Borderless",
+    "currency": "BDS",
+    "logo": "https://cdn.mytoken.org/988adc22e1e113e47766d8d0484941ac"
+  },
+  { "symbol": "SNET", "name": "Snetwork", "currency": "SNET", "logo": null },
+  {
+    "symbol": "PASC",
+    "name": "Pascal Coin",
+    "currency": "PASC",
+    "logo": "https://cdn.mytoken.org/pascal-coin.png"
+  },
+  {
+    "symbol": "SGCC",
+    "name": "Super Game Chain",
+    "currency": "SGCC",
+    "logo": "https://cdn.mytoken.org/e8574740e3b71d3954acf217bb757a45"
+  },
+  {
+    "symbol": "GUS",
+    "name": "Guess Chain",
+    "currency": "GUS",
+    "logo": "https://cdn.mytoken.org/Fn-7_N8uRqhbwBJMfuCGC_B8TlFM"
+  },
+  {
+    "symbol": "FAIR",
+    "name": "FairCoin",
+    "currency": "FAIR",
+    "logo": "https://cdn.mytoken.org/faircoin.png"
+  },
+  {
+    "symbol": "CPS",
+    "name": "Coin Paws",
+    "currency": "CPS",
+    "logo": "https://cdn.mytoken.org/Fu5AGh2rdYtet5cnB4mkbF6NUlj4"
+  },
+  {
+    "symbol": "UBQ",
+    "name": "Ubiq",
+    "currency": "UBQ",
+    "logo": "https://cdn.mytoken.org/ubiq.png"
+  },
+  {
+    "symbol": "MAG",
+    "name": "Magnet",
+    "currency": "MAG",
+    "logo": "https://cdn.mytoken.org/magnet.png"
+  },
+  {
+    "symbol": "FLP",
+    "name": "Gameflip",
+    "currency": "FLP",
+    "logo": "https://cdn.mytoken.org/FutXsFrKqMcoxeGsRfPx6ejV5ASa"
+  },
+  {
+    "symbol": "BBC",
+    "name": "Tradove BBCoin",
+    "currency": "BBC",
+    "logo": "https://cdn.mytoken.org/e2479cfdd6b528a89e96000d475c4ba8"
+  },
+  {
+    "symbol": "ETHOS",
+    "name": "Ethos",
+    "currency": "ETHOS",
+    "logo": "https://cdn.mytoken.org/Fjy3E90ecdjd6-SdFW8CrOyz2TfM"
+  },
+  {
+    "symbol": "FTC",
+    "name": "Feathercoin",
+    "currency": "FTC",
+    "logo": "https://cdn.mytoken.org/feathercoin.png"
+  },
+  {
+    "symbol": "ECC",
+    "name": "ECC",
+    "currency": "ECC",
+    "logo": "https://cdn.mytoken.org/cd1783c158d23c1ef46c9e87ec36f86c"
+  },
+  {
+    "symbol": "CAPP",
+    "name": "Cappasity",
+    "currency": "CAPP",
+    "logo": "https://cdn.mytoken.org/cappasity.png"
+  },
+  {
+    "symbol": "CNET",
+    "name": "CNET",
+    "currency": "CNET",
+    "logo": "https://cdn.mytoken.org/4c54dc417300ae4564016f85078f9bf0"
+  },
+  {
+    "symbol": "GRAM",
+    "name": "Telegram Open Network",
+    "currency": "GRAM",
+    "logo": null
+  },
+  {
+    "symbol": "ECN",
+    "name": "E-coin",
+    "currency": "ECN",
+    "logo": "https://cdn.mytoken.org/e-coin.png"
+  },
+  {
+    "symbol": "EDU",
+    "name": "EduChain",
+    "currency": "EDU",
+    "logo": "https://cdn.mytoken.org/FpSdynJ0CLBU-II6XJecgTPt1jVX"
+  },
+  { "symbol": "IDHUB", "name": "IDHub", "currency": "IDHUB", "logo": null },
+  {
+    "symbol": "CAR",
+    "name": "CarBlock",
+    "currency": "CAR",
+    "logo": "https://cdn.mytoken.org/FmJLm6_QRPOV1c9gFw2NAZM6JlU-"
+  },
+  {
+    "symbol": "BTCD",
+    "name": "BitcoinDark",
+    "currency": "BTCD",
+    "logo": "https://cdn.mytoken.org/bitcoindark.png"
+  },
+  {
+    "symbol": "FNKOS",
+    "name": "FogLink",
+    "currency": "FNKOS",
+    "logo": "https://cdn.mytoken.org/Ft0NOzbWImeYavZxgG8mSidYtgCF"
+  },
+  {
+    "symbol": "QRK",
+    "name": "Quark",
+    "currency": "QRK",
+    "logo": "https://cdn.mytoken.org/quark.png"
+  },
+  {
+    "symbol": "ICO",
+    "name": "ICOCoin",
+    "currency": "ICO",
+    "logo": "https://files.coinmarketcap.com/static/img/coins/128x128/ico.png"
+  },
+  { "symbol": "OIOC", "name": "OIOCoin", "currency": "OIOC", "logo": null },
+  {
+    "symbol": "HBT",
+    "name": "Hubii Network",
+    "currency": "HBT",
+    "logo": "https://cdn.mytoken.org/Fvbj8d58YwJqOhhExrAZhkdHCNK-"
+  },
+  {
+    "symbol": "TRST",
+    "name": "WeTrust",
+    "currency": "TRST",
+    "logo": "https://cdn.mytoken.org/trust.png"
+  },
+  {
+    "symbol": "ZCC",
+    "name": "ZcCoin",
+    "currency": "ZCC",
+    "logo": "https://cdn.mytoken.org/zccoin.png"
+  },
+  { "symbol": "BITH", "name": "Bithash", "currency": "BITH", "logo": null },
+  {
+    "symbol": "BC",
+    "name": "Butler Coin",
+    "currency": "BC",
+    "logo": "https://cdn.mytoken.org/FjzwRJMf1XiX7fcWxD2zcWKLFByf"
+  },
+  {
+    "symbol": "EXRN",
+    "name": "EXRN Chain",
+    "currency": "EXRN",
+    "logo": "https://cdn.mytoken.org/FtT317VIrMFvyfnF9FpzARhCcWoJ"
+  },
+  {
+    "symbol": "BFDT",
+    "name": "Befund",
+    "currency": "BFDT",
+    "logo": "https://cdn.mytoken.org/FiXLJ_KS4pZ5z1LMoNKkIR0ESCko"
+  },
+  {
+    "symbol": "EIF",
+    "name": "EIF",
+    "currency": "EIF",
+    "logo": "https://cdn.mytoken.org/Fmd_FNXmNIwrlIDydC_ff6Yt7Ozg"
+  },
+  { "symbol": "BT2", "name": "CST-BT2", "currency": "BT2", "logo": null },
+  {
+    "symbol": "SOUL",
+    "name": "Phantasma Protocol",
+    "currency": "SOUL",
+    "logo": "https://cdn.mytoken.org/Fk8tEo2KA_3I5Ebj107WSHmtRVDO"
+  },
+  {
+    "symbol": "SWTH",
+    "name": "Switcheo",
+    "currency": "SWTH",
+    "logo": "https://cdn.mytoken.org/FnbcSLQt6Ij4C8yz_wd5_zK0PjJH"
+  },
+  {
+    "symbol": "ZCO",
+    "name": "Zebi",
+    "currency": "ZCO",
+    "logo": "https://cdn.mytoken.org/FllpHKKLtMCUrlGT9SCS8QazlaDe"
+  },
+  {
+    "symbol": "IND",
+    "name": "Indorse Token",
+    "currency": "IND",
+    "logo": "https://cdn.mytoken.org/indorse-token.png"
+  },
+  {
+    "symbol": "SNOV",
+    "name": "Snovio",
+    "currency": "SNOV",
+    "logo": "https://cdn.mytoken.org/snovio.png"
+  },
+  {
+    "symbol": "FDZ",
+    "name": "Friendz",
+    "currency": "FDZ",
+    "logo": "https://cdn.mytoken.org/09b5c788f7560921d1806ff0d2f26592"
+  },
+  {
+    "symbol": "RISK",
+    "name": "Global Risk Exchange",
+    "currency": "RISK",
+    "logo": "https://cdn.mytoken.org/Fr2mpKauw346poyo_iiH2Y_0TDkP"
+  },
+  {
+    "symbol": "HDA",
+    "name": "HondaChain",
+    "currency": "HDA",
+    "logo": "https://cdn.mytoken.org/FiUB99ItAqZNLCC2amRF9hQ_DTKj"
+  },
+  {
+    "symbol": "AMP",
+    "name": "Synereo",
+    "currency": "AMP",
+    "logo": "https://cdn.mytoken.org/synereo.png"
+  },
+  {
+    "symbol": "BNK",
+    "name": "Bankera",
+    "currency": "BNK",
+    "logo": "https://cdn.mytoken.org/FlsZZXVs1L7UiVzSY32qr-Ve9lJf"
+  },
+  {
+    "symbol": "ZCN",
+    "name": "0chain",
+    "currency": "ZCN",
+    "logo": "https://cdn.mytoken.org/Fpob1z-okv9QNTF03oaQhJ2XM653"
+  },
+  {
+    "symbol": "VRC",
+    "name": "VeriCoin",
+    "currency": "VRC",
+    "logo": "https://cdn.mytoken.org/8f4b95dc823f74109a6248383e4d27e4"
+  },
+  {
+    "symbol": "PUT",
+    "name": "Profile Utility Token",
+    "currency": "PUT",
+    "logo": "https://cdn.mytoken.org/716839700b3ac988ebd240eb1fa88ee6"
+  },
+  {
+    "symbol": "SIC",
+    "name": "Swisscoin",
+    "currency": "SIC",
+    "logo": "https://cdn.mytoken.org/swisscoin.png"
+  },
+  {
+    "symbol": "RISE",
+    "name": "Rise",
+    "currency": "RISE",
+    "logo": "https://cdn.mytoken.org/rise.png"
+  },
+  {
+    "symbol": "MGO",
+    "name": "MobileGo",
+    "currency": "MGO",
+    "logo": "https://cdn.mytoken.org/mobilego.png"
+  },
+  { "symbol": "CHT", "name": "CoinHot", "currency": "CHT", "logo": null },
+  {
+    "symbol": "WAB",
+    "name": "WAB Network",
+    "currency": "WAB",
+    "logo": "https://cdn.mytoken.org/Fn5mNmBK7UwBSGTzDImQOR_T2g2J"
+  },
+  {
+    "symbol": "SGCC",
+    "name": "Super Game Chain",
+    "currency": "SGCC",
+    "logo": "https://cdn.mytoken.org/e8574740e3b71d3954acf217bb757a45"
+  },
+  {
+    "symbol": "GUS",
+    "name": "Guess Chain",
+    "currency": "GUS",
+    "logo": "https://cdn.mytoken.org/Fn-7_N8uRqhbwBJMfuCGC_B8TlFM"
+  },
+  {
+    "symbol": "FAIR",
+    "name": "FairCoin",
+    "currency": "FAIR",
+    "logo": "https://cdn.mytoken.org/faircoin.png"
+  },
+  {
+    "symbol": "CPS",
+    "name": "Coin Paws",
+    "currency": "CPS",
+    "logo": "https://cdn.mytoken.org/Fu5AGh2rdYtet5cnB4mkbF6NUlj4"
+  },
+  {
+    "symbol": "UBQ",
+    "name": "Ubiq",
+    "currency": "UBQ",
+    "logo": "https://cdn.mytoken.org/ubiq.png"
+  },
+  {
+    "symbol": "MAG",
+    "name": "Magnet",
+    "currency": "MAG",
+    "logo": "https://cdn.mytoken.org/magnet.png"
+  },
+  {
+    "symbol": "FLP",
+    "name": "Gameflip",
+    "currency": "FLP",
+    "logo": "https://cdn.mytoken.org/FutXsFrKqMcoxeGsRfPx6ejV5ASa"
+  },
+  {
+    "symbol": "BBC",
+    "name": "Tradove BBCoin",
+    "currency": "BBC",
+    "logo": "https://cdn.mytoken.org/e2479cfdd6b528a89e96000d475c4ba8"
+  },
+  {
+    "symbol": "ETHOS",
+    "name": "Ethos",
+    "currency": "ETHOS",
+    "logo": "https://cdn.mytoken.org/Fjy3E90ecdjd6-SdFW8CrOyz2TfM"
+  },
+  {
+    "symbol": "FTC",
+    "name": "Feathercoin",
+    "currency": "FTC",
+    "logo": "https://cdn.mytoken.org/feathercoin.png"
+  },
+  {
+    "symbol": "ECC",
+    "name": "ECC",
+    "currency": "ECC",
+    "logo": "https://cdn.mytoken.org/cd1783c158d23c1ef46c9e87ec36f86c"
+  },
+  {
+    "symbol": "CAPP",
+    "name": "Cappasity",
+    "currency": "CAPP",
+    "logo": "https://cdn.mytoken.org/cappasity.png"
+  },
+  {
+    "symbol": "CNET",
+    "name": "CNET",
+    "currency": "CNET",
+    "logo": "https://cdn.mytoken.org/4c54dc417300ae4564016f85078f9bf0"
+  },
+  {
+    "symbol": "GRAM",
+    "name": "Telegram Open Network",
+    "currency": "GRAM",
+    "logo": null
+  },
+  {
+    "symbol": "ECN",
+    "name": "E-coin",
+    "currency": "ECN",
+    "logo": "https://cdn.mytoken.org/e-coin.png"
+  },
+  {
+    "symbol": "EDU",
+    "name": "EduChain",
+    "currency": "EDU",
+    "logo": "https://cdn.mytoken.org/FpSdynJ0CLBU-II6XJecgTPt1jVX"
+  },
+  { "symbol": "IDHUB", "name": "IDHub", "currency": "IDHUB", "logo": null },
+  {
+    "symbol": "CAR",
+    "name": "CarBlock",
+    "currency": "CAR",
+    "logo": "https://cdn.mytoken.org/FmJLm6_QRPOV1c9gFw2NAZM6JlU-"
+  },
+  {
+    "symbol": "BTCD",
+    "name": "BitcoinDark",
+    "currency": "BTCD",
+    "logo": "https://cdn.mytoken.org/bitcoindark.png"
+  },
+  {
+    "symbol": "FNKOS",
+    "name": "FogLink",
+    "currency": "FNKOS",
+    "logo": "https://cdn.mytoken.org/Ft0NOzbWImeYavZxgG8mSidYtgCF"
+  },
+  {
+    "symbol": "QRK",
+    "name": "Quark",
+    "currency": "QRK",
+    "logo": "https://cdn.mytoken.org/quark.png"
+  },
+  {
+    "symbol": "ICO",
+    "name": "ICOCoin",
+    "currency": "ICO",
+    "logo": "https://files.coinmarketcap.com/static/img/coins/128x128/ico.png"
+  },
+  { "symbol": "OIOC", "name": "OIOCoin", "currency": "OIOC", "logo": null },
+  {
+    "symbol": "HBT",
+    "name": "Hubii Network",
+    "currency": "HBT",
+    "logo": "https://cdn.mytoken.org/Fvbj8d58YwJqOhhExrAZhkdHCNK-"
+  },
+  {
+    "symbol": "TRST",
+    "name": "WeTrust",
+    "currency": "TRST",
+    "logo": "https://cdn.mytoken.org/trust.png"
+  },
+  {
+    "symbol": "ZCC",
+    "name": "ZcCoin",
+    "currency": "ZCC",
+    "logo": "https://cdn.mytoken.org/zccoin.png"
+  },
+  { "symbol": "BITH", "name": "Bithash", "currency": "BITH", "logo": null },
+  {
+    "symbol": "BC",
+    "name": "Butler Coin",
+    "currency": "BC",
+    "logo": "https://cdn.mytoken.org/FjzwRJMf1XiX7fcWxD2zcWKLFByf"
+  },
+  {
+    "symbol": "EXRN",
+    "name": "EXRN Chain",
+    "currency": "EXRN",
+    "logo": "https://cdn.mytoken.org/FtT317VIrMFvyfnF9FpzARhCcWoJ"
+  },
+  {
+    "symbol": "BFDT",
+    "name": "Befund",
+    "currency": "BFDT",
+    "logo": "https://cdn.mytoken.org/FiXLJ_KS4pZ5z1LMoNKkIR0ESCko"
+  },
+  {
+    "symbol": "EIF",
+    "name": "EIF",
+    "currency": "EIF",
+    "logo": "https://cdn.mytoken.org/Fmd_FNXmNIwrlIDydC_ff6Yt7Ozg"
+  },
+  { "symbol": "BT2", "name": "CST-BT2", "currency": "BT2", "logo": null },
+  {
+    "symbol": "SOUL",
+    "name": "Phantasma Protocol",
+    "currency": "SOUL",
+    "logo": "https://cdn.mytoken.org/Fk8tEo2KA_3I5Ebj107WSHmtRVDO"
+  },
+  {
+    "symbol": "SWTH",
+    "name": "Switcheo",
+    "currency": "SWTH",
+    "logo": "https://cdn.mytoken.org/FnbcSLQt6Ij4C8yz_wd5_zK0PjJH"
+  },
+  {
+    "symbol": "ZCO",
+    "name": "Zebi",
+    "currency": "ZCO",
+    "logo": "https://cdn.mytoken.org/FllpHKKLtMCUrlGT9SCS8QazlaDe"
+  },
+  {
+    "symbol": "IND",
+    "name": "Indorse Token",
+    "currency": "IND",
+    "logo": "https://cdn.mytoken.org/indorse-token.png"
+  },
+  {
+    "symbol": "SNOV",
+    "name": "Snovio",
+    "currency": "SNOV",
+    "logo": "https://cdn.mytoken.org/snovio.png"
+  },
+  {
+    "symbol": "FDZ",
+    "name": "Friendz",
+    "currency": "FDZ",
+    "logo": "https://cdn.mytoken.org/09b5c788f7560921d1806ff0d2f26592"
+  },
+  {
+    "symbol": "RISK",
+    "name": "Global Risk Exchange",
+    "currency": "RISK",
+    "logo": "https://cdn.mytoken.org/Fr2mpKauw346poyo_iiH2Y_0TDkP"
+  },
+  {
+    "symbol": "HDA",
+    "name": "HondaChain",
+    "currency": "HDA",
+    "logo": "https://cdn.mytoken.org/FiUB99ItAqZNLCC2amRF9hQ_DTKj"
+  },
+  {
+    "symbol": "AMP",
+    "name": "Synereo",
+    "currency": "AMP",
+    "logo": "https://cdn.mytoken.org/synereo.png"
+  },
+  {
+    "symbol": "BNK",
+    "name": "Bankera",
+    "currency": "BNK",
+    "logo": "https://cdn.mytoken.org/FlsZZXVs1L7UiVzSY32qr-Ve9lJf"
+  },
+  {
+    "symbol": "ZCN",
+    "name": "0chain",
+    "currency": "ZCN",
+    "logo": "https://cdn.mytoken.org/Fpob1z-okv9QNTF03oaQhJ2XM653"
+  },
+  {
+    "symbol": "VRC",
+    "name": "VeriCoin",
+    "currency": "VRC",
+    "logo": "https://cdn.mytoken.org/8f4b95dc823f74109a6248383e4d27e4"
+  },
+  {
+    "symbol": "PUT",
+    "name": "Profile Utility Token",
+    "currency": "PUT",
+    "logo": "https://cdn.mytoken.org/716839700b3ac988ebd240eb1fa88ee6"
+  },
+  {
+    "symbol": "SIC",
+    "name": "Swisscoin",
+    "currency": "SIC",
+    "logo": "https://cdn.mytoken.org/swisscoin.png"
+  },
+  {
+    "symbol": "RISE",
+    "name": "Rise",
+    "currency": "RISE",
+    "logo": "https://cdn.mytoken.org/rise.png"
+  },
+  {
+    "symbol": "MGO",
+    "name": "MobileGo",
+    "currency": "MGO",
+    "logo": "https://cdn.mytoken.org/mobilego.png"
+  },
+  { "symbol": "CHT", "name": "CoinHot", "currency": "CHT", "logo": null },
+  {
+    "symbol": "WAB",
+    "name": "WAB Network",
+    "currency": "WAB",
+    "logo": "https://cdn.mytoken.org/Fn5mNmBK7UwBSGTzDImQOR_T2g2J"
+  }
+]

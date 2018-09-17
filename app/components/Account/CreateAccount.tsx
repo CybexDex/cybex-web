@@ -8,7 +8,7 @@ import AccountNameInput from "./../Forms/AccountNameInput";
 import PasswordInput from "./../Forms/PasswordInput";
 import WalletDb from "stores/WalletDb";
 import notify from "actions/NotificationActions";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import AccountSelect from "../Forms/AccountSelect";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import TransactionConfirmStore from "stores/TransactionConfirmStore";
@@ -34,6 +34,7 @@ import { WalletInfo } from "components/Login/CreateSelector";
 import { LoginSelector } from "components/Login/LoginSelector";
 import { CreateSwitcher } from "components/Login/CreateSwitcher";
 import Radium from "radium";
+import { Gtag } from "services/Gtag";
 
 let CreateAccount = Radium(
   class extends React.Component<any, any> {
@@ -119,7 +120,7 @@ let CreateAccount = Radium(
           [this.state.accountName]: true
         }).then(() => {
           console.log("onFinishConfirm");
-          this.props.router.push("/wallet/backup/create?newAccount=true");
+          this.props.history.push("/wallet/backup/create?newAccount=true");
         });
       }
     }
@@ -128,6 +129,7 @@ let CreateAccount = Radium(
       let { cap } = this.state;
       let refcode = this.refs.refcode ? this.refs.refcode.value() : null;
       let referralAccount = AccountStore.getState().referralAccount;
+      let that = this
       WalletUnlockActions.unlock().then(() => {
         this.setState({ loading: true });
 
@@ -162,6 +164,7 @@ let CreateAccount = Radium(
                 }
               );
             }
+            Gtag.eventRegisterDone(name, "bin");
           })
           .catch(error => {
             console.log("ERROR AccountActions.createAccount", error);
@@ -171,8 +174,9 @@ let CreateAccount = Radium(
               level: "error",
               autoDismiss: 5
             });
-            this.cap && this.cap.updateCaptcha();
-            this.setState({ loading: false });
+            that.refs.captcha.updateCaptcha();
+            that.setState({ loading: false });
+            Gtag.eventRegisterFailed(`Failed to create account: ${name} - ${error_msg}`);
           });
       });
     }
@@ -283,7 +287,7 @@ let CreateAccount = Radium(
                 confirmation={true}
                 onChange={this.onPasswordChange.bind(this)}
                 noLabel
-                checkStrength
+                // checkStrength
               />
             )}
 
@@ -309,7 +313,7 @@ let CreateAccount = Radium(
                 <label>
                   <Translate content="captcha.label" />
                 </label>
-                <Captcha onCapthaChange={this.setCaptcha} />
+                <Captcha onCapthaChange={this.setCaptcha} ref = "captcha" />
               </div>
             )}
             <div style={{ marginTop: "1em" }} />

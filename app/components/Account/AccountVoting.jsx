@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import Immutable from "immutable";
 import Translate from "react-translate-component";
@@ -10,7 +11,7 @@ import cnames from "classnames";
 import { Tabs, Tab } from "../Utility/Tabs";
 import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
-import { Link } from "react-router/es";
+import { Link } from "react-router-dom";
 import ApplicationApi from "api/ApplicationApi";
 import AccountSelector from "./AccountSelector";
 import Icon from "../Icon/Icon";
@@ -709,7 +710,7 @@ class AccountVoting extends React.Component {
             <Tabs
               setting="votingTab"
               className="overview-tabs"
-              defaultActiveTab={1}
+              defaultActiveTab={0}
               segmented={false}
               tabsClass="account-overview no-padding bordered-header content-block"
               contentClass="no-padding"
@@ -720,7 +721,6 @@ class AccountVoting extends React.Component {
               <Tab title="explorer.witnesses.title">
                 <div className={cnames("content-block")}>
                   <div className="hide-selector">
-                    {/* <Link to="/help/voting/witness"><Icon name="question-circle" /></Link> */}
                     <div className="new-worker-button">{saveText}</div>
                   </div>
                   <VotingAccountsList
@@ -747,7 +747,6 @@ class AccountVoting extends React.Component {
               <Tab title="explorer.committee_members.title">
                 <div className={cnames("content-block")}>
                   <div className="hide-selector">
-                    {/* <Link to="/help/voting/committee"><Icon name="question-circle" /></Link> */}
                     <div className="new-worker-button">{saveText}</div>
                   </div>
                   <VotingAccountsList
@@ -773,7 +772,6 @@ class AccountVoting extends React.Component {
 
               <Tab title="account.votes.workers_short">
                 <div className="hide-selector">
-                  {/* <Link to="/help/voting/worker"><Icon name="question-circle" /></Link> */}
                   <div
                     style={{ paddingLeft: 10 }}
                     className={cnames("hide-selector-item", {
@@ -820,24 +818,6 @@ class AccountVoting extends React.Component {
                     </Link>
                   </div>
                 </div>
-
-                {/* {showExpired ? null : (
-                                    <div style={{paddingTop: 10, paddingBottom: 20}}>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <Translate content="account.votes.total_budget" />:</td>
-                                                    <td style={{paddingLeft: 20, textAlign: "right"}}>
-                                                        &nbsp;{globalObject ? <FormattedAsset amount={totalBudget} asset="1.3.0" decimalOffset={5}/> : null}
-                                                        <span>&nbsp;({globalObject ? <EquivalentValueComponent fromAsset="1.3.0" toAsset={preferredUnit} amount={totalBudget}/> : null})</span>
-                                                    </td></tr>
-                                                <tr>
-                                                    <td><Translate content="account.votes.unused_budget" />:</td>
-                                                    <td style={{paddingLeft: 20, textAlign: "right"}}> {globalObject ? <FormattedAsset amount={unusedBudget} asset="1.3.0" decimalOffset={5}/> : null}</td></tr>
-                                            </tbody>
-                                        </table>
-                                    </div>)} */}
 
                 <table className="table dashboard-table">
                   {workerTableIndex === 2 ? null : workerTableIndex === 0 ? (

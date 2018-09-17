@@ -43,7 +43,7 @@ let Input = Radium(
     static defaultProps = {
       size: "normal",
       valueFromOuter: false,
-      autoComplete: "off",
+      autoComplete: "false",
       inputRef: () => void 0
     };
     static styles = {
@@ -62,6 +62,7 @@ let Input = Radium(
         margin: 0,
         padding: 0,
         flex: "1 1",
+        border: 0,
         fontSize: "1em",
         backgroundColor: "transparent",
         ":focus": {
@@ -143,7 +144,8 @@ let Input = Radium(
         },
         small: {
           wrapper: {
-            height: "2.6667rem"
+            height: "2.6667rem",
+            fontSize: "1em"
           },
           icon: {
             fontSize: "2em"
@@ -178,7 +180,11 @@ let Input = Radium(
       }
       this.setState({ value, valid });
       if (this.props.onChange) {
-        this.props.onChange(value);
+        if (this.props.valueFromOuter) {
+          this.props.onChange(e);
+        } else {
+          this.props.onChange(value);
+        }
       }
       if (this.props.onValid && valid) {
         this.props.onValid(value);
@@ -336,7 +342,7 @@ let InputValidator = props => {};
 const ACCOUNT_NAME_SET = /^[a-z0-9\.-]*$/;
 
 let LoginAccountInput = class extends React.PureComponent<
-  { onValidChange; errorMsgs? },
+  { onValidChange; errorMsgs?, accountName? },
   any
 > {
   valid = false;
@@ -347,6 +353,12 @@ let LoginAccountInput = class extends React.PureComponent<
       valid: false,
       onError: false
     };
+  }
+
+  componentDidMount() {
+    if (this.props.accountName) {
+      this.handleNameChange(this.props.accountName);
+    }
   }
 
   handleNameChange = async name => {
@@ -458,6 +470,7 @@ let LoginPasswordInput = class extends React.PureComponent<
         icon="lock"
         type="password"
         onBlur={this.checkError}
+        autocomplete="new-password"
         error={errorPass && counterpart.translate("login.error_password")}
         onChange={this.handleChange}
         keepPlaceholder

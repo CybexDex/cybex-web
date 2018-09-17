@@ -11,10 +11,12 @@ import Icon from "../Icon/Icon";
 import LoadingIndicator from "../LoadingIndicator";
 import WalletDb from "stores/WalletDb";
 import AccountStore from "stores/AccountStore";
+import SettingsStore from "stores/SettingsStore";
 import AccountSelect from "components/Forms/AccountSelect";
 import { ChainStore } from "cybexjs";
 import utils from "common/utils";
 import Operation from "components/Blockchain/Operation";
+import { Button } from "components/Common/Button";
 import notify from "actions/NotificationActions";
 
 class TransactionConfirm extends React.Component {
@@ -104,7 +106,7 @@ class TransactionConfirm extends React.Component {
   }
 
   render() {
-    let { broadcast, broadcasting } = this.props;
+    let { broadcast, broadcasting, appendParams } = this.props;
     if (!this.props.transaction || this.props.closed) {
       return null;
     }
@@ -117,14 +119,14 @@ class TransactionConfirm extends React.Component {
     if (this.props.error || this.props.included) {
       header = this.props.error ? (
         <div
-          style={{ minHeight: 100 }}
+          style={{ minHeight: 40 }}
           className="grid-content modal-header has-error"
         >
           <Translate component="h3" content="transaction.broadcast_fail" />
           <h6>{this.props.error}</h6>
         </div>
       ) : (
-        <div style={{ minHeight: 100 }} className="grid-content modal-header">
+        <div style={{ minHeight: 40 }} className="grid-content modal-header">
           <div className="float-left">
             <Icon name="checkmark-circle" size="4x" className="success" />
           </div>
@@ -139,28 +141,28 @@ class TransactionConfirm extends React.Component {
       );
       button_group = (
         <div className="button-group">
-          <div className="button" onClick={this.onCloseClick.bind(this)}>
+          <Button type="secondary" onClick={this.onCloseClick.bind(this)}>
             <Translate content="transfer.close" />
-          </div>
+          </Button>
         </div>
       );
     } else if (broadcast) {
       header = (
-        <div style={{ minHeight: 100 }} className="grid-content modal-header">
+        <div style={{ minHeight: 40 }} className="grid-content modal-header">
           <Translate component="h3" content="transaction.broadcast_success" />
           <Translate component="h6" content="transaction.waiting" />
         </div>
       );
       button_group = (
         <div className="button-group">
-          <div className="button" onClick={this.onCloseClick.bind(this)}>
+          <Button type="secondary" onClick={this.onCloseClick.bind(this)}>
             <Translate content="transfer.close" />
-          </div>
+          </Button>
         </div>
       );
     } else if (broadcasting) {
       header = (
-        <div style={{ minHeight: 100 }} className="grid-content modal-header">
+        <div style={{ minHeight: 40 }} className="grid-content modal-header">
           <Translate component="h3" content="transaction.broadcasting" />
           <div style={{ width: "100%", textAlign: "center" }}>
             <LoadingIndicator type="three-bounce" />
@@ -170,26 +172,34 @@ class TransactionConfirm extends React.Component {
       button_group = <div style={{ height: 55 }} />;
     } else {
       header = (
-        <div style={{ minHeight: 100 }} className="grid-content modal-header">
+        <div style={{ minHeight: 40 }} className="grid-content modal-header">
           <Translate component="h3" content="transaction.confirm" />
         </div>
       );
       button_group = (
         <div className="button-group">
-          <div className="grid-block full-width-content">
-            <div
-              className={confirmButtonClass}
+          <div
+            className="grid-block full-width-content"
+            style={{ alignItems: "center" }}
+          >
+            <Button
               onClick={this.onConfirmClick.bind(this)}
+              type="primary"
+              style={{ whiteSpace: "nowrap", marginRight: "0.5em" }}
             >
               {this.props.propose ? (
                 <Translate content="propose" />
               ) : (
                 <Translate content="transfer.confirm" />
               )}
-            </div>
-            <div className="button" onClick={this.onCloseClick.bind(this)}>
+            </Button>
+            <Button
+              type="secondary"
+              style={{ minHeight: 42 }}
+              onClick={this.onCloseClick.bind(this)}
+            >
               <Translate content="account.perm.cancel" />
-            </div>
+            </Button>
           </div>
         </div>
       );
@@ -205,7 +215,7 @@ class TransactionConfirm extends React.Component {
           noCloseBtn={true}
         >
           <div
-            style={{ minHeight: 350 }}
+            style={{ minHeight: 250 }}
             className="grid-block vertical no-padding no-margin"
           >
             {!broadcasting ? (
@@ -217,6 +227,8 @@ class TransactionConfirm extends React.Component {
               </div>
             ) : null}
             {header}
+
+            {appendParams}
             <div
               className="grid-content shrink"
               style={{
@@ -232,30 +244,13 @@ class TransactionConfirm extends React.Component {
                 no_links={true}
               />
             </div>
-
-            {/* P R O P O S E   F R O M */}
-            {this.props.propose ? (
-              <div className="full-width-content form-group">
-                <label>
-                  <Translate content="account.propose_from" />
-                </label>
-                <AccountSelect
-                  account_names={AccountStore.getMyAccounts()}
-                  onChange={this.onProposeAccount.bind(this)}
-                />
-              </div>
-            ) : null}
-
-            <div className="grid-block shrink" style={{ paddingTop: "1rem" }}>
-              {button_group}
-
+            <div className="grid-content shrink" style={{ padding: "1rem" }}>
               {/* P R O P O S E   T O G G L E */}
-              {!this.props.transaction.has_proposed_operation() &&
+              {this.props.enabledProposal &&
+              !this.props.transaction.has_proposed_operation() &&
               !(broadcast || broadcasting) ? (
-                <div className="align-right grid-block">
-                  <label
-                    style={{ paddingTop: "0.5rem", paddingRight: "0.5rem" }}
-                  >
+                <div className="grid-block form-group" style={{justifyContent: "space-between", alignItems: "flex-end"}}>
+                  <label style={{paddingLeft: "5px"}}>
                     <Translate content="propose" />:
                   </label>
                   <div
@@ -267,6 +262,21 @@ class TransactionConfirm extends React.Component {
                   </div>
                 </div>
               ) : null}
+              {/* P R O P O S E   F R O M */}
+              {this.props.propose ? (
+                <div className="full-width-content"  style={{ paddingTop: "0.6rem" }}>
+                  <label style={{paddingLeft: "5px"}}>
+                    <Translate content="account.propose_from" />
+                  </label>
+                  <AccountSelect
+                    account_names={AccountStore.getMyAccounts()}
+                    onChange={this.onProposeAccount.bind(this)}
+                  />
+                </div>
+              ) : null}
+            </div>
+            <div className="grid-block shrink" style={{ paddingTop: "1rem" }}>
+              {button_group}
             </div>
           </div>
         </BaseModal>
@@ -275,13 +285,26 @@ class TransactionConfirm extends React.Component {
   }
 }
 
-TransactionConfirm = connect(TransactionConfirm, {
-  listenTo() {
-    return [TransactionConfirmStore];
-  },
-  getProps() {
-    return TransactionConfirmStore.getState();
+TransactionConfirm = connect(
+  TransactionConfirm,
+  {
+    listenTo() {
+      return [TransactionConfirmStore, SettingsStore];
+    },
+    getProps() {
+      let enabledProposal = SettingsStore.getState().settings.get(
+        "advancedMode"
+      );
+      // console.group();
+      // console.debug("TransactionConfirm: ");
+      // console.dir(enabledProposal);
+      // console.groupEnd();
+      return {
+        ...TransactionConfirmStore.getState(),
+        enabledProposal
+      };
+    }
   }
-});
+);
 
 export default TransactionConfirm;

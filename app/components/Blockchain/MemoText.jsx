@@ -10,14 +10,21 @@ import utils from "common/utils";
 import ReactTooltip from "react-tooltip";
 
 class MemoText extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      full: false
+    };
+  }
   static defaultProps = {
     fullLength: false
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps, nextState) {
     return (
       !utils.are_equal_shallow(nextProps.memo, this.props.memo) ||
-      nextProps.wallet_locked !== this.props.wallet_locked
+      nextProps.wallet_locked !== this.props.wallet_locked ||
+      this.state.full !== nextState.full
     );
   }
 
@@ -28,6 +35,13 @@ class MemoText extends React.Component {
       ReactTooltip.rebuild();
     });
   }
+
+  _toggleFullText = () => {
+    console.debug("Toggle Full");
+    this.setState(prev => ({
+      full: !prev.full
+    }));
+  };
 
   render() {
     let { memo, fullLength } = this.props;
@@ -49,13 +63,17 @@ class MemoText extends React.Component {
     }
 
     let full_memo = text;
-    if (text && !fullLength && text.length > 35) {
+    if (text && !fullLength && !this.state.full && text.length > 35) {
       text = text.substr(0, 35) + "...";
     }
 
     if (text) {
       return (
-        <div className="memo" style={{ paddingTop: 5, cursor: "help" }}>
+        <div
+          className="memo"
+          onClick={this._toggleFullText}
+          style={{ paddingTop: 5, cursor: "help" }}
+        >
           <span
             className="inline-block"
             data-class="memo-tip"
@@ -80,13 +98,16 @@ class MemoTextStoreWrapper extends React.Component {
   }
 }
 
-export default connect(MemoTextStoreWrapper, {
-  listenTo() {
-    return [WalletUnlockStore];
-  },
-  getProps() {
-    return {
-      wallet_locked: WalletUnlockStore.getState().locked
-    };
+export default connect(
+  MemoTextStoreWrapper,
+  {
+    listenTo() {
+      return [WalletUnlockStore];
+    },
+    getProps() {
+      return {
+        wallet_locked: WalletUnlockStore.getState().locked
+      };
+    }
   }
-});
+);

@@ -8,15 +8,18 @@ import GatewayStore from "stores/GatewayStore";
 import AccountStore from "stores/AccountStore";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import WalletUnlockStore from "stores/WalletUnlockStore";
-import { JadePool } from "services//GatewayConfig";
+import { JadePool, GatewayAsset } from "services//GatewayConfig";
 import { FundRecordEntry, FundRecordRes } from "services//GatewayModels";
 import Icon from "../Icon/Icon";
 import Translate from "react-translate-component";
 import ReactTooltip from "react-tooltip";
+import DateTime from "components/Common/DateTime";
+import { getId } from "components/Common/utils";
 
 import counterpart from "counterpart";
 import { List } from "immutable";
 import { Colors } from "components/Common/Colors";
+import { Table } from "components/Common/Table";
 
 import ChainTypes from "../Utility/ChainTypes";
 import EquivalentPrice from "../Utility/EquivalentPrice";
@@ -30,7 +33,7 @@ import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
-
+import { Club } from "components/StaticPages/Club";
 //React Table
 import ReactTable from "react-table";
 
@@ -40,132 +43,185 @@ const oriAssets = Object.keys(ADDRESS_TYPES);
 
 const noBalanceTip = counterpart.translate("gateway.no_balance");
 
-let AssetRow = class extends React.Component<any, any> {
-  static propTypes = {
-    balance: ChainTypes.ChainObject
-  };
-  _showWithdrawModal = asset => {
-    let { account } = this.props;
-    GatewayActions.showWithdrawModal(asset);
-  };
-  _showDepositWithdraw(asset) {
-    let { account } = this.props;
-    GatewayActions.showDepositModal(account.get("name"), asset);
-  }
-
-  render() {
-    let { asset, balance } = this.props;
-    let canWithdraw = balance && balance.get && balance.get("balance") > 0;
-    // let canWithdraw = !!asset.get("balance") && asset.get("balance") > 0;
-    return (
-      <>
-        <tr>
-          <td>
-            <LinkToAssetById asset={asset.get("id")} />
-          </td>
-          <td>
-            {canWithdraw ? (
-              <BalanceComponent
-                balance={asset.get("balance")}
-                hide_asset={true}
-              />
-            ) : (
-              "-"
-            )}
-          </td>
-          <td>
-            <a
-              onClick={this._showDepositWithdraw.bind(
-                this,
-                asset.get("symbol"),
-                false
-              )}
-            >
-              <Icon name="deposit" className="icon-14px" />
-            </a>
-          </td>
-          <td>
-            {(canWithdraw && (
-              <a
-                className={!canWithdraw ? "disabled" : ""}
-                onClick={
-                  canWithdraw
-                    ? this._showWithdrawModal.bind(
-                        this,
-                        asset.get("symbol"),
-                        false
-                      )
-                    : () => {}
-                }
-              >
-                <Icon name="withdraw" className="icon-14px" />
-              </a>
-            )) || (
-              <a
-                href="javascript:;"
-                data-for="noBalance"
-                data-place="right"
-                data-offset="{ 'left': -6 }"
-                style={{ opacity: 0.3 }}
-                data-tip
-              >
-                <Icon name="withdraw" className="icon-14px" />
-              </a>
-            )}
-          </td>
-        </tr>
-        {!canWithdraw && (
-          <ReactTooltip id="noBalance" effect="solid">
-            {noBalanceTip}
-          </ReactTooltip>
-        )}
-      </>
-    );
-  }
+const GatewayOperaions = ({
+  address,
+  hash,
+  asset
+}: {
+  address: string;
+  hash: string;
+  asset: GatewayAsset;
+}) => {
+  return hash && asset ? (
+    <Translate
+      content="gateway.details"
+      component="a"
+      href={asset.getExplorerUrlByTx(hash)}
+      target="_blank"
+    />
+  ) : (
+    <span>-</span>
+  );
 };
-
-AssetRow = BindToChainState(AssetRow);
 
 let GatewayTable = class extends React.Component<any, any> {
   static propTypes = {
-    assets: ChainTypes.ChainAssetsList.isRequired
+    assets: ChainTypes.ChainAssetsList.isRequired,
+    balances: ChainTypes.ChainObjectsList.isRequired
   };
 
   static defaultProps = {
     assets: List()
   };
 
+  _showWithdrawModal = asset => {
+    let { account } = this.props;
+    GatewayActions.showWithdrawModal(asset);
+  };
+
+  _showDepositWithdraw(asset) {
+    let { account } = this.props;
+    GatewayActions.showDepositModal(account.get("name"), asset);
+  }
+
   render() {
     let { assets, balances, filter, account } = this.props;
-    let assetRows = assets.filter(a => !!a).map(asset => {
-      let a = asset.set("balance", balances.get(asset.get("id")));
+    let balancesMap = balances
+      .filter(bal => bal && bal.get)
+      .reduce((map, bal) => {
+        return {
+          ...map,
+          [bal.get("asset_type")]: bal
+        };
+      }, {});
+    let assetRows = assets.filter(a => !!a && a.get).map(asset => {
+      let balOfAsset = balancesMap[asset.get("id")];
+      let a = asset
+        .set("balance", balOfAsset ? balOfAsset.get("id") : balOfAsset)
+        .set(
+          "balanceAmount",
+          balOfAsset ? balOfAsset.get("balance") : balOfAsset
+        )
+        .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0);
       return a;
     });
     return (
-      <table className="table gateway-table dashboard-table">
-        <thead>
-          <tr>
-            <Translate component="th" content="account.asset" />
-            <Translate component="th" content="account.qty" />
-            {/* <Translate component="th" content="account.eq_value_header"></Translate> */}
-            <Translate component="th" content="gateway.deposit" />
-            <Translate component="th" content="gateway.withdraw" />
-          </tr>
-        </thead>
-        <tbody>
-          {assetRows.map(asset => (
-            <AssetRow
-              key={asset.get("id")}
-              asset={asset}
-              account={account}
-              balance={asset.get("balance")}
-            />
-          ))}
-        </tbody>
-      </table>
+      <Table
+        showPagination={false}
+        defaultPageSize={assetRows.length}
+        className="text-center"
+        data={assetRows}
+        columns={[
+          {
+            Header: counterpart.translate("account.asset"),
+            id: "symbol",
+            accessor: asset => asset.get("symbol"),
+            Cell: row => {
+              return <LinkToAssetById asset={row.original.get("id")} />;
+            },
+            sortMethod: (_a, _b) => {
+              let [a, b] = [_a, _b].map(asset => utils.replaceName(asset).name);
+              return a > b ? 1 : -1;
+            }
+          },
+          {
+            Header: counterpart.translate("account.qty"),
+            accessor: asset => asset,
+            id: "qty",
+            Cell: row => {
+              return row.original.get("canWithdraw") ? (
+                <BalanceComponent
+                  balance={row.original.get("balance")}
+                  hide_asset={true}
+                />
+              ) : (
+                "-"
+              );
+            },
+            sortMethod: (_a, _b) => {
+              let [a, b] = [_a, _b].map(asset =>
+                utils.get_asset_amount(asset.get("balanceAmount"), asset)
+              );
+              return a > b ? 1 : -1;
+            }
+          },
+          {
+            Header: counterpart.translate("gateway.deposit"),
+            accessor: asset => asset.get("symbol"),
+            id: "deposit",
+            Cell: row => {
+              return (
+                <a
+                  onClick={this._showDepositWithdraw.bind(
+                    this,
+                    row.original.get("symbol"),
+                    false
+                  )}
+                >
+                  <Icon name="deposit" className="icon-14px" />
+                </a>
+              );
+            },
+            sortMethod: (_a, _b) => {
+              let [a, b] = [_a, _b].map(asset => utils.replaceName(asset).name);
+              return a > b ? 1 : -1;
+            }
+          },
+          {
+            Header: counterpart.translate("gateway.withdraw"),
+            id: "withdraw",
+            accessor: asset => asset,
+            Cell: row => {
+              let asset = row.original;
+              return asset.get("canWithdraw") ? (
+                <a
+                  onClick={this._showWithdrawModal.bind(
+                    this,
+                    asset.get("symbol"),
+                    false
+                  )}
+                >
+                  <Icon name="withdraw" className="icon-14px" />
+                </a>
+              ) : (
+                <a
+                  href="javascript:;"
+                  data-for={"noBalance" + asset.get("id")}
+                  data-place="right"
+                  data-offset="{ 'left': -6 }"
+                  className="disabled"
+                  style={{ opacity: 0.3 }}
+                  data-tip
+                >
+                  <Icon name="withdraw" className="icon-14px" />
+                  <ReactTooltip
+                    id={"noBalance" + asset.get("id")}
+                    effect="solid"
+                  >
+                    {noBalanceTip}
+                  </ReactTooltip>
+                </a>
+              );
+            },
+            sortMethod: (_a, _b) => {
+              let [a, b] = [_a, _b].map(asset =>
+                utils.get_asset_amount(asset.get("balanceAmount"), asset)
+              );
+              return a > b ? 1 : -1;
+            }
+          }
+        ]}
+        defaultSorted={[
+          {
+            id: "qty",
+            desc: true
+          }
+        ]}
+      />
     );
   }
 };
+
 GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
 
 let GatewayRecords = class extends React.Component<
@@ -209,69 +265,15 @@ let GatewayRecords = class extends React.Component<
     GatewayActions.loginGatewayQuery(this.props.account);
   };
   render() {
+    console.debug("GatewayRecords Render");
+
     let { fundRecords, isLocked } = this.props;
     let records = fundRecords.records || [];
     return (
-      <div className="gateway-records" style={{ position: "relative" }}>
-        {/*<table
-          className="table gateway-table dashboard-table"
-          style={
-            isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
-          }
-        >
-          <thead>
-            <tr>
-              <Translate component="th" content="account.asset" />
-              <Translate component="th" content="gateway.type" />
-              <Translate component="th" content="transfer.amount" />
-              <Translate component="th" content="gateway.address" />
-              <Translate component="th" content="proposal.status" />
-              <Translate component="th" content="gateway.last_update" />
-            </tr>
-          </thead>
-          <tbody>
-            {fundRecords.records &&
-              fundRecords.records.map(record => (
-                <tr key={record.updateAt}>
-                  <td>{record.coinType}</td>
-                  <Translate
-                    component="td"
-                    content={`gateway.${record.fundType.toLowerCase()}`}
-                  />
-                  <td>
-                    <FormattedAsset
-                      asset={record.asset}
-                      amount={record.amount}
-                      hide_asset
-                    />
-                  </td>
-                  <td>{record.address}</td>
-                  <td>{record.state}</td>
-                  <td>{record.updateAt}</td>
-                </tr>
-              ))}
-            {!fundRecords.records ||
-              (!fundRecords.records.length &&
-                !isLocked && (
-                  <tr>
-                    <Translate
-                      component="td"
-                      colSpan={6}
-                      content={`gateway.no_record_one_month`}
-                    />
-                  </tr>
-                ))}
-          </tbody>
-              </table> */}
-        <ReactTable
+      <div className="cybex-records" style={{ position: "relative" }}>
+        <Table
           data={records}
-          noDataText={counterpart.translate(`gateway.no_record_one_month`)}
-          previousText={counterpart.translate(`table.previousText`)}
-          nextText={counterpart.translate(`table.nextText`)}
-          loadingText={counterpart.translate(`table.loadingText`)}
-          pageText={counterpart.translate(`table.pageText`)}
-          ofText={counterpart.translate(`table.ofText`) + " "}
-          rowsText={counterpart.translate(`table.rowsText`)}
+          noDataText={counterpart.translate("gateway.no_record_one_month")}
           style={
             isLocked ? { filter: "blur(5px)", transform: "scale(0.99)" } : {}
           }
@@ -315,17 +317,35 @@ let GatewayRecords = class extends React.Component<
               Header: counterpart.translate("proposal.status"),
               id: "state",
               maxWidth: 80,
-              accessor: d => d.state
+              accessor: d => counterpart.translate("gateway.state." + d.state)
             },
             {
               Header: counterpart.translate("gateway.last_update"),
-              maxWidth: 180,
+              maxWidth: 170,
               id: "update",
-              accessor: d => d.updateAt
+              accessor: d => d.updateAt,
+              Cell: row => (
+                <DateTime
+                  id={getId("gateway")}
+                  dateTime={row.original.updateAt}
+                  notDisplayUTC={true}
+                />
+              )
+            },
+            {
+              Header: counterpart.translate("gateway.operation"),
+              maxWidth: 100,
+              id: "operation",
+              accessor: d => null,
+              Cell: row => (
+                <GatewayOperaions
+                  address={row.original.address}
+                  hash={row.original.hash}
+                  asset={ADDRESS_TYPES[row.original.asset]}
+                />
+              )
             }
           ]}
-          defaultPageSize={10}
-          className="-striped -highlight"
         />
         {isLocked && (
           <div
@@ -383,6 +403,7 @@ let GatewayContainer = class extends React.Component<any, any> {
       nameFilter: "",
       onlyCanWithdraw: false
     };
+    console.debug("GatewayCotainer");
   }
 
   static propTypes = {
@@ -407,7 +428,9 @@ let GatewayContainer = class extends React.Component<any, any> {
   render() {
     let { depositModal, withdrawModal, account } = this.props;
     let { nameFilter } = this.state;
-    let assets = oriAssets.filter(asset => asset.search(nameFilter) !== -1);
+    let assets = oriAssets.filter(
+      asset => utils.replaceName(asset).name.search(nameFilter) !== -1
+    );
     return (
       <div className="page-layout">
         <div className="grid-block main-content">

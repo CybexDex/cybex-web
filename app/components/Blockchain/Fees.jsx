@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import Immutable from "immutable";
 import counterpart from "counterpart";
 import classNames from "classnames";
@@ -38,12 +39,12 @@ class FeeGroup extends React.Component {
     super(props);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return (
-      !Immutable.is(nextProps.globalObject, this.props.globalObject) ||
-      !Immutable.is(nextProps.settings, this.props.settings)
-    );
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   return (
+  //     !Immutable.is(nextProps.globalObject, this.props.globalObject) ||
+  //     !Immutable.is(nextProps.settings, this.props.settings)
+  //   );
+  // }
 
   render() {
     let { globalObject, settings, opIds, title } = this.props;
@@ -78,7 +79,7 @@ class FeeGroup extends React.Component {
       let labelClass = classNames("label", "info");
 
       for (let key in fee) {
-        let amount = fee[key] * scale / 1e4;
+        let amount = (fee[key] * scale) / 1e4;
         let feeTypes = counterpart.translate("transaction.feeTypes");
         let assetAmount = amount ? (
           <FormattedAsset amount={amount} asset="1.3.0" />
@@ -201,7 +202,7 @@ class Fees extends React.Component {
 
     return (
       <div className="grid-block page-layout">
-        <div className="grid-block vertical" style={{ overflow: "visible" }}>
+        <div className="grid-block vertical readable container" style={{ overflow: "visible" }}>
           <div
             className="grid-block small-12 shrink"
             style={{ overflow: "visible" }}

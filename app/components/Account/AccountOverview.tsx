@@ -16,7 +16,7 @@ import SettingsActions from "actions/SettingsActions";
 import assetUtils from "common/asset_utils";
 import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import ChainTypes from "../Utility/ChainTypes";
 import EquivalentPrice from "../Utility/EquivalentPrice";
 import BindToChainState from "../Utility/BindToChainState";
@@ -40,6 +40,7 @@ import CrowdFund from "components/CrowdFund/AccountCrowdFund";
 import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
 import { JadePool } from "services/GatewayConfig";
 import { isFootballAsset } from "qtb";
+import { AccountIEO } from "components/Account/AccountIEO";
 
 const sortFunctions = {
   alphabetic: function(a, b, force) {
@@ -95,18 +96,7 @@ let AccountOverview = class extends React.Component<any, any> {
       depositAsset: null,
       withdrawAsset: null,
       bridgeAsset: null,
-      alwaysShowAssets: [
-        "CYB"
-        // "BTS",
-        // "USD",
-        // "CNY",
-        // "OPEN.BTC",
-        // "OPEN.USDT",
-        // "OPEN.ETH",
-        // "OPEN.MAID",
-        // "OPEN.STEEM",
-        // "OPEN.DASH"
-      ]
+      alwaysShowAssets: ["CYB"]
     };
 
     // this.tableHeightMountInterval = tableHeightHelper.tableHeightMountInterval.bind(this);
@@ -252,7 +242,7 @@ let AccountOverview = class extends React.Component<any, any> {
 
   _onNavigate(route, e) {
     e.preventDefault();
-    this.props.router.push(route);
+    this.props.history.push(route);
   }
 
   _renderBalances(balanceList, optionalAssets, visible?) {
@@ -361,7 +351,6 @@ let AccountOverview = class extends React.Component<any, any> {
       const canDepositWithdraw = !!JadePool.ADDRESS_TYPES[asset.get("symbol")];
       const canWithdraw =
         canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
-      const canBuy = !!this.props.bridgeCoins.get(symbol);
 
       balances.push(
         <tr key={asset.get("symbol")} style={{ maxWidth: "100rem" }}>
@@ -416,24 +405,7 @@ let AccountOverview = class extends React.Component<any, any> {
             </td>
           ) : null}
           <td>{transferLink}</td>
-          <td>
-            {canBuy && this.props.isMyAccount ? (
-              <span>
-                <a
-                  onClick={this._showDepositWithdraw.bind(
-                    this,
-                    "bridge_modal",
-                    assetName,
-                    false
-                  )}
-                >
-                  <Icon name="dollar" className="icon-14px" />
-                </a>
-              </span>
-            ) : (
-              emptyCell
-            )}
-          </td>
+
           <td>
             {canDepositWithdraw && this.props.isMyAccount ? (
               <span>
@@ -556,7 +528,6 @@ let AccountOverview = class extends React.Component<any, any> {
             const canDepositWithdraw = !!this.props.backedCoins
               .get("OPEN", [])
               .find(a => a.symbol === asset.get("symbol"));
-            const canBuy = !!this.props.bridgeCoins.get(asset.get("symbol"));
 
             const notCore = asset.get("id") !== "1.3.0";
             let { market } = assetUtils.parseDescription(
@@ -589,24 +560,6 @@ let AccountOverview = class extends React.Component<any, any> {
                   <td />
                   <td />
                   <td className="column-hide-small" colSpan={2} />
-                  <td style={{ textAlign: "center" }}>
-                    {canBuy && this.props.isMyAccount ? (
-                      <span>
-                        <a
-                          onClick={this._showDepositWithdraw.bind(
-                            this,
-                            "bridge_modal",
-                            a,
-                            false
-                          )}
-                        >
-                          <Icon name="dollar" className="icon-14px" />
-                        </a>
-                      </span>
-                    ) : (
-                      emptyCell
-                    )}
-                  </td>
                   <td>
                     {canDepositWithdraw && this.props.isMyAccount ? (
                       <span>
@@ -790,6 +743,7 @@ let AccountOverview = class extends React.Component<any, any> {
       );
       hiddenBalances = hidden;
     }
+    if (!hiddenBalances || !includedBalances) return null;
 
     let totalBalanceList = includedBalancesList.concat(hiddenBalancesList);
 
@@ -850,7 +804,7 @@ let AccountOverview = class extends React.Component<any, any> {
       />
     );
 
-    includedBalances.push(
+    includedBalances && includedBalances.push(
       <tr key="portfolio" className="total-value">
         <td style={{ textAlign: "left", paddingLeft: 10 }}>{totalValueText}</td>
         <td />
@@ -997,9 +951,9 @@ let AccountOverview = class extends React.Component<any, any> {
                       <th>
                         <Translate content="header.payments" />
                       </th>
-                      <th>
+                      {/* <th>
                         <Translate content="exchange.buy" />
-                      </th>
+                      </th> */}
                       <th>
                         <Translate content="modal.deposit.submit" />
                       </th>
@@ -1086,15 +1040,16 @@ let AccountOverview = class extends React.Component<any, any> {
                   </div>
                 </Tab>
               )}
-              {this.props.isMyAccount && (
-                <Tab title="account.crowdfund">
-                  <div className="content-block">
-                    <div className="generic-bordered-box">
-                      <CrowdFund account={account} />
-                    </div>
+              {/* {this.props.isMyAccount && ( */}
+              <Tab title="account.crowdfund">
+                <div className="content-block">
+                  <div className="generic-bordered-box">
+                    {/* <CrowdFund account={account} /> */}
+                    <AccountIEO account={account} />
                   </div>
-                </Tab>
-              )}
+                </div>
+              </Tab>
+              {/* )} */}
               {/* <Tab title="markets.title" subText={hiddenSubText}>
 
                             </Tab> */}

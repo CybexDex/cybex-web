@@ -1,4 +1,7 @@
 import { Fraction } from "fractional";
+import { BigNumber } from "bignumber.js";
+
+const BnFrDown = BigNumber.another({ ROUNDING_MODE: BigNumber.ROUND_DOWN });
 
 const GRAPHENE_100_PERCENT = 10000;
 
@@ -283,7 +286,10 @@ class Price {
         (this.base.amount * this.quote.toSats())
       : (this.base.amount * this.quote.toSats()) /
         (this.quote.amount * this.base.toSats());
-    this[key] = parseFloat(real.toFixed(digits));
+    // this[key] = parseFloat(real.toFixed(digits));
+    this[key] = parseFloat(
+      new BnFrDown(real.toFixed(digits + 2)).toFixed(digits)
+    );
     return this[key]; // toFixed and parseFloat helps avoid floating point errors for really big or small numbers
   }
 
@@ -574,11 +580,18 @@ class LimitOrder {
 
   sum(order) {
     let newOrder = this.clone();
+    delete newOrder._to_receive;
+    delete this._to_receive;
+    
     if (newOrder.sellers.indexOf(order.seller) === -1) {
       newOrder.sellers.push(order.seller);
     }
     newOrder.for_sale += order.for_sale;
     newOrder.init_for_sale += order.init_for_sale;
+    newOrder.sell_price.base.amount =
+      order.sell_price.base.amount + this.sell_price.base.amount;
+    newOrder.sell_price.quote.amount =
+      order.sell_price.quote.amount + this.sell_price.quote.amount;
 
     return newOrder;
   }
@@ -588,7 +601,11 @@ class LimitOrder {
   }
 
   clone() {
-    return new LimitOrder(this.order, this.assets, this.market_base);
+    let thisOrder = {
+      ...this.order,
+      for_sale: this.for_sale
+    };
+    return new LimitOrder(thisOrder, this.assets, this.market_base);
   }
 
   ne(order) {

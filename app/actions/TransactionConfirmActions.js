@@ -1,82 +1,93 @@
 import alt from "alt-instance";
-import {ChainConfig} from "cybexjs-ws";
+import { ChainConfig } from "cybexjs-ws";
 import counterpart from "counterpart";
+import { Gtag } from "services/Gtag";
+import AccountStore from "stores/AccountStore";
 
 class TransactionConfirmActions {
+  confirm(transaction, resolve, reject, appendParams) {
+    return { transaction, resolve, reject, appendParams };
+  }
 
-    confirm(transaction, resolve, reject) {
-        return {transaction, resolve, reject};
-    }
+  broadcast(transaction, resolve, reject) {
+    return dispatch => {
+      dispatch({ broadcasting: true, closed: true });
 
-    broadcast(transaction, resolve, reject) {
-        return (dispatch) => {
-            dispatch({broadcasting: true, closed: true});
+      let broadcast_timeout = setTimeout(() => {
+        dispatch({
+          broadcast: false,
+          broadcasting: false,
+          error: counterpart.translate("gateway.find_asset"),
+          closed: false
+        });
+        if (reject) reject();
+      }, ChainConfig.expire_in_secs * 4000);
 
-            let broadcast_timeout = setTimeout(() => {
-                dispatch({
-                    broadcast: false,
-                    broadcasting: false,
-                    error: counterpart.translate("gateway.find_asset"),
-                    closed: false
-                });
-                if (reject) reject();
-            }, ChainConfig.expire_in_secs * 4000);
+      transaction
+        .broadcast(() => {
+          dispatch({ broadcasting: false, broadcast: true });
+        })
+        .then(res => {
+          clearTimeout(broadcast_timeout);
+          dispatch({
+            error: null,
+            broadcasting: false,
+            broadcast: true,
+            included: true,
+            trx_id: res[0].id,
+            trx_block_num: res[0].block_num,
+            broadcasted_transaction: true
+          });
+          try {
+            let op = res[0].trx.operations[0][0];
+            Gtag.eventTracactionBroadcast(
+              AccountStore.getState().currentAccount,
+              op
+            );
+          } catch (e) {}
+          if (resolve) resolve();
+        })
+        .catch(error => {
+          console.error(error);
+          clearTimeout(broadcast_timeout);
+          // messages of length 1 are local exceptions (use the 1st line)
+          // longer messages are remote API exceptions (use the 1st line)
+          let splitError = error.message.split("\n");
+          let message = splitError[0];
+          dispatch({
+            broadcast: false,
+            broadcasting: false,
+            error: message,
+            closed: false
+          });
+          if (reject) reject();
+        });
+    };
+  }
 
-            transaction.broadcast(() => {
-                dispatch({broadcasting: false, broadcast: true});
-            }).then( (res)=> {
-                clearTimeout(broadcast_timeout);
-                dispatch({
-                    error: null,
-                    broadcasting: false,
-                    broadcast: true,
-                    included: true,
-                    trx_id: res[0].id,
-                    trx_block_num: res[0].block_num,
-                    broadcasted_transaction: true
-                });
-                if (resolve) resolve();
-            }).catch( error => {
-                console.error(error);
-                clearTimeout(broadcast_timeout);
-                // messages of length 1 are local exceptions (use the 1st line)
-                // longer messages are remote API exceptions (use the 1st line)
-                let splitError = error.message.split( "\n" );
-                let message = splitError[0];
-                dispatch({
-                    broadcast: false,
-                    broadcasting: false,
-                    error: message,
-                    closed: false
-                });
-                if (reject) reject();
-            });
-        };
-    }
+  wasBroadcast(res) {
+    return res;
+  }
 
-    wasBroadcast(res){
-        return res;
-    }
+  wasIncluded(res) {
+    return res;
+  }
 
-    wasIncluded(res){
-        return res;
-    }
+  close() {
+    return true;
+  }
 
-    close() {
-        return true;
-    }
+  error(msg) {
+    return { error: msg };
+  }
 
-    error(msg) {
-        return {error: msg};
-    }
+  togglePropose() {
+    return true;
+  }
 
-    togglePropose() {
-        return true;
-    }
-
-    proposeFeePayingAccount(fee_paying_account) {
-        return fee_paying_account;
-    }
+  proposeFeePayingAccount(fee_paying_account) {
+    return fee_paying_account;
+  }
 }
 
 export default alt.createActions(TransactionConfirmActions);

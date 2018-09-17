@@ -14,10 +14,11 @@ import MarketsActions from "actions/MarketsActions";
 import { correctMarketPair } from "utils/Market";
 import market_utils from "common/utils";
 import market_utils_ori from "common/market_utils";
+import { withRouter } from "react-router-dom";
 
-class ExchangeContainer extends React.Component<any, any> {
+let ExchangeContainer = class extends React.Component<any, any> {
   render() {
-    let symbols = this.props.params.marketID.split("_");
+    let symbols = this.props.match.params.marketID.split("_");
 
     return (
       <AltContainer
@@ -90,7 +91,7 @@ class ExchangeContainer extends React.Component<any, any> {
             return MarketsStore.getState().marketReady;
           },
           backedCoins: () => {
-            return GatewayStore.getState().backedCoins.get("OPEN", []);
+            return GatewayStore.getState().backedCoins.get("JADE", []);
           },
           bridgeCoins: () => {
             return GatewayStore.getState().bridgeCoins;
@@ -104,7 +105,7 @@ class ExchangeContainer extends React.Component<any, any> {
         }}
       >
         <ExchangeSubscriber
-          router={this.props.router}
+          router={this.props.history}
           quoteAsset={symbols[0]}
           baseAsset={symbols[1]}
         />
@@ -130,6 +131,7 @@ let ExchangeSubscriber = class extends React.Component<any, any> {
 
   static defaultProps = {
     currentAccount: "1.2.3",
+    // 缴纳的手续费（cyb）金额
     coreAsset: "1.3.0"
   };
 
@@ -275,5 +277,5 @@ ExchangeSubscriber = BindToChainState(ExchangeSubscriber, {
   keep_updating: true,
   show_loader: true
 });
-
+ExchangeContainer = withRouter(ExchangeContainer);
 export default ExchangeContainer;

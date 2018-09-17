@@ -1,39 +1,42 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
-import "create-react-class";
 import ReactDOM from "react-dom";
-import { AppContainer } from "react-hot-loader";
-import { Router, browserHistory, hashHistory } from "react-router";
-/*
-* Routes-dev is only needed for react hot reload, as this does not work with
-* the async routes defined in Routes.jsx. Any changes to the routes must be kept
-* synchronized between the two files
-*/
-import routes from "./Routes";
-console.debug = () => null;
-require("./components/Utility/Prototypes"); // Adds a .equals method to Array for use in shouldComponentUpdate
-/*
-* Electron does not support browserHistory, so we need to use hashHistory.
-* The same is true for servers without configuration options, such as Github Pages
-*/
-const history = browserHistory;
+import AppInit from "./AppInit";
 
-const rootEl = document.getElementById("content");
-if (history) {
-  history.listen(location => {
-    if (window.gtag) {
-      window.gtag("event", "page_view", {
-        page_path: location.pathname + location.search
-      });
-    }
-  });
+if (__PERFORMANCE_DEVTOOL__) {
+  console.debug("DEVTOOL", "PERFORMANCE");
+  const { registerObserver } = require("react-perf-devtool");
+  registerObserver();
+} else {
+  console.debug = () => null;
 }
-const render = () => {
-  ReactDOM.render(
-    <AppContainer>
-      <Router history={history} routes={routes} />
-    </AppContainer>,
-    rootEl
-  );
-};
-render();
+
+(function initApp() {
+  const rootEl = document.getElementById("content");
+  const render = () => {
+    ReactDOM.render(<AppInit />, rootEl);
+  };
+  render();
+})();
+
+
+// Patch for Resize
+(function() {
+  var throttle = function(type, name, obj) {
+    obj = obj || window;
+    var running = false;
+    var func = function() {
+      if (running) {
+        return;
+      }
+      running = true;
+      requestAnimationFrame(function() {
+        obj.dispatchEvent(new CustomEvent(name));
+        running = false;
+      });
+    };
+    obj.addEventListener(type, func);
+  };
+
+  /* init - you can init any event */
+  throttle("resize", "optimizedResize");
+})();

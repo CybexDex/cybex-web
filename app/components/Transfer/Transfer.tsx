@@ -28,7 +28,7 @@ class Transfer extends React.Component<any, any> {
   constructor(props) {
     super(props);
     let initState: { [s: string]: any } = Transfer.getInitialState();
-    let { query } = this.props.location;
+    let { params: query } = this.props.match;
     if (query.from) {
       initState.from_name = query.from;
       ChainStore.getAccount(query.from);
@@ -147,7 +147,8 @@ class Transfer extends React.Component<any, any> {
   }
 
   _checkFeeStatus(account = this.state.from_account) {
-    if (!account) return;
+    console.debug("CheckFeeStatue: ", account);
+    if (!account || !account.get) return;
 
     const assets = Object.keys(account.get("balances").toJS()).sort(
       utils.sortID
@@ -225,6 +226,7 @@ class Transfer extends React.Component<any, any> {
   }
 
   onFromAccountChanged(from_account) {
+    console.debug("FromAccountChanged: ", from_account);
     this.setState({ from_account, error: null }, () => {
       this._updateFee();
       this._checkFeeStatus();
@@ -336,9 +338,9 @@ class Transfer extends React.Component<any, any> {
         TransactionConfirmStore.listen(this.onTrxIncluded);
       })
       .catch(e => {
-        let msg = e.message ? e.message.split("\n")[1] : null;
-        console.log("error: ", e, msg);
+        let msg = e.message ? e.message : e.toString();
         this.setState({ error: msg });
+        console.log("error: ", e, msg);
       });
   }
 
@@ -439,9 +441,7 @@ class Transfer extends React.Component<any, any> {
     } = this.state;
     let from_my_account =
       !from_account ||
-      AccountStore.getState().currentAccount === from_account.get("name") ||
-      from_name === this.props.passwordAccount;
-    // let from_my_account = AccountStore.isMyAccount(from_account) || from_name === this.props.passwordAccount;
+      AccountStore.getState().currentAccount === from_account.get("name") 
     if (from_account && !from_my_account && !propose) {
       from_error = (
         <span>
@@ -503,9 +503,9 @@ class Transfer extends React.Component<any, any> {
     let tabIndex = 1;
 
     return (
-      <div className="grid-block vertical">
+      <div className="grid-block vertical page-layout">
         <div
-          className="grid-block shrink vertical medium-horizontal"
+          className="grid-block shrink vertical medium-horizontal page-layout"
           style={{ paddingTop: "2rem" }}
         >
           <form
@@ -570,7 +570,11 @@ class Transfer extends React.Component<any, any> {
             <div className="content-block">
               <label htmlFor="issueVesting">
                 <Translate component="span" content="transfer.vesting_period" />
-                <input type="checkbox" onChange={this.onPeriodSwitchChange} />
+                <input
+                  style={{ marginLeft: "0.5em" }}
+                  type="checkbox"
+                  onChange={this.onPeriodSwitchChange}
+                />
               </label>
               <PublicKeySelector
                 disabled={!enableVesting}
@@ -677,8 +681,7 @@ class Transfer extends React.Component<any, any> {
                             allows adjusting of the memo to / from parameters.
                         */}
             {propose ? (
-              <>
-                <div className="full-width-content form-group transfer-input">
+              <><div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="account.propose_from" />
                   </label>
@@ -687,8 +690,7 @@ class Transfer extends React.Component<any, any> {
                     onChange={this.onProposeAccount.bind(this)}
                     tabIndex={tabIndex++}
                   />
-                </div>
-                <div className="full-width-content form-group transfer-input">
+                </div><div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="proposal.expires" />
                   </label>
@@ -724,16 +726,21 @@ class Transfer extends React.Component<any, any> {
 
             {/* TODO: show remaining balance */}
           </form>
-          <div className="grid-content small-12 medium-6 large-4 large-offset-1 right-column">
-            <div className="grid-content no-padding">
-              <RecentTransactions
-                accountsList={accountsList}
-                limit={25}
-                compactView={true}
-                filter="transfer"
-                fullHeight={true}
-              />
-            </div>
+          <div
+            className="grid-content small-12 medium-6 large-4 large-offset-1 right-column page-layout"
+            style={{
+              height: "calc(100% - 2rem)"
+            }}
+          >
+            {/* <Translate component="h3" content="transfer.records" /> */}
+            <RecentTransactions
+              accountsList={accountsList}
+              limit={25}
+              compactView={true}
+              filter="transfer"
+              fullHeight={true}
+              noHeader
+            />
           </div>
 
           <div className="grid-content medium-6 large-4" />
@@ -751,8 +758,7 @@ export default connect(
     },
     getProps() {
       return {
-        currentAccount: AccountStore.getState().currentAccount,
-        passwordAccount: AccountStore.getState().passwordAccount
+        currentAccount: AccountStore.getState().currentAccount
       };
     }
   }

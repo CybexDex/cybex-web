@@ -10,7 +10,7 @@
     ],
     "noImplicitAny": false,
     "sourceMap": true,
-    "removeComments": false,
+    "removeComments": true,
     "typeRoots": [
       "node_modules/@types"
     ],

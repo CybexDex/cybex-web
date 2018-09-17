@@ -113,7 +113,6 @@ div.bordered-header {
   flex-direction: column;
   .bg {
     flex: 1 1 auto;
-    background-image: url("./../background.jpg");
     background-position: center center;
     background-size: cover;
     padding: 1em;
@@ -159,6 +158,11 @@ div.bordered-header {
 
 .readable {
   max-width: 70em;
+  &.container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
 }
 
 .left-panel {
@@ -181,14 +185,14 @@ div.bordered-header {
       height: 100%;
       display: flex;
       flex-direction: row;
-      flex: 1;
+      flex: 1 1 auto;
       justify-content: space-around;
       align-items: center;
       & > a {
         height: 56px;
         position: relative;
         text-align: center;
-        flex: 1;
+        flex: 1 1 auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -199,7 +203,8 @@ div.bordered-header {
           transform: translateX(-50%);
           transition: opacity 0.3s;
           height: 0.3334rem;
-          width: 5.3334rem;
+          // width: 5.3334rem;
+          width: 90%;
           content: "";
           opacity: 0;
           border-radius: 4px 4px 0 0;
@@ -315,6 +320,11 @@ div.bordered-header {
   display: none !important;
   @media screen and (max-width: $size-medium) {
     display: block !important;
+  }
+}
+.hide-for-small-only:not(.ng-hide) {
+  @media screen and (max-width: $size-medium) {
+    display: none !important;
   }
 }
 
@@ -542,12 +552,62 @@ a {
 .page-layout {
   height: 100%;
 }
-.volume-wrapper {
+.volume-wrapper,
+.logo-normal {
   @media screen and (max-width: 75em) {
+    display: none !important;
+  }
+}
+.logo-short {
+  @media screen and (min-width: 75em) {
     display: none !important;
   }
 }
 
 #mobile-menu {
   z-index: 300;
+}
+
+.account-selector {
+  .form-field {
+    flex: 1;
+  }
+}
+
+#transaction_confirm_modal {
+  .button-group {
+    width: 100%;
+  }
+}
+
+.cybex-records .__react_component_tooltip {
+  white-space: pre-wrap;
+}
+
+#JCT_MODAL_ONE,
+#JCT_MODAL_TWO {
+  margin: 0;
+  max-width: 400px;
+  padding: 0;
+}
+#JCT_MODAL_ONE.modal .modal-content,
+#JCT_MODAL_TWO.modal .modal-content {
+  min-height: 200px;
+  padding: 0;
+}
+#JCT_MODAL_ONE.modal .close-button,
+#JCT_MODAL_TWO.modal .close-button {
+  color: #787878;
+}
+#JCT_MODAL_ONE.modal .modal-footer p,
+#JCT_MODAL_TWO.modal .modal-footer p {
+  margin: 0;
+}
+#JCT_MODAL_ONE.modal .modal-footer label,
+#JCT_MODAL_TWO.modal .modal-footer label {
+  margin: 2px;
+}
+
+hr {
+  margin: 0.5em 0;
 }

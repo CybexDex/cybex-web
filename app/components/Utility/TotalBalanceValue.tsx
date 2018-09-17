@@ -159,7 +159,6 @@ let TotalValue = class extends MarketStatsCheck {
     // Open orders value
     for (let asset in openOrders) {
       let fromAsset = assets[asset];
-      console.debug("From Asset: ", fromAsset);
       if (!fromAsset) {
         continue;
       };
@@ -523,11 +522,7 @@ let AccountWrapper = class extends React.Component<any, any> {
     ) {
       return (
         <span>
-          {!!this.props.label ? (
-            <span className="font-secondary">
-              <Translate content={this.props.label} />:{" "}
-            </span>
-          ) : null}{" "}
+          {" "}
           0
         </span>
       );

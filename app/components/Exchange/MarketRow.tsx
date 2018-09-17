@@ -13,6 +13,7 @@ import ReactTooltip from "react-tooltip";
 import { connect } from "alt-react";
 import Radium from "radium";
 import { Colors } from "components/Common";
+import { withRouter } from "react-router-dom";
 
 const Styles = {
   row: {
@@ -49,6 +50,8 @@ let MarketRow = class extends React.Component<
     withYuan?;
     unitYuan?;
     tooltipPosition?;
+    history?
+    location?
   },
   any
 > {
@@ -78,9 +81,9 @@ let MarketRow = class extends React.Component<
 
   _onClick(marketID) {
     const newPath = `/market/${marketID}`;
-    if (newPath !== this.context.router.location.pathname) {
+    if (newPath !== this.props.location.pathname) {
       MarketsActions.switchMarket();
-      this.context.router.push(`/market/${marketID}`);
+      this.props.history.push(`/market/${marketID}`);
     }
   }
 
@@ -387,6 +390,7 @@ let MarketRow = class extends React.Component<
     );
   }
 };
+
 MarketRow = Radium(MarketRow);
 
 MarketRow = BindToChainState(MarketRow);
@@ -406,6 +410,7 @@ MarketRow = connect(
     }
   }
 );
+MarketRow = withRouter(MarketRow);
 
 
 export default MarketRow;

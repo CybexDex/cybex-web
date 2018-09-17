@@ -1,26 +1,26 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import BlockchainStore from "stores/BlockchainStore";
 import AltContainer from "alt-container";
 import Block from "./Block";
 
 class BlockContainer extends React.Component {
+  render() {
+    let height = parseInt(this.props.match.params.height, 10);
 
-    render() {
-        let height = parseInt(this.props.params.height, 10);
-
-        return (
-              <AltContainer 
-                  stores={[BlockchainStore]}
-                  inject={{
-                    blocks: () => {
-                        return BlockchainStore.getState().blocks;
-                    }
-                  }} 
-                  >
-                <Block {...this.props} height={height}/>
-              </AltContainer>
-        );
-    }
+    return (
+      <AltContainer
+        stores={[BlockchainStore]}
+        inject={{
+          blocks: () => {
+            return BlockchainStore.getState().blocks;
+          }
+        }}
+      >
+        <Block {...this.props} height={height} />
+      </AltContainer>
+    );
+  }
 }
 
 export default BlockContainer;

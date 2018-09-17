@@ -1,0 +1,10 @@
+.wallet-options {
+  .backup-links {
+    display: flex;
+    flex-wrap: wrap;
+    > * {
+      flex: 1 1 33%;
+      margin-right: 0;
+    }
+  }
+}

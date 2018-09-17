@@ -37,6 +37,7 @@ class AccountActions {
    *  TODO:  The concept of current accounts is deprecated and needs to be removed
    */
   setCurrentAccount(name) {
+    console.debug("setCurrentAccount Account: ", name);
     return name;
   }
 
@@ -63,7 +64,8 @@ class AccountActions {
     memo,
     propose_account = null,
     fee_asset_id = "1.3.0",
-    vesting
+    vesting,
+    appendParams
   ) {
     // Set the fee asset to use
     fee_asset_id = accountUtils.getFinalFeeAsset(
@@ -82,8 +84,8 @@ class AccountActions {
           memo,
           propose_account,
           fee_asset_id,
-          vesting
-        }).then(result => {
+          vesting,
+        }, appendParams).then(result => {
           // console.log( "transfer result: ", result )
 
           dispatch(result);

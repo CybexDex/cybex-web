@@ -77,7 +77,7 @@ class MarketCard extends React.Component {
 
   goToMarket(e) {
     e.preventDefault();
-    this.context.router.push(
+    this.context.router.history.push(
       `/market/${this.props.base.get("symbol")}_${this.props.quote.get(
         "symbol"
       )}`
@@ -127,10 +127,10 @@ class MarketCard extends React.Component {
           <div className="v-align">
             <img
               className="align-center"
-              ref={imgName.toLowerCase()}
+              ref={imgName.toUpperCase()}
               onError={this._onError.bind(this, imgName)}
               style={{ maxWidth: 70 }}
-              src={`${__BASE_URL__}asset-symbols/${imgName.toLowerCase()}.png`}
+              src={`assets/asset-symbols/${imgName.toUpperCase()}.png`}
             />
           </div>
         </div>
@@ -186,13 +186,16 @@ class MarketCardWrapper extends React.Component {
   }
 }
 
-export default connect(MarketCardWrapper, {
-  listenTo() {
-    return [MarketsStore];
-  },
-  getProps(props) {
-    return {
-      marketStats: MarketsStore.getState().allMarketStats.get(props.marketId)
-    };
+export default connect(
+  MarketCardWrapper,
+  {
+    listenTo() {
+      return [MarketsStore];
+    },
+    getProps(props) {
+      return {
+        marketStats: MarketsStore.getState().allMarketStats.get(props.marketId)
+      };
+    }
   }
-});
+);

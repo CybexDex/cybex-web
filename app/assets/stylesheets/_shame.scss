@@ -437,7 +437,7 @@ input[type="number"] {
 section input[type="text"],
 section input[type="password"] {
   border: none;
-  max-width: 30rem;
+  // max-width: 30rem;
   &:hover,
   &:active,
   &:focus {
@@ -481,7 +481,9 @@ section progress {
   align-self: flex-end;
 }
 
-textarea:-webkit-autofill, select:-webkit-autofill, input:-webkit-autofill {
+textarea:-webkit-autofill,
+select:-webkit-autofill,
+input:-webkit-autofill {
   background-color: transparent !important;
   color: rgba(255, 255, 255, 0.8) !important;
 }
@@ -639,4 +641,11 @@ body:not(.native-scroll) {
 
 .switch-wrapper > div {
   position: absolute;
+}
+
+.with-colon {
+  &::after {
+    content: ":";
+    padding-right: 0.5em;
+  }
 }

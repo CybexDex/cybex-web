@@ -120,7 +120,13 @@ class WalletDb extends BaseStore {
     return this.decryptTcomb_PrivateKey(private_key_tcomb);
   }
 
-  process_transaction(tr, signer_pubkeys, broadcast, extra_keys = []) {
+  process_transaction(
+    tr,
+    signer_pubkeys,
+    broadcast,
+    extra_keys = [],
+    appendParams
+  ) {
     const passwordLogin = SettingsStore.getState().settings.get(
       "passwordLogin"
     );
@@ -192,7 +198,12 @@ class WalletDb extends BaseStore {
               if (broadcast) {
                 if (this.confirm_transactions) {
                   let p = new Promise((resolve, reject) => {
-                    TransactionConfirmActions.confirm(tr, resolve, reject);
+                    TransactionConfirmActions.confirm(
+                      tr,
+                      resolve,
+                      reject,
+                      appendParams
+                    );
                   });
                   return p;
                 } else return tr.broadcast();
@@ -316,16 +327,18 @@ class WalletDb extends BaseStore {
           });
       });
     };
+    console.debug("BrainDict brainkey_plaintext: ", brainkey_plaintext);
 
     let dictionaryPromise = brainkey_plaintext
       ? null
-      : require("common/dictionary.json");
+      : import("common/dictionary.json");
     // console.debug("DICT: ", dictionaryPromise);
     return Promise.all([dictionaryPromise])
       .then(res => {
+        console.debug("BrainDict: ", res);
         return brainkey_plaintext
           ? walletCreateFct(null)
-          : walletCreateFct(dictionaryPromise);
+          : walletCreateFct(res[0]);
       })
       .catch(err => {
         console.log("unable to fetch dictionary.json", err);

@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 
 import AssetActions from "actions/AssetActions";
 import SettingsActions from "actions/SettingsActions";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import Immutable from "immutable";
 import Translate from "react-translate-component";
 import LinkToAccountById from "../Utility/LinkToAccountById";
@@ -276,8 +276,8 @@ class Assets extends React.Component {
 
     return (
       <div className="grid-block vertical">
-        <div className="grid-block page-layout vertical">
-          <div className="grid-block main-content small-12 medium-10 medium-offset-1 main-content vertical">
+        <div className="grid-block page-layout vertical readable container">
+          <div className="grid-block main-content small-12 main-content vertical">
             <div className="generic-bordered-box">
               <Tabs
                 tabsClass="no-padding bordered-header"
@@ -290,7 +290,7 @@ class Assets extends React.Component {
                   <div className="grid-block shrink">
                     <div className="grid-content">
                       <input
-                        style={{ maxWidth: "500px" }}
+                        style={{ margin: "2px 0" }}
                         placeholder={placeholder}
                         type="text"
                         value={this.state.filterMPA}
@@ -334,7 +334,7 @@ class Assets extends React.Component {
                   <div className="grid-block shrink">
                     <div className="grid-content">
                       <input
-                        style={{ maxWidth: "500px" }}
+                        style={{ margin: "2px 0" }}
                         placeholder={placeholder}
                         type="text"
                         value={this.state.filterUIA}
@@ -379,7 +379,7 @@ class Assets extends React.Component {
                   <div className="grid-block shrink">
                     <div className="grid-content">
                       <input
-                        style={{ maxWidth: "500px" }}
+                        style={{ margin: "2px 0" }}
                         placeholder={counterpart
                           .translate("markets.search")
                           .toUpperCase()}

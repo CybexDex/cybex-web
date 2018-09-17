@@ -1,15 +1,7 @@
 import * as React from "react"; import * as PropTypes from "prop-types";
 
 import { getClassName } from "utils//ClassName";
-import { connect } from "alt-react";
-import GatewayStore from "stores/GatewayStore";
 import { GatewayActions } from "actions/GatewayActions";
-import BindToChainState from "../Utility/BindToChainState";
-import ChainTypes from "../Utility/ChainTypes";
-import { Asset } from "lib/common/MarketClasses";
-import Translate from "react-translate-component";
-import CopyButton from "../Utility/CopyButton";
-import Icon from "../Icon/Icon";
 
 type props = { fade?, modalId, className?};
 

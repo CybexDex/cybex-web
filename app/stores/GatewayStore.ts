@@ -8,7 +8,8 @@ import { debugGen } from "utils//Utils";
 import {
   LoginBody,
   Result as GatewayQueryResult,
-  FundRecordRes
+  FundRecordRes,
+  FundRecordEntry
 } from "services/GatewayModels";
 
 import ls from "lib/common/localStorage";
@@ -32,6 +33,11 @@ declare const __TEST__;
 export const JADE_COINS = JadePool.ADDRESS_TYPES;
 
 class GatewayStore extends BaseStore implements Store<State> {
+  static findHash = (record: FundRecordEntry) => {
+    if (!record.details || !record.details.length) return null;
+    return record.details[record.details.length - 1].hash;
+  };
+
   bindListeners;
   setState;
   state: State = {
@@ -64,8 +70,13 @@ class GatewayStore extends BaseStore implements Store<State> {
     });
   }
 
-  handleDepositUpdate(depositInfo) {
-    debug("Open: ", depositInfo);
+  handleDepositUpdate(_depositInfo) {
+    let meta = JADE_COINS[_depositInfo.asset] || {};
+    let depositInfo = {
+      ..._depositInfo,
+      meta
+    };
+    debug("Open: ", JADE_COINS, depositInfo);
     this.setState({
       depositInfo
     });
@@ -84,6 +95,12 @@ class GatewayStore extends BaseStore implements Store<State> {
   }
 
   handleRecordsUpdate(records: FundRecordRes) {
+    records.records.forEach(record => {
+      if (!record.hash) {
+        record.hash = GatewayStore.findHash(record);
+      }
+    });
+
     this.setState({
       records
     });

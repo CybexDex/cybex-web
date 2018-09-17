@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://cybex.io/; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://static.zdassets.com/ https://ekr.zdassets.com https://cdnjs.cloudflare.com/ajax/libs/ https://v2.zopim.com/ https://www.googletagmanager.com/ https://www.google-analytics.com/; style-src 'self' 'unsafe-inline'; connect-src 'self' wss://*.51nebula.com/ wss://*.cybex.io *; font-src 'self' data: https://v2.zopim.com/ https://fonts.gstatic.com/; img-src 'self' data: blob: https://static-assets.51nebula.com/ https://ieo-apitest.nbltrust.com/ https://v2.zopim.com/ https://ieo.oss-cn-hangzhou.aliyuncs.com/ https://ieo-test.oss-cn-hangzhou.aliyuncs.com/ https://www.google-analytics.com/ https://stats.g.doubleclick.net/ https://stats.g.doubleclick.net/;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cybex DEX</title>
+    <meta name="description" content="CYBEX: a decentralized crypto-asset exchange. A future exchange system based on the Graphene Blockchain">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <base href="/" />
+    <!-- <script>/*<![CDATA[*/window.zE || (function (e, t, s) { var n = window.zE = window.zEmbed = function () { n._.push(arguments) }, a = n.s = e.createElement(t), r = e.getElementsByTagName(t)[0]; n.set = function (e) { n.set._.push(e) }, n._ = [], n.set._ = [], a.async = true, a.setAttribute("charset", "utf-8"), a.src = "https://static.zdassets.com/ekr/asset_composer.js?key=" + s, n.t = +new Date, a.type = "text/javascript", r.parentNode.insertBefore(a, r) })(document, "script", "4a299e55-8cd6-491a-86dc-ad6e256b4ada");/*]]>*/</script>     -->
+    <style>
+        body {
+            background-color: #232C36 !important;
+        }
+
+        #load {
+            position: absolute;
+            width: 600px;
+            height: 36px;
+            left: 50%;
+            top: 40%;
+            margin-left: -300px;
+            overflow: visible;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
+        }
+
+        #load div {
+            position: absolute;
+            width: 20px;
+            height: 36px;
+            opacity: 0;
+            font-family: Helvetica, Arial, sans-serif;
+            animation: move 2s linear infinite;
+            -o-animation: move 2s linear infinite;
+            -moz-animation: move 2s linear infinite;
+            -webkit-animation: move 2s linear infinite;
+            transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            color: #35C4F0;
+            font-size: 24px;
+        }
+
+        #load div:nth-child(2) {
+            animation-delay: 0.2s;
+            -o-animation-delay: 0.2s;
+            -moz-animation-delay: 0.2s;
+            -webkit-animation-delay: 0.2s;
+        }
+
+        #load div:nth-child(3) {
+            animation-delay: 0.4s;
+            -o-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+            -webkit-animation-delay: 0.4s;
+        }
+
+        #load div:nth-child(4) {
+            animation-delay: 0.6s;
+            -o-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+        }
+
+        #load div:nth-child(5) {
+            animation-delay: 0.8s;
+            -o-animation-delay: 0.8s;
+            -moz-animation-delay: 0.8s;
+            -webkit-animation-delay: 0.8s;
+        }
+
+        #load div:nth-child(6) {
+            animation-delay: 1s;
+            -o-animation-delay: 1s;
+            -moz-animation-delay: 1s;
+            -webkit-animation-delay: 1s;
+        }
+
+        #load div:nth-child(7) {
+            animation-delay: 1.2s;
+            -o-animation-delay: 1.2s;
+            -moz-animation-delay: 1.2s;
+            -webkit-animation-delay: 1.2s;
+        }
+
+        @keyframes move {
+            0% {
+                left: 0;
+                opacity: 0;
+                color: #35C4F0;
+            }
+            35% {
+                left: 41%;
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                opacity: 1;
+                color: rgb(53, 128, 240);
+            }
+            65% {
+                left: 59%;
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                opacity: 1;
+                color: rgb(150, 53, 240);
+            }
+            100% {
+                left: 100%;
+                -moz-transform: rotate(-180deg);
+                -webkit-transform: rotate(-180deg);
+                -o-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+                opacity: 0;
+                color: rgb(240, 53, 109);
+            }
+        }
+
+        #globalLoading {
+            position: fixed;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: #232C36 !important;
+        }
+
+        #globalLoading.fade-out {
+            opacity: 0;
+            -webkit-transition: opacity 0.3s linear 0.2s;
+            -moz-transition: opacity 0.3s linear 0.2s;
+            transition: opacity 0.3s linear 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    <main id="content">
+    </main>
+    <div id="globalLoading">
+        <div id="load">
+            <div>G</div>
+            <div>N</div>
+            <div>I</div>
+            <div>D</div>
+            <div>A</div>
+            <div>O</div>
+            <div>L</div>
+        </div>
+    </div>
+    <script>
+        (function name(params) {
+            if (/MQQBrowser\/6\.2/.test(navigator.userAgent)) {
+                document.getElementById("content").remove();
+                document.getElementById("globalLoading").remove();
+                document.body.innerHTML = (`<div style="color: #eee;
+    text-align: center;
+    height: 100vh;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100vw;">
+    <div style="    width: 16em;
+    height: 16em;
+    margin: auto;
+    line-height: 16em;
+    border-radius: 100%;
+    overflow: hidden;
+    background: #ddd;
+    box-shadow: 0 0 4px #fff;">
+        
+        <img src="/images/logo-main.png"/>
+        </div>
+    <p style="
+    font-size: 18px; margin-top: 2em">
+    请点击右上角菜单<br>选择<strong>在浏览器中打开</strong></p></div>`)
+            }
+        }());
+    </script>
+    <!-- Google Analytics tracking code -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121047450-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        let gtag = window.gtag = function () { dataLayer.push(arguments); }
+        gtag("config", "UA-121047450-1", { app_name: "CybexDex", });
+        gtag("config", "UA-121082216-1", { app_name: "CybexDex", });
+        gtag("config", "UA-121050870-1", { app_name: "CybexDex", });
+        gtag('js', new Date());
+    </script>
+    <!-- End Google Analytics tracking code -->
+
+
+</body>
+
+</html>

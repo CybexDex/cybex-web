@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import FormattedAsset from "../Utility/FormattedAsset";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Translate from "react-translate-component";
 import counterpart from "counterpart";
@@ -226,17 +226,17 @@ class Operation extends React.PureComponent<any, any> {
           vesting === null
             ? "none"
             : humanize(vesting * 1000, {
-                language: humanizeLocals[locale],
-                unitMeasures: {
-                  y: 365 * SECONDS_OF_ONE_DAY,
-                  mo: 30 * SECONDS_OF_ONE_DAY,
-                  w: 7 * SECONDS_OF_ONE_DAY,
-                  d: SECONDS_OF_ONE_DAY,
-                  h: 3600000,
-                  m: 60000,
-                  s: 1000
-                }
-              });
+              language: humanizeLocals[locale],
+              unitMeasures: {
+                y: 365 * SECONDS_OF_ONE_DAY,
+                mo: 30 * SECONDS_OF_ONE_DAY,
+                w: 7 * SECONDS_OF_ONE_DAY,
+                d: SECONDS_OF_ONE_DAY,
+                h: 3600000,
+                m: 60000,
+                s: 1000
+              }
+            });
 
         color = "success";
         op[1].amount.amount = parseFloat(op[1].amount.amount);

@@ -1,6 +1,12 @@
 import alt from "alt-instance";
 
-const normalize = (notification, level?) => {
+type notification = {
+    message: string,
+    level?: string,
+    autoDismiss?: number
+}
+
+const normalize = (notification: notification, level?) => {
     if (typeof notification == "string")
         notification = { message: notification };
     if (level)

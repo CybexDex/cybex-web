@@ -23,7 +23,7 @@ class MarketCard extends React.Component {
   };
 
   _onClick(marketID) {
-    this.context.router.push(`/market/${marketID}`);
+    this.context.router.history.push(`/market/${marketID}`);
   }
 
   render() {

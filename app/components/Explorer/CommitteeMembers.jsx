@@ -22,7 +22,7 @@ class CommitteeMemberCard extends React.Component {
 
   _onCardClick(e) {
     e.preventDefault();
-    this.context.router.push(
+    this.context.router.history.push(
       `/account/${this.props.committee_member.get("name")}`
     );
   }
@@ -83,7 +83,7 @@ class CommitteeMemberRow extends React.Component {
 
   _onRowClick(e) {
     e.preventDefault();
-    this.context.router.push(
+    this.context.router.history.push(
       `/account/${this.props.committee_member.get("name")}`
     );
   }
@@ -351,7 +351,7 @@ class CommitteeMembers extends React.Component {
 
     return (
       <div className="grid-block">
-        <div className="grid-block page-layout vertical medium-horizontal">
+        <div className="grid-block page-layout vertical medium-horizontal readable container">
           {/* <div className="grid-block shrink">
                         <div className="grid-content">
                             <h5><Translate content="explorer.committee_members.active" />: {Object.keys(globalObject.active_committee_members).length}</h5>

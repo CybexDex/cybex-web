@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import utils from "common/utils";
 import AccountImage from "../Account/AccountImage";
@@ -11,6 +12,7 @@ import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 import accountUtils from "common/account_utils";
 import FloatingDropdown from "../Utility/FloatingDropdown";
+import { Input } from "components/Common/Input";
 
 /**
  * @brief Allows the user to enter an account by name or #ID
@@ -171,20 +173,27 @@ class AccountSelector extends React.Component {
                     height: this.props.size || 80,
                     width: this.props.size || 80
                   }}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
                   account={
                     this.props.account ? this.props.account.get("name") : null
                   }
                   custom_image={null}
                 />
               )}
-              <input
+              <Input
                 style={{
                   textTransform: "lowercase",
                   fontVariant: "initial",
                   zIndex: "1"
                 }}
+                size={this.props.styleSize || "small"}
                 type="text"
                 name="username"
+                valueFromOuter
                 value={this.props.accountName || ""}
                 placeholder={
                   this.props.placeholder ||
@@ -193,7 +202,6 @@ class AccountSelector extends React.Component {
                 ref="user_input"
                 onChange={this.onInputChanged.bind(this)}
                 onKeyDown={this.onKeyDown.bind(this)}
-                tabIndex={this.props.tabIndex}
               />
               {this.props.dropDownContent ? (
                 <div className="form-label select floating-dropdown">
