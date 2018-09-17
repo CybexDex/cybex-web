@@ -80,14 +80,11 @@ let AppInit = class extends React.Component<any, any> {
       loadingMask.classList.add("fade-out");
       setTimeout(() => loadingMask.remove(), 200);
     }
-  }
+  };
 
   componentWillMount() {
     // Node Connection Init
-    willTransitionTo(
-      true, 
-      this._statusCallback.bind(this)
-    )
+    willTransitionTo(true, this._statusCallback.bind(this))
       .then(() => {
         this.setState({
           apiConnected: true,
@@ -107,7 +104,7 @@ let AppInit = class extends React.Component<any, any> {
       })
       .finally(() => {
         this.removeLoadingMask();
-      })
+      });
   }
 
   componentDidMount() {

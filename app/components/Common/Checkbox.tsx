@@ -12,7 +12,7 @@ let Checkbox = class extends React.Component<
     isMaster?: boolean;
     active: boolean;
     children: any;
-    size: string;
+    size?: string;
     labelStyle?;
     onChange?;
   },
