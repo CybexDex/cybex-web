@@ -50,8 +50,8 @@ let MarketRow = class extends React.Component<
     withYuan?;
     unitYuan?;
     tooltipPosition?;
-    history?
-    location?
+    history?;
+    location?;
   },
   any
 > {
@@ -373,20 +373,17 @@ let MarketRow = class extends React.Component<
     }
 
     return (
-      <>
-        <div
-          className="table-row clickable"
-          style={
-            [Styles.row.base, this.props.current && Styles.row.active] as any
-          }
-          data-tip={withYuan && !isNaN(priceByYuan) ? `¥ ${priceByYuan}` : null}
-          data-place={tooltipPosition}
-          data-offset="{'right': 6}"
-        >
-          {columns}
-        </div>
-        {/* <ReactTooltip /> */}
-      </>
+      <div
+        className="table-row clickable"
+        style={
+          [Styles.row.base, this.props.current && Styles.row.active] as any
+        }
+        data-tip={withYuan && !isNaN(priceByYuan) ? `¥ ${priceByYuan}` : null}
+        data-place={tooltipPosition}
+        data-offset="{'right': 6}"
+      >
+        {columns}
+      </div>
     );
   }
 };
@@ -411,6 +408,5 @@ MarketRow = connect(
   }
 );
 MarketRow = withRouter(MarketRow);
-
 
 export default MarketRow;

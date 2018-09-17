@@ -380,27 +380,24 @@ export class MarketGroup extends React.Component<any, any> {
             }
         }
       })
-      .sort((a, b) => {
-        return b.props.starred ? 1 : -1;
-      });
 
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
 
-    return open
-      ? [
+    return (
+      open && [
         <div className="table table-hover">
-            <div className="table-row" style={{ paddingRight: "10px" }}>
-              {headers}
-            </div>
-          </div>,
-        <div
-            className="table table-hover _scroll-bar"
-            style={{ overflowY: "auto", paddingRight: "4px" }}
-          >
-            {marketRows && marketRows.length && <>{marketRows}</>}
+          <div className="table-row" style={{ paddingRight: "10px" }}>
+            {headers}
           </div>
+        </div>,
+        <div
+          className="table table-hover _scroll-bar"
+          style={{ overflowY: "auto", paddingRight: "4px" }}
+        >
+          {marketRows}
+        </div>
       ]
-      : null;
+    );
   }
 }
 
@@ -763,8 +760,13 @@ let MyMarkets = class extends React.Component<any, any> {
             return a.quote.indexOf(lookupQuote) !== -1;
           } else {
             const ID = a.quote + "_" + a.base;
+            utils.replaceName(a.quote).name;
             if (!!this.state.myMarketFilter) {
-              return ID.indexOf(this.state.myMarketFilter) !== -1;
+              return (
+                utils
+                  .replaceName(a.quote)
+                  .name.indexOf(this.state.myMarketFilter) !== -1
+              );
             }
             if (onlyStars && !starredMarkets.has(ID)) {
               return false;
@@ -801,7 +803,6 @@ let MyMarkets = class extends React.Component<any, any> {
         .toArray();
     }
     // console.debug("Final Other Markets: ", activeMarkets.toJSON());
-    const hasOthers = otherMarkets && otherMarkets.length;
 
     let hc = "mymarkets-header clickable";
     let starClass = cnames(hc, { inactive: !myMarketTab });
@@ -859,21 +860,6 @@ let MyMarkets = class extends React.Component<any, any> {
             </TabLink>
           );
         })}
-        {myMarketTab && hasOthers ? (
-          <li
-            key={"others"}
-            style={{ textTransform: "uppercase" }}
-            onClick={this.toggleActiveMarketTab.bind(
-              this,
-              preferredBases.size + 1
-            )}
-            className={cnames("mymarkets-tab", {
-              active: activeMarketTab === preferredBases.size + 1
-            })}
-          >
-            <Translate content="exchange.others" />
-          </li>
-        ) : null}
       </ul>,
       myMarketTab ? (
         <div
@@ -889,7 +875,7 @@ let MyMarkets = class extends React.Component<any, any> {
             onChange={() => {
               MarketsActions.toggleStars();
             }}
-            labelStyle={{alignItems: "center"}}
+            labelStyle={{ alignItems: "center" }}
           >
             <Translate content="exchange.show_star_2" />
             <Translate content="exchange.show_star_1" />
@@ -961,23 +947,6 @@ let MyMarkets = class extends React.Component<any, any> {
               />
             );
           })}
-        {activeMarketTab === preferredBases.size + 1 &&
-        myMarketTab &&
-        hasOthers ? (
-          <MarketGroup
-            userMarkets={this.props.userMarkets}
-            index={preferredBases.size}
-            current={current}
-            starredMarkets={starredMarkets}
-            marketStats={marketStats}
-            viewSettings={viewSettings}
-            columns={columns}
-            markets={otherMarkets}
-            base="others"
-            maxRows={myMarketTab ? 20 : 10}
-            findMarketTab={!myMarketTab}
-          />
-        ) : null}
       </div>
     ];
   }
@@ -997,7 +966,6 @@ export default connect(
       return [SettingsStore, MarketsStore, AssetStore, IntlStore];
     },
     getProps() {
-      console.debug("Locale: ", IntlStore.getState());
       return {
         locale: IntlStore.getState().currentLocale,
         starredMarkets: SettingsStore.getState().starredMarkets,
