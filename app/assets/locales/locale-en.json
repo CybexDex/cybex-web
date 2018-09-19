@@ -1417,7 +1417,7 @@
     "use_wallet_create": "Use the wallet model to create",
     "use_password": "Use a cloud wallet",
     "use_password_create": "Use the cloud wallet model to create",
-    "pass_length": "The password must contain at least %(minLength)s characters. Ideally you should use 20 or more, and a combination of numbers, special characters and letters.",
+    "pass_length": "The password must contain at least %(minLength)s characters. It should be a combination of numbers, special characters and uppercase & lowercase letters.",
     "switch_model_wallet": "Switch to local wallet",
     "switch_model_password": "Switch to cloud wallet",
     "account_public": "Account Name (Public)",

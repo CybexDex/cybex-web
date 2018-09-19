@@ -310,6 +310,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
                 ref="password"
                 confirmation={true}
                 passwordLength={12}
+                validatePattern={/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{12,}/}
                 onChange={this.onPasswordChange.bind(this)}
                 noLabel
                 checkStrength

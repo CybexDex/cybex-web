@@ -70,7 +70,7 @@ class WorkerApproval extends React.Component {
     if (worker.daily_pay < this.props.rest) {
       fundedPercent = 100;
     } else if (this.props.rest > 0) {
-      fundedPercent = this.props.rest / worker.daily_pay * 100;
+      fundedPercent = (this.props.rest / worker.daily_pay) * 100;
     }
     console.debug("Worker: ", worker);
     let startDate = counterpart.localize(
@@ -89,38 +89,35 @@ class WorkerApproval extends React.Component {
       (!isExpired && total_votes < this.props.voteThreshold) || !hasStarted;
     return (
       <tr className={approvalState ? "" : "unsupported"}>
-        {isExpired ? null : (
-          <td style={{ textAlign: "right", paddingRight: 10, paddingLeft: 0 }}>
-            {rank}
-          </td>
-        )}
+        {isExpired
+          ? null
+          : [
+            <td
+                style={{ textAlign: "right", paddingRight: 10, paddingLeft: 0 }}
+              >
+                {rank}
+              </td>,
+            <td style={{ textAlign: "left" }} className="hide-column-small">
+                {worker.id}
+              </td>
+          ]}
 
         <td className="worker-name" style={{ textAlign: "left" }}>
-          <div
-            className="inline-block"
-            style={{ paddingRight: 5, position: "relative", top: -1 }}
-          >
-            <a
-              style={{
-                visibility:
-                  worker.url && worker.url.indexOf(".") !== -1
-                    ? "visible"
-                    : "hidden"
-              }}
-              href={worker.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="share" />
-            </a>
-          </div>
           <div data-tip={worker.name} className="inline-block tooltip">
             {worker.name}
             <br />
             <LinkToAccountById account={worker.worker_account} />
           </div>
         </td>
-
+        <td className="text-center">
+          {worker.url && worker.url.indexOf(".") !== -1 ? (
+            <a href={worker.url} target="_blank" rel="noopener noreferrer">
+              <Icon name="share" />
+            </a>
+          ) : (
+            "-"
+          )}
+        </td>
         <td style={{ textAlign: "right" }} className="hide-column-small">
           <FormattedAsset
             amount={total_votes}

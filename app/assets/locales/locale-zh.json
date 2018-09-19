@@ -467,10 +467,10 @@
       "active_short": "活跃",
       "inactive": "备份",
       "about": "关于",
-      "create_worker": "创建新工作者",
-      "line": "线",
+      "create_worker": "创建新的预算项目",
+      "line": "行",
       "save_finish": "点击“保存”完成投票",
-      "threshold": "Votes required to activate",
+      "threshold": "通过所需票数",
       "missing": "所需"
     },
     "options": {
@@ -1447,7 +1447,7 @@
     "use_wallet_create": "创建钱包模式账户",
     "use_password": "使用云钱包模式",
     "use_password_create": "创建云钱包账户",
-    "pass_length": "密码必须包含至少 %(minLength)s 位字符. 理想的密码是至少20位字符，包含了数字、特殊符号和字母。",
+    "pass_length": "密码必须包含至少 %(minLength)s 位字符, 且需要同时包含数字、特殊符号和大写及字母。",
     "switch_model_wallet": "切换到钱包模式",
     "switch_model_password": "切换到云钱包模式",
     "account_public": "账户名称（公开可见）",

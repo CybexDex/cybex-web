@@ -870,7 +870,13 @@ class AccountVoting extends React.Component {
                         </th>
                       )}
                       <th style={{ textAlign: "left" }}>
+                        <Translate content="explorer.assets.id" />
+                      </th>
+                      <th style={{ textAlign: "left" }}>
                         <Translate content="account.user_issued_assets.description" />
+                      </th>
+                      <th style={{ textAlign: "center" }}>
+                        <Translate content="vesting.detail" />
                       </th>
                       <th
                         style={{ textAlign: "right" }}

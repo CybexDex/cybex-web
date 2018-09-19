@@ -33,6 +33,7 @@ class PasswordInput extends React.Component<any, any> {
     wrongPassword: false,
     noValidation: false,
     noLabel: false,
+    validatePattern: false,
     passwordLength: 8,
     showErrorMsg: true,
     checkStrength: false,
@@ -109,7 +110,9 @@ class PasswordInput extends React.Component<any, any> {
         !this.state.wrong &&
         !(this.props.confirmation && doesnt_match) &&
         confirmation &&
-        password.length >= this.props.passwordLength,
+        password.length >= this.props.passwordLength &&
+        (!this.props.validatePattern ||
+          this.props.validatePattern.test(password)),
       value: password,
       doesnt_match
     };
@@ -124,18 +127,37 @@ class PasswordInput extends React.Component<any, any> {
   render() {
     let password_error = null,
       confirmation_error = null;
-    if (this.props.showErrorMsg && (this.state.wrong || this.props.wrongPassword))
+    if (
+      this.props.showErrorMsg &&
+      (this.state.wrong || this.props.wrongPassword)
+    )
       password_error = (
-        <div style={{marginTop: "1em"}}>
+        <div style={{ marginTop: "1em" }}>
           <Translate content="wallet.pass_incorrect" />
         </div>
       );
     else if (this.state.error) password_error = <div>{this.state.error}</div>;
+    // if (
+    //   !this.props.noValidation &&
+    //   !this.props.validatePattern &&
+    //   !password_error &&
+    //   (this.state.value.length > 0 &&
+    //     this.state.value.length < this.props.passwordLength)
+    // )
+    //   password_error = (
+    //     <div>
+    //       <Translate
+    //         content="wallet.pass_length"
+    //         minLength={this.props.passwordLength}
+    //       />
+    //     </div>
+    //   );
     if (
       !this.props.noValidation &&
+      this.props.validatePattern &&
       !password_error &&
       (this.state.value.length > 0 &&
-        this.state.value.length < this.props.passwordLength)
+        !this.props.validatePattern.test(this.state.value))
     )
       password_error = (
         <div>
@@ -187,106 +209,99 @@ class PasswordInput extends React.Component<any, any> {
     }
 
     return (
-      <>
-        {
-          <div className="account-selector">
-            <div className={password_class_name}>
-              {/* {noLabel ? null : <Translate component="label" content="wallet.password" />} */}
-              {this.props.noLabel ? null : (
-                <label className="left-label">
-                  <Translate content="wallet.enter_password" />
-                </label>
-              )}
-              <Input
-                style={
-                  this.props.isSimple
-                    ? {}
-                    : {
-                        fontSize: "1.25rem",
-                        height: "3.66667em",
-                        marginBottom: this.props.checkStrength ? 0 : null
-                      }
+      <div className="account-selector">
+        <div className={password_class_name}>
+          {/* {noLabel ? null : <Translate component="label" content="wallet.password" />} */}
+          {this.props.noLabel ? null : (
+            <label className="left-label">
+              <Translate content="wallet.enter_password" />
+            </label>
+          )}
+          <Input
+            style={
+              this.props.isSimple
+                ? {}
+                : {
+                  fontSize: "1.25rem",
+                  height: "3.66667em",
+                  marginBottom: this.props.checkStrength ? 0 : null
                 }
-                icon={this.props.isSimple ? null : "lock"}
-                iconStyle={
-                  this.props.isSimple ? {} : { transform: "scale(0.8)" }
-                }
-                name="password"
-                type="password"
-                inputRef={input => (this.passwordInput = input)}
-                autoComplete="off"
-                valueFromOuter
-                value={this.props.value || this.state.value}
-                onChange={this.handleChange}
-                onKeyDown={this.onKeyDown}
-              />
-              {this.props.checkStrength ? (
-                !this.pw ? (
-                  <LoadingIndicator />
-                ) : (
-                  <>
-                    <progress
-                      style={{ height: 10, width: "100%" }}
-                      className={scoreSet[score] || scoreSet[0]}
-                      value={score}
-                      max="5"
-                      // min="0"
-                    />
-                    {this.passwordInput &&
-                      this.passwordInput.value && (
-                        <div className={scoreSet[score] || scoreSet[0]}>
-                          <Translate content="wallet.password_strength" />
+            }
+            id="accountNameTip"
+            icon={this.props.isSimple ? null : "lock"}
+            iconStyle={this.props.isSimple ? {} : { transform: "scale(0.8)" }}
+            name="password"
+            type="password"
+            inputRef={input => (this.passwordInput = input)}
+            autoComplete="off"
+            valueFromOuter
+            value={this.props.value || this.state.value}
+            onChange={this.handleChange}
+            onKeyDown={this.onKeyDown}
+          />
+          {this.props.checkStrength ? (
+            !this.pw ? (
+              <LoadingIndicator />
+            ) : (
+              [
+                <progress
+                  style={{ height: 10, width: "100%" }}
+                  className={scoreSet[score] || scoreSet[0]}
+                  value={score}
+                  max="5"
+                  // min="0"
+                />,
+                this.passwordInput &&
+                  this.passwordInput.value && (
+                    <div className={scoreSet[score] || scoreSet[0]}>
+                      <Translate content="wallet.password_strength" />
+                      <Translate
+                        content={`wallet.strength_${scoreSet[score] ||
+                          scoreSet[0]}`}
+                      />
+                      {this.props.showStrengthTip &&
+                        score < 4 && (
                           <Translate
-                            content={`wallet.strength_${scoreSet[score] ||
-                              scoreSet[0]}`}
+                            style={{ paddingLeft: "1em" }}
+                            className="txtlabel warning"
+                            content={"wallet.strength_tip"}
                           />
-                          {this.props.showStrengthTip &&
-                            score < 4 && (
-                              <Translate
-                                style={{ paddingLeft: "1em" }}
-                                className="txtlabel warning"
-                                content={`wallet.strength_tip`}
-                              />
-                            )}
-                        </div>
-                      )}
-                  </>
-                )
-              ) : null}
+                        )}
+                    </div>
+                  )
+              ]
+            )
+          ) : null}
 
-              {password_error}
-            </div>
-            {this.props.confirmation ? (
-              <div className={password_confirmation_class_name}>
-                {/* {noLabel ? null : <Translate component="label" content="wallet.confirm" />} */}
-                <label className="left-label">
-                  <Translate content="wallet.confirm_password" />
-                </label>
-                <Input
-                  icon={this.props.isSimple ? null : "lock"}
-                  name="confirm_password"
-                  type="password"
-                  inputRef={input => (this.confirmationInput = input)}
-                  iconStyle={
-                    this.props.isSimple ? {} : { transform: "scale(0.8)" }
-                  }
-                  style={
-                    this.props.isSimple
-                      ? {}
-                      : { fontSize: "1.25rem", height: "3.66667em" }
-                  }
-                  autoComplete="off"
-                  onChange={this.handleChange}
-                />
-                {/* {confirmMatch ? (
+          {password_error}
+        </div>
+        {this.props.confirmation ? (
+          <div className={password_confirmation_class_name}>
+            {/* {noLabel ? null : <Translate component="label" content="wallet.confirm" />} */}
+            <label className="left-label">
+              <Translate content="wallet.confirm_password" />
+            </label>
+            <Input
+              icon={this.props.isSimple ? null : "lock"}
+              name="confirm_password"
+              type="password"
+              inputRef={input => (this.confirmationInput = input)}
+              iconStyle={this.props.isSimple ? {} : { transform: "scale(0.8)" }}
+              style={
+                this.props.isSimple
+                  ? {}
+                  : { fontSize: "1.25rem", height: "3.66667em" }
+              }
+              autoComplete="off"
+              onChange={this.handleChange}
+            />
+            {/* {confirmMatch ? (
               <div className={"ok-indicator success"}>OK</div>
             ) : null} */}
-                {confirmation_error}
-              </div>
-            ) : null}
+            {confirmation_error}
           </div>
-        }
-      </>
+        ) : null}
+      </div>
     );
   }
 }
