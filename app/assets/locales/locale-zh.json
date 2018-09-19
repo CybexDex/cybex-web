@@ -412,6 +412,7 @@
       "proxy_current": "你当前选择的投票代理人是",
       "proxy_short": "代理投票",
       "workers_short": "预算项目",
+      "create_worker_publish": "创建项目",
       "proxy": "代理投票账户",
       "no_proxy": "无代理",
       "name": "账户名",

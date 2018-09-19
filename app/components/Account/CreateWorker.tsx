@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { connect } from "alt-react";
 import ApplicationApi from "api/ApplicationApi";
@@ -6,10 +7,12 @@ import AccountStore from "stores/AccountStore";
 import utils from "common/utils";
 import notify from "actions/NotificationActions";
 import Translate from "react-translate-component";
+import { Button, ButtonType } from "components/Common/Button";
 
-class CreateWorker extends React.Component {
-  constructor() {
-    super();
+class CreateWorker extends React.Component<any, any> {
+  formInstance: HTMLFormElement;
+  constructor(props) {
+    super(props);
 
     this.state = {
       title: null,
@@ -28,7 +31,8 @@ class CreateWorker extends React.Component {
     );
   }
 
-  onSubmit() {
+  onSubmit(e) {
+    e.preventDefault();
     ApplicationApi.createWorker(this.state, this.props.currentAccount).catch(
       error => {
         console.log("error", error);
@@ -46,19 +50,26 @@ class CreateWorker extends React.Component {
     );
   }
 
+  checkValid = () => {
+    return this.formInstance && this.formInstance.checkValidity();
+  };
+
   render() {
-    console.log("state:", this.state);
     return (
       <div className="grid-block" style={{ paddingTop: 20 }}>
         <div className="grid-content large-9 large-offset-3 small-12">
           <Translate content="explorer.workers.create" component="h3" />
-          <form style={{ maxWidth: 800 }}>
+          <form
+            ref={form => (this.formInstance = form)}
+            style={{ maxWidth: 800 }}
+          >
             <Translate content="explorer.workers.create_text_1" component="p" />
             <Translate content="explorer.workers.create_text_2" component="p" />
 
             <label>
               <Translate content="explorer.workers.title" />
               <input
+                required
                 onChange={e => {
                   this.setState({ title: e.target.value });
                 }}
@@ -76,6 +87,7 @@ class CreateWorker extends React.Component {
               <label>
                 <Translate content="account.votes.start" />
                 <input
+                  required
                   onChange={e => {
                     this.setState({ start: new Date(e.target.value) });
                   }}
@@ -93,6 +105,7 @@ class CreateWorker extends React.Component {
               <label>
                 <Translate content="account.votes.end" />
                 <input
+                  required
                   onChange={e => {
                     this.setState({ end: new Date(e.target.value) });
                   }}
@@ -105,6 +118,7 @@ class CreateWorker extends React.Component {
             <label>
               <Translate content="explorer.workers.daily_pay" />
               <input
+                required
                 onChange={e => {
                   this.setState({ pay: e.target.value });
                 }}
@@ -116,6 +130,7 @@ class CreateWorker extends React.Component {
             <label>
               <Translate content="explorer.workers.website" />
               <input
+                required
                 onChange={e => {
                   this.setState({ url: e.target.value });
                 }}
@@ -131,15 +146,20 @@ class CreateWorker extends React.Component {
                 onChange={e => {
                   this.setState({ vesting: parseInt(e.target.value) });
                 }}
+                required
                 type="number"
               />
             </label>
             <Translate content="explorer.workers.vesting_text" component="p" />
 
-            <div className="button-group" onClick={this.onSubmit.bind(this)}>
-              <div className="button" type="submit">
-                Publish
-              </div>
+            <div className="button-group">
+              <Button
+                disabled={!this.checkValid()}
+                type="primary"
+                onClick={this.onSubmit.bind(this)}
+              >
+                <Translate content="account.votes.create_worker_publish" />
+              </Button>
             </div>
           </form>
         </div>
@@ -148,13 +168,16 @@ class CreateWorker extends React.Component {
   }
 }
 
-export default (CreateWorker = connect(CreateWorker, {
-  listenTo() {
-    return [AccountStore];
-  },
-  getProps() {
-    return {
-      currentAccount: AccountStore.getState().currentAccount
-    };
+export default connect(
+  CreateWorker,
+  {
+    listenTo() {
+      return [AccountStore];
+    },
+    getProps() {
+      return {
+        currentAccount: AccountStore.getState().currentAccount
+      };
+    }
   }
-}));
+);
