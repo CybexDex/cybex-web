@@ -413,6 +413,7 @@
       "proxy_short": "代理投票",
       "workers_short": "预算项目",
       "create_worker_publish": "创建项目",
+      "create_worker_success": "创建已成功，点击此处返回",
       "proxy": "代理投票账户",
       "no_proxy": "无代理",
       "name": "账户名",
@@ -994,6 +995,7 @@
       "create_text_2": "设置参数前请仔细估量，发布后将无法修改。",
       "name_text": "预算项目的名字应该简短明了，比如'目标：改进账户名体系'",
       "date_text": "开始时间应该至少设置在一周以后，这样留有足够的时间让用户股东们发现、评估并投票。",
+      "date_validate": "开始时间应晚于当前日期，且结束日期应晚于开始日期",
       "pay_text": "每日支付设定的是每天你希望收到的酬劳，以CYB计价。目前的最佳实践是设定以美元或人民币计价的工资，并承诺销毁由于CYB升值导致的溢价部分。只要你的预算项目还是有效的，并且拥有足够的赞成票超过'回购项目'，那你就能每日持续收到工资。",
       "url_text": "你应该提供一个网址，github文档或者google文档来详细描述你的工作目标和资金使用计划。",
       "vesting_text": "解冻周期设定工作收入需要经过多少天的线性释放才能达到完全解冻并领取完毕。"
@@ -1917,5 +1919,17 @@
   },
   "notify": {
     "create_account_failed": "创建账户失败：%(message)s"
+  },
+  "error_details": {
+    "is_lifetime_member": "该操作需要终身会员才可执行",
+    "is_authorized_asset": "该操作收到资产黑白名单限制",
+    "is_market_issued": "该操作不可用于市场喂价资产",
+    "insufficient_balance": "执行该操作所需资金不足",
+    "incorrect_verify_code": "验证码超时或输入错误",
+    "unknown_error": "未知错误",
+    "faucet_is_out_of_money": "水龙头资金不足，请联系客服人员咨询",
+    "only_one_account": "创建用户请求过多，同一IP地址五分钟内仅可注册一个Cybex账号",
+    "cannot_read_property": "客户端错误，请刷新页面后重试",
+    "max_supply": "超出资产有效最大供应量"
   }
 }

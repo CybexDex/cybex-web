@@ -18,6 +18,7 @@ import utils from "common/utils";
 import Operation from "components/Blockchain/Operation";
 import { Button } from "components/Common/Button";
 import notify from "actions/NotificationActions";
+import { getErrorTrans } from "utils";
 
 class TransactionConfirm extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -107,6 +108,7 @@ class TransactionConfirm extends React.Component {
 
   render() {
     let { broadcast, broadcasting, appendParams } = this.props;
+    let errorTrans = getErrorTrans(this.props.error);
     if (!this.props.transaction || this.props.closed) {
       return null;
     }
@@ -123,7 +125,11 @@ class TransactionConfirm extends React.Component {
           className="grid-content modal-header has-error"
         >
           <Translate component="h3" content="transaction.broadcast_fail" />
-          <h6>{this.props.error}</h6>
+          {errorTrans ? (
+            <Translate component="h6" content={`error_details.${errorTrans}`} />
+          ) : (
+            <h6>{this.props.error}</h6>
+          )}
         </div>
       ) : (
         <div style={{ minHeight: 40 }} className="grid-content modal-header">
@@ -249,8 +255,14 @@ class TransactionConfirm extends React.Component {
               {this.props.enabledProposal &&
               !this.props.transaction.has_proposed_operation() &&
               !(broadcast || broadcasting) ? (
-                <div className="grid-block form-group" style={{justifyContent: "space-between", alignItems: "flex-end"}}>
-                  <label style={{paddingLeft: "5px"}}>
+                <div
+                  className="grid-block form-group"
+                  style={{
+                    justifyContent: "space-between",
+                    alignItems: "flex-end"
+                  }}
+                >
+                  <label style={{ paddingLeft: "5px" }}>
                     <Translate content="propose" />:
                   </label>
                   <div
@@ -264,8 +276,11 @@ class TransactionConfirm extends React.Component {
               ) : null}
               {/* P R O P O S E   F R O M */}
               {this.props.propose ? (
-                <div className="full-width-content"  style={{ paddingTop: "0.6rem" }}>
-                  <label style={{paddingLeft: "5px"}}>
+                <div
+                  className="full-width-content"
+                  style={{ paddingTop: "0.6rem" }}
+                >
+                  <label style={{ paddingLeft: "5px" }}>
                     <Translate content="account.propose_from" />
                   </label>
                   <AccountSelect

@@ -109,7 +109,7 @@ class WorkerApproval extends React.Component {
           </div>
         </td>
         <td className="text-center">
-          {worker.url && worker.url.indexOf(".") !== -1 ? (
+          {worker.url ? (
             <a href={worker.url} target="_blank" rel="noopener noreferrer">
               <Icon name="share" />
             </a>

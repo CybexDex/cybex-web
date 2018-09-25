@@ -218,7 +218,7 @@ div.modal {
   border: 1px solid #008cba;
 }
 
-div.disabled {
+div.disabled, form.disabled {
   &,
   * {
     opacity: 0.8 !important;

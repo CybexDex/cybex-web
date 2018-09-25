@@ -459,6 +459,8 @@
     border-color: $error-text-color;
   }
   input[type="text"],
+  input[type="date"],
+  input[type="url"],
   input[type="password"],
   input[type="email"],
   input[type="number"],

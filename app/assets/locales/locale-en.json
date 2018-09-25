@@ -965,6 +965,7 @@
       "create_text_1": "In order to create your new worker, please fill in the form below. The worker will be created using your currently active account, which must already be a lifetime member.",
       "create_text_2": "Consider carefully the parameters you choose as they can not be changed once you've published your worker.",
       "name_text": "The name of your worker should be short and descriptive, something like this: 'Worker Purpose - Account Name'",
+      "date_validate": "The date of start should be later than today and the end of date should be later than today and the date of start, both",
       "date_text": "The start date should be at least a week into the future in order to allow people the time to discover, evaluate and vote for your worker.",
       "pay_text": "The daily pay defines how much you want to be paid per day and is defined in CYB. The current best practice is to define a salary in USD/CNY, and commit to burning whatever surplus you receive as a result of the CYB price increasing. As long as your worker is active and has sufficient votes to be above the refund worker, you will receive this daily salary.",
       "url_text": "You should supply a website, github document or google doc that describes in more detail the purpose of the worker and how you intend to use the worker pay.",
@@ -1853,5 +1854,17 @@
   },
   "notify": {
     "create_account_failed": "Failed to create account: %(message)s"
+  },
+  "error_details": {
+    "is_lifetime_member": "The operation should be performd by a lifetime member.",
+    "is_authorized_asset": "The operation is unauthorized due to asset's whitelist / blacklist",
+    "is_market_issued": "Cannot manually issue a market-issued asset.",
+    "unknown_error": "Unknown Error",
+    "incorrect_verify_code": "Incorrect verify code",
+    "insufficient_balance": "Insufficient Balance",
+    "only_one_account": "Only one account could be registered from a single IP, within 5 mins",
+    "faucet_is_out_of_money": "Faucet is out of money, please wait a minute.",
+    "cannot_read_property": "Client error, refresh the page and try again, please",
+    "max_supply": "The operation is illegal against the rule of max supply of asset"
   }
 }

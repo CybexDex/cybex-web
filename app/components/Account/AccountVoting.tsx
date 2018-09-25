@@ -637,6 +637,7 @@ let AccountVoting = class extends React.Component<any, any> {
         <Button
           style={{ marginRight: "0.5em" }}
           disabled={!this.isChanged()}
+          type="primary"
           size="small"
           onClick={this.onPublish}
         >

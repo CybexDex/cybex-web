@@ -33,6 +33,7 @@ import {
 import { $breakpointSmall } from "components/Common/Breakpoints";
 import Radium from "radium";
 import { Gtag } from "services/Gtag";
+import { getErrorTranslated } from "utils";
 
 let CreateAccountPassword = class extends React.Component<any, any> {
   static contextTypes = {
@@ -174,6 +175,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
       .catch(error => {
         console.error("ERROR AccountActions.createAccount", error);
         let error_msg = error || "unknown error";
+        error_msg = getErrorTranslated(error_msg) || error_msg;
         // let error_msg =
         //   error.base && error.base.length && error.base.length > 0
         //     ? error.base[0]
@@ -186,7 +188,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
           level: "error",
           autoDismiss: 5
         });
-        that.refs.captcha.updateCaptcha();
+        (that.refs.captcha as any).updateCaptcha();
         that.setState({ loading: false });
         Gtag.eventRegisterFailed(name);
       });
