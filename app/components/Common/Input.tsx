@@ -172,10 +172,10 @@ let Input = Radium(
     onChange = e => {
       let value = e.target.value;
       let valid = false;
-      if (this.props.formatter) {
+      if (this.props.formatter && value) {
         value = this.props.formatter(this.state.value, value);
       }
-      if (this.props.validator) {
+      if (this.props.validator && value) {
         valid = this.props.validator(value);
       }
       this.setState({ value, valid });

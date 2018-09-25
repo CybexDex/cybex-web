@@ -103,12 +103,12 @@ class AmountSelector extends React.Component {
               disabled={this.props.disabled}
               type="number"
               valueFromOuter
-              value={value || 0}
+              value={value}
               size="small"
               placeholder={this.props.placeholder}
               onChange={this._onChange.bind(this)}
               tabIndex={this.props.tabIndex}
-              style={{width: "100%", marginBottom: 0}}
+              style={{ width: "100%", marginBottom: 0 }}
             />
           ) : (
             <Input
@@ -120,7 +120,7 @@ class AmountSelector extends React.Component {
               placeholder={this.props.placeholder}
               onChange={this._onChange.bind(this)}
               tabIndex={this.props.tabIndex}
-              style={{width: "100%", marginBottom: 0}}
+              style={{ width: "100%", marginBottom: 0 }}
             />
           )}
           <div className="form-label select floating-dropdown">
