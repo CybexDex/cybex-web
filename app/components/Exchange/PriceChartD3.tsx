@@ -1730,7 +1730,7 @@ export default Radium(
 
       /* Indicators dropdown */
       const indicatorOptionsVolume = [];
-      const indicatorCommon = ["macd", "bb", "sar", "rsi"].map(i => (
+      const indicatorCommon = ["macd", "bb", "sar"].map(i => (
         <LabelOption
           key={i}
           className="hide-column-small"
