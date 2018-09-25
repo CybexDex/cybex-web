@@ -13,6 +13,7 @@ let LabelOption = class extends React.Component<
     type?: ButtonType;
     style?: React.CSSProperties;
     onClick?;
+    [prop:string]: any
   },
   any
 > {
@@ -36,7 +37,8 @@ let LabelOption = class extends React.Component<
     let styles = Button.Styles;
     return (
       <span
-        className="clickable"
+        {...this.props}
+        className={["clickable"].concat(this.props.className || []).join(" ")}
         style={
           [
             styles.base,

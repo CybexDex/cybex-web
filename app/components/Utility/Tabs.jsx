@@ -174,6 +174,7 @@ class Tabs extends React.Component {
     if (!activeContent) {
       activeContent = tabs[0].props.children;
     }
+    console.debug("Tabs: ", tabs);
 
     return (
       <div
@@ -201,7 +202,14 @@ class Tabs extends React.Component {
                     this._changeTab(parseInt(e.target.value, 10));
                   }}
                 >
-                  {tabs}
+                  {tabs.map(tab => (
+                    <Translate
+                      key={tab.key}
+                      component="option"
+                      content={tab.props.title}
+                      value={tab.props.index}
+                    />
+                  ))}
                 </select>
               </li>
             ) : (
@@ -220,13 +228,16 @@ class Tabs extends React.Component {
   }
 }
 
-Tabs = connect(Tabs, {
-  listenTo() {
-    return [SettingsStore];
-  },
-  getProps() {
-    return { viewSettings: SettingsStore.getState().viewSettings };
+Tabs = connect(
+  Tabs,
+  {
+    listenTo() {
+      return [SettingsStore];
+    },
+    getProps() {
+      return { viewSettings: SettingsStore.getState().viewSettings };
+    }
   }
-});
+);
 
 export { Tabs, Tab };

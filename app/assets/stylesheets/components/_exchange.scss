@@ -214,8 +214,9 @@ form.order-form {
       justify-content: flex-start;
     }
     .custom-dropdown-content {
-      left: 50%;
-      transform: translateX(-50%);
+      max-width: 16em;
+      right: 0%;
+      // transform: translateX(-50%);
     }
   }
 }
@@ -648,7 +649,7 @@ form.hide-container {
     position: absolute;
     z-index: 99;
     top: 29px;
-    left: 0;
+    // left: 0;
     right: auto;
     min-width: 17rem;
     @include shadow;

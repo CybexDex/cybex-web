@@ -2,30 +2,27 @@ import * as React from "react";
 import { format } from "d3-format";
 import { timeFormat } from "d3-time-format";
 import Translate from "react-translate-component";
-import {
-  ChartCanvas,
-  Chart,
-  series,
-  scale,
-  coordinates,
-  tooltip,
-  axes,
-  indicator,
-  helper,
-  interactive
-} from "react-stockcharts";
+import { ChartCanvas, Chart } from "react-stockcharts/es";
 import { handleStockData } from "utils/Chart";
 import Radium from "radium";
-import { XAxis, YAxis } from "react-stockcharts/lib/axes";
-import { fitWidth } from "react-stockcharts/lib/helper";
-import { discontinuousTimeScaleProvider } from "react-stockcharts/lib/scale";
+import { XAxis, YAxis } from "react-stockcharts/es/lib/axes";
+import { fitWidth } from "react-stockcharts/es/lib/helper";
+import { discontinuousTimeScaleProvider } from "react-stockcharts/es/lib/scale";
 import {
   ema,
   wma,
   sma,
   tma,
   macd,
-  bollingerBand
+  bollingerBand,
+  rsi,
+  atr,
+  elderImpulse,
+  sar,
+  forceIndex,
+  elderRay,
+  change,
+  stochasticOscillator
 } from "react-stockcharts/es/lib/indicator";
 import {
   CandlestickSeries,
@@ -33,7 +30,14 @@ import {
   LineSeries,
   AreaSeries,
   BollingerSeries,
-  MACDSeries
+  MACDSeries,
+  RSISeries,
+  OHLCSeries,
+  SARSeries,
+  VolumeProfileSeries,
+  StraightLine,
+  ElderRaySeries,
+  StochasticSeries
 } from "react-stockcharts/es/lib/series";
 
 import {
@@ -45,14 +49,21 @@ import {
 } from "react-stockcharts/es/lib/coordinates";
 import {
   FibonacciRetracement,
-  TrendLine
+  StandardDeviationChannel,
+  TrendLine,
+  DrawingObjectSelector,
+  EquidistantChannel,
+  GannFan
 } from "react-stockcharts/es/lib/interactive";
 import {
   OHLCTooltip,
   MovingAverageTooltip,
   BollingerBandTooltip,
-  MACDTooltip
-} from "react-stockcharts/lib/tooltip";
+  MACDTooltip,
+  RSITooltip,
+  SingleValueTooltip,
+  StochasticTooltip
+} from "react-stockcharts/es/lib/tooltip";
 import colors from "assets/colors";
 import { cloneDeep } from "lodash";
 import utils from "common/utils";
@@ -61,8 +72,13 @@ import counterpart from "counterpart";
 import Icon from "../Icon/Icon";
 import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
 import { Checkbox, Button, LabelOption } from "components/Common";
-
-import numeral from "numeral";
+import { saveInteractiveNodes, getInteractiveNodes } from "./interactiveutils";
+import * as numeral from "numeral";
+import { element } from "../../../node_modules/@types/prop-types";
+import { toObject } from "react-stockcharts/es/lib/utils";
+const stoAppearance = {
+  stroke: Object.assign({}, StochasticSeries.defaultProps.stroke)
+};
 
 const bbStroke = {
   top: "#964B00",
@@ -95,23 +111,19 @@ const arrowStyle = (isRight = true) => ({
 });
 
 let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
+  saveInteractiveNodes;
+  getInteractiveNodes;
   constructor(props) {
     super(props);
-
     const pricePrecision = props.base.get("precision");
     const volumePrecision = props.quote.get("precision");
-
     const priceFormat = format(`.${pricePrecision}f`);
     const timeFormatter = timeFormat("%Y-%m-%d %H:%M");
     const volumeFormat = volume =>
       volume > 10
-        ? numeral(volume).format(`0.0a`)
-        : numeral(volume).format(`0.00a`);
-
-    let { digits, marginRight } = this.calcDigits(props);
+        ? numeral(volume).format("0.0a")
+        : numeral(volume).format("0.00a");
     this.state = {
-      enableTrendLine: false,
-      enableFib: false,
       tools: [],
       priceFormat,
       timeFormatter,
@@ -119,60 +131,10 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       margin: { left: 10, right: 48, top: 30, bottom: 20 },
       calculators: this._getCalculators(props)
     };
-
-    this.onTrendLineComplete = this.onTrendLineComplete.bind(this);
-    this.onFibComplete = this.onFibComplete.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
-  componentDidMount() {
-    document.addEventListener("keyup", this.onKeyPress, {
-      capture: false,
-      passive: true
-    });
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keyup", this.onKeyPress);
-  }
-
-  onTrendLineComplete() {
-    this.setState({
-      enableTrendLine: false
-    });
-  }
-
-  onFibComplete() {
-    this.setState({
-      enableFib: false
-    });
-  }
-
-  onKeyPress(e) {
-    const tools = cloneDeep(this.state.tools);
-    const ref = this.refs[tools[tools.length - 1]];
-    var keyCode = e.which;
-    switch (keyCode) {
-      case 46: {
-        // DEL
-        if (ref) ref.removeLast();
-        tools.pop();
-        this.setState({ tools });
-        break;
-      }
-      case 27: {
-        // ESC
-        if (ref) ref.terminate();
-        try {
-          // modal uses escape event as well, and this line throws an exception
-          this.setState({
-            [enableFib]: false
-          });
-        } catch (e) {}
-        break;
-      }
-    }
-  }
-
+  componentDidMount() {}
+  componentWillUnmount() {}
   calcDigits = props => {
     let [digits, marginRight] = [6, 48];
     try {
@@ -186,15 +148,8 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
   };
 
   componentWillReceiveProps(np) {
-    let tools = cloneDeep(this.state.tools);
-    if (np.tools && np.tools.trendline) {
-      this.setState({ enableTrendLine: true });
-      tools.push("enableTrendLine");
-    }
-    if (np.tools && np.tools.fib) {
-      this.setState({ enableFib: true });
-      tools.push("enableFib");
-    }
+    console.debug("NP: ", np);
+
     // 判断是否极小价格变化
     let { digits, marginRight } = this.calcDigits(np);
     if (this.state.margin.right !== marginRight) {
@@ -206,8 +161,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         }
       });
     }
-    this.setState({ tools });
-
     if (
       !utils.are_equal_shallow(np.indicators, this.props.indicators) ||
       !utils.are_equal_shallow(
@@ -227,6 +180,18 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     const { positiveColor, negativeColor } = this._getThemeColors(props);
     const { indicatorSettings } = props;
     const calculators = {
+      atr14: atr()
+        .options({ windowSize: 14 })
+        .merge((d, c) => {
+          d.atr14 = c;
+        })
+        .accessor(d => d.atr14),
+      rsi: rsi()
+        .options({ windowSize: 14 })
+        .merge((d, c) => {
+          d.rsi = c;
+        })
+        .accessor(d => d.rsi),
       sma: sma()
         .options({
           windowSize: parseInt(indicatorSettings["sma"], 10), // optional will default to 10
@@ -270,6 +235,15 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           d.bb = c;
         })
         .accessor(d => d.bb),
+      sar: sar()
+        .options({
+          accelerationFactor: 0.02,
+          maxAccelerationFactor: 0.2
+        })
+        .merge((d, c) => {
+          d.sar = c;
+        })
+        .accessor(d => d.sar),
       macd: macd()
         .options({
           fast: 12,
@@ -281,9 +255,60 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         .merge((d, c) => {
           d.macd = c;
         })
-        .accessor(d => d.macd)
+        .accessor(d => d.macd),
+      slowSTO: stochasticOscillator()
+        .options({ windowSize: 14, kWindowSize: 3 })
+        .merge((d, c) => {
+          d.slowSTO = c;
+        })
+        .accessor(d => d.slowSTO),
+      fastSTO: stochasticOscillator()
+        .options({ windowSize: 14, kWindowSize: 1 })
+        .merge((d, c) => {
+          d.fastSTO = c;
+        })
+        .accessor(d => d.fastSTO),
+      fullSTO: stochasticOscillator()
+        .options({ windowSize: 14, kWindowSize: 3, dWindowSize: 4 })
+        .merge((d, c) => {
+          d.fullSTO = c;
+        })
+        .accessor(d => d.fullSTO),
+      elder: elderRay(),
+      change: change(),
+      fi: forceIndex()
+        .merge((d, c) => {
+          d.fi = c;
+        })
+        .accessor(d => d.fi),
+      ei: elderImpulse()
+        .macdSource(
+          macd()
+            .options({
+              fast: 12,
+              slow: 26,
+              signal: 9
+            })
+            .stroke({ macd: negativeColor, signal: positiveColor })
+            .fill({ macd: negativeColor, signal: positiveColor })
+            .merge((d, c) => {
+              d.macd = c;
+            })
+            .accessor(d => d.macd)
+            .accessor()
+        )
+        .emaSource(
+          ema()
+            .options({
+              windowSize: parseInt(indicatorSettings["ema2"], 10)
+            })
+            .merge((d, c) => {
+              d.ema2 = c;
+            })
+            .accessor(d => d.ema2)
+            .accessor()
+        )
     };
-
     return calculators;
   }
 
@@ -304,26 +329,14 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     let yGrid = showGrid
       ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.1 }
       : {};
-
+    console.log("chartindicators", indicators);
     return (
       <Chart
         id={2}
         yExtents={[d => d.volume, calculators.smaVolume.accessor()]}
         height={60}
-        origin={(w, h) => [0, indicators.macd ? h - 180 : h - 80]}
+        origin={[0, 230]}
       >
-        {indicators.macd ? null : (
-          <XAxis
-            tickStroke={axisLineColor}
-            stroke={axisLineColor}
-            {...axisStyle}
-            axisAt="bottom"
-            orient="bottom"
-            opacity={0.5}
-            // tickFormat={timeFormatter}
-            ticks={10}
-          />
-        )}
         <YAxis
           tickStroke={axisLineColor}
           showDomain={false}
@@ -349,16 +362,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           tickPadding={0}
           tickFormat={volumeFormat}
         />
-
-        {indicators.macd ? null : (
-          <MouseCoordinateX
-            id={1}
-            rectWidth={65}
-            at="bottom"
-            orient="bottom"
-            displayFormat={timeFormatter}
-          />
-        )}
         <MouseCoordinateY
           id={0}
           {...arrowStyle()}
@@ -446,7 +449,22 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       indicators,
       enableChartClamp,
       onMouseMove,
-      lasest
+      lasest,
+      saveCanvasNode,
+      saveInteractiveNodes,
+      onDrawCompleteChart1,
+      onGfComplete,
+      onFibComplete,
+      onEquComplete,
+      onSdcComplete,
+      getInteractiveNodes,
+      handleSelection,
+      trends_1,
+      channels_2,
+      fans,
+      retracements_1,
+      channels_1,
+      enables
     } = this.props;
 
     let { marginRight, digits } = this.calcDigits(this.props);
@@ -526,16 +544,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           tickStroke={axisLineColor}
           stroke={axisLineColor}
         />
-
-        {indicators.macd || showVolumeChart ? null : (
-          <MouseCoordinateX
-            id={1}
-            rectWidth={65}
-            at="bottom"
-            orient="bottom"
-            displayFormat={timeFormatter}
-          />
-        )}
         <MouseCoordinateY
           {...arrowStyle()}
           id={0}
@@ -544,7 +552,67 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           orient="left"
           displayFormat={priceFormat}
         />
-
+        <TrendLine
+          ref={saveInteractiveNodes("Trendline", 1)}
+          enabled={enables.trendline}
+          type="RAY"
+          snap={false}
+          snapTo={d => [d.high, d.low]}
+          onStart={() => console.log("START")}
+          onComplete={onDrawCompleteChart1}
+          trends={trends_1}
+          appearance={{
+            stroke: "#6BA583",
+            strokeOpacity: 1,
+            strokeWidth: 1,
+            strokeDasharray: "Solid",
+            edgeStrokeWidth: 1,
+            edgeFill: "#FFFFFF",
+            edgeStroke: "#000000",
+            r: 6
+          }}
+        />
+        <FibonacciRetracement
+          ref={saveInteractiveNodes("FibonacciRetracement", 1)}
+          enabled={enables.fib}
+          type="BOUND"
+          retracements={retracements_1}
+          onComplete={onFibComplete}
+          appearance={{
+            stroke: "#6BA583",
+            strokeWidth: 1,
+            strokeOpacity: 1,
+            fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+            fontSize: 11,
+            fontFill: "#FF0000",
+            edgeStroke: "#000000",
+            edgeFill: "#FFFFFF",
+            nsEdgeFill: "#000000",
+            edgeStrokeWidth: 1,
+            r: 5
+          }}
+        />
+        <EquidistantChannel
+          ref={saveInteractiveNodes("EquidistantChannel", 1)}
+          enabled={enables.equ}
+          onStart={() => console.log("START")}
+          onComplete={onEquComplete}
+          channels={channels_1}
+        />
+        <StandardDeviationChannel
+          ref={saveInteractiveNodes("StandardDeviationChannel", 1)}
+          enabled={enables.sdc}
+          onStart={() => console.log("START")}
+          onComplete={onSdcComplete}
+          channels={channels_2}
+        />
+        <GannFan
+          ref={saveInteractiveNodes("GannFan", 1)}
+          enabled={enables.gf}
+          onStart={() => console.log("START")}
+          onComplete={onGfComplete}
+          fans={fans}
+        />
         <CandlestickSeries
           wickStroke={d => (d.close > d.open ? positiveColor : negativeColor)}
           stroke={d => (d.close > d.open ? positiveColor : negativeColor)}
@@ -552,6 +620,25 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           opacity={1}
           rectRadius={40}
         />
+        {indicators.vpbs && (
+          <VolumeProfileSeries
+            bySession
+            orient="right"
+            showSessionBackground
+            fill={_ref => {
+              console.debug("ref", _ref.type);
+              return _ref.type === "up" ? positiveColor : negativeColor;
+            }}
+          />
+        )}
+        {indicators.vp && (
+          <VolumeProfileSeries
+            fill={_ref => {
+              console.debug("ref", _ref.type);
+              return _ref.type === "up" ? positiveColor : negativeColor;
+            }}
+          />
+        )}
         {indicators.bb && (
           <BollingerSeries
             yAccessor={d => d.bb}
@@ -559,7 +646,21 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
             fill={bbFill}
           />
         )}
-
+        {indicators.sar && <SARSeries yAccessor={d => d.sar} />}
+        {indicators.sar && (
+          <SingleValueTooltip
+            yDisplayFormat={format(".8f")}
+            yLabel={"SAR (.02,.2)"}
+            yAccessor={d => d.sar}
+            origin={[0, 45]}
+            fontSize={12}
+            labelFill="rgba(255,255,255,0.3)"
+            valueFill="rgba(255,255,255,0.8)"
+          />
+        )}
+        {indicators.ei && (
+          <OHLCSeries stroke={d => calculators.ei.stroke()[d.elderImpulse]} />
+        )}
         {indicators.sma ? (
           <LineSeries
             yAccessor={calculators.sma.accessor()}
@@ -629,7 +730,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           xDisplayFormat={timeFormatter}
           volumeFormat={volumeFormat}
           ohlcFormat={priceFormat}
-          origin={[0, -10]}
+          origin={[0, -20]}
         />
 
         {maCalcs.length ? (
@@ -645,40 +746,21 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
             }))}
           />
         ) : null}
-
         {indicators.bb && (
           <BollingerBandTooltip
-            origin={[-40, 40]}
+            {...ohlcStyle}
+            origin={[0, 60]}
             yAccessor={d => d.bb}
             options={calculators.bb.options()}
           />
         )}
-
-        <TrendLine
-          ref="enableTrendLine"
-          enabled={enableTrendLine}
-          type="LINE"
-          snap={true}
-          snapTo={d => [d.high, d.low]}
-          onComplete={this.onTrendLineComplete}
-          stroke={axisLineColor}
-          fontStroke={axisLineColor}
-        />
-
-        <FibonacciRetracement
-          ref="enableFib"
-          enabled={enableFib}
-          type="BOUND"
-          onComplete={this.onFibComplete}
-          stroke={axisLineColor}
-          fontStroke={axisLineColor}
-        />
       </Chart>
     );
   }
 
   render() {
     const {
+      elementorigin,
       width,
       priceData,
       height,
@@ -687,8 +769,17 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       zoom,
       indicators,
       showVolumeChart,
-      enableChartClamp
+      enableChartClamp,
+      saveCanvasNode,
+      getInteractiveNodes,
+      handleSelection,
+      handleSelection1,
+      handleSelection2,
+      handleSelection3,
+      handleSelection4,
+      enables
     } = this.props;
+    console.debug("elementorigin1:", elementorigin);
     const {
       timeFormatter,
       enableFib,
@@ -727,8 +818,8 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       zoom === "all"
         ? priceData
         : priceData.filter(a => {
-            return a.date > filterDate;
-          });
+          return a.date > filterDate;
+        });
 
     const initialData = handleStockData(filteredData);
     const dataWithIndicator = Object.getOwnPropertyNames(calculators).reduce(
@@ -768,14 +859,15 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         divergence: "#4682B4"
       }
     };
+    console.log("height:", height);
     return (
       <ChartCanvas
+        ref={saveCanvasNode}
         ratio={ratio}
         width={width}
         height={height}
         seriesName="PriceChart"
-        margin={margin}
-        // zoomEvent={false}
+        margin={{ left: 10, right: 70, top: 30, bottom: 20 }}
         clamp={enableChartClamp}
         data={data}
         xAccessor={xAccessor}
@@ -783,9 +875,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         xScale={xScale}
         xExtents={xExtents}
         type="hybrid"
-        // className="chart-main ps-child no-overflow Stockcharts__wrapper ps-must-propagate"
         className="chart-main no-overflow Stockcharts__wrapper"
-        drawMode={enableTrendLine || enableFib}
       >
         {showVolumeChart && this._renderVolumeChart(chartMultiplier)}
         {this._renderCandleStickChart(chartMultiplier, maCalcs)}
@@ -794,15 +884,17 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
             id={3}
             height={80}
             yExtents={calculators.macd.accessor()}
-            origin={(w, h) => [0, h - 100]}
+            origin={[0, elementorigin.macd]}
           >
             <XAxis
               tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
               stroke={axisLineColor}
               {...axisStyle}
-              ticks={8}
               axisAt="bottom"
               orient="bottom"
+              opacity={0.8}
             />
             <YAxis
               tickStroke={axisLineColor}
@@ -829,13 +921,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
               tickStroke={axisLineColor}
               stroke={axisLineColor}
             />
-
-            <MouseCoordinateX
-              rectWidth={125}
-              at="bottom"
-              orient="bottom"
-              displayFormat={timeFormatter}
-            />
             <MouseCoordinateY
               {...arrowStyle()}
               id={0}
@@ -843,7 +928,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
               orient="left"
               displayFormat={priceFormat}
             />
-
             <MACDSeries yAccessor={d => d.macd} {...macdAppearance} />
             <MACDTooltip
               yAccessor={d => d.macd}
@@ -853,8 +937,438 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
             />
           </Chart>
         )}
+        {indicators.rsi && (
+          <Chart
+            id={4}
+            height={80}
+            yExtents={calculators.rsi.accessor()}
+            origin={[0, elementorigin.rsi]}
+          >
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              // zoomEnabled={false}
+              axisAt="right"
+              orient="right"
+              ticks={3}
+            />
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".2f")}
+            />
+            <RSISeries yAccessor={d => d.rsi} />
+            <RSITooltip
+              origin={[0, -6]}
+              yAccessor={d => d.rsi}
+              options={calculators.rsi.options()}
+              fontSize={12}
+              textFill="rgba(255,255,255,0.8)"
+              labelFill="rgba(255,255,255,0.3)"
+            />
+          </Chart>
+        )}
+        {indicators.atr && (
+          <Chart
+            id={6}
+            height={80}
+            yExtents={calculators.atr14.accessor()}
+            origin={[0, elementorigin.atr]}
+          >
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              // zoomEnabled={false}
+              axisAt="right"
+              orient="right"
+              ticks={3}
+            />
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".8f")}
+            />
+
+            <LineSeries
+              yAccessor={calculators.atr14.accessor()}
+              stroke={calculators.atr14.stroke()}
+            />
+            <SingleValueTooltip
+              yAccessor={calculators.atr14.accessor()}
+              yLabel={`ATR (${calculators.atr14.options().windowSize})`}
+              yDisplayFormat={format(".8f")}
+              origin={[0, -6]}
+              fontSize={12}
+              labelFill="rgba(255,255,255,0.3)"
+              valueFill="rgba(255,255,255,0.8)"
+            />
+          </Chart>
+        )}
+        {indicators.fi && (
+          <Chart
+            id={7}
+            height={80}
+            yExtents={calculators.fi.accessor()}
+            origin={[0, elementorigin.fi]}
+          >
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              axisAt="right"
+              orient="right"
+              ticks={3}
+            />
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".2f")}
+            />
+            <AreaSeries
+              baseAt={scale => scale(0)}
+              yAccessor={calculators.fi.accessor()}
+            />
+            <StraightLine yValue={0} stroke="#ffffff" opacity={0.3} />
+            <SingleValueTooltip
+              yAccessor={calculators.fi.accessor()}
+              yLabel="ForceIndex (1)"
+              fontSize={12}
+              valueFill="rgba(255,255,255,0.8)"
+              labelFill="rgba(255,255,255,0.3)"
+              yDisplayFormat={format(".4s")}
+              origin={[0, -6]}
+            />
+          </Chart>
+        )}
+        {indicators.er && (
+          <Chart
+            id={8}
+            height={80}
+            yExtents={[0, calculators.elder.accessor()]}
+            origin={[0, elementorigin.er]}
+          >
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              axisAt="right"
+              orient="right"
+              ticks={3}
+              tickFormat={format(".4f")}
+            />
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".4f")}
+            />
+            <ElderRaySeries
+              yAccessor={calculators.elder.accessor()}
+              bullPowerFill={positiveColor}
+              bearPowerFill={negativeColor}
+            />
+            <StraightLine yValue={0} stroke="#ffffff" opacity={0.3} />
+            <SingleValueTooltip
+              yAccessor={calculators.elder.accessor()}
+              yLabel="Elder Ray"
+              fontSize={12}
+              valueFill="rgba(255,255,255,0.8)"
+              labelFill="rgba(255,255,255,0.3)"
+              yDisplayFormat={d =>
+                `${format(".7f")(d.bullPower)}, ${format(".7f")(d.bearPower)}`
+              }
+              origin={[0, -6]}
+            />
+          </Chart>
+        )}
+        {indicators.sto && (
+          <Chart
+            id={9}
+            yExtents={[0, 100]}
+            height={80}
+            origin={[0, elementorigin.sto]}
+          >
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              axisAt="right"
+              orient="right"
+              tickValues={[20, 50, 80]}
+            />
+
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".2f")}
+            />
+            <StochasticSeries
+              yAccessor={d => d.slowSTO}
+              stroke={{
+                top: "#ffffff",
+                middle: "#ffffff",
+                bottom: "#ffffff",
+                dLine: "#EA2BFF",
+                kLine: "#74D400"
+              }}
+            />
+
+            <StochasticTooltip
+              origin={[0, -6]}
+              yAccessor={d => d.slowSTO}
+              options={calculators.slowSTO.options()}
+              appearance={stoAppearance}
+              label="Slow STO"
+            />
+          </Chart>
+        )}
+        {indicators.sto && (
+          <Chart
+            id={10}
+            yExtents={[0, 100]}
+            height={80}
+            origin={[0, elementorigin.sto + 100]}
+          >
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              axisAt="right"
+              orient="right"
+              tickValues={[20, 50, 80]}
+            />
+
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".2f")}
+            />
+            <StochasticSeries
+              yAccessor={d => d.slowSTO}
+              stroke={{
+                top: "#ffffff",
+                middle: "#ffffff",
+                bottom: "#ffffff",
+                dLine: "#EA2BFF",
+                kLine: "#74D400"
+              }}
+            />
+
+            <StochasticTooltip
+              origin={[0, -6]}
+              yAccessor={d => d.fastSTO}
+              options={calculators.fastSTO.options()}
+              appearance={stoAppearance}
+              label="Fast STO"
+            />
+          </Chart>
+        )}
+        {indicators.sto && (
+          <Chart
+            id={11}
+            yExtents={[0, 100]}
+            height={80}
+            origin={[0, elementorigin.sto + 200]}
+          >
+            <XAxis
+              tickStroke={axisLineColor}
+              showTicks={false}
+              showTickLabel={false}
+              stroke={axisLineColor}
+              {...axisStyle}
+              axisAt="bottom"
+              orient="bottom"
+              opacity={0.8}
+            />
+            <YAxis
+              tickStroke={axisLineColor}
+              stroke={axisLineColor}
+              {...axisStyle}
+              tickPadding={4}
+              showDomain={false}
+              innerTickSize={0}
+              axisAt="right"
+              orient="right"
+              tickValues={[20, 50, 80]}
+            />
+
+            <MouseCoordinateY
+              {...arrowStyle()}
+              id={0}
+              at="right"
+              orient="left"
+              displayFormat={format(".2f")}
+            />
+            <StochasticSeries
+              yAccessor={d => d.slowSTO}
+              stroke={{
+                top: "#ffffff",
+                middle: "#ffffff",
+                bottom: "#ffffff",
+                dLine: "#EA2BFF",
+                kLine: "#74D400"
+              }}
+            />
+
+            <StochasticTooltip
+              origin={[0, -6]}
+              yAccessor={d => d.fullSTO}
+              options={calculators.fullSTO.options()}
+              appearance={stoAppearance}
+              label="Full STO"
+            />
+          </Chart>
+        )}
+        <Chart id={5} height={height - 75} yExtents={[]}>
+          <XAxis
+            tickStroke={axisLineColor}
+            stroke={axisLineColor}
+            {...axisStyle}
+            ticks={8}
+            axisAt="bottom"
+            orient="bottom"
+          />
+          <MouseCoordinateX
+            rectWidth={125}
+            at="bottom"
+            orient="bottom"
+            displayFormat={timeFormatter}
+          />
+        </Chart>
         {/* Need to return an empty element here, null triggers an error */}
         <CrossHairCursor stroke={indicatorLineColor} />
+        <DrawingObjectSelector
+          enabled={!enables.trendline}
+          getInteractiveNodes={getInteractiveNodes}
+          drawingObjectMap={{
+            Trendline: "trends"
+          }}
+          onSelect={handleSelection}
+        />
+        <DrawingObjectSelector
+          enabled={!enables.fib}
+          getInteractiveNodes={getInteractiveNodes}
+          drawingObjectMap={{
+            FibonacciRetracement: "retracements"
+          }}
+          onSelect={handleSelection1}
+        />
+        <DrawingObjectSelector
+          enabled={!enables.equ}
+          getInteractiveNodes={getInteractiveNodes}
+          drawingObjectMap={{
+            EquidistantChannel: "channels"
+          }}
+          onSelect={handleSelection2}
+        />
+        <DrawingObjectSelector
+          enabled={!enables.sdc}
+          getInteractiveNodes={getInteractiveNodes}
+          drawingObjectMap={{
+            StandardDeviationChannel: "channels"
+          }}
+          onSelect={handleSelection3}
+        />
+        <DrawingObjectSelector
+          enabled={!enables.gf}
+          getInteractiveNodes={getInteractiveNodes}
+          drawingObjectMap={{
+            GannFan: "fans"
+          }}
+          onSelect={handleSelection4}
+        />
       </ChartCanvas>
     );
   }
@@ -863,21 +1377,183 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
 CandleStickChartWithZoomPan = fitWidth(CandleStickChartWithZoomPan);
 export default Radium(
   class Wrapper extends React.Component<any, any> {
+    saveInteractiveNodes;
+    getInteractiveNodes;
+    canvasNode;
     mainChart: React.RefObject<any> = React.createRef();
     constructor(props) {
       super(props);
 
       this.state = {
+        enables: {
+          trendline: false,
+          fib: false,
+          equ: false,
+          sdc: false,
+          gf: false
+        },
         dropdowns: {
           indicators: false,
           tools: false,
           settings: false
-        }
+        },
+        retracements_1: [],
+        trends_1: [],
+        channels_2: [],
+        channels_1: [],
+        fans: []
       };
+      this.onKeyPress = this.onKeyPress.bind(this);
+      this.onDrawCompleteChart1 = this.onDrawCompleteChart1.bind(this);
+      (this.onGfComplete = this.onGfComplete.bind(this)),
+        (this.onSdcComplete = this.onSdcComplete.bind(this));
+      this.onFibComplete = this.onFibComplete.bind(this);
+      this.onEquComplete = this.onEquComplete.bind(this);
+      this.handleSelection = this.handleSelection.bind(this);
+      this.handleSelection1 = this.handleSelection1.bind(this);
+      this.handleSelection2 = this.handleSelection2.bind(this);
+      this.handleSelection3 = this.handleSelection3.bind(this);
+      this.handleSelection4 = this.handleSelection4.bind(this);
+      this.saveInteractiveNodes = saveInteractiveNodes.bind(this);
+      this.getInteractiveNodes = getInteractiveNodes.bind(this);
+
+      this.saveCanvasNode = this.saveCanvasNode.bind(this);
+
       this._onInputHeight = this._onInputHeight.bind(this);
       this._listener = this._listener.bind(this);
     }
+    saveCanvasNode(node) {
+      this.canvasNode = node;
+    }
+    handleSelection3(interactives) {
+      let handle = [interactives[3]];
+      const state = toObject(handle, each => {
+        return ["channels_2", each.objects];
+      });
+      this.setState(state);
+    }
+    handleSelection2(interactives) {
+      let handle = [interactives[2]];
+      const state = toObject(handle, each => {
+        return [`channels_${each.chartId}`, each.objects];
+      });
+      this.setState(state);
+    }
+    handleSelection1(interactives) {
+      let handle = [interactives[1]];
+      const state = toObject(handle, each => {
+        return [`retracements_${each.chartId}`, each.objects];
+      });
+      this.setState(state);
+    }
+    handleSelection4(interactives) {
+      let handle = [interactives[4]];
+      const state = toObject(handle, each => {
+        return ["fans", each.objects];
+      });
+      this.setState(state);
+    }
+    handleSelection(interactives) {
+      let handle = [interactives[0]];
+      const state = toObject(handle, each => {
+        return [`trends_${each.chartId}`, each.objects];
+      });
+      this.setState(state);
+    }
+    onEquComplete(channels_1) {
+      // this gets called on
+      // 1. draw complete of drawing object
+      // 2. drag complete of drawing object
+      this.setState({
+        enables: {
+          trendline: false,
+          fib: false,
+          equ: false,
+          sdc: false,
+          gf: false
+        },
+        channels_1
+      });
+    }
+    onFibComplete(retracements_1) {
+      this.setState({
+        retracements_1,
+        enables: {
+          trendline: false,
+          fib: false,
+          equ: false,
+          sdc: false,
+          gf: false
+        }
+      });
+    }
+    onSdcComplete(channels_2) {
+      this.setState({
+        channels_2,
+        enables: {
+          trendline: false,
+          fib: false,
+          equ: false,
+          sdc: false,
+          gf: false
+        }
+      });
+    }
+    onGfComplete(fans) {
+      this.setState({
+        fans,
+        enables: {
+          trendline: false,
+          fib: false,
+          equ: false,
+          sdc: false,
+          gf: false
+        }
+      });
+    }
+    onDrawCompleteChart1(trends_1) {
+      this.setState({
+        enables: {
+          trendline: false,
+          fib: false,
+          equ: false,
+          sdc: false,
+          gf: false
+        },
+        trends_1
+      });
+      console.debug("trend1:", trends_1);
+    }
+    onKeyPress(e) {
+      const keyCode = e.which;
+      console.log(keyCode);
+      switch (keyCode) {
+        case 8: {
+          // DEL
 
+          const trends_1 = this.state.trends_1.filter(each => !each.selected);
+          const retracements_1 = this.state.retracements_1.filter(
+            each => !each.selected
+          );
+          const channels_1 = this.state.channels_1.filter(
+            each => !each.selected
+          );
+          const channels_2 = this.state.channels_2.filter(
+            each => !each.selected
+          );
+          const fans = this.state.fans.filter(each => !each.selected);
+          this.canvasNode.cancelDrag();
+          this.setState({
+            trends_1,
+            retracements_1,
+            channels_1,
+            channels_2,
+            fans
+          });
+          break;
+        }
+      }
+    }
     shouldComponentUpdate(np, ns) {
       // if (!np.marketReady && !this.props.marketReady) return false;
       if (!np.priceData.length && !this.props.priceData.length) return false;
@@ -901,12 +1577,17 @@ export default Radium(
     }
 
     componentWillUnmount() {
+      document.removeEventListener("keyup", this.onKeyPress);
       document.removeEventListener("click", this._listener);
     }
 
     _toggleTools(key) {
+      console.debug("toolsKey:", key);
+      let enables = this.state.enables;
+      console.debug("toolsKey:", enables);
+      enables[key] = true;
+      this.setState(enables);
       this._resetDropdowns();
-      this.props.onChangeTool(key);
       this.forceUpdate();
     }
 
@@ -957,6 +1638,7 @@ export default Radium(
     }
 
     componentDidMount() {
+      document.addEventListener("keyup", this.onKeyPress);
       if (this.mainChart) {
         (this.mainChart.current as HTMLElement).addEventListener(
           "wheel",
@@ -970,6 +1652,7 @@ export default Radium(
 
     render() {
       const {
+        elementorigin,
         currentPeriod,
         buckets,
         bucketSize,
@@ -977,7 +1660,7 @@ export default Radium(
         indicatorSettings
       } = this.props;
       const { dropdowns } = this.state;
-
+      console.debug("shuyuan", this.state.trends_1);
       // Lower bar
       let bucketText = function(size) {
         if (size === "all") {
@@ -998,17 +1681,17 @@ export default Radium(
       };
 
       let bucketOptions = buckets
-        .filter(bucket => {
-          return bucket > 60 * 4;
-        })
+        // .filter(bucket => {
+        //   return bucket > 60 * 4;
+        // })
         .map(bucket => {
           return (
             <LabelOption
               key={bucket}
               active={bucketSize === bucket}
+              onClick={this.props.changeBucketSize.bind(this, bucket)}
               size="smaller"
               type="white-primary"
-              onClick={this.props.changeBucketSize.bind(this, bucket)}
               style={{
                 marginRight: "4px"
               }}
@@ -1047,21 +1730,34 @@ export default Radium(
 
       /* Indicators dropdown */
       const indicatorOptionsVolume = [];
+      const indicatorCommon = ["macd", "bb", "sar", "rsi"].map(i => (
+        <LabelOption
+          key={i}
+          className="hide-column-small"
+          active={indicators[i]}
+          size="smaller"
+          type="white-primary"
+          style={{
+            marginRight: "4px"
+          }}
+          onClick={this.props.onChangeIndicators.bind(null, i)}
+        >
+          <Translate content={`exchange.chart_options.${i}`} />
+        </LabelOption>
+      ));
       const indicatorOptionsPrice = Object.keys(indicators)
         .map(i => {
           let hasSetting = i in indicatorSettings;
           let settingInput = hasSetting ? (
-            <>
-              <div className="inline-block" style={{ paddingRight: 5 }}>
-                <Translate content="exchange.chart_options.period" />:
-                <input
-                  style={{ margin: 0 }}
-                  type="number"
-                  value={indicatorSettings[i]}
-                  onChange={this.props.onChangeIndicatorSetting.bind(null, i)}
-                />
-              </div>
-            </>
+            <div className="inline-block" style={{ paddingRight: 5 }}>
+              <Translate content="exchange.chart_options.period" />:
+              <input
+                style={{ margin: 0 }}
+                type="number"
+                value={indicatorSettings[i]}
+                onChange={this.props.onChangeIndicatorSetting.bind(null, i)}
+              />
+            </div>
           ) : null;
 
           if (i.toLowerCase().indexOf("volume") !== -1) {
@@ -1074,7 +1770,7 @@ export default Radium(
                   onChange={this.props.onChangeIndicators.bind(null, i)}
                   labelStyle={{ alignItems: "center" }}
                 >
-                  <Translate content={`exchange.chart_options.${i}`} />{" "}
+                  <Translate content={`exchange.chart_options.${i}`} />
                 </Checkbox>
                 {/* <input
                 className="clickable"
@@ -1108,7 +1804,8 @@ export default Radium(
         .filter(a => !!a);
 
       /* Tools dropdown */
-      const toolsOptions = Object.keys(this.props.tools).map(i => {
+      console.debug("this.props.tools:", this.props.tools);
+      const toolsOptions = this.props.tools.map(i => {
         return (
           <li
             className="clickable"
@@ -1216,20 +1913,34 @@ export default Radium(
             </li> */}
               <li className="stat">
                 <span>
-                  <span>
-                    <Translate content="exchange.time" />:
+                  <span className="with-colon">
+                    <Translate content="exchange.time" />
                   </span>
                   <span>{bucketOptions}</span>
                 </span>
               </li>
 
-              <li className="stat input custom-dropdown">
-                <div
-                  className="v-align indicators clickable"
-                  onClick={this._toggleDropdown.bind(this, "indicators")}
-                >
-                  <Translate content="exchange.chart_options.title" />
-                </div>
+              <li className="stat custom-dropdown">
+                <span>
+                  <span className="with-colon">
+                    <Translate content="exchange.chart_options.title" />
+                  </span>
+                </span>
+                <span>
+                  {indicatorCommon}
+                  <LabelOption
+                    size="smaller"
+                    type="white-primary"
+                    style={{
+                      marginRight: "4px"
+                    }}
+                    // className="v-align indicators clickable"
+                    // style={{ display: "inline-flex" }}
+                    onClick={this._toggleDropdown.bind(this, "indicators")}
+                  >
+                    <Translate content="exchange.chart_options.more" />
+                  </LabelOption>
+                </span>
                 {dropdowns.indicators ? (
                   <div
                     className="custom-dropdown-content"
@@ -1283,7 +1994,30 @@ export default Radium(
             </ul>
           </div>
           {this.props.priceData.length ? (
-            <CandleStickChartWithZoomPan ref={this.mainChart} {...this.props} />
+            <CandleStickChartWithZoomPan
+              ref={this.mainChart}
+              {...this.props}
+              handleSelection={this.handleSelection}
+              handleSelection1={this.handleSelection1}
+              handleSelection2={this.handleSelection2}
+              handleSelection3={this.handleSelection3}
+              handleSelection4={this.handleSelection4}
+              getInteractiveNodes={this.getInteractiveNodes}
+              trends_1={this.state.trends_1}
+              fans={this.state.fans}
+              channels_2={this.state.channels_2}
+              retracements_1={this.state.retracements_1}
+              channels_1={this.state.channels_1}
+              onFibComplete={this.onFibComplete}
+              onEquComplete={this.onEquComplete}
+              onSdcComplete={this.onSdcComplete}
+              onDrawCompleteChart1={this.onDrawCompleteChart1}
+              onGfComplete={this.onGfComplete}
+              enableTrendLine={this.state.enableTrendLine}
+              saveInteractiveNodes={this.saveInteractiveNodes}
+              saveCanvasNode={this.saveCanvasNode}
+              enables={this.state.enables}
+            />
           ) : (
             <div className="grid-content text-center">
               <div
