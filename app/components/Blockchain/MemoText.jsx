@@ -37,7 +37,6 @@ class MemoText extends React.Component {
   }
 
   _toggleFullText = () => {
-    console.debug("Toggle Full");
     this.setState(prev => ({
       full: !prev.full
     }));

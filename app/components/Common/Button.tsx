@@ -164,7 +164,15 @@ let Button = class extends React.Component<ButtonProps, any> {
         target="_blank"
         {...this.props}
         className={classnames(loading ? "loading" : "", disabled)}
-        style={[styles.base, styles[type], styles[size], styles.lineHeight[size], style] as any}
+        style={
+          [
+            styles.base,
+            styles[type],
+            styles[size],
+            styles.lineHeight[size],
+            style
+          ] as any
+        }
         onClick={this.props.onClick ? this.props.onClick : () => void 0}
       >
         {children}
@@ -184,7 +192,9 @@ let Button = class extends React.Component<ButtonProps, any> {
 };
 Button = Radium(Button);
 
-let RouterButton = class extends React.PureComponent<ButtonProps> {
+let RouterButton = class extends React.PureComponent<
+  ButtonProps & { preventDefault? }
+> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
@@ -192,7 +202,12 @@ let RouterButton = class extends React.PureComponent<ButtonProps> {
     return (
       <Button
         {...this.props}
-        onClick={() => this.context.router.history.push(this.props.link)}
+        onClick={e => {
+          if (this.props.preventDefault) {
+            e.preventDefault();
+          }
+          this.context.router.history.push(this.props.link);
+        }}
       />
     );
   }

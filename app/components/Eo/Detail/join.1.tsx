@@ -412,7 +412,6 @@ let Join = class extends React.Component<
       if (asset_types.length > 0) {
         let current_asset_id = asset ? asset.get("id") : asset_types[0];
         let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
-        console.debug("AccountBalances: ", account_balances[current_asset_id]);
         balance = (
           <span
             style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }}
@@ -439,7 +438,6 @@ let Join = class extends React.Component<
     let crowd_assets = base_tokens.map(base =>
       ChainStore.getAsset(base.base_token)
     ).filter(a => !!a).map(asset => asset.get("id"));
-    console.debug("Data: ", data, crowd_assets);
     let crowd_asset = ChainStore.getAsset(
       this.state.asset_id || default_base_token
     );
@@ -458,7 +456,7 @@ let Join = class extends React.Component<
         .dividedBy(Math.pow(10, current_base.accuracy) || 1)
         .toString()
         .indexOf(".") === -1;
-    console.debug("A: ", isAmountIntTimes, amountValue);
+
     const intTimeError = isAmountValid && !balanceError && !isAmountIntTimes;
     const avail = max - current_user_count;
     const isOverflow = amountValue > avail;

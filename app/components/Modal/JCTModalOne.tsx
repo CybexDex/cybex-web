@@ -70,7 +70,6 @@ class CommonModal extends React.Component<
   render() {
     let { modalId, open, locale, accountName } = this.props;
     let current = this.state.current;
-    console.debug("CommonModal: ", this);
     return (
       open &&
       current && (

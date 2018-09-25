@@ -19,7 +19,6 @@ export default class BrainkeyInput extends React.Component {
 
   componentWillMount() {
     import("common/dictionary.json").then(result => {
-      console.debug("Result: ", result);
       dictionary_set = new Set(result.en.split(","));
       this.setState({
         loading: false

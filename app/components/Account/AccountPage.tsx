@@ -115,7 +115,6 @@ let AccountPage = class extends React.Component<Props, any> {
   }
 
   render() {
-      console.debug("AccountPage");
     let {
       myAccounts,
       linkedAccounts,

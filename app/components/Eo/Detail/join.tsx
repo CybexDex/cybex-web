@@ -214,7 +214,6 @@ let Join = class extends React.Component<
           { current_base_token_count }
         ]) => {
           let { current_base_token_count: base_received } = personalStatusRaw;
-          console.debug("PStatus: ", projectData, personalStatusRaw);
           let personalStatus;
           if (base_received) {
             personalStatus = { base_received };
@@ -232,11 +231,6 @@ let Join = class extends React.Component<
               ...personalStatus
             }
           }));
-          console.debug(
-            "Latest State of Join: ",
-            projectData,
-            personalStatusRaw
-          );
         }
       )
       .catch(error => {
@@ -321,7 +315,6 @@ let Join = class extends React.Component<
         });
       })
       .catch(error => {
-        console.debug("Fetch Error: ", error);
         this.setState({ fetchError: true, loading: false });
         setTimeout(() => {
           this.updateProject();

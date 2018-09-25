@@ -203,13 +203,10 @@ let CreateAccount = Radium(
       e.preventDefault();
       if (!this.isValid()) return;
       let account_name = this.accountNameInput.getValue();
-      console.debug("AccoutnName: ", account_name);
       if (WalletDb.getWallet()) {
         this.createAccount(account_name);
       } else {
         let password = this.state.password;
-        console.debug("AccoutnName: Passwords", password);
-
         this.createWallet(password).then(() =>
           this.createAccount(account_name)
         );
@@ -248,8 +245,6 @@ let CreateAccount = Radium(
           isLTM = true;
         }
       }
-
-      console.debug("Vdlis: ", valid, registrar_account, isLTM);
 
       let buttonClass = classNames("submit-button button no-margin", {
         disabled: !valid || (registrar_account && !isLTM)

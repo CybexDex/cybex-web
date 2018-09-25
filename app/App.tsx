@@ -173,7 +173,7 @@ let App = class extends React.Component<any, any> {
 
   constructor(props) {
     super(props);
-    console.debug("APP: ", this.props, this.context);
+    // console.debug("APP: ", this.props, this.context);
 
     // Check for mobile device to disable chat
     const user_agent = navigator.userAgent.toLowerCase();
@@ -287,12 +287,12 @@ let App = class extends React.Component<any, any> {
       lower
     ) {
       // this.refs.browser_modal.show();
-      console.debug("Show Support Modal");
+      // console.debug("Show Support Modal");
       ModalActions.showModal(DEFAULT_SUPPORT_MODAL, true);
     }
     ModalActions.showModal("JCT_MODAL_ONE", true);
     ModalActions.showModal("JCT_MODAL_TWO", true);
-    console.debug("Context: ", this);
+    // console.debug("Context: ", this);
     this.context.router.history.listen(this._rebuildTooltips);
     // Todo
     this.showBackupTip();

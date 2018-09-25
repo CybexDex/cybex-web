@@ -688,7 +688,6 @@ class AccountStore extends BaseStore {
     }
     if (payload.setting === "passwordLogin" && payload.value === true) {
       // this.setWallet(PASSWORD_WALLET_NAME);
-      console.debug("Switch To Password: ", this.state);
     }
   }
 }

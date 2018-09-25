@@ -10,7 +10,7 @@ export const EXPLORER_URLS = __TEST__
   }
   : {
     BTC: "https://live.blockcypher.com/btc/tx/#{txid}",
-    USDT: "www.omniexplorer.info/tx/#{txid}",
+    USDT: "https://www.omniexplorer.info/tx/#{txid}",
     ETH: "https://etherscan.io/tx/#{txid}",
     GAS: "https://neoscan.io/transaction/#{txid}",
     EOS: "https://eosflare.io/tx/#{txid}",

@@ -53,7 +53,6 @@ class LogoutModal extends React.Component<
   handleKnown = e => {
     let name = e.target.name;
     let value = e.target.checked;
-    console.debug("Name: ", name, value);
     this.setState({
       [name]: value
     });

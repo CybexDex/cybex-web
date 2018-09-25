@@ -29,7 +29,6 @@ import { connect } from "alt-react";
 
 let LoginCheck: any = class extends React.Component<any, any> {
   componentWillMount() {
-    console.debug("PO: ", WalletManagerStore.getState(), AccountStore.getState());
     if (
       AccountStore.getState().currentAccount
     ) {
@@ -80,7 +79,6 @@ let LoginMain = Radium(
 
     doLogin = () => {
       const { password, account } = this.state;
-      console.debug("Login: ", this.props, password, account);
       WalletDb.validatePassword(
         password || "",
         true, //unlock
@@ -108,7 +106,6 @@ let LoginMain = Radium(
 
     render() {
       let valid = this.state.accountValid && this.state.passwordValid;
-      console.debug("valid: ", this.state.account, this.state.password);
       return (
         <div
           style={

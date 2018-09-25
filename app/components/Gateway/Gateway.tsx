@@ -261,7 +261,6 @@ let GatewayRecords = class extends React.Component<
       (prevProps.isLocked && !this.props.isLocked) ||
       prevProps.account !== this.props.account
     ) {
-      console.debug("[GatewayRecords] Updated", prevProps, this.props);
       GatewayActions.queryFundRecords(this.props.account, this.props.login);
     }
   }
@@ -273,7 +272,6 @@ let GatewayRecords = class extends React.Component<
     GatewayActions.loginGatewayQuery(this.props.account);
   };
   render() {
-    console.debug("GatewayRecords Render");
 
     let { fundRecords, isLocked } = this.props;
     let records = fundRecords.records || [];
@@ -389,10 +387,6 @@ GatewayRecords = connect(
       return [WalletUnlockStore, GatewayStore];
     },
     getProps(props) {
-      console.debug(
-        "WalletUnlockStore.getState()",
-        WalletUnlockStore.getState()
-      );
       return {
         isLocked: WalletUnlockStore.getState().locked,
         fundRecords: GatewayStore.getState().records,
@@ -409,7 +403,6 @@ let GatewayContainer = class extends React.Component<any, any> {
       nameFilter: "",
       onlyCanWithdraw: false
     };
-    console.debug("GatewayCotainer");
   }
 
   static propTypes = {

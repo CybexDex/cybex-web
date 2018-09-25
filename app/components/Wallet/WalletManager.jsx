@@ -20,7 +20,6 @@ const connectObject = {
 
 class WalletManager extends React.Component {
   getTitle() {
-    console.debug("ManagerPath: ", this.props);
     switch (this.props.location.pathname) {
       case "/wallet/create":
         return "wallet.create_wallet";

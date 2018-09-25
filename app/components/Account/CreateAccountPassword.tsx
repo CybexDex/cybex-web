@@ -92,7 +92,6 @@ let CreateAccountPassword = class extends React.Component<any, any> {
       valid = valid && this.state.registrar_account;
     }
     valid = valid && !!this.state.cap && !!this.state.cap.captcha;
-    console.debug("THis. cap: ", valid, this.state.cap, this.state.cap.captcha);
     return (
       valid &&
       this.state.understand_1 &&
@@ -224,7 +223,6 @@ let CreateAccountPassword = class extends React.Component<any, any> {
   }
 
   setCaptcha = cap => {
-    console.debug("Set Cap:", cap);
     this.setState({ cap });
   };
 
@@ -310,7 +308,7 @@ let CreateAccountPassword = class extends React.Component<any, any> {
                 ref="password"
                 confirmation={true}
                 passwordLength={12}
-                validatePattern={/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{12,}/}
+                validatePattern={/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{12,}/}
                 onChange={this.onPasswordChange.bind(this)}
                 noLabel
                 checkStrength

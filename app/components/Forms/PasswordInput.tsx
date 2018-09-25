@@ -64,7 +64,6 @@ class PasswordInput extends React.Component<any, any> {
   }
 
   clear() {
-    console.debug("Clear: ");
     this.setState({
       value: ""
     });
@@ -245,6 +244,7 @@ class PasswordInput extends React.Component<any, any> {
             ) : (
               [
                 <progress
+                  key="passwordStrengthIndicator"
                   style={{ height: 10, width: "100%" }}
                   className={scoreSet[score] || scoreSet[0]}
                   value={score}
@@ -253,7 +253,7 @@ class PasswordInput extends React.Component<any, any> {
                 />,
                 this.passwordInput &&
                   this.passwordInput.value && (
-                    <div className={scoreSet[score] || scoreSet[0]}>
+                    <div key="passwordIndicator" className={scoreSet[score] || scoreSet[0]}>
                       <Translate content="wallet.password_strength" />
                       <Translate
                         content={`wallet.strength_${scoreSet[score] ||

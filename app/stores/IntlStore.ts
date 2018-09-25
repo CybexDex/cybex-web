@@ -65,8 +65,6 @@ class IntlStore extends AbstractStore<{ currentLocale }> {
   }
 
   onSwitchLocale({ locale, localeData }: { locale; localeData? }) {
-    console.debug("new locale: ", locale, localeData);
-
     if (!this.localesObject[locale] && localeData) {
       this.localesObject[locale] = localeData;
     }

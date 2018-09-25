@@ -503,8 +503,6 @@ class TransactionBuilder {
         public_key
       );
 
-      console.debug("[TransactionBuilder]", "[BufferToBroadcast]", Buffer.concat([new Buffer(chain_id, "hex"), this.tr_buffer]).toString("hex"));
-      console.debug("[TransactionBuilder]", "[Signature]", sig.toBuffer().toString("hex"));
       this.signatures.push(sig.toBuffer());
     }
     this.signer_private_keys = [];

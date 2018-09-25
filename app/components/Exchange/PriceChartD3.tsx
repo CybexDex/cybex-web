@@ -186,7 +186,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
   };
 
   componentWillReceiveProps(np) {
-    console.debug("NP: ", np);
     let tools = cloneDeep(this.state.tools);
     if (np.tools && np.tools.trendline) {
       this.setState({ enableTrendLine: true });
@@ -959,7 +958,6 @@ export default Radium(
 
     componentDidMount() {
       if (this.mainChart) {
-        console.debug("3D: ", this.mainChart);
         (this.mainChart.current as HTMLElement).addEventListener(
           "wheel",
           e => {

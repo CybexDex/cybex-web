@@ -614,7 +614,6 @@ class Detail extends React.Component<any, any> {
       this.setState({
         currentState
       });
-      console.debug("Latest State: ", currentState);
     });
   }
 
@@ -726,7 +725,6 @@ class Detail extends React.Component<any, any> {
         break;
       case "finish":
         // countDownTime = moment.utc(finishAt).valueOf() - moment.utc(endAt).valueOf();
-        console.debug("finishAt: ", finishAt.toString(), startAt.toString());
         remainStr = shortEnglishHumanizer(true, lang)(
           t_total_time ? t_total_time * 1000 : finishAt.diff(startAt)
         ).replace(/[\,]/g, "");

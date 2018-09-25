@@ -182,7 +182,6 @@ class BalanceClaimActiveStore extends BaseStore {
     var no_balance_address = new Set(this.no_balance_address);
     var no_bal_size = no_balance_address.size;
     for (let addy of this.addresses) no_balance_address.add(addy);
-    console.debug("Addrss: ", this.addresses);
     // for(let addy of this.addresses) ChainStore.getBalanceObjects(addy) // Test with ChainStore
     return db.exec("get_balance_objects", [this.addresses]).then(result => {
       // console.debug("BalanceObjects: ", result);

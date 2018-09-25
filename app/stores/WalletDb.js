@@ -327,7 +327,6 @@ class WalletDb extends BaseStore {
           });
       });
     };
-    console.debug("BrainDict brainkey_plaintext: ", brainkey_plaintext);
 
     let dictionaryPromise = brainkey_plaintext
       ? null
@@ -335,7 +334,6 @@ class WalletDb extends BaseStore {
     // console.debug("DICT: ", dictionaryPromise);
     return Promise.all([dictionaryPromise])
       .then(res => {
-        console.debug("BrainDict: ", res);
         return brainkey_plaintext
           ? walletCreateFct(null)
           : walletCreateFct(res[0]);

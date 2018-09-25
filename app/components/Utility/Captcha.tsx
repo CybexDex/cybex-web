@@ -62,7 +62,6 @@ export let Captcha = class Captcha extends React.Component<
         this.id = res.id;
       })
       .catch(err => {
-        console.debug("Captcha: ", err);
         NotificationActions.error(counterpart.translate("captcha.error"));
         this.id = null;
         let s = {
@@ -75,7 +74,6 @@ export let Captcha = class Captcha extends React.Component<
 
   send() {
     let { captcha, cap } = this.state;
-    console.debug("Captcha: ", captcha);
     fetch(`${this.faucetAddress}/register`, {
       method: "post",
       mode: "cors",

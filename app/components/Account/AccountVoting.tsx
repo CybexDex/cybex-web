@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 import Translate from "react-translate-component";
 import accountUtils from "common/account_utils";
 import { ChainStore, FetchChainObjects } from "cybexjs";
@@ -20,8 +20,9 @@ import counterpart from "counterpart";
 import { EquivalentValueComponent } from "../Utility/EquivalentValueComponent";
 import FormattedAsset from "../Utility/FormattedAsset";
 import SettingsStore from "stores/SettingsStore";
+import Button, { RouterButton } from "components/Common/Button";
 
-class AccountVoting extends React.Component {
+let AccountVoting = class extends React.Component<any, any> {
   static propTypes = {
     initialBudget: ChainTypes.ChainObject.isRequired,
     globalObject: ChainTypes.ChainObject.isRequired,
@@ -61,7 +62,7 @@ class AccountVoting extends React.Component {
   }
 
   componentDidMount() {
-    this.updateAccountData(this.props);
+    this.updateAccountData(this.props as any);
     this._getVoteObjects();
     this._getVoteObjects("committee");
   }
@@ -116,9 +117,9 @@ class AccountVoting extends React.Component {
     ]).then(res => {
       const [vote_objs, proxy_vote_objs] = res;
       function sortVoteObjects(objects) {
-        let witnesses = new Immutable.List();
-        let committee = new Immutable.List();
-        let workers = new Immutable.Set();
+        let witnesses = Immutable.List();
+        let committee = Immutable.List();
+        let workers = Immutable.Set();
         objects.forEach(obj => {
           let account_id = obj.get("committee_member_account");
           if (account_id) {
@@ -169,7 +170,7 @@ class AccountVoting extends React.Component {
     );
   }
 
-  _getVoteObjects(type = "witnesses", vote_ids) {
+  _getVoteObjects(type = "witnesses", vote_ids?) {
     let current = this.state[`all_${type}`];
     const isWitness = type === "witnesses";
     let lastIdx;
@@ -188,7 +189,7 @@ class AccountVoting extends React.Component {
     }
     FetchChainObjects(ChainStore.getObject, vote_ids, 5000, {}).then(
       vote_objs => {
-        this.state[`all_${type}`] = current.concat(
+        (this.state as any)[`all_${type}`] = current.concat(
           Immutable.List(
             vote_objs
               .filter(a => !!a)
@@ -214,8 +215,8 @@ class AccountVoting extends React.Component {
 
   onPublish() {
     let updated_account = this.props.account.toJS();
-    let updateObject = { account: updated_account.id };
-    let new_options = { memo_key: updated_account.options.memo_key };
+    let updateObject: any = { account: updated_account.id };
+    let new_options: any = { memo_key: updated_account.options.memo_key };
     // updated_account.new_options = updated_account.options;
     let new_proxy_id = this.state.proxy_account_id;
     new_options.voting_account = new_proxy_id ? new_proxy_id : "1.2.5";
@@ -294,8 +295,11 @@ class AccountVoting extends React.Component {
 
   onReset() {
     let s = this.state;
-    if (this.refs.voting_proxy && this.refs.voting_proxy.refs.bound_component)
-      this.refs.voting_proxy.refs.bound_component.onResetProxy();
+    if (
+      this.refs.voting_proxy &&
+      (this.refs.voting_proxy as any).refs.bound_component
+    )
+      (this.refs.voting_proxy as any).refs.bound_component.onResetProxy();
     this.setState(
       {
         proxy_account_id: s.prev_proxy_account_id,
@@ -306,7 +310,7 @@ class AccountVoting extends React.Component {
         vote_ids: s.prev_vote_ids
       },
       () => {
-        this.updateAccountData(this.props);
+        this.updateAccountData(this.props as any);
       }
     );
   }
@@ -324,7 +328,7 @@ class AccountVoting extends React.Component {
   }
 
   onChangeVotes(addVotes, removeVotes) {
-    let state = {};
+    let state: any = {};
     state.vote_ids = this.state.vote_ids;
     if (addVotes.length) {
       addVotes.forEach(vote => {
@@ -385,7 +389,7 @@ class AccountVoting extends React.Component {
         proxy_account_id: proxy_account ? proxy_account.get("id") : ""
       },
       () => {
-        this.updateAccountData(this.props);
+        this.updateAccountData(this.props as any);
       }
     );
   }
@@ -630,22 +634,21 @@ class AccountVoting extends React.Component {
 
     let actionButtons = (
       <div>
-        <button
-          className={cnames(publish_buttons_class, {
-            success: this.isChanged()
-          })}
+        <Button
+          style={{ marginRight: "0.5em" }}
+          disabled={!this.isChanged()}
+          size="small"
           onClick={this.onPublish}
-          tabIndex={4}
         >
           <Translate content="account.votes.publish" />
-        </button>
-        <button
-          className={"button " + publish_buttons_class}
+        </Button>
+        <Button
           onClick={this.onReset}
-          tabIndex={8}
+          size="small"
+          disabled={!this.isChanged()}
         >
           <Translate content="account.perm.reset" />
-        </button>
+        </Button>
       </div>
     );
 
@@ -669,7 +672,7 @@ class AccountVoting extends React.Component {
         >
           <Icon name="locked" size="1x" />
         </span>
-        <span
+        {/* <span
           style={{
             paddingLeft: 5,
             position: "relative",
@@ -680,7 +683,7 @@ class AccountVoting extends React.Component {
           <Link to="/help/voting">
             <Icon name="question-circle" size="1x" />
           </Link>
-        </span>
+        </span> */}
       </AccountSelector>
     );
 
@@ -810,12 +813,14 @@ class AccountVoting extends React.Component {
                   ) : null}
 
                   <div className="new-worker-button flex-flow-end">
-                    {saveText}
-                    <Link to="/create-worker">
-                      <div className="button no-margin">
-                        <Translate content="account.votes.create_worker" />
-                      </div>
-                    </Link>
+                    {/* {saveText} */}
+                    <RouterButton
+                      preventDefault
+                      link="/create-worker"
+                      style={{ padding: "0 1em" }}
+                    >
+                      <Translate content="account.votes.create_worker" />
+                    </RouterButton>
                   </div>
                 </div>
 
@@ -824,7 +829,7 @@ class AccountVoting extends React.Component {
                     <thead>
                       <tr>
                         <th />
-                        <th colSpan="3" style={{ textAlign: "left" }}>
+                        <th colSpan={4} style={{ textAlign: "left" }}>
                           <Translate content="account.votes.threshold" />
                         </th>
                         <th style={{ textAlign: "right" }}>
@@ -835,7 +840,7 @@ class AccountVoting extends React.Component {
                             asset="1.3.0"
                           />
                         </th>
-                        <th colSpan="3" />
+                        <th colSpan={3} />
                       </tr>
                     </thead>
                   ) : (
@@ -847,7 +852,7 @@ class AccountVoting extends React.Component {
                             name={preferredUnit}
                           />)
                         </th>
-                        <th colSpan="4" className="hide-column-small" />
+                        <th colSpan={4} className="hide-column-small" />
                         <th style={{ textAlign: "right" }}>
                           {globalObject ? (
                             <EquivalentValueComponent
@@ -858,20 +863,23 @@ class AccountVoting extends React.Component {
                             />
                           ) : null}
                         </th>
-                        <th className="hide-column-small" />
+                        <th colSpan={3} className="hide-column-small" />
                       </tr>
                     </thead>
                   )}
                   <thead>
                     <tr>
-                      {workerTableIndex === 2 ? null : (
-                        <th style={{ textAlign: "right" }}>
-                          <Translate content="account.votes.line" />
-                        </th>
-                      )}
-                      <th style={{ textAlign: "left" }}>
-                        <Translate content="explorer.assets.id" />
-                      </th>
+                      {workerTableIndex === 2
+                        ? null
+                        : [
+                          <th key="voteLine" style={{ textAlign: "right" }}>
+                              <Translate content="account.votes.line" />
+                            </th>,
+                          <th key="voteID" style={{ textAlign: "left" }}>
+                              <Translate content="explorer.assets.id" />
+                            </th>
+                        ]}
+
                       <th style={{ textAlign: "left" }}>
                         <Translate content="account.user_issued_assets.description" />
                       </th>
@@ -941,10 +949,14 @@ class AccountVoting extends React.Component {
       </div>
     );
   }
-}
-AccountVoting = BindToChainState(AccountVoting);
+};
+AccountVoting = BindToChainState(AccountVoting, {
+  keep_updating: true,
+  show_loader: true
+});
 
 const BudgetObjectWrapper = props => {
+  console.debug("Budget: ", SettingsStore.getLastBudgetObject());
   return (
     <AccountVoting
       {...props}

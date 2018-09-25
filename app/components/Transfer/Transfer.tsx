@@ -147,7 +147,6 @@ class Transfer extends React.Component<any, any> {
   }
 
   _checkFeeStatus(account = this.state.from_account) {
-    console.debug("CheckFeeStatue: ", account);
     if (!account || !account.get) return;
 
     const assets = Object.keys(account.get("balances").toJS()).sort(
@@ -226,7 +225,6 @@ class Transfer extends React.Component<any, any> {
   }
 
   onFromAccountChanged(from_account) {
-    console.debug("FromAccountChanged: ", from_account);
     this.setState({ from_account, error: null }, () => {
       this._updateFee();
       this._checkFeeStatus();
@@ -238,7 +236,7 @@ class Transfer extends React.Component<any, any> {
   }
 
   onAmountChanged({ amount, asset }) {
-    console.debug("Amount: ", amount);
+
     if (!asset) {
       return;
     }

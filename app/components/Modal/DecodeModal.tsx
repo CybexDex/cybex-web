@@ -59,7 +59,6 @@ class DecodeModal extends React.Component<
 
   tryDecode = e => {
     e.preventDefault();
-    console.debug("TryDecode: ", this.state);
     let key = Aes.fromSeed(this.state.secret);
     let generatedPassword = key.decryptHexToText(this.state.crypto);
 

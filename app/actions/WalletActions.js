@@ -62,7 +62,7 @@ class WalletActions {
     );
 
     cap.fp = SettingsStore.getState().fp;
-    console.debug("Finger Print: ", cap);
+    // console.debug("Finger Print: ", cap);
     console.log("create account:", account_name);
     console.log(
       "new active pubkey",

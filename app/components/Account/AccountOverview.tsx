@@ -294,7 +294,7 @@ let AccountOverview = class extends React.Component<any, any> {
       if (!asset) return null;
 
       const assetName = asset.get("symbol");
-      console.debug("AssetName: ", assetName);
+      // console.debug("AssetName: ", assetName);
       // Hide for Wcup
       // if (isFootballAsset(assetName)) {
       //   return null;

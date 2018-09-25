@@ -72,7 +72,6 @@ class WorkerApproval extends React.Component {
     } else if (this.props.rest > 0) {
       fundedPercent = (this.props.rest / worker.daily_pay) * 100;
     }
-    console.debug("Worker: ", worker);
     let startDate = counterpart.localize(
       new Date(worker.work_begin_date + "Z"),
       { type: "date", format: "short_custom" }

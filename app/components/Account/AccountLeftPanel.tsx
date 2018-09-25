@@ -226,7 +226,10 @@ class AccountLeftPanel extends React.Component<
 
             {/* Advanced features*/}
             {this.props.advancedMode && [
-              <div style={{ paddingBottom: 10, paddingTop: 20 }}>
+              <div
+                key="advanceMode"
+                style={{ paddingBottom: 10, paddingTop: 20 }}
+              >
                 <div className="grid-container no-margin advanced-toggle">
                   <a
                     onClick={this._toggleAdvanced.bind(this)}
@@ -242,7 +245,7 @@ class AccountLeftPanel extends React.Component<
                   </a>
                 </div>
               </div>,
-              <section className="block-list">
+              <section key="advancedFnList" className="block-list">
                 {this.state.showAdvanced ? (
                   <ul className="account-left-menu">
                     <li>
@@ -287,7 +290,10 @@ class AccountLeftPanel extends React.Component<
               </section>,
               isMyAccount &&
                 !passwordLogin && (
-                  <div className="regular-padding vertical-center">
+                  <div
+                    key="wallteModeCreateMode"
+                    className="regular-padding vertical-center"
+                  >
                     <div className="button block-button create-account-button">
                       <Link
                         to={`/create-account/${

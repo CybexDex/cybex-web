@@ -12,7 +12,7 @@ class BackupActions {
       reader.onload = evt => {
         let contents = new Buffer(evt.target.result, "binary");
         let name = file.name;
-        console.debug("FILE: ", file);
+        // console.debug("FILE: ", file);
         let last_modified = file.lastModifiedDate
           ? file.lastModifiedDate.toString()
           : file.lastModified

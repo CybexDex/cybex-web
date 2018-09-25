@@ -109,7 +109,6 @@ class Manager {
         let conn = new ChainWebSocket(url, () => {});
         connectionStartTimes[url] = new Date().getTime();
         connectionPromises.push(() => {
-          console.debug("ConnectManager", "Try to connect: ", url);
           return conn
             .login(rpc_user, rpc_password)
             .then(data => {
@@ -138,7 +137,6 @@ class Manager {
 
       doPromise()
         .then(res => {
-          console.debug("Connections: ", res);
           resolve(
             res.filter(a => !!a).reduce((f, a) => {
               let key = Object.keys(a)[0];

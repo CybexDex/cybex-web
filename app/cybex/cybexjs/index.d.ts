@@ -51,6 +51,9 @@ declare module "cybexjs" {
   const Login: AccountLogin;
   class ChainStoreClass {
     resetCache(): void;
+    getObjectByVoteID: any;
+    getWitnessById: any;
+    getCommitteeMemberById: any;
     init: () => Promise<any>;
     subscribe(handler: (obj: object) => any): void;
     unsubscribe(handler: (obj: object) => any): void;
@@ -58,7 +61,7 @@ declare module "cybexjs" {
     getEstimatedChainTimeOffset: any;
     subError: any;
     subscribed: any;
-    getObject(id: string): any;
+    getObject(id: string, ...args): any;
     getAsset(symbolOrId: string): any;
     getBalanceObjects(id: string | string[]): any;
     getAccount(name_or_id: string, autosubscribe?: boolean): any;
@@ -69,6 +72,7 @@ declare module "cybexjs" {
   const TransactionHelper: any;
   const Aes: any;
   const PublicKey: any;
+  const FetchChainObjects: any;
   const PrivateKey: any;
   const ChainTypes: any;
   const ChainValidation: {

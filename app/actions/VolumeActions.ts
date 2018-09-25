@@ -141,11 +141,11 @@ class VolumnActions {
   }
 
   async fetchPriceData() {
-    console.debug("Start To Fetch");
+    // console.debug("Start To Fetch");
     let data: PriceSetByYuan = await fetch(PRICE_API)
       .then(res => res.json())
       .then(async (outer: OuterPriceData) => {
-        console.debug("Fetchd: ", outer);
+        // console.debug("Fetchd: ", outer);
 
         if (outer.code !== 0) {
           throw Error("Price Api Error!" + JSON.stringify(outer));

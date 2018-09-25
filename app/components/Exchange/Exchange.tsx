@@ -1266,7 +1266,6 @@ class Exchange extends React.Component<any, any> {
       this.state.height > 1100 ? chartHeight : chartHeight - 125,
       minChartHeight
     );
-    console.debug("Props: ", this.props);
     let buyForm = isFrozen ? null : (
       <BuySell
         onBorrow={

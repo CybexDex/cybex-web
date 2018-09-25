@@ -56,7 +56,6 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
       !this.timer &&
       this.props.initDone
     ) {
-      console.debug("To Reconnect");
       // (NetworkStore as any).setInitDone(false);
       this.reconnect();
     }
