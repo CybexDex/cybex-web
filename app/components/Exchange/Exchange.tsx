@@ -141,7 +141,7 @@ class Exchange extends React.Component<any, any> {
       ["vpVolume", false],
       ["vpbsVolume", false],
       ["sar", false],
-      ["ei", false],
+      // ["ei", false],
       ["rsi", false],
       ["atr", false],
       ["fi", false],

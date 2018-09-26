@@ -620,7 +620,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
           opacity={1}
           rectRadius={40}
         />
-        {indicators.vpbs && (
+        {indicators.vpbsVolume && (
           <VolumeProfileSeries
             bySession
             orient="right"
@@ -631,7 +631,7 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
             }}
           />
         )}
-        {indicators.vp && (
+        {indicators.vpVolume && (
           <VolumeProfileSeries
             fill={_ref => {
               console.debug("ref", _ref.type);
