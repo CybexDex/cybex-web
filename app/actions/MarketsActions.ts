@@ -64,32 +64,20 @@ class MarketsActions {
         marketStats[market] = {
           lastFetched: new Date()
         };
-        Promise.all([
-          Apis.instance()
-            .history_api()
-            .exec("get_market_history", [
-              base.get("id"),
-              quote.get("id"),
-              3600,
-              startDateShort.toISOString().slice(0, -5),
-              endDate.toISOString().slice(0, -5)
-            ]),
-          Apis.instance()
-            .history_api()
-            .exec("get_fill_order_history", [
-              base.get("id"),
-              quote.get("id"),
-              1
-            ])
-        ]).then(result => {
-          dispatch({
-            history: result[0],
-            last: result[1],
-            market: marketName,
-            base,
-            quote
+        Apis.instance()
+          .db_api ()
+          .exec("get_ticker", [
+            base.get("id"),
+            quote.get("id")
+          ])
+          .then(result => {
+            dispatch({
+              market: marketName,
+              base,
+              quote,
+              latest: result
+            });
           });
-        });
       }
     };
   }

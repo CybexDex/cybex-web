@@ -212,7 +212,6 @@ class MarketsStore {
   }
 
   onSubscribeMarket(result) {
-    // console.debug("Marketing: ", result);
     if (result.switchMarket) {
       this.marketReady = false;
       return this.emitChange();
@@ -1416,13 +1415,30 @@ class MarketsStore {
 
   onGetMarketStats(payload) {
     if (payload) {
-      let stats = this._calcMarketStats(
-        payload.history,
-        payload.base,
-        payload.quote,
-        payload.last,
-        payload.market
-      );
+      let stats = {
+        close: null,
+        price: payload.latest.latest,
+        change: payload.latest.percent_change,
+        volumeBase: parseInt(payload.latest.base_volume),
+        volumeQuote: parseInt(payload.latest.quote_volume),
+        volumeBaseAsset: new Asset({
+          amount: payload.latest.base_volume,
+          asset_id: payload.base.get("id"),
+          precision: payload.base.get("precision")
+        }),
+        volumeQuoteAsset: new Asset({
+          amount: payload.latest.base_volume,
+          asset_id: payload.quote.get("id"),
+          precision: payload.quote.get("precision")
+        }),
+      };
+      // let stats = this._calcMarketStats(
+      //   payload.history,
+      //   payload.base,
+      //   payload.quote,
+      //   payload.last,
+      //   payload.market
+      // );
       this.allMarketStats = this.allMarketStats.set(payload.market, stats);
     }
   }
