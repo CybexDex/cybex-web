@@ -1656,6 +1656,7 @@
     "withdraw_placeholder": "Please enter your %(asset)s address",
     "unavailable_jade": "The gateway service for this asset is currently down, please try again later",
     "state": {
+      "undefined": "请求待处理",
       "init": "正在上链",
       "new": "新建",
       "pending": "待确认",
