@@ -36,8 +36,9 @@ let Input = Radium(
       formatter?;
       validator?;
       iconStyle?;
+      value?;
       valueFromOuter?;
-    } & HTMLInputElement,
+    },
     { value; focused; type; valid }
   > {
     static defaultProps = {
@@ -267,7 +268,10 @@ let Input = Radium(
                 type={error ? "error" : "base"}
               />
             )}
-          <div className="input-wrapper" style={Input.styles.inputWrapper}>
+          <div
+            className="input-wrapper"
+            style={Input.styles.inputWrapper as any}
+          >
             <input
               ref={inputRef}
               key={this.key}
@@ -342,7 +346,7 @@ let InputValidator = props => {};
 const ACCOUNT_NAME_SET = /^[a-z0-9\.-]*$/;
 
 let LoginAccountInput = class extends React.PureComponent<
-  { onValidChange; errorMsgs?, accountName? },
+  { onValidChange; errorMsgs?; accountName? },
   any
 > {
   valid = false;
@@ -470,7 +474,7 @@ let LoginPasswordInput = class extends React.PureComponent<
         icon="lock"
         type="password"
         onBlur={this.checkError}
-        autocomplete="new-password"
+        autoComplete="new-password"
         error={errorPass && counterpart.translate("login.error_password")}
         onChange={this.handleChange}
         keepPlaceholder

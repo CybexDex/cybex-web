@@ -39,6 +39,10 @@ const icons = {
     active: require("./icons/ic_radio_active.svg"),
     disabledAcitve: require("./icons/ic_radio_active_disabled.svg")
   },
+  help: {
+    base: require("./icons/ic_help_outline.svg"),
+    active: require("./icons/ic_help_outline_active.svg"),
+  },
   lock: {
     base: require("./icons/ic_lock_outline.svg")
   },

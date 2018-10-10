@@ -20,18 +20,15 @@ import Icon from "../Icon/Icon";
 import counterpart from "counterpart";
 import utils from "common/utils";
 import { debugGen } from "utils";
-import LoadingIndicator from "../LoadingIndicator";
-import NewDepositAddress from "./NewDepositAddress";
-import { ASSETS } from "./Config";
 import { checkFeeStatusAsync, checkBalance } from "lib/common/trxHelper";
 import { debounce } from "lodash";
 import { BaseModal } from "./BaseModal";
-import { CurrentBalance } from "./Common";
 import AccountActions from "actions/AccountActions";
 import { calcAmount } from "utils//Asset";
 import { BigNumber } from "bignumber.js";
 import { NotificationActions } from "actions/NotificationActions";
-
+import { TipMark } from "components/Common/TipMark";
+import { Input, Button } from "components/Common";
 const debug = debugGen("WithdrawModal");
 
 const style = {
@@ -617,54 +614,34 @@ class WithdrawModal extends React.Component<props, state> {
             muiltTips={false}
           />
         </div>
-
-        {/* Fee selection */}
-        {/* {this.state.feeAmount ? ( */}
-        <div className="content-block gate_fee">
-          <AmountSelector
-            refCallback={this.setNestedRef.bind(this)}
-            label="transfer.fee"
-            disabled={true}
-            amount={this.state.feeAmount.getAmount({ real: true })}
-            onChange={this.onFeeChanged.bind(this)}
-            asset={this.state.feeAmount.asset_id}
-            assets={fee_asset_types}
-          />
-          {!this.state.hasBalance ? (
-            <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-              <Translate content="transfer.errors.noFeeBalance" />
-            </p>
-          ) : null}
-          {!this.state.hasPoolBalance ? (
-            <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-              <Translate content="transfer.errors.noPoolBalance" />
-            </p>
-          ) : null}
-        </div>
-        {/* ) : null} */}
-
-        {/* Gate fee */}
-        {this.props.withdrawInfo.fee ? (
-          <div
-            className="amount-selector right-selector"
-            style={{ paddingBottom: 20 }}
-          >
-            <label className="left-label">
-              <Translate content="gateway.fee" />
-            </label>
-            <div className="inline-label input-wrapper">
-              <input type="text" disabled value={this.props.withdrawInfo.fee} />
-
-              <div className="form-label select floating-dropdown">
-                <div className="dropdown-wrapper inactive">
-                  <div>{withdrawInfo.type}</div>
-                </div>
-              </div>
-            </div>
+        <div className="content-block">
+          <label className="left-label">
+            {!isEOS ? (
+              <Translate component="span" content="modal.withdraw.address" />
+            ) : (
+              <Translate component="span" content="modal.withdraw.to_eos" />
+            )}
+          </label>
+          <div className="inline-label">
+            <Input
+              size="small"
+              style={{ width: "100%" }}
+              id="withdrawAddress"
+              name="withdrawAddress"
+              type="text"
+              value={withMemo ? withdraw_address_origin : withdraw_address}
+              valueFromOuter={true}
+              onChange={
+                withMemo
+                  ? this.onWithdrawOriginAddrChange.bind(this)
+                  : this.onWithdrawAddressChanged.bind(this)
+              }
+              autoComplete="off"
+            />
           </div>
-        ) : null}
-        {isEOS && (
-          <div className="content-block">
+        </div>
+        <div className="content-block">
+          {isEOS && (
             <div className="inline-label use-cyb">
               <Translate
                 className="left-label"
@@ -682,45 +659,24 @@ class WithdrawModal extends React.Component<props, state> {
                 <label htmlFor="withMemo" />
               </div>
             </div>
-          </div>
-        )}
-        <div className="content-block">
-          <label className="left-label">
-            {!isEOS ? (
-              <Translate component="span" content="modal.withdraw.address" />
-            ) : (
-              <Translate component="span" content="modal.withdraw.to_eos" />
-            )}
-          </label>
-          <div className="blocktrades-select-dropdown">
-            <div className="inline-label">
-              <input
-                type="text"
-                value={withMemo ? withdraw_address_origin : withdraw_address}
-                onChange={
-                  withMemo
-                    ? this.onWithdrawOriginAddrChange.bind(this)
-                    : this.onWithdrawAddressChanged.bind(this)
-                }
-                autoComplete="off"
-              />
-            </div>
-          </div>
-
+          )}
           {withMemo && (
             <div style={{ marginTop: 10 }}>
               <label className="left-label">
                 <Translate component="span" content="gateway.withdraw_memo" />
               </label>
-              <div className="blocktrades-select-dropdown">
-                <div className="inline-label">
-                  <input
-                    type="text"
-                    value={memoContent}
-                    onChange={this.onWithdrawMemoChange.bind(this)}
-                    autoComplete="off"
-                  />
-                </div>
+              <div className="inline-label">
+                <Input
+                  type="text"
+                  size="small"
+                  style={{ width: "100%" }}
+                  id="withdrawAddressMemo"
+                  name="withdrawAddressMemo"
+                  value={memoContent}
+                  valueFromOuter={true}
+                  onChange={this.onWithdrawMemoChange.bind(this)}
+                  autoComplete="off"
+                />
               </div>
             </div>
           )}
@@ -759,14 +715,73 @@ class WithdrawModal extends React.Component<props, state> {
             muiltTips={false}
           />
         </div>
-        {/* Withdraw/Cancel buttons */}
-        <div className="button-group">
-          <Translate
-            content="modal.withdraw.submit"
-            onClick={this.onSubmit}
-            className={"button" + (disableSubmit ? " disabled" : "")}
+        <hr />
+        {/* Gate fee */}
+        {this.props.withdrawInfo.fee ? (
+          <div
+            className="amount-selector right-selector"
+            style={{ paddingBottom: 20 }}
+          >
+            <label className="left-label">
+              <Translate content="gateway.fee" />
+              <TipMark>
+                <Translate content="gateway.fee_tip_outer" />
+              </TipMark>
+            </label>
+            <div className="inline-label input-wrapper">
+              <Input
+                size="small"
+                style={{ width: "100%" }}
+                type="text"
+                disabled
+                valueFromOuter={true}
+                value={this.props.withdrawInfo.fee}
+              />
+
+              <div className="form-label select floating-dropdown">
+                <div className="dropdown-wrapper inactive">
+                  <div>{withdrawInfo.type}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="content-block gate_fee">
+          <AmountSelector
+            labelTooltip={{
+              id: "gate_fee_tip",
+              component: <Translate content="gateway.fee_tip_inner" />
+            }}
+            refCallback={this.setNestedRef.bind(this)}
+            label="transfer.fee"
+            disabled={true}
+            amount={this.state.feeAmount.getAmount({ real: true })}
+            onChange={this.onFeeChanged.bind(this)}
+            asset={this.state.feeAmount.asset_id}
+            assets={fee_asset_types}
           />
+          {!this.state.hasBalance ? (
+            <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+              <Translate content="transfer.errors.noFeeBalance" />
+            </p>
+          ) : null}
+          {!this.state.hasPoolBalance ? (
+            <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+              <Translate content="transfer.errors.noPoolBalance" />
+            </p>
+          ) : null}
         </div>
+
+        {/* Withdraw/Cancel buttons */}
+        <Button
+          onClick={this.onSubmit}
+          type="primary"
+          style={{ width: "100%" }}
+          disabled={disableSubmit}
+        >
+          <Translate content="modal.withdraw.submit" onClick={this.onSubmit} />
+        </Button>
       </BaseModal>
     );
   }
