@@ -1615,7 +1615,7 @@ function FetchChainObjects(method, object_ids, timeout, subMap) {
 }
 chain_store.FetchChainObjects = FetchChainObjects;
 
-function FetchChain(methodName, objectIds, timeout = 1900, subMap = {}) {
+function FetchChain(methodName, objectIds, timeout = 5000, subMap = {}) {
   let method = chain_store[methodName];
   if (!method) throw new Error("ChainStore does not have method " + methodName);
 

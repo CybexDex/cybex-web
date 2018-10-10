@@ -56,6 +56,7 @@ type state = {
   withdraw_address_loading;
   withdraw_address_error?;
   withdraw_address_valid;
+  feeAsset?;
   error;
   balanceError;
   hasPoolBalance;
@@ -94,7 +95,7 @@ class WithdrawModal extends React.Component<props, state> {
       withdraw_address: "",
       fadeOut: false,
       fee_asset_id: "1.3.0",
-      feeAmount: null,
+      feeAmount: new Asset({ amount: 0 }),
       from_account: props.account,
       feeStatus: {},
       memo: null,
@@ -131,11 +132,14 @@ class WithdrawModal extends React.Component<props, state> {
         .dividedBy(p)
         .toString()
         .indexOf(".") !== -1;
-    this.setState({
-      withdraw_amount: amount,
-      eosPrecisionError,
-      outerPrecision: p.toString()
-    });
+    this.setState(
+      {
+        withdraw_amount: amount,
+        eosPrecisionError,
+        outerPrecision: p.toString()
+      },
+      this._checkBalance
+    );
   };
 
   onMemoToggleChange = e => {
@@ -198,11 +202,14 @@ class WithdrawModal extends React.Component<props, state> {
   };
 
   onWithdrawAddressChanged(e) {
-    this.setState({
-      withdraw_address: e.target.value,
-      withdraw_address_loading: true,
-      withdraw_address_valid: false
-    });
+    this.setState(
+      {
+        withdraw_address: e.target.value,
+        withdraw_address_loading: true,
+        withdraw_address_valid: false
+      },
+      this._updateFee
+    );
     this.validateAddress(e.target.value);
   }
 
@@ -223,11 +230,14 @@ class WithdrawModal extends React.Component<props, state> {
         withdraw_address_error: true
       });
     }
-    this.setState({
-      withdraw_address_loading: false,
-      withdraw_address_error: false,
-      withdraw_address_valid: valid
-    });
+    this.setState(
+      {
+        withdraw_address_loading: false,
+        withdraw_address_error: false,
+        withdraw_address_valid: valid
+      },
+      this._updateFee
+    );
     debug("Valid: ", valid);
   };
 
@@ -253,6 +263,7 @@ class WithdrawModal extends React.Component<props, state> {
   onFeeChanged({ asset }) {
     this.setState(
       {
+        feeAsset: asset,
         fee_asset_id: asset.get("id")
       },
       this._updateFee
@@ -273,11 +284,7 @@ class WithdrawModal extends React.Component<props, state> {
       options: ["price_per_kbyte"],
       data: {
         type: "memo",
-        content:
-          this.props.receive_asset_symbol +
-          ":" +
-          state.withdraw_address +
-          (state.memo ? ":" + state.memo : "")
+        content: this._withdrawMemo()
       }
     }).then(({ fee, hasBalance, hasPoolBalance }) => {
       // if (this.unMounted) return;
@@ -354,14 +361,7 @@ class WithdrawModal extends React.Component<props, state> {
           options: ["price_per_kbyte"],
           data: {
             type: "memo",
-            content:
-              "withdraw:" +
-              GATEWAY_ID +
-              ":" +
-              this.props.asset +
-              ":" +
-              state.withdraw_address +
-              (state.memo ? ":" + state.memo : "")
+            content: this._withdrawMemo()
           }
         })
       );
@@ -401,7 +401,13 @@ class WithdrawModal extends React.Component<props, state> {
     let current_asset_id = this.props.asset.get("id");
     let balance = balances[current_asset_id]; //Todo
     if (!balance || !feeAmount) return;
-    const hasBalance = checkBalance(withdraw_amount, asset, feeAmount, balance);
+    let balanceObject = ChainStore.getObject(balance);
+    const hasBalance = checkBalance(
+      withdraw_amount,
+      asset,
+      feeAmount,
+      balanceObject
+    );
     if (hasBalance === null) return;
     this.setState({ balanceError: !hasBalance });
     return hasBalance;
@@ -419,7 +425,7 @@ class WithdrawModal extends React.Component<props, state> {
       this.props.asset.get("id"),
       this._withdrawMemo(),
       null,
-      useCybAsFee ? "1.3.0" : this.props.asset.get("id")
+      this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0"
     ).catch(error => {
       NotificationActions.error(
         counterpart.translate("modal.withdraw.lack_memo")
@@ -454,6 +460,28 @@ class WithdrawModal extends React.Component<props, state> {
     </div>
   );
 
+  _setTotal(asset_id, balance_id) {
+    const { feeAmount } = this.state;
+    let balanceObject = ChainStore.getObject(balance_id);
+    let transferAsset = ChainStore.getObject(asset_id);
+
+    let balance = new Asset({
+      amount: balanceObject.get("balance"),
+      asset_id: transferAsset.get("id"),
+      precision: transferAsset.get("precision")
+    });
+
+    if (balanceObject) {
+      if (feeAmount.asset_id === balance.asset_id) {
+        balance.minus(feeAmount);
+      }
+      this.setState(
+        { withdraw_amount: balance.getAmount({ real: true }) },
+        this._checkBalance
+      );
+    }
+  }
+
   // render
   render() {
     let { asset, withdrawInfo, modalId } = this.props;
@@ -468,6 +496,7 @@ class WithdrawModal extends React.Component<props, state> {
       memo,
       withdraw_address_origin,
       withMemo,
+      feeAsset,
       memoContent
     } = this.state;
 
@@ -475,12 +504,23 @@ class WithdrawModal extends React.Component<props, state> {
     // console.log( "account: ", this.props.account.toJS() );
     let account_balances = this.props.account.get("balances").toJS();
     // console.log( "balances: ", account_balances );
+    let fee = this.state.feeAmount.getAmount({ real: true });
+    let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
     let asset_types = Object.keys(account_balances);
     if (asset_types.length > 0) {
       let current_asset_id = this.props.asset.get("id");
       if (current_asset_id)
         balance = (
-          <span>
+          <span
+            style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }}
+            onClick={this._setTotal.bind(
+              this,
+              current_asset_id,
+              account_balances[current_asset_id],
+              fee,
+              feeID
+            )}
+          >
             <Translate component="span" content="transfer.available" />:
             <BalanceComponent balance={account_balances[current_asset_id]} />
           </span>
@@ -506,6 +546,7 @@ class WithdrawModal extends React.Component<props, state> {
       !withdraw_address ||
       withdraw_address_loading ||
       addressInvalid ||
+      this.state.balanceError ||
       gatewayServiceInvalid ||
       eosPrecisionError ||
       !amountValid;
@@ -547,6 +588,12 @@ class WithdrawModal extends React.Component<props, state> {
             isI18n={true}
             tips={[
               {
+                name: "insufficient",
+                isError: this.state.balanceError,
+                isI18n: true,
+                message: "transfer.errors.insufficient"
+              },
+              {
                 name: "withdraw-amount",
                 isError: !amountValid && Number(withdraw_amount) != 0,
                 isI18n: true,
@@ -572,29 +619,29 @@ class WithdrawModal extends React.Component<props, state> {
         </div>
 
         {/* Fee selection */}
-        {this.state.feeAmount ? (
-          <div className="content-block gate_fee">
-            <AmountSelector
-              refCallback={this.setNestedRef.bind(this)}
-              label="transfer.fee"
-              disabled={true}
-              amount={this.state.feeAmount.getAmount({ real: true })}
-              onChange={this.onFeeChanged.bind(this)}
-              asset={this.state.feeAmount.asset_id}
-              assets={fee_asset_types}
-            />
-            {!this.state.hasBalance ? (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="transfer.errors.noFeeBalance" />
-              </p>
-            ) : null}
-            {!this.state.hasPoolBalance ? (
-              <p className="has-error no-margin" style={{ paddingTop: 10 }}>
-                <Translate content="transfer.errors.noPoolBalance" />
-              </p>
-            ) : null}
-          </div>
-        ) : null}
+        {/* {this.state.feeAmount ? ( */}
+        <div className="content-block gate_fee">
+          <AmountSelector
+            refCallback={this.setNestedRef.bind(this)}
+            label="transfer.fee"
+            disabled={true}
+            amount={this.state.feeAmount.getAmount({ real: true })}
+            onChange={this.onFeeChanged.bind(this)}
+            asset={this.state.feeAmount.asset_id}
+            assets={fee_asset_types}
+          />
+          {!this.state.hasBalance ? (
+            <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+              <Translate content="transfer.errors.noFeeBalance" />
+            </p>
+          ) : null}
+          {!this.state.hasPoolBalance ? (
+            <p className="has-error no-margin" style={{ paddingTop: 10 }}>
+              <Translate content="transfer.errors.noPoolBalance" />
+            </p>
+          ) : null}
+        </div>
+        {/* ) : null} */}
 
         {/* Gate fee */}
         {this.props.withdrawInfo.fee ? (
@@ -616,25 +663,6 @@ class WithdrawModal extends React.Component<props, state> {
             </div>
           </div>
         ) : null}
-        <div className="content-block">
-          <div className="inline-label use-cyb">
-            <Translate
-              className="left-label"
-              component="lebel"
-              content="modal.withdraw.cyb_fee"
-            />
-            <div className="switch">
-              <input
-                id="useCybAsFee"
-                type="checkbox"
-                value={useCybAsFee}
-                defaultChecked={true}
-                onChange={this.onFeeCheckboxChange.bind(this)}
-              />
-              <label htmlFor="useCybAsFee" />
-            </div>
-          </div>
-        </div>
         {isEOS && (
           <div className="content-block">
             <div className="inline-label use-cyb">
