@@ -118,8 +118,8 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     const pricePrecision = props.base.get("precision");
     const volumePrecision = props.quote.get("precision");
     // const priceFormat = format(`.${pricePrecision}f`);
-    const priceFormat = format(`.8f`);
-    const timeFormatter = timeFormat("%Y-%m-%d %H:%M:%s");
+    const priceFormat = format(".8f");
+    const timeFormatter = timeFormat("%Y-%m-%d %H:%M:%S");
     const volumeFormat = volume =>
       volume > 10
         ? numeral(volume).format("0.0a")
