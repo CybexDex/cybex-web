@@ -11,5 +11,6 @@ export * from "./FlexGrowDivider";
 export * from "./Input";
 export * from "./Panel";
 export * from "./ProgressBar";
+export * from "./TipMark";
 
 export * from "./utils";

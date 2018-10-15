@@ -7,7 +7,7 @@ import FormattedAsset from "./FormattedAsset";
 import FloatingDropdown from "./FloatingDropdown";
 import Immutable from "immutable";
 import counterpart from "counterpart";
-import { Input } from "components/Common";
+import { Input, TipMark } from "components/Common";
 
 class AssetSelector extends React.Component {
   static propTypes = {
@@ -92,11 +92,14 @@ class AmountSelector extends React.Component {
     return (
       <div className="amount-selector" style={this.props.style}>
         <label className="right-label">{this.props.display_balance}</label>
-        <Translate
-          className="left-label"
-          component="label"
-          content={this.props.label}
-        />
+        <label className="left-label">
+          <Translate content={this.props.label} />
+          {this.props.labelTooltip && (
+            <TipMark id={this.props.labelTooltip.id}>
+              {this.props.labelTooltip.component}
+            </TipMark>
+          )}
+        </label>
         <div className="inline-label input-wrapper">
           {isNumber ? (
             <Input
