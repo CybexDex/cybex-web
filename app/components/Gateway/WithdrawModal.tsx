@@ -754,7 +754,7 @@ class WithdrawModal extends React.Component<props, state> {
               component: <Translate content="gateway.fee_tip_inner" />
             }}
             refCallback={this.setNestedRef.bind(this)}
-            label="transfer.fee"
+            label="gateway.fee_transfer"
             disabled={true}
             amount={this.state.feeAmount.getAmount({ real: true })}
             onChange={this.onFeeChanged.bind(this)}

@@ -1561,7 +1561,8 @@
     "id": "Proposal object id"
   },
   "gateway": {
-    "fee": "Gateway fee",
+    "fee": "Gateway Fee",
+    "fee_transfer": "Transfer Fee",
     "find_asset": "Find an asset",
     "title": "Deposit & Withdraw",
     "no_balance": "No enough balance",
