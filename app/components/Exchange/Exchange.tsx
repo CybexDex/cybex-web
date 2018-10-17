@@ -176,7 +176,7 @@ class Exchange extends React.Component<any, any> {
       buyFeeAssetIdx: ws.get("buyFeeAssetIdx", 0),
       sellFeeAssetIdx: ws.get("sellFeeAssetIdx", 0),
       indicatorSettings,
-      tools: ["fib","trendline","equ","sdc","gf"],
+      tools: ["fib", "trendline", "equ", "sdc", "gf"],
       currentMouseItem,
       currentInfoTab,
       height: window.innerHeight,

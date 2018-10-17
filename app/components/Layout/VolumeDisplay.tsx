@@ -139,12 +139,6 @@ let VolumeDisplay = class extends React.PureComponent<
         }
       });
     let volDetails = [];
-    console.debug("Vol Set");
-    console.debug(volSet);
-    console.debug(priceByEth);
-    console.debug(priceByCyb);
-    console.debug(priceByUsdt);
-    console.debug(priceByBtc);
     let vol = Object.getOwnPropertyNames(volSet).reduce((sum, nextId) => {
       let price = priceByEth[nextId]
         ? priceByEth[nextId]
