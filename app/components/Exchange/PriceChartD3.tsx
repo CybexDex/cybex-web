@@ -149,8 +149,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
   };
 
   componentWillReceiveProps(np) {
-    console.debug("NP: ", np);
-
     // 判断是否极小价格变化
     let { digits, marginRight } = this.calcDigits(np);
     if (this.state.margin.right !== marginRight) {
@@ -330,7 +328,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
     let yGrid = showGrid
       ? { innerTickSize: -1 * gridWidth, tickStrokeOpacity: 0.1 }
       : {};
-    console.log("chartindicators", indicators);
     return (
       <Chart
         id={2}
@@ -627,7 +624,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
             orient="right"
             showSessionBackground
             fill={_ref => {
-              console.debug("ref", _ref.type);
               return _ref.type === "up" ? positiveColor : negativeColor;
             }}
           />
@@ -635,7 +631,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         {indicators.vpVolume && (
           <VolumeProfileSeries
             fill={_ref => {
-              console.debug("ref", _ref.type);
               return _ref.type === "up" ? positiveColor : negativeColor;
             }}
           />
@@ -780,7 +775,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
       handleSelection4,
       enables
     } = this.props;
-    console.debug("elementorigin1:", elementorigin);
     const {
       timeFormatter,
       enableFib,
@@ -1523,7 +1517,6 @@ export default Radium(
         },
         trends_1
       });
-      console.debug("trend1:", trends_1);
     }
     onKeyPress(e) {
       const keyCode = e.which;
@@ -1583,9 +1576,7 @@ export default Radium(
     }
 
     _toggleTools(key) {
-      console.debug("toolsKey:", key);
       let enables = this.state.enables;
-      console.debug("toolsKey:", enables);
       enables[key] = true;
       this.setState(enables);
       this._resetDropdowns();
@@ -1661,7 +1652,6 @@ export default Radium(
         indicatorSettings
       } = this.props;
       const { dropdowns } = this.state;
-      console.debug("shuyuan", this.state.trends_1);
       // Lower bar
       let bucketText = function(size) {
         if (size === "all") {
@@ -1805,7 +1795,6 @@ export default Radium(
         .filter(a => !!a);
 
       /* Tools dropdown */
-      console.debug("this.props.tools:", this.props.tools);
       const toolsOptions = this.props.tools.map(i => {
         return (
           <li

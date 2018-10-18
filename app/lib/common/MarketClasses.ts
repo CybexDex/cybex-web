@@ -582,7 +582,7 @@ class LimitOrder {
     let newOrder = this.clone();
     delete newOrder._to_receive;
     delete this._to_receive;
-    
+
     if (newOrder.sellers.indexOf(order.seller) === -1) {
       newOrder.sellers.push(order.seller);
     }
