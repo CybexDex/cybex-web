@@ -696,21 +696,8 @@ let OrderBook = class extends React.Component<any, any> {
               )
           )
         : [combinedBids, combinedAsks];
-    // let [bids, asks] = rteDepth;
     let [bidRows, askRows] = [limitBids, limitAsks].map(
       (orders: LimitOrder[]) =>
-        // Array.from(
-        //   orders
-        //     .reduce((orderSet: Map<number, Order>, order) => {
-        //       if (!orderSet.has(order.price)) {
-        //         orderSet.set(order.price, order);
-        //       } else {
-        //         let newOrder = orderSet.get(order.price).sum(order);
-        //         orderSet.set(order.price, newOrder);
-        //       }
-        //       return orderSet;
-        //     }, new Map<number, Order>())
-        //     .values()
         Array.from(
           orders
             .reduce((orderSet: Map<string, LimitOrder>, order) => {
@@ -725,7 +712,6 @@ let OrderBook = class extends React.Component<any, any> {
               return orderSet;
             }, new Map<string, LimitOrder>())
             .values()
-          // )
         )
     );
 
