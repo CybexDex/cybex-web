@@ -11,7 +11,6 @@ import SettingsStore from "stores/SettingsStore";
 import { connect } from "alt-react";
 import ChainTypes from "../Utility/ChainTypes";
 
-
 let AssetDetail = class extends React.PureComponent<{ asset; vol }> {
   static propTypes = {
     asset: ChainTypes.ChainAsset.isRequired
@@ -48,6 +47,8 @@ let VolumeDisplay = class extends React.PureComponent<
       this.props.markets[1]
     ) {
       let assetsMap = this.props.markets.filter(m => !!m);
+      console.debug("Assets Map");
+      console.debug(assetsMap);
       let rawPairs = assetsMap.reduce((allPairs, nextAssetMap, i, arr) => {
         arr.forEach(assetMap => {
           if (assetMap.get("id") !== nextAssetMap.get("id")) {
@@ -88,6 +89,7 @@ let VolumeDisplay = class extends React.PureComponent<
     let volSet = {};
     let priceByCyb = {};
     let priceByEth = {};
+    let priceByBtc = {};
     let priceByUsdt = {};
     volMarkets
       .map(pair =>
@@ -105,6 +107,12 @@ let VolumeDisplay = class extends React.PureComponent<
         }
         if (stat.volumeQuoteAsset.asset_id === "1.3.0") {
           priceByCyb[stat.volumeBaseAsset.asset_id] = 1 / parseFloat(stat.price);
+        }
+        if (stat.volumeBaseAsset.asset_id === "1.3.3") {
+          priceByBtc[stat.volumeQuoteAsset.asset_id] = stat.price.toReal();
+        }
+        if (stat.volumeQuoteAsset.asset_id === "1.3.3") {
+          priceByBtc[stat.volumeBaseAsset.asset_id] = 1 / stat.price.toReal();
         }
         if (stat.volumeBaseAsset.asset_id === "1.3.27") {
           priceByUsdt[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price);
@@ -137,7 +145,9 @@ let VolumeDisplay = class extends React.PureComponent<
           ? priceByCyb[nextId] * priceByEth["1.3.0"]
           : priceByUsdt[nextId]
             ? priceByUsdt[nextId] * (1 / priceByUsdt["1.3.2"])
-            : 0;
+            : priceByBtc[nextId]
+              ? priceByBtc[nextId] * priceByEth["1.3.3"]
+              : 0;
       let v = volSet[nextId] * price;
       sum += v;
       volDetails.push({ asset: nextId, volByEther: v });

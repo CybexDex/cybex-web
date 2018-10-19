@@ -492,6 +492,9 @@ class LimitOrderCreate {
   }
 }
 
+type RteOrderPrice = string;
+type RteOrderAmount = string;
+type RteOrder = [RteOrderPrice, RteOrderAmount];
 class LimitOrder {
   order;
   assets;
@@ -542,6 +545,78 @@ class LimitOrder {
 
     this.fee = order.deferred_fee;
   }
+  /**
+   *
+   *  order = { id: '1.7.108864616',
+   *   expiration: '2023-08-27T05:34:23',
+   *   seller: '1.2.7581',
+   *   for_sale: 21717,
+   *   sell_price:
+   *    { base: { amount: 21717, asset_id: '1.3.2' },
+   *      quote: { amount: 22200000, asset_id: '1.3.0' } },
+   *   deferred_fee: 100 }
+   *
+   *
+   * @param rteOrder
+   * @param baseAsset
+   * @param quoteAsset
+   * @param isRteBid
+   */
+  static fromRteOrder(
+    rteOrder: RteOrder,
+    marketBaseAsset,
+    marketQuoteAsset,
+    isRteBid: boolean = false
+  ) {
+    let base = isRteBid
+      ? Math.floor(
+          parseFloat(rteOrder[0]) *
+            parseFloat(rteOrder[1]) *
+            Math.pow(10, marketQuoteAsset.get("precision"))
+        )
+      : Math.floor(
+          parseFloat(rteOrder[1]) *
+            Math.pow(10, marketBaseAsset.get("precision"))
+        );
+    let quote = isRteBid
+      ? Math.floor(
+          parseFloat(rteOrder[1]) *
+            Math.pow(10, marketBaseAsset.get("precision"))
+        )
+      : Math.floor(
+          parseFloat(rteOrder[0]) *
+            parseFloat(rteOrder[1]) *
+            Math.pow(10, marketQuoteAsset.get("precision"))
+        );
+    let order = {
+      id: "1.7.0",
+      seller: "1.2.0",
+      for_sale: base,
+      sell_price: {
+        base: {
+          amount: base,
+          asset_id: isRteBid
+            ? marketBaseAsset.get("id")
+            : marketQuoteAsset.get("id")
+        },
+        quote: {
+          amount: quote,
+          asset_id: isRteBid
+            ? marketQuoteAsset.get("id")
+            : marketBaseAsset.get("id")
+        }
+      }
+    };
+    console.debug("From RTE: ", isRteBid, order, rteOrder);
+    return new LimitOrder(
+      order,
+      {
+        [marketQuoteAsset.get("id")]: marketQuoteAsset.toJS(),
+        [marketBaseAsset.get("id")]: marketBaseAsset.toJS()
+      },
+      marketQuoteAsset.get("id")
+    );
+  }
 
   getPrice(p = this.sell_price, d = 8) {
     if (this._real_price[d]) {
@@ -582,7 +657,7 @@ class LimitOrder {
     let newOrder = this.clone();
     delete newOrder._to_receive;
     delete this._to_receive;
-    
+
     if (newOrder.sellers.indexOf(order.seller) === -1) {
       newOrder.sellers.push(order.seller);
     }

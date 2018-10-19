@@ -5,6 +5,8 @@ import Translate from "react-translate-component";
 import SettingsActions from "actions/SettingsActions";
 import { Button } from "components/Common";
 import AssetName from "../Utility/AssetName";
+import utils from "common/utils";
+
 export default class SettingsEntry extends React.Component<any, any> {
   timer;
 
@@ -80,7 +82,7 @@ export default class SettingsEntry extends React.Component<any, any> {
         input = (
           <input
             type="text"
-            style={{width: "100%"}}
+            style={{ width: "100%" }}
             value={selected}
             onChange={this.props.onChange.bind(this, setting)}
           />
@@ -126,7 +128,7 @@ export default class SettingsEntry extends React.Component<any, any> {
               ? counterpart.translate(`settings.${entry.translate}`)
               : entry;
             if (setting === "unit") {
-              option = <AssetName name={entry} />;
+              option = utils.replaceName(entry).name;
             }
             let key = entry.translate ? entry.translate : entry;
             return (

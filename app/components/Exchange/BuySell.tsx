@@ -459,7 +459,7 @@ let BuySell = class extends React.Component<any, any> {
                       </td>
                     </tr>
 
-                    <tr className="buy-sell-info">
+                    {/* <tr className="buy-sell-info">
                       <td style={{ paddingTop: 5 }}>
                         {isBid ? (
                           <Translate content="exchange.lowest_ask" />
@@ -498,7 +498,7 @@ let BuySell = class extends React.Component<any, any> {
                           </span>
                         </td>
                       ) : null}
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </table>
                 <div className="buysell-buttons-wrapper">

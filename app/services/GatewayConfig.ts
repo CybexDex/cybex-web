@@ -268,6 +268,10 @@ export const JadePool: {
         name: "TokenClub",
         contractAddress: "0x4824a7b64e3966b0133f4f4ffb1b9d6beb75fff7"
       }),
+      "JADE.POLY": new GatewayAsset("JADE.POLY", "POLY", ProtocolType.ERC20, {
+        name: "Polymath",
+        contractAddress: "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC"
+      }),
       "JADE.MCO": new GatewayAsset("JADE.MCO", "MCO", ProtocolType.ERC20, {
         name: "Monaco",
         contractAddress: "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d"

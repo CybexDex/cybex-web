@@ -170,7 +170,7 @@ class BorrowModalContent extends React.Component {
 
     let newState = {
       short_amount: this.state.short_amount,
-      collateral: (this.state.short_amount / feed_price * ratio).toFixed(
+      collateral: ((this.state.short_amount / feed_price) * ratio).toFixed(
         this.props.backing_asset.get("precision")
       ),
       collateral_ratio: ratio
@@ -530,22 +530,51 @@ class BorrowModalContent extends React.Component {
                     ])}
                   />
                 </div>
-                {/* <div className="borrow-price-feeds">
-                                <span
-                                    className="inline-block tooltip borrow-price-label"
-                                    data-place="bottom"
-                                    data-tip={counterpart.translate("tooltip.margin_price")}
-                                ><Translate content="exchange.squeeze" />:&nbsp;</span>
-                                <FormattedPrice
-                                    decimals={2}
-                                    callPrice
-                                    noPopOver
-                                    quote_amount={quote_asset.getIn(["bitasset", "current_feed", "settlement_price", "base", "amount"])}
-                                    quote_asset={quote_asset.getIn(["bitasset", "current_feed", "settlement_price", "base", "asset_id"])}
-                                    base_asset={quote_asset.getIn(["bitasset", "current_feed", "settlement_price", "quote", "asset_id"])}
-                                    base_amount={squeezeRatio * quote_asset.getIn(["bitasset", "current_feed", "settlement_price", "quote", "amount"])}
-                                    />
-                            </div> */}
+                <div className="borrow-price-feeds">
+                  <span
+                    className="inline-block tooltip borrow-price-label"
+                    data-place="bottom"
+                    data-tip={counterpart.translate("tooltip.margin_price")}
+                  >
+                    <Translate content="exchange.squeeze" />:&nbsp;
+                  </span>
+                  <FormattedPrice
+                    decimals={2}
+                    callPrice
+                    noPopOver
+                    quote_amount={quote_asset.getIn([
+                      "bitasset",
+                      "current_feed",
+                      "settlement_price",
+                      "base",
+                      "amount"
+                    ])}
+                    quote_asset={quote_asset.getIn([
+                      "bitasset",
+                      "current_feed",
+                      "settlement_price",
+                      "base",
+                      "asset_id"
+                    ])}
+                    base_asset={quote_asset.getIn([
+                      "bitasset",
+                      "current_feed",
+                      "settlement_price",
+                      "quote",
+                      "asset_id"
+                    ])}
+                    base_amount={
+                      squeezeRatio *
+                      quote_asset.getIn([
+                        "bitasset",
+                        "current_feed",
+                        "settlement_price",
+                        "quote",
+                        "amount"
+                      ])
+                    }
+                  />
+                </div>
                 <b />
                 <div
                   className={

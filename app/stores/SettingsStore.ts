@@ -30,6 +30,7 @@ export const MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.POLY",
   "JADE.JCT",
   "JADE.MCO",
   // "JADE.HER",
@@ -128,7 +129,7 @@ class SettingsStore extends AbstractStore<any> {
     let defaults = {
       locale: ["zh", "en"],
       apiServer: [],
-      unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "CNY", "BTC", "EUR"],
+      unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "BTC"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
       showAssetPercent: [{ translate: "yes" }, { translate: "no" }],
       advancedMode: [{ translate: "yes" }, { translate: "no" }],

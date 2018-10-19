@@ -90,11 +90,9 @@ class TableHeader extends React.Component<any, any> {
             <Translate content="account.trade" />
           </th>
           {/* <th><Translate content="transaction.expiration" /></th> */}
-          {isMyAccount ? (
-            <th>
-              <Translate content="wallet.cancel" />
-            </th>
-          ) : null}
+          <th>
+            <Translate content="wallet.cancel" />
+          </th>
         </tr>
       </thead>
     );
@@ -238,19 +236,17 @@ class OrderRow extends React.Component<any, any> {
             <Icon name="trade" className="icon-14px" />
           </Link>
         </td>
-        {isMyAccount ? (
-          <td className="text-center" style={{ padding: "2px 5px" }}>
-            {isCall ? null : (
-              <a
-                style={{ marginRight: 0 }}
-                className="order-cancel"
-                onClick={this.props.onCancel}
-              >
-                <Icon name="cross-circle" className="icon-14px" />
-              </a>
-            )}
-          </td>
-        ) : null}
+        <td className="text-center" style={{ padding: "2px 5px" }}>
+          {isCall ? null : (
+            <a
+              style={{ marginRight: 0 }}
+              className="order-cancel"
+              onClick={this.props.onCancel}
+            >
+              <Icon name="cross-circle" className="icon-14px" />
+            </a>
+          )}
+        </td>
       </tr>
     );
     // }
@@ -411,34 +407,32 @@ class MyOpenOrders extends React.Component<any, any> {
       return a.props.price - b.props.price;
     });
 
-    return (
-      <>
-        <div className="exchange-content-header">
-          <Translate content="exchange.my_orders" />
-        </div>
-        <table className="table order-table table-hover">
-          <TableHeader
-            type="sell"
-            baseSymbol={baseSymbol}
-            quoteSymbol={quoteSymbol}
-          />
-        </table>
-        <div
-          className="grid-block no-padding market-right-padding _scroll-bar"
-          ref="asks"
-          style={{ overflow: "auto", maxHeight: 720 }}
+    return [
+      <div className="exchange-content-header">
+        <Translate content="exchange.my_orders" />
+      </div>,
+      <table className="table order-table table-hover">
+        <TableHeader
+          type="sell"
+          baseSymbol={baseSymbol}
+          quoteSymbol={quoteSymbol}
+        />
+      </table>,
+      <div
+        className="grid-block no-padding market-right-padding _scroll-bar"
+        ref="asks"
+        style={{ overflow: "auto", maxHeight: 720 }}
+      >
+        <table
+          style={{ paddingBottom: 5 }}
+          className="table order-table table-hover"
         >
-          <table
-            style={{ paddingBottom: 5 }}
-            className="table order-table table-hover"
-          >
-            <TransitionWrapper component="tbody" transitionName="newrow">
-              {rows.length ? rows : emptyRow}
-            </TransitionWrapper>
-          </table>
-        </div>
-      </>
-    );
+          <TransitionWrapper component="tbody" transitionName="newrow">
+            {rows.length ? rows : emptyRow}
+          </TransitionWrapper>
+        </table>,
+      </div>
+    ];
   }
 }
 

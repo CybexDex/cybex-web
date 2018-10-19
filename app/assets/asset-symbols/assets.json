@@ -690,6 +690,12 @@
     "logo": "https://cdn.mytoken.org/Fi1-qHuN92DCsY380M18_jL-CMNc"
   },
   {
+    "symbol": "POLY",
+    "name": "Polymath",
+    "currency": "POLY",
+    "logo": "https://cdn.mytoken.org/Fi1-qHuN92DCsY380M18_jL-CMNc"
+  },
+  {
     "symbol": "LSK",
     "name": "Lisk",
     "currency": "LSK",

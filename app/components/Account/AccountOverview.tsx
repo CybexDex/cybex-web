@@ -993,8 +993,7 @@ let AccountOverview = class extends React.Component<any, any> {
                       <td style={{ textAlign: "center" }}>{totalValueText}</td>
                       <td colSpan={3} />
                       <td style={{ textAlign: "center" }}>{ordersValue}</td>
-                      <td colSpan={1} />
-                      {this.props.isMyAccount ? <td /> : null}
+                      <td colSpan={2} />
                     </tr>
                   </tbody>
                 </AccountOrders>

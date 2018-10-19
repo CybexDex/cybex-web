@@ -272,7 +272,6 @@ let GatewayRecords = class extends React.Component<
     GatewayActions.loginGatewayQuery(this.props.account);
   };
   render() {
-
     let { fundRecords, isLocked } = this.props;
     let records = fundRecords.records || [];
     return (
