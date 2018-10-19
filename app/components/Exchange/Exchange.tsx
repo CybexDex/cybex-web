@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import MarketsActions from "actions/MarketsActions";
 import { MyOpenOrders } from "./MyOpenOrders";
-import OrderBook, { Order } from "./OrderBook";
+import OrderBook from "./OrderBook";
 import MarketHistory from "./MarketHistory";
 import MyMarkets from "./MyMarkets";
 import BuySell from "./BuySell";
@@ -770,15 +770,15 @@ class Exchange extends React.Component<any, any> {
     this.forceUpdate();
   }
 
-  _orderbookClick(order: Order) {
-    const isBid = order.isBid;
+  _orderbookClick(order) {
+    const isBid = order.isBid();
     /*
         * Because we are using a bid order to construct an ask and vice versa,
         * totalToReceive becomes forSale, and totalForSale becomes toReceive
         */
-    let forSale = order.value;
+    let forSale = order.totalToReceive({ noCache: true });
     // let toReceive = order.totalForSale({noCache: true});
-    let toReceive = order.amount;
+    let toReceive = forSale.times(order.sellPrice());
 
     let newPrice = new Price({
       base: isBid ? toReceive : forSale,
@@ -1171,6 +1171,8 @@ class Exchange extends React.Component<any, any> {
         }
       }
     });
+    console.debug("elementsHeight", elementsHeight);
+    console.debug("elementsOrigin", elementsOrigin);
     let base = null,
       quote = null,
       accountBalance = null,

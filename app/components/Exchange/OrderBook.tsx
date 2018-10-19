@@ -112,7 +112,9 @@ export class Order {
     public price: number,
     public value: number,
     public amount: number,
-    public isBid: boolean
+    public isBid: boolean,
+    public basePrecision: number,
+    public quotePresicion: number
   ) {}
 
   sum(another: Order) {
@@ -120,7 +122,28 @@ export class Order {
       this.price,
       this.value + another.value,
       this.amount + another.amount,
-      this.isBid
+      this.isBid,
+      this.basePrecision,
+      this.quotePresicion
+    );
+  }
+
+  get priceAmount() {
+    return parseInt((this.price * Math.pow(10, this.basePrecision)).toString());
+  }
+  get amountAmount() {
+    return parseInt(
+      (this.amount * Math.pow(10, this.quotePresicion)).toString()
+    );
+  }
+  get accumAmount() {
+    return parseInt(
+      (this.accum * Math.pow(10, this.quotePresicion)).toString()
+    );
+  }
+  get quoteValueAmount() {
+    return parseInt(
+      (this.accum * this.price * Math.pow(10, this.basePrecision)).toString()
     );
   }
 }
@@ -128,10 +151,13 @@ type RteOrderPrice = string;
 type RteOrderAmount = string;
 type RteOrder = [RteOrderPrice, RteOrderAmount];
 
-const convertLimitToOrder: (order: LimitOrder, digits: number) => Order = (
-  order,
-  digits
-) => {
+const convertLimitToOrder: (
+  order: LimitOrder,
+  digits: number,
+  basePrecision: number,
+  quotePrecision: number
+) => Order = (order, digits, basePrecision, quotePrecision) => {
+  console.debug("LimitOrder: ", order);
   let price = order.getPrice(order.sell_price, digits);
   let isBid = order.isBid();
   let value = order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({
@@ -140,30 +166,32 @@ const convertLimitToOrder: (order: LimitOrder, digits: number) => Order = (
   let amount = order[isBid ? "amountToReceive" : "amountForSale"]().getAmount({
     real: true
   });
-  return new Order(price, value, amount, isBid);
+  return new Order(price, value, amount, isBid, basePrecision, quotePrecision);
 };
 
-const convertRteOrderToNormal: (order: RteOrder, digits: number) => Order = (
-  order,
-  digits
-) => {
+const convertRteOrderToNormal: (
+  order: RteOrder,
+  digits: number,
+  basePrecision: number,
+  quotePrecision: number
+) => Order = (order, digits, basePrecision, quotePrecision) => {
   let price = parseFloat(order[0]);
   let amount = parseFloat(order[1]);
   let value = price * amount;
-  return new Order(parseFloat(price.toFixed(digits)), value, amount, false);
+  return new Order(
+    parseFloat(price.toFixed(digits)),
+    value,
+    amount,
+    false,
+    basePrecision,
+    quotePrecision
+  );
 };
-
 let OrderBookRowVertical = class extends React.Component<
   {
     index?;
     currentAccount;
-    order: {
-      isBid?;
-      price: number;
-      amount: number;
-      value: number;
-      accum: number;
-    };
+    order;
     quote;
     base;
     final;
@@ -172,7 +200,6 @@ let OrderBookRowVertical = class extends React.Component<
     onClick?;
     total;
     max?;
-    isBid?;
     withYuan?;
     unitYuan?;
   },
@@ -185,7 +212,7 @@ let OrderBookRowVertical = class extends React.Component<
   shouldComponentUpdate(np) {
     // if (np.order.market_base !== this.props.order.market_base) return false;
     return (
-      // np.order.ne(this.props.order) ||
+      np.order.ne(this.props.order) ||
       np.index !== this.props.index ||
       np.digits !== this.props.digits ||
       np.depthType !== this.props.depthType ||
@@ -206,32 +233,51 @@ let OrderBookRowVertical = class extends React.Component<
       unitYuan,
       max
     } = this.props;
-    let { isBid } = order;
-    let priceText = (
+    const isBid = order.isBid();
+    const isCall = order.isCall();
+    let integerClass = isCall
+      ? "orderHistoryCall"
+      : isBid
+        ? "orderHistoryBid"
+        : "orderHistoryAsk";
+
+    let price = (
       <PriceText
-        price={order.price}
+        price={order.getPrice(order.sell_price, digits)}
         quote={quote}
         base={base}
         precision={digits}
       />
     );
     let yuanPrice = withYuan
-      ? parseFloat((unitYuan * order.price).toFixed(digits - 3))
+      ? parseFloat(
+          (unitYuan * order.getPrice(order.sell_price, digits)).toFixed(
+            digits - 3
+          )
+        )
       : NaN;
+    // console.debug("ORDER: ", total, order, order.totalToReceive());
     let bgWidth =
       (order
         ? depthType === DepthType.Interval
-          ? ((order.amount / max) as any).toFixed(4) * 100
-          : ((order.accum / total).toFixed(4) as any) * 100
+          ? (((isBid
+              ? order.amountToReceive().amount
+              : order.amountForSale().amount) / max) as any).toFixed(4) * 100
+          : ((order.accum / total)
+              // (isBid
+              //   ? // ? order.totalToReceive().amount
+              //     order.totalForSale().amount
+              //   : order.totalForSale().amount) / total
+              .toFixed(4) as any) * 100
         : 0) + "%";
     return (
       <div
         onClick={this.props.onClick}
         className={classnames(
           "link",
-          "order-row"
+          "order-row",
           // { "final-row": final },
-          // { "my-order": order.isMine(this.props.currentAccount) }
+          { "my-order": order.isMine(this.props.currentAccount) }
         )}
         style={[rowStyles.base, rowHeight] as any}
         data-tip={withYuan && !isNaN(yuanPrice) ? `¥ ${yuanPrice}` : null}
@@ -258,13 +304,23 @@ let OrderBookRowVertical = class extends React.Component<
             ] as any
           }
         >
-          {priceText}
+          {price}
         </span>
         <span className="text-right" style={cellStyle("30%")}>
-          {utils.format_number(order.amount, quote.get("precision"))}
+          {utils.format_number(
+            order[isBid ? "amountToReceive" : "amountForSale"]().getAmount({
+              real: true
+            }),
+            quote.get("precision")
+          )}
         </span>
         <span className="text-right" style={cellStyle("40%")}>
-          {utils.format_number(order.value, base.get("precision"))}
+          {utils.format_number(
+            order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({
+              real: true
+            }),
+            base.get("precision")
+          )}
         </span>
       </div>
     );
@@ -472,9 +528,24 @@ let OrderBookParitalWrapper = class extends React.Component<
       return order === null ? (
         <OrderBookRowEmpty key={"$nullOrder" + index} />
       ) : (
+        // <OrderBookRowVertical
+        //   index={index}
+        //   key={order.price}
+        //   order={order}
+        //   onClick={onOrderClick.bind(this, order)}
+        //   digits={digits}
+        //   withYuan
+        //   base={base}
+        //   quote={quote}
+        //   final={index === 0}
+        //   depthType={depthType}
+        //   max={max}
+        //   total={total}
+        //   currentAccount={currentAccount}
+        // />
         <OrderBookRowVertical
           index={index}
-          key={order.price}
+          key={order.getPrice() + (order.isCall() ? "_call" : "")}
           order={order}
           onClick={onOrderClick.bind(this, order)}
           digits={digits}
@@ -614,29 +685,48 @@ let OrderBook = class extends React.Component<any, any> {
     if (!base || !quote) {
       return null;
     }
+
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids
-        ? [rteDepth.bids, rteDepth.asks].map((orders: RteOrder[]) =>
-            orders.map(order => convertRteOrderToNormal(order, digits))
+        ? [rteDepth.bids, rteDepth.asks].map((orders: RteOrder[], isNotBid) =>
+            orders
+              // .slice(0, 1)
+              .map(order =>
+                LimitOrder.fromRteOrder(order, base, quote, !isNotBid)
+              )
           )
-        : [combinedBids, combinedAsks].map((orders: LimitOrder[]) =>
-            orders.map(order => convertLimitToOrder(order, digits))
-          );
+        : [combinedBids, combinedAsks];
     // let [bids, asks] = rteDepth;
-    let [bidRows, askRows] = [limitBids, limitAsks].map((orders: Order[]) =>
-      Array.from(
-        orders
-          .reduce((orderSet: Map<number, Order>, order) => {
-            if (!orderSet.has(order.price)) {
-              orderSet.set(order.price, order);
-            } else {
-              let newOrder = orderSet.get(order.price).sum(order);
-              orderSet.set(order.price, newOrder);
-            }
-            return orderSet;
-          }, new Map<number, Order>())
-          .values()
-      )
+    let [bidRows, askRows] = [limitBids, limitAsks].map(
+      (orders: LimitOrder[]) =>
+        // Array.from(
+        //   orders
+        //     .reduce((orderSet: Map<number, Order>, order) => {
+        //       if (!orderSet.has(order.price)) {
+        //         orderSet.set(order.price, order);
+        //       } else {
+        //         let newOrder = orderSet.get(order.price).sum(order);
+        //         orderSet.set(order.price, newOrder);
+        //       }
+        //       return orderSet;
+        //     }, new Map<number, Order>())
+        //     .values()
+        Array.from(
+          orders
+            .reduce((orderSet: Map<string, LimitOrder>, order) => {
+              let orderPrice = order.getPrice(order.sell_price, digits);
+              let oriOrder = orderSet[orderPrice];
+              if (!orderSet.has(orderPrice)) {
+                orderSet.set(orderPrice, order);
+              } else {
+                let newOrder = orderSet.get(orderPrice).sum(order);
+                orderSet.set(orderPrice, newOrder);
+              }
+              return orderSet;
+            }, new Map<string, LimitOrder>())
+            .values()
+          // )
+        )
     );
 
     Array.prototype["lastOne"] = function() {
@@ -670,17 +760,34 @@ let OrderBook = class extends React.Component<any, any> {
     let accum = 0;
     let maxBid = 0;
     let maxAsk = 0;
+    // bidRows.filter(b => b).forEach(order => {
+    //   maxBid = Math.max(maxBid, order.amount);
+    //   order.isBid = true;
+    //   accum += order.amount;
+    //   order.accum = accum;
+    // });
+    // accum = 0;
+    // askRows.filter(a => a).forEach(order => {
+    //   maxAsk = Math.max(maxAsk, order.amount);
+    //   accum += order.amount;
+    //   order.accum = accum;
+    // });
     bidRows.filter(b => b).forEach(order => {
-      maxBid = Math.max(maxBid, order.amount);
-      order.isBid = true;
-      accum += order.amount;
-      order.accum = accum;
+      let amount = order.isBid()
+        ? order.amountToReceive().amount
+        : order.amountForSale().amount;
+      maxBid = Math.max(maxBid, amount);
+      accum += amount;
+      order["accum"] = accum;
     });
     accum = 0;
     askRows.filter(a => a).forEach(order => {
-      maxAsk = Math.max(maxAsk, order.amount);
-      accum += order.amount;
-      order.accum = accum;
+      let amount = order.isBid()
+        ? order.amountToReceive().amount
+        : order.amountForSale().amount;
+      maxAsk = Math.max(maxAsk, amount);
+      accum += amount;
+      order["accum"] = accum;
     });
     let total = Math.max(
       ((bidRows as any).lastOne() && (bidRows as any).lastOne().accum) || 0,
