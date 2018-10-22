@@ -5,7 +5,7 @@ import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
 import GatewayStore from "stores/GatewayStore";
 import AltContainer from "alt-container";
-import Exchange from "./Exchange";
+import Exchange from "./ExchangeTV";
 import ChainTypes from "../Utility/ChainTypes";
 import LoadingIndicator from "../LoadingIndicator";
 import { EmitterInstance } from "cybexjs";
