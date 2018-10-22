@@ -1171,8 +1171,6 @@ class Exchange extends React.Component<any, any> {
         }
       }
     });
-    console.debug("elementsHeight", elementsHeight);
-    console.debug("elementsOrigin", elementsOrigin);
     let base = null,
       quote = null,
       accountBalance = null,

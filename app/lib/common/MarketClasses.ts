@@ -607,7 +607,6 @@ class LimitOrder {
         }
       }
     };
-    console.debug("From RTE: ", isRteBid, order, rteOrder);
     return new LimitOrder(
       order,
       {

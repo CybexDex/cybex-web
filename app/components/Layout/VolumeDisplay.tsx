@@ -103,28 +103,32 @@ let VolumeDisplay = class extends React.PureComponent<
       )
       .forEach(stat => {
         if (stat.volumeBaseAsset.asset_id === "1.3.0") {
-          priceByCyb[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price);
+          priceByCyb[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price.toReal());
         }
         if (stat.volumeQuoteAsset.asset_id === "1.3.0") {
-          priceByCyb[stat.volumeBaseAsset.asset_id] = 1 / parseFloat(stat.price);
+          priceByCyb[stat.volumeBaseAsset.asset_id] =
+            1 / parseFloat(stat.price.toReal());
         }
         if (stat.volumeBaseAsset.asset_id === "1.3.3") {
-          priceByBtc[stat.volumeQuoteAsset.asset_id] = stat.price.toReal();
+          priceByBtc[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price.toReal());
         }
         if (stat.volumeQuoteAsset.asset_id === "1.3.3") {
-          priceByBtc[stat.volumeBaseAsset.asset_id] = 1 / stat.price.toReal();
+          priceByBtc[stat.volumeBaseAsset.asset_id] =
+            1 / parseFloat(stat.price.toReal());
         }
         if (stat.volumeBaseAsset.asset_id === "1.3.27") {
-          priceByUsdt[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price);
+          priceByUsdt[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price.toReal());
         }
         if (stat.volumeQuoteAsset.asset_id === "1.3.27") {
-          priceByUsdt[stat.volumeBaseAsset.asset_id] = 1 / parseFloat(stat.price);
+          priceByUsdt[stat.volumeBaseAsset.asset_id] =
+            1 / parseFloat(stat.price.toReal());
         }
         if (stat.volumeBaseAsset.asset_id === "1.3.2") {
-          priceByEth[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price);
+          priceByEth[stat.volumeQuoteAsset.asset_id] = parseFloat(stat.price.toReal());
         }
         if (stat.volumeQuoteAsset.asset_id === "1.3.2") {
-          priceByEth[stat.volumeBaseAsset.asset_id] = 1 / parseFloat(stat.price);
+          priceByEth[stat.volumeBaseAsset.asset_id] =
+            1 / parseFloat(stat.price.toReal());
         }
         if (volSet[stat.volumeBaseAsset.asset_id]) {
           volSet[stat.volumeBaseAsset.asset_id] += stat.volumeBase;
@@ -145,9 +149,13 @@ let VolumeDisplay = class extends React.PureComponent<
           ? priceByCyb[nextId] * priceByEth["1.3.0"]
           : priceByUsdt[nextId]
             ? priceByUsdt[nextId] * (1 / priceByUsdt["1.3.2"])
-            : priceByBtc[nextId]
+            : priceByBtc[nextId] && priceByEth["1.3.3"]
               ? priceByBtc[nextId] * priceByEth["1.3.3"]
-              : 0;
+              : priceByBtc[nextId] && priceByUsdt["1.3.3"]
+                ? priceByBtc[nextId] *
+                  priceByUsdt["1.3.3"] *
+                  (1 / priceByUsdt["1.3.2"])
+                : 0;
       let v = volSet[nextId] * price;
       sum += v;
       volDetails.push({ asset: nextId, volByEther: v });

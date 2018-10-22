@@ -12,7 +12,7 @@ declare const __DEV__;
 let subs = {};
 let currentBucketSize;
 let marketStats = {};
-let statTTL = 29 * 1000; // 2 minutes
+let statTTL = 4 * 1000; // 2 minutes
 // let statTTL = 60 * 2 * 1000; // 2 minutes
 
 let cancelBatchIDs: any = Immutable.List();

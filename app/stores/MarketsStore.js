@@ -1295,7 +1295,7 @@ class MarketsStore {
         );
       }
 
-      change = noTrades ? 0 : Math.round(10000 * (close - open) / open) / 100;
+      change = noTrades ? 0 : Math.round((10000 * (close - open)) / open) / 100;
       if (!isFinite(change) || isNaN(change)) {
         change = 0;
       }
@@ -1414,10 +1414,26 @@ class MarketsStore {
   }
 
   onGetMarketStats(payload) {
+    let price = new Price({
+      base: new Asset({
+        amount:
+          1 *
+          payload.latest.latest *
+          Math.pow(10, payload.base.get("precision")),
+        asset_id: payload.base.get("id"),
+        precision: payload.base.get("precision")
+      }),
+      quote: new Asset({
+        amount: 1 * Math.pow(10, payload.quote.get("precision")),
+        asset_id: payload.quote.get("id"),
+        precision: payload.quote.get("precision")
+      })
+    });
     if (payload) {
       let stats = {
         close: null,
-        price: payload.latest.latest,
+        // price: payload.latest.latest,
+        price,
         change: payload.latest.percent_change,
         volumeBase: parseInt(payload.latest.base_volume),
         volumeQuote: parseInt(payload.latest.quote_volume),
@@ -1430,7 +1446,7 @@ class MarketsStore {
           amount: payload.latest.base_volume,
           asset_id: payload.quote.get("id"),
           precision: payload.quote.get("precision")
-        }),
+        })
       };
       // let stats = this._calcMarketStats(
       //   payload.history,

@@ -854,7 +854,6 @@ let CandleStickChartWithZoomPan = class extends React.Component<any, any> {
         divergence: "#4682B4"
       }
     };
-    console.log("height:", height);
     return (
       <ChartCanvas
         ref={saveCanvasNode}

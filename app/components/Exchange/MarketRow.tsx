@@ -97,7 +97,7 @@ let MarketRow = class extends React.Component<
         this.props.base,
         this.props.quote
       ),
-      30 * 1000
+      6 * 1000
     );
   }
 
@@ -145,7 +145,7 @@ let MarketRow = class extends React.Component<
     let price = utils.convertPrice(quote, base);
     let finalPrice =
       stats && stats.price
-        ? stats.price
+        ? stats.price.toReal()
         : stats &&
           stats.close &&
           (stats.close.quote.amount && stats.close.base.amount)
