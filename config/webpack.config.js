@@ -1,6 +1,7 @@
 const path = require("path");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const git = require("git-rev-sync");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 require("es6-promise").polyfill();
 // BASE APP DIR
 let gitRevisionPlugin = new GitRevisionPlugin({
@@ -39,6 +40,12 @@ var outputPath = path.join(BASE_URL, "assets");
 
 var plugins = [
   // new webpack.optimize.OccurrenceOrderPlugin(),
+  new CopyWebpackPlugin([
+    {
+      from: path.join(root_dir, "charting_library"),
+      to: "charting_library"
+    }
+  ])
 ];
 
 const loaders = [
@@ -81,9 +88,7 @@ const loaders = [
   },
   {
     test: /\.png/,
-    include: [
-      path.resolve(root_dir, "app/assets/asset-symbols")
-    ],
+    include: [path.resolve(root_dir, "app/assets/asset-symbols")],
     use: [
       {
         loader: "file-loader",

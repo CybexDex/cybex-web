@@ -1,18 +1,29 @@
 import * as React from "react";
 // import './index.css';
 // import Datafeed from './api/'
-import { widget } from '../../lib/charting_library/charting_library.min';
+import { widget } from "../../../charting_library/charting_library.min";
 
 function getLanguageFromURL() {
-  const regex = new RegExp('[\\?&]lang=([^&#]*)');
+  const regex = new RegExp("[\\?&]lang=([^&#]*)");
   const results = regex.exec(window.location.search);
-  return results === null ? null : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  return results === null
+    ? null
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-const supportedResolutions = ["1", "3", "5", "15", "30", "60", "120", "240", "D"];
+const supportedResolutions = [
+  "1",
+  "3",
+  "5",
+  "15",
+  "30",
+  "60",
+  "120",
+  "240",
+  "D"
+];
 
 export class TVChartContainer extends React.PureComponent {
-
   static defaultProps = {
     symbol: "Cybex:BTC/USD",
     interval: "15",
@@ -24,43 +35,57 @@ export class TVChartContainer extends React.PureComponent {
     userId: "public_user_id",
     fullscreen: false,
     autosize: true,
-    studiesOverrides: {},
+    studiesOverrides: {}
   };
 
   tvWidget = null;
 
   componentDidMount() {
-    const priceData=this.props.priceData;
+    const priceData = this.props.priceData;
     //const volumeData=this.props.volumeData;
 
     let Datafeed = {
       onReady: cb => {
         console.log("=====onReady running");
-        setTimeout(() => cb({supported_resolutions: supportedResolutions}), 0)
-
+        setTimeout(
+          () => cb({ supported_resolutions: supportedResolutions }),
+          0
+        );
       },
       calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
         //optional
         console.log("=====calculateHistoryDepth running");
         // while optional, this makes sure we request 24 hours of minute data at a time
         // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
-        return resolution < 60 ? {resolutionBack: "D", intervalBack: "1"} : undefined;
+        return resolution < 60
+          ? { resolutionBack: "D", intervalBack: "1" }
+          : undefined;
       },
-      subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
+      subscribeBars: (
+        symbolInfo,
+        resolution,
+        onRealtimeCallback,
+        subscribeUID,
+        onResetCacheNeededCallback
+      ) => {
         console.log("=====subscribeBars runnning");
         // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
       },
       unsubscribeBars: subscriberUID => {
         console.log("=====unsubscribeBars running");
         // stream.unsubscribeBars(subscriberUID)
-      },
+      }
     };
 
-    Datafeed.resolveSymbol=function(symbolName, onSymbolResolvedCallback, onResolveErrorCallback){
+    Datafeed.resolveSymbol = function(
+      symbolName,
+      onSymbolResolvedCallback,
+      onResolveErrorCallback
+    ) {
       // expects a symbolInfo object in response
-      console.log('======resolveSymbol running')
+      console.log("======resolveSymbol running");
       // console.log('resolveSymbol:',{symbolName})
-      var split_data = symbolName.split(/[:/]/)
+      var split_data = symbolName.split(/[:/]/);
       // console.log({split_data})
       var symbol_stub = {
         name: symbolName,
@@ -74,10 +99,10 @@ export class TVChartContainer extends React.PureComponent {
         pricescale: 100000000,
         has_intraday: true,
         intraday_multipliers: ["1", "60"],
-        supported_resolution:  supportedResolutions,
+        supported_resolution: supportedResolutions,
         volume_precision: 8,
-        data_status: "streaming",
-      }
+        data_status: "streaming"
+      };
 
       if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
         symbol_stub.pricescale = 100;
@@ -88,7 +113,15 @@ export class TVChartContainer extends React.PureComponent {
       // }, 0)
     };
 
-    Datafeed.getBars=function(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) {
+    Datafeed.getBars = function(
+      symbolInfo,
+      resolution,
+      from,
+      to,
+      onHistoryCallback,
+      onErrorCallback,
+      firstDataRequest
+    ) {
       console.debug("=====getBars running", priceData);
       // close: 6439.1
       // high: 6439.1
@@ -105,22 +138,22 @@ export class TVChartContainer extends React.PureComponent {
       // open: 0.0005
       // volume: 87270.08555
 
-      priceData.forEach(price=>{
+      priceData.forEach(price => {
         price.time = price.date.getTime();
         price.volumefrom = price.volume;
         price.volumeto = price.volume;
       });
 
       if (priceData.length) {
-        onHistoryCallback(priceData, {noData: false});
+        onHistoryCallback(priceData, { noData: false });
       } else {
-        onHistoryCallback(priceData, {noData: true});
+        onHistoryCallback(priceData, { noData: true });
       }
     };
 
     const widgetOptions = {
       debug: true,
-      symbol: "Cybex:"+this.props.base+"/"+this.props.quote,//"Cybex:BTC/USD"
+      symbol: "Cybex:" + this.props.base + "/" + this.props.quote, //"Cybex:BTC/USD"
       //symbol:this.props.exchange+this.props.symbol,
       datafeed: Datafeed,
       interval: this.props.interval,
@@ -142,9 +175,9 @@ export class TVChartContainer extends React.PureComponent {
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
         "symbolWatermarkProperties.transparency": 90,
-        "scalesProperties.textColor" : "#AAA",
+        "scalesProperties.textColor": "#AAA",
         "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
-        "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
+        "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f"
       }
     };
 
@@ -173,8 +206,8 @@ export class TVChartContainer extends React.PureComponent {
   render() {
     return (
       <div
-        id={ this.props.containerId }
-        className={ 'TVChartContainer' }
+        id={this.props.containerId}
+        className={"TVChartContainer"}
         height={this.props.height}
       />
     );

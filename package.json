@@ -265,6 +265,7 @@
     "coffee-script": "^1.12.2",
     "compression": "^1.7.3",
     "compression-webpack-plugin": "^1.1.11",
+    "copy-webpack-plugin": "^4.5.4",
     "copyfiles": "^1.2.0",
     "cross-env": "^5.1.6",
     "css-loader": "^0.22.0",
