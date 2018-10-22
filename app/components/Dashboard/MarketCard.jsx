@@ -151,7 +151,7 @@ class MarketCard extends React.Component {
             <Translate content="exchange.price" />:{" "}
             <div className="float-right">
               {marketStats && marketStats.price
-                ? utils.price_text(marketStats.price, base, quote)
+                ? utils.price_text(marketStats.price.toReal(), base, quote)
                 : null}
             </div>
           </div>
