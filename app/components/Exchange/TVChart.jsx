@@ -26,7 +26,7 @@ const supportedResolutions = [
 export class TVChartContainer extends React.PureComponent {
   static defaultProps = {
     symbol: "Cybex:BTC/USD",
-    interval: "15",
+    interval: "60",
     containerId: "tv_chart_container",
     libraryPath: "/charting_library/",
     chartsStorageUrl: "https://saveload.tradingview.com",
@@ -41,34 +41,32 @@ export class TVChartContainer extends React.PureComponent {
   tvWidget = null;
 
   componentDidMount() {
-    const priceData = this.props.priceData;
-    console.log("priceData:", priceData);
 
     let Datafeed = {
       onReady: cb => {
-        cb({ supported_resolutions: supportedResolutions });
+        console.log("=====onReady running");
+        setTimeout(() => cb({supported_resolutions: supportedResolutions}), 0);
       },
       calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
         //optional
         console.log("=====calculateHistoryDepth running");
         // while optional, this makes sure we request 24 hours of minute data at a time
         // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
-        return resolution < 60
-          ? { resolutionBack: "D", intervalBack: "1" }
-          : undefined;
+        return resolution < 60 ? { resolutionBack: "D", intervalBack: "1" } : undefined;
       },
-      resolveSymbol:(symbolName) => {
+      resolveSymbol:(symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
-        console.debug("======resolveSymbol running");
+        console.debug("======resolveSymbol running", symbolName)
         // console.log('resolveSymbol:',{symbolName})
         const split_data = symbolName.split(/[:/]/);
+
         // console.log({split_data})
         const symbolStub = {
           name: symbolName,
-          description: "Fantastic",
+          description: symbolName,
           type: "crypto",
           session: "24x7",
-          timezone: "Etc/UTC",
+          timezone: "Asia/Shanghai",
           ticker: symbolName,
           exchange: split_data[0],
           minmov: 1,
@@ -77,21 +75,37 @@ export class TVChartContainer extends React.PureComponent {
           intraday_multipliers: ["1", "60"],
           supported_resolution: supportedResolutions,
           volume_precision: 8,
-          data_status: "streaming"
+          data_status: "streaming",
         };
 
         if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
           symbolStub.pricescale = 100;
         }
+        setTimeout(function() {
+          onSymbolResolvedCallback(symbolStub)
+          console.log("Resolving that symbol....", symbolStub);
+        }, 0);
+      },
+      subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
+        console.log("=====subscribeBars runnning");
+        // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
+      },
+      unsubscribeBars: subscriberUID => {
+        console.log("=====unsubscribeBars running");
+        // stream.unsubscribeBars(subscriberUID)
       },
       getBars: (symbolInfo, resolution, from, to, onHistoryCallback,onErrorCallback,firstDataRequest) =>{
-        console.debug("=====getBars running", priceData);
-        if (priceData.length) {
-          onHistoryCallback(priceData, { noData: false });
-        } else {
-          onHistoryCallback(priceData, { noData: true });
+        console.debug("=====getBars running", this.props.priceData);
+        if (this.props.priceData.length) {
+          this.props.priceData.forEach(price => {
+            price.time = Math.round(price.date.getTime()/1000);
+            price.volumeto = price.volume;
+            price.volumefrom = price.volume;
+          });
+          console.log("priceData", this.props.priceData);
+          onHistoryCallback(this.props.priceData, { noData: false });
         }
-      }
+      },
     };
 
     const widgetOptions = {
@@ -111,32 +125,23 @@ export class TVChartContainer extends React.PureComponent {
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
-      // studies_overrides: this.props.studiesOverrides,
-      // overrides: {
-      //   "mainSeriesProperties.showCountdown": true,
-      //   "paneProperties.background": "#131722",
-      //   "paneProperties.vertGridProperties.color": "#363c4e",
-      //   "paneProperties.horzGridProperties.color": "#363c4e",
-      //   "symbolWatermarkProperties.transparency": 90,
-      //   "scalesProperties.textColor": "#AAA",
-      //   "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
-      //   "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f"
-      // },
 
-      enabled_features: ["minimalistic_logo", "narrow_chart_enabled", "dont_show_boolean_study_arguments","hide_last_na_study_output","clear_bars_on_series_error", "hide_loading_screen_on_series_error"],
+      enabled_features:["minimalistic_logo", "narrow_chart_enabled", "dont_show_boolean_study_arguments","hide_last_na_study_output","clear_bars_on_series_error", "hide_loading_screen_on_series_error"],
       disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
       charts_storage_url: "http://saveload.tradingview.com",
       client_id: "bitmex.com",
+      custom_css_url: "/charting_library/themes/tv-dark.min.css",
       overrides: {
-        "paneProperties.background": "#131722",
+        "paneProperties.background": "#fff",
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
-        "symbolWatermarkProperties.transparency": 90,
+        "symbolWatermarkProperties.transparency": 60,
         "scalesProperties.textColor": "#AAA",
-        "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
-        "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
-        // "paneProperties.topMargin": 10,
-        // "paneProperties.bottomMargin": 25,
+        "mainSeriesProperties.candleStyle.wickUpColor": "#6dbb49", //"#336854",
+        "mainSeriesProperties.candleStyle.wickDownColor": "#d24632",//"#7f323f",
+
+        "paneProperties.topMargin": 10,
+        "paneProperties.bottomMargin": 25,
         "paneProperties.legendProperties.showStudyArguments": !1,
         "paneProperties.legendProperties.showStudyTitles": !0,
         "paneProperties.legendProperties.showStudyValues": !0,
@@ -175,8 +180,6 @@ export class TVChartContainer extends React.PureComponent {
   }
 
   render() {
-    const priceData = this.props.priceData;
-    console.debug("myPriceData",priceData);
 
     return (
       <div
