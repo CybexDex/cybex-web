@@ -42,17 +42,11 @@ export class TVChartContainer extends React.PureComponent {
 
   componentDidMount() {
     const priceData = this.props.priceData;
-    const volumeData=this.props.volumeData;
-
     console.log("priceData:", priceData);
 
     let Datafeed = {
       onReady: cb => {
-        console.log("=====onReady running");
-        setTimeout(
-          () => cb({ supported_resolutions: supportedResolutions }),
-          0
-        );
+        cb({ supported_resolutions: supportedResolutions });
       },
       calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
         //optional
@@ -63,72 +57,40 @@ export class TVChartContainer extends React.PureComponent {
           ? { resolutionBack: "D", intervalBack: "1" }
           : undefined;
       },
-      subscribeBars: (
-        symbolInfo,
-        resolution,
-        onRealtimeCallback,
-        subscribeUID,
-        onResetCacheNeededCallback
-      ) => {
-        console.log("=====subscribeBars runnning");
-        // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
+      resolveSymbol:(symbolName) => {
+        // expects a symbolInfo object in response
+        console.debug("======resolveSymbol running");
+        // console.log('resolveSymbol:',{symbolName})
+        const split_data = symbolName.split(/[:/]/);
+        // console.log({split_data})
+        const symbolStub = {
+          name: symbolName,
+          description: "Fantastic",
+          type: "crypto",
+          session: "24x7",
+          timezone: "Etc/UTC",
+          ticker: symbolName,
+          exchange: split_data[0],
+          minmov: 1,
+          pricescale: 100000000,
+          has_intraday: true,
+          intraday_multipliers: ["1", "60"],
+          supported_resolution: supportedResolutions,
+          volume_precision: 8,
+          data_status: "streaming"
+        };
+
+        if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
+          symbolStub.pricescale = 100;
+        }
       },
-      unsubscribeBars: subscriberUID => {
-        console.log("=====unsubscribeBars running");
-        // stream.unsubscribeBars(subscriberUID)
-      },
-    };
-
-    Datafeed.resolveSymbol = function(
-      symbolName,
-      onSymbolResolvedCallback,
-      onResolveErrorCallback
-    ) {
-      // expects a symbolInfo object in response
-      console.log("======resolveSymbol running");
-      // console.log('resolveSymbol:',{symbolName})
-      var split_data = symbolName.split(/[:/]/);
-      // console.log({split_data})
-      var symbol_stub = {
-        name: symbolName,
-        description: "Fantastic",
-        type: "crypto",
-        session: "24x7",
-        timezone: "Etc/UTC",
-        ticker: symbolName,
-        exchange: split_data[0],
-        minmov: 1,
-        pricescale: 100000000,
-        has_intraday: true,
-        intraday_multipliers: ["1", "60"],
-        supported_resolution: supportedResolutions,
-        volume_precision: 8,
-        data_status: "streaming"
-      };
-
-      if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
-        symbol_stub.pricescale = 100;
-      }
-      // setTimeout(function() {
-      //   onSymbolResolvedCallback(symbol_stub)
-      //   console.log('Resolving that symbol....', symbol_stub)
-      // }, 0)
-    };
-
-    Datafeed.getBars = function(
-      symbolInfo,
-      resolution,
-      from,
-      to,
-      onHistoryCallback,
-      onErrorCallback,
-      firstDataRequest
-    ) {
-      console.debug("=====getBars running", priceData);
-      if (priceData.length) {
-        onHistoryCallback(priceData, { noData: false });
-      } else {
-        onHistoryCallback(priceData, { noData: true });
+      getBars: (symbolInfo, resolution, from, to, onHistoryCallback,onErrorCallback,firstDataRequest) =>{
+        console.debug("=====getBars running", priceData);
+        if (priceData.length) {
+          onHistoryCallback(priceData, { noData: false });
+        } else {
+          onHistoryCallback(priceData, { noData: true });
+        }
       }
     };
 
