@@ -569,24 +569,28 @@ class LimitOrder {
     isRteBid: boolean = false
   ) {
     let base = isRteBid
-      ? Math.floor(
-          parseFloat(rteOrder[0]) *
-            parseFloat(rteOrder[1]) *
-            Math.pow(10, marketQuoteAsset.get("precision"))
+      ? parseInt(
+          new BigNumber(rteOrder[0])
+            .mul(new BigNumber(rteOrder[1]))
+            .mul(Math.pow(10, marketBaseAsset.get("precision")))
+            .toFixed(0)
         )
-      : Math.floor(
-          parseFloat(rteOrder[1]) *
-            Math.pow(10, marketBaseAsset.get("precision"))
+      : parseInt(
+          new BigNumber(rteOrder[1])
+            .mul(Math.pow(10, marketQuoteAsset.get("precision")))
+            .toFixed(0)
         );
     let quote = isRteBid
-      ? Math.floor(
-          parseFloat(rteOrder[1]) *
-            Math.pow(10, marketBaseAsset.get("precision"))
+      ? parseInt(
+          new BigNumber(rteOrder[1])
+            .mul(Math.pow(10, marketQuoteAsset.get("precision")))
+            .toFixed(0)
         )
-      : Math.floor(
-          parseFloat(rteOrder[0]) *
-            parseFloat(rteOrder[1]) *
-            Math.pow(10, marketQuoteAsset.get("precision"))
+      : parseInt(
+          new BigNumber(rteOrder[0])
+            .mul(new BigNumber(rteOrder[1]))
+            .mul(Math.pow(10, marketBaseAsset.get("precision")))
+            .toFixed(0)
         );
     let order = {
       id: "1.7.0",
