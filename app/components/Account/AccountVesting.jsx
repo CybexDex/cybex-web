@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import Translate from "react-translate-component";
 import FormattedAsset from "../Utility/FormattedAsset";
@@ -92,7 +93,7 @@ class VestingBalance extends React.Component {
               <td>
                 {utils.format_number(
                   utils.get_asset_amount(
-                    vb.balance.amount * vestingPeriod / secondsPerDay,
+                    (vb.balance.amount * vestingPeriod) / secondsPerDay,
                     cvbAsset
                   ),
                   0
@@ -106,7 +107,7 @@ class VestingBalance extends React.Component {
               </td>
               <td>
                 {utils.format_number(
-                  vestingPeriod * (1 - availablePercent) / secondsPerDay || 0,
+                  (vestingPeriod * (1 - availablePercent)) / secondsPerDay || 0,
                   2
                 )}
                 &nbsp;days

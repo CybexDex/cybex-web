@@ -76,6 +76,12 @@ export async function getDepositInfo(
         asset
         type
         createAt
+        projectInfo {
+          projectName
+          logoUrl
+          contractAddress
+          contractExplorerUrl
+        }
       }
     }
   `;

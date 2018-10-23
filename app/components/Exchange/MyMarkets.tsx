@@ -726,7 +726,6 @@ let MyMarkets = class extends React.Component<any, any> {
         .forEach(asset => {
           bases.forEach(base => {
             let marketID = asset.symbol + "_" + base;
-
             if (base !== asset.symbol) {
               allMarkets.push([marketID, { quote: asset.symbol, base: base }]);
             }
