@@ -17,6 +17,8 @@ import { LimitOrder } from "common/MarketClasses";
 import { VolumnStore } from "stores/VolumeStore";
 import ReactTooltip from "react-tooltip";
 import { connect } from "alt-react";
+import { RteActions } from "actions/RteActions";
+import { RteStore } from "stores/RteStore";
 
 enum OrderType {
   Ask,
@@ -103,6 +105,88 @@ const cellStyle = width => ({
   width
 });
 
+export class Order {
+  accum: number;
+
+  constructor(
+    public price: number,
+    public value: number,
+    public amount: number,
+    public isBid: boolean,
+    public basePrecision: number,
+    public quotePresicion: number
+  ) {}
+
+  sum(another: Order) {
+    return new Order(
+      this.price,
+      this.value + another.value,
+      this.amount + another.amount,
+      this.isBid,
+      this.basePrecision,
+      this.quotePresicion
+    );
+  }
+
+  get priceAmount() {
+    return parseInt((this.price * Math.pow(10, this.basePrecision)).toString());
+  }
+  get amountAmount() {
+    return parseInt(
+      (this.amount * Math.pow(10, this.quotePresicion)).toString()
+    );
+  }
+  get accumAmount() {
+    return parseInt(
+      (this.accum * Math.pow(10, this.quotePresicion)).toString()
+    );
+  }
+  get quoteValueAmount() {
+    return parseInt(
+      (this.accum * this.price * Math.pow(10, this.basePrecision)).toString()
+    );
+  }
+}
+type RteOrderPrice = string;
+type RteOrderAmount = string;
+type RteOrder = [RteOrderPrice, RteOrderAmount];
+
+const convertLimitToOrder: (
+  order: LimitOrder,
+  digits: number,
+  basePrecision: number,
+  quotePrecision: number
+) => Order = (order, digits, basePrecision, quotePrecision) => {
+  console.debug("LimitOrder: ", order);
+  let price = order.getPrice(order.sell_price, digits);
+  let isBid = order.isBid();
+  let value = order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({
+    real: true
+  });
+  let amount = order[isBid ? "amountToReceive" : "amountForSale"]().getAmount({
+    real: true
+  });
+  return new Order(price, value, amount, isBid, basePrecision, quotePrecision);
+};
+
+const convertRteOrderToNormal: (
+  order: RteOrder,
+  digits: number,
+  basePrecision: number,
+  quotePrecision: number
+) => Order = (order, digits, basePrecision, quotePrecision) => {
+  let price = parseFloat(order[0]);
+  let amount = parseFloat(order[1]);
+  let value = price * amount;
+  return new Order(
+    parseFloat(price.toFixed(digits)),
+    value,
+    amount,
+    false,
+    basePrecision,
+    quotePrecision
+  );
+};
 let OrderBookRowVertical = class extends React.Component<
   {
     index?;
@@ -261,6 +345,7 @@ OrderBookRowVertical = connect(
   }
 );
 
+const PRECISION_SIZE = 4;
 let OrderBookHeader = class extends React.PureComponent<
   {
     type;
@@ -275,14 +360,9 @@ let OrderBookHeader = class extends React.PureComponent<
   combineOptions = [];
   constructor(props) {
     super(props);
-    let availablePrecision = Math.max(
-      props.basePrecision,
-      OrderBook.PRECISION_SIZE
-    );
+    let availablePrecision = Math.max(props.basePrecision, PRECISION_SIZE);
 
-    let combineOptions = (this.combineOptions = new Array(
-      OrderBook.PRECISION_SIZE
-    )
+    let combineOptions = (this.combineOptions = new Array(PRECISION_SIZE)
       .fill(1)
       .map((v, i) => ({
         label: counterpart.translate("exchange.depth", {
@@ -312,56 +392,59 @@ let OrderBookHeader = class extends React.PureComponent<
       onDepthChange,
       basePrecision = 8
     } = this.props;
-
-    return (
-      <>
-        <TabLink
-          active={type === OrderType.All}
-          onClick={onTypeChange.bind(this, OrderType.All)}
-          style={OrderBook.Styles.tab}
-        >
-          <Translate content="exchange.orderbook.all" />
-        </TabLink>
-        <TabLink
-          active={type === OrderType.Ask}
-          onClick={onTypeChange.bind(this, OrderType.Ask)}
-          style={OrderBook.Styles.tab}
-        >
-          <Translate content="exchange.orderbook.ask" />
-        </TabLink>
-        <TabLink
-          active={type === OrderType.Bid}
-          onClick={onTypeChange.bind(this, OrderType.Bid)}
-          style={OrderBook.Styles.tab}
-        >
-          <Translate content="exchange.orderbook.bid" />
-        </TabLink>
-        <i style={{ flexGrow: 1 }} />
-        <TabLink
-          type="secondary"
-          active={depthType === DepthType.Interval}
-          onClick={onDepthTypeChange.bind(this, DepthType.Interval)}
-          style={OrderBook.Styles.tab}
-        >
-          <Translate content="exchange.orderbook.compare_depth" />
-        </TabLink>
-        <TabLink
-          type="secondary"
-          active={depthType === DepthType.Accum}
-          onClick={onDepthTypeChange.bind(this, DepthType.Accum)}
-          style={OrderBook.Styles.tab}
-        >
-          <Translate content="exchange.orderbook.accum_depth" />
-        </TabLink>
-        <i style={{ flexGrow: 1 }} />
-        <Select
-          onChange={this.handleDepthChange}
-          styles={$styleSelect("orderbook")}
-          options={this.combineOptions}
-          value={this.state.depth}
-        />
-      </>
-    );
+    return [
+      <TabLink
+        key="orderType-all"
+        active={type === OrderType.All}
+        onClick={onTypeChange.bind(this, OrderType.All)}
+        style={OrderBookStyles.tab}
+      >
+        <Translate content="exchange.orderbook.all" />
+      </TabLink>,
+      <TabLink
+        key="orderType-ask"
+        active={type === OrderType.Ask}
+        onClick={onTypeChange.bind(this, OrderType.Ask)}
+        style={OrderBookStyles.tab}
+      >
+        <Translate content="exchange.orderbook.ask" />
+      </TabLink>,
+      <TabLink
+        key="orderType-bid"
+        active={type === OrderType.Bid}
+        onClick={onTypeChange.bind(this, OrderType.Bid)}
+        style={OrderBookStyles.tab}
+      >
+        <Translate content="exchange.orderbook.bid" />
+      </TabLink>,
+      <i key="orderType-divider" style={{ flexGrow: 1 }} />,
+      <TabLink
+        key="depthType-interval"
+        type="secondary"
+        active={depthType === DepthType.Interval}
+        onClick={onDepthTypeChange.bind(this, DepthType.Interval)}
+        style={OrderBookStyles.tab}
+      >
+        <Translate content="exchange.orderbook.compare_depth" />
+      </TabLink>,
+      <TabLink
+        key="depthType-accum"
+        type="secondary"
+        active={depthType === DepthType.Accum}
+        onClick={onDepthTypeChange.bind(this, DepthType.Accum)}
+        style={OrderBookStyles.tab}
+      >
+        <Translate content="exchange.orderbook.accum_depth" />
+      </TabLink>,
+      <i key="depthType-divider" style={{ flexGrow: 1 }} />,
+      <Select
+        key="depthType-switcher"
+        onChange={this.handleDepthChange}
+        styles={$styleSelect("orderbook")}
+        options={this.combineOptions}
+        value={this.state.depth}
+      />
+    ];
   }
 };
 
@@ -440,24 +523,26 @@ let OrderBookParitalWrapper = class extends React.Component<
       digits,
       max
     } = this.props;
-    // orders =
-    //   displayType === type
-    //     ? fixArray(orders, orders.length < countOfRow * 2, countOfRow * 2, null)
-    //     : fixArray(orders, true, countOfRow, null);
-    // Calculate Depth
-    // let accum = 0;
-    // orders = orders.map(order => {
-    //   accum += order.isBid()
-    //     ? order.totalToReceive().amount
-    //     : order.totalForSale().amount;
-    //   order.accum = accum;
-    //   return order;
-    // });
     let toDispalyOrders = type === OrderType.Ask ? orders.reverse() : orders;
     return toDispalyOrders.map((order, index) => {
       return order === null ? (
         <OrderBookRowEmpty key={"$nullOrder" + index} />
       ) : (
+        // <OrderBookRowVertical
+        //   index={index}
+        //   key={order.price}
+        //   order={order}
+        //   onClick={onOrderClick.bind(this, order)}
+        //   digits={digits}
+        //   withYuan
+        //   base={base}
+        //   quote={quote}
+        //   final={index === 0}
+        //   depthType={depthType}
+        //   max={max}
+        //   total={total}
+        //   currentAccount={currentAccount}
+        // />
         <OrderBookRowVertical
           index={index}
           key={order.getPrice() + (order.isCall() ? "_call" : "")}
@@ -479,8 +564,8 @@ let OrderBookParitalWrapper = class extends React.Component<
 };
 
 let OrderBook = class extends React.Component<any, any> {
+  marketPair: string;
   askWrapper: HTMLDivElement;
-  static PRECISION_SIZE = 4;
   static defaultProps = {
     bids: [],
     asks: [],
@@ -491,14 +576,6 @@ let OrderBook = class extends React.Component<any, any> {
     bids: PropTypes.array.isRequired,
     asks: PropTypes.array.isRequired,
     orders: PropTypes.object.isRequired
-  };
-
-  static Styles = {
-    tab: {
-      marginRight: "0.5rem",
-      lineHeight: priceRowHeight + "px",
-      height: priceRowHeight + "px"
-    }
   };
 
   constructor(props) {
@@ -514,6 +591,7 @@ let OrderBook = class extends React.Component<any, any> {
       depthType: DepthType.Interval,
       type: OrderType.All
     };
+    RteActions.addMarketListener(`${props.quoteSymbol}${props.baseSymbol}`);
   }
 
   setType = type => {
@@ -541,7 +619,18 @@ let OrderBook = class extends React.Component<any, any> {
     }, 200);
   };
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.baseSymbol !== this.props.baseSymbol ||
+      prevProps.quoteSymbol !== this.props.quoteSymbol
+    ) {
+      RteActions.removeMarketListener(
+        `${prevProps.quoteSymbol}${prevProps.baseSymbol}`
+      );
+      RteActions.addMarketListener(
+        `${this.props.quoteSymbol}${this.props.baseSymbol}`
+      );
+    }
     // this.fixPos();
   }
   componentDidMount() {
@@ -559,6 +648,7 @@ let OrderBook = class extends React.Component<any, any> {
   onDepthTypeChange = {};
 
   render() {
+    let useRte = true;
     let {
       combinedBids,
       combinedAsks,
@@ -572,6 +662,8 @@ let OrderBook = class extends React.Component<any, any> {
       baseSymbol,
       horizontal,
       marketReady,
+      rteTicker,
+      rteDepth,
       latest
     } = this.props;
     let {
@@ -593,7 +685,18 @@ let OrderBook = class extends React.Component<any, any> {
     if (!base || !quote) {
       return null;
     }
-    let [bidRows, askRows] = [combinedBids, combinedAsks].map(
+
+    let [limitBids, limitAsks] =
+      useRte && rteDepth.bids
+        ? [rteDepth.bids, rteDepth.asks].map((orders: RteOrder[], isNotBid) =>
+            orders
+              // .slice(0, 1)
+              .map(order =>
+                LimitOrder.fromRteOrder(order, base, quote, !isNotBid)
+              )
+          )
+        : [combinedBids, combinedAsks];
+    let [bidRows, askRows] = [limitBids, limitAsks].map(
       (orders: LimitOrder[]) =>
         Array.from(
           orders
@@ -611,6 +714,7 @@ let OrderBook = class extends React.Component<any, any> {
             .values()
         )
     );
+
     Array.prototype["lastOne"] = function() {
       if (this.length) {
         return this.filter(a => a).slice(-1)[0];
@@ -642,6 +746,18 @@ let OrderBook = class extends React.Component<any, any> {
     let accum = 0;
     let maxBid = 0;
     let maxAsk = 0;
+    // bidRows.filter(b => b).forEach(order => {
+    //   maxBid = Math.max(maxBid, order.amount);
+    //   order.isBid = true;
+    //   accum += order.amount;
+    //   order.accum = accum;
+    // });
+    // accum = 0;
+    // askRows.filter(a => a).forEach(order => {
+    //   maxAsk = Math.max(maxAsk, order.amount);
+    //   accum += order.amount;
+    //   order.accum = accum;
+    // });
     bidRows.filter(b => b).forEach(order => {
       let amount = order.isBid()
         ? order.amountToReceive().amount
@@ -659,7 +775,6 @@ let OrderBook = class extends React.Component<any, any> {
       accum += amount;
       order["accum"] = accum;
     });
-    // console.debug("MAX: ", maxAsk, maxBid);
     let total = Math.max(
       ((bidRows as any).lastOne() && (bidRows as any).lastOne().accum) || 0,
       ((askRows as any).lastOne() && (askRows as any).lastOne().accum) || 0
@@ -677,7 +792,7 @@ let OrderBook = class extends React.Component<any, any> {
       >
         <PriceStat
           ready={marketReady}
-          price={(latest && latest.full) || {}}
+          price={(rteTicker && rteTicker.px) || (latest && latest.full) || {}}
           quote={quote}
           withYuan
           base={base}
@@ -686,92 +801,114 @@ let OrderBook = class extends React.Component<any, any> {
       </div>
     );
 
-    return (
-      <>
-        <div className="order-book-title" style={headerStyles}>
-          <OrderBookHeader
-            type={this.state.type}
-            onTypeChange={this.setType}
-            basePrecision={8}
-            depthType={this.state.depthType}
-            onDepthTypeChange={this.setDepthType}
-            // basePrecision={base.get("precision")}
-            onDepthChange={this.onDepthChange}
-          />
-        </div>
-        <div className="order-book-wrapper" style={headerUnderStyle}>
-          <OrderBookTableHeader
-            baseSymbol={base.get("symbol")}
-            quoteSymbol={quote.get("symbol")}
-          />
+    return [
+      <div className="order-book-title" style={headerStyles}>
+        <OrderBookHeader
+          type={this.state.type}
+          onTypeChange={this.setType}
+          basePrecision={8}
+          depthType={this.state.depthType}
+          onDepthTypeChange={this.setDepthType}
+          // basePrecision={base.get("precision")}
+          onDepthChange={this.onDepthChange}
+        />
+      </div>,
+      <div className="order-book-wrapper" style={headerUnderStyle}>
+        <OrderBookTableHeader
+          baseSymbol={base.get("symbol")}
+          quoteSymbol={quote.get("symbol")}
+        />
+        <div className="order-book-body _scroll-bar" style={[bodyStyle] as any}>
           <div
-            className="order-book-body _scroll-bar"
-            style={[bodyStyle] as any}
+            ref={askWrapper => (this.askWrapper = askWrapper)}
+            className="ask-wrapper"
+            style={
+              [
+                wrapperStyle.base,
+                type === OrderType.All && wrapperStyle.expand,
+                type === OrderType.Ask && wrapperStyle.scroll,
+                type === OrderType.Bid && wrapperStyle.hidden
+                // {
+                //   flexFlow: "column-reverse"
+                // }
+              ] as any
+            }
           >
-            <div
-              ref={askWrapper => (this.askWrapper = askWrapper)}
-              className="ask-wrapper"
-              style={
-                [
-                  wrapperStyle.base,
-                  type === OrderType.All && wrapperStyle.expand,
-                  type === OrderType.Ask && wrapperStyle.scroll,
-                  type === OrderType.Bid && wrapperStyle.hidden
-                  // {
-                  //   flexFlow: "column-reverse"
-                  // }
-                ] as any
-              }
-            >
-              <OrderBookParitalWrapper
-                displayType={this.state.type}
-                type={OrderType.Ask}
-                currentAccount={this.props.currentAccount}
-                countOfRow={countOfRow}
-                total={total}
-                digits={digits}
-                base={base}
-                quote={quote}
-                orders={askRows}
-                max={maxAsk}
-                depthType={depthType}
-                onOrderClick={this.props.onClick.bind(this)}
-              />
-            </div>
-            {priceRow}
-            <div
-              className="bid-wrapper"
-              style={
-                [
-                  wrapperStyle.base,
-                  type === OrderType.All && wrapperStyle.expand,
-                  type === OrderType.Bid && wrapperStyle.scroll,
-                  type === OrderType.Ask && wrapperStyle.hidden
-                ] as any
-              }
-            >
-              <OrderBookParitalWrapper
-                displayType={this.state.type}
-                type={OrderType.Bid}
-                currentAccount={this.props.currentAccount}
-                countOfRow={countOfRow}
-                digits={digits}
-                base={base}
-                total={total}
-                quote={quote}
-                depthType={depthType}
-                max={maxBid}
-                orders={bidRows}
-                onOrderClick={this.props.onClick.bind(this)}
-              />
-            </div>
+            <OrderBookParitalWrapper
+              displayType={this.state.type}
+              type={OrderType.Ask}
+              currentAccount={this.props.currentAccount}
+              countOfRow={countOfRow}
+              total={total}
+              digits={digits}
+              base={base}
+              quote={quote}
+              orders={askRows}
+              max={maxAsk}
+              depthType={depthType}
+              onOrderClick={this.props.onClick.bind(this)}
+            />
+          </div>
+          {priceRow}
+          <div
+            className="bid-wrapper"
+            style={
+              [
+                wrapperStyle.base,
+                type === OrderType.All && wrapperStyle.expand,
+                type === OrderType.Bid && wrapperStyle.scroll,
+                type === OrderType.Ask && wrapperStyle.hidden
+              ] as any
+            }
+          >
+            <OrderBookParitalWrapper
+              displayType={this.state.type}
+              type={OrderType.Bid}
+              currentAccount={this.props.currentAccount}
+              countOfRow={countOfRow}
+              digits={digits}
+              base={base}
+              total={total}
+              quote={quote}
+              depthType={depthType}
+              max={maxBid}
+              orders={bidRows}
+              onOrderClick={this.props.onClick.bind(this)}
+            />
           </div>
         </div>
-      </>
-    );
+      </div>
+    ];
   }
 };
 
+const OrderBookStyles = {
+  tab: {
+    marginRight: "0.5rem",
+    lineHeight: priceRowHeight + "px",
+    height: priceRowHeight + "px"
+  }
+};
 OrderBook = Radium(OrderBook);
+OrderBook = connect(
+  OrderBook,
+  {
+    listenTo: () => {
+      return [RteStore];
+    },
+    getProps: props => {
+      return {
+        rteDepth: RteStore.getState()["depth"].get(
+          `${props.quoteSymbol}${props.baseSymbol}`,
+          {}
+        ),
+        rteTicker: RteStore.getState()["ticker"].get(
+          `${props.quoteSymbol}${props.baseSymbol}`,
+          {}
+        )
+      };
+    }
+  }
+);
 
 export default OrderBook;

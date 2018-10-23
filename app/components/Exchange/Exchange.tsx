@@ -176,7 +176,7 @@ class Exchange extends React.Component<any, any> {
       buyFeeAssetIdx: ws.get("buyFeeAssetIdx", 0),
       sellFeeAssetIdx: ws.get("sellFeeAssetIdx", 0),
       indicatorSettings,
-      tools: ["fib","trendline","equ","sdc","gf"],
+      tools: ["fib", "trendline", "equ", "sdc", "gf"],
       currentMouseItem,
       currentInfoTab,
       height: window.innerHeight,
@@ -541,7 +541,6 @@ class Exchange extends React.Component<any, any> {
       setting[marketID] = !inverted;
       SettingsActions.changeMarketDirection(setting);
     }
-    console.log("order:", JSON.stringify(order.toObject()));
     return MarketsActions.createLimitOrder2(order)
       .then(result => {
         if (result.error) {
@@ -893,7 +892,6 @@ class Exchange extends React.Component<any, any> {
     const newHeight = value
       ? value
       : this.state.chartHeight + (increase ? 20 : -20);
-    console.log("newHeight", newHeight);
     this.setState({
       chartHeight: newHeight
     });
@@ -1117,7 +1115,6 @@ class Exchange extends React.Component<any, any> {
       buySellTop,
       currentInfoTab
     } = this.state;
-    console.log("indicators111:", indicators);
     const { isFrozen, frozenAsset } = this.isMarketFrozen();
     let elementsOrigin = {
       atr: 310,
@@ -1174,8 +1171,6 @@ class Exchange extends React.Component<any, any> {
         }
       }
     });
-    console.debug("elementsHeight", elementsHeight);
-    console.debug("elementsOrigin", elementsOrigin);
     let base = null,
       quote = null,
       accountBalance = null,

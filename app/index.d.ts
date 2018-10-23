@@ -46,10 +46,10 @@ declare namespace ETO {
     rate: number;
     base_token_name: string;
   };
-  
+
   type ProjectDetail = {
     account: "testroot";
-    banner: 0; // 
+    banner: 0; //
     base_accuracy: 1;
     base_max_quota: 20;
     base_min_quota: 0.5;
@@ -58,13 +58,13 @@ declare namespace ETO {
     base_token_count: 1000;
     base_token_name: "ETH";
     close_at: null;
-    control: "online"; // 
+    control: "online"; //
     control_status: "unstart"; //
     created_at: "2018-07-21 05:22:12"; //
     current_base_token_count: 0;
     current_percent: 0;
     current_user_count: 0;
-    deleted: 0; // 
+    deleted: 0; //
     end_at: "2018-08-28 04:00:00";
     finish_at: null;
     id: "1004";
@@ -72,11 +72,11 @@ declare namespace ETO {
     lock_at: null;
     name: "会员组";
     offer_at: null;
-    parent: "1000"; // 
+    parent: "1000"; //
     project: "1004";
     rate: 5000;
     receive_address: "";
-    score: 5; // 
+    score: 5; //
     start_at: "2018-07-08 12:00:00";
     status: "ok";
     timestamp: "2018-07-21 13:22:12"; //
@@ -87,13 +87,15 @@ declare namespace ETO {
     update_at: "2018-07-21 05:22:12";
   };
 
-  type CurrentState = {
-    current_base_token_count: number;
-    current_percent: number;
-    current_user_count: number;
-    real: boolean;
-    status: "pre";
-  } | {};
+  type CurrentState =
+    | {
+        current_base_token_count: number;
+        current_percent: number;
+        current_user_count: number;
+        real: boolean;
+        status: "pre";
+      }
+    | {};
   type ETORecord = {
     block_num: number | null;
     created_at: string;
@@ -150,6 +152,35 @@ declare namespace ETO {
 }
 
 declare namespace Cybex {
+  type Ticker = {
+    close: null;
+    price: string;
+    change: string;
+    volumeBase: number;
+    volumeQuote: number;
+    volumeBaseAsset: Asset;
+    volumeQuoteAsset: Asset;
+  };
+  type Asset = {
+    satoshi;
+    asset_id;
+    precision;
+    amount;
+    _real_amount;
+    constructor({
+      asset_id,
+      amount,
+      precision,
+      real
+    }: {
+      asset_id: string;
+      amount: number;
+      precision: number;
+      real: boolean | null;
+    });
+    hasAmount(): boolean;
+    toSats(amount: number): number;
+  };
   type AccountProperty =
     | "id"
     | "name"

@@ -22,7 +22,6 @@ import { Colors } from "components/Common/Colors";
 import { Table } from "components/Common/Table";
 
 import ChainTypes from "../Utility/ChainTypes";
-import EquivalentPrice from "../Utility/EquivalentPrice";
 import BindToChainState from "../Utility/BindToChainState";
 import BalanceComponent from "../Utility/BalanceComponent";
 import FormattedAsset from "../Utility/FormattedAsset";
@@ -33,8 +32,6 @@ import utils from "common/utils";
 import DepositModal from "components//Gateway/DepositModal";
 import WithdrawModal from "components//Gateway/WithdrawModal";
 import { connect } from "alt-react";
-import { Club } from "components/StaticPages/Club";
-//React Table
 import ReactTable from "react-table";
 
 const { ADDRESS_TYPES } = JadePool;
