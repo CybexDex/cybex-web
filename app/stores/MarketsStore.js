@@ -840,7 +840,8 @@ class MarketsStore {
             high: prices[ii].close,
             low: prices[ii].close,
             close: prices[ii].close,
-            volume: 0
+            volume: 0,
+            time: addTime(prices[ii].date, 1, this.bucketSize).getTime()
           });
           volumeData.splice(ii + 1, 0, [
             addTime(prices[ii].date, 1, this.bucketSize),

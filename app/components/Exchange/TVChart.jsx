@@ -42,7 +42,9 @@ export class TVChartContainer extends React.PureComponent {
 
   componentDidMount() {
     const priceData = this.props.priceData;
-    //const volumeData=this.props.volumeData;
+    const volumeData=this.props.volumeData;
+
+    console.log("priceData:", priceData);
 
     let Datafeed = {
       onReady: cb => {
@@ -74,7 +76,7 @@ export class TVChartContainer extends React.PureComponent {
       unsubscribeBars: subscriberUID => {
         console.log("=====unsubscribeBars running");
         // stream.unsubscribeBars(subscriberUID)
-      }
+      },
     };
 
     Datafeed.resolveSymbol = function(
@@ -123,27 +125,6 @@ export class TVChartContainer extends React.PureComponent {
       firstDataRequest
     ) {
       console.debug("=====getBars running", priceData);
-      // close: 6439.1
-      // high: 6439.1
-      // low: 6439.09
-      // open: 6439.09
-      // time: 1539803100
-      // volumefrom: 1.44
-      // volumeto: 9261.31
-
-      // close: 0.0008410000044910787
-      // date: Mon Mar 05 2018 08:00:00 GMT+0800 (中国标准时间) {}
-      // high: 0.0008410000044910787
-      // low: 0.0005
-      // open: 0.0005
-      // volume: 87270.08555
-
-      priceData.forEach(price => {
-        price.time = price.date.getTime();
-        price.volumefrom = price.volume;
-        price.volumeto = price.volume;
-      });
-
       if (priceData.length) {
         onHistoryCallback(priceData, { noData: false });
       } else {
@@ -153,41 +134,69 @@ export class TVChartContainer extends React.PureComponent {
 
     const widgetOptions = {
       debug: true,
-      symbol: "Cybex:" + this.props.base + "/" + this.props.quote, //"Cybex:BTC/USD"
+      symbol: "Cybex:" + this.props.baseSymbol + "/" + this.props.quoteSymbol, //"Cybex:BTC/USD"
       //symbol:this.props.exchange+this.props.symbol,
       datafeed: Datafeed,
       interval: this.props.interval,
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
       locale: getLanguageFromURL() || "en",
-      disabled_features: ["use_localstorage_for_settings"],
-      enabled_features: ["study_templates"],
-      charts_storage_url: this.props.chartsStorageUrl,
+      // disabled_features: ["use_localstorage_for_settings"],
+      // enabled_features: ["study_templates"],
+      // charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,
-      client_id: this.props.clientId,
+      // client_id: this.props.clientId,
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
-      studies_overrides: this.props.studiesOverrides,
+      // studies_overrides: this.props.studiesOverrides,
+      // overrides: {
+      //   "mainSeriesProperties.showCountdown": true,
+      //   "paneProperties.background": "#131722",
+      //   "paneProperties.vertGridProperties.color": "#363c4e",
+      //   "paneProperties.horzGridProperties.color": "#363c4e",
+      //   "symbolWatermarkProperties.transparency": 90,
+      //   "scalesProperties.textColor": "#AAA",
+      //   "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
+      //   "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f"
+      // },
+
+      enabled_features: ["minimalistic_logo", "narrow_chart_enabled", "dont_show_boolean_study_arguments","hide_last_na_study_output","clear_bars_on_series_error", "hide_loading_screen_on_series_error"],
+      disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
+      charts_storage_url: "http://saveload.tradingview.com",
+      client_id: "bitmex.com",
       overrides: {
-        "mainSeriesProperties.showCountdown": true,
         "paneProperties.background": "#131722",
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
         "symbolWatermarkProperties.transparency": 90,
         "scalesProperties.textColor": "#AAA",
         "mainSeriesProperties.candleStyle.wickUpColor": "#336854",
-        "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f"
-      }
+        "mainSeriesProperties.candleStyle.wickDownColor": "#7f323f",
+        // "paneProperties.topMargin": 10,
+        // "paneProperties.bottomMargin": 25,
+        "paneProperties.legendProperties.showStudyArguments": !1,
+        "paneProperties.legendProperties.showStudyTitles": !0,
+        "paneProperties.legendProperties.showStudyValues": !0,
+        "paneProperties.legendProperties.showSeriesTitle": !1,
+        "paneProperties.legendProperties.showSeriesOHLC": !0,
+        "scalesProperties.showLeftScale": !1,
+        "scalesProperties.showRightScale": !0,
+        "scalesProperties.scaleSeriesOnly": !1,
+        "scalesProperties.showSymbolLabels": !0,
+        "mainSeriesProperties.priceAxisProperties.autoScale": !0,
+        "mainSeriesProperties.priceAxisProperties.autoScaleDisabled": !1,
+        "mainSeriesProperties.priceAxisProperties.percentage": !1,
+        "mainSeriesProperties.priceAxisProperties.percentageDisabled": !1,
+        "mainSeriesProperties.priceAxisProperties.log": !1,
+        "mainSeriesProperties.priceAxisProperties.logDisabled": !1,
+        "mainSeriesProperties.showLastValue": !0,
+        "mainSeriesProperties.visible": !0,
+        "mainSeriesProperties.showPriceLine": !0
+      },
+
     };
 
-    // window.TradingView.onready(() => {
-    //   const widget = window.tvWidget = new window.TradingView.widget(widgetOptions);
-    //
-    //   widget.onChartReady(() => {
-    //     console.log("Chart has loaded!");
-    //   });
-    // });
     const tvWidget = new widget(widgetOptions);
     this.tvWidget = tvWidget;
 
@@ -204,11 +213,17 @@ export class TVChartContainer extends React.PureComponent {
   }
 
   render() {
+    const priceData = this.props.priceData;
+    console.debug("myPriceData",priceData);
+
     return (
       <div
         id={this.props.containerId}
         className={"TVChartContainer"}
-        height={this.props.height}
+        style={{
+          height: this.props.height,
+          width: "100%"
+        }}
       />
     );
   }
