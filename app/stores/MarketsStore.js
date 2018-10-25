@@ -773,7 +773,9 @@ class MarketsStore {
         high,
         low,
         close,
-        volume
+        volume,
+        base: this.baseAsset.get("symbol"),
+        quote: this.quoteAsset.get("symbol")
       });
       volumeData.push([date, volume]);
     }
