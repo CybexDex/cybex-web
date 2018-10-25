@@ -385,19 +385,19 @@ export class MarketGroup extends React.Component<any, any> {
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
 
     return (
-      open && [
+      open && <>
         <div className="table table-hover">
           <div className="table-row" style={{ paddingRight: "10px" }}>
             {headers}
           </div>
-        </div>,
+        </div>
         <div
           className="table table-hover _scroll-bar"
           style={{ overflowY: "auto", paddingRight: "4px" }}
         >
           {marketRows}
         </div>
-      ]
+      </>
     );
   }
 }
@@ -815,7 +815,7 @@ let MyMarkets = class extends React.Component<any, any> {
     if (listHeight) {
       listStyle.height = listHeight;
     }
-    return [
+    return <>
       <div className="grid-block shrink left-orderbook-header">
         <div
           ref="myMarkets"
@@ -830,15 +830,15 @@ let MyMarkets = class extends React.Component<any, any> {
           >
             <Translate content="exchange.more" />
           </div> */}
-      </div>,
-      this.props.controls && (
+      </div>
+      {this.props.controls && (
         <div className="small-12 medium-6" style={{ padding: "1rem 0" }}>
           {this.props.controls ? (
             <div style={{ paddingBottom: "0.5rem" }}>{this.props.controls}</div>
           ) : null}
           {/* {!myMarketTab ? <input type="text" value={this.state.inputValue} onChange={this._lookupAssets.bind(this)} placeholder="SYMBOL:SYMBOL" /> : null} */}
         </div>
-      ),
+      )}
       <ul className="mymarkets-tabs" style={{ padding: "0 0.5em" }}>
         {preferredBases.map((base, index) => {
           if (!base) return null;
@@ -860,8 +860,8 @@ let MyMarkets = class extends React.Component<any, any> {
             </TabLink>
           );
         })}
-      </ul>,
-      myMarketTab ? (
+      </ul>
+      {myMarketTab ? (
         <div
           className="grid-block shrink"
           style={{
@@ -903,7 +903,7 @@ let MyMarkets = class extends React.Component<any, any> {
         </div>
       ) : (
         this._renderFindMarkets()
-      ),
+      )}
       <div
         style={listStyle}
         className="table-container grid-block vertical mymarkets-list"
@@ -948,7 +948,7 @@ let MyMarkets = class extends React.Component<any, any> {
             );
           })}
       </div>
-    ];
+    </>;
   }
 };
 MyMarkets = BindToChainState(MyMarkets, { keep_updating: true });

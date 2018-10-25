@@ -43,11 +43,13 @@ export class TVChartContainer extends React.PureComponent {
       (prevProps.priceData[0].base !== this.props.priceData[0].base ||
         prevProps.priceData[0].quote !== this.props.priceData[0].quote)
     ) {
+      console.debug("TVChart: Update", prevProps, this.props);
       this.priceData = this.props.priceData.map(price => ({
         ...price,
         time: price.date.getTime()
       }));
       this.updateEmitter.emit(RELOAD_CHART);
+      // this._setupTv();
     }
   }
 
@@ -59,10 +61,24 @@ export class TVChartContainer extends React.PureComponent {
         this.updateCbs.resetData();
       }
     });
+    this._setupTv();
+  }
+
+  _setupTv() {
+    let disabled_features = [
+      "header_saveload",
+      "symbol_info",
+      "symbol_search_hot_key",
+      "border_around_the_chart",
+      "header_symbol_search",
+      "header_compare"
+    ];
     let Datafeed = {
       onReady: cb => {
         console.log("=====onReady running");
-        cb({ supported_resolutions: supportedResolutions });
+        setTimeout(() => {
+          cb({ supported_resolutions: supportedResolutions });
+        }, 10);
       },
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
@@ -82,6 +98,7 @@ export class TVChartContainer extends React.PureComponent {
           pricescale: 100000000,
           has_intraday: true,
           intraday_multipliers: ["1", "60"],
+          disabled_features,
           supported_resolution: supportedResolutions,
           volume_precision: 8,
           data_status: "streaming"
@@ -141,7 +158,7 @@ export class TVChartContainer extends React.PureComponent {
       symbol: this._getSymbol(), //"Cybex:BTC/USD"
       //symbol:this.props.exchange+this.props.symbol,
       datafeed: Datafeed,
-      interval: this.props.interval,
+      interval: "60",
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
       locale: getLanguageFromURL() || "en",
@@ -196,14 +213,13 @@ export class TVChartContainer extends React.PureComponent {
       studies: ["MACD@tv-basicstudies"]
     };
 
-    const tvWidget = new widget(widgetOptions);
-    this.tvWidget = tvWidget;
+    this.tvWidget = new widget(widgetOptions);
 
-    tvWidget.onChartReady(() => {
+    this.tvWidget.onChartReady(() => {
       console.log("Chart has loaded!");
       this.updateCbs.resetData = () => {
-        tvWidget.activeChart().resetData();
-        tvWidget.activeChart().setSymbol(this._getSymbol());
+        this.tvWidget.activeChart().resetData();
+        this.tvWidget.activeChart().setSymbol(this._getSymbol());
       };
     });
   }
