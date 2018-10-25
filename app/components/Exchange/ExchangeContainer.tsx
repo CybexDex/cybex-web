@@ -45,6 +45,9 @@ let ExchangeContainer = class extends React.Component<any, any> {
           priceData: () => {
             return MarketsStore.getState().priceData;
           },
+            Datafeed: () =>{
+              return MarketsStore.getState().Datafeed;
+            },
           volumeData: () => {
             return MarketsStore.getState().volumeData;
           },

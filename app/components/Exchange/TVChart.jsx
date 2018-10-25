@@ -11,9 +11,14 @@ function getLanguageFromURL() {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-const supportedResolutions = ["1","5","60","1D","1W","1M"];
-
 export class TVChartContainer extends React.PureComponent {
+  // constructor(props) {
+  //   super(props);
+  //   this.bindListeners({
+  //     onSubscribeMarket: MarketsActions.subscribeMarket,
+  //   });
+  // }
+
   static defaultProps = {
     symbol: "Cybex:BTC/USD",
     interval: "60",
@@ -32,77 +37,12 @@ export class TVChartContainer extends React.PureComponent {
 
   componentDidMount() {
 
-    let Datafeed = {
-      onReady: cb => {
-        console.log("=====onReady running");
-        setTimeout(() => cb({supported_resolutions: supportedResolutions}), 0);
-      },
-      calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
-        //optional
-        console.log("=====calculateHistoryDepth running");
-        // while optional, this makes sure we request 24 hours of minute data at a time
-        // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
-        return resolution < 60 ? { resolutionBack: "D", intervalBack: "1" } : undefined;
-      },
-      resolveSymbol:(symbolName, onSymbolResolvedCallback) => {
-        // expects a symbolInfo object in response
-        console.debug("======resolveSymbol running", symbolName)
-        // console.log('resolveSymbol:',{symbolName})
-        // const split_data = symbolName.split(/[:/]/);
-
-        const symbolStub = {
-          name: symbolName,
-          description: symbolName,
-          type: "crypto",
-          session: "24x7",
-          timezone: "Asia/Shanghai",
-          ticker: symbolName,
-          exchange: "Cybex",
-          minmov: 1,
-          pricescale: 100000000,
-          has_intraday: true,
-          intraday_multipliers: ["1", "60"],
-          supported_resolution: supportedResolutions,
-          volume_precision: 8,
-          data_status: "streaming",
-        };
-
-        // if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
-        //   symbolStub.pricescale = 100;
-        // }
-        setTimeout(function() {
-          onSymbolResolvedCallback(symbolStub)
-          console.log("Resolving that symbol....", symbolStub);
-        }, 0);
-      },
-      subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback) => {
-        console.log("=====subscribeBars runnning");
-        // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
-      },
-      unsubscribeBars: subscriberUID => {
-        console.log("=====unsubscribeBars running");
-        // stream.unsubscribeBars(subscriberUID)
-      },
-      getBars: (symbolInfo, resolution, from, to, onHistoryCallback,onErrorCallback,firstDataRequest) =>{
-        console.debug("=====getBars running", this.props.priceData);
-        if (this.props.priceData.length) {
-          this.props.priceData.forEach(price => {
-            price.time = Math.round(price.date.getTime());
-            // price.volumeto = price.volume;
-            // price.volumefrom = price.volume;
-          });
-          console.log("priceData", this.props.priceData);
-          onHistoryCallback(this.props.priceData, { noData: false });
-        }
-      },
-    };
-
     const widgetOptions = {
       debug: true,
       symbol: "Cybex:" + this.props.quoteSymbol.replace("JADE.","")  + "/" + this.props.baseSymbol.replace("JADE.",""), //"Cybex:BTC/USD"
       //symbol:this.props.exchange+this.props.symbol,
-      datafeed: Datafeed,
-      interval: this.props.interval,
+      datafeed: this.props.Datafeed,
+      interval: "60",
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
       locale: getLanguageFromURL() || "en",
@@ -114,11 +54,11 @@ export class TVChartContainer extends React.PureComponent {
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
+      timezone: "Asia/Shanghai",
       time_frames: [
-        { text: "1m", resolution: "1M" },
-        { text: "1w", resolution: "1W" },
-        { text: "1d", resolution: "1D" },
-        { text: "6h", resolution: "6" },
+        { text: "1m", resolution: "1D" },
+        { text: "1d", resolution: "60" },
+        { text: "6h", resolution: "1" },
       ],
       enabled_features:["minimalistic_logo", "narrow_chart_enabled", "dont_show_boolean_study_arguments","hide_last_na_study_output","clear_bars_on_series_error", "hide_loading_screen_on_series_error","side_toolbar_in_fullscreen_mode"],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
@@ -161,6 +101,11 @@ export class TVChartContainer extends React.PureComponent {
 
   // componentDidUpdate(){
   //   alert("update");
+  // }
+
+  // onSubscribeMarket(result){
+  //   alert("Alert!Subscribe");
+  //   console.log(result);
   // }
 
   render() {

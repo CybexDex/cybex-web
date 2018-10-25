@@ -1504,7 +1504,7 @@ class ExchangeNew extends React.Component<any, any> {
                         {/* Price history chart */}
                         <TVChartContainer
                             priceData={this.props.priceData}
-                            volumeData={this.props.volumeData}
+                            Datafeed={this.props.Datafeed}
                             base={base}
                             quote={quote}
                             baseSymbol={baseSymbol}
