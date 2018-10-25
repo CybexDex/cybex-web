@@ -17,6 +17,7 @@ const RELOAD_CHART = Symbol();
 export class TVChartContainer extends React.PureComponent {
   updateEmitter = new EventEmitter();
   updateCbs = {};
+  priceData = [];
   static defaultProps = {
     symbol: "Cybex:BTC/USD",
     interval: "60",
@@ -42,6 +43,10 @@ export class TVChartContainer extends React.PureComponent {
       (prevProps.priceData[0].base !== this.props.priceData[0].base ||
         prevProps.priceData[0].quote !== this.props.priceData[0].quote)
     ) {
+      this.priceData = this.props.priceData.map(price => ({
+        ...price,
+        time: price.date.getTime()
+      }));
       this.updateEmitter.emit(RELOAD_CHART);
     }
   }
@@ -58,15 +63,6 @@ export class TVChartContainer extends React.PureComponent {
       onReady: cb => {
         console.log("=====onReady running");
         cb({ supported_resolutions: supportedResolutions });
-      },
-      calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
-        //optional
-        console.log("=====calculateHistoryDepth running");
-        // while optional, this makes sure we request 24 hours of minute data at a time
-        // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
-        return resolution < 60
-          ? { resolutionBack: "D", intervalBack: "1" }
-          : undefined;
       },
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
@@ -123,17 +119,17 @@ export class TVChartContainer extends React.PureComponent {
         onErrorCallback,
         firstDataRequest
       ) => {
-        console.debug("=====getBars running", this.props.priceData);
+        from *= 1000;
+        to *= 1000;
+        console.debug("=====getBars running", from, to, this.priceData);
+        let priceData = this.priceData.filter(
+          price => price.time >= from && price.time <= to
+        );
         const updateHistory = () => {
-          if (this.props.priceData.length) {
-            this.props.priceData.map(price => {
-              price.time = Math.floor(price.date.getTime());
-              // price.volumeto = price.volume;
-              // price.volumefrom = price.volume;
-              return price;
-            });
-            console.log("priceData", this.props.priceData);
-            onHistoryCallback(this.props.priceData, { noData: false });
+          if (priceData.length) {
+            onHistoryCallback(priceData, { noData: false });
+          } else {
+            onHistoryCallback(priceData, { noData: true });
           }
         };
         updateHistory();
@@ -141,7 +137,7 @@ export class TVChartContainer extends React.PureComponent {
     };
 
     const widgetOptions = {
-      debug: true,
+      debug: false,
       symbol: this._getSymbol(), //"Cybex:BTC/USD"
       //symbol:this.props.exchange+this.props.symbol,
       datafeed: Datafeed,
