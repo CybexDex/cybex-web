@@ -13,6 +13,7 @@ function getLanguageFromURL() {
 }
 
 const RELOAD_CHART = Symbol();
+const supportedResolutions = ["1", "60", "1D"];
 
 export class TVChartContainer extends React.PureComponent {
   updateEmitter = new EventEmitter();
@@ -35,7 +36,6 @@ export class TVChartContainer extends React.PureComponent {
 
   tvWidget = null;
 
-
   componentDidUpdate(prevProps) {
     console.debug("TVChart: ", prevProps, this.props);
     if (
@@ -49,6 +49,7 @@ export class TVChartContainer extends React.PureComponent {
       //   ...price,
       //   time: price.date.getTime()
       // }));
+      this.priceData = this.props.priceData;
       this.updateEmitter.emit(RELOAD_CHART);
     }
   }
@@ -62,88 +63,91 @@ export class TVChartContainer extends React.PureComponent {
       }
     });
 
-    // let Datafeed = {
-    //   onReady: cb => {
-    //     console.log("=====onReady running");
-    //     cb({ supported_resolutions: supportedResolutions });
-    //   },
-    //   resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
-    //     // expects a symbolInfo object in response
-    //     console.debug("======resolveSymbol running", symbolName);
-    //     // console.log('resolveSymbol:',{symbolName})
-    //     // const split_data = symbolName.split(/[:/]/);
-    //
-    //     const symbolStub = {
-    //       name: symbolName,
-    //       description: symbolName,
-    //       type: "crypto",
-    //       session: "24x7",
-    //       timezone: "Asia/Shanghai",
-    //       ticker: symbolName,
-    //       exchange: "Cybex",
-    //       minmov: 1,
-    //       pricescale: 100000000,
-    //       has_intraday: true,
-    //       intraday_multipliers: ["1", "60"],
-    //       supported_resolution: supportedResolutions,
-    //       volume_precision: 8,
-    //       data_status: "streaming"
-    //     };
-    //
-    //     // if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
-    //     //   symbolStub.pricescale = 100;
-    //     // }
-    //     // setTimeout(function() {
-    //     onSymbolResolvedCallback(symbolStub);
-    //     console.log("Resolving that symbol....", symbolStub);
-    //     // }, 0);
-    //   },
-    //   subscribeBars: (
-    //     symbolInfo,
-    //     resolution,
-    //     onRealtimeCallback,
-    //     subscribeUID,
-    //     onResetCacheNeededCallback
-    //   ) => {
-    //     console.log("=====subscribeBars runnning", symbolInfo);
-    //     this.updateCbs.resetCache = () => onResetCacheNeededCallback();
-    //     // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
-    //   },
-    //   unsubscribeBars: subscriberUID => {
-    //     console.log("=====unsubscribeBars running", subscriberUID);
-    //     // stream.unsubscribeBars(subscriberUID)
-    //   },
-    //   getBars: (
-    //     symbolInfo,
-    //     resolution,
-    //     from,
-    //     to,
-    //     onHistoryCallback,
-    //     onErrorCallback,
-    //     firstDataRequest
-    //   ) => {
-    //     from *= 1000;
-    //     to *= 1000;
-    //     console.debug("=====getBars running", from, to, this.priceData);
-    //     let priceData = this.priceData.filter(
-    //       price => price.time >= from && price.time <= to
-    //     );
-    //     const updateHistory = () => {
-    //       if (priceData.length) {
-    //         onHistoryCallback(priceData, { noData: false });
-    //       } else {
-    //         onHistoryCallback(priceData, { noData: true });
-    //       }
-    //     };
-    //     updateHistory();
-    //   }
-    // };
+    let Datafeed = {
+      onReady: cb => {
+        console.log("=====onReady running");
+        setTimeout(function() {
+          cb({supported_resolutions: supportedResolutions});
+        },0);
+      },
+      resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
+        // expects a symbolInfo object in response
+        console.debug("======resolveSymbol running", symbolName);
+        // console.log('resolveSymbol:',{symbolName})
+        // const split_data = symbolName.split(/[:/]/);
+
+        const symbolStub = {
+          name: symbolName,
+          description: symbolName,
+          type: "crypto",
+          session: "24x7",
+          timezone: "Asia/Shanghai",
+          ticker: symbolName,
+          exchange: "Cybex",
+          minmov: 1,
+          pricescale: 100000000,
+          has_intraday: true,
+          intraday_multipliers: ["1", "60"],
+          supported_resolution: supportedResolutions,
+          volume_precision: 8,
+          data_status: "streaming"
+        };
+
+        // if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
+        //   symbolStub.pricescale = 100;
+        // }
+        setTimeout(function() {
+          onSymbolResolvedCallback(symbolStub);
+          console.log("Resolving that symbol....", symbolStub);
+        }, 0);
+      },
+      subscribeBars: (
+        symbolInfo,
+        resolution,
+        onRealtimeCallback,
+        subscribeUID,
+        onResetCacheNeededCallback
+      ) => {
+        console.log("=====subscribeBars runnning", symbolInfo);
+        this.updateCbs.resetCache = () => onResetCacheNeededCallback();
+        // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
+      },
+      unsubscribeBars: subscriberUID => {
+        console.log("=====unsubscribeBars running", subscriberUID);
+        // stream.unsubscribeBars(subscriberUID)
+      },
+      getBars: (
+        symbolInfo,
+        resolution,
+        from,
+        to,
+        onHistoryCallback,
+        onErrorCallback,
+        firstDataRequest
+      ) => {
+        from *= 1000;
+        to *= 1000;
+        console.debug("=====getBars running", from, to, this.priceData);
+        let priceData = this.props.priceData.filter(
+          price => price.time >= from && price.time <= to
+        );
+        const updateHistory = () => {
+          if (priceData.length) {
+            onHistoryCallback(priceData, { noData: false });
+          } else {
+            onHistoryCallback(priceData, { noData: true });
+          }
+        };
+        updateHistory();
+      }
+    };
 
     const widgetOptions = {
       debug: false,
       symbol: this._getSymbol(), //"Cybex:BTC/USD"
-      //symbol:this.props.exchange+this.props.symbol,
-      datafeed: this.props.Datafeed,
+      // symbol:this.props.exchange+this.props.symbol,
+      // datafeed: this.props.Datafeed,
+      datafeed: Datafeed,
       interval: (this.props.bucketSize/60).toString(),
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
