@@ -11,17 +11,7 @@ function getLanguageFromURL() {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-const supportedResolutions = [
-  "1",
-  "3",
-  "5",
-  "15",
-  "30",
-  "60",
-  "120",
-  "240",
-  "D"
-];
+const supportedResolutions = ["1","5","60","1D","1W","1M"];
 
 export class TVChartContainer extends React.PureComponent {
   static defaultProps = {
@@ -30,9 +20,9 @@ export class TVChartContainer extends React.PureComponent {
     containerId: "tv_chart_container",
     libraryPath: "/charting_library/",
     chartsStorageUrl: "https://saveload.tradingview.com",
-    chartsStorageApiVersion: "1.1",
+    chartsStorageApiVersion: "1.0",
     clientId: "tradingview.com",
-    userId: "public_user_id",
+    userId: "anonymous",
     fullscreen: false,
     autosize: true,
     studiesOverrides: {}
@@ -58,9 +48,8 @@ export class TVChartContainer extends React.PureComponent {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName)
         // console.log('resolveSymbol:',{symbolName})
-        const split_data = symbolName.split(/[:/]/);
+        // const split_data = symbolName.split(/[:/]/);
 
-        // console.log({split_data})
         const symbolStub = {
           name: symbolName,
           description: symbolName,
@@ -68,7 +57,7 @@ export class TVChartContainer extends React.PureComponent {
           session: "24x7",
           timezone: "Asia/Shanghai",
           ticker: symbolName,
-          exchange: split_data[0],
+          exchange: "Cybex",
           minmov: 1,
           pricescale: 100000000,
           has_intraday: true,
@@ -78,9 +67,9 @@ export class TVChartContainer extends React.PureComponent {
           data_status: "streaming",
         };
 
-        if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
-          symbolStub.pricescale = 100;
-        }
+        // if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
+        //   symbolStub.pricescale = 100;
+        // }
         setTimeout(function() {
           onSymbolResolvedCallback(symbolStub)
           console.log("Resolving that symbol....", symbolStub);
@@ -98,9 +87,9 @@ export class TVChartContainer extends React.PureComponent {
         console.debug("=====getBars running", this.props.priceData);
         if (this.props.priceData.length) {
           this.props.priceData.forEach(price => {
-            price.time = Math.round(price.date.getTime()/1000);
-            price.volumeto = price.volume;
-            price.volumefrom = price.volume;
+            price.time = Math.round(price.date.getTime());
+            // price.volumeto = price.volume;
+            // price.volumefrom = price.volume;
           });
           console.log("priceData", this.props.priceData);
           onHistoryCallback(this.props.priceData, { noData: false });
@@ -110,7 +99,7 @@ export class TVChartContainer extends React.PureComponent {
 
     const widgetOptions = {
       debug: true,
-      symbol: "Cybex:" + this.props.baseSymbol + "/" + this.props.quoteSymbol, //"Cybex:BTC/USD"
+      symbol: "Cybex:" + this.props.quoteSymbol.replace("JADE.","")  + "/" + this.props.baseSymbol.replace("JADE.",""), //"Cybex:BTC/USD"
       //symbol:this.props.exchange+this.props.symbol,
       datafeed: Datafeed,
       interval: this.props.interval,
@@ -119,49 +108,40 @@ export class TVChartContainer extends React.PureComponent {
       locale: getLanguageFromURL() || "en",
       // disabled_features: ["use_localstorage_for_settings"],
       // enabled_features: ["study_templates"],
-      // charts_storage_url: this.props.chartsStorageUrl,
+      charts_storage_url: this.props.chartsStorageUrl,
       charts_storage_api_version: this.props.chartsStorageApiVersion,
       // client_id: this.props.clientId,
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
-
-      enabled_features:["minimalistic_logo", "narrow_chart_enabled", "dont_show_boolean_study_arguments","hide_last_na_study_output","clear_bars_on_series_error", "hide_loading_screen_on_series_error"],
-      disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
-      charts_storage_url: "http://saveload.tradingview.com",
+      time_frames: [
+        { text: "1m", resolution: "1M" },
+        { text: "1w", resolution: "1W" },
+        { text: "1d", resolution: "1D" },
+        { text: "6h", resolution: "6" },
+      ],
+      enabled_features:["minimalistic_logo", "narrow_chart_enabled", "dont_show_boolean_study_arguments","hide_last_na_study_output","clear_bars_on_series_error", "hide_loading_screen_on_series_error","side_toolbar_in_fullscreen_mode"],
+      // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
+      disabled_features:["header_widget","header_symbol_search","header_compare","header_chart_type","border_around_the_chart","remove_library_container_border"],
       client_id: "bitmex.com",
       custom_css_url: "/charting_library/themes/tv-dark.min.css",
       overrides: {
-        "paneProperties.background": "#fff",
+        "paneProperties.background": "#171d2a",
+        "dataWindowProperties.font":"Open Sans, Verdana",
+        "dataWindowProperties.fontSize":8,
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
         "symbolWatermarkProperties.transparency": 60,
         "scalesProperties.textColor": "#AAA",
         "mainSeriesProperties.candleStyle.wickUpColor": "#6dbb49", //"#336854",
         "mainSeriesProperties.candleStyle.wickDownColor": "#d24632",//"#7f323f",
-
         "paneProperties.topMargin": 10,
         "paneProperties.bottomMargin": 25,
-        "paneProperties.legendProperties.showStudyArguments": !1,
-        "paneProperties.legendProperties.showStudyTitles": !0,
-        "paneProperties.legendProperties.showStudyValues": !0,
-        "paneProperties.legendProperties.showSeriesTitle": !1,
-        "paneProperties.legendProperties.showSeriesOHLC": !0,
-        "scalesProperties.showLeftScale": !1,
-        "scalesProperties.showRightScale": !0,
-        "scalesProperties.scaleSeriesOnly": !1,
-        "scalesProperties.showSymbolLabels": !0,
-        "mainSeriesProperties.priceAxisProperties.autoScale": !0,
-        "mainSeriesProperties.priceAxisProperties.autoScaleDisabled": !1,
-        "mainSeriesProperties.priceAxisProperties.percentage": !1,
-        "mainSeriesProperties.priceAxisProperties.percentageDisabled": !1,
-        "mainSeriesProperties.priceAxisProperties.log": !1,
-        "mainSeriesProperties.priceAxisProperties.logDisabled": !1,
-        "mainSeriesProperties.showLastValue": !0,
-        "mainSeriesProperties.visible": !0,
-        "mainSeriesProperties.showPriceLine": !0
       },
-
+      loading_screen: { backgroundColor: "#171d2a" },
+      studies:[
+        "MACD@tv-basicstudies"
+      ]
     };
 
     const tvWidget = new widget(widgetOptions);
@@ -178,6 +158,10 @@ export class TVChartContainer extends React.PureComponent {
       this.tvWidget = null;
     }
   }
+
+  // componentDidUpdate(){
+  //   alert("update");
+  // }
 
   render() {
 
