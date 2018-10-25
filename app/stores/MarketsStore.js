@@ -908,21 +908,19 @@ class MarketsStore {
     this.priceData = prices;
     this.volumeData = volumeData;
 
-    console.log("hi,priceData", this.priceData);
-
-    this.Datafeed.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback,onErrorCallback,firstDataRequest){
-      if(prices.length){
-        onHistoryCallback(prices, { noData: false });
-      }else{
-        onHistoryCallback([], { noData: true });
-      }
-    };
-
-    this.Datafeed.subscribeBars= function(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback){
-      console.log("=====subscribeBars runnning");
-      // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
-      // onRealtimeCallback(bar)
-    };
+    // this.Datafeed.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback,onErrorCallback,firstDataRequest){
+    //   if(prices.length){
+    //     onHistoryCallback(prices, { noData: false });
+    //   }else{
+    //     onHistoryCallback([], { noData: true });
+    //   }
+    // };
+    //
+    // this.Datafeed.subscribeBars= function(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback){
+    //   console.log("=====subscribeBars runnning");
+    //   // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
+    //   // onRealtimeCallback(bar)
+    // };
   }
 
   _orderBook(limitsChanged = true, callsChanged = false) {

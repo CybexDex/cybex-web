@@ -40,8 +40,8 @@ export class TVChartContainer extends React.PureComponent {
     console.debug("TVChart: ", prevProps, this.props);
     if (
       prevProps.baseSymbol !== this.props.baseSymbol ||
-      prevProps.quoteSymbol !== this.props.quoteSymbol //||
-      // (prevProps.priceData.length === 0 && this.props.priceData.length !== 0) ||
+      prevProps.quoteSymbol !== this.props.quoteSymbol ||
+      (prevProps.priceData.length === 0 && this.props.priceData.length !== 0) //||
       // (prevProps.priceData[0].base !== this.props.priceData[0].base ||
       //   prevProps.priceData[0].quote !== this.props.priceData[0].quote)
     ) {
@@ -49,8 +49,20 @@ export class TVChartContainer extends React.PureComponent {
       //   ...price,
       //   time: price.date.getTime()
       // }));
-      this.priceData = this.props.priceData;
+      // this.priceData = this.props.priceData;
       this.updateEmitter.emit(RELOAD_CHART);
+    }
+
+    // Price realtime update
+    // TODO: needs further riview
+    if(this.props.lastBar && this.props.priceData.length>=prevProps.priceData.length){
+      let index = this.props.priceData.findIndex(this.props.lastBar);
+      while(index<this.props.priceData.length){
+        if(this.updateCbs.realtimeUpdate){
+          this.updateCbs.realtimeUpdate(this.props.priceData[index]);
+        }
+        index = index + 1;
+      }
     }
   }
 
@@ -74,8 +86,6 @@ export class TVChartContainer extends React.PureComponent {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName);
         // console.log('resolveSymbol:',{symbolName})
-        // const split_data = symbolName.split(/[:/]/);
-
         const symbolStub = {
           name: symbolName,
           description: symbolName,
@@ -93,9 +103,6 @@ export class TVChartContainer extends React.PureComponent {
           data_status: "streaming"
         };
 
-        // if (split_data[2].match(/USD|EUR|JPY|AUD|GBP|KRW|CNY/)) {
-        //   symbolStub.pricescale = 100;
-        // }
         setTimeout(function() {
           onSymbolResolvedCallback(symbolStub);
           console.log("Resolving that symbol....", symbolStub);
@@ -110,6 +117,7 @@ export class TVChartContainer extends React.PureComponent {
       ) => {
         console.log("=====subscribeBars runnning", symbolInfo);
         this.updateCbs.resetCache = () => onResetCacheNeededCallback();
+        this.updateCbs.realtimeUpdate = onRealtimeCallback;
         // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
       },
       unsubscribeBars: subscriberUID => {
@@ -134,8 +142,10 @@ export class TVChartContainer extends React.PureComponent {
         const updateHistory = () => {
           if (priceData.length) {
             onHistoryCallback(priceData, { noData: false });
+            this.updateCbs.lastBar=priceData[priceData.length-1];
           } else {
             onHistoryCallback(priceData, { noData: true });
+            this.updateCbs.lastBar=null;
           }
         };
         updateHistory();
@@ -169,8 +179,8 @@ export class TVChartContainer extends React.PureComponent {
       enabled_features: [
         "minimalistic_logo",
         "narrow_chart_enabled",
-        "dont_show_boolean_study_arguments",
-        "hide_last_na_study_output",
+        // "dont_show_boolean_study_arguments",
+        // "hide_last_na_study_output",
         "clear_bars_on_series_error",
         "hide_loading_screen_on_series_error",
         "side_toolbar_in_fullscreen_mode"
@@ -181,9 +191,10 @@ export class TVChartContainer extends React.PureComponent {
         "header_symbol_search",
         "header_compare",
         "header_chart_type",
-        "border_around_the_chart",
-        "remove_library_container_border"
+        "border_around_the_chart"//,
+        //"remove_library_container_border"
       ],
+      hide_top_toolbar:true,
       client_id: "bitmex.com",
       custom_css_url: "/charting_library/themes/tv-dark.min.css",
       overrides: {
@@ -212,6 +223,7 @@ export class TVChartContainer extends React.PureComponent {
         tvWidget.activeChart().resetData();
         tvWidget.activeChart().setSymbol(this._getSymbol());
       };
+
     });
   }
 
@@ -238,7 +250,7 @@ export class TVChartContainer extends React.PureComponent {
         className={"TVChartContainer"}
         style={{
           height: this.props.height,
-          width: "100%"
+          width: "99%",
         }}
       />
     );
