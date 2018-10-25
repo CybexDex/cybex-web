@@ -224,6 +224,45 @@ var Utils = {
     return priceText;
   },
 
+  compared_price_text:function(price, base, quote, forcePrecision, previous){
+      console.log("compare", previous);
+
+      let priceText;
+
+      if (forcePrecision) {
+          priceText = this.format_number(price, forcePrecision);
+      } else {
+          priceText = this.price_text(price, base, quote);
+      }
+
+      let dec = "";
+      let trailing = priceText
+
+
+      let previousPriceText;
+      if (forcePrecision) {
+        previousPriceText = this.format_number(previous, forcePrecision);
+      } else {
+        previousPriceText = this.price_text(previous, base, quote);
+      }
+
+      const start = 0;//priceText.indexOf(".");
+      for(var j=start;j<priceText.length;j++){
+        if(previousPriceText[j]!=priceText[j]){
+          dec = priceText.slice(start,j);
+          trailing = priceText.slice(j);
+          break;
+        }
+      }
+
+      return {
+          text: priceText,
+          dec: dec,
+          trailing: trailing,
+          full: price
+      };
+  },
+
   price_to_text: function(price, base, quote, forcePrecision = null) {
     if (typeof price !== "number" || !base || !quote) {
       return;
@@ -242,6 +281,7 @@ var Utils = {
     let price_split = priceText.split(".");
     let int = price_split[0];
     let dec = price_split[1];
+
     let i;
 
     let zeros = 0;

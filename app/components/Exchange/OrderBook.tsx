@@ -202,6 +202,7 @@ let OrderBookRowVertical = class extends React.Component<
     max?;
     withYuan?;
     unitYuan?;
+    previous;
   },
   any
 > {
@@ -231,7 +232,8 @@ let OrderBookRowVertical = class extends React.Component<
       total,
       withYuan,
       unitYuan,
-      max
+      max,
+        previous
     } = this.props;
     const isBid = order.isBid();
     const isCall = order.isCall();
@@ -247,6 +249,7 @@ let OrderBookRowVertical = class extends React.Component<
         quote={quote}
         base={base}
         precision={digits}
+        previous={previous}
       />
     );
     let yuanPrice = withYuan
@@ -525,24 +528,17 @@ let OrderBookParitalWrapper = class extends React.Component<
     } = this.props;
     let toDispalyOrders = type === OrderType.Ask ? orders.reverse() : orders;
     return toDispalyOrders.map((order, index) => {
-      return order === null ? (
+        let previousOne;
+        if (type === OrderType.Ask) {
+            previousOne = index<toDispalyOrders.length-1?toDispalyOrders[index+1]:null;
+        }else{
+            previousOne = index>0?toDispalyOrders[index-1]:null;
+        }
+        let previous = previousOne?previousOne.getPrice():null;
+
+        return order === null ? (
         <OrderBookRowEmpty key={"$nullOrder" + index} />
       ) : (
-        // <OrderBookRowVertical
-        //   index={index}
-        //   key={order.price}
-        //   order={order}
-        //   onClick={onOrderClick.bind(this, order)}
-        //   digits={digits}
-        //   withYuan
-        //   base={base}
-        //   quote={quote}
-        //   final={index === 0}
-        //   depthType={depthType}
-        //   max={max}
-        //   total={total}
-        //   currentAccount={currentAccount}
-        // />
         <OrderBookRowVertical
           index={index}
           key={order.getPrice() + (order.isCall() ? "_call" : "")}
@@ -557,6 +553,7 @@ let OrderBookParitalWrapper = class extends React.Component<
           max={max}
           total={total}
           currentAccount={currentAccount}
+          previous={previous}
         />
       );
     });

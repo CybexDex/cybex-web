@@ -227,6 +227,12 @@ form.order-form {
   }
 }
 
+.order-row {
+  .price-decimal {
+    opacity:0.5;
+  }
+}
+
 .left-order-book {
   width: 100%;
   display: flex;
