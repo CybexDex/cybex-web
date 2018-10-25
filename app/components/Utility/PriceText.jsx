@@ -27,10 +27,10 @@ class PriceText extends React.Component {
         <span>
           <span className="price-integer">{formattedPrice.int}.</span>
           {formattedPrice.dec ? (
-            <span className="price-integer">{formattedPrice.dec}{formattedPrice.trailing}</span>
+            <span className="price-integer">{formattedPrice.dec}</span>
           ) : null}
           {formattedPrice.trailing? (
-            <span className="price-decimal"></span>
+            <span className="price-integer">{formattedPrice.trailing}</span>
           ) : null}
         </span>
       );

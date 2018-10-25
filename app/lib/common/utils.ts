@@ -225,8 +225,6 @@ var Utils = {
   },
 
   compared_price_text:function(price, base, quote, forcePrecision, previous){
-      console.log("compare", previous);
-
       let priceText;
 
       if (forcePrecision) {
