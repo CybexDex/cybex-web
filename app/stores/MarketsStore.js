@@ -111,6 +111,55 @@ class MarketsStore {
       onFeedUpdate: MarketsActions.feedUpdate,
       onToggleStars: MarketsActions.toggleStars
     });
+
+    const supportedResolutions = ["1","5","60","1D","1W","1M"];
+
+    this.Datafeed = {
+      onReady: cb => {
+        console.log("=====onReady running");
+        setTimeout(() => cb({supported_resolutions: supportedResolutions}), 0);
+      },
+      calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
+        //optional
+        console.log("=====calculateHistoryDepth running");
+        // while optional, this makes sure we request 24 hours of minute data at a time
+        // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
+        return resolution < 60 ? { resolutionBack: "D", intervalBack: "1" } : undefined;
+      },
+      resolveSymbol:(symbolName, onSymbolResolvedCallback) => {
+        // expects a symbolInfo object in response
+        console.debug("======resolveSymbol running", symbolName)
+        // console.log('resolveSymbol:',{symbolName})
+        const symbolStub = {
+          name: symbolName,
+          description: symbolName,
+          type: "crypto",
+          session: "24x7",
+          timezone: "Asia/Shanghai",
+          ticker: symbolName,
+          exchange: "Cybex",
+          minmov: 1,
+          // TODO: set this later
+          pricescale: 100000000,
+          has_intraday: true,
+          intraday_multipliers: ["1", "60"],
+          supported_resolution: supportedResolutions,
+          // TODO: set this later
+          volume_precision: 8,
+          data_status: "streaming",
+        };
+
+        setTimeout(function() {
+          onSymbolResolvedCallback(symbolStub)
+          console.log("Resolving that symbol....", symbolStub);
+        }, 0);
+      },
+
+      unsubscribeBars: subscriberUID => {
+        console.log("=====unsubscribeBars running");
+        // stream.unsubscribeBars(subscriberUID)
+      },
+    };
   }
 
   onGetCollateralPositions(payload) {
@@ -212,6 +261,7 @@ class MarketsStore {
   }
 
   onSubscribeMarket(result) {
+
     if (result.switchMarket) {
       this.marketReady = false;
       return this.emitChange();
@@ -842,7 +892,6 @@ class MarketsStore {
             low: prices[ii].close,
             close: prices[ii].close,
             volume: 0,
-            time: addTime(prices[ii].date, 1, this.bucketSize).getTime()
           });
           volumeData.splice(ii + 1, 0, [
             addTime(prices[ii].date, 1, this.bucketSize),
@@ -852,8 +901,26 @@ class MarketsStore {
       }
     }
 
+    prices.forEach(price =>{
+      price.time = price.date.getTime();
+    });
+
     this.priceData = prices;
     this.volumeData = volumeData;
+
+    // this.Datafeed.getBars = function(symbolInfo, resolution, from, to, onHistoryCallback,onErrorCallback,firstDataRequest){
+    //   if(prices.length){
+    //     onHistoryCallback(prices, { noData: false });
+    //   }else{
+    //     onHistoryCallback([], { noData: true });
+    //   }
+    // };
+    //
+    // this.Datafeed.subscribeBars= function(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback){
+    //   console.log("=====subscribeBars runnning");
+    //   // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
+    //   // onRealtimeCallback(bar)
+    // };
   }
 
   _orderBook(limitsChanged = true, callsChanged = false) {
