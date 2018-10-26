@@ -22,6 +22,7 @@ require("./asset-symbols/PAY.png");
 require("./asset-symbols/GET.png");
 require("./asset-symbols/MAD.png");
 require("./asset-symbols/TCT.png");
+require("./asset-symbols/CENNZ.png");
 require("./asset-symbols/POLY.png");
 require("./asset-symbols/MCO.png");
 require("./asset-symbols/JCT.png");

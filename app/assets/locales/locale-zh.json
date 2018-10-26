@@ -1661,6 +1661,7 @@
     "state": {
       "undefined": "请求待处理",
       "init": "正在上链",
+      "online": "正在上链",
       "new": "新建",
       "pending": "待确认",
       "done": "成功",
