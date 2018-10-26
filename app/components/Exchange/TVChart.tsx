@@ -3,21 +3,23 @@ import * as React from "react";
 // import Datafeed from './api/'
 import { widget } from "../../../charting_library/charting_library.min";
 import EventEmitter from "event-emitter";
+import { Colors } from "components/Common/Colors";
+import IntlStore from "stores/IntlStore";
 
 function getLanguageFromURL() {
   const regex = new RegExp("[\\?&]lang=([^&#]*)");
   const results = regex.exec(window.location.search);
   return results === null
-    ? null
+    ? IntlStore.getState().currentLocale
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
 const RELOAD_CHART = Symbol();
 const supportedResolutions = ["1", "60", "1D"];
 
-export class TVChartContainer extends React.PureComponent {
+export class TVChartContainer extends React.PureComponent<any> {
   updateEmitter = new EventEmitter();
-  updateCbs = {};
+  updateCbs: { [fnName: string]: any } = {};
   priceData = [];
 
   static defaultProps = {
@@ -56,10 +58,13 @@ export class TVChartContainer extends React.PureComponent {
 
     // Price realtime update
     // TODO: needs further riview
-    if(this.props.lastBar && this.props.priceData.length>=prevProps.priceData.length){
+    if (
+      this.props.lastBar &&
+      this.props.priceData.length >= prevProps.priceData.length
+    ) {
       let index = this.props.priceData.findIndex(this.props.lastBar);
-      while(index<this.props.priceData.length){
-        if(this.updateCbs.realtimeUpdate){
+      while (index < this.props.priceData.length) {
+        if (this.updateCbs.realtimeUpdate) {
           this.updateCbs.realtimeUpdate(this.props.priceData[index]);
         }
         index = index + 1;
@@ -89,7 +94,7 @@ export class TVChartContainer extends React.PureComponent {
     ];
     let Datafeed = {
       onReady: cb => {
-        console.log("=====onReady running");
+        console.debug("=====onReady running");
         setTimeout(() => {
           cb({ supported_resolutions: supportedResolutions });
         }, 10);
@@ -97,7 +102,7 @@ export class TVChartContainer extends React.PureComponent {
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName);
-        // console.log('resolveSymbol:',{symbolName})
+        // console.debug('resolveSymbol:',{symbolName})
         const symbolStub = {
           name: symbolName,
           description: symbolName,
@@ -118,7 +123,7 @@ export class TVChartContainer extends React.PureComponent {
 
         setTimeout(function() {
           onSymbolResolvedCallback(symbolStub);
-          console.log("Resolving that symbol....", symbolStub);
+          console.debug("Resolving that symbol....", symbolStub);
         }, 0);
       },
       subscribeBars: (
@@ -128,13 +133,13 @@ export class TVChartContainer extends React.PureComponent {
         subscribeUID,
         onResetCacheNeededCallback
       ) => {
-        console.log("=====subscribeBars runnning", symbolInfo);
+        console.debug("=====subscribeBars runnning", symbolInfo);
         this.updateCbs.resetCache = () => onResetCacheNeededCallback();
         this.updateCbs.realtimeUpdate = onRealtimeCallback;
         // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
       },
       unsubscribeBars: subscriberUID => {
-        console.log("=====unsubscribeBars running", subscriberUID);
+        console.debug("=====unsubscribeBars running", subscriberUID);
         // stream.unsubscribeBars(subscriberUID)
       },
       getBars: (
@@ -155,10 +160,10 @@ export class TVChartContainer extends React.PureComponent {
         const updateHistory = () => {
           if (priceData.length) {
             onHistoryCallback(priceData, { noData: false });
-            this.updateCbs.lastBar=priceData[priceData.length-1];
+            this.updateCbs.lastBar = priceData[priceData.length - 1];
           } else {
             onHistoryCallback(priceData, { noData: true });
-            this.updateCbs.lastBar=null;
+            this.updateCbs.lastBar = null;
           }
         };
         updateHistory();
@@ -171,7 +176,7 @@ export class TVChartContainer extends React.PureComponent {
       // symbol:this.props.exchange+this.props.symbol,
       // datafeed: this.props.Datafeed,
       datafeed: Datafeed,
-      interval: (this.props.bucketSize/60).toString(),
+      interval: (this.props.bucketSize / 60).toString(),
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
       locale: getLanguageFromURL() || "en",
@@ -187,55 +192,69 @@ export class TVChartContainer extends React.PureComponent {
       time_frames: [
         { text: "1m", resolution: "1D" },
         { text: "1d", resolution: "60" },
-        { text: "6h", resolution: "1" },
+        { text: "6h", resolution: "1" }
       ],
       enabled_features: [
-        "minimalistic_logo",
-        "narrow_chart_enabled",
+        // "minimalistic_logo",
+        // "narrow_chart_enabled",
         // "dont_show_boolean_study_arguments",
         // "hide_last_na_study_output",
-        "clear_bars_on_series_error",
+        // "clear_bars_on_series_error",
         "hide_loading_screen_on_series_error",
         "side_toolbar_in_fullscreen_mode"
       ],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
       disabled_features: [
-        "header_widget",
+        // "header_widget",
         "header_symbol_search",
+        "symbol_search_hot_key",
         "header_compare",
+        "header_undo_redo",
+        "header_screenshot",
+        "header_saveload",
         "header_chart_type",
-        "border_around_the_chart"//,
+        "border_around_the_chart" //,
         //"remove_library_container_border"
       ],
-      hide_top_toolbar:true,
+      // hide_top_toolbar: true,
+      toolbar_bg: Colors.$colorDark,
       client_id: "bitmex.com",
-      custom_css_url: "/charting_library/themes/tv-dark.min.css",
+      custom_css_url: ["/charting_library/themes/tv-dark.min.css"],
       overrides: {
-        "paneProperties.background": "#171d2a",
+        "paneProperties.background": Colors.$colorDark,
         "dataWindowProperties.font": "Open Sans, Verdana",
         "dataWindowProperties.fontSize": 8,
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
         "symbolWatermarkProperties.transparency": 60,
         "scalesProperties.textColor": "#AAA",
-        "mainSeriesProperties.candleStyle.wickUpColor": "#6dbb49", //"#336854",
-        "mainSeriesProperties.candleStyle.wickDownColor": "#d24632", //"#7f323f",
         "paneProperties.topMargin": 10,
-        "paneProperties.bottomMargin": 25
+        "paneProperties.bottomMargin": 25,
+        // Colors
+        "mainSeriesProperties.candleStyle.wickUpColor": Colors.$colorGrass,
+        "mainSeriesProperties.candleStyle.wickDownColor": Colors.$colorFlame,
+        "mainSeriesProperties.candleStyle.upColor": Colors.$colorGrass,
+        "mainSeriesProperties.candleStyle.downColor": Colors.$colorFlame
       },
       loading_screen: { backgroundColor: "#171d2a" },
       studies: ["MACD@tv-basicstudies"]
     };
 
-    this.tvWidget = new widget(widgetOptions);
+    this.tvWidget = new widget(widgetOptions as any);
 
     this.tvWidget.onChartReady(() => {
-      console.log("Chart has loaded!");
+      console.debug("Chart has loaded!");
       this.updateCbs.resetData = () => {
         this.tvWidget.activeChart().resetData();
         this.tvWidget.activeChart().setSymbol(this._getSymbol());
       };
-
+      this.tvWidget
+        .chart()
+        .onIntervalChanged()
+        .subscribe(null, function(interval, obj) {
+          console.debug("TVChart: ", "onIntervalChanged: ", interval, obj);
+          obj.timeframe = "12M";
+        });
     });
   }
 
@@ -262,7 +281,7 @@ export class TVChartContainer extends React.PureComponent {
         className={"TVChartContainer"}
         style={{
           height: this.props.height,
-          width: "99%",
+          width: "99%"
         }}
       />
     );

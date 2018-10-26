@@ -213,7 +213,7 @@ class Asset {
 class Price {
   base;
   quote;
-  constructor({ base, quote, real = false } = {}) {
+  constructor({ base, quote, real = false }: { base?; quote?; real? } = {}) {
     if (!base || !quote) {
       throw new Error("Base and Quote assets must be defined");
     }
