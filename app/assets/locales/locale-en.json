@@ -1637,6 +1637,7 @@
     "unavailable_jade": "The Jadepool Gateway is down or not responding",
     "state": {
       "undefined": "Waiting",
+      "online": "Online",
       "init": "Init",
       "new": "New",
       "pending": "Pending",
