@@ -15,7 +15,14 @@ function getLanguageFromURL() {
 }
 
 const RELOAD_CHART = Symbol();
-const supportedResolutions = ["1", "60", "1D"];
+const supportedResolutions = {
+  "15S": 15,
+  "1": 60,
+  "5": 300,
+  "60": 3600,
+  "1D": 86400
+};
+const interval = { 15: "15S", 60: "1", 300: "5", 3600: "60", 86400: "1D" };
 
 export class TVChartContainer extends React.PureComponent<any> {
   updateEmitter = new EventEmitter();
@@ -39,11 +46,12 @@ export class TVChartContainer extends React.PureComponent<any> {
   tvWidget = null;
 
   componentDidUpdate(prevProps) {
-    console.debug("TVChart: ", prevProps, this.props);
+    console.debug("TVChart: DidUpdate", prevProps, this.props);
     if (
       prevProps.baseSymbol !== this.props.baseSymbol ||
       prevProps.quoteSymbol !== this.props.quoteSymbol ||
-      (prevProps.priceData.length === 0 && this.props.priceData.length !== 0) //||
+      prevProps.bucketSize !== this.props.bucketSize ||
+      prevProps.priceData.length !== this.props.priceData.length //||
       // (prevProps.priceData[0].base !== this.props.priceData[0].base ||
       //   prevProps.priceData[0].quote !== this.props.priceData[0].quote)
     ) {
@@ -85,18 +93,24 @@ export class TVChartContainer extends React.PureComponent<any> {
 
   _setupTv() {
     let disabled_features = [
-      "header_saveload",
-      "symbol_info",
-      "symbol_search_hot_key",
-      "border_around_the_chart",
+      "edit_buttons_in_legend",
       "header_symbol_search",
-      "header_compare"
+      "hide_left_toolbar_by_default",
+      "symbol_search_hot_key",
+      "symbol_info",
+      "header_compare",
+      "header_undo_redo",
+      "header_screenshot",
+      "header_saveload",
+      "header_chart_type",
+      "legend_context_menu",
+      "border_around_the_chart"
     ];
     let Datafeed = {
       onReady: cb => {
         console.debug("=====onReady running");
         setTimeout(() => {
-          cb({ supported_resolutions: supportedResolutions });
+          cb({ supported_resolutions: Object.keys(supportedResolutions) });
         }, 10);
       },
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
@@ -114,9 +128,10 @@ export class TVChartContainer extends React.PureComponent<any> {
           minmov: 1,
           pricescale: 100000000,
           has_intraday: true,
-          intraday_multipliers: ["1", "60"],
+          has_seconds: true,
+          intraday_multipliers: ["15S", "1", "60"],
           disabled_features,
-          supported_resolution: supportedResolutions,
+          supported_resolution: Object.keys(supportedResolutions),
           volume_precision: 8,
           data_status: "streaming"
         };
@@ -176,7 +191,7 @@ export class TVChartContainer extends React.PureComponent<any> {
       // symbol:this.props.exchange+this.props.symbol,
       // datafeed: this.props.Datafeed,
       datafeed: Datafeed,
-      interval: (this.props.bucketSize / 60).toString(),
+      interval: interval[this.props.bucketSize],
       container_id: this.props.containerId,
       library_path: this.props.libraryPath,
       locale: getLanguageFromURL() || "en",
@@ -194,28 +209,9 @@ export class TVChartContainer extends React.PureComponent<any> {
         { text: "1d", resolution: "60" },
         { text: "6h", resolution: "1" }
       ],
-      enabled_features: [
-        // "minimalistic_logo",
-        // "narrow_chart_enabled",
-        // "dont_show_boolean_study_arguments",
-        // "hide_last_na_study_output",
-        // "clear_bars_on_series_error",
-        "hide_loading_screen_on_series_error",
-        "side_toolbar_in_fullscreen_mode"
-      ],
+      enabled_features: ["hide_loading_screen_on_series_error"],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
-      disabled_features: [
-        // "header_widget",
-        "header_symbol_search",
-        "symbol_search_hot_key",
-        "header_compare",
-        "header_undo_redo",
-        "header_screenshot",
-        "header_saveload",
-        "header_chart_type",
-        "border_around_the_chart" //,
-        //"remove_library_container_border"
-      ],
+      disabled_features,
       // hide_top_toolbar: true,
       toolbar_bg: Colors.$colorDark,
       client_id: "bitmex.com",
@@ -251,9 +247,10 @@ export class TVChartContainer extends React.PureComponent<any> {
       this.tvWidget
         .chart()
         .onIntervalChanged()
-        .subscribe(null, function(interval, obj) {
+        .subscribe(null, (interval, obj) => {
           console.debug("TVChart: ", "onIntervalChanged: ", interval, obj);
-          obj.timeframe = "12M";
+          this.props.onChangeBucket(supportedResolutions[interval] || 86400);
+          // obj.timeframe = "12M";
         });
     });
   }
