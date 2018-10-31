@@ -284,10 +284,10 @@ class Price {
     // Todo
     // Trying to be more accurate
     let real = sameBase
-      ? (this.quote.amount * this.base.toSats() * this.quote.toSats()) /
-        (this.base.amount * this.quote.toSats() * this.base.toSats())
-      : (this.base.amount * this.quote.toSats() * this.base.toSats()) /
-        (this.quote.amount * this.base.toSats() * this.quote.toSats());
+      ? (this.quote.amount * this.base.toSats()) /
+        (this.base.amount * this.quote.toSats())
+      : (this.base.amount * this.quote.toSats()) /
+        (this.quote.amount * this.base.toSats());
     // this[key] = parseFloat(real.toFixed(digits));
     this[key] = parseFloat(
       new BnFrDown(real.toFixed(digits + 2)).toFixed(digits)
