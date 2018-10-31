@@ -570,8 +570,29 @@ class LimitOrder {
     marketQuoteAsset,
     isRteBid: boolean = false
   ) {
-    let priceDigits =
-      marketBaseAsset.get("precision") + marketQuoteAsset.get("precision") + 2;
+    // Todo adjust precision; To more accurate, uncomment this
+    // let priceDigits =
+    //   marketBaseAsset.get("precision") + marketQuoteAsset.get("precision") + 2;
+
+    // let value = isRteBid
+    //   ? new BigNumber(rteOrder[1])
+    //   : new BigNumber(rteOrder[0]).mul(new BigNumber(rteOrder[1]));
+    // let qty = isRteBid
+    //   ? new BigNumber(rteOrder[0]).mul(new BigNumber(rteOrder[1]))
+    //   : new BigNumber(rteOrder[1]);
+
+    // let for_sale = isRteBid
+    //   ? qty.mul(Math.pow(10, marketBaseAsset.get("precision")))
+    //   : qty.mul(Math.pow(10, marketQuoteAsset.get("precision")));
+
+    // let base = qty.mul(Math.pow(10, priceDigits));
+    // let quote = value.mul(Math.pow(10, priceDigits));
+    // -----------
+    // No accurate for temporary
+
+    let priceDigits = isRteBid
+      ? marketBaseAsset.get("precision")
+      : marketQuoteAsset.get("precision");
 
     let value = isRteBid
       ? new BigNumber(rteOrder[1])
@@ -584,30 +605,30 @@ class LimitOrder {
       ? qty.mul(Math.pow(10, marketBaseAsset.get("precision")))
       : qty.mul(Math.pow(10, marketQuoteAsset.get("precision")));
 
-    let base = qty.mul(Math.pow(10, priceDigits));
-    let quote = value.mul(Math.pow(10, priceDigits));
+    let base = for_sale;
+    let quote = isRteBid
+      ? value.mul(Math.pow(10, marketQuoteAsset.get("precision")))
+      : value.mul(Math.pow(10, marketBaseAsset.get("precision")));
+
     let order = {
       id: "1.7.0",
       seller: "1.2.0",
       for_sale: parseInt(for_sale.toFixed(0)),
       sell_price: {
         base: {
-          amount: base,
+          amount: parseInt(base.toFixed(0)),
           asset_id: isRteBid
             ? marketBaseAsset.get("id")
             : marketQuoteAsset.get("id")
         },
         quote: {
-          amount: quote,
+          amount: parseInt(quote.toFixed(0)),
           asset_id: isRteBid
             ? marketQuoteAsset.get("id")
             : marketBaseAsset.get("id")
         }
       }
     };
-    if (rteOrder[1] === "0.002231") {
-      console.debug("From RTE: ", rteOrder, order);
-    }
     return new LimitOrder(
       order,
       {

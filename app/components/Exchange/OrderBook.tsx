@@ -645,7 +645,6 @@ let OrderBook = class extends React.Component<any, any> {
   onDepthTypeChange = {};
 
   render() {
-    let useRte = true;
     let {
       combinedBids,
       combinedAsks,
@@ -682,6 +681,7 @@ let OrderBook = class extends React.Component<any, any> {
     if (!base || !quote) {
       return null;
     }
+    let useRte = base === "JADE.USDT" && quote=== "JADE.ETH";
 
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids
