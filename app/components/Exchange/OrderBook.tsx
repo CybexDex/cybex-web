@@ -684,7 +684,7 @@ let OrderBook = class extends React.Component<any, any> {
     if (!base || !quote) {
       return null;
     }
-    let useRte = base === "JADE.USDT" && quote=== "JADE.ETH";
+    let useRte = baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH";
 
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids
