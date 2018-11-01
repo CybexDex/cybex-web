@@ -47,23 +47,7 @@ export class TVChartContainer extends React.PureComponent<any> {
 
   componentDidUpdate(prevProps) {
     // console.debug("TVChart: DidUpdate", prevProps, this.props);
-    if (
-      prevProps.baseSymbol !== this.props.baseSymbol ||
-      prevProps.quoteSymbol !== this.props.quoteSymbol ||
-      prevProps.bucketSize !== this.props.bucketSize ||
-      prevProps.priceData.length !== this.props.priceData.length //||
-      // (prevProps.priceData[0].base !== this.props.priceData[0].base ||
-      //   prevProps.priceData[0].quote !== this.props.priceData[0].quote)
-    ) {
-      // console.debug("TVChart: Update", prevProps, this.props);
-      // this.priceData = this.props.priceData.map(price => ({
-      //   ...price,
-      //   time: price.date.getTime()
-      // }));
-      this.updateEmitter.emit(RELOAD_CHART);
-      // this._setupTv();
-    }
-
+    this.updateEmitter.emit(RELOAD_CHART);
     // Price realtime update
     // TODO: needs further riview
     if (
@@ -165,9 +149,12 @@ export class TVChartContainer extends React.PureComponent<any> {
         from *= 1000;
         to *= 1000;
         console.debug("=====getBars running", from, to, this.props.priceData);
-        let priceData = this.props.priceData.filter(
-          price => price.time >= from && price.time <= to
-        );
+        let priceData = this.props.priceData
+          .filter(price => price.time >= from && price.time <= to)
+          .sort(
+            (prev, next) =>
+              prev.time > next.time ? 1 : prev.time < next.time ? -1 : 0
+          );
         const updateHistory = () => {
           if (priceData.length) {
             onHistoryCallback(priceData, { noData: false });
@@ -278,8 +265,8 @@ export class TVChartContainer extends React.PureComponent<any> {
         style={{
           height: this.props.height,
           width: "100%",
-            marginBottom:"15px",
-            borderBottom:"1px solid #2f3239",
+          marginBottom: "15px",
+          borderBottom: "1px solid #2f3239"
         }}
       />
     );
