@@ -3,7 +3,7 @@ import * as PropTypes from "prop-types";
 import Radium from "radium";
 import Colors from "./Colors";
 import classnames from "classnames";
-import Icon from "./icon";
+import Icon from "./Icon";
 import { getId } from "./utils";
 import ReactTooltip from "react-tooltip";
 
