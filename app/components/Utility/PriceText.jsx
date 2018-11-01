@@ -8,19 +8,19 @@ class PriceText extends React.Component {
 
     let formattedPrice = preFormattedPrice
       ? preFormattedPrice
-      : previous? utils.compared_price_text(price, quote, base, precision, previous)
+      // : previous? utils.compared_price_text(price, quote, base, precision, previous)
         : utils.price_to_text(price, quote, base, precision);
 
-    if(previous){
-      return (
-        <span>
-          <span className="price-decimal">{formattedPrice.dec}</span>
-          {formattedPrice.trailing? (
-            <span className="price-integer">{formattedPrice.trailing}</span>
-          ) : null}
-        </span>
-      );
-    }
+    // if(previous){
+    //   return (
+    //     <span>
+    //       <span className="price-decimal">{formattedPrice.dec}</span>
+    //       {formattedPrice.trailing? (
+    //         <span className="price-integer">{formattedPrice.trailing}</span>
+    //       ) : null}
+    //     </span>
+    //   );
+    // }
 
     if (formattedPrice.full >= 1) {
       return (

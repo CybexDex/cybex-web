@@ -27,7 +27,7 @@ const interval = { 15: "15S", 60: "1", 300: "5", 3600: "60", 86400: "1D" };
 export class TVChartContainer extends React.PureComponent<any> {
   updateEmitter = new EventEmitter();
   updateCbs: { [fnName: string]: any } = {};
-  priceData = [];
+  // priceData = [];
 
   static defaultProps = {
     symbol: "Cybex:BTC/USD",
@@ -46,7 +46,7 @@ export class TVChartContainer extends React.PureComponent<any> {
   tvWidget = null;
 
   componentDidUpdate(prevProps) {
-    console.debug("TVChart: DidUpdate", prevProps, this.props);
+    // console.debug("TVChart: DidUpdate", prevProps, this.props);
     if (
       prevProps.baseSymbol !== this.props.baseSymbol ||
       prevProps.quoteSymbol !== this.props.quoteSymbol ||
@@ -55,11 +55,11 @@ export class TVChartContainer extends React.PureComponent<any> {
       // (prevProps.priceData[0].base !== this.props.priceData[0].base ||
       //   prevProps.priceData[0].quote !== this.props.priceData[0].quote)
     ) {
-      console.debug("TVChart: Update", prevProps, this.props);
-      this.priceData = this.props.priceData.map(price => ({
-        ...price,
-        time: price.date.getTime()
-      }));
+      // console.debug("TVChart: Update", prevProps, this.props);
+      // this.priceData = this.props.priceData.map(price => ({
+      //   ...price,
+      //   time: price.date.getTime()
+      // }));
       this.updateEmitter.emit(RELOAD_CHART);
       // this._setupTv();
     }
@@ -164,7 +164,7 @@ export class TVChartContainer extends React.PureComponent<any> {
       ) => {
         from *= 1000;
         to *= 1000;
-        console.debug("=====getBars running", from, to, this.priceData);
+        console.debug("=====getBars running", from, to, this.props.priceData);
         let priceData = this.props.priceData.filter(
           price => price.time >= from && price.time <= to
         );
@@ -277,7 +277,9 @@ export class TVChartContainer extends React.PureComponent<any> {
         className={"TVChartContainer"}
         style={{
           height: this.props.height,
-          width: "99%"
+          width: "100%",
+            marginBottom:"15px",
+            borderBottom:"1px solid #2f3239",
         }}
       />
     );
