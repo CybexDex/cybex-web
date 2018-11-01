@@ -3,6 +3,7 @@ import { ChainStore, ChainTypes } from "cybexjs";
 let { object_type } = ChainTypes;
 let opTypes = Object.keys(object_type);
 import { correctMarketPairMap } from "utils/Market";
+import { BigNumber } from "bignumber.js";
 
 const MarketUtils = {
   order_type(id) {
@@ -143,7 +144,7 @@ const MarketUtils = {
       }
     } else if (!ask) {
       amount = this.limitByPrecision(
-        buy.amount / sell.amount * order.for_sale / quotePrecision,
+        ((buy.amount / sell.amount) * order.for_sale) / quotePrecision,
         quote
       );
       value = order.for_sale / basePrecision;
@@ -173,9 +174,9 @@ const MarketUtils = {
     );
     let payPrecision = utils.get_asset_precision(paysAsset.get("precision"));
 
-    let receives = order.receives.amount / receivePrecision;
+    let receives = new BigNumber(order.receives.amount).div(receivePrecision).toNumber();
     receives = utils.format_number(receives, receivesAsset.get("precision"));
-    let pays = order.pays.amount / payPrecision;
+    let pays = new BigNumber(order.pays.amount).div(payPrecision).toNumber();
     pays = utils.format_number(pays, paysAsset.get("precision"));
     let price_full = utils.get_asset_price(
       order.receives.amount,
