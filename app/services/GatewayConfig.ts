@@ -195,6 +195,12 @@ export const JadePool: {
       "TEST.PAY": new GatewayAsset("TEST.PAY", "PAY", ProtocolType.ETH),
       "TEST.GET": new GatewayAsset("TEST.GET", "GET", ProtocolType.ETH),
       "TEST.TCT": new GatewayAsset("TEST.TCT", "TCT", ProtocolType.ETH),
+      "TEST.LTC": new GatewayAsset("TEST.LTC", "LTC", ProtocolType.LTC, {
+        name: "Litecoin"
+      }),
+      "TEST.EOS": new GatewayAsset("TEST.EOS", "EOS", ProtocolType.EOS, {
+        name: "EOS"
+      }),
         // "TEST.SDT": new GatewayAsset("TEST.SDT", "SDT", ProtocolType.ETH),
         // "TEST.GNT": new GatewayAsset("TEST.GNT", "GNT", ProtocolType.ETH),
         // "TEST.BTM": new GatewayAsset("TEST.BTM", "BTM", ProtocolType.ETH),
