@@ -169,7 +169,7 @@ export class TVChartContainer extends React.PureComponent<any> {
     };
 
     const widgetOptions = {
-      debug: true,
+      debug: false,
       symbol: this._getSymbol(), //"Cybex:BTC/USD"
       // symbol:this.props.exchange+this.props.symbol,
       // datafeed: this.props.Datafeed,

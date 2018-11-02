@@ -161,6 +161,17 @@ declare namespace Cybex {
     volumeBaseAsset: Asset;
     volumeQuoteAsset: Asset;
   };
+
+  type Trade = {
+    sequence: number;
+    date: string;
+    price: string;
+    amount: string;
+    value: string;
+    side1_account_id: string;
+    side2_account_id: string;
+  };
+
   type Asset = {
     satoshi;
     asset_id;

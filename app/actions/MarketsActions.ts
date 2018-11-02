@@ -6,7 +6,8 @@ import { Apis } from "cybexjs-ws";
 import marketUtils from "common/market_utils";
 import accountUtils from "common/account_utils";
 import * as Immutable from "immutable";
-
+import { TradeHistoryActions } from "./TradeHistoryActions";
+import { TradeHistoryStore } from "stores/TradeHistoryStore";
 declare const __DEV__;
 
 let subs = {};
@@ -65,11 +66,8 @@ class MarketsActions {
           lastFetched: new Date()
         };
         Apis.instance()
-          .db_api ()
-          .exec("get_ticker", [
-            base.get("id"),
-            quote.get("id")
-          ])
+          .db_api()
+          .exec("get_ticker", [base.get("id"), quote.get("id")])
           .then(result => {
             dispatch({
               market: marketName,
@@ -138,7 +136,16 @@ class MarketsActions {
                 }
               });
             });
-
+            console.debug("MarketActions", "UpdateHasFill", hasFill);
+            if (hasFill) {
+              TradeHistoryActions.patchTradeHistory(
+                quote,
+                base,
+                TradeHistoryStore.getState()[
+                  `${quote.get("symbol")}${base.get("symbol")}`
+                ]
+              );
+            }
             let callPromise = null,
               settlePromise = null;
 
@@ -355,7 +362,14 @@ class MarketsActions {
               bucketSize,
               startDate3.toISOString().slice(0, -5),
               startDate2.toISOString().slice(0, -5)
-            ])
+            ]),
+          TradeHistoryActions.patchTradeHistory(
+            quote,
+            base,
+            TradeHistoryStore.getState()[
+              `${quote.get("symbol")}${base.get("symbol")}`
+            ]
+          )
         ])
           .then(results => {
             const data1 = results[9] || [];
