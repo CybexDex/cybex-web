@@ -937,6 +937,15 @@ a.properties-tabs-label {
 .feature-touch .button-263WXsg-- .icon-1Y-3MM9F-:active {
   color: #fefeee !important;
 }
-[class^="fill-"] {
+[class^="fill-"],
+[class^="menuWrap-"],
+[class^="menuWrap-"] [class^="item-"],
+[class^="button-"][class^="isOpened"] {
   background-color: #171d2a;
+}
+[class^="menuWrap-"] {
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
+}
+[class^="button-"][class^="isOpened"] {
+  filter: brightness(3);
 }
