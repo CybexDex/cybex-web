@@ -157,7 +157,6 @@ const convertLimitToOrder: (
   basePrecision: number,
   quotePrecision: number
 ) => Order = (order, digits, basePrecision, quotePrecision) => {
-  console.debug("LimitOrder: ", order);
   let price = order.getPrice(order.sell_price, digits);
   let isBid = order.isBid();
   let value = order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({

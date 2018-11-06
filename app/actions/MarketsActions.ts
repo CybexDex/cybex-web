@@ -136,7 +136,6 @@ class MarketsActions {
                 }
               });
             });
-            console.debug("MarketActions", "UpdateHasFill", hasFill);
             if (hasFill) {
               TradeHistoryActions.patchTradeHistory(
                 quote,
