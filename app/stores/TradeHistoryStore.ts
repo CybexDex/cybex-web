@@ -20,7 +20,7 @@ class TradeHistoryStore extends AbstractStore<TradeHistoryState> {
     console.debug("TradeHistory Store Constructor Done");
   }
   onHistoryPatched({ market, history }) {
-    console.debug("TradeHistoryStore: ", market, this.state[market], history);
+    // console.debug("TradeHistoryStore: ", market, this.state[market], history);
     let h = [
       ...(this.state[market] || []),
       ...(history || [])
@@ -34,7 +34,7 @@ class TradeHistoryStore extends AbstractStore<TradeHistoryState> {
         else return 0;
       }).slice(0, MAX_SIZE)
     });
-    console.debug("TradeHistoryStore Patched: ", this.state);
+    // console.debug("TradeHistoryStore Patched: ", this.state);
   }
 }
 

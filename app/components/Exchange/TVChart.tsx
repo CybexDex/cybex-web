@@ -122,7 +122,7 @@ export class TVChartContainer extends React.PureComponent<any> {
     let disabled_features = [
       "edit_buttons_in_legend",
       "header_symbol_search",
-      "hide_left_toolbar_by_default",
+      // "hide_left_toolbar_by_default",
       "symbol_search_hot_key",
       "symbol_info",
       "header_compare",
@@ -237,6 +237,7 @@ export class TVChartContainer extends React.PureComponent<any> {
       ],
       enabled_features: [
         "hide_loading_screen_on_series_error",
+        "keep_left_toolbar_visible_on_small_screens",
         "side_toolbar_in_fullscreen_mode"
       ],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
