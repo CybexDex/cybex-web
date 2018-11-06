@@ -59,7 +59,7 @@ class RteActions {
   setupWs(channelStr: string) {
     this.subscription.channel = channelStr;
     this.subscription.ws = new WebSocket(
-      `ws://210.3.74.58:18888/streams?stream=${channelStr}`
+      `wss://mdp.cybex.io/streams?stream=${channelStr}`
     );
     this.subscription.ws.onmessage = this.onMarketMsg;
   }
