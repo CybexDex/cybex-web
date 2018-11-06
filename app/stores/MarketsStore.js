@@ -809,13 +809,13 @@ class MarketsStore {
         open = close;
       }
 
-      if (high > 1.3 * ((open + close) / 2)) {
-        high = findMax(open, close);
-      }
+      // if (high > 1.3 * ((open + close) / 2)) {
+      //   high = findMax(open, close);
+      // }
 
-      if (low < 0.7 * ((open + close) / 2)) {
-        low = findMin(open, close);
-      }
+      // if (low < 0.7 * ((open + close) / 2)) {
+      //   low = findMin(open, close);
+      // }
 
       prices.push({
         date,
