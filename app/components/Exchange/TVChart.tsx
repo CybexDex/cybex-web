@@ -23,6 +23,47 @@ const supportedResolutions = {
   "1D": 86400
 };
 const interval = { 15: "15S", 60: "1", 300: "5", 3600: "60", 86400: "1D" };
+type Price = {
+  base: "JADE.USDT";
+  close: 578.4156383628588;
+  date: Date;
+  high: 586.1529147571035;
+  isBarClosed: true;
+  isLastBar: false;
+  low: 566.4228706896552;
+  open: 573.7612700228833;
+  quote: "JADE.ETH";
+  time: 1466265600000;
+  volume: 475.724341;
+};
+const isPriceDifferent: (prev: Price[], next: Price[]) => boolean = (
+  prev = [],
+  next = []
+) => {
+  let fromZeroToOne =
+    prev.length < 2 ||
+    next.length < 2 ||
+    Math.abs(next.length - prev.length) >= 2;
+  if (fromZeroToOne) {
+    return true;
+  }
+  let bucketChange: boolean =
+    [prev[0], prev[1]].reduce(
+      (first, second) => Math.abs(first.time - second.time) as any
+    ) !==
+    [next[0], next[1]].reduce(
+      (first, second) => Math.abs(first.time - second.time) as any
+    );
+  if (bucketChange) {
+    return true;
+  }
+  let marketChange: boolean =
+    prev[0].base + prev[0].quote !== next[0].base + next[0].quote;
+  if (marketChange) {
+    return true;
+  }
+  return false;
+};
 
 export class TVChartContainer extends React.PureComponent<any> {
   updateEmitter = new EventEmitter();
@@ -47,7 +88,9 @@ export class TVChartContainer extends React.PureComponent<any> {
 
   componentDidUpdate(prevProps) {
     // console.debug("TVChart: DidUpdate", prevProps, this.props);
-    this.updateEmitter.emit(RELOAD_CHART);
+    if (isPriceDifferent(prevProps.priceData, this.props.priceData)) {
+      this.updateEmitter.emit(RELOAD_CHART);
+    }
     // Price realtime update
     // TODO: needs further riview
     if (
