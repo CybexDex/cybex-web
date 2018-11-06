@@ -167,6 +167,7 @@ const MarketUtils = {
   },
 
   parse_order_history(order, paysAsset, receivesAsset, isAsk, flipped) {
+    console.debug("ParseOrder: ", order);
     let isCall =
       order.order_id.split(".")[1] == object_type.limit_order ? false : true;
     let receivePrecision = utils.get_asset_precision(
@@ -174,14 +175,28 @@ const MarketUtils = {
     );
     let payPrecision = utils.get_asset_precision(paysAsset.get("precision"));
 
-    let receives = new BigNumber(order.receives.amount).div(receivePrecision).toNumber();
+    let receives = new BigNumber(order.receives.amount)
+      .div(receivePrecision)
+      .toNumber();
     receives = utils.format_number(receives, receivesAsset.get("precision"));
     let pays = new BigNumber(order.pays.amount).div(payPrecision).toNumber();
     pays = utils.format_number(pays, paysAsset.get("precision"));
+    // let price_full = utils.get_asset_price(
+    //   order.receives.amount,
+    //   receivesAsset,
+    //   order.pays.amount,
+    //   paysAsset,
+    //   isAsk
+    // );
+    // Todo check the price is right or not
+    let [fillRec, fillPay] =
+      order.fill_price.base.asset_id === order.receives.asset_id
+        ? [order.fill_price.base, order.fill_price.quote]
+        : [order.fill_price.quote, order.fill_price.base];
     let price_full = utils.get_asset_price(
-      order.receives.amount,
+      fillRec.amount,
       receivesAsset,
-      order.pays.amount,
+      fillPay.amount,
       paysAsset,
       isAsk
     );

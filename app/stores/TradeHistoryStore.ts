@@ -34,7 +34,7 @@ class TradeHistoryStore extends AbstractStore<TradeHistoryState> {
         else return 0;
       }).slice(0, MAX_SIZE)
     });
-    console.debug("TradeHistoryStore: ", this.state);
+    console.debug("TradeHistoryStore Patched: ", this.state);
   }
 }
 
