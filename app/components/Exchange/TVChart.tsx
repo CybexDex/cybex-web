@@ -30,7 +30,7 @@ export class TVChartContainer extends React.PureComponent<any> {
   // priceData = [];
 
   static defaultProps = {
-    symbol: "Cybex:BTC/USD",
+    symbol: "ETH/USDT",
     interval: "60",
     containerId: "tv_chart_container",
     libraryPath: "/charting_library/",
@@ -79,7 +79,7 @@ export class TVChartContainer extends React.PureComponent<any> {
     let disabled_features = [
       "edit_buttons_in_legend",
       "header_symbol_search",
-      "hide_left_toolbar_by_default",
+      // "hide_left_toolbar_by_default",
       "symbol_search_hot_key",
       "symbol_info",
       "header_compare",
@@ -104,7 +104,7 @@ export class TVChartContainer extends React.PureComponent<any> {
           session: "24x7",
           timezone: "Asia/Shanghai",
           ticker: symbolName,
-          exchange: "Cybex",
+          // exchange: "Cybex",
           minmov: 1,
           pricescale: 100000000,
           has_intraday: true,
@@ -208,11 +208,13 @@ export class TVChartContainer extends React.PureComponent<any> {
         "dataWindowProperties.fontSize": 8,
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
-        "symbolWatermarkProperties.transparency": 60,
-        "scalesProperties.textColor": "#AAA",
-        "paneProperties.topMargin": 10,
-        "paneProperties.bottomMargin": 25,
-        // Colors
+          "symbolWatermarkProperties.transparency": 60,
+          "scalesProperties.textColor": "#AAA",
+          "scalesProperties.fontSize":10,
+          "paneProperties.topMargin": 10,
+          "paneProperties.bottomMargin": 25,
+
+          // Colors
         "mainSeriesProperties.candleStyle.wickUpColor": Colors.$colorGrass,
         "mainSeriesProperties.candleStyle.wickDownColor": Colors.$colorFlame,
         "mainSeriesProperties.candleStyle.upColor": Colors.$colorGrass,
@@ -243,7 +245,7 @@ export class TVChartContainer extends React.PureComponent<any> {
 
   _getSymbol() {
     return (
-      "Cybex:" +
+      //"Cybex:" +
       this.props.quoteSymbol.replace("JADE.", "") +
       "/" +
       this.props.baseSymbol.replace("JADE.", "")
