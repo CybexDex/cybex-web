@@ -36,7 +36,7 @@ type Price = {
   time: 1466265600000;
   volume: 475.724341;
 };
-const isPriceDifferent: (prev: Price[], next: Price[]) => boolean = (
+const hasMarketChanged: (prev: Price[], next: Price[]) => boolean = (
   prev = [],
   next = []
 ) => {
@@ -87,23 +87,16 @@ export class TVChartContainer extends React.PureComponent<any> {
   tvWidget = null;
 
   componentDidUpdate(prevProps) {
-    // console.debug("TVChart: DidUpdate", prevProps, this.props);
-    if (isPriceDifferent(prevProps.priceData, this.props.priceData)) {
+    if (hasMarketChanged(prevProps.priceData, this.props.priceData)) {
       this.updateEmitter.emit(RELOAD_CHART);
-    }
-    // Price realtime update
-    // TODO: needs further riview
-    if (
-      this.props.lastBar &&
-      this.props.priceData.length >= prevProps.priceData.length
+    } else if (
+      this.updateCbs.lastBar &&
+      this.props.priceData.length &&
+      this.updateCbs.realtimeUpdate
     ) {
-      let index = this.props.priceData.findIndex(this.props.lastBar);
-      while (index < this.props.priceData.length) {
-        if (this.updateCbs.realtimeUpdate) {
-          this.updateCbs.realtimeUpdate(this.props.priceData[index]);
-        }
-        index = index + 1;
-      }
+      this.props.priceData
+        .filter((price: Price) => price.time > this.updateCbs.lastBar.time)
+        .forEach(price => this.updateCbs.realtimeUpdate(price));
     }
   }
 
@@ -122,7 +115,6 @@ export class TVChartContainer extends React.PureComponent<any> {
     let disabled_features = [
       "edit_buttons_in_legend",
       "header_symbol_search",
-      "hide_left_toolbar_by_default",
       "symbol_search_hot_key",
       "symbol_info",
       "header_compare",
@@ -237,6 +229,7 @@ export class TVChartContainer extends React.PureComponent<any> {
       ],
       enabled_features: [
         "hide_loading_screen_on_series_error",
+        "keep_left_toolbar_visible_on_small_screens",
         "side_toolbar_in_fullscreen_mode"
       ],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
