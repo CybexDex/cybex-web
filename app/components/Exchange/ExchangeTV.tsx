@@ -988,7 +988,7 @@ class ExchangeNew extends React.Component<any, any> {
       currentInfoTab
     } = this.state;
     const { isFrozen, frozenAsset } = this.isMarketFrozen();
-    let elementsHeight = 366;
+    let elementsHeight = 460;
     let base = null,
       quote = null,
       accountBalance = null,

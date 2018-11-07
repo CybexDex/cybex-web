@@ -41,7 +41,7 @@
 .market-layout {
   display: grid;
   grid-template-rows: [r1-s] minmax(50%, 1fr) [r1-e r2-s] 1fr [r2-e];
-  grid-template-columns: minmax(288px, 1fr) minmax(532px, 2fr) minmax(
+  grid-template-columns: minmax(288px, 1fr) minmax(532px, 3fr) minmax(
       272px,
       1fr
     );
@@ -425,7 +425,7 @@ div.bucket-option {
 }
 
 .buy-sell-label {
-  font-size: 90%;
+  font-size: 110%;
   line-height: 1.75rem;
   height: 1.75rem;
 }
@@ -440,7 +440,7 @@ div.bucket-option {
   padding: 0;
   height: 1.75rem;
   text-align: right;
-  font-size: 90%;
+  font-size: 100%;
   padding-right: 0.4rem;
 }
 
@@ -449,7 +449,8 @@ div.bucket-option {
   height: 1.75rem;
   line-height: 1.75rem;
   font-weight: 700;
-  font-size: 75%;
+  //font-size: 75%;
+  font-size: 100%;
   padding: 0 0 0 5px;
   min-width: 3.6rem;
   border-top-right-radius: 5px;

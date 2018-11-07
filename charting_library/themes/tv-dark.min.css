@@ -39,7 +39,7 @@ body,
 html {
   background: #1b262d 0 0;
   color: #afafaf;
-  font-family: "Microsoft YaHei", Arial, sans-serif !important;
+  /*font-family: Arial, sans-serif !important;*/
 }
 #library-container {
   border: 0 !important;
@@ -939,4 +939,8 @@ a.properties-tabs-label {
 }
 [class^="fill-"] {
   background-color: #171d2a;
+}
+
+.pane-legend-item-value-wrap .pane-legend-item-value-title__main, .pane-legend-item-value-wrap .pane-legend-item-value__main{
+  font-size: 8pt !important;
 }

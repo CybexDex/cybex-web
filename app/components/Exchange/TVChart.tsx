@@ -149,13 +149,13 @@ export class TVChartContainer extends React.PureComponent<any> {
           ticker: symbolName,
           // exchange: "Cybex",
           minmov: 1,
-          pricescale: 100000000,
+          pricescale: 1000000,
           has_intraday: true,
           has_seconds: true,
           intraday_multipliers: ["15S", "1", "60"],
           disabled_features,
           supported_resolution: Object.keys(supportedResolutions),
-          volume_precision: 8,
+          volume_precision: 4,
           data_status: "streaming"
         };
 
@@ -213,8 +213,7 @@ export class TVChartContainer extends React.PureComponent<any> {
 
     const widgetOptions = {
       debug: false,
-      symbol: this._getSymbol(), //"Cybex:BTC/USD"
-      // symbol:this.props.exchange+this.props.symbol,
+      symbol: this.props.quoteSymbol.replace("JADE.", "") + "/" + this.props.baseSymbol.replace("JADE.", ""),
       // datafeed: this.props.Datafeed,
       datafeed: Datafeed,
       interval: interval[this.props.bucketSize],
@@ -236,8 +235,9 @@ export class TVChartContainer extends React.PureComponent<any> {
         { text: "6h", resolution: "1" }
       ],
       enabled_features: [
-        "hide_loading_screen_on_series_error",
-        "side_toolbar_in_fullscreen_mode"
+          "hide_loading_screen_on_series_error",
+          "side_toolbar_in_fullscreen_mode",
+          "hide_left_toolbar_by_default"
       ],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
       disabled_features,
@@ -256,6 +256,8 @@ export class TVChartContainer extends React.PureComponent<any> {
           "scalesProperties.fontSize":10,
           "paneProperties.topMargin": 10,
           "paneProperties.bottomMargin": 25,
+          "paneProperties.leftMargin": 20,
+          "paneProperties.rightMargin": 20,
 
           // Colors
         "mainSeriesProperties.candleStyle.wickUpColor": Colors.$colorGrass,
@@ -284,15 +286,6 @@ export class TVChartContainer extends React.PureComponent<any> {
           // obj.timeframe = "12M";
         });
     });
-  }
-
-  _getSymbol() {
-    return (
-      //"Cybex:" +
-      this.props.quoteSymbol.replace("JADE.", "") +
-      "/" +
-      this.props.baseSymbol.replace("JADE.", "")
-    );
   }
 
   componentWillUnmount() {

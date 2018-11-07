@@ -122,7 +122,7 @@ class MarketHistory extends React.Component {
                 <PriceText preFormattedPrice={parsed_order} />
               </td>
               <td>{parsed_order.receives}</td>
-              <td>{parsed_order.pays}</td>
+              {/*<td>{parsed_order.pays}</td>*/}
               <BlockDate component="td" block_number={block_num} tooltip />
             </tr>
           );
@@ -165,8 +165,9 @@ class MarketHistory extends React.Component {
                 <PriceText preFormattedPrice={parsed_order} />
               </td>
               <td>{parsed_order.receives}</td>
-              <td>{parsed_order.pays}</td>
-              <td className="tooltip" data-tip={new Date(order.time)}>
+              {/*<td>{parsed_order.pays}</td>*/}
+              {/*<td className="tooltip" data-tip={new Date(order.time)}>*/}
+                <td>
                 {counterpart.localize(new Date(order.time), {
                   type: "date",
                   format:
@@ -225,11 +226,11 @@ class MarketHistory extends React.Component {
                       <AssetName dataPlace="top" name={quoteSymbol} />
                     </span>
                   </th>
-                  <th className="text-center">
-                    <span className="header-sub-title">
-                      <AssetName dataPlace="top" name={baseSymbol} />
-                    </span>
-                  </th>
+                  {/*<th className="text-center">*/}
+                    {/*<span className="header-sub-title">*/}
+                      {/*<AssetName dataPlace="top" name={baseSymbol} />*/}
+                    {/*</span>*/}
+                  {/*</th>*/}
                   <th className="text-center">
                     <Translate
                       className="header-sub-title"
