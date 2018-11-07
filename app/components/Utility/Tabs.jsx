@@ -174,7 +174,6 @@ class Tabs extends React.Component {
     if (!activeContent) {
       activeContent = tabs[0].props.children;
     }
-    console.debug("Tabs: ", tabs);
 
     return (
       <div

@@ -47,8 +47,6 @@ let VolumeDisplay = class extends React.PureComponent<
       this.props.markets[1]
     ) {
       let assetsMap = this.props.markets.filter(m => !!m);
-      console.debug("Assets Map");
-      console.debug(assetsMap);
       let rawPairs = assetsMap.reduce((allPairs, nextAssetMap, i, arr) => {
         arr.forEach(assetMap => {
           if (assetMap.get("id") !== nextAssetMap.get("id")) {

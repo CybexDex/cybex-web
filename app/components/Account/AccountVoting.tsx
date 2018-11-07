@@ -957,7 +957,6 @@ AccountVoting = BindToChainState(AccountVoting, {
 });
 
 const BudgetObjectWrapper = props => {
-  console.debug("Budget: ", SettingsStore.getLastBudgetObject());
   return (
     <AccountVoting
       {...props}

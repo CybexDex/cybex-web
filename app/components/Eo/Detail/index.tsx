@@ -663,6 +663,7 @@ class Detail extends React.Component<any, any> {
   render() {
     const data = this.state.data || {};
     const {
+      id,
       name,
       rate,
       adds_token_total,
@@ -899,7 +900,12 @@ class Detail extends React.Component<any, any> {
                     <Translate content="EIO.Lock-up_Period" />
                   </div>
                   <div className="info-detail">
-                    {lockAt.local().format("YYYY-MM-DD HH:mm:ss")}
+                    {id === "1032"
+                      ? lockAt
+                          .add(5, "h")
+                          .local()
+                          .format("YYYY-MM-DD HH:mm:ss")
+                      : lockAt.local().format("YYYY-MM-DD HH:mm:ss")}
                   </div>
                 </div>
               ) : null}
