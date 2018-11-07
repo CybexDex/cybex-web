@@ -232,7 +232,7 @@ let OrderBookRowVertical = class extends React.Component<
       withYuan,
       unitYuan,
       max,
-        previous
+      previous
     } = this.props;
     const isBid = order.isBid();
     const isCall = order.isCall();
@@ -254,7 +254,7 @@ let OrderBookRowVertical = class extends React.Component<
     let yuanPrice = withYuan
       ? parseFloat(
           (unitYuan * order.getPrice(order.sell_price, digits)).toFixed(
-            digits - 3
+            Math.max(digits - 3, 2)
           )
         )
       : NaN;
@@ -347,7 +347,7 @@ OrderBookRowVertical = connect(
   }
 );
 
-const PRECISION_SIZE = 4;
+const PRECISION_SIZE = 7;
 let OrderBookHeader = class extends React.PureComponent<
   {
     type;
@@ -527,15 +527,18 @@ let OrderBookParitalWrapper = class extends React.Component<
     } = this.props;
     let toDispalyOrders = type === OrderType.Ask ? orders.reverse() : orders;
     return toDispalyOrders.map((order, index) => {
-        let previousOne;
-        if (type === OrderType.Ask) {
-            previousOne = index<toDispalyOrders.length-1?toDispalyOrders[index+1]:null;
-        }else{
-            previousOne = index>0?toDispalyOrders[index-1]:null;
-        }
-        let previous = previousOne?previousOne.getPrice():null;
+      let previousOne;
+      if (type === OrderType.Ask) {
+        previousOne =
+          index < toDispalyOrders.length - 1
+            ? toDispalyOrders[index + 1]
+            : null;
+      } else {
+        previousOne = index > 0 ? toDispalyOrders[index - 1] : null;
+      }
+      let previous = previousOne ? previousOne.getPrice() : null;
 
-        return order === null ? (
+      return order === null ? (
         <OrderBookRowEmpty key={"$nullOrder" + index} />
       ) : (
         <OrderBookRowVertical
@@ -681,7 +684,7 @@ let OrderBook = class extends React.Component<any, any> {
       return null;
     }
     let useRte = baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH";
-
+    let usingRte = useRte && rteDepth.bids;
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids
         ? [rteDepth.bids, rteDepth.asks].map((orders: RteOrder[], isNotBid) =>
@@ -788,7 +791,7 @@ let OrderBook = class extends React.Component<any, any> {
       >
         <PriceStat
           ready={marketReady}
-          price={(rteTicker && rteTicker.px) || (latest && latest.full) || {}}
+          price={(useRte && rteTicker && rteTicker.px) || (latest && latest.full) || {}}
           quote={quote}
           withYuan
           base={base}

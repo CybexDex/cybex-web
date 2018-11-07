@@ -35,6 +35,7 @@ import { Button, Colors } from "components/Common";
 import { Icon } from "components/Common";
 import { Checkbox, Radio, getId, BaseColors } from "components/Common";
 import PriceChartD3 from "./PriceChartD3";
+import { MarketHistoryStore } from "stores/MarketHistoryStore";
 
 const INFO_TAB_MYORDER = "my-order",
   INFO_TAB_MARKET_HISTORY = "market-history",
@@ -1301,7 +1302,8 @@ class ExchangeNew extends React.Component<any, any> {
           <div className="grid-block shrink no-overflow" id="market-charts">
             {/* Price history chart */}
             <TVChartContainer
-              priceData={this.props.priceData}
+              // priceData={this.props.priceData}
+              priceData={MarketHistoryStore.getState()[`${quoteSymbol}${baseSymbol}${bucketSize}`]}
               onChangeBucket={this._changeBucketSize.bind(this)}
               // Datafeed={this.props.Datafeed}
               base={base}

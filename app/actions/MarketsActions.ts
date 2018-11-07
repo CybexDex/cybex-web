@@ -8,6 +8,8 @@ import accountUtils from "common/account_utils";
 import * as Immutable from "immutable";
 import { TradeHistoryActions } from "./TradeHistoryActions";
 import { TradeHistoryStore } from "stores/TradeHistoryStore";
+import { MarketHistoryActions } from "./MarketHistoryActions";
+import { MarketHistoryStore } from "stores/MarketHistoryStore";
 declare const __DEV__;
 
 let subs = {};
@@ -303,6 +305,14 @@ class MarketsActions {
         startDateShort = new Date(startDateShort.getTime() - 3600 * 50 * 1000);
         endDate.setDate(endDate.getDate() + 1);
         if (__DEV__) console.time("Fetch market data");
+        MarketHistoryActions.patchMarketHistory(
+          quote,
+          base,
+          bucketSize,
+          MarketHistoryStore.getState()[
+            `${quote.get("symbol")}${base.get("symbol")}${bucketSize}`
+          ]
+        );
         return Promise.all([
           Apis.instance()
             .db_api()

@@ -172,6 +172,39 @@ declare namespace Cybex {
     side2_account_id: string;
   };
 
+  type MarketHistory = {
+    id: "5.1.722298";
+    key: {
+      base: "1.3.2";
+      quote: "1.3.27";
+      seconds: 86400;
+      open: "2018-06-01T00:00:00";
+    };
+    high_base: 63100;
+    high_quote: 35643676;
+    low_base: 99000;
+    low_quote: 58341825;
+    open_base: 163700;
+    open_quote: 94686640;
+    close_base: 131800;
+    close_quote: 76553309;
+    base_volume: 587892479;
+    quote_volume: "338732823145";
+  };
+  type SanitizedMarketHistory = {
+    date: Date;
+    open: number;
+    high: number;
+    low: number;
+    close: number;
+    volume: number;
+    base: string;
+    quote: string;
+    time: number;
+    isLastBar: boolean;
+    isBarClosed: boolean;
+  };
+
   type Asset = {
     satoshi;
     asset_id;

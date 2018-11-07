@@ -56,7 +56,7 @@ class TradeHistoryActions {
         stopTime.substring(0, stopTime.length - 1),
         100
       ]);
-    this.onHistoryPatched({
+    return this.onHistoryPatched({
       market: `${market.quote.get("symbol")}${market.base.get("symbol")}`,
       history
     });
