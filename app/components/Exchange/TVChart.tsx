@@ -5,6 +5,8 @@ import { widget } from "../../../charting_library/charting_library.min";
 import EventEmitter from "event-emitter";
 import { Colors } from "components/Common/Colors";
 import IntlStore from "stores/IntlStore";
+import { MarketHistoryActions } from "actions/MarketHistoryActions";
+import { MarketHistoryStore, marketEvent } from "stores/MarketHistoryStore";
 
 function getLanguageFromURL() {
   const regex = new RegExp("[\\?&]lang=([^&#]*)");
@@ -22,44 +24,38 @@ const supportedResolutions = {
   "60": 3600,
   "1D": 86400
 };
+const support_r = Object.keys(supportedResolutions);
 const interval = { 15: "15S", 60: "1", 300: "5", 3600: "60", 86400: "1D" };
-type Price = {
-  base: "JADE.USDT";
-  close: 578.4156383628588;
-  date: Date;
-  high: 586.1529147571035;
-  isBarClosed: true;
-  isLastBar: false;
-  low: 566.4228706896552;
-  open: 573.7612700228833;
-  quote: "JADE.ETH";
-  time: 1466265600000;
-  volume: 475.724341;
-};
-const hasMarketChanged: (prev: Price[], next: Price[]) => boolean = (
-  prev = [],
-  next = []
-) => {
-  let fromZeroToOne =
-    prev.length < 2 ||
-    next.length < 2 ||
-    Math.abs(next.length - prev.length) >= 2;
+const hasMarketChanged: (
+  prev: Cybex.SanitizedMarketHistory[],
+  next: Cybex.SanitizedMarketHistory[]
+) => boolean = (prev = [], next = []) => {
+  if (!prev.length && !next.length) return false;
+  let fromZeroToOne = prev.length == 0 || next.length == 0;
   if (fromZeroToOne) {
+    console.debug("===getBar from zero to one");
     return true;
   }
   let bucketChange: boolean =
-    [prev[0], prev[1]].reduce(
-      (first, second) => Math.abs(first.time - second.time) as any
-    ) !==
-    [next[0], next[1]].reduce(
-      (first, second) => Math.abs(first.time - second.time) as any
-    );
+    prev[1] && next[1] && prev[1].interval !== next[1].interval;
+
   if (bucketChange) {
+    console.debug(
+      "===getBar bucketChange: ",
+      prev[1].interval,
+      next[1].interval
+    );
     return true;
   }
   let marketChange: boolean =
     prev[0].base + prev[0].quote !== next[0].base + next[0].quote;
   if (marketChange) {
+    console.debug(
+      "===getBar marketChange: ",
+      prev[0].base + prev[0].quote,
+      next[0].base + next[0].quote,
+      next[1].interval
+    );
     return true;
   }
   return false;
@@ -95,20 +91,21 @@ export class TVChartContainer extends React.PureComponent<any> {
       this.updateCbs.realtimeUpdate
     ) {
       console.debug("======= Real Update", this.updateCbs.lastBar);
-      this.props.priceData
-        .filter((price: Price) => price.date > this.updateCbs.lastBar.date)
-        .forEach(price => this.updateCbs.realtimeUpdate(price));
+      // this.props.priceData
+      //   .filter((price: Price) => price.date > this.updateCbs.lastBar.date)
+      //   .forEach(price => this.updateCbs.realtimeUpdate(price));
     }
   }
 
   componentDidMount() {
     this.updateEmitter.on(RELOAD_CHART, props => {
       if (this.updateCbs.resetData) {
-        console.debug("Reload Chart");
+        console.debug("==== getBar Reload Chart");
         this.updateCbs.resetCache();
         this.updateCbs.resetData();
       }
     });
+    console.debug("==== getBar Component Did Mount");
     this._setupTv();
   }
 
@@ -147,9 +144,9 @@ export class TVChartContainer extends React.PureComponent<any> {
           has_seconds: true,
           intraday_multipliers: ["15S", "1", "60"],
           disabled_features,
-          supported_resolution: Object.keys(supportedResolutions),
+          supported_resolution: support_r,
           volume_precision: 8,
-          data_status: "streaming"
+          data_status: "delayed_streaming"
         };
 
         setTimeout(function() {
@@ -173,7 +170,7 @@ export class TVChartContainer extends React.PureComponent<any> {
         console.debug("=====unsubscribeBars running", subscriberUID);
         // stream.unsubscribeBars(subscriberUID)
       },
-      getBars: (
+      getBars: async (
         symbolInfo,
         resolution,
         from,
@@ -183,24 +180,69 @@ export class TVChartContainer extends React.PureComponent<any> {
         firstDataRequest
       ) => {
         from *= 1000;
-        to *= 1000;
-        let priceData = this.props.priceData.filter(
-          price => price.time >= from && price.time <= to
+        to = to * 1000;
+        let currentPriceData =
+          MarketHistoryStore.getState()[
+            `${this.props.quoteSymbol}${this.props.baseSymbol}${
+              this.props.bucketSize
+            }`
+          ] || [];
+
+        let availableData = firstDataRequest
+          ? currentPriceData
+          : currentPriceData.filter(
+              price => price.date >= from && price.time <= to
+            );
+        console.debug(
+          "=====getBars running",
+          firstDataRequest,
+          from,
+          to,
+          currentPriceData,
+          availableData
         );
-        console.debug("=====getBars running", firstDataRequest, from, to, this.props.priceData, priceData);
-        priceData.sort(
-          (prev, next) =>
-            prev.time > next.time ? 1 : prev.time < next.time ? -1 : 0
-        );
-        const updateHistory = () => {
-          if (priceData.length) {
+        if (!availableData.length) {
+          availableData = (await new Promise(resolve => {
+            let requestID = new Date().toISOString() + "$";
+            console.debug("=====getBars running Greedy Fetch: ", requestID);
+            MarketHistoryActions.patchMarketHistory(
+              this.props.base,
+              this.props.quote,
+              this.props.bucketSize,
+              MarketHistoryStore,
+              false,
+              requestID
+            );
+            marketEvent.once(requestID, newPriceData => {
+              console.debug(
+                "=====getBars running Greedy Fetched: ",
+                requestID,
+                newPriceData
+              );
+              resolve(newPriceData);
+            });
+          })) as Cybex.SanitizedMarketHistory[];
+        }
+        console.debug("=====getBars running after fetch", availableData);
+
+        const updateHistory = priceData => {
+          priceData.filter(p => {
+            p.date > from && p.date < to
+          });
+          priceData = priceData.sort(
+            (prev, next) =>
+              prev.date > next.date ? 1 : prev.date < next.date ? -1 : 0
+          );
+          if (priceData.length > 1) {
             onHistoryCallback(priceData, { noData: false });
             this.updateCbs.lastBar = priceData[priceData.length - 1];
           } else {
-            onHistoryCallback(priceData, { noData: true });
+            console.debug("=====getBar: NoData: ", priceData);
+            onHistoryCallback([], { noData: true });
+            // onHistoryCallback([], { noData: true, nextTime: new Date(new Date().getTime() - 86400 * 1000 * 10) });
           }
         };
-        updateHistory();
+        updateHistory(availableData);
       }
     };
 

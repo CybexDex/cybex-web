@@ -200,9 +200,8 @@ declare namespace Cybex {
     volume: number;
     base: string;
     quote: string;
+    interval: number;
     time: number;
-    isLastBar: boolean;
-    isBarClosed: boolean;
   };
 
   type Asset = {

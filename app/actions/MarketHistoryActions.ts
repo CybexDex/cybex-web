@@ -23,6 +23,9 @@ function findMin(a, b) {
     return a;
   }
 }
+
+export const MarketHistoryStore = {};
+
 const marketHistorySanitizer = (baseAsset, quoteAsset, interval) => (
   current: Cybex.MarketHistory,
   index: number,
@@ -126,52 +129,85 @@ const marketHistorySanitizer = (baseAsset, quoteAsset, interval) => (
   };
 };
 
+const getMarketKey = (quoteSymbol, baseSymbol, interval) =>
+  `${quoteSymbol}${baseSymbol}${interval}`;
+
+const getTimeSet = (
+  currentHistory: Cybex.SanitizedMarketHistory[] = [],
+  interval: number,
+  loadLatest = true
+) => {
+  // 计算合适的接口区间
+  // 当没有当前数据时，时间节点为 当前时间 与 当前时间 - 200 * interval * 1000;
+  // 当有当前数据时，判断是否为获取最新数据，如果是，时间节点为 当前时间 与 当前数据 的 最新时间，
+  //              如不获取最新数据，为 当前数据的最旧时间 与 当前数据的最旧时间 - 200 * interval * 1000;
+
+  let nowDate = new Date();
+  let nowIsoString = nowDate.toISOString();
+  let newDate = currentHistory.length
+    ? loadLatest
+      ? nowDate
+      : currentHistory[currentHistory.length - 1].date
+    : nowDate;
+  let oldDate = currentHistory.length
+    ? loadLatest
+      ? currentHistory[0].date
+      : currentHistory[currentHistory.length - 1].date
+    : nowDate;
+  oldDate =
+    currentHistory.length && loadLatest
+      ? oldDate
+      : new Date(oldDate.getTime() - interval * 1000 * 200);
+  return {
+    newDate,
+    oldDate,
+    nowDate,
+    nowIsoString
+  };
+};
+
 class MarketHistoryActions {
   /**
    *
-   * @param {string} assetA
-   * @param {string} assetB
-   * @param {Cybex.SanitizedMarketHistory[]} currentHistory A trade history array, with descending order on the time
+   *
+   * @param {*} assetA
+   * @param {*} assetB
+   * @param {number} interval
+   * @param {} [currentHistory=[]] A trade history array, with descending order on the time
    * @param {boolean} [loadLatest=true]
+   * @param {string} [requestID="COMMON"]
    * @memberof MarketHistoryActions
    */
   async patchMarketHistory(
     assetA,
     assetB,
     interval: number,
-    currentHistory: Cybex.SanitizedMarketHistory[] = [],
-    loadLatest = true
+    historyStore,
+    loadLatest = true,
+    requestID = "COMMON"
   ) {
-    console.debug("Get Market History: Current", currentHistory);
     let market = correctMarketPairMap(assetA, assetB);
     let { base, quote } = market;
-    // 计算合适的接口区间
-    // 当没有当前数据时，时间节点为 当前时间 与 当前时间 - 200 * interval * 1000;
-    // 当有当前数据时，判断是否为获取最新数据，如果是，时间节点为 当前时间 与 当前数据 的 最新时间，
-    //              如不获取最新数据，为 当前数据的最旧时间 与 当前数据的最旧时间 - 200 * interval * 1000;
-    let nowDate = new Date();
-    let nowIsoString = nowDate.toISOString();
-    let newDate = currentHistory.length
-      ? loadLatest
-        ? nowDate
-        : currentHistory[currentHistory.length - 1].date
-      : nowDate;
-    let oldDate = currentHistory.length
-      ? loadLatest
-        ? currentHistory[0].date
-        : currentHistory[currentHistory.length - 1].date
-      : nowDate;
-    oldDate =
-      currentHistory.length && loadLatest
-        ? oldDate
-        : new Date(oldDate.getTime() - interval * 1000 * 200);
+    let marketKey = getMarketKey(
+      quote.get("symbol"),
+      base.get("symbol"),
+      interval
+    );
+    let currentHistory = (historyStore.getState()[marketKey] || []).sort(
+      (prev, next) =>
+        prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
+    ) ;
     let history: Cybex.SanitizedMarketHistory[] = [];
     let loaderCount = 0;
+    let { oldDate, newDate, nowIsoString } = getTimeSet(
+      currentHistory,
+      interval,
+      loadLatest
+    );
     while (
       (loaderCount === 0 && loadLatest && currentHistory.length) ||
-      (!history.length && loaderCount < 20)
+      (!history.length && loaderCount < Math.ceil((86400 * 2) / 200 / interval))
     ) {
-      console.debug("Get Market History: LoadCount");
       history = (await Apis.instance()
         .history_api()
         .exec("get_market_history", [
@@ -190,11 +226,7 @@ class MarketHistoryActions {
     history = history
       .map((data, i, historyArray) => {
         let finalDate =
-          i !== historyArray.length - 1
-            ? historyArray[i + 1].date
-            : currentHistory.length && !loadLatest
-              ? currentHistory[currentHistory.length - 1].date
-              : new Date();
+          i !== historyArray.length - 1 ? historyArray[i + 1].date : newDate;
         let suffix = i !== historyArray.length - 1 ? 1 : 0;
         return [
           data,
@@ -203,7 +235,6 @@ class MarketHistoryActions {
               ((finalDate as any) - (data.date as any)) / interval / 1000
             ) - suffix
           )
-            // return new Array((Math.floor(finalTime - data.time) / interval / 1000) - 1)
             .fill(1)
             .map((e, i) => {
               let date = new Date(
@@ -217,8 +248,7 @@ class MarketHistoryActions {
                 high: data.close,
                 low: data.close,
                 volume: 0,
-                isBarClosed: true,
-                isLastBar: false,
+                interval,
                 base: data.base,
                 quote: data.quote
               };
@@ -228,28 +258,29 @@ class MarketHistoryActions {
       .reduce((all, next) => [...all, ...next], [])
       .sort(
         (prev, next) =>
-          prev.time > next.time ? -1 : prev.time < next.time ? 1 : 0
+          prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
       );
     console.debug("Get Market History: Got: ", history);
     this.onHistoryPatched({
-      market: `${market.quote.get("symbol")}${market.base.get(
-        "symbol"
-      )}${interval}`,
+      market: marketKey,
       history,
-      loadLatest
+      loadLatest,
+      requestID
     });
   }
 
   onHistoryPatched({
     market,
     history,
-    loadLatest
+    loadLatest,
+    requestID
   }: {
     market: string;
     history: Cybex.SanitizedMarketHistory[];
     loadLatest: boolean;
+    requestID;
   }) {
-    return { market, history, loadLatest };
+    return { market, history, loadLatest, requestID };
   }
 }
 

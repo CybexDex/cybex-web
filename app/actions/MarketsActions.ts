@@ -151,9 +151,7 @@ class MarketsActions {
               quote,
               base,
               bucketSize,
-              MarketHistoryStore.getState()[
-                `${quote.get("symbol")}${base.get("symbol")}${bucketSize}`
-              ]
+              MarketHistoryStore
             );
             let callPromise = null,
               settlePromise = null;
@@ -317,9 +315,7 @@ class MarketsActions {
           quote,
           base,
           bucketSize,
-          MarketHistoryStore.getState()[
-            `${quote.get("symbol")}${base.get("symbol")}${bucketSize}`
-          ]
+          MarketHistoryStore
         );
         return Promise.all([
           Apis.instance()

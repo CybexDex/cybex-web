@@ -4,8 +4,11 @@ import { debugGen } from "utils//Utils";
 import { MarketHistoryActions } from "actions/MarketHistoryActions";
 import { AbstractStore } from "./AbstractStore";
 import { Map } from "immutable";
+import EventEmitter from "event-emitter";
 
 const MAX_SIZE = 1500;
+
+export const marketEvent = new EventEmitter();
 
 type MarketHistoryState = {
   [marketPairWithInterval: string]: Cybex.SanitizedMarketHistory[];
@@ -21,7 +24,7 @@ class MarketHistoryStore extends AbstractStore<MarketHistoryState> {
     });
     console.debug("MarketHistory Store Constructor Done");
   }
-  onHistoryPatched({ market, history = [], loadLatest }) {
+  onHistoryPatched({ market, history = [], loadLatest, requestID }) {
     console.debug("MarketHistoryStore: ", market, this.state[market], history);
     let currentData = this.state[market] || [];
     let concatData = history.length ? history[history.length - 1] : null;
@@ -31,18 +34,13 @@ class MarketHistoryStore extends AbstractStore<MarketHistoryState> {
     let h: Cybex.SanitizedMarketHistory[] = !loadLatest
       ? [...currentData, ...history]
       : [...history, ...currentData];
+    
+      // .slice(0, MAX_SIZE);
     this.setState({
       [market]: h
-        .sort((prev, next) => {
-          let prevTime = prev.date;
-          let nextTime = next.date;
-          if (prevTime > nextTime) return -1;
-          if (prevTime < nextTime) return 1;
-          else return 0;
-        })
-        .slice(0, MAX_SIZE)
     });
     console.debug("MarketHistoryStore Patched: ", this.state);
+    requestID && marketEvent.emit(requestID, h);
   }
 }
 
