@@ -104,13 +104,13 @@ const marketHistorySanitizer = (baseAsset, quoteAsset, interval) => (
     open = close;
   }
 
-  if (high > 1.3 * ((open + close) / 2)) {
-    high = findMax(open, close);
-  }
+  // if (high > 1.3 * ((open + close) / 2)) {
+  //   high = findMax(open, close);
+  // }
 
-  if (low < 0.7 * ((open + close) / 2)) {
-    low = findMin(open, close);
-  }
+  // if (low < 0.7 * ((open + close) / 2)) {
+  //   low = findMin(open, close);
+  // }
 
   return {
     date,
@@ -120,6 +120,7 @@ const marketHistorySanitizer = (baseAsset, quoteAsset, interval) => (
     close,
     volume,
     interval,
+    time: date.getTime(),
     base: baseAsset.get("symbol"),
     quote: quoteAsset.get("symbol")
   };
@@ -141,53 +142,32 @@ class MarketHistoryActions {
     currentHistory: Cybex.SanitizedMarketHistory[] = [],
     loadLatest = true
   ) {
+    console.debug("Get Market History: Current", currentHistory);
     let market = correctMarketPairMap(assetA, assetB);
     let { base, quote } = market;
     // let current = currentHistory.filter(entry => !entry.isBarClosed);
-    let nowTrade: Cybex.SanitizedMarketHistory = {
-      date: new Date(),
-      open: 0,
-      high: 0,
-      low: 0,
-      close: 0,
-      volume: 0,
-      base: base.get("symbol"),
-      quote: quote.get("symbol"),
-      time: new Date().valueOf(),
-      isLastBar: false,
-      isBarClosed: true
-    };
-    let earlyTrade: Cybex.SanitizedMarketHistory = {
-      date: new Date(Date.now() - 86400 * 1000 * 10000),
-      open: 0,
-      high: 0,
-      low: 0,
-      close: 0,
-      volume: 0,
-      base: base.get("symbol"),
-      quote: quote.get("symbol"),
-      time: new Date(Date.now() - 86400 * 1000 * 10000).valueOf(),
-      isLastBar: false,
-      isBarClosed: true
-    };
-    let currentLatest: Cybex.SanitizedMarketHistory = currentHistory.length
-      ? currentHistory[0]
-      : earlyTrade;
-    let currentOldest: Cybex.SanitizedMarketHistory = currentHistory.length
-      ? currentHistory[currentHistory.length - 1]
-      : nowTrade;
-    let startTime = loadLatest
-      ? nowTrade.date.toISOString()
-      : currentOldest.date.toISOString();
-    let stopTime = loadLatest
-      ? currentLatest.date.toISOString()
-      : earlyTrade.date.toISOString();
-    console.debug("Market Action To Patch: ", [
+    let nowDate = new Date();
+    let nowIsoString = nowDate.toISOString();
+    let newDate = currentHistory.length
+      ? loadLatest
+        ? nowDate
+        : currentHistory[currentHistory.length - 1].date
+      : nowDate;
+    let oldDate = currentHistory.length
+      ? loadLatest
+        ? currentHistory[0].date
+        : currentHistory[currentHistory.length - 1].date
+      : nowDate;
+    oldDate =
+      currentHistory.length && loadLatest
+        ? oldDate
+        : new Date(oldDate.getTime() - interval * 1000 * 200);
+    console.debug("Get Market History: ", [
       base.get("id"),
       quote.get("id"),
-      startTime.substring(0, startTime.length - 1),
-      stopTime.substring(0, stopTime.length - 1),
-      300
+      interval,
+      oldDate.toISOString().substring(0, nowIsoString.length - 5),
+      newDate.toISOString().substring(0, nowIsoString.length - 5)
     ]);
     let history: Cybex.SanitizedMarketHistory[] = (await Apis.instance()
       .history_api()
@@ -195,25 +175,68 @@ class MarketHistoryActions {
         base.get("id"),
         quote.get("id"),
         interval,
-        stopTime.substring(0, stopTime.length - 1),
-        startTime.substring(0, startTime.length - 1),
-      ])).map(marketHistorySanitizer(base, quote, interval));
+        oldDate.toISOString().substring(0, nowIsoString.length - 5),
+        newDate.toISOString().substring(0, nowIsoString.length - 5)
+      ]))
+      .map(marketHistorySanitizer(base, quote, interval))
+      .map((data, i, historyArray) => {
+        if (i !== historyArray.length - 1) {
+          let finalTime = historyArray[i + 1].time;
+          return [
+            data,
+            ...new Array(
+              Math.floor(finalTime - data.time) / interval / 1000 - 1
+            )
+              // return new Array((Math.floor(finalTime - data.time) / interval / 1000) - 1)
+              .fill(1)
+              .map((e, i) => {
+                let date = new Date(
+                  data.date.getTime() + (i + 1) * interval * 1000
+                );
+                return {
+                  date,
+                  time: date.getTime(),
+                  open: data.close,
+                  close: data.close,
+                  high: data.close,
+                  low: data.close,
+                  volume: 0,
+                  isBarClosed: true,
+                  isLastBar: false,
+                  base: data.base,
+                  quote: data.quote
+                };
+              })
+          ];
+        } else {
+          return [data];
+        }
+      })
+      .reduce((all, next) => [...all, ...next], [])
+      .sort(
+        (prev, next) =>
+          prev.time > next.time ? -1 : prev.time < next.time ? 1 : 0
+      );
+    console.debug("Get Market History: Got: ", history);
     this.onHistoryPatched({
       market: `${market.quote.get("symbol")}${market.base.get(
         "symbol"
       )}${interval}`,
-      history
+      history,
+      loadLatest
     });
   }
 
   onHistoryPatched({
     market,
-    history
+    history,
+    loadLatest
   }: {
     market: string;
     history: Cybex.SanitizedMarketHistory[];
+    loadLatest: boolean;
   }) {
-    return { market, history };
+    return { market, history, loadLatest };
   }
 }
 

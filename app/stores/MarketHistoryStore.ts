@@ -21,12 +21,16 @@ class MarketHistoryStore extends AbstractStore<MarketHistoryState> {
     });
     console.debug("MarketHistory Store Constructor Done");
   }
-  onHistoryPatched({ market, history }) {
+  onHistoryPatched({ market, history = [], loadLatest }) {
     console.debug("MarketHistoryStore: ", market, this.state[market], history);
-    let h = [
-      ...(this.state[market] || []).filter(entry => !entry.isBarClosed),
-      ...(history || [])
-    ] as Cybex.SanitizedMarketHistory[];
+    let currentData = this.state[market] || [];
+    let concatData = history.length ? history[history.length - 1] : null;
+    if (concatData) {
+      currentData = currentData.filter(data => data.date < concatData.date);
+    }
+    let h: Cybex.SanitizedMarketHistory[] = !loadLatest
+      ? [...currentData, ...history]
+      : [...history, ...currentData];
     this.setState({
       [market]: h
         .sort((prev, next) => {

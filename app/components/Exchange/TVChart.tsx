@@ -94,8 +94,9 @@ export class TVChartContainer extends React.PureComponent<any> {
       this.props.priceData.length &&
       this.updateCbs.realtimeUpdate
     ) {
+      console.debug("======= Real Update", this.updateCbs.lastBar);
       this.props.priceData
-        .filter((price: Price) => price.time > this.updateCbs.lastBar.time)
+        .filter((price: Price) => price.date > this.updateCbs.lastBar.date)
         .forEach(price => this.updateCbs.realtimeUpdate(price));
     }
   }
@@ -183,20 +184,20 @@ export class TVChartContainer extends React.PureComponent<any> {
       ) => {
         from *= 1000;
         to *= 1000;
-        console.debug("=====getBars running", from, to, this.props.priceData);
-        let priceData = this.props.priceData
-          .filter(price => price.time >= from && price.time <= to)
-          .sort(
-            (prev, next) =>
-              prev.time > next.time ? 1 : prev.time < next.time ? -1 : 0
-          );
+        let priceData = this.props.priceData.filter(
+          price => price.time >= from && price.time <= to
+        );
+        console.debug("=====getBars running", firstDataRequest, from, to, this.props.priceData, priceData);
+        priceData.sort(
+          (prev, next) =>
+            prev.time > next.time ? 1 : prev.time < next.time ? -1 : 0
+        );
         const updateHistory = () => {
           if (priceData.length) {
             onHistoryCallback(priceData, { noData: false });
             this.updateCbs.lastBar = priceData[priceData.length - 1];
           } else {
             onHistoryCallback(priceData, { noData: true });
-            this.updateCbs.lastBar = null;
           }
         };
         updateHistory();
@@ -221,7 +222,7 @@ export class TVChartContainer extends React.PureComponent<any> {
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
-      timezone: "Asia/Shanghai",
+      timezone: "UTC",
       time_frames: [
         { text: "1m", resolution: "1D" },
         { text: "1d", resolution: "60" },

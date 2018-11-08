@@ -147,6 +147,14 @@ class MarketsActions {
                 ]
               );
             }
+            MarketHistoryActions.patchMarketHistory(
+              quote,
+              base,
+              bucketSize,
+              MarketHistoryStore.getState()[
+                `${quote.get("symbol")}${base.get("symbol")}${bucketSize}`
+              ]
+            );
             let callPromise = null,
               settlePromise = null;
 

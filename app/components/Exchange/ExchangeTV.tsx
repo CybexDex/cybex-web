@@ -1303,7 +1303,7 @@ class ExchangeNew extends React.Component<any, any> {
             {/* Price history chart */}
             <TVChartContainer
               // priceData={this.props.priceData}
-              priceData={MarketHistoryStore.getState()[`${quoteSymbol}${baseSymbol}${bucketSize}`]}
+              priceData={MarketHistoryStore.getState()[`${quoteSymbol}${baseSymbol}${bucketSize}`] || []}
               onChangeBucket={this._changeBucketSize.bind(this)}
               // Datafeed={this.props.Datafeed}
               base={base}
