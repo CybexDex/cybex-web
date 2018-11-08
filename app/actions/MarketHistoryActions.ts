@@ -145,7 +145,10 @@ class MarketHistoryActions {
     console.debug("Get Market History: Current", currentHistory);
     let market = correctMarketPairMap(assetA, assetB);
     let { base, quote } = market;
-    // let current = currentHistory.filter(entry => !entry.isBarClosed);
+    // 计算合适的接口区间
+    // 当没有当前数据时，时间节点为 当前时间 与 当前时间 - 200 * interval * 1000;
+    // 当有当前数据时，判断是否为获取最新数据，如果是，时间节点为 当前时间 与 当前数据 的 最新时间，
+    //              如不获取最新数据，为 当前数据的最旧时间 与 当前数据的最旧时间 - 200 * interval * 1000;
     let nowDate = new Date();
     let nowIsoString = nowDate.toISOString();
     let newDate = currentHistory.length
@@ -164,7 +167,11 @@ class MarketHistoryActions {
         : new Date(oldDate.getTime() - interval * 1000 * 200);
     let history: Cybex.SanitizedMarketHistory[] = [];
     let loaderCount = 0;
-    while (!history.length && loaderCount++ < 20) {
+    while (
+      (loaderCount === 0 && loadLatest && currentHistory.length) ||
+      (!history.length && loaderCount < 20)
+    ) {
+      console.debug("Get Market History: LoadCount");
       history = (await Apis.instance()
         .history_api()
         .exec("get_market_history", [
@@ -175,6 +182,10 @@ class MarketHistoryActions {
           newDate.toISOString().substring(0, nowIsoString.length - 5)
         ])).map(marketHistorySanitizer(base, quote, interval));
       oldDate = new Date(oldDate.getTime() - interval * 1000 * 200);
+      loaderCount++;
+    }
+    if (history.length === 0 && currentHistory.length && loadLatest) {
+      history.push(currentHistory[0]);
     }
     history = history
       .map((data, i, historyArray) => {
@@ -188,7 +199,9 @@ class MarketHistoryActions {
         return [
           data,
           ...new Array(
-            Math.floor((finalDate - data.date) / interval / 1000) - suffix
+            Math.floor(
+              ((finalDate as any) - (data.date as any)) / interval / 1000
+            ) - suffix
           )
             // return new Array((Math.floor(finalTime - data.time) / interval / 1000) - 1)
             .fill(1)
@@ -211,9 +224,6 @@ class MarketHistoryActions {
               };
             })
         ];
-        // } else {
-        //   return [data];
-        // }
       })
       .reduce((all, next) => [...all, ...next], [])
       .sort(
