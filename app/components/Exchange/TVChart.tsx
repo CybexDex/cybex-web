@@ -139,7 +139,15 @@ export class TVChartContainer extends React.PureComponent<any> {
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName);
-        // console.debug('resolveSymbol:',{symbolName})
+
+        const precision = this.props.latestPrice.full.toPrecision(6).split(".")[1].length;
+        let preToDeimal = pre => {
+          let result = 1;
+          for(let i=0;i<pre;i++){
+            result = result*10
+          }
+          return result;
+        }
         const symbolStub = {
           name: symbolName,
           description: symbolName,
@@ -149,7 +157,7 @@ export class TVChartContainer extends React.PureComponent<any> {
           ticker: symbolName,
           // exchange: "Cybex",
           minmov: 1,
-          pricescale: 1000000,
+          pricescale:preToDeimal(precision) ,
           has_intraday: true,
           has_seconds: true,
           intraday_multipliers: ["15S", "1", "60"],
@@ -275,7 +283,7 @@ export class TVChartContainer extends React.PureComponent<any> {
       console.debug("Chart has loaded!");
       this.updateCbs.resetData = () => {
         this.tvWidget.activeChart().resetData();
-        this.tvWidget.activeChart().setSymbol(this._getSymbol());
+        this.tvWidget.activeChart().setSymbol(this.props.quoteSymbol.replace("JADE.", "") + "/" + this.props.baseSymbol.replace("JADE.", ""));
       };
       this.tvWidget
         .chart()
