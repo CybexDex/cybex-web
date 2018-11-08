@@ -180,37 +180,42 @@ class MarketHistoryActions {
       ]))
       .map(marketHistorySanitizer(base, quote, interval))
       .map((data, i, historyArray) => {
-        if (i !== historyArray.length - 1) {
-          let finalTime = historyArray[i + 1].time;
-          return [
-            data,
-            ...new Array(
-              Math.floor(finalTime - data.time) / interval / 1000 - 1
-            )
-              // return new Array((Math.floor(finalTime - data.time) / interval / 1000) - 1)
-              .fill(1)
-              .map((e, i) => {
-                let date = new Date(
-                  data.date.getTime() + (i + 1) * interval * 1000
-                );
-                return {
-                  date,
-                  time: date.getTime(),
-                  open: data.close,
-                  close: data.close,
-                  high: data.close,
-                  low: data.close,
-                  volume: 0,
-                  isBarClosed: true,
-                  isLastBar: false,
-                  base: data.base,
-                  quote: data.quote
-                };
-              })
-          ];
-        } else {
-          return [data];
-        }
+        let finalDate =
+          i !== historyArray.length - 1
+            ? historyArray[i + 1].date
+            : currentHistory.length && !loadLatest
+              ? currentHistory[currentHistory.length - 1].date
+              : new Date();
+        let suffix = i !== historyArray.length - 1 ? 1 : 0;
+        return [
+          data,
+          ...new Array(
+            Math.floor((finalDate - data.date) / interval / 1000) - suffix
+          )
+            // return new Array((Math.floor(finalTime - data.time) / interval / 1000) - 1)
+            .fill(1)
+            .map((e, i) => {
+              let date = new Date(
+                data.date.getTime() + (i + 1) * interval * 1000
+              );
+              return {
+                date,
+                time: date.getTime(),
+                open: data.close,
+                close: data.close,
+                high: data.close,
+                low: data.close,
+                volume: 0,
+                isBarClosed: true,
+                isLastBar: false,
+                base: data.base,
+                quote: data.quote
+              };
+            })
+        ];
+        // } else {
+        //   return [data];
+        // }
       })
       .reduce((all, next) => [...all, ...next], [])
       .sort(
