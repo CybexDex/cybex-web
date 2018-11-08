@@ -162,23 +162,21 @@ class MarketHistoryActions {
       currentHistory.length && loadLatest
         ? oldDate
         : new Date(oldDate.getTime() - interval * 1000 * 200);
-    console.debug("Get Market History: ", [
-      base.get("id"),
-      quote.get("id"),
-      interval,
-      oldDate.toISOString().substring(0, nowIsoString.length - 5),
-      newDate.toISOString().substring(0, nowIsoString.length - 5)
-    ]);
-    let history: Cybex.SanitizedMarketHistory[] = (await Apis.instance()
-      .history_api()
-      .exec("get_market_history", [
-        base.get("id"),
-        quote.get("id"),
-        interval,
-        oldDate.toISOString().substring(0, nowIsoString.length - 5),
-        newDate.toISOString().substring(0, nowIsoString.length - 5)
-      ]))
-      .map(marketHistorySanitizer(base, quote, interval))
+    let history: Cybex.SanitizedMarketHistory[] = [];
+    let loaderCount = 0;
+    while (!history.length && loaderCount++ < 20) {
+      history = (await Apis.instance()
+        .history_api()
+        .exec("get_market_history", [
+          base.get("id"),
+          quote.get("id"),
+          interval,
+          oldDate.toISOString().substring(0, nowIsoString.length - 5),
+          newDate.toISOString().substring(0, nowIsoString.length - 5)
+        ])).map(marketHistorySanitizer(base, quote, interval));
+      oldDate = new Date(oldDate.getTime() - interval * 1000 * 200);
+    }
+    history = history
       .map((data, i, historyArray) => {
         let finalDate =
           i !== historyArray.length - 1
