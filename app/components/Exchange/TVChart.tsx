@@ -61,7 +61,12 @@ const hasMarketChanged: (
   return false;
 };
 
-export class TVChartContainer extends React.PureComponent<any> {
+class TVChartProps {
+  priceData: Cybex.SanitizedMarketHistory[];
+  [props: string]: any;
+}
+
+export class TVChartContainer extends React.PureComponent<TVChartProps> {
   updateEmitter = new EventEmitter();
   updateCbs: { [fnName: string]: any } = {};
   // priceData = [];
@@ -82,18 +87,25 @@ export class TVChartContainer extends React.PureComponent<any> {
 
   tvWidget = null;
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: TVChartProps) {
     if (hasMarketChanged(prevProps.priceData, this.props.priceData)) {
       this.updateEmitter.emit(RELOAD_CHART);
     } else if (
-      this.updateCbs.lastBar &&
+      prevProps.priceData.length &&
       this.props.priceData.length &&
       this.updateCbs.realtimeUpdate
     ) {
-      console.debug("======= Real Update", this.updateCbs.lastBar);
-      this.props.priceData
-        .filter((price: Cybex.SanitizedMarketHistory) => price.date > this.updateCbs.lastBar.date)
-        .forEach(price => this.updateCbs.realtimeUpdate(price));
+      let latestDate = new Date(
+        Math.max(
+          prevProps.priceData[0].date as any,
+          prevProps.priceData[prevProps.priceData.length - 1].date as any
+        )
+      );
+      let newBars = this.props.priceData.filter(
+        (price: Cybex.SanitizedMarketHistory) => price.date >= latestDate
+      );
+      console.debug("======= Real Update", latestDate, newBars);
+      newBars.forEach(price => this.updateCbs.realtimeUpdate(price));
     }
   }
 
@@ -146,7 +158,7 @@ export class TVChartContainer extends React.PureComponent<any> {
           disabled_features,
           supported_resolution: support_r,
           volume_precision: 8,
-          data_status: "delayed_streaming"
+          data_status: "streaming"
         };
 
         setTimeout(function() {
@@ -227,7 +239,7 @@ export class TVChartContainer extends React.PureComponent<any> {
 
         const updateHistory = priceData => {
           priceData.filter(p => {
-            p.date >= from && p.date <= to
+            p.date >= from && p.date <= to;
           });
           priceData = priceData.sort(
             (prev, next) =>
@@ -235,7 +247,6 @@ export class TVChartContainer extends React.PureComponent<any> {
           );
           if (priceData.length > 1) {
             onHistoryCallback(priceData, { noData: false });
-            this.updateCbs.lastBar = priceData[priceData.length - 1];
           } else {
             console.debug("=====getBar: NoData: ", priceData);
             onHistoryCallback([], { noData: true });

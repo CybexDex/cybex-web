@@ -234,12 +234,12 @@ class MarketHistoryActions {
             ((finalDate as any) - (data.date as any)) / interval / 1000
           ) - 1
         );
-        console.debug(
-          "Get Market History: Got",
-          "Now Patch Empty Date",
-          i,
-          numToPatch
-        );
+        // console.debug(
+        //   "Get Market History: Got",
+        //   "Now Patch Empty Date",
+        //   i,
+        //   numToPatch
+        // );
         return [
           data,
           ...new Array(numToPatch).fill(1).map((e, i) => {
@@ -261,12 +261,12 @@ class MarketHistoryActions {
           })
         ];
       })
-      .reduce((all, next) => [...all, ...next], []);
-    // .sort(
-    //   (prev, next) =>
-    //     prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
-    // );
-    console.debug("Get Market History: Got: ", history);
+      .reduce((all, next) => [...all, ...next], [])
+      .sort(
+        (prev, next) =>
+          prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
+      );
+    // console.debug("Get Market History: Got: ", history);
     this.onHistoryPatched({
       market: marketKey,
       history,
