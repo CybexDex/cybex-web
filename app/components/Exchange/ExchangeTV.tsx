@@ -1308,6 +1308,7 @@ class ExchangeNew extends React.Component<any, any> {
               // Datafeed={this.props.Datafeed}
               base={base}
               quote={quote}
+              latestPrice={latestPrice}
               baseSymbol={baseSymbol}
               quoteSymbol={quoteSymbol}
               height={elementsHeight}
