@@ -107,13 +107,13 @@ const marketHistorySanitizer = (baseAsset, quoteAsset, interval) => (
     open = close;
   }
 
-  // if (high > 1.3 * ((open + close) / 2)) {
-  //   high = findMax(open, close);
-  // }
+  if (high > 1.3 * ((open + close) / 2)) {
+    high = findMax(open, close);
+  }
 
-  // if (low < 0.7 * ((open + close) / 2)) {
-  //   low = findMin(open, close);
-  // }
+  if (low < 0.7 * ((open + close) / 2)) {
+    low = findMin(open, close);
+  }
 
   return {
     date,
@@ -196,7 +196,7 @@ class MarketHistoryActions {
     let currentHistory = (historyStore.getState()[marketKey] || []).sort(
       (prev, next) =>
         prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
-    ) ;
+    );
     let history: Cybex.SanitizedMarketHistory[] = [];
     let loaderCount = 0;
     let { oldDate, newDate, nowIsoString } = getTimeSet(
@@ -228,38 +228,44 @@ class MarketHistoryActions {
         let finalDate =
           i !== historyArray.length - 1 ? historyArray[i + 1].date : newDate;
         let suffix = i !== historyArray.length - 1 ? 1 : 0;
+        let numToPatch = Math.max(
+          0,
+          Math.floor(
+            ((finalDate as any) - (data.date as any)) / interval / 1000
+          ) - 1
+        );
+        console.debug(
+          "Get Market History: Got",
+          "Now Patch Empty Date",
+          i,
+          numToPatch
+        );
         return [
           data,
-          ...new Array(
-            Math.floor(
-              ((finalDate as any) - (data.date as any)) / interval / 1000
-            ) - suffix
-          )
-            .fill(1)
-            .map((e, i) => {
-              let date = new Date(
-                data.date.getTime() + (i + 1) * interval * 1000
-              );
-              return {
-                date,
-                time: date.getTime(),
-                open: data.close,
-                close: data.close,
-                high: data.close,
-                low: data.close,
-                volume: 0,
-                interval,
-                base: data.base,
-                quote: data.quote
-              };
-            })
+          ...new Array(numToPatch).fill(1).map((e, i) => {
+            let date = new Date(
+              data.date.getTime() + (i + 1) * interval * 1000
+            );
+            return {
+              date,
+              time: date.getTime(),
+              open: data.close,
+              close: data.close,
+              high: data.close,
+              low: data.close,
+              volume: 0,
+              interval,
+              base: data.base,
+              quote: data.quote
+            };
+          })
         ];
       })
-      .reduce((all, next) => [...all, ...next], [])
-      .sort(
-        (prev, next) =>
-          prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
-      );
+      .reduce((all, next) => [...all, ...next], []);
+    // .sort(
+    //   (prev, next) =>
+    //     prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
+    // );
     console.debug("Get Market History: Got: ", history);
     this.onHistoryPatched({
       market: marketKey,

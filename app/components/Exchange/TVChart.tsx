@@ -91,9 +91,9 @@ export class TVChartContainer extends React.PureComponent<any> {
       this.updateCbs.realtimeUpdate
     ) {
       console.debug("======= Real Update", this.updateCbs.lastBar);
-      // this.props.priceData
-      //   .filter((price: Price) => price.date > this.updateCbs.lastBar.date)
-      //   .forEach(price => this.updateCbs.realtimeUpdate(price));
+      this.props.priceData
+        .filter((price: Cybex.SanitizedMarketHistory) => price.date > this.updateCbs.lastBar.date)
+        .forEach(price => this.updateCbs.realtimeUpdate(price));
     }
   }
 
@@ -191,7 +191,7 @@ export class TVChartContainer extends React.PureComponent<any> {
         let availableData = firstDataRequest
           ? currentPriceData
           : currentPriceData.filter(
-              price => price.date >= from && price.time <= to
+              price => price.date >= from && price.date <= to
             );
         console.debug(
           "=====getBars running",
@@ -227,7 +227,7 @@ export class TVChartContainer extends React.PureComponent<any> {
 
         const updateHistory = priceData => {
           priceData.filter(p => {
-            p.date > from && p.date < to
+            p.date >= from && p.date <= to
           });
           priceData = priceData.sort(
             (prev, next) =>
