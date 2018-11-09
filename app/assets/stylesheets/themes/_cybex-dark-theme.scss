@@ -7,7 +7,7 @@ $primary-text-color: #fff;
 $dark-text-color: #444;
 $light-text-color: #e0e0e0;
 $secondary-text-color: darken($primary-text-color, 20%);
-$link-text-color: $color-grey;
+$link-text-color: $color-light;
 $error-text-color: #e3745b;
 
 $bg-color: #171d2a;
@@ -111,11 +111,11 @@ $account-background: $panel-bg-color;
   .nav {
     .nav-items {
       a::after {
-        background: $color-gradient-foilex;
+        background: $color-orange;/*$color-gradient-foilex;*/
       }
     }
     .explorer-nav {
       background-color: $color-dark;
-    }
+  }
   }
 }

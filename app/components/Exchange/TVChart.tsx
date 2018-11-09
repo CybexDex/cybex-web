@@ -72,7 +72,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
   // priceData = [];
 
   static defaultProps = {
-    symbol: "Cybex:BTC/USD",
+    symbol: "ETH/USDT",
     interval: "60",
     containerId: "tv_chart_container",
     libraryPath: "/charting_library/",
@@ -141,7 +141,15 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName);
-        // console.debug('resolveSymbol:',{symbolName})
+
+        const precision = this.props.latestPrice.full.toPrecision(6).split(".")[1].length;
+        let preToDeimal = pre => {
+          let result = 1;
+          for(let i=0;i<pre;i++){
+            result = result*10
+          }
+          return result;
+        }
         const symbolStub = {
           name: symbolName,
           description: symbolName,
@@ -149,15 +157,15 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           session: "24x7",
           timezone: "Asia/Shanghai",
           ticker: symbolName,
-          exchange: "Cybex",
+          // exchange: "Cybex",
           minmov: 1,
-          pricescale: 100000000,
+          pricescale:preToDeimal(precision) ,
           has_intraday: true,
           has_seconds: true,
           intraday_multipliers: ["15S", "1", "60"],
           disabled_features,
           supported_resolution: support_r,
-          volume_precision: 8,
+          volume_precision: 4,
           data_status: "streaming"
         };
 
@@ -259,8 +267,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
 
     const widgetOptions = {
       debug: false,
-      symbol: this._getSymbol(), //"Cybex:BTC/USD"
-      // symbol:this.props.exchange+this.props.symbol,
+      symbol: this.props.quoteSymbol.replace("JADE.", "") + "/" + this.props.baseSymbol.replace("JADE.", ""),
       // datafeed: this.props.Datafeed,
       datafeed: Datafeed,
       interval: interval[this.props.bucketSize],
@@ -283,8 +290,8 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       ],
       enabled_features: [
         "hide_loading_screen_on_series_error",
-        "keep_left_toolbar_visible_on_small_screens",
-        "side_toolbar_in_fullscreen_mode"
+        "side_toolbar_in_fullscreen_mode",
+        "hide_left_toolbar_by_default"
       ],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
       disabled_features,
@@ -298,11 +305,15 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         "dataWindowProperties.fontSize": 8,
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
-        "symbolWatermarkProperties.transparency": 60,
-        "scalesProperties.textColor": "#AAA",
-        "paneProperties.topMargin": 10,
-        "paneProperties.bottomMargin": 25,
-        // Colors
+          "symbolWatermarkProperties.transparency": 60,
+          "scalesProperties.textColor": "#AAA",
+          "scalesProperties.fontSize":10,
+          "paneProperties.topMargin": 10,
+          "paneProperties.bottomMargin": 25,
+          "paneProperties.leftMargin": 20,
+          "paneProperties.rightMargin": 20,
+
+          // Colors
         "mainSeriesProperties.candleStyle.wickUpColor": Colors.$colorGrass,
         "mainSeriesProperties.candleStyle.wickDownColor": Colors.$colorFlame,
         "mainSeriesProperties.candleStyle.upColor": Colors.$colorGrass,
@@ -318,7 +329,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       console.debug("Chart has loaded!");
       this.updateCbs.resetData = () => {
         this.tvWidget.activeChart().resetData();
-        this.tvWidget.activeChart().setSymbol(this._getSymbol());
+        this.tvWidget.activeChart().setSymbol(this.props.quoteSymbol.replace("JADE.", "") + "/" + this.props.baseSymbol.replace("JADE.", ""));
       };
       this.tvWidget
         .chart()
@@ -329,15 +340,6 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           // obj.timeframe = "12M";
         });
     });
-  }
-
-  _getSymbol() {
-    return (
-      "Cybex:" +
-      this.props.quoteSymbol.replace("JADE.", "") +
-      "/" +
-      this.props.baseSymbol.replace("JADE.", "")
-    );
   }
 
   componentWillUnmount() {

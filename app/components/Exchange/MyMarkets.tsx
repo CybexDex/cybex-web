@@ -869,7 +869,7 @@ let MyMarkets = class extends React.Component<any, any> {
           style={{
             width: "100%",
             textAlign: "left",
-            padding: "0.75rem 0.5rem"
+            padding: "0.5rem 0.5rem 0.25rem"
           }}
         >
           <Checkbox
@@ -887,9 +887,8 @@ let MyMarkets = class extends React.Component<any, any> {
           <div className="float-right">
             <input
               style={{
-                fontSize: "0.9rem",
                 height: "inherit",
-                padding: 2
+                padding: 5
               }}
               className="no-margin"
               type="text"
