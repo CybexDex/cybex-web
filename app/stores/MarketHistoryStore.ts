@@ -17,15 +17,15 @@ type MarketHistoryState = {
 class MarketHistoryStore extends AbstractStore<MarketHistoryState> {
   constructor() {
     super();
-    console.debug("MarketHistory Store Constructor");
+    // console.debug("MarketHistory Store Constructor");
     this.state = {};
     this.bindListeners({
       onHistoryPatched: MarketHistoryActions.onHistoryPatched
     });
-    console.debug("MarketHistory Store Constructor Done");
+    // console.debug("MarketHistory Store Constructor Done");
   }
   onHistoryPatched({ market, history = [], loadLatest, requestID }) {
-    console.debug("MarketHistoryStore: ", market, this.state[market], history);
+    // console.debug("MarketHistoryStore: ", market, this.state[market], history);
     let currentData = this.state[market] || [];
     let concatData = history.length ? history[history.length - 1] : null;
     if (concatData) {
@@ -39,7 +39,7 @@ class MarketHistoryStore extends AbstractStore<MarketHistoryState> {
     this.setState({
       [market]: h
     });
-    console.debug("MarketHistoryStore Patched: ", this.state);
+    // console.debug("MarketHistoryStore Patched: ", this.state);
     requestID && marketEvent.emit(requestID, h);
   }
 }

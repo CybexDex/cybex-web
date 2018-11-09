@@ -1,4 +1,4 @@
-import Immutable from "immutable";
+import * as Immutable from "immutable";
 import alt from "alt-instance";
 import MarketsActions from "actions/MarketsActions";
 import market_utils from "common/market_utils";
@@ -32,6 +32,7 @@ const nullPrice = {
 let marketStorage = new ls("__graphene__");
 
 class MarketsStore {
+  [props: string]: any;
   constructor() {
     this.markets = Immutable.Map();
     this.asset_symbol_to_id = {};
@@ -112,23 +113,28 @@ class MarketsStore {
       onToggleStars: MarketsActions.toggleStars
     });
 
-    const supportedResolutions = ["1","5","60","1D","1W","1M"];
+    const supportedResolutions = ["1", "5", "60", "1D", "1W", "1M"];
 
     this.Datafeed = {
       onReady: cb => {
         console.log("=====onReady running");
-        setTimeout(() => cb({supported_resolutions: supportedResolutions}), 0);
+        setTimeout(
+          () => cb({ supported_resolutions: supportedResolutions }),
+          0
+        );
       },
       calculateHistoryDepth: (resolution, resolutionBack, intervalBack) => {
         //optional
         console.log("=====calculateHistoryDepth running");
         // while optional, this makes sure we request 24 hours of minute data at a time
         // CryptoCompare's minute data endpoint will throw an error if we request data beyond 7 days in the past, and return no data
-        return resolution < 60 ? { resolutionBack: "D", intervalBack: "1" } : undefined;
+        return resolution < 60
+          ? { resolutionBack: "D", intervalBack: "1" }
+          : undefined;
       },
-      resolveSymbol:(symbolName, onSymbolResolvedCallback) => {
+      resolveSymbol: (symbolName, onSymbolResolvedCallback) => {
         // expects a symbolInfo object in response
-        console.debug("======resolveSymbol running", symbolName)
+        console.debug("======resolveSymbol running", symbolName);
         // console.log('resolveSymbol:',{symbolName})
         const symbolStub = {
           name: symbolName,
@@ -146,11 +152,11 @@ class MarketsStore {
           supported_resolution: supportedResolutions,
           // TODO: set this later
           volume_precision: 8,
-          data_status: "streaming",
+          data_status: "streaming"
         };
 
         setTimeout(function() {
-          onSymbolResolvedCallback(symbolStub)
+          onSymbolResolvedCallback(symbolStub);
           console.log("Resolving that symbol....", symbolStub);
         }, 0);
       },
@@ -158,7 +164,7 @@ class MarketsStore {
       unsubscribeBars: subscriberUID => {
         console.log("=====unsubscribeBars running");
         // stream.unsubscribeBars(subscriberUID)
-      },
+      }
     };
   }
 
@@ -261,7 +267,6 @@ class MarketsStore {
   }
 
   onSubscribeMarket(result) {
-
     if (result.switchMarket) {
       this.marketReady = false;
       return this.emitChange();
@@ -891,7 +896,7 @@ class MarketsStore {
             high: prices[ii].close,
             low: prices[ii].close,
             close: prices[ii].close,
-            volume: 0,
+            volume: 0
           });
           volumeData.splice(ii + 1, 0, [
             addTime(prices[ii].date, 1, this.bucketSize),
@@ -901,7 +906,7 @@ class MarketsStore {
       }
     }
 
-    prices.forEach(price =>{
+    prices.forEach(price => {
       price.time = price.date.getTime();
     });
 
@@ -1280,9 +1285,10 @@ class MarketsStore {
   }
 
   _calcMarketStats(history, baseAsset, quoteAsset, recent, market) {
+    console.debug("CalcMarketStats: ", market);
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    yesterday = yesterday.getTime();
+    // yesterday = yesterday.getTime() as any;
     let volumeBase = 0,
       volumeQuote = 0,
       change = 0,
@@ -1300,7 +1306,7 @@ class MarketsStore {
         if (!/Z$/.test(bucket.key.open)) {
           bucket.key.open += "Z";
         }
-        let date = new Date(bucket.key.open).getTime();
+        let date = new Date(bucket.key.open);
         if (date > yesterday) {
           // console.debug("Date: ", bucket.key.open, date, yesterday);
           noTrades = false;

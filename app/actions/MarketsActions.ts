@@ -48,10 +48,6 @@ class MarketsActions {
       let market = quote.get("id") + "_" + base.get("id");
       let marketName = quote.get("symbol") + "_" + base.get("symbol");
       let now = new Date();
-      let endDate = new Date();
-      let startDateShort = new Date();
-      endDate.setDate(endDate.getDate() + 1);
-      startDateShort = new Date(startDateShort.getTime() - 3600 * 50 * 1000);
 
       let refresh = false;
 
@@ -166,25 +162,6 @@ class MarketsActions {
                 .exec("get_settle_orders", [marketAsset.id, 300]);
             }
 
-            let startDate = new Date();
-            let startDate2 = new Date();
-            let startDate3 = new Date();
-            let endDate = new Date();
-            let startDateShort = new Date();
-            startDate = new Date(
-              startDate.getTime() - bucketSize * bucketCount * 1000
-            );
-            startDate2 = new Date(
-              startDate2.getTime() - bucketSize * bucketCount * 2000
-            );
-            startDate3 = new Date(
-              startDate3.getTime() - bucketSize * bucketCount * 3000
-            );
-            endDate.setDate(endDate.getDate() + 1);
-            startDateShort = new Date(
-              startDateShort.getTime() - 3600 * 50 * 1000
-            );
-
             subBatchResults = subBatchResults.clear();
             dispatchSubTimeout = null;
             // Selectively call the different market api calls depending on the type
@@ -199,17 +176,7 @@ class MarketsActions {
                 ]), // Limits
               onlyLimitOrder ? null : callPromise, // Calls
               onlyLimitOrder ? null : settlePromise, // Settles
-              !hasFill //[3] Price
-                ? null
-                : Apis.instance()
-                    .history_api()
-                    .exec("get_market_history", [
-                      base.get("id"),
-                      quote.get("id"),
-                      bucketSize,
-                      startDate.toISOString().slice(0, -5),
-                      endDate.toISOString().slice(0, -5)
-                    ]),
+              null,
               !hasFill // [4]Filled History
                 ? null
                 : Apis.instance()
@@ -219,55 +186,22 @@ class MarketsActions {
                       quote.get("id"),
                       200
                     ]),
-              !hasFill
-                ? null
-                : Apis.instance()
-                    .history_api()
-                    .exec("get_market_history", [
-                      base.get("id"),
-                      quote.get("id"),
-                      3600,
-                      startDateShort.toISOString().slice(0, -5),
-                      endDate.toISOString().slice(0, -5)
-                    ]),
-              !hasFill
-                ? null
-                : Apis.instance()
-                    .history_api()
-                    .exec("get_market_history", [
-                      base.get("id"),
-                      quote.get("id"),
-                      bucketSize,
-                      startDate2.toISOString().slice(0, -5),
-                      startDate.toISOString().slice(0, -5)
-                    ]),
-              !hasFill
-                ? null
-                : Apis.instance()
-                    .history_api()
-                    .exec("get_market_history", [
-                      base.get("id"),
-                      quote.get("id"),
-                      bucketSize,
-                      startDate3.toISOString().slice(0, -5),
-                      startDate2.toISOString().slice(0, -5)
-                    ])
+              Apis.instance() // [5] latest state
+                .db_api()
+                .exec("get_ticker", [base.get("id"), quote.get("id")]),
+              null,
+              null
             ])
               .then(results => {
-                // Todo
-                const data1 = results[6] || [];
-                const data2 = results[7] || [];
                 dispatch({
                   limits: results[0],
                   calls: !onlyLimitOrder && results[1],
                   settles: !onlyLimitOrder && results[2],
-                  price: hasFill && data1.concat(data2.concat(results[3])),
                   history: hasFill && results[4],
-                  recent: hasFill && results[5],
+                  stat: results[5],
                   market: subID,
-                  base: base,
-                  quote: quote,
-                  inverted: inverted
+                  base,
+                  quote
                 });
               })
               .catch(error => {

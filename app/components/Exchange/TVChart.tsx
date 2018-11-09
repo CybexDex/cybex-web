@@ -205,18 +205,18 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           : currentPriceData.filter(
               price => price.date >= from && price.date <= to
             );
-        console.debug(
-          "=====getBars running",
-          firstDataRequest,
-          from,
-          to,
-          currentPriceData,
-          availableData
-        );
+        // console.debug(
+        //   "=====getBars running",
+        //   firstDataRequest,
+        //   from,
+        //   to,
+        //   currentPriceData,
+        //   availableData
+        // );
         if (!availableData.length) {
           availableData = (await new Promise(resolve => {
             let requestID = new Date().toISOString() + "$";
-            console.debug("=====getBars running Greedy Fetch: ", requestID);
+            // console.debug("=====getBars running Greedy Fetch: ", requestID);
             MarketHistoryActions.patchMarketHistory(
               this.props.base,
               this.props.quote,
@@ -226,16 +226,16 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
               requestID
             );
             marketEvent.once(requestID, newPriceData => {
-              console.debug(
-                "=====getBars running Greedy Fetched: ",
-                requestID,
-                newPriceData
-              );
+              // console.debug(
+              //   "=====getBars running Greedy Fetched: ",
+              //   requestID,
+              //   newPriceData
+              // );
               resolve(newPriceData);
             });
           })) as Cybex.SanitizedMarketHistory[];
         }
-        console.debug("=====getBars running after fetch", availableData);
+        // console.debug("=====getBars running after fetch", availableData);
 
         const updateHistory = priceData => {
           priceData.filter(p => {
@@ -248,7 +248,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           if (priceData.length > 1) {
             onHistoryCallback(priceData, { noData: false });
           } else {
-            console.debug("=====getBar: NoData: ", priceData);
+            // console.debug("=====getBar: NoData: ", priceData);
             onHistoryCallback([], { noData: true });
             // onHistoryCallback([], { noData: true, nextTime: new Date(new Date().getTime() - 86400 * 1000 * 10) });
           }
