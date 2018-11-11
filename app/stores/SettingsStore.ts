@@ -8,7 +8,12 @@ import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
 // import * as FingerPrint from "fingerprintjs2";
 import { AbstractStore } from "./AbstractStore";
-
+export const preferredBases = List([
+  "JADE.USDT",
+  "JADE.ETH",
+  "JADE.BTC",
+  "CYB"
+]);
 export const MARKETS = [
   // Main Net
   "CYB",
@@ -38,7 +43,7 @@ export const MARKETS = [
   // "JADE.HER",
   "JADE.CTXC",
   "JADE.VET",
-  // "JADE.NES",
+  "JADE.NES",
   "JADE.RHOC",
   "JADE.PPT",
   "JADE.MKR",
@@ -223,20 +228,11 @@ class SettingsStore extends AbstractStore<any> {
       };
 
       let bases = {
-        markets_4018d784: [
-          // BTS MAIN NET
-          "USD",
-          "OPEN.BTC",
-          "CNY",
-          "CYB",
-          "BTC"
-        ],
         markets_90be01e8: [
           // Main Net
           "JADE.USDT",
           "JADE.ETH",
           "JADE.BTC",
-          // "JADE.EOS",
           "CYB"
         ]
       };

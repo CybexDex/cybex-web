@@ -393,7 +393,8 @@ class MarketsStore {
 
     this.updateSettleOrders(result);
 
-    if (result.history) {
+    if (result.history && result.history.length) {
+      console.debug("Result: history: ", result.history);
       this.activeMarketHistory = this.activeMarketHistory.clear();
       result.history.forEach(order => {
         if (!/Z$/.test(order.time)) {
@@ -416,7 +417,7 @@ class MarketsStore {
 
     if (result.stat) {
       let stats = result.stat;
-      console.debug("ResultStat: ", stats);
+      // console.debug("ResultStat: ", stats);
       this.marketStats = this.marketStats.set("change", stats.percent_change);
       this.marketStats = this.marketStats.set("volumeBase", stats.base_volume);
       this.marketStats = this.marketStats.set("volumeQuote", stats.quote_volume);

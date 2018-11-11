@@ -176,12 +176,12 @@ class ExchangeNew extends React.Component<any, any> {
     window.addEventListener("optimizedResize", this._getWindowSize);
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if (!nextProps.marketReady && !this.props.marketReady) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
+  shouldComponentUpdate(nextProps) {
+    if (!nextProps.marketReady && !this.props.marketReady) {
+      return false;
+    }
+    return true;
+  }
 
   _checkFeeStatus(
     assets = [

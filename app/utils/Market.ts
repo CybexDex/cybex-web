@@ -1,5 +1,5 @@
 import { Map } from "immutable";
-import SettingsStore from "stores/SettingsStore";
+import SettingsStore, {preferredBases} from "stores/SettingsStore";
 export type Market = {
   quote: string;
   base: string;
@@ -14,8 +14,8 @@ class MarketPair {
 }
 
 const correctMarketPair = (symbolOfA?, symbolOfB?) => {
-  let indexOfA = SettingsStore.getState().preferredBases.indexOf(symbolOfA);
-  let indexOfB = SettingsStore.getState().preferredBases.indexOf(symbolOfB);
+  let indexOfA = preferredBases.indexOf(symbolOfA);
+  let indexOfB = preferredBases.indexOf(symbolOfB);
   if (
     (indexOfA > indexOfB && indexOfB > -1) ||
     (indexOfA === -1 && indexOfB !== -1)

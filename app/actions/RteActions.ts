@@ -54,6 +54,7 @@ class RteActions {
       this.subscription.ws ? this.subscription.ws.close() : null;
       this.setupWs(latestChannelStr);
     }
+    return latestChannelStr;
   }
 
   setupWs(channelStr: string) {
@@ -62,6 +63,7 @@ class RteActions {
       `wss://mdp.cybex.io/streams?stream=${channelStr}`
     );
     this.subscription.ws.onmessage = this.onMarketMsg;
+    return channelStr;
   }
 
   onMarketMsg(msg: MessageEvent) {
