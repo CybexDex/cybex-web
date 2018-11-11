@@ -82,8 +82,8 @@ const FilteredMarkets = {
   // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
-  // CYB: { "JADE.MVP": -1 },
-  "JADE.ETH": { "JADE.JCT": -1 }
+  CYB: { "JADE.NES": -1 },
+  "JADE.ETH": { "JADE.NES": -1 }
   // "JADE.BTC": { "JADE.MVP": -1 },
   // "JADE.EOS": { "JADE.MVP": -1 }
 };
@@ -288,7 +288,7 @@ export class MarketGroup extends React.Component<any, any> {
             base={market.base}
             columns={columns}
             // leftAlign={true}
-            hideZeroVol={true}
+            hideZeroVol={market.quote === "JADE.NES" ? false : true}
             compact={true}
             noSymbols={true}
             stats={marketStats.get(market.id)}
@@ -382,24 +382,26 @@ export class MarketGroup extends React.Component<any, any> {
               return 0;
             }
         }
-      })
+      });
 
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
 
     return (
-      open && <>
-        <div className="table table-hover">
-          <div className="table-row" style={{ paddingRight: "10px" }}>
-            {headers}
+      open && (
+        <React.Fragment>
+          <div className="table table-hover">
+            <div className="table-row" style={{ paddingRight: "10px" }}>
+              {headers}
+            </div>
           </div>
-        </div>
-        <div
-          className="table table-hover _scroll-bar"
-          style={{ overflowY: "auto", paddingRight: "4px" }}
-        >
-          {marketRows}
-        </div>
-      </>
+          <div
+            className="table table-hover _scroll-bar"
+            style={{ overflowY: "auto", paddingRight: "4px" }}
+          >
+            {marketRows}
+          </div>
+        </React.Fragment>
+      )
     );
   }
 }
@@ -817,139 +819,144 @@ let MyMarkets = class extends React.Component<any, any> {
     if (listHeight) {
       listStyle.height = listHeight;
     }
-    return <>
-      <div className="grid-block shrink left-orderbook-header">
-        <div
-          ref="myMarkets"
-          className={starClass}
-          onClick={this._changeTab.bind(this, "my-market")}
-        >
-          <Translate content="exchange.market_name" />
-        </div>
-        {/* <div
+    return (
+      <React.Fragment>
+        <div className="grid-block shrink left-orderbook-header">
+          <div
+            ref="myMarkets"
+            className={starClass}
+            onClick={this._changeTab.bind(this, "my-market")}
+          >
+            <Translate content="exchange.market_name" />
+          </div>
+          {/* <div
             className={allClass}
             onClick={this._changeTab.bind(this, "find-market")}
           >
             <Translate content="exchange.more" />
           </div> */}
-      </div>
-      {this.props.controls && (
-        <div className="small-12 medium-6" style={{ padding: "1rem 0" }}>
-          {this.props.controls ? (
-            <div style={{ paddingBottom: "0.5rem" }}>{this.props.controls}</div>
-          ) : null}
-          {/* {!myMarketTab ? <input type="text" value={this.state.inputValue} onChange={this._lookupAssets.bind(this)} placeholder="SYMBOL:SYMBOL" /> : null} */}
         </div>
-      )}
-      <ul className="mymarkets-tabs" style={{ padding: "0 0.5em" }}>
-        {preferredBases.map((base, index) => {
-          if (!base) return null;
-          return (
-            <TabLink
-              style={{
-                lineHeight: "1.8",
-                marginRight: "1rem",
-                display: "inline-block",
-                height: "1.8em",
-                fontWeight: "bold",
-                borderBottomWidth: "2px"
-              }}
-              key={base}
-              active={activeMarketTab === index}
-              onClick={this.toggleActiveMarketTab.bind(this, index)}
-            >
-              <AssetName name={base} dataPlace="left" />
-            </TabLink>
-          );
-        })}
-      </ul>
-      {myMarketTab ? (
-        <div
-          className="grid-block shrink"
-          style={{
-            width: "100%",
-            textAlign: "left",
-            padding: "0.5rem 0.5rem 0.25rem"
-          }}
-        >
-          <Checkbox
-            active={this.props.onlyStars}
-            onChange={() => {
-              MarketsActions.toggleStars();
-            }}
-            labelStyle={{ alignItems: "center" }}
-          >
-            <Translate content="exchange.show_star_2" />
-            <Translate content="exchange.show_star_1" />
-            <Icon icon="star" />
-          </Checkbox>
-          <FlexGrowDivider />
-          <div className="float-right">
-            <input
-              style={{
-                height: "inherit",
-                padding: 5
-              }}
-              className="no-margin"
-              type="text"
-              placeholder={counterpart.translate("exchange.filter_name")}
-              value={this.state.myMarketFilter}
-              onChange={e => {
-                this.setState({
-                  myMarketFilter: e.target.value && e.target.value.toUpperCase()
-                });
-              }}
-            />
+        {this.props.controls && (
+          <div className="small-12 medium-6" style={{ padding: "1rem 0" }}>
+            {this.props.controls ? (
+              <div style={{ paddingBottom: "0.5rem" }}>
+                {this.props.controls}
+              </div>
+            ) : null}
+            {/* {!myMarketTab ? <input type="text" value={this.state.inputValue} onChange={this._lookupAssets.bind(this)} placeholder="SYMBOL:SYMBOL" /> : null} */}
           </div>
-        </div>
-      ) : (
-        this._renderFindMarkets()
-      )}
-      <div
-        style={listStyle}
-        className="table-container grid-block vertical mymarkets-list"
-        ref="favorites"
-      >
-        {assetsLoading ? (
-          <div
-            style={{
-              position: "absolute",
-              paddingTop: "3rem",
-              textAlign: "center",
-              width: "100%"
-            }}
-          >
-            <LoadingIndicator type="three-bounce" />
-          </div>
-        ) : null}
-        {preferredBases
-          .filter(a => {
-            return a === preferredBases.get(activeMarketTab);
-          })
-          .map((base, index) => {
+        )}
+        <ul className="mymarkets-tabs" style={{ padding: "0 0.5em" }}>
+          {preferredBases.map((base, index) => {
+            if (!base) return null;
             return (
-              <MarketGroup
-                userMarkets={this.props.userMarkets}
-                defaultMarkets={this.props.defaultMarkets}
-                index={index}
-                allowChange={false}
+              <TabLink
+                style={{
+                  lineHeight: "1.8",
+                  marginRight: "1rem",
+                  display: "inline-block",
+                  height: "1.8em",
+                  fontWeight: "bold",
+                  borderBottomWidth: "2px"
+                }}
                 key={base}
-                current={current}
-                starredMarkets={starredMarkets}
-                marketStats={marketStats}
-                viewSettings={viewSettings}
-                columns={
-                  myMarketTab ? columns : this.props.findColumns || columns
-                }
-                markets={baseGroups[base]}
-                base={base}
-                maxRows={myMarketTab ? 20 : 10}
-                findMarketTab={!myMarketTab}
-              />
+                active={activeMarketTab === index}
+                onClick={this.toggleActiveMarketTab.bind(this, index)}
+              >
+                <AssetName name={base} dataPlace="left" />
+              </TabLink>
             );
           })}
-      </div>
-    </>;
+        </ul>
+        {myMarketTab ? (
+          <div
+            className="grid-block shrink"
+            style={{
+              width: "100%",
+              textAlign: "left",
+              padding: "0.5rem 0.5rem 0.25rem"
+            }}
+          >
+            <Checkbox
+              active={this.props.onlyStars}
+              onChange={() => {
+                MarketsActions.toggleStars();
+              }}
+              labelStyle={{ alignItems: "center" }}
+            >
+              <Translate content="exchange.show_star_2" />
+              <Translate content="exchange.show_star_1" />
+              <Icon icon="star" />
+            </Checkbox>
+            <FlexGrowDivider />
+            <div className="float-right">
+              <input
+                style={{
+                  height: "inherit",
+                  padding: 5
+                }}
+                className="no-margin"
+                type="text"
+                placeholder={counterpart.translate("exchange.filter_name")}
+                value={this.state.myMarketFilter}
+                onChange={e => {
+                  this.setState({
+                    myMarketFilter:
+                      e.target.value && e.target.value.toUpperCase()
+                  });
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          this._renderFindMarkets()
+        )}
+        <div
+          style={listStyle}
+          className="table-container grid-block vertical mymarkets-list"
+          ref="favorites"
+        >
+          {assetsLoading ? (
+            <div
+              style={{
+                position: "absolute",
+                paddingTop: "3rem",
+                textAlign: "center",
+                width: "100%"
+              }}
+            >
+              <LoadingIndicator type="three-bounce" />
+            </div>
+          ) : null}
+          {preferredBases
+            .filter(a => {
+              return a === preferredBases.get(activeMarketTab);
+            })
+            .map((base, index) => {
+              return (
+                <MarketGroup
+                  userMarkets={this.props.userMarkets}
+                  defaultMarkets={this.props.defaultMarkets}
+                  index={index}
+                  allowChange={false}
+                  key={base}
+                  current={current}
+                  starredMarkets={starredMarkets}
+                  marketStats={marketStats}
+                  viewSettings={viewSettings}
+                  columns={
+                    myMarketTab ? columns : this.props.findColumns || columns
+                  }
+                  markets={baseGroups[base]}
+                  base={base}
+                  maxRows={myMarketTab ? 20 : 10}
+                  findMarketTab={!myMarketTab}
+                />
+              );
+            })}
+        </div>
+      </React.Fragment>
+    );
   }
 };
 MyMarkets = BindToChainState(MyMarkets, { keep_updating: true });

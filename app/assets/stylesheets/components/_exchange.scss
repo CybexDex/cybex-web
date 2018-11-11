@@ -42,7 +42,7 @@
   display: grid;
   grid-template-rows: [r1-s] minmax(50%, 1fr) [r1-e r2-s] 1fr [r2-e];
   grid-template-columns: minmax(288px, 1fr) minmax(532px, 3fr) minmax(
-      272px,
+      302px,
       1fr
     );
   grid-template-areas: "markets main orderbook" "orders main orderbook";

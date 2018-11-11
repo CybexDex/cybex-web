@@ -39,7 +39,7 @@ class MarketHistoryStore extends AbstractStore<MarketHistoryState> {
     this.setState({
       [market]: h
     });
-    // console.debug("MarketHistoryStore Patched: ", this.state);
+    console.debug("MarketHistoryStore Patched: ", this.state);
     requestID && marketEvent.emit(requestID, h);
   }
 }

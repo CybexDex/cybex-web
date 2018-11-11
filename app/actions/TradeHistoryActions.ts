@@ -3,6 +3,7 @@ import { string } from "prop-types";
 import { correctMarketPair, correctMarketPairMap } from "utils/Market";
 import { Apis } from "cybexjs-ws";
 
+// Todo Review this class
 class TradeHistoryActions {
   /**
    *

@@ -38,7 +38,7 @@ export const MARKETS = [
   // "JADE.HER",
   "JADE.CTXC",
   "JADE.VET",
-  "JADE.NES",
+  // "JADE.NES",
   "JADE.RHOC",
   "JADE.PPT",
   "JADE.MKR",

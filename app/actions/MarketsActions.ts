@@ -134,15 +134,7 @@ class MarketsActions {
                 }
               });
             });
-            if (hasFill) {
-              TradeHistoryActions.patchTradeHistory(
-                quote,
-                base,
-                TradeHistoryStore.getState()[
-                  `${quote.get("symbol")}${base.get("symbol")}`
-                ]
-              );
-            }
+            
             MarketHistoryActions.patchMarketHistory(
               quote,
               base,
@@ -252,89 +244,46 @@ class MarketsActions {
           MarketHistoryStore
         );
         return Promise.all([
-          Apis.instance()
+          Apis.instance() // 0
             .db_api()
             .exec("subscribe_to_market", [
               subscription,
               base.get("id"),
               quote.get("id")
             ]),
-          Apis.instance()
+          Apis.instance() // 1
             .db_api()
             .exec("get_limit_orders", [base.get("id"), quote.get("id"), 300]),
-          callPromise,
-          settlePromise,
-          Apis.instance()
-            .history_api()
-            .exec("get_market_history", [
-              base.get("id"),
-              quote.get("id"),
-              bucketSize,
-              startDate.toISOString().slice(0, -5),
-              endDate.toISOString().slice(0, -5)
-            ]),
-          Apis.instance()
+          callPromise, // 2
+          settlePromise,  // 3
+          null,
+          Apis.instance() // 5
             .history_api()
             .exec("get_market_history_buckets", []),
-          Apis.instance()
+          Apis.instance() // 6
             .history_api()
             .exec("get_fill_order_history", [
               base.get("id"),
               quote.get("id"),
               200
             ]),
-          Apis.instance()
-            .history_api()
-            .exec("get_market_history", [
-              base.get("id"),
-              quote.get("id"),
-              3600,
-              startDateShort.toISOString().slice(0, -5),
-              endDate.toISOString().slice(0, -5)
-            ]),
-          Apis.instance()
-            .history_api()
-            .exec("get_market_history", [
-              base.get("id"),
-              quote.get("id"),
-              bucketSize,
-              startDate2.toISOString().slice(0, -5),
-              startDate.toISOString().slice(0, -5)
-            ]),
-          Apis.instance()
-            .history_api()
-            .exec("get_market_history", [
-              base.get("id"),
-              quote.get("id"),
-              bucketSize,
-              startDate3.toISOString().slice(0, -5),
-              startDate2.toISOString().slice(0, -5)
-            ]),
-          TradeHistoryActions.patchTradeHistory(
-            quote,
-            base,
-            TradeHistoryStore.getState()[
-              `${quote.get("symbol")}${base.get("symbol")}`
-            ]
-          )
+          Apis.instance() // [7] latest state
+            .db_api()
+            .exec("get_ticker", [base.get("id"), quote.get("id")]),
         ])
           .then(results => {
-            const data1 = results[9] || [];
-            const data2 = results[8] || [];
             subs[subID] = subscription;
             if (__DEV__) console.timeEnd("Fetch market data");
             dispatch({
               limits: results[1],
               calls: results[2],
               settles: results[3],
-              price: data1.concat(data2.concat(results[4])),
               buckets: results[5],
               history: results[6],
-              recent: results[7],
+              stat: results[7],
               market: subID,
               base: base,
               quote: quote,
-              inverted: inverted
             });
           })
           .catch(error => {
