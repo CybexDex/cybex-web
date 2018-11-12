@@ -82,8 +82,8 @@ const FilteredMarkets = {
   // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
-  // CYB: { "JADE.MVP": -1 },
-  "JADE.ETH": { "JADE.JCT": -1 }
+  CYB: { "JADE.NES": -1 },
+  "JADE.ETH": { "JADE.NES": -1 }
   // "JADE.BTC": { "JADE.MVP": -1 },
   // "JADE.EOS": { "JADE.MVP": -1 }
 };
@@ -288,7 +288,7 @@ export class MarketGroup extends React.Component<any, any> {
             base={market.base}
             columns={columns}
             // leftAlign={true}
-            hideZeroVol={true}
+            hideZeroVol={market.quote === "JADE.NES" ? false : true}
             compact={true}
             noSymbols={true}
             stats={marketStats.get(market.id)}
@@ -387,7 +387,7 @@ export class MarketGroup extends React.Component<any, any> {
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
 
     return (
-      open && <>
+      open && <React.Fragment>
         <div className="table table-hover">
           <div className="table-row" style={{ paddingRight: "10px" }}>
             {headers}
@@ -399,7 +399,7 @@ export class MarketGroup extends React.Component<any, any> {
         >
           {marketRows}
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }
@@ -817,7 +817,7 @@ let MyMarkets = class extends React.Component<any, any> {
     if (listHeight) {
       listStyle.height = listHeight;
     }
-    return <>
+    return <React.Fragment>
       <div className="grid-block shrink left-orderbook-header">
         <div
           ref="myMarkets"
@@ -949,7 +949,7 @@ let MyMarkets = class extends React.Component<any, any> {
             );
           })}
       </div>
-    </>;
+    </React.Fragment>;
   }
 };
 MyMarkets = BindToChainState(MyMarkets, { keep_updating: true });

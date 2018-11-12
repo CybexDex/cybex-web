@@ -102,9 +102,10 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         )
       );
       let newBars = this.props.priceData.filter(
-        (price: Cybex.SanitizedMarketHistory) => price.date >= latestDate
+        (price: Cybex.SanitizedMarketHistory) =>
+          price.date.getTime() >= latestDate.getTime()
       );
-      console.debug("======= Real Update", latestDate, newBars);
+      newBars.forEach(price => (price.time = price.date.getTime()));
       newBars.forEach(price => this.updateCbs.realtimeUpdate(price));
     }
   }
@@ -142,14 +143,16 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName);
 
-        const precision = this.props.latestPrice.full.toPrecision(6).split(".")[1].length;
+        const precision = (this.props.latestPrice ? this.props.latestPrice.full : 0.00000000)
+          .toPrecision(6)
+          .split(".")[1].length;
         let preToDeimal = pre => {
           let result = 1;
-          for(let i=0;i<pre;i++){
-            result = result*10
+          for (let i = 0; i < pre; i++) {
+            result = result * 10;
           }
           return result;
-        }
+        };
         const symbolStub = {
           name: symbolName,
           description: symbolName,
@@ -159,7 +162,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           ticker: symbolName,
           // exchange: "Cybex",
           minmov: 1,
-          pricescale:preToDeimal(precision) ,
+          pricescale: preToDeimal(precision),
           has_intraday: true,
           has_seconds: true,
           intraday_multipliers: ["15S", "1", "60"],
@@ -224,7 +227,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         if (!availableData.length) {
           availableData = (await new Promise(resolve => {
             let requestID = new Date().toISOString() + "$";
-            console.debug("=====getBars running Greedy Fetch: ", requestID);
+            // console.debug("=====getBars running Greedy Fetch: ", requestID);
             MarketHistoryActions.patchMarketHistory(
               this.props.base,
               this.props.quote,
@@ -234,16 +237,16 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
               requestID
             );
             marketEvent.once(requestID, newPriceData => {
-              console.debug(
-                "=====getBars running Greedy Fetched: ",
-                requestID,
-                newPriceData
-              );
+              // console.debug(
+              //   "=====getBars running Greedy Fetched: ",
+              //   requestID,
+              //   newPriceData
+              // );
               resolve(newPriceData);
             });
           })) as Cybex.SanitizedMarketHistory[];
         }
-        console.debug("=====getBars running after fetch", availableData);
+        // console.debug("=====getBars running after fetch", availableData);
 
         const updateHistory = priceData => {
           priceData.filter(p => {
@@ -256,7 +259,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           if (priceData.length > 1) {
             onHistoryCallback(priceData, { noData: false });
           } else {
-            console.debug("=====getBar: NoData: ", priceData);
+            // console.debug("=====getBar: NoData: ", priceData);
             onHistoryCallback([], { noData: true });
             // onHistoryCallback([], { noData: true, nextTime: new Date(new Date().getTime() - 86400 * 1000 * 10) });
           }
@@ -267,7 +270,10 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
 
     const widgetOptions = {
       debug: false,
-      symbol: this.props.quoteSymbol.replace("JADE.", "") + "/" + this.props.baseSymbol.replace("JADE.", ""),
+      symbol:
+        this.props.quoteSymbol.replace("JADE.", "") +
+        "/" +
+        this.props.baseSymbol.replace("JADE.", ""),
       // datafeed: this.props.Datafeed,
       datafeed: Datafeed,
       interval: interval[this.props.bucketSize],
@@ -305,15 +311,15 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         "dataWindowProperties.fontSize": 8,
         "paneProperties.vertGridProperties.color": "#363c4e",
         "paneProperties.horzGridProperties.color": "#363c4e",
-          "symbolWatermarkProperties.transparency": 60,
-          "scalesProperties.textColor": "#AAA",
-          "scalesProperties.fontSize":10,
-          "paneProperties.topMargin": 10,
-          "paneProperties.bottomMargin": 25,
-          "paneProperties.leftMargin": 20,
-          "paneProperties.rightMargin": 20,
+        "symbolWatermarkProperties.transparency": 60,
+        "scalesProperties.textColor": "#AAA",
+        "scalesProperties.fontSize": 10,
+        "paneProperties.topMargin": 10,
+        "paneProperties.bottomMargin": 25,
+        "paneProperties.leftMargin": 20,
+        "paneProperties.rightMargin": 20,
 
-          // Colors
+        // Colors
         "mainSeriesProperties.candleStyle.wickUpColor": Colors.$colorGrass,
         "mainSeriesProperties.candleStyle.wickDownColor": Colors.$colorFlame,
         "mainSeriesProperties.candleStyle.upColor": Colors.$colorGrass,
@@ -329,7 +335,13 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       console.debug("Chart has loaded!");
       this.updateCbs.resetData = () => {
         this.tvWidget.activeChart().resetData();
-        this.tvWidget.activeChart().setSymbol(this.props.quoteSymbol.replace("JADE.", "") + "/" + this.props.baseSymbol.replace("JADE.", ""));
+        this.tvWidget
+          .activeChart()
+          .setSymbol(
+            this.props.quoteSymbol.replace("JADE.", "") +
+              "/" +
+              this.props.baseSymbol.replace("JADE.", "")
+          );
       };
       this.tvWidget
         .chart()
