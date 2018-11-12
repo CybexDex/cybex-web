@@ -326,10 +326,6 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         "mainSeriesProperties.candleStyle.upColor": Colors.$colorGrass,
         "mainSeriesProperties.candleStyle.downColor": Colors.$colorFlame
       },
-      isDrawingToolbarVisible: false,
-      ChartDrawingToolbarWidget: {
-        visible: false
-      },
       loading_screen: { backgroundColor: "#171d2a" },
       studies: ["MACD@tv-basicstudies"]
     };
