@@ -1,12 +1,7 @@
 import { cloneDeep } from "lodash";
 import { NetworkStore } from "stores/NetworkStore";
-
-let WebSocketClient;
-if (typeof WebSocket === "undefined" && !process.env.browser) {
-  WebSocketClient = require("ws");
-} else {
-  WebSocketClient = WebSocket;
-}
+import ReconnectingWebSocket from "reconnecting-websocket";
+let WebSocketClient = ReconnectingWebSocket;
 
 var SOCKET_DEBUG = false;
 
@@ -138,7 +133,7 @@ class ChainWebSocket {
         }
         var err = new Error("connection closed");
         for (var cbId = this.responseCbId + 1; cbId <= this.cbId; cbId += 1) {
-          this.cbs[cbId].reject(err);
+          this.cbs[cbId] && this.cbs[cbId].reject && this.cbs[cbId].reject(err);
         }
         NetworkStore.updateApiStatus("error");
         if (this.statusCb) this.statusCb("closed");
@@ -189,9 +184,11 @@ class ChainWebSocket {
       method === "unsubscribe_from_accounts"
     ) {
       if (typeof params[2][0] !== "function") {
-        throw new Error(
-          "First parameter of unsub must be the original callback"
-        );
+        // throw new Error(
+        //   "First parameter of unsub must be the original callback"
+        // );
+
+        console.error("First parameter of unsub must be the original callback");
       }
 
       let unSubCb = params[2].splice(0, 1)[0];
