@@ -215,6 +215,8 @@ let OrderBookRowVertical = class extends React.Component<
       np.order.ne(this.props.order) ||
       np.index !== this.props.index ||
       np.digits !== this.props.digits ||
+      np.max !== this.props.max ||
+      np.total !== this.props.total ||
       np.depthType !== this.props.depthType ||
       np.currentAccount !== this.props.currentAccount
     );
