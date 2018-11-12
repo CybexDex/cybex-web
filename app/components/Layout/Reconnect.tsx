@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { findDOMNode } from "react-dom";
 import { NetworkStore } from "stores/NetworkStore";
 import { withRouter, Link } from "react-router-dom";
@@ -16,6 +17,8 @@ type ReconnectProps = {
   currentNodePing?: number;
   apiStatus?: string;
   initDone?: boolean;
+  history?: any;
+  location?: any;
   router: any;
 };
 
@@ -69,19 +72,14 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
     });
 
     ReactTooltip.show(findDOMNode(this.refs.toggle));
-
-    this.timer = setTimeout(
-      () =>{
-        WalletUnlockActions.lock();
-        willTransitionTo(
-          this.props.history,
-          this.props.history.replace,
-          () => {},
-          false
-        );
-      }
-      6000
-    );
+    let currentPath = this.props.location.pathname || "/";
+    this.timer = setTimeout(() => {
+      WalletUnlockActions.lock();
+      willTransitionTo(false, () => {
+        console.debug("Reconnect Transition");
+        this.props.history.replace(currentPath);
+      });
+    }, 6000);
   }
 
   get currentStatus() {
@@ -95,7 +93,9 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
           ? "net_offline"
           : apiStatus === "offline"
             ? "api_offline"
-            : !synced || apiStatus === "blocked" ? "nosync" : "unknown";
+            : !synced || apiStatus === "blocked"
+              ? "nosync"
+              : "unknown";
   }
 
   render() {
@@ -169,16 +169,19 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
   }
 };
 
-Reconnect = connect(Reconnect, {
-  listenTo() {
-    return [NetworkStore];
-  },
-  getProps() {
-    return {
-      ...NetworkStore.getState()
-    };
+Reconnect = connect(
+  Reconnect,
+  {
+    listenTo() {
+      return [NetworkStore];
+    },
+    getProps() {
+      return {
+        ...NetworkStore.getState()
+      };
+    }
   }
-});
+);
 
 Reconnect = withRouter(Reconnect);
 

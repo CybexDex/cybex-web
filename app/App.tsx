@@ -407,7 +407,7 @@ let App = class extends React.Component<any, any> {
           {/* <Nav isVertical={true} hideLabel={true} /> */}
           <div className="main-body">
             <Switch>
-              <Redirect from="*missing*" to="/dashboard" />
+              {/* <Redirect from="*missing*" to="/dashboard" /> */}
               <Route path="/dashboard" exact component={DashboardPage} />
 
               <Route path="/account/:account_name" component={AccountPage} />

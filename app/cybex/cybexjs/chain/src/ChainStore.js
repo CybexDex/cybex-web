@@ -121,90 +121,99 @@ class ChainStore {
     let reconnectCounter = 0;
     var _init = (resolve, reject) => {
       if (this.subscribed) return resolve();
-      let db_api = Apis.instance().db_api();
-      if (!db_api) {
-        return reject(
-          new Error(
-            "Api not found, please initialize the api instance before calling the ChainStore"
-          )
-        );
-      }
-      return db_api
-        .exec("get_objects", [["2.1.0"]])
-        .then(optional_objects => {
-          //if(DEBUG) console.log("... optional_objects",optional_objects ? optional_objects[0].id : null)
-          for (let i = 0; i < optional_objects.length; i++) {
-            let optional_object = optional_objects[i];
-            if (optional_object) {
-              /*
+      let db_api;
+      let interval;
+      let initPromise = new Promise(resolve => {
+        if (!db_api) {
+          interval = setInterval(() => {
+            let db = Apis.instance().db_api();
+            db_api = db;
+            if (db) {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100);
+        }
+      });
+
+      return initPromise.then(() =>
+        db_api
+          .exec("get_objects", [["2.1.0"]])
+          .then(optional_objects => {
+            //if(DEBUG) console.log("... optional_objects",optional_objects ? optional_objects[0].id : null)
+            for (let i = 0; i < optional_objects.length; i++) {
+              let optional_object = optional_objects[i];
+              if (optional_object) {
+                /*
                         ** Because 2.1.0 gets fetched here before the set_subscribe_callback,
                         ** the new witness_node subscription model makes it so we
                         ** never get subscribed to that object, therefore
                         ** this._updateObject is commented out here
                         */
-              // this._updateObject( optional_object, true );
+                // this._updateObject( optional_object, true );
 
-              let head_time = new Date(
-                optional_object.time + "+00:00"
-              ).getTime();
-              this.head_block_time_string = optional_object.time;
-              this.chain_time_offset.push(
-                new Date().getTime() -
-                  timeStringToDate(optional_object.time).getTime()
-              );
-              let now = new Date().getTime();
-              let delta = (now - head_time) / 1000;
-              // let start = Date.parse("Sep 1, 2015");
-              // let progress_delta = head_time - start;
-              // this.progress = progress_delta / (now-start);
+                let head_time = new Date(
+                  optional_object.time + "+00:00"
+                ).getTime();
+                this.head_block_time_string = optional_object.time;
+                this.chain_time_offset.push(
+                  new Date().getTime() -
+                    timeStringToDate(optional_object.time).getTime()
+                );
+                let now = new Date().getTime();
+                let delta = (now - head_time) / 1000;
+                // let start = Date.parse("Sep 1, 2015");
+                // let progress_delta = head_time - start;
+                // this.progress = progress_delta / (now-start);
 
-              if (delta < 60) {
-                Apis.instance()
-                  .db_api()
-                  .exec("set_subscribe_callback", [
-                    this.onUpdate.bind(this),
-                    true
-                  ])
-                  .then(() => {
-                    console.log("synced and subscribed, chainstore ready");
-                    this.subscribed = true;
-                    this.subError = null;
-                    this.notifySubscribers();
-                    resolve();
-                  })
-                  .catch(error => {
-                    this.subscribed = false;
-                    this.subError = error;
-                    this.notifySubscribers();
-                    reject(error);
-                    console.log("Error: ", error);
-                  });
-              } else {
-                console.log("not yet synced, retrying in 1s");
-                this.subscribed = false;
-                reconnectCounter++;
-                this.notifySubscribers();
-                if (reconnectCounter > 5) {
-                  this.subError = new Error(
-                    "ChainStore sync error, please check your system clock"
-                  );
-                  return reject(this.subError);
+                if (delta < 60) {
+                  Apis.instance()
+                    .db_api()
+                    .exec("set_subscribe_callback", [
+                      this.onUpdate.bind(this),
+                      true
+                    ])
+                    .then(() => {
+                      console.log("synced and subscribed, chainstore ready");
+                      this.subscribed = true;
+                      this.subError = null;
+                      this.notifySubscribers();
+                      resolve();
+                    })
+                    .catch(error => {
+                      this.subscribed = false;
+                      this.subError = error;
+                      this.notifySubscribers();
+                      reject(error);
+                      console.log("Error: ", error);
+                    });
+                } else {
+                  console.log("not yet synced, retrying in 1s");
+                  this.subscribed = false;
+                  reconnectCounter++;
+                  this.notifySubscribers();
+                  if (reconnectCounter > 5) {
+                    this.subError = new Error(
+                      "ChainStore sync error, please check your system clock"
+                    );
+                    return reject(this.subError);
+                  }
+                  setTimeout(_init.bind(this, resolve, reject), 1000);
                 }
+              } else {
                 setTimeout(_init.bind(this, resolve, reject), 1000);
               }
-            } else {
-              setTimeout(_init.bind(this, resolve, reject), 1000);
             }
-          }
-          //
-          NetworkStore.setInitDone();
-        })
-        .catch(error => {
-          // in the event of an error clear the pending state for id
-          console.log("!!! Chain API error", error);
-          this.objects_by_id.delete("2.1.0");
-          reject(error);
-        });
+            //
+            NetworkStore.setInitDone();
+          })
+          .catch(error => {
+            // in the event of an error clear the pending state for id
+            console.log("!!! Chain API error", error);
+            this.objects_by_id.delete("2.1.0");
+            reject(error);
+          })
+      );
     };
 
     return new Promise((resolve, reject) => _init(resolve, reject));

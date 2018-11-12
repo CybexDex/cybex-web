@@ -2,6 +2,7 @@ import { cloneDeep } from "lodash";
 import { NetworkStore } from "stores/NetworkStore";
 import ReconnectingWebSocket from "reconnecting-websocket";
 let WebSocketClient = ReconnectingWebSocket;
+// let WebSocketClient = ReconnectingWebSocket;
 
 var SOCKET_DEBUG = false;
 
@@ -189,6 +190,11 @@ class ChainWebSocket {
         // );
 
         console.error("First parameter of unsub must be the original callback");
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          });
+        });
       }
 
       let unSubCb = params[2].splice(0, 1)[0];

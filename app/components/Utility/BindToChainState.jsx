@@ -185,11 +185,13 @@ function BindToChainState(Component, options = {}) {
     }
 
     componentWillMount() {
+      // console.debug("BindToChainState", "WillMount", this.componentName());
       ChainStore.subscribe(this.update);
       this.update();
     }
-
+    
     componentWillUnmount() {
+      // console.debug("BindToChainState", "WillUnmount", this.componentName());
       ChainStore.unsubscribe(this.update);
     }
 
