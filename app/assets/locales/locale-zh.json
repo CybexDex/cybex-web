@@ -1953,6 +1953,7 @@
   "app_init": {
     "connecting": "连接节点...",
     "check_latency": "检查节点状况...",
-    "database":"程序初始化..."
+    "database":"程序初始化...",
+    "error": "网络链接异常，本页将重新载入"
   }
 }

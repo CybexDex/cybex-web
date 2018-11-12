@@ -28,10 +28,9 @@ import LogoutModal, {
 import Loadable from "react-loadable";
 import titleUtils from "common/titleUtils";
 import { LoadComponent } from "./Routes";
-import JCTModalOne from "components/Modal/JCTModalOne";
-import JCTModalTwo from "components/Modal/JCTModalTwo";
-
+import counterpart from "counterpart";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { RefreshTip } from "RefreshTip";
 let patch = false;
 (function(window) {
   if (window) {
@@ -187,6 +186,7 @@ let App = class extends React.Component<any, any> {
         : false;
     this.state = {
       loading: false,
+      hasError: false,
       synced: this._syncStatus(),
       syncFail,
       theme: SettingsStore.getState().settings.get("themes"),
@@ -216,6 +216,15 @@ let App = class extends React.Component<any, any> {
     clearInterval(this.priceSubscription);
   }
 
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+  
+  componentDidCatch(err, info) {
+    console.error("App Catch: ", err, info);
+    this.setState({ hasError: true });
+  }
   /**
    * Returns the current blocktime, or exception if not yet available
    * @returns {Date}
@@ -470,7 +479,7 @@ let App = class extends React.Component<any, any> {
         className={this.state.theme}
       >
         <div id="content-wrapper">
-          {content}
+          {this.state.hasError ? <RefreshTip /> : content}
           <NotificationSystem
             ref="notificationSystem"
             allowHTML={true}
@@ -489,8 +498,6 @@ let App = class extends React.Component<any, any> {
             }}
           />
           <WalletUnlockModal />
-          <JCTModalOne modalId={"JCT_MODAL_ONE"} />
-          <JCTModalTwo modalId={"JCT_MODAL_TWO"} />
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />

@@ -67,7 +67,7 @@ let AccountVestedBalances = class extends React.PureComponent<VestedBalancesProp
     // console.debug("WillReceive: ", nextProps);
     let keys = PrivateKeyStore.getState().keys;
     let keySeq = keys.keySeq();
-    console.debug("GetKey: ", keySeq);
+    // console.debug("GetKey: ", keySeq);
     if (!keySeq.equals(this.existing_keys)) {
       this.existing_keys = keySeq;
       BalanceClaimActiveActions.setPubkeys(keySeq);
