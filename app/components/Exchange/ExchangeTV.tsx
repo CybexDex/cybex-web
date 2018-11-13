@@ -229,13 +229,6 @@ class ExchangeNew extends React.Component<any, any> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.refs.center && this.psInit) {
-      let centerContainer = this.refs.center;
-      if (centerContainer) {
-        // Ps.initialize(centerContainer);
-        this.psInit = false;
-      }
-    }
     if (
       nextProps.quoteAsset !== this.props.quoteAsset ||
       nextProps.baseAsset !== this.props.baseAsset ||
@@ -251,6 +244,7 @@ class ExchangeNew extends React.Component<any, any> {
         this.props.quoteAsset.get("symbol") ||
       nextProps.baseAsset.get("symbol") !== this.props.baseAsset.get("symbol")
     ) {
+      // console.debug("Set Initial Props", nextProps);
       this.setState(this._initialState(nextProps));
 
       return SettingsActions.changeViewSetting({

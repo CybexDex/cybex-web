@@ -396,59 +396,61 @@ let OrderBookHeader = class extends React.PureComponent<
       onDepthChange,
       basePrecision = 8
     } = this.props;
-    return [
-      <TabLink
-        key="orderType-all"
-        active={type === OrderType.All}
-        onClick={onTypeChange.bind(this, OrderType.All)}
-        style={OrderBookStyles.tab}
-      >
-        <Translate content="exchange.orderbook.all" />
-      </TabLink>,
-      <TabLink
-        key="orderType-ask"
-        active={type === OrderType.Ask}
-        onClick={onTypeChange.bind(this, OrderType.Ask)}
-        style={OrderBookStyles.tab}
-      >
-        <Translate content="exchange.orderbook.ask" />
-      </TabLink>,
-      <TabLink
-        key="orderType-bid"
-        active={type === OrderType.Bid}
-        onClick={onTypeChange.bind(this, OrderType.Bid)}
-        style={OrderBookStyles.tab}
-      >
-        <Translate content="exchange.orderbook.bid" />
-      </TabLink>,
-      <i key="orderType-divider" style={{ flexGrow: 1 }} />,
-      <TabLink
-        key="depthType-interval"
-        type="secondary"
-        active={depthType === DepthType.Interval}
-        onClick={onDepthTypeChange.bind(this, DepthType.Interval)}
-        style={OrderBookStyles.tab}
-      >
-        <Translate content="exchange.orderbook.compare_depth" />
-      </TabLink>,
-      <TabLink
-        key="depthType-accum"
-        type="secondary"
-        active={depthType === DepthType.Accum}
-        onClick={onDepthTypeChange.bind(this, DepthType.Accum)}
-        style={OrderBookStyles.tab}
-      >
-        <Translate content="exchange.orderbook.accum_depth" />
-      </TabLink>,
-      <i key="depthType-divider" style={{ flexGrow: 1 }} />,
-      <Select
-        key="depthType-switcher"
-        onChange={this.handleDepthChange}
-        styles={$styleSelect("orderbook")}
-        options={this.combineOptions}
-        value={this.state.depth}
-      />
-    ];
+    return (
+      <React.Fragment>
+        <TabLink
+          key="orderType-all"
+          active={type === OrderType.All}
+          onClick={onTypeChange.bind(this, OrderType.All)}
+          style={OrderBookStyles.tab}
+        >
+          <Translate content="exchange.orderbook.all" />
+        </TabLink>
+        <TabLink
+          key="orderType-ask"
+          active={type === OrderType.Ask}
+          onClick={onTypeChange.bind(this, OrderType.Ask)}
+          style={OrderBookStyles.tab}
+        >
+          <Translate content="exchange.orderbook.ask" />
+        </TabLink>
+        <TabLink
+          key="orderType-bid"
+          active={type === OrderType.Bid}
+          onClick={onTypeChange.bind(this, OrderType.Bid)}
+          style={OrderBookStyles.tab}
+        >
+          <Translate content="exchange.orderbook.bid" />
+        </TabLink>
+        <i key="orderType-divider" style={{ flexGrow: 1 }} />,
+        <TabLink
+          key="depthType-interval"
+          type="secondary"
+          active={depthType === DepthType.Interval}
+          onClick={onDepthTypeChange.bind(this, DepthType.Interval)}
+          style={OrderBookStyles.tab}
+        >
+          <Translate content="exchange.orderbook.compare_depth" />
+        </TabLink>
+        <TabLink
+          key="depthType-accum"
+          type="secondary"
+          active={depthType === DepthType.Accum}
+          onClick={onDepthTypeChange.bind(this, DepthType.Accum)}
+          style={OrderBookStyles.tab}
+        >
+          <Translate content="exchange.orderbook.accum_depth" />
+        </TabLink>
+        <i key="depthType-divider" style={{ flexGrow: 1 }} />,
+        <Select
+          key="depthType-switcher"
+          onChange={this.handleDepthChange}
+          styles={$styleSelect("orderbook")}
+          options={this.combineOptions}
+          value={this.state.depth}
+        />
+      </React.Fragment>
+    );
   }
 };
 
@@ -793,7 +795,11 @@ let OrderBook = class extends React.Component<any, any> {
       >
         <PriceStat
           ready={marketReady}
-          price={(useRte && rteTicker && rteTicker.px) || (latest && latest.full) || {}}
+          price={
+            (useRte && rteTicker && rteTicker.px) ||
+            (latest && latest.full) ||
+            {}
+          }
           quote={quote}
           withYuan
           base={base}
