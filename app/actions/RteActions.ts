@@ -1,5 +1,6 @@
 import alt from "alt-instance";
 import { string } from "prop-types";
+import ReconnectingWebSocket from "reconnecting-websocket";
 
 type SubCounter = {
   [channel: string]: {
@@ -15,7 +16,7 @@ class RteActions {
 
   subscription: {
     channel: string;
-    ws?: WebSocket;
+    ws?: ReconnectingWebSocket;
   } = {
     channel: ""
   };
@@ -58,7 +59,7 @@ class RteActions {
 
   setupWs(channelStr: string) {
     this.subscription.channel = channelStr;
-    this.subscription.ws = new WebSocket(
+    this.subscription.ws = new ReconnectingWebSocket(
       `wss://mdp.cybex.io/streams?stream=${channelStr}`
     );
     this.subscription.ws.onmessage = this.onMarketMsg;

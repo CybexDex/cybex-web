@@ -422,7 +422,7 @@ let OrderBookHeader = class extends React.PureComponent<
         >
           <Translate content="exchange.orderbook.bid" />
         </TabLink>
-        <i key="orderType-divider" style={{ flexGrow: 1 }} />,
+        <i key="orderType-divider" style={{ flexGrow: 1 }} />
         <TabLink
           key="depthType-interval"
           type="secondary"
@@ -441,7 +441,7 @@ let OrderBookHeader = class extends React.PureComponent<
         >
           <Translate content="exchange.orderbook.accum_depth" />
         </TabLink>
-        <i key="depthType-divider" style={{ flexGrow: 1 }} />,
+        <i key="depthType-divider" style={{ flexGrow: 1 }} />
         <Select
           key="depthType-switcher"
           onChange={this.handleDepthChange}
