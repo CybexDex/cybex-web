@@ -291,7 +291,11 @@ class MarketsStore {
     };
 
     if (result.market && result.market !== this.activeMarket) {
-      // console.log("switch active market from", this.activeMarket, "to", result.market);
+      console.debug("switch active market from", this.activeMarket, "to", result.market);
+      // Todo find why this fragment works fine
+      if (this.activeMarket) {
+        return;
+      }
       this.onClearMarket();
       this.activeMarket = result.market;
     }

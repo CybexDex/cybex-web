@@ -118,6 +118,7 @@ class Blocks extends React.Component<any, any> {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    console.debug("Block Should Update: ", nextProps);
     return (
       !Immutable.is(nextProps.latestBlocks, this.props.latestBlocks) ||
       !utils.are_equal_shallow(nextState, this.state)

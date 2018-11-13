@@ -314,7 +314,8 @@ class MarketsActions {
           .catch(error => {
             subs[subID] = true;
             console.log("Error in MarketsActions.unSubscribeMarket: ", error);
-            dispatch({ unSub: false, market: subID });
+            dispatch({ unSub: true, market: subID });
+            // dispatch({ unSub: false, market: subID });
           });
       }
       return Promise.resolve(true);

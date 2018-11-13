@@ -1,5 +1,6 @@
 import alt from "alt-instance";
 import { string } from "prop-types";
+import ReconnectingWebSocket from "reconnecting-websocket";
 
 type SubCounter = {
   [channel: string]: {
@@ -15,7 +16,7 @@ class RteActions {
 
   subscription: {
     channel: string;
-    ws?: WebSocket;
+    ws?: ReconnectingWebSocket;
   } = {
     channel: ""
   };
@@ -27,7 +28,6 @@ class RteActions {
         : (this.subCounter[channel][marketPair] = 1);
     });
     this.updateWs();
-    return this.subCounter;
   }
   removeMarketListener(marketPair: string, channels = ["ticker", "depth"]) {
     channels.forEach(channel => {
@@ -37,7 +37,6 @@ class RteActions {
         : console.error("Remove Market Listener Error: ", marketPair, channel);
     });
     this.updateWs();
-    return this.subCounter;
   }
   updateWs() {
     let latestChannelStr = Object.getOwnPropertyNames(this.subCounter)
@@ -54,16 +53,14 @@ class RteActions {
       this.subscription.ws ? this.subscription.ws.close() : null;
       this.setupWs(latestChannelStr);
     }
-    return latestChannelStr;
   }
 
   setupWs(channelStr: string) {
     this.subscription.channel = channelStr;
-    this.subscription.ws = new WebSocket(
+    this.subscription.ws = new ReconnectingWebSocket(
       `wss://mdp.cybex.io/streams?stream=${channelStr}`
     );
     this.subscription.ws.onmessage = this.onMarketMsg;
-    return channelStr;
   }
 
   onMarketMsg(msg: MessageEvent) {

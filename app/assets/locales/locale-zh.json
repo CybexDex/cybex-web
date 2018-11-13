@@ -1949,5 +1949,11 @@
     "only_one_account": "创建用户请求过多，同一IP地址五分钟内仅可注册一个Cybex账号",
     "cannot_read_property": "客户端错误，请刷新页面后重试",
     "max_supply": "超出资产有效最大供应量"
+  },
+  "app_init": {
+    "connecting": "连接节点...",
+    "check_latency": "检查节点状况...",
+    "database":"程序初始化...",
+    "error": "网络链接异常，本页将重新载入"
   }
 }

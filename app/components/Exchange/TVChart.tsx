@@ -297,7 +297,8 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       enabled_features: [
         "hide_loading_screen_on_series_error",
         "side_toolbar_in_fullscreen_mode",
-        "hide_left_toolbar_by_default"
+        "keep_left_toolbar_visible_on_small_screens"
+        // "hide_left_toolbar_by_default"
       ],
       // disabled_features:["google_analytics", "header_widget","header_symbol_search","symbol_info","header_compare","header_chart_type","display_market_status","symbol_search_hot_key","compare_symbol","border_around_the_chart","remove_library_container_border","symbol_info","header_interval_dialog_button","show_interval_dialog_on_key_press","volume_force_overlay"],
       disabled_features,

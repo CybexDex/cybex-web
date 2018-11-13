@@ -84,27 +84,29 @@ let AppInit = class extends React.Component<any, any> {
 
   componentWillMount() {
     // Node Connection Init
-    willTransitionTo(true, this._statusCallback.bind(this))
-      .then(() => {
-        this.setState({
-          apiConnected: true,
-          apiError: false,
-          syncError: null
+    let tsResult = willTransitionTo(true, this._statusCallback.bind(this));
+    if (tsResult)
+      tsResult
+        .then(() => {
+          this.setState({
+            apiConnected: true,
+            apiError: false,
+            syncError: null
+          });
+        })
+        .catch(err => {
+          console.error("willTransitionTo err:", err);
+          this.setState({
+            apiConnected: false,
+            apiError: true,
+            syncError: !err
+              ? null
+              : (err && err.message).indexOf("ChainStore sync error") !== -1
+          });
+        })
+        .finally(() => {
+          this.removeLoadingMask();
         });
-      })
-      .catch(err => {
-        console.error("willTransitionTo err:", err);
-        this.setState({
-          apiConnected: false,
-          apiError: true,
-          syncError: !err
-            ? null
-            : (err && err.message).indexOf("ChainStore sync error") !== -1
-        });
-      })
-      .finally(() => {
-        this.removeLoadingMask();
-      });
   }
 
   componentDidMount() {

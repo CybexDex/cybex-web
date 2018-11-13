@@ -1030,11 +1030,12 @@ let AccountOverview = class extends React.Component<any, any> {
                   </div>
                 </Tab>
               )}
-              {this.props.isMyAccount && (
+              {true && (
+              // {this.props.isMyAccount && (
                 <Tab title="account.vested">
                   <div className="content-block">
                     <div className="generic-bordered-box">
-                      <AccountVestedBalances />
+                      <AccountVestedBalances account={account} />
                     </div>
                   </div>
                 </Tab>
