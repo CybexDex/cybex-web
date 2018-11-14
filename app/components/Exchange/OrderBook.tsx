@@ -352,7 +352,6 @@ let OrderBookHeader = class extends React.PureComponent<
       onDepthChange
     } = this.props;
     let { maxDigits, digits } = this.props;
-    console.debug("OrderBookHeader: ", this.props);
     let combineOptions = new Array(maxDigits)
       .fill(1)
       .map((v, i) => this.getDepthOption(maxDigits - i));
@@ -536,9 +535,22 @@ declare namespace OrderBook {
       time: "2018/11 14:01:27Z";
       trailing: "000000";
     };
+    marketReady: boolean;
     [other: string]: any;
   };
 }
+
+const getMaxDigits = latest => {
+  let latestPrice = (latest && latest.full) || 0.0;
+  return Math.max(
+    2,
+    (
+      Number.parseFloat(latestPrice.toString())
+        .toPrecision(5)
+        .split(".")[1] || "0"
+    ).length
+  );
+};
 let OrderBook = class extends React.Component<OrderBook.Props, any> {
   marketPair: string;
   askWrapper: HTMLDivElement;
@@ -572,16 +584,8 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
   }
 
   static getDerivedStateFromProps(props: OrderBook.Props, state) {
-    let maxDigits =
-      props.latest && props.latest.full
-        ? Math.max(
-            2,
-            Number.parseFloat(props.latest.full.toString())
-              .toPrecision(5)
-              .split(".")[1].length
-          )
-        : 8;
-    console.debug("DerivedState: ", props, state);
+    let maxDigits = getMaxDigits(props.latest);
+
     let newState = {
       digits: state.digits,
       maxDigits: maxDigits
@@ -592,12 +596,17 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
     return newState;
   }
 
+  shouldComponentUpdate(props: OrderBook.Props) {
+    return props.marketReady;
+  }
+
   setType = type => {
     this.setState({
       type
     });
     this.fixPos();
   };
+
   setDepthType = depthType => {
     this.setState({
       depthType
@@ -617,7 +626,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
     }, 200);
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: OrderBook.Props) {
     if (
       prevProps.baseSymbol !== this.props.baseSymbol ||
       prevProps.quoteSymbol !== this.props.quoteSymbol
@@ -629,6 +638,17 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
         `${this.props.quoteSymbol}${this.props.baseSymbol}`
       );
     }
+    if (prevProps.latest !== this.props.latest) {
+      let lastMaxDigits = getMaxDigits(prevProps.latest);
+      let newMaxDigits = getMaxDigits(this.props.latest);
+      if (lastMaxDigits !== newMaxDigits) {
+        this.setState({
+          digits: newMaxDigits,
+          maxDigits: newMaxDigits
+        });
+      }
+    }
+
     // this.fixPos();
   }
   componentDidMount() {
