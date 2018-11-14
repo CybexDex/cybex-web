@@ -24,3 +24,4 @@ app/test/MarketClasses.js
 dist
 yarn.*
 app/counterpart
+.vscode/
