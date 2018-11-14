@@ -22,10 +22,12 @@ class RteStore extends AbstractStore<RteState> {
     console.debug("RTE Store Constructor Done");
   }
   onUpdateMarket({ channel, market, data }) {
-    let n = this.state[channel].set(market, data);
-    this.setState({
-      [channel]: n
-    });
+    if(this.state[channel]){
+        let n = this.state[channel].set(market, data);
+        this.setState({
+            [channel]: n
+        });
+    }
   }
 }
 
