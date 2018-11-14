@@ -421,7 +421,7 @@ class MarketsStore {
 
     if (result.stat) {
       let stats = result.stat;
-      // console.debug("ResultStat: ", stats);
+      console.debug("ResultStat: ", stats);
       this.marketStats = this.marketStats.set("change", stats.percent_change);
       this.marketStats = this.marketStats.set("volumeBase", stats.base_volume);
       this.marketStats = this.marketStats.set("volumeQuote", stats.quote_volume);

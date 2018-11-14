@@ -82,16 +82,6 @@ let PriceStat = class extends React.Component<
 
     let value2 = volume2 ? utils.format_volume(volume2) : null;
 
-    let changeComp = !change ? null : change !== null ? (
-      <span className={changeClass}>
-        &nbsp;{changeClass === "change-up" ? (
-          <span>&#8593;</span>
-        ) : (
-          <span>&#8595;</span>
-        )}
-      </span>
-    ) : null;
-
     return (
       <li
         className={cnames("stat", this.props.className)}
@@ -102,9 +92,9 @@ let PriceStat = class extends React.Component<
           {content && <Translate content={content} />}
           {content && <br />}
           <b className={`value stat-primary ${hideBase ? changeClass : ""}`}>
-            {!ready ? 0 : value}&nbsp;
-            {!hideBase && changeComp}
+            {!ready ? 0 : value}
           </b>
+          &nbsp;
           <span className="symbol-text">
             {!hideBase && <AssetName name={base.get("symbol")} />}
             {!hideQuote && quote && !volume ? (
@@ -118,9 +108,9 @@ let PriceStat = class extends React.Component<
           <span>
             <span />
             <b className="value stat-primary">
-              {!ready ? 0 : <span> / {value2}</span>}&nbsp;
-              {changeComp}
+              {!ready ? 0 : <span> / {value2}</span>}
             </b>
+            &nbsp;
             <span className="symbol-text">
               <AssetName name={quote.get("symbol")} />
             </span>

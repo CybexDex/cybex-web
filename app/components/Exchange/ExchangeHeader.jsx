@@ -11,7 +11,6 @@ import counterpart from "counterpart";
 import cnames from "classnames";
 
 export default class ExchangeHeader extends React.Component {
-
   _addMarket(quote, base) {
     let marketID = `${quote}_${base}`;
     if (!this.props.starredMarkets.has(marketID)) {
@@ -116,16 +115,8 @@ export default class ExchangeHeader extends React.Component {
                   <br />
                   <b className={"value " + dayChangeClass}>
                     {marketReady ? dayChange : 0}
-                    <span className={dayChangeArrow}>
-                      &nbsp;{dayChangeArrow === "" ? null : dayChangeArrow ===
-                      "change-up" ? (
-                        <span>&#8593;</span>
-                      ) : (
-                        <span>&#8595;</span>
-                      )}
-                    </span>
                   </b>
-                  <span>%</span>
+                  <span className={dayChangeArrow}>%</span>
                 </span>
               </li>
 
@@ -135,7 +126,7 @@ export default class ExchangeHeader extends React.Component {
                   decimals={0}
                   volume={true}
                   price={volumeBase}
-                  volume2={volumeQuote}
+                  volume2={parseFloat(volumeQuote)}
                   base={baseAsset}
                   quote={quoteAsset}
                   content="exchange.volume_24"

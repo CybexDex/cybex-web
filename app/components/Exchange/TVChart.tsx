@@ -356,10 +356,10 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
   }
 
   componentWillUnmount() {
-    if (this.tvWidget !== null) {
-      this.tvWidget.remove();
-      this.tvWidget = null;
-    }
+    // if (this.tvWidget !== null) {
+    //   this.tvWidget.remove();
+    //   this.tvWidget = null;
+    // }
   }
 
   render() {

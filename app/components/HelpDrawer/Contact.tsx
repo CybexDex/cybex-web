@@ -2,9 +2,9 @@ import * as React from "react"; import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faTelegram } from '@fortawesome/fontawesome-free-brands';
-import fontawesome from '@fortawesome/fontawesome';
+import { library } from '@fortawesome/fontawesome';
 
-fontawesome.library.add(faTelegram);
+library.add(faTelegram);
 
 export class Contact extends React.Component<any, any> {
   render() {
