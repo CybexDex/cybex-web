@@ -571,8 +571,8 @@ class LimitOrder {
     isRteBid: boolean = false
   ) {
     // Todo adjust precision; To more accurate, uncomment this
-    // let priceDigits =
-    //   marketBaseAsset.get("precision") + marketQuoteAsset.get("precision") + 2;
+    let priceDigits =
+      marketBaseAsset.get("precision") + marketQuoteAsset.get("precision") + 2;
 
     // let value = isRteBid
     //   ? new BigNumber(rteOrder[1])
@@ -590,9 +590,9 @@ class LimitOrder {
     // -----------
     // No accurate for temporary
 
-    let priceDigits = isRteBid
-      ? marketBaseAsset.get("precision")
-      : marketQuoteAsset.get("precision");
+    // let priceDigits = isRteBid
+    //   ? marketBaseAsset.get("precision")
+    //   : marketQuoteAsset.get("precision");
 
     let value = isRteBid
       ? new BigNumber(rteOrder[1])
@@ -602,13 +602,13 @@ class LimitOrder {
       : new BigNumber(rteOrder[1]);
 
     let for_sale = isRteBid
-      ? qty.mul(Math.pow(10, marketBaseAsset.get("precision")))
-      : qty.mul(Math.pow(10, marketQuoteAsset.get("precision")));
+      ? qty.mul(Math.pow(10, marketBaseAsset.get("precision") + 1))
+      : qty.mul(Math.pow(10, marketQuoteAsset.get("precision") + 1));
 
     let base = for_sale;
     let quote = isRteBid
-      ? value.mul(Math.pow(10, marketQuoteAsset.get("precision")))
-      : value.mul(Math.pow(10, marketBaseAsset.get("precision")));
+      ? value.mul(Math.pow(10, marketQuoteAsset.get("precision") + 1))
+      : value.mul(Math.pow(10, marketBaseAsset.get("precision") + 1));
 
     let order = {
       id: "1.7.0",

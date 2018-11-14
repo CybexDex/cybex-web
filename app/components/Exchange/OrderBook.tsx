@@ -151,41 +151,6 @@ type RteOrderPrice = string;
 type RteOrderAmount = string;
 type RteOrder = [RteOrderPrice, RteOrderAmount];
 
-const convertLimitToOrder: (
-  order: LimitOrder,
-  digits: number,
-  basePrecision: number,
-  quotePrecision: number
-) => Order = (order, digits, basePrecision, quotePrecision) => {
-  let price = order.getPrice(order.sell_price, digits);
-  let isBid = order.isBid();
-  let value = order[isBid ? "amountForSale" : "amountToReceive"]().getAmount({
-    real: true
-  });
-  let amount = order[isBid ? "amountToReceive" : "amountForSale"]().getAmount({
-    real: true
-  });
-  return new Order(price, value, amount, isBid, basePrecision, quotePrecision);
-};
-
-const convertRteOrderToNormal: (
-  order: RteOrder,
-  digits: number,
-  basePrecision: number,
-  quotePrecision: number
-) => Order = (order, digits, basePrecision, quotePrecision) => {
-  let price = parseFloat(order[0]);
-  let amount = parseFloat(order[1]);
-  let value = price * amount;
-  return new Order(
-    parseFloat(price.toFixed(digits)),
-    value,
-    amount,
-    false,
-    basePrecision,
-    quotePrecision
-  );
-};
 let OrderBookRowVertical = class extends React.Component<
   {
     index?;
@@ -356,36 +321,27 @@ let OrderBookHeader = class extends React.PureComponent<
     depthType;
     onDepthTypeChange?;
     onTypeChange?;
-    basePrecision?;
+    maxDigits?;
+    digits?;
     onDepthChange;
   },
   any
 > {
   combineOptions = [];
-  constructor(props) {
-    super(props);
-    let availablePrecision = Math.max(props.basePrecision, PRECISION_SIZE);
-
-    let combineOptions = (this.combineOptions = new Array(PRECISION_SIZE)
-      .fill(1)
-      .map((v, i) => ({
-        label: counterpart.translate("exchange.depth", {
-          depth: availablePrecision - i
-        }),
-        value: availablePrecision - i
-      })));
-    this.state = {
-      depth: combineOptions[0]
-    };
-  }
 
   handleDepthChange = depth => {
-    this.setState({ depth });
     let { onDepthChange } = this.props;
     if (onDepthChange) {
       onDepthChange(depth);
     }
   };
+
+  getDepthOption = value => ({
+    label: counterpart.translate("exchange.depth", {
+      depth: value
+    }),
+    value: value
+  });
 
   render() {
     let {
@@ -393,9 +349,13 @@ let OrderBookHeader = class extends React.PureComponent<
       depthType,
       onTypeChange,
       onDepthTypeChange,
-      onDepthChange,
-      basePrecision = 8
+      onDepthChange
     } = this.props;
+    let { maxDigits, digits } = this.props;
+    console.debug("OrderBookHeader: ", this.props);
+    let combineOptions = new Array(maxDigits)
+      .fill(1)
+      .map((v, i) => this.getDepthOption(maxDigits - i));
     return (
       <React.Fragment>
         <TabLink
@@ -446,8 +406,8 @@ let OrderBookHeader = class extends React.PureComponent<
           key="depthType-switcher"
           onChange={this.handleDepthChange}
           styles={$styleSelect("orderbook")}
-          options={this.combineOptions}
-          value={this.state.depth}
+          options={combineOptions}
+          value={this.getDepthOption(digits)}
         />
       </React.Fragment>
     );
@@ -565,8 +525,21 @@ let OrderBookParitalWrapper = class extends React.Component<
     });
   }
 };
-
-let OrderBook = class extends React.Component<any, any> {
+declare namespace OrderBook {
+  type Props = {
+    latest: {
+      dec: "77";
+      full: 210.76999999999998;
+      int: "210";
+      pays: "790.387500";
+      receives: "3.750000";
+      time: "2018/11 14:01:27Z";
+      trailing: "000000";
+    };
+    [other: string]: any;
+  };
+}
+let OrderBook = class extends React.Component<OrderBook.Props, any> {
   marketPair: string;
   askWrapper: HTMLDivElement;
   static defaultProps = {
@@ -590,11 +563,33 @@ let OrderBook = class extends React.Component<any, any> {
       showAllAsks: true,
       rowCount: 20,
       digits: 8,
+      maxDigits: 8,
       // digits: props.base.get("precision", 8),
       depthType: DepthType.Interval,
       type: OrderType.All
     };
     RteActions.addMarketListener(`${props.quoteSymbol}${props.baseSymbol}`);
+  }
+
+  static getDerivedStateFromProps(props: OrderBook.Props, state) {
+    let maxDigits =
+      props.latest && props.latest.full
+        ? Math.max(
+            2,
+            Number.parseFloat(props.latest.full.toString())
+              .toPrecision(5)
+              .split(".")[1].length
+          )
+        : 8;
+    console.debug("DerivedState: ", props, state);
+    let newState = {
+      digits: state.digits,
+      maxDigits: maxDigits
+    };
+    if (state.digits > maxDigits) {
+      newState.digits = maxDigits;
+    }
+    return newState;
   }
 
   setType = type => {
@@ -674,6 +669,7 @@ let OrderBook = class extends React.Component<any, any> {
       rowCount,
       type,
       digits,
+      maxDigits,
       depthType
     } = this.state;
     // let countOfRow = 16;
@@ -813,7 +809,8 @@ let OrderBook = class extends React.Component<any, any> {
         <OrderBookHeader
           type={this.state.type}
           onTypeChange={this.setType}
-          basePrecision={8}
+          maxDigits={maxDigits}
+          digits={digits}
           depthType={this.state.depthType}
           onDepthTypeChange={this.setDepthType}
           // basePrecision={base.get("precision")}
