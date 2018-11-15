@@ -671,7 +671,8 @@ class ExchangeNew extends React.Component<any, any> {
     this.forceUpdate();
   }
 
-  _orderbookClick(order) {
+  _orderbookClick(order, dispalyPrice) {
+    console.log("click order ==========================",dispalyPrice);
     const isBid = order.isBid();
     /*
             * Because we are using a bid order to construct an ask and vice versa,
@@ -688,7 +689,7 @@ class ExchangeNew extends React.Component<any, any> {
 
     let current = this.state[isBid ? "bid" : "ask"];
     current.price = newPrice;
-    current.priceText = newPrice.toReal();
+    current.priceText = dispalyPrice;//newPrice.toReal();
 
     let newState = {
       // If isBid is true, newState defines a new ask order and vice versa
@@ -698,7 +699,7 @@ class ExchangeNew extends React.Component<any, any> {
         to_receive: toReceive,
         toReceiveText: toReceive.getAmount({ real: true }),
         price: newPrice,
-        priceText: newPrice.toReal()
+        priceText: dispalyPrice//newPrice.toReal()
       }
     };
 
