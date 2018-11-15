@@ -513,12 +513,11 @@ let BuySell = class extends React.Component<any, any> {
                       type={type}
                       disabled={disabled}
                     >
-                      {buttonText}
-
+                      {buttonText}{" "}
                       <AssetName
                         // name={isBid ? base.get("symbol") : quote.get("symbol")}
-                          name={base.get("symbol")}
-                      />{" "}
+                          name={quote.get("symbol")}
+                      />
                       {/*{" => "}
                       <AssetName
                         name={isBid ? quote.get("symbol") : base.get("symbol")}
