@@ -327,7 +327,7 @@ let OrderBookHeader = class extends React.PureComponent<
   },
   any
 > {
-  combineOptions = [];
+  // combineOptions = [];
 
   handleDepthChange = depth => {
     let { onDepthChange } = this.props;
@@ -353,7 +353,7 @@ let OrderBookHeader = class extends React.PureComponent<
     } = this.props;
     let { maxDigits, digits } = this.props;
     console.debug("OrderBookHeader: ", this.props);
-    let combineOptions = new Array(maxDigits)
+    let combineOptions = new Array(Math.min(4, maxDigits))
       .fill(1)
       .map((v, i) => this.getDepthOption(maxDigits - i));
     return (
@@ -576,9 +576,12 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       props.latest && props.latest.full
         ? Math.max(
             2,
-            Number.parseFloat(props.latest.full.toString())
-              .toPrecision(5)
-              .split(".")[1].length
+            Math.min(
+                8,
+                Number.parseFloat(props.latest.full.toString())
+                    .toPrecision(5)
+                    .split(".")[1].length
+            )
           )
         : 8;
     console.debug("DerivedState: ", props, state);
