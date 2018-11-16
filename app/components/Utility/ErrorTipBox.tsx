@@ -13,6 +13,7 @@ type props = {
   placeholder?: string | boolean
   isI18n?: boolean
   muiltTips: boolean;
+  messageParams: any;
   tips: ErrorTips
 };
 
@@ -39,7 +40,7 @@ const InfoMessage = ({ isI18n, message, messageParams }) => (
 
 const ErrorBox = ({ children }) => <div className="error-wrapper">{children}</div>;
 
-const ErrorTipBox = ({ placeholder, isI18n, tips, muiltTips }: props) => {
+const ErrorTipBox = ({ placeholder, isI18n, tips, muiltTips, messageParams }: props) => {
   let errorTips = tips.filter(tip => tip.isError);
   if (!errorTips.length && !placeholder) {
     return null;
@@ -51,7 +52,7 @@ const ErrorTipBox = ({ placeholder, isI18n, tips, muiltTips }: props) => {
       </ErrorBox>
     ) : placeholder ? (
       <ErrorBox>
-        <InfoMessage isI18n={isI18n} message={placeholder} messageParams={{}} />
+        <InfoMessage isI18n={isI18n} message={placeholder} messageParams={messageParams} />
       </ErrorBox>
     ) : null;
   }

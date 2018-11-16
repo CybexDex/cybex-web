@@ -1474,9 +1474,10 @@
     "withdraw": {
       "amount": "Amount to Withdraw",
       "address": "Withdraw to Address",
-      "to_eos": "Withdraw to EOS account",
+      "to_eos": "Withdraw to %(type)s account",
       "lack_memo": "Missing private memo key for sender.",
       "submit": "Withdraw",
+      "with_memo": "Withdraw with %(memo)s",
       "cyb_fee": "Use CYB as the Cybex transfer fee for this operation"
     },
     "deposit": {
@@ -1619,8 +1620,8 @@
     "intermediate": "Intermediate account",
     "asset_to_withdraw": "Asset to withdraw:",
     "support_block": "For support, please contact Jadepool at:",
-    "space_in_memo": "There are empty letters in your memo, please reconfirm it",
-    "withdraw_memo": "Withdraw Memo",
+    "space_in_memo": "There are empty letters in your %(memo), please reconfirm it",
+    "withdraw_memo": "Withdraw %(memo)s",
     "valid_address": "Please enter a valid %(coin_type)s address",
     "valid_service": "Network error, check your network status, please.",
     "loading": "Verifing the rule of address...",
