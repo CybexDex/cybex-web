@@ -87,6 +87,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       address = depositInfo.address;
     }
     let isEOS = type === "EOS" || type === "XRP";
+    let memoName = type === "XRP" ? "tag" : "memo";
     return (
       <BaseModal modalId={modalId}>
         <h3>
@@ -115,6 +116,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
               style={{ fontSize: "bold" }}
               content="gateway.deposit_eos"
               account={gatewayAccount}
+              memo={memoName}
               type={type}
             />
           ) : (

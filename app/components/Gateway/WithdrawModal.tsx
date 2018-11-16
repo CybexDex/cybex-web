@@ -550,7 +550,10 @@ class WithdrawModal extends React.Component<props, state> {
     // withdraw_amount <= 0;
     let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
       .name;
-    let isEOS = assetName.indexOf("EOS") !== -1;
+    let isEOS =
+      assetName.indexOf("EOS") !== -1 || assetName.indexOf("XRP") !== -1;
+    let memoName = assetName.indexOf("XRP") !== -1 ? "tag" : "memo";
+
     return (
       <BaseModal modalId={modalId}>
         <div className="content-block">
@@ -617,9 +620,17 @@ class WithdrawModal extends React.Component<props, state> {
         <div className="content-block">
           <label className="left-label">
             {!isEOS ? (
-              <Translate component="span" content="modal.withdraw.address" />
+              <Translate
+                component="span"
+                content="modal.withdraw.address"
+                type={assetName}
+              />
             ) : (
-              <Translate component="span" content="modal.withdraw.to_eos" />
+              <Translate
+                component="span"
+                content="modal.withdraw.to_eos"
+                type={assetName}
+              />
             )}
           </label>
           <div className="inline-label">
@@ -647,6 +658,7 @@ class WithdrawModal extends React.Component<props, state> {
                 className="left-label"
                 component="lebel"
                 content="modal.withdraw.with_memo"
+                memo={memoName}
               />
               <div className="switch">
                 <input
@@ -663,7 +675,11 @@ class WithdrawModal extends React.Component<props, state> {
           {withMemo && (
             <div style={{ marginTop: 10 }}>
               <label className="left-label">
-                <Translate component="span" content="gateway.withdraw_memo" />
+                <Translate
+                  component="span"
+                  memo={memoName}
+                  content="gateway.withdraw_memo"
+                />
               </label>
               <div className="inline-label">
                 <Input
@@ -683,6 +699,7 @@ class WithdrawModal extends React.Component<props, state> {
           <ErrorTipBox
             isI18n={true}
             placeholder={true}
+            messageParams={{ memo: memoName }}
             tips={[
               {
                 name: "withdraw-address",
