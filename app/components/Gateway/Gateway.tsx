@@ -177,7 +177,7 @@ let GatewayTable = class extends React.Component<any, any> {
               accessor: asset => asset,
               Cell: row => {
                 let asset = row.original;
-                return asset.get("canWithdraw") || true? (
+                return asset.get("canWithdraw") ? (
                   <a
                     onClick={this._showWithdrawModal.bind(
                       this,
