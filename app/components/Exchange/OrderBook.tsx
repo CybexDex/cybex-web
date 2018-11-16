@@ -354,9 +354,11 @@ let OrderBookHeader = class extends React.PureComponent<
     let { maxDigits, digits } = this.props;
 
     console.debug("OrderBookHeader: ", this.props);
-    let combineOptions = new Array(Math.min(4, maxDigits))
+    const maxOption = Math.min(8, maxDigits);
+    // const minOption = Math.max(1, maxDigits-2);
+    let combineOptions = new Array(Math.min(4, maxOption))
       .fill(1)
-      .map((v, i) => this.getDepthOption(maxDigits - i));
+      .map((v, i) => this.getDepthOption(maxOption - i));
     return (
       <React.Fragment>
         <TabLink
@@ -510,7 +512,7 @@ let OrderBookParitalWrapper = class extends React.Component<
           index={index}
           key={order.getPrice() + (order.isCall() ? "_call" : "")}
           order={order}
-          onClick={onOrderClick.bind(this, order)}
+          onClick={onOrderClick.bind(this, order, order.getPrice(order.sell_price, digits))}
           digits={digits}
           withYuan
           base={base}
@@ -546,7 +548,7 @@ const getMaxDigits = latest => {
   let latestPrice = (latest && latest.full) || 0.00000000;
 
   return Math.max(
-    2,
+    1,
       Math.min(
           8,
           Number.parseFloat(latestPrice)
@@ -573,14 +575,15 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
 
   constructor(props) {
     super(props);
+    const maxDigit = getMaxDigits(props.latest)
     this.state = {
       scrollToBottom: true,
       flip: props.flipOrderBook,
       showAllBids: true,
       showAllAsks: true,
       rowCount: 20,
-      digits: 8,
-      maxDigits: 8,
+      digits: maxDigit,
+      maxDigits: Math.min(8,maxDigit+2),
       // digits: props.base.get("precision", 8),
       depthType: DepthType.Interval,
       type: OrderType.All
@@ -588,19 +591,19 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
     RteActions.addMarketListener(`${props.quoteSymbol}${props.baseSymbol}`);
   }
 
-  static getDerivedStateFromProps(props: OrderBook.Props, state) {
-
-    let maxDigits = getMaxDigits(props.latest);
-
-    let newState = {
-      digits: state.digits,
-      maxDigits: maxDigits
-    };
-    if (state.digits > maxDigits) {
-      newState.digits = maxDigits;
-    }
-    return newState;
-  }
+  // static getDerivedStateFromProps(props: OrderBook.Props, state) {
+  //
+  //   let maxDigits = getMaxDigits(props.latest);
+  //
+  //   let newState = {
+  //     digits: state.digits,
+  //     maxDigits: maxDigits
+  //   };
+  //   if (state.digits > maxDigits) {
+  //     newState.digits = maxDigits;
+  //   }
+  //   return newState;
+  // }
 
   shouldComponentUpdate(props: OrderBook.Props) {
     return props.marketReady;
@@ -650,7 +653,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       if (lastMaxDigits !== newMaxDigits) {
         this.setState({
           digits: newMaxDigits,
-          maxDigits: newMaxDigits
+          maxDigits: Math.min(newMaxDigits+2,8)
         });
       }
     }
