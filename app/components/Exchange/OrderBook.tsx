@@ -512,7 +512,11 @@ let OrderBookParitalWrapper = class extends React.Component<
           index={index}
           key={order.getPrice() + (order.isCall() ? "_call" : "")}
           order={order}
-          onClick={onOrderClick.bind(this, order, order.getPrice(order.sell_price, digits))}
+          onClick={onOrderClick.bind(
+            this,
+            order,
+            order.getPrice(order.sell_price, digits)
+          )}
           digits={digits}
           withYuan
           base={base}
@@ -545,16 +549,18 @@ declare namespace OrderBook {
 }
 
 const getMaxDigits = latest => {
-  let latestPrice = (latest && latest.full) || 0.00000000;
+  let latestPrice = (latest && latest.full) || 0.0;
 
   return Math.max(
     1,
-      Math.min(
-          8,
-          Number.parseFloat(latestPrice)
-            .toPrecision(5)
-            .split(".")[1].length
-      )
+    Math.min(
+      8,
+      (
+        Number.parseFloat(latestPrice)
+          .toPrecision(5)
+          .split(".")[1] || ""
+      ).length
+    )
   );
 };
 
@@ -575,7 +581,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
 
   constructor(props) {
     super(props);
-    const maxDigit = getMaxDigits(props.latest)
+    const maxDigit = getMaxDigits(props.latest);
     this.state = {
       scrollToBottom: true,
       flip: props.flipOrderBook,
@@ -583,7 +589,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       showAllAsks: true,
       rowCount: 20,
       digits: maxDigit,
-      maxDigits: Math.min(8,maxDigit+2),
+      maxDigits: Math.min(8, maxDigit + 2),
       // digits: props.base.get("precision", 8),
       depthType: DepthType.Interval,
       type: OrderType.All
@@ -653,7 +659,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       if (lastMaxDigits !== newMaxDigits) {
         this.setState({
           digits: newMaxDigits,
-          maxDigits: Math.min(newMaxDigits+2,8)
+          maxDigits: Math.min(newMaxDigits + 2, 8)
         });
       }
     }

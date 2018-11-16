@@ -105,6 +105,10 @@ var Utils = {
   },
 
   format_number: (number, decimals, trailing_zeros = true) => {
+    if (number.toString().includes("e-")) {
+      // console.debug("Float: ", number, decimals, parseFloat(number.toString()).toFixed(decimals))
+      return parseFloat(number.toString()).toFixed(decimals);
+    }
     if (
       isNaN(number) ||
       !isFinite(number) ||

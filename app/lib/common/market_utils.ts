@@ -173,10 +173,11 @@ const MarketUtils = {
       receivesAsset.get("precision")
     );
     let payPrecision = utils.get_asset_precision(paysAsset.get("precision"));
-
-    let receives = new BigNumber(order.receives.amount)
-      .div(receivePrecision)
-      .toNumber();
+    
+    let receives = Number.parseFloat(
+      new BigNumber(order.receives.amount).div(receivePrecision).toString()
+    );
+    
     receives = utils.format_number(receives, receivesAsset.get("precision"));
     let pays = new BigNumber(order.pays.amount).div(payPrecision).toNumber();
     pays = utils.format_number(pays, paysAsset.get("precision"));
