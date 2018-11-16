@@ -135,7 +135,7 @@ let MarketRow = class extends React.Component<
       return null;
     }
 
-    if (hideZeroVol && stats && stats.volumeBase === 0) return null;
+    if (hideZeroVol && stats && stats.volumeQuote === 0 && stats.volumeBase === 0) return null;
 
     let marketID = quote.get("symbol") + "_" + base.get("symbol");
     let marketName = quote.get("symbol") + ":" + base.get("symbol");
