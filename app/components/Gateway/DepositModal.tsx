@@ -86,7 +86,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     } else {
       address = depositInfo.address;
     }
-    let isEOS = type === "EOS";
+    let isEOS = type === "EOS" || type === "XRP";
     return (
       <BaseModal modalId={modalId}>
         <h3>
@@ -115,6 +115,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
               style={{ fontSize: "bold" }}
               content="gateway.deposit_eos"
               account={gatewayAccount}
+              type={type}
             />
           ) : (
             [
@@ -175,7 +176,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
               type="submit"
             >
               {isEOS ? (
-                <Translate content="gateway.generate_new_eos" />
+                <Translate content="gateway.generate_new_eos" type={type} />
               ) : (
                 <Translate content="gateway.generate_new" />
               )}

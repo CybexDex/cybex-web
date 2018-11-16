@@ -12,7 +12,7 @@ export const EXPLORER_URLS = __TEST__
     BTC: "https://live.blockcypher.com/btc/tx/#{txid}",
     USDT: "https://www.omniexplorer.info/tx/#{txid}",
     ETH: "https://etherscan.io/tx/#{txid}",
-    XRP: "https://xrpcharts.ripple.com/#/transactions//#{txid}",
+    XRP: "https://xrpcharts.ripple.com/#/transactions/#{txid}",
     GAS: "https://neoscan.io/transaction/#{txid}",
     EOS: "https://eosflare.io/tx/#{txid}",
     LTC: "https://chain.so/tx/LTC/#{txid}",
@@ -232,7 +232,7 @@ export const JadePool: {
         name: "EOS"
       }),
       "JADE.XRP": new GatewayAsset("JADE.XRP", "XRP", ProtocolType.XRP, {
-        name: "EOS"
+        name: "Ripple"
       }),
       "JADE.USDT": new GatewayAsset("JADE.USDT", "USDT", ProtocolType.USDT, {
         name: "Tether"
