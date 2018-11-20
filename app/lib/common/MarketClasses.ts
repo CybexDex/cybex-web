@@ -602,13 +602,13 @@ class LimitOrder {
       : new BigNumber(rteOrder[1]);
 
     let for_sale = isRteBid
-      ? qty.mul(Math.pow(10, marketBaseAsset.get("precision") + 1))
-      : qty.mul(Math.pow(10, marketQuoteAsset.get("precision") + 1));
+      ? qty.mul(Math.pow(10, marketBaseAsset.get("precision")))
+      : qty.mul(Math.pow(10, marketQuoteAsset.get("precision")));
 
     let base = for_sale;
     let quote = isRteBid
-      ? value.mul(Math.pow(10, marketQuoteAsset.get("precision") + 1))
-      : value.mul(Math.pow(10, marketBaseAsset.get("precision") + 1));
+      ? value.mul(Math.pow(10, marketQuoteAsset.get("precision")))
+      : value.mul(Math.pow(10, marketBaseAsset.get("precision")));
 
     let order = {
       id: "1.7.0",

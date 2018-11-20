@@ -231,9 +231,9 @@ export const JadePool: {
       "JADE.EOS": new GatewayAsset("JADE.EOS", "EOS", ProtocolType.EOS, {
         name: "EOS"
       }),
-      "JADE.XRP": new GatewayAsset("JADE.XRP", "XRP", ProtocolType.XRP, {
-        name: "Ripple"
-      }),
+      // "JADE.XRP": new GatewayAsset("JADE.XRP", "XRP", ProtocolType.XRP, {
+      //   name: "Ripple"
+      // }),
       "JADE.USDT": new GatewayAsset("JADE.USDT", "USDT", ProtocolType.USDT, {
         name: "Tether"
       }),
