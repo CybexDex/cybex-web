@@ -126,6 +126,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
     let disabled_features = [
       "edit_buttons_in_legend",
       "header_symbol_search",
+      "timeframes_toolbar",
       "symbol_search_hot_key",
       "symbol_info",
       "header_compare",
@@ -289,11 +290,11 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
       timezone: "UTC",
-      time_frames: [
-        { text: "1m", resolution: "1D" },
-        { text: "1d", resolution: "60" },
-        { text: "6h", resolution: "1" }
-      ],
+      // time_frames: [
+      //   { text: "1m", resolution: "1D" },
+      //   { text: "1d", resolution: "60" },
+      //   { text: "6h", resolution: "1" }
+      // ],
       enabled_features: [
         "hide_loading_screen_on_series_error",
         "side_toolbar_in_fullscreen_mode",
