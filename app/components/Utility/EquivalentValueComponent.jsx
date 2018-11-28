@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types"; 
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import FormattedAsset from "./FormattedAsset";
 import ChainTypes from "./ChainTypes";
 import BindToChainState from "./BindToChainState";
@@ -77,22 +78,27 @@ class ValueComponent extends MarketStatsCheck {
       toStats = marketStats.get(toSymbol + "_" + coreSymbol);
       fromStats = marketStats.get(fromSymbol + "_" + coreSymbol);
     }
+    console.debug("Close Stat: ", fromStats, toStats);
+    // let price = utils.convertPrice(
+    //   fromStats && fromStats.close
+    //     ? fromStats.close
+    //     : fromID === "1.3.0" || fromAsset.has("bitasset")
+    //       ? fromAsset
+    //       : null,
+    //   toStats && toStats.close
+    //     ? toStats.close
+    //     : toID === "1.3.0" || toAsset.has("bitasset")
+    //       ? toAsset
+    //       : null,
+    //   fromID,
+    //   toID
+    // );
+    let price =
+      fromID === "1.3.0" && toID === "1.3.0"
+        ? utils.convertPrice(fromAsset, toAsset, fromID, toID)
+        : (marketStats.get(fromSymbol + "_" + toSymbol) || {}).price || null;
 
-    let price = utils.convertPrice(
-      fromStats && fromStats.close
-        ? fromStats.close
-        : fromID === "1.3.0" || fromAsset.has("bitasset")
-          ? fromAsset
-          : null,
-      toStats && toStats.close
-        ? toStats.close
-        : toID === "1.3.0" || toAsset.has("bitasset")
-          ? toAsset
-          : null,
-      fromID,
-      toID
-    );
-
+    console.debug("Price: ", price);
     let eqValue = price
       ? utils.convertValue(price, amount, fromAsset, toAsset)
       : null;
@@ -149,16 +155,19 @@ class EquivalentValueComponent extends React.Component {
   }
 }
 
-EquivalentValueComponent = connect(EquivalentValueComponent, {
-  listenTo() {
-    return [MarketsStore];
-  },
-  getProps() {
-    return {
-      marketStats: MarketsStore.getState().allMarketStats
-    };
+EquivalentValueComponent = connect(
+  EquivalentValueComponent,
+  {
+    listenTo() {
+      return [MarketsStore];
+    },
+    getProps() {
+      return {
+        marketStats: MarketsStore.getState().allMarketStats
+      };
+    }
   }
-});
+);
 
 class BalanceValueComponent extends React.Component {
   static propTypes = {
