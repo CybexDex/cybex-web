@@ -74,20 +74,24 @@ let TotalValue = class extends MarketStatsCheck {
       fromStats = marketStats.get(fromSymbol + "_" + coreSymbol);
     }
 
-    let price = utils.convertPrice(
-      fromStats && fromStats.close
-        ? fromStats.close
-        : fromID === "1.3.0" || fromAsset.has("bitasset")
-          ? fromAsset
-          : null,
-      toStats && toStats.close
-        ? toStats.close
-        : toID === "1.3.0" || toAsset.has("bitasset")
-          ? toAsset
-          : null,
-      fromID,
-      toID
-    );
+    // let price = utils.convertPrice(
+    //   fromStats && fromStats.close
+    //     ? fromStats.close
+    //     : fromID === "1.3.0" || fromAsset.has("bitasset")
+    //       ? fromAsset
+    //       : null,
+    //   toStats && toStats.close
+    //     ? toStats.close
+    //     : toID === "1.3.0" || toAsset.has("bitasset")
+    //       ? toAsset
+    //       : null,
+    //   fromID,
+    //   toID
+    // );
+    let price =
+      fromID === "1.3.0" && toID === "1.3.0"
+        ? utils.convertPrice(fromAsset, toAsset, fromID, toID)
+        : (marketStats.get(fromSymbol + "_" + toSymbol) || {}).price || null;
 
     return price ? utils.convertValue(price, amount, fromAsset, toAsset) : 0;
   }
@@ -161,7 +165,7 @@ let TotalValue = class extends MarketStatsCheck {
       let fromAsset = assets[asset];
       if (!fromAsset) {
         continue;
-      };
+      }
       // Hide For Wcup
       let fromAssetMap = fromAsset.get
         ? fromAsset
@@ -191,7 +195,7 @@ let TotalValue = class extends MarketStatsCheck {
       let fromAsset = assets[asset];
       if (!fromAsset) {
         continue;
-      };
+      }
       // Hide For Wcup
       let fromAssetMap = ChainStore.getAsset(fromAsset);
       if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
@@ -219,7 +223,7 @@ let TotalValue = class extends MarketStatsCheck {
       let fromAsset = assets[balance.asset_id];
       if (!fromAsset) {
         return;
-      };
+      }
       let fromAssetMap = ChainStore.getAsset(balance.asset_id);
       if (!fromAssetMap || isFootballAsset(fromAssetMap.get("symbol"))) {
         return;
@@ -520,12 +524,7 @@ let AccountWrapper = class extends React.Component<any, any> {
       !Object.keys(openOrders).length &&
       !Object.keys(debt).length
     ) {
-      return (
-        <span>
-          {" "}
-          0
-        </span>
-      );
+      return <span> 0</span>;
     } else {
       return (
         <TotalBalanceValue
