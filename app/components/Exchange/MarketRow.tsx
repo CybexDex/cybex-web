@@ -139,7 +139,9 @@ let MarketRow = class extends React.Component<
       hideZeroVol &&
       stats &&
       stats.volumeQuote === 0 &&
-      stats.volumeBase === 0
+      stats.volumeBase === 0 &&
+      base.get("symbol") !== "JADE.USDT" &&
+      quote.get("symbol") !== "JADE.JCT" 
     )
       return null;
 

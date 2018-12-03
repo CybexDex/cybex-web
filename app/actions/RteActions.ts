@@ -30,10 +30,12 @@ class RteActions {
     this.updateWs();
   }
   removeMarketListener(marketPair: string, channels = ["ticker", "depth"]) {
+    console.debug("RemoveMarket: ", marketPair);
     channels.forEach(channel => {
       marketPair in this.subCounter[channel] &&
       this.subCounter[channel][marketPair] > 0
-        ? (this.subCounter[channel][marketPair] -= 1)
+        ? (this.subCounter[channel][marketPair] =
+            this.subCounter[channel][marketPair] - 1)
         : console.error("Remove Market Listener Error: ", marketPair, channel);
     });
     this.updateWs();

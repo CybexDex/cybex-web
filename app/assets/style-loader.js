@@ -40,4 +40,5 @@ require("./asset-symbols/GNT.png");
 require("./asset-symbols/DPY.png");
 require("./asset-symbols/KEY.png");
 require("./asset-symbols/MT.png");
+require("./asset-symbols/MXC.png");
 require("./asset-symbols/ENG.png");

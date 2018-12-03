@@ -42,8 +42,8 @@ const hasMarketChanged: (
   if (bucketChange) {
     console.debug(
       "===getBar bucketChange: ",
-      prev[1].interval,
-      next[1].interval
+      prev[1],
+      next[1]
     );
     return true;
   }
@@ -54,7 +54,7 @@ const hasMarketChanged: (
       "===getBar marketChange: ",
       prev[0].base + prev[0].quote,
       next[0].base + next[0].quote,
-      next[1].interval
+      next[1]
     );
     return true;
   }
@@ -126,7 +126,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
     let disabled_features = [
       "edit_buttons_in_legend",
       "header_symbol_search",
-      "timeframes_toolbar",
+      // "timeframes_toolbar",
       "symbol_search_hot_key",
       "symbol_info",
       "header_compare",
@@ -289,7 +289,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       user_id: this.props.userId,
       fullscreen: this.props.fullscreen,
       autosize: this.props.autosize,
-      timezone: "UTC",
+      timezone: "Asia/Shanghai",
       // time_frames: [
       //   { text: "1m", resolution: "1D" },
       //   { text: "1d", resolution: "60" },

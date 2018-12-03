@@ -598,7 +598,6 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
   static getDerivedStateFromProps(props: OrderBook.Props, state) {
     let lastMaxDigits = state.maxDigits;
     let newMaxDigits = Math.min(getMaxDigits(props.latest).maxDigit + 2, 8);
-    console.debug("DerivedState: ", props, state);
     let newState: any = {
       // digits: state.digits,
       maxDigits: newMaxDigits
@@ -640,23 +639,18 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
   };
 
   componentDidUpdate(prevProps: OrderBook.Props) {
-    if (
-      prevProps.baseSymbol !== this.props.baseSymbol ||
-      prevProps.quoteSymbol !== this.props.quoteSymbol
-    ) {
-      RteActions.removeMarketListener(
-        `${prevProps.quoteSymbol}${prevProps.baseSymbol}`
-      );
-      RteActions.addMarketListener(
-        `${this.props.quoteSymbol}${this.props.baseSymbol}`
-      );
+    let newMarket = `${this.props.quoteSymbol}${this.props.baseSymbol}`;
+    if (this.marketPair !== newMarket) {
+      RteActions.removeMarketListener(this.marketPair);
+      this.marketPair = newMarket;
+      RteActions.addMarketListener(this.marketPair);
     }
-
-    // this.fixPos();
   }
+
   componentDidMount() {
     this.fixPos();
   }
+
   componentDidCatch() {
     return <h1>Opps</h1>;
   }
@@ -666,6 +660,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       digits
     });
   };
+
   onDepthTypeChange = {};
 
   render() {
@@ -706,7 +701,9 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
     if (!base || !quote) {
       return null;
     }
-    let useRte = baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH";
+    let useRte =
+      // (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH") ||
+      baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.EOS";
     let usingRte = useRte && rteDepth.bids;
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids
