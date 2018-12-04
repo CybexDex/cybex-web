@@ -2,6 +2,7 @@ import { Fraction } from "fractional";
 import { BigNumber } from "bignumber.js";
 
 const BnFrDown = BigNumber.another({ ROUNDING_MODE: BigNumber.ROUND_DOWN });
+const BnFrUp = BigNumber.another({ ROUNDING_MODE: BigNumber.ROUND_UP });
 
 const GRAPHENE_100_PERCENT = 10000;
 
@@ -197,6 +198,12 @@ class Asset {
   }
 }
 
+enum FrDirection {
+  Normal,
+  Up,
+  Down
+}
+
 /**
  * @brief The price struct stores asset prices in the Graphene system.
  *
@@ -275,7 +282,7 @@ class Price {
     );
   }
 
-  toReal(sameBase = false, digits = 8) {
+  toReal(sameBase = false, digits = 8, frDirection = FrDirection.Normal) {
     const key =
       digits.toString() + (sameBase ? "_samebase_real" : "_not_samebase_real");
     if (this[key]) {
@@ -290,7 +297,11 @@ class Price {
         (this.quote.amount * this.base.toSats());
     // this[key] = parseFloat(real.toFixed(digits));
     this[key] = parseFloat(
-      new BnFrDown(real.toFixed(digits + 2)).toFixed(digits)
+      frDirection === FrDirection.Down
+        ? new BnFrDown(real.toString()).toFixed(digits)
+        : frDirection === FrDirection.Up
+          ? new BnFrUp(real.toString()).toFixed(digits)
+          : new BigNumber(real.toString()).toFixed(digits)
     );
     return this[key]; // toFixed and parseFloat helps avoid floating point errors for really big or small numbers
   }
@@ -643,7 +654,11 @@ class LimitOrder {
     if (this._real_price[d]) {
       return this._real_price[d];
     }
-    this._real_price[d] = p.toReal(p.base.asset_id === this.market_base, d);
+    this._real_price[d] = p.toReal(
+      p.base.asset_id === this.market_base,
+      d,
+      this.isBid() ? FrDirection.Down : FrDirection.Up
+    );
     return this._real_price[d];
   }
 
