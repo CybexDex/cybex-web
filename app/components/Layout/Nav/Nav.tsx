@@ -34,12 +34,11 @@ interface NavLink {
 
 const NavLinks: Array<NavLink> = [
   {
-    id: "eto",
-    routeTo: "/eto",
-    // routeTo: "/eto",
-    activeMatcher: /^\/eto/,
-    name: "eto",
-    icon: "ETO"
+    id: "game",
+    routeTo: "/game",
+    activeMatcher: /^\/game/,
+    name: "game",
+    icon: "game"
   },
   {
     id: "account",

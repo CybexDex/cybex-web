@@ -113,6 +113,11 @@ const WalletManager = Loadable({
     import(/* webpackChunkName: "wallet" */ "./components/Wallet/WalletManager"),
   loading: LoadingIndicator
 });
+const GameCenter = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "wallet" */ "./components/GameCenter/GameCenter"),
+  loading: LoadingIndicator
+});
 
 const ExistingAccount = Loadable({
   loader: () =>
@@ -439,6 +444,7 @@ let App = class extends React.Component<any, any> {
 
               {/* Wallet backup/restore routes */}
               <Route path="/wallet" component={WalletManager} />
+              <Route path="/game" component={GameCenter} />
 
               <Route path="/existing-account" component={ExistingAccount} />
 
