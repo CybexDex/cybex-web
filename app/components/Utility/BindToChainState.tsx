@@ -55,10 +55,10 @@ function checkIfRequired(t) {
   return false;
 }
 
-function BindToChainState<T>(
-  Component: T & React.ComponentClass,
+function BindToChainState<C>(
+  Component: C,
   options: { [props: string]: any } = {}
-) {
+): C {
   return class Wrapper extends React.Component {
     [prop: string]: any;
     constructor(props) {

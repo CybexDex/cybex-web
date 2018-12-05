@@ -19,13 +19,13 @@ declare module "alt-container" {
 
 declare module "alt-react" {
   const supplyFluxContext: any;
-  function connect(
-    Component,
+  function connect<P, NP extends P, >(
+    Component: React.ComponentClass<P> | React.ReactElement<P>,
     injector: {
       listenTo?(): any[];
-      getProps?(props: any): { [propName: string]: any };
+      getProps?(props: any):<T>() => { [propName: string]: any };
     }
-  );
+  ): React.ComponentClass<P>;
 }
 
 declare namespace CommonUtils {

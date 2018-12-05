@@ -27,7 +27,7 @@ class GameActions {
    * @param {Map<string, any>} account
    * @memberof GatewayActions
    */
-  async getGameUrl(account: Map<string, any>) {
+  async updateGameUrl(account: Map<string, any>) {
     console.debug("[LoginGameCenter]", account);
     console.debug(
       "[LoginGameCenter]",
@@ -57,16 +57,17 @@ class GameActions {
       account.getIn(["options", "memo_key"]),
       privKey
     );
-    // let privKey = PrivateKey.fromWif(privKeyWif);
     let buffer = ops.fund_query.toBuffer(op);
     let signedHex = Signature.signBuffer(buffer, privKey).toHex();
     console.debug("[LoginGameCenter Signed]", signedHex);
-    // tx.addSigner(1);
     tx.addSigner(signedHex);
     let loginRes = await gameLogin(tx);
     console.debug("[LoginGameCenter LoginRes]", loginRes);
+    return this.setGameUrl(loginRes.url);
+  }
 
-    return loginRes;
+  setGameUrl(gameUrl: string) {
+    return gameUrl;
   }
 }
 

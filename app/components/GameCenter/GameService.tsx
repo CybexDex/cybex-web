@@ -11,8 +11,11 @@ export interface LoginBody {
   accountName: string;
   signer: string;
 }
+export interface LoginRes {
+  url: string
+}
 
-export async function gameLogin(tx: CustomTx): Promise<LoginBody> {
+export async function gameLogin(tx: CustomTx): Promise<LoginRes> {
   return await queryImpl("login", tx).then(res => res.data);
 }
 

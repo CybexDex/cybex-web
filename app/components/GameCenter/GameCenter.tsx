@@ -2,7 +2,14 @@ import * as React from "react";
 import { Button } from "./../Common/Button";
 import Radium from "radium";
 import * as counterpart from "counterpart";
-import BindToChainState from "../Utility/BindToChainState";
+import { connect } from "alt-react";
+import AccountStore from "stores/AccountStore";
+import GameStore from "./GameStore";
+import WalletDb from "stores/WalletDb";
+import WalletUnlockActions from "actions/WalletUnlockActions";
+import { GameActions } from "./GameActions";
+import BindToChainState from "components/Utility/BindToChainState";
+import ChainTypes from "components/Utility/ChainTypes";
 
 const GameChip = Radium(({ title, content, buttonLabel, onButtonClick }) => (
   <div>
@@ -19,42 +26,55 @@ enum ModalType {
   Withdraw
 }
 
-export const GameCenter = connect(
-  class GameCenter extends React.Component<{}, {}> {
-    openModal = (modalType: ModalType) => () => {
-      console.debug("GameCenter: ", "OpenModal", modalType);
-    };
+let GameCenter = connect(
+  BindToChainState(
+    class GameCenter extends React.Component<{ account }, {}> {
+      static propTypes = {
+        account: ChainTypes.ChainAccount.isRequired
+      };
 
-    render() {
-      return (
-        <>
-          <h1>Game Center</h1>
-          <GameChip
-            title={counterpart.translate("game.deposit_title")}
-            content={counterpart.translate("game.deposit_content", {
-              price: 1,
-              amount: 1000,
-              asset: "USDT"
-            })}
-            buttonLabel={counterpart.translate("game.deposit_btn")}
-            onButtonClick={this.openModal(ModalType.Deposit)}
-          />
-        </>
-      );
+      openModal = (modalType: ModalType) => () => {
+        console.debug("GameCenter: ", "OpenModal", modalType);
+      };
+
+      openUrl = async () => {
+        if (WalletDb.isLocked()) {
+          await WalletUnlockActions.unlock();
+        }
+        GameActions.updateGameUrl(this.props.account);
+      };
+
+      render() {
+        return (
+          <>
+            <h1>Game Center</h1>
+            <GameChip
+              title={counterpart.translate("game.deposit_title")}
+              content={counterpart.translate("game.deposit_content", {
+                price: 1,
+                amount: 1000,
+                asset: "USDT"
+              })}
+              buttonLabel={counterpart.translate("game.deposit_btn")}
+              onButtonClick={this.openModal(ModalType.Deposit)}
+            />
+            <button onClick={this.openUrl}>URL</button>
+          </>
+        );
+      }
     }
-  },
+  ), 
   {
     listenTo() {
-      return [AccountStore, GatewayStore];
+      return [AccountStore, GameStore];
     },
     getProps() {
+      console.debug("GameCenter: ", AccountStore.getState().currentAccount);
       return {
-        account: AccountStore.getState().currentAccount,
-        depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
-        withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
+        account: AccountStore.getState().currentAccount
       };
     }
   }
 );
-
+console.debug("GameCenterInstance: ", GameCenter);
 export default GameCenter;
