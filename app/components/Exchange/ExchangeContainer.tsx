@@ -112,7 +112,7 @@ let ExchangeContainer = class extends React.Component<any, any> {
       </AltContainer>
     );
   }
-}
+};
 
 let emitter = EmitterInstance();
 let callListener,

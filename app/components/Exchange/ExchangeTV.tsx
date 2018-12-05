@@ -7,7 +7,6 @@ import MarketHistory from "./MarketHistory";
 import MyMarkets from "./MyMarkets";
 import BuySell from "./BuySell";
 import utils from "common/utils";
-// import PriceChartD3 from "./PriceChartD3";
 import { TVChartContainer } from "./TVChart";
 import assetUtils from "common/asset_utils";
 import { debounce, cloneDeep } from "lodash";
@@ -34,7 +33,6 @@ import { Tabs } from "./Tabs/Tabs";
 import { Button, Colors } from "components/Common";
 import { Icon } from "components/Common";
 import { Checkbox, Radio, getId, BaseColors } from "components/Common";
-import PriceChartD3 from "./PriceChartD3";
 import { MarketHistoryStore } from "stores/MarketHistoryStore";
 
 const INFO_TAB_MYORDER = "my-order",

@@ -6,7 +6,6 @@ import { merge } from "lodash";
 import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
-// import * as FingerPrint from "fingerprintjs2";
 import { AbstractStore } from "./AbstractStore";
 export const preferredBases = List([
   "JADE.USDT",

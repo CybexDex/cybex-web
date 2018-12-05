@@ -19,7 +19,7 @@ enum ModalType {
   Withdraw
 }
 
-export const GameCenter = BindToChainState(
+export const GameCenter = connect(
   class GameCenter extends React.Component<{}, {}> {
     openModal = (modalType: ModalType) => () => {
       console.debug("GameCenter: ", "OpenModal", modalType);
@@ -43,7 +43,18 @@ export const GameCenter = BindToChainState(
       );
     }
   },
-  { keep_update: true }
+  {
+    listenTo() {
+      return [AccountStore, GatewayStore];
+    },
+    getProps() {
+      return {
+        account: AccountStore.getState().currentAccount,
+        depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
+        withdrawModal: GatewayStore.getState().modals.get(WITHDRAW_MODAL_ID)
+      };
+    }
+  }
 );
 
 export default GameCenter;

@@ -1,9 +1,5 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
-import { Component } from "react";
-import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
-import CardList from "components/Account/CardList";
 
 import { Button, Icon } from "components/Common";
 import { $styleFlexItem, $styleFlexContainer } from "components/Common/Styles";
