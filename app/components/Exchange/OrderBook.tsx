@@ -702,8 +702,8 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       return null;
     }
     let useRte =
-      // (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH") ||
-      baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.EOS";
+      (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH") ||
+      (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.EOS");
     let usingRte = useRte && rteDepth.bids;
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids

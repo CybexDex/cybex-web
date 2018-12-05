@@ -34,10 +34,11 @@ class RteActions {
     channels.forEach(channel => {
       marketPair in this.subCounter[channel] &&
       this.subCounter[channel][marketPair] > 0
-        ? (this.subCounter[channel][marketPair] =
-            this.subCounter[channel][marketPair] - 1)
+        ? (this.subCounter[channel][marketPair] = 0)
+            // this.subCounter[channel][marketPair] - 1)
         : console.error("Remove Market Listener Error: ", marketPair, channel);
     });
+    console.debug("Now Subcounter: ", JSON.stringify(this.subCounter));
     this.updateWs();
   }
   updateWs() {
