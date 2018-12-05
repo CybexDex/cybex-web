@@ -55,8 +55,12 @@ function checkIfRequired(t) {
   return false;
 }
 
-function BindToChainState(Component, options = {}) {
+function BindToChainState<T>(
+  Component: T & React.ComponentClass,
+  options: { [props: string]: any } = {}
+) {
   return class Wrapper extends React.Component {
+    [prop: string]: any;
     constructor(props) {
       super(props);
       let prop_types_array = pairs(Component.propTypes);
@@ -189,7 +193,7 @@ function BindToChainState(Component, options = {}) {
       ChainStore.subscribe(this.update);
       this.update();
     }
-    
+
     componentWillUnmount() {
       // console.debug("BindToChainState", "WillUnmount", this.componentName());
       ChainStore.unsubscribe(this.update);
@@ -278,7 +282,7 @@ function BindToChainState(Component, options = {}) {
         let prop =
           props[key] || this.dynamic_prop[key] || this.default_props[key];
         if (prop) {
-          let new_obj = ChainStore.getAccountRefsOfKey(prop);
+          let new_obj = (ChainStore as any).getAccountRefsOfKey(prop);
           if (
             new_obj === undefined &&
             this.required_props.indexOf(key) === -1 &&
@@ -445,7 +449,7 @@ function BindToChainState(Component, options = {}) {
 
       //console.log("----- Wrapper update ----->", this.all_chain_props, this.all_chain_props.length, all_objects_counter, resolved_objects_counter);
       if (all_objects_counter <= resolved_objects_counter)
-        new_state.resolved = true;
+        (new_state as any).resolved = true;
       this.setState(new_state);
     }
 
@@ -476,14 +480,18 @@ function BindToChainState(Component, options = {}) {
       //return <span className={this.state.resolved ? "resolved":"notresolved"}><Component {...props} {...this.state}/></span>;
       return <Component ref="bound_component" {...props} {...this.state} />;
     }
-  };
+  } as any;
 }
 
-class Wrapper extends React.Component {
+let Wrapper = class extends React.Component {
   render() {
-    return <span className="wrapper">{this.props.children(this.props)}</span>;
+    return (
+      <span className="wrapper">
+        {(this.props.children as any)(this.props)}
+      </span>
+    );
   }
-}
+};
 Wrapper = BindToChainState(Wrapper, {
   all_props: true,
   require_all_props: true

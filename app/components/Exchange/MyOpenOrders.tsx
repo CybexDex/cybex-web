@@ -408,7 +408,7 @@ class MyOpenOrders extends React.Component<any, any> {
     });
 
     return (
-      <React.Fragment>
+      <>
         <div className="exchange-content-header">
           <Translate content="exchange.my_orders" />
         </div>
@@ -433,7 +433,7 @@ class MyOpenOrders extends React.Component<any, any> {
             </TransitionWrapper>
           </table>
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }

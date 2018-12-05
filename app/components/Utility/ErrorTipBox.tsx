@@ -13,7 +13,7 @@ type props = {
   placeholder?: string | boolean
   isI18n?: boolean
   muiltTips: boolean;
-  messageParams: any;
+  messageParams?: any;
   tips: ErrorTips
 };
 

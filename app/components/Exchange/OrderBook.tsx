@@ -360,7 +360,7 @@ let OrderBookHeader = class extends React.PureComponent<
       .fill(1)
       .map((v, i) => this.getDepthOption(maxOption - i));
     return (
-      <React.Fragment>
+      <>
         <TabLink
           key="orderType-all"
           active={type === OrderType.All}
@@ -412,7 +412,7 @@ let OrderBookHeader = class extends React.PureComponent<
           options={combineOptions}
           value={this.getDepthOption(digits)}
         />
-      </React.Fragment>
+      </>
     );
   }
 };

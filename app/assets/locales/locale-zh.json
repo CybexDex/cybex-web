@@ -1766,6 +1766,7 @@
     "logout": "登出账户",
     "cybex_bet": "足球竞猜",
     "help": "帮助文档",
+    "game": "游戏中心",
     "eto": "ETO"
   },
   "vesting": {
@@ -1953,7 +1954,18 @@
   "app_init": {
     "connecting": "连接节点...",
     "check_latency": "检查节点状况...",
-    "database":"程序初始化...",
+    "database": "程序初始化...",
     "error": "网络链接异常，本页将重新载入"
+  },
+  "game": {
+    "deposit_title": "金币充值",
+    "withdraw_title": "金币提现",
+    "deposit_btn": "立即充值",
+    "withdraw_btn": "申请提现",
+    "deposit_content": "%(price)s %(asset)s = %(amount)s金币",
+    "withdraw_content": "每日最高提现%(ceil)s，提现后，%(asset)s将在%(delay)s小时后转入您的账户",
+    "btn_try": "试玩一下",
+    "btn_play": "正式开始",
+    "more_game": "更多游戏"
   }
 }

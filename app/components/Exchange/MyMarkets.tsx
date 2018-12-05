@@ -391,7 +391,7 @@ export class MarketGroup extends React.Component<any, any> {
 
     return (
       open && (
-        <React.Fragment>
+        <>
           <div className="table table-hover">
             <div className="table-row" style={{ paddingRight: "10px" }}>
               {headers}
@@ -403,7 +403,7 @@ export class MarketGroup extends React.Component<any, any> {
           >
             {marketRows}
           </div>
-        </React.Fragment>
+        </>
       )
     );
   }
@@ -823,7 +823,7 @@ let MyMarkets = class extends React.Component<any, any> {
       listStyle.height = listHeight;
     }
     return (
-      <React.Fragment>
+      <>
         <div className="grid-block shrink left-orderbook-header">
           <div
             ref="myMarkets"
@@ -958,7 +958,7 @@ let MyMarkets = class extends React.Component<any, any> {
               );
             })}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 };
