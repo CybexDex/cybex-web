@@ -36,6 +36,7 @@ export const MARKETS = [
   "JADE.KEY",
   "JADE.TCT",
   "JADE.XRP",
+  "JADE.MXC",
   "JADE.CENNZ",
   // "JADE.NASH",
   "JADE.POLY",

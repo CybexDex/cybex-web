@@ -32,6 +32,7 @@ const SpecialMarkets = {
     "JADE.ETH": 1,
     "JADE.BTC": 2,
     "JADE.EOS": 3,
+    "JADE.MXC": 4,
     // "JADE.LTC": 4,
     "JADE.XRP": 5
   }
@@ -56,7 +57,6 @@ const BTC_MARKETS = [
   "JADE.KEY",
   "JADE.TCT",
   "JADE.XRP",
-  // "JADE.MXC",
   "JADE.CENNZ",
   // "JADE.NASH",
   "JADE.JCT",
