@@ -3,6 +3,7 @@
     "target": "es2015",
     "module": "esnext",
     "moduleResolution": "node",
+    "strict": true,
     "jsx": "react",
     "lib": [
       "es2015",

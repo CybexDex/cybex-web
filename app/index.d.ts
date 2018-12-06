@@ -284,3 +284,15 @@ type Account = {
   whitelisted_accounts: any[];
   whitelisting_accounts: AccountId[];
 };
+
+declare namespace GameCenter {
+  interface DepositConfig {
+    depositAccount: string | null;
+    asset: string | null;
+    exchangeRate: number | null;
+  }
+  interface WithdrawConfig {
+    ceil: number | null;
+    exchangeRate: number | null;
+  }
+}

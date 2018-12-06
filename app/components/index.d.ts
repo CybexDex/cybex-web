@@ -20,10 +20,10 @@ declare module "alt-container" {
 declare module "alt-react" {
   const supplyFluxContext: any;
   function connect<P, NP extends P, >(
-    Component: React.ComponentClass<P> | React.ReactElement<P>,
+    Component,
     injector: {
       listenTo?(): any[];
-      getProps?(props: any):<T>() => { [propName: string]: any };
+      getProps?(props: any):{ [propName: string]: any };
     }
   ): React.ComponentClass<P>;
 }

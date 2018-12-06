@@ -66,8 +66,39 @@ class GameActions {
     return this.setGameUrl(loginRes.url);
   }
 
+  async showDepositModal(modalId) {
+    this.updateDepositInfo({
+      depositAccount: "game-receive",
+      asset: "CYB",
+      exchangeRate: 100
+    });
+    this.openModal(modalId);
+  }
+  async showWithdrawModal(modalId) {
+    this.updateWithdrawInfo({
+      exchangeRate: 100,
+      ceil: Number.POSITIVE_INFINITY
+    });
+    this.openModal(modalId);
+  }
+
   setGameUrl(gameUrl: string) {
     return gameUrl;
+  }
+
+  updateDepositInfo(depositInfo: GameCenter.DepositConfig) {
+    return depositInfo;
+  }
+  updateWithdrawInfo(withdrawInfo: GameCenter.WithdrawConfig) {
+    return withdrawInfo;
+  }
+
+  closeModal(modalId) {
+    return modalId;
+  }
+
+  openModal(modalId) {
+    return modalId;
   }
 }
 

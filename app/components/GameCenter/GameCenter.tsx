@@ -10,6 +10,11 @@ import WalletUnlockActions from "actions/WalletUnlockActions";
 import { GameActions } from "./GameActions";
 import BindToChainState from "components/Utility/BindToChainState";
 import ChainTypes from "components/Utility/ChainTypes";
+import DepositModalWrapper from "./DepositModal";
+import WithdrawModalWrapper from "./WithdrawModal";
+
+const DEPOSIT_MODAL_ID = "GAME_MODAL_DEPOSIT";
+const WITHDRAW_MODAL_ID = "GAME_MODAL_WITHDRAW";
 
 const GameChip = Radium(({ title, content, buttonLabel, onButtonClick }) => (
   <div>
@@ -28,13 +33,26 @@ enum ModalType {
 
 let GameCenter = connect(
   BindToChainState(
-    class GameCenter extends React.Component<{ account }, {}> {
+    class GameCenter extends React.Component<
+      { account; depositModal?; withdrawModal? },
+      {}
+    > {
       static propTypes = {
         account: ChainTypes.ChainAccount.isRequired
       };
 
       openModal = (modalType: ModalType) => () => {
         console.debug("GameCenter: ", "OpenModal", modalType);
+        switch (modalType) {
+          case ModalType.Deposit:
+            GameActions.showDepositModal(DEPOSIT_MODAL_ID);
+            break;
+          case ModalType.Withdraw:
+            GameActions.showWithdrawModal(WITHDRAW_MODAL_ID);
+
+          default:
+            break;
+        }
       };
 
       openUrl = async () => {
@@ -45,6 +63,7 @@ let GameCenter = connect(
       };
 
       render() {
+        let { depositModal, account, withdrawModal } = this.props;
         return (
           <>
             <h1>Game Center</h1>
@@ -58,20 +77,45 @@ let GameCenter = connect(
               buttonLabel={counterpart.translate("game.deposit_btn")}
               onButtonClick={this.openModal(ModalType.Deposit)}
             />
+            <GameChip
+              title={counterpart.translate("game.withdraw_title")}
+              content={counterpart.translate("game.withdraw_content", {
+                ceil: 1000,
+                asset: "USDT",
+                delay: 24
+              })}
+              buttonLabel={counterpart.translate("game.withdraw_btn")}
+              onButtonClick={this.openModal(ModalType.Withdraw)}
+            />
             <button onClick={this.openUrl}>URL</button>
+            {depositModal && (
+              <DepositModalWrapper
+                account={account}
+                modalId={DEPOSIT_MODAL_ID}
+              />
+            )}
+            {withdrawModal && (
+              <WithdrawModalWrapper
+                account={account}
+                modalId={WITHDRAW_MODAL_ID}
+              />
+            )}
           </>
         );
       }
     }
-  ), 
+  ),
   {
     listenTo() {
       return [AccountStore, GameStore];
     },
-    getProps() {
-      console.debug("GameCenter: ", AccountStore.getState().currentAccount);
+    getProps(props) {
+      console.debug("GameCenter: ", props, GameStore.getState());
+
       return {
-        account: AccountStore.getState().currentAccount
+        account: AccountStore.getState().currentAccount,
+        depositModal: GameStore.getState().modals.has(DEPOSIT_MODAL_ID),
+        withdrawModal: GameStore.getState().modals.has(WITHDRAW_MODAL_ID)
       };
     }
   }

@@ -1963,9 +1963,11 @@
     "deposit_btn": "立即充值",
     "withdraw_btn": "申请提现",
     "deposit_content": "%(price)s %(asset)s = %(amount)s金币",
-    "withdraw_content": "每日最高提现%(ceil)s，提现后，%(asset)s将在%(delay)s小时后转入您的账户",
+    "withdraw_content": "每日最高提现%(ceil)s金币，提现申请递交并通过后，相应额度%(asset)s将在%(delay)s小时内转入您的账户",
     "btn_try": "试玩一下",
     "btn_play": "正式开始",
-    "more_game": "更多游戏"
+    "more_game": "更多游戏",
+    "modal_deposit_title": "游戏充值",
+    "modal_withdraw_title": "游戏币提现"
   }
 }
