@@ -142,6 +142,7 @@ let MarketRow = class extends React.Component<
       stats.volumeBase === 0 &&
       base.get("symbol") !== "JADE.USDT" &&
       quote.get("symbol") !== "JADE.MXC" &&
+      quote.get("symbol") !== "JADE.NASH" &&
       quote.get("symbol") !== "JADE.JCT" 
     )
       return null;
@@ -172,7 +173,7 @@ let MarketRow = class extends React.Component<
               base,
               true
             );
-    let priceByYuan = parseFloat((unitYuan * finalPrice).toFixed(2));
+    let priceByYuan = parseFloat((unitYuan * finalPrice).toFixed(4));
     let buttonClass = "button outline";
     let buttonStyle = null;
     if (this.props.compact) {
@@ -391,7 +392,7 @@ let MarketRow = class extends React.Component<
         style={
           [Styles.row.base, this.props.current && Styles.row.active] as any
         }
-        data-tip={withYuan && !isNaN(priceByYuan) ? `¥ ${priceByYuan}` : null}
+        data-tip={withYuan && !isNaN(priceByYuan) ? `¥ ${priceByYuan.toFixed(4)}` : null}
         data-place={tooltipPosition}
         data-offset="{'right': 6}"
       >
