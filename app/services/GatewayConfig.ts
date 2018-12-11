@@ -280,18 +280,18 @@ export const JadePool: {
         name: "TokenClub",
         contractAddress: "0x4824a7b64e3966b0133f4f4ffb1b9d6beb75fff7"
       }),
-      // "JADE.MXC": new GatewayAsset("JADE.MXC", "MXC", ProtocolType.ERC20, {
-      //   name: "Machine Xchange Coin",
-      //   contractAddress: "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
-      // }),
+      "JADE.MXC": new GatewayAsset("JADE.MXC", "MXC", ProtocolType.ERC20, {
+        name: "Machine Xchange Coin",
+        contractAddress: "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
+      }),
       "JADE.CENNZ": new GatewayAsset("JADE.CENNZ", "CENNZ", ProtocolType.ERC20, {
         name: "Centrality",
         contractAddress: "0x1122b6a0e00dce0563082b6e2953f3a943855c1f"
       }),
-      // "JADE.NASH": new GatewayAsset("JADE.NASH", "NASH", ProtocolType.ERC20, {
-      //   name: "Centrality",
-      //   contractAddress: "0x4b94c8567763654101f690cf4d54957206383b75"
-      // }),
+      "JADE.NASH": new GatewayAsset("JADE.NASH", "NASH", ProtocolType.ERC20, {
+        name: "Centrality",
+        contractAddress: "0x4b94c8567763654101f690cf4d54957206383b75"
+      }),
       "JADE.POLY": new GatewayAsset("JADE.POLY", "POLY", ProtocolType.ERC20, {
         name: "Polymath",
         contractAddress: "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC"

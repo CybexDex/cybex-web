@@ -32,6 +32,7 @@ const SpecialMarkets = {
     "JADE.ETH": 1,
     "JADE.BTC": 2,
     "JADE.EOS": 3,
+    "JADE.MXC": 4,
     // "JADE.LTC": 4,
     "JADE.XRP": 5
   }
@@ -56,9 +57,8 @@ const BTC_MARKETS = [
   "JADE.KEY",
   "JADE.TCT",
   "JADE.XRP",
-  // "JADE.MXC",
   "JADE.CENNZ",
-  // "JADE.NASH",
+  "JADE.NASH",
   "JADE.JCT",
   "JADE.MCO",
   // "JADE.HER",
@@ -78,15 +78,15 @@ const BTC_MARKETS = [
   // "JADE.ENG"
 ];
 const FilteredMarkets = {
-  CYB: new Set(["JADE.JCT", "JADE.NES"]),
-  "JADE.ETH": new Set(["JADE.LTC"]),
+  CYB: new Set(["JADE.JCT", "JADE.NES", "JADE.MXC", "JADE.NASH"]),
+  "JADE.ETH": new Set(["JADE.LTC", "JADE.MXC"]),
   "JADE.EOS": new Set(["JADE.LTC"]),
   "JADE.BTC": new Set(BTC_MARKETS)
   // "JADE.USDT": new Set(["JADE.LTC"])
 };
 const FixedMarkets = {
   // CYB: { "JADE.NES": -1 },
-  "JADE.ETH": { "JADE.NES": -1 }
+  "JADE.ETH": { "JADE.NES": -1, "JADE.NASH": -2 }
   // "JADE.BTC": { "JADE.MVP": -1 },
   // "JADE.EOS": { "JADE.MVP": -1 }
 };
@@ -331,6 +331,15 @@ export class MarketGroup extends React.Component<any, any> {
           (a.props.quote in FixedMarkets[a.props.base] ||
             b.props.quote in FixedMarkets[a.props.base])
         ) {
+          if (
+            a.props.quote in FixedMarkets[a.props.base] &&
+            b.props.quote in FixedMarkets[a.props.base]
+          ) {
+            return FixedMarkets[a.props.base][a.props.quote] <
+              FixedMarkets[a.props.base][b.props.quote]
+              ? -1
+              : 1;
+          }
           return a.props.quote in FixedMarkets[a.props.base] ? -1 : 1;
         }
         let a_symbols = a.key.split("_");

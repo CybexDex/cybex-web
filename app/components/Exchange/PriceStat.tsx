@@ -146,7 +146,7 @@ PriceStat: PriceStat = connect(
       let symbolName = utils.replaceName(base.get("symbol"), false).name;
       let unitYuan = VolumnStore.getState().priceState[symbolName];
       let valueByYuan = unitYuan
-        ? parseFloat((value * unitYuan).toFixed(2))
+        ? parseFloat((value * unitYuan).toFixed(4))
         : NaN;
       return {
         value,

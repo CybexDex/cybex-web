@@ -550,15 +550,15 @@ declare namespace OrderBook {
 
 const getMaxDigits = latest => {
   let latestPrice = (latest && latest.full) || 0.0;
-  let digitsLength = (
+  let pre =
     Number.parseFloat(latestPrice)
       .toPrecision(5)
-      .split(".")[1] || ""
-  ).length;
+      .split(".")[1] || "";
+  let digitsLength = pre.length;
 
   return {
     maxDigit: Math.max(1, Math.min(8, digitsLength)),
-    tooSmall: digitsLength >= 8
+    tooSmall: pre.startsWith("0000")
   };
 };
 
@@ -579,14 +579,15 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
 
   constructor(props) {
     super(props);
-    const { maxDigit } = getMaxDigits(props.latest);
+    const { maxDigit, tooSmall } = getMaxDigits(props.latest);
     this.state = {
       scrollToBottom: true,
       flip: props.flipOrderBook,
       showAllBids: true,
       showAllAsks: true,
       rowCount: 20,
-      digits: maxDigit - 2,
+      tooSmall,
+      digits: tooSmall ? maxDigit : maxDigit - 2,
       maxDigits: maxDigit,
       // digits: props.base.get("precision", 8),
       depthType: DepthType.Interval,
@@ -597,13 +598,16 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
 
   static getDerivedStateFromProps(props: OrderBook.Props, state) {
     let lastMaxDigits = state.maxDigits;
-    let newMaxDigits = Math.min(getMaxDigits(props.latest).maxDigit + 2, 8);
+    let lastTooSmall = state.tooSmall;
+    let { maxDigit, tooSmall } = getMaxDigits(props.latest);
+    let newMaxDigits = Math.min(maxDigit + 2, 8);
     let newState: any = {
       // digits: state.digits,
+      tooSmall,
       maxDigits: newMaxDigits
     };
-    if (state.digits > newMaxDigits || newMaxDigits != lastMaxDigits) {
-      newState.digits = newMaxDigits - 2;
+    if (state.digits > newMaxDigits || newMaxDigits != lastMaxDigits || tooSmall !== lastTooSmall) {
+      newState.digits = tooSmall ? newMaxDigits : newMaxDigits - 2;
     }
     return newState;
   }
@@ -702,8 +706,8 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       return null;
     }
     let useRte =
-      // (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH") ||
-      baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.EOS";
+      (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.ETH") ||
+      (baseSymbol === "JADE.USDT" && quoteSymbol === "JADE.EOS");
     let usingRte = useRte && rteDepth.bids;
     let [limitBids, limitAsks] =
       useRte && rteDepth.bids
