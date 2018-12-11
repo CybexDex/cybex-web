@@ -331,6 +331,15 @@ export class MarketGroup extends React.Component<any, any> {
           (a.props.quote in FixedMarkets[a.props.base] ||
             b.props.quote in FixedMarkets[a.props.base])
         ) {
+          if (
+            a.props.quote in FixedMarkets[a.props.base] &&
+            b.props.quote in FixedMarkets[a.props.base]
+          ) {
+            return FixedMarkets[a.props.base][a.props.quote] <
+              FixedMarkets[a.props.base][b.props.quote]
+              ? -1
+              : 1;
+          }
           return a.props.quote in FixedMarkets[a.props.base] ? -1 : 1;
         }
         let a_symbols = a.key.split("_");
