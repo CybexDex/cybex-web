@@ -14,10 +14,9 @@ $pokerFront: #fbfbfb;
   user-select: none;
   border-radius: 0.4em;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-  transform: rotateY(0deg) translate3d(0, 0, 0);
+  transform: rotateY(0deg);
   transform-style: preserve-3d;
   border-radius: 5px;
-  // will-change: transform;
   //上中散開
   transition: all 1s;
   position: relative;
@@ -27,6 +26,7 @@ $pokerFront: #fbfbfb;
   .face {
     @include full();
     -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     background-color: $pokerFace;
     box-shadow: 0 0 3px #000, inset 0 0 2px #999;
     color: #000;
@@ -42,7 +42,6 @@ $pokerFront: #fbfbfb;
     &.back {
       padding: 10px;
       box-sizing: border-box;
-      // will-change: transform;
       &:before {
         @include full;
         box-sizing: border-box;

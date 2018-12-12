@@ -45,7 +45,7 @@ const Rank = ({
     />
   </div>
 );
-
+let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 export const Poker = class extends React.Component<
   {
     shape: PokerShape;
@@ -97,11 +97,12 @@ export const Poker = class extends React.Component<
 
   render() {
     let { shape, rank, style, shrink, mark } = this.props;
+    let { open } = this.state;
     return (
       <div
-        className={classnames("poker", { open: this.state.open })}
+        className={classnames("poker", { open })}
         style={
-          shrink && this.state.open
+          shrink && open
             ? { transform: this._getTransform(), ...style }
             : { ...style }
         }
@@ -111,10 +112,12 @@ export const Poker = class extends React.Component<
           <div
             className="back-wrapper"
             style={{
+              opacity: isSafari && open ? 0 : 1,
               position: "absolute",
               top: "50%",
               left: "50%",
               margin: "auto",
+              transition: "all 1s",
               transform: "translate(-50%, -50%)"
             }}
           >
@@ -126,9 +129,9 @@ export const Poker = class extends React.Component<
                 lineHeight: "92px",
                 borderRadius: "100%",
                 overflow: "hidden",
-                background: "rgba(255, 221, 132)",
+                background: "rgba(255, 221, 132, 1)",
                 opacity: 0.99,
-                boxShadow: `0 0 4px 1px rgba(255, 221, 132)`
+                boxShadow: `0 0 4px 1px rgba(255, 221, 132, 1)`
               }}
             >
               <img src="/images/logo-main.png" />
