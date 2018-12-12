@@ -1,0 +1,65 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes flyInFromRight {
+  from {
+    right: 200px;
+  }
+  to {
+    rigth: 1px;
+  }
+}
+@-webkit-keyframes flyInFromRight {
+  from {
+    right: -200px;
+  }
+  to {
+    rigth: 1px;
+  }
+}
+
+.game-table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 1s;
+  animation-name: fadeIn;
+  animation-duration: 600ms;
+  animation-iteration-count: 1;
+  position: absolute;
+  top: -2em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &.open {
+    z-index: 1;
+    opacity: 1;
+  }
+
+  .poker {
+    transition: all 1s;
+    // animation-iteration-count: 1;
+    &+.poker {
+      margin-left: 0.2em;
+    }
+  }
+}

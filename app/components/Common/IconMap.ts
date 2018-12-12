@@ -76,6 +76,18 @@ const icons = {
   singleAccount: {
     base: require("./icons/Icon_Single_Account.svg"),
   },
+  pokerHeart: {
+    base: require("./icons/heart-normal.svg"),
+  },
+  pokerSpade: {
+    base: require("./icons/spade-normal.svg"),
+  },
+  pokerDiamond: {
+    base: require("./icons/diamond-normal.svg"),
+  },
+  pokerClub: {
+    base: require("./icons/club-normal.svg"),
+  },
 };
 
 export const getIcon = (icon, type = "base") =>
