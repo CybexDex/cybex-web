@@ -94,8 +94,8 @@ const GameTable = class GameTable extends React.Component<
         >
           <img
             style={{ filter: "brightness(0.98)" }}
-            src="https://static-assets.51nebula.com/activities/service_c.jpeg"
-            alt="QC of Cybex Service C"
+            src="https://static-assets.51nebula.com/activities/service_d.jpeg"
+            alt="小助手D微信号码：CybexServiceDd"
           />
         </Poker>
         <Poker
@@ -109,7 +109,7 @@ const GameTable = class GameTable extends React.Component<
           <img
             style={{ filter: "brightness(0.98)" }}
             src="https://static-assets.51nebula.com/activities/service_c.jpeg"
-            alt="QC of Cybex Service C"
+            alt="小助手C微信号码：cybexservicec"
           />
         </Poker>
       </div>

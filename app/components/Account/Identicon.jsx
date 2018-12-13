@@ -25,6 +25,8 @@ class Identicon extends React.Component {
     let { account } = this.props;
     let { height, width } = this.props.size;
     let hash = account ? sha256(account) : null;
+    console.log("Identicon: ", hash);
+    console.log("Identicon Xiao: ", account, sha256("xiao1234567890aaaaaaaaaabbbbbbbbbbccccccccccddddddddddeeeeeeeee"));
     return (
       <canvas
         id={this.canvas_id}

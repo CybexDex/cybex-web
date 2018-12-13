@@ -327,6 +327,7 @@ let Header = class extends React.Component<any, any> {
       }
       if (tradingAccounts.length >= 1) {
         accountsList = tradingAccounts.sort().map((name, index) => {
+          console.debug("Name: ", name);
           return (
             <li
               className={name === account_display_name ? "current-account" : ""}
@@ -365,7 +366,7 @@ let Header = class extends React.Component<any, any> {
       (tradingAccounts.length === 1 ? (
         <ActionSheet.Button title="" setActiveState={() => {}}>
           <a
-            onClick={this._accountClickHandler.bind(this, account_display_name)}
+            onClick={this._accountClickHandler.bind(this, currentAccount)}
             style={{ padding: "1rem", border: "none" }}
             className="button"
           >
@@ -373,7 +374,7 @@ let Header = class extends React.Component<any, any> {
               <AccountImage
                 style={{ display: "inline-block" }}
                 size={{ height: 20, width: 20 }}
-                account={account_display_name}
+                account={currentAccount}
               />
             </span>
             {/* <span className="table-cell" style={{ paddingLeft: 5 }}><div className="inline-block"><span>{account_display_name}</span></div></span> */}
@@ -388,7 +389,7 @@ let Header = class extends React.Component<any, any> {
                 <AccountImage
                   style={{ display: "inline-block" }}
                   size={{ height: 20, width: 20 }}
-                  account={account_display_name}
+                  account={currentAccount}
                 />
               </span>
               <AccountName account_display_name={account_display_name} />
