@@ -11,6 +11,7 @@ require("./asset-symbols/GNX.png");
 require("./asset-symbols/LTC.png");
 require("./asset-symbols/EOS.png");
 require("./asset-symbols/USDT.png");
+require("./asset-symbols/RING.png");
 require("./asset-symbols/LHT.png");
 require("./asset-symbols/INK.png");
 require("./asset-symbols/BAT.png");

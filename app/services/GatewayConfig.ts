@@ -280,6 +280,10 @@ export const JadePool: {
         name: "TokenClub",
         contractAddress: "0x4824a7b64e3966b0133f4f4ffb1b9d6beb75fff7"
       }),
+      "JADE.RING": new GatewayAsset("JADE.RING", "RING", ProtocolType.ERC20, {
+        name: "Evolution Land Global Token",
+        contractAddress: "0x9469D013805bFfB7D3DEBe5E7839237e535ec483"
+      }),
       "JADE.MXC": new GatewayAsset("JADE.MXC", "MXC", ProtocolType.ERC20, {
         name: "Machine Xchange Coin",
         contractAddress: "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"

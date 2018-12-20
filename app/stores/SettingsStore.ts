@@ -34,6 +34,7 @@ export const MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.RING",
   "JADE.XRP",
   "JADE.MXC",
   "JADE.CENNZ",
