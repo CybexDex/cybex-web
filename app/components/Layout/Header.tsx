@@ -327,7 +327,6 @@ let Header = class extends React.Component<any, any> {
       }
       if (tradingAccounts.length >= 1) {
         accountsList = tradingAccounts.sort().map((name, index) => {
-          console.debug("Name: ", name);
           return (
             <li
               className={name === account_display_name ? "current-account" : ""}

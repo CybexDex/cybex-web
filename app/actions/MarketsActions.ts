@@ -135,12 +135,12 @@ class MarketsActions {
               });
             });
             
-            MarketHistoryActions.patchMarketHistory(
-              quote,
-              base,
-              bucketSize,
-              MarketHistoryStore
-            );
+            // MarketHistoryActions.patchMarketHistory(
+            //   quote,
+            //   base,
+            //   bucketSize,
+            //   MarketHistoryStore
+            // );
             let callPromise = null,
               settlePromise = null;
 
@@ -237,12 +237,12 @@ class MarketsActions {
         startDateShort = new Date(startDateShort.getTime() - 3600 * 50 * 1000);
         endDate.setDate(endDate.getDate() + 1);
         if (__DEV__) console.time("Fetch market data");
-        MarketHistoryActions.patchMarketHistory(
-          quote,
-          base,
-          bucketSize,
-          MarketHistoryStore
-        );
+        // MarketHistoryActions.patchMarketHistory(
+        //   quote,
+        //   base,
+        //   bucketSize,
+        //   MarketHistoryStore
+        // );
         return Promise.all([
           Apis.instance() // 0
             .db_api()

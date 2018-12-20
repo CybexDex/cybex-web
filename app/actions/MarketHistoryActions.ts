@@ -1,8 +1,10 @@
 import alt from "alt-instance";
-import { string } from "prop-types";
+import { string, number } from "prop-types";
 import { correctMarketPair, correctMarketPairMap } from "utils/Market";
 import { Apis } from "cybexjs-ws";
 import utils from "common/utils";
+import { EventEmitter } from "events";
+import { FetchChain } from "cybexjs";
 
 function findMax(a, b) {
   if (a !== Infinity && b !== Infinity) {
@@ -165,6 +167,193 @@ const getTimeSet = (
     nowIsoString
   };
 };
+
+export const getMarketHistory = async (
+  baseAsset,
+  quoteAsset,
+  interval,
+  timeEarlier,
+  timeLatest,
+  patchEmpty = true
+) => {
+  type StartTime = Date;
+  type EndTime = Date;
+  type TimePair = [StartTime, EndTime];
+  let maxInterval = 200 * interval * 1000;
+  let now = new Date();
+  timeLatest = timeLatest > now ? now : timeLatest;
+  let timeGroup: TimePair[] = (function() {
+    let group: TimePair[] = [];
+    let start = new Date(timeEarlier);
+    while (true) {
+      let stop = new Date(Math.min(start.valueOf() + maxInterval, timeLatest));
+      // let stop = new Date(Math.min(start.valueOf() + maxInterval, Date.now()));
+      group.push([start, stop]);
+      if (stop >= timeLatest) {
+        break;
+      }
+      start = stop;
+    }
+    return group;
+  })();
+  return await Promise.all(
+    timeGroup.map((timePair: TimePair) => {
+      return getMarketHistoryImpl(
+        baseAsset,
+        quoteAsset,
+        interval,
+        timePair[0],
+        timePair[1],
+        patchEmpty
+      );
+    })
+  ).then(res => {
+    return res.reduce((prev, next) => prev.concat(next));
+  });
+};
+export const getMarketHistoryImpl = async (
+  baseAsset,
+  quoteAsset,
+  interval,
+  timeEarlier,
+  timeLatest,
+  patchEmpty = true
+) => {
+  if (!baseAsset || !quoteAsset) return [];
+  let loaderCount = 0;
+  let history: Cybex.SanitizedMarketHistory[] = [];
+  let oldDate = new Date(timeEarlier);
+  let newDate = new Date(timeLatest);
+  let nowIsoString = new Date().toISOString();
+  while (
+    !history.length &&
+    loaderCount < Math.ceil((86400 * 2) / 200 / interval)
+  ) {
+    history = (await Apis.instance()
+      .history_api()
+      .exec("get_market_history", [
+        baseAsset.get("id"),
+        quoteAsset.get("id"),
+        interval,
+        oldDate.toISOString().substring(0, nowIsoString.length - 5),
+        newDate.toISOString().substring(0, nowIsoString.length - 5)
+      ])).map(marketHistorySanitizer(baseAsset, quoteAsset, interval));
+    oldDate = new Date(oldDate.getTime() - interval * 1000 * 200);
+    loaderCount++;
+  }
+
+  history = history
+    .map((data, i, historyArray) => {
+      let finalDate =
+        i !== historyArray.length - 1 ? historyArray[i + 1].date : newDate;
+      let suffix = i !== historyArray.length - 1 ? 1 : 0;
+      let numToPatch = Math.max(
+        0,
+        Math.floor(
+          ((finalDate as any) - (data.date as any)) / interval / 1000
+        ) - 1
+      );
+      // console.debug(
+      //   "Get Market History: Got",
+      //   "Now Patch Empty Date",
+      //   i,
+      //   numToPatch
+      // );
+      return [
+        data,
+        ...new Array(numToPatch).fill(1).map((e, i) => {
+          let date = new Date(data.date.getTime() + (i + 1) * interval * 1000);
+          return {
+            date,
+            time: date.getTime(),
+            open: data.close,
+            close: data.close,
+            high: data.close,
+            low: data.close,
+            volume: 0,
+            interval,
+            base: data.base,
+            quote: data.quote
+          };
+        })
+      ];
+    })
+    .reduce((all, next) => [...all, ...next], [])
+    .sort(
+      (prev, next) =>
+        prev.date > next.date ? -1 : prev.date < next.date ? 1 : 0
+    );
+  return history;
+};
+
+export const supportedResolutions = {
+  "15S": 15,
+  "1": 60,
+  "5": 300,
+  "60": 3600,
+  "1D": 86400,
+  D: 86400
+};
+
+export class SubStore extends EventEmitter {
+  subCounterMap: { [symbolUID: string]: number } = {};
+  timer;
+  constructor(public updateInterval = 3000) {
+    super();
+    this.startTimer();
+  }
+
+  static encodeSubSymbol = (quoteId, baseId, interval) =>
+    `${quoteId}/${baseId}_${interval}`;
+  static decodeSubSymbol = (subStr: string) =>
+    subStr
+      .split("_")
+      .map(
+        (market, i) =>
+          i === 0 ? market.split("/") : [supportedResolutions[market]]
+      )
+      .reduce((prev, next) => prev.concat(next));
+
+  startTimer() {
+    this.timer = setInterval(() => {
+      Object.keys(this.subCounterMap)
+        .filter(symbolUID => this.subCounterMap[symbolUID] > 0)
+        .forEach(async symbolUID => {
+          let [quoteSymbol, baseSymbol, interval] = SubStore.decodeSubSymbol(
+            symbolUID
+          );
+          let [quote, base] = await Promise.all(
+            [quoteSymbol, baseSymbol].map(symbol =>
+              FetchChain("getAsset", symbol)
+            )
+          );
+          let stop = new Date();
+          let start = new Date(stop.valueOf() - parseInt(interval) * 10 * 1000);
+          let data = await getMarketHistory(base, quote, interval, start, stop, false);
+          this.emit(symbolUID, data);
+        });
+    }, this.updateInterval);
+  }
+
+  stopUpdateTimer() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
+
+  addSub(symbolUID: string) {
+    if (symbolUID in this.subCounterMap) {
+      this.subCounterMap[symbolUID]++;
+    } else {
+      this.subCounterMap[symbolUID] = 1;
+    }
+  }
+  removeSub(symbolUID: string) {
+    if (symbolUID in this.subCounterMap) {
+      this.subCounterMap[symbolUID]--;
+    }
+  }
+}
 
 class MarketHistoryActions {
   /**
