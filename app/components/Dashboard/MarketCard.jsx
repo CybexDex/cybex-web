@@ -130,7 +130,7 @@ class MarketCard extends React.Component {
               ref={imgName.toUpperCase()}
               onError={this._onError.bind(this, imgName)}
               style={{ maxWidth: 70 }}
-              src={`assets/asset-symbols/${imgName.toUpperCase()}.png`}
+              src={`https://static-assets.51nebula.com/asset-symbols/${imgName.toUpperCase()}.png`}
             />
           </div>
         </div>

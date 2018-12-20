@@ -3,7 +3,6 @@ import * as PropTypes from "prop-types";
 import { Component } from "react";
 import cname from "classnames";
 import Translate from "react-translate-component";
-import pw from "zxcvbn";
 import LoadingIndicator from "components/LoadingIndicator";
 import { Input } from "components/Common";
 
