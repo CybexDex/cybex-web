@@ -7,6 +7,8 @@ import ls from "common/localStorage";
 import { Apis } from "cybexjs-ws";
 import { settingsAPIs } from "api/apiConfig";
 import { AbstractStore } from "./AbstractStore";
+import { FetchChain } from "cybexjs";
+
 export const preferredBases = List([
   "JADE.USDT",
   "JADE.ETH",
@@ -58,7 +60,7 @@ export const MARKETS = [
   // "JADE.NKN",
   "JADE.MVP",
   "JADE.USDT",
-  "JADE.DPY",
+  "JADE.DPY"
   // "JADE.LST",
   // "JADE.ENG"
 ];
@@ -215,61 +217,46 @@ class SettingsStore extends AbstractStore<any> {
   }
 
   init() {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
       if (this.initDone) resolve();
       this.starredKey = this._getChainKey("markets");
       this.marketsKey = this._getChainKey("userMarkets");
       this.fp = Math.floor(Math.random() * 100) + Date.now();
 
-      // let fp = new FingerPrint().get(result => {
-      // });
-
-      // Default markets setup
-      let topMarkets = {
-        markets_90be01e8: MARKETS
-      };
-
-      let bases = {
-        markets_90be01e8: [
+      let defaultMarkets = await Promise.all(
+      [
           // Main Net
-          "JADE.USDT",
-          "JADE.ETH",
-          "JADE.BTC",
-          "CYB"
-        ]
-      };
-
-      let coreAssets = {
-        markets_90be01e8: "CYB",
-        markets_4018d784: "BTS",
-        markets_39f5e2ed: "TEST"
-      };
-      let coreAsset = coreAssets[this.starredKey] || "CYB";
+        "1.3.0",
+        "1.3.2",
+        "1.3.3",
+        "1.3.27"
+      ].map(baseId =>
+          fetch(`https://app.cybex.io/market_list?base=${baseId}`)
+            .then(res => res.json())
+            .then(res => res.data)
+            .then((quoteIds: string[]) =>
+              Promise.all([
+                FetchChain("getAsset", baseId),
+                ...quoteIds.map(quoteId => FetchChain("getAsset", quoteId))
+              ])
+            )
+            .then(([baseAsset, ...quoteAssets]) =>
+              quoteAssets.map(marketAsset => [
+                `${marketAsset.get("symbol")}_${baseAsset.get("symbol")}`,
+                {
+                  quote: marketAsset.get("symbol"),
+                  base: baseAsset.get("symbol")
+                }
+              ])
+            )
+        )
+      ).then(groupedMarkets =>
+        groupedMarkets.reduce((prev, next) => prev.concat(next))
+      );
+      let coreAsset = "CYB";
       this.defaults.unit[0] = coreAsset;
 
-      let chainBases = bases[this.starredKey] || bases.markets_90be01e8;
-      this.preferredBases = List(chainBases);
-
-      const addMarkets = (target, base, markets) => {
-        markets
-          .filter((a, i, all) => {
-            return (
-              a !== base &&
-              (this.preferredBases.indexOf(a) >
-                this.preferredBases.indexOf(base) ||
-                this.preferredBases.indexOf(a) === -1)
-            );
-          })
-          .forEach(market => {
-            target.push([`${market}_${base}`, { quote: market, base: base }]);
-          });
-      };
-
-      let defaultMarkets = [];
-      let chainMarkets = MARKETS;
-      this.preferredBases.forEach(base => {
-        addMarkets(defaultMarkets, base, chainMarkets);
-      });
+      this.preferredBases = List(["CYB", "JADE.BTC", "JADE.ETH", "JADE.USDT"]);
 
       this.defaultMarkets = Map(defaultMarkets);
       this.starredMarkets = Map(ss.get(this.starredKey, []));

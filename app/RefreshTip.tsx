@@ -1,8 +1,16 @@
 import * as React from "react";
+import WalletUnlockActions from "actions/WalletUnlockActions";
+import willTransitionTo from "./routerTransition";
 
 export const RefreshTip = class extends React.Component<any> {
   componentDidMount() {
-    location.reload();
+    let currentPath = location.pathname || "/";
+
+    WalletUnlockActions.lock();
+    willTransitionTo(false, () => {
+      console.debug("Reconnect Transition");
+      this.props.history.replace(currentPath);
+    });
   }
   render() {
     return (
@@ -31,7 +39,8 @@ export const RefreshTip = class extends React.Component<any> {
           <img src="/images/logo-main.png" />
         </div>
         <p style={{ fontSize: 18, marginTop: "2em" }}>
-          The connection has been broken; The site will be refreshed in some seconds;
+          The connection has been broken; The site will be refreshed in some
+          seconds;
         </p>
       </div>
     );

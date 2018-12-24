@@ -221,11 +221,6 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
             if (!this.latestTime || data[0].date > this.latestTime) {
               this.latestTime = data[0].date;
             }
-            console.log(
-              "=====subscribeBars: Filtered Data: ",
-              data,
-              this.latestTime
-            );
             data.reverse().forEach(priceData => onRealtimeCallback(priceData));
           }
         });

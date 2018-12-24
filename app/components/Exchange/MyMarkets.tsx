@@ -292,7 +292,7 @@ export class MarketGroup extends React.Component<any, any> {
             base={market.base}
             columns={columns}
             // leftAlign={true}
-            hideZeroVol={market.quote === "JADE.NES" ? false : true}
+            hideZeroVol={false}
             compact={true}
             noSymbols={true}
             stats={marketStats.get(market.id)}
