@@ -126,7 +126,8 @@ const config = {
     fs: "empty"
   },
   optimization: {
-    splitChunks: {
+    splitChunks: 
+    {
       cacheGroups: {
         styles: {
           name: "styles",

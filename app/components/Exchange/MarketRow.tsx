@@ -143,6 +143,7 @@ let MarketRow = class extends React.Component<
       base.get("symbol") !== "JADE.USDT" &&
       quote.get("symbol") !== "JADE.MXC" &&
       quote.get("symbol") !== "JADE.NASH" &&
+      quote.get("symbol") !== "JADE.RING" &&
       quote.get("symbol") !== "JADE.JCT" 
     )
       return null;

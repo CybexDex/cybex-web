@@ -1,11 +1,16 @@
 import * as React from "react";
-// import './index.css';
+import { FetchChain } from "cybexjs";
 // import Datafeed from './api/'
 import { widget } from "../../../charting_library/charting_library.min";
 import EventEmitter from "event-emitter";
 import { Colors } from "components/Common/Colors";
 import IntlStore from "stores/IntlStore";
-import { MarketHistoryActions } from "actions/MarketHistoryActions";
+import {
+  MarketHistoryActions,
+  getMarketHistory,
+  SubStore,
+  supportedResolutions
+} from "actions/MarketHistoryActions";
 import { MarketHistoryStore, marketEvent } from "stores/MarketHistoryStore";
 
 function getLanguageFromURL() {
@@ -16,14 +21,24 @@ function getLanguageFromURL() {
     : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+class SymbolUtils {
+  static Spliter = "/";
+  static constructSymbolString = (quoteSymbol, baseSymbol) =>
+    [quoteSymbol, baseSymbol].join(SymbolUtils.Spliter);
+  static destructSymbolString = (symbolString: string) =>
+    symbolString.split(SymbolUtils.Spliter);
+  static constructSymbolTicker = (quoteSymbol, baseSymbol) =>
+    SymbolUtils.constructSymbolString(quoteSymbol, baseSymbol).replace(
+      /JADE\./gm,
+      ""
+    );
+  static getAsset = (symbolOrId: string) => {
+    return FetchChain("getAsset", symbolOrId);
+  };
+}
+
 const RELOAD_CHART = Symbol();
-const supportedResolutions = {
-  "15S": 15,
-  "1": 60,
-  "5": 300,
-  "60": 3600,
-  "1D": 86400
-};
+
 const support_r = Object.keys(supportedResolutions);
 const interval = { 15: "15S", 60: "1", 300: "5", 3600: "60", 86400: "1D" };
 const hasMarketChanged: (
@@ -40,11 +55,7 @@ const hasMarketChanged: (
     prev[1] && next[1] && prev[1].interval !== next[1].interval;
 
   if (bucketChange) {
-    console.debug(
-      "===getBar bucketChange: ",
-      prev[1],
-      next[1]
-    );
+    console.debug("===getBar bucketChange: ", prev[1], next[1]);
     return true;
   }
   let marketChange: boolean =
@@ -70,9 +81,9 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
   updateEmitter = new EventEmitter();
   updateCbs: { [fnName: string]: any } = {};
   // priceData = [];
+  latestTime;
 
   static defaultProps = {
-    symbol: "ETH/USDT",
     interval: "60",
     containerId: "tv_chart_container",
     libraryPath: "/charting_library/",
@@ -88,25 +99,11 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
   tvWidget = null;
 
   componentDidUpdate(prevProps: TVChartProps) {
-    if (hasMarketChanged(prevProps.priceData, this.props.priceData)) {
-      this.updateEmitter.emit(RELOAD_CHART);
-    } else if (
-      prevProps.priceData.length &&
-      this.props.priceData.length &&
-      this.updateCbs.realtimeUpdate
+    if (
+      this.props.quoteSymbol !== prevProps.quoteSymbol ||
+      this.props.baseSymbol !== prevProps.baseSymbol
     ) {
-      let latestDate = new Date(
-        Math.max(
-          prevProps.priceData[0].date as any,
-          prevProps.priceData[prevProps.priceData.length - 1].date as any
-        )
-      );
-      let newBars = this.props.priceData.filter(
-        (price: Cybex.SanitizedMarketHistory) =>
-          price.date.getTime() >= latestDate.getTime()
-      );
-      newBars.forEach(price => (price.time = price.date.getTime()));
-      newBars.forEach(price => this.updateCbs.realtimeUpdate(price));
+      this.updateEmitter.emit(RELOAD_CHART);
     }
   }
 
@@ -133,6 +130,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       "header_undo_redo",
       "border_around_the_chart"
     ];
+    let subCenter = new SubStore();
     let Datafeed = {
       onReady: cb => {
         console.debug("=====onReady running");
@@ -144,7 +142,10 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         // expects a symbolInfo object in response
         console.debug("======resolveSymbol running", symbolName);
 
-        const precision = (this.props.latestPrice ? this.props.latestPrice.full : 0.00000000)
+        const precision = (this.props.latestPrice
+          ? this.props.latestPrice.full
+          : 0.0
+        )
           .toPrecision(6)
           .split(".")[1].length;
         let preToDeimal = pre => {
@@ -154,13 +155,19 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           }
           return result;
         };
+        let description = SymbolUtils.constructSymbolTicker(
+          this.props.quoteSymbol,
+          this.props.baseSymbol
+        );
         const symbolStub = {
           name: symbolName,
-          description: symbolName,
+          description,
           type: "crypto",
           session: "24x7",
           timezone: "Asia/Shanghai",
           ticker: symbolName,
+          legs: [symbolName],
+          base_name: [symbolName],
           // exchange: "Cybex",
           minmov: 1,
           pricescale: preToDeimal(precision),
@@ -170,6 +177,8 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           disabled_features,
           supported_resolution: support_r,
           volume_precision: 4,
+          // force_session_rebuild: false,
+          has_empty_bars: true,
           data_status: "streaming"
         };
 
@@ -185,14 +194,45 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         subscribeUID,
         onResetCacheNeededCallback
       ) => {
-        console.debug("=====subscribeBars runnning", symbolInfo);
+        console.debug("=====subscribeBars runnning", symbolInfo, subscribeUID);
         this.updateCbs.resetCache = () => onResetCacheNeededCallback();
         this.updateCbs.realtimeUpdate = onRealtimeCallback;
-        // stream.subscribeBars(symbolInfo, resolution, onRealtimeCallback, subscribeUID, onResetCacheNeededCallback)
+        let [quoteSymbol, baseSymbol] = SymbolUtils.destructSymbolString(
+          symbolInfo.name
+        );
+        let subSymbol = SubStore.encodeSubSymbol(
+          quoteSymbol,
+          baseSymbol,
+          supportedResolutions[resolution]
+        );
+        subCenter.addSub(subscribeUID);
+        subCenter.addListener(subscribeUID, data => {
+          console.debug(
+            "=====subscribeBars: Update Data: ",
+            data,
+            this.latestTime
+          );
+          if (data && data.length) {
+            if (this.latestTime) {
+              data = data.filter(d => d.date >= this.latestTime);
+            }
+          }
+          if (data && data.length) {
+            if (!this.latestTime || data[0].date > this.latestTime) {
+              this.latestTime = data[0].date;
+            }
+            console.log(
+              "=====subscribeBars: Filtered Data: ",
+              data,
+              this.latestTime
+            );
+            data.reverse().forEach(priceData => onRealtimeCallback(priceData));
+          }
+        });
       },
       unsubscribeBars: subscriberUID => {
+        subCenter.removeSub(subscriberUID);
         console.debug("=====unsubscribeBars running", subscriberUID);
-        // stream.unsubscribeBars(subscriberUID)
       },
       getBars: async (
         symbolInfo,
@@ -205,50 +245,30 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
       ) => {
         from *= 1000;
         to = to * 1000;
-        let currentPriceData =
-          MarketHistoryStore.getState()[
-            `${this.props.quoteSymbol}${this.props.baseSymbol}${
-              this.props.bucketSize
-            }`
-          ] || [];
-
-        let availableData = firstDataRequest
-          ? currentPriceData
-          : currentPriceData.filter(
-              price => price.date >= from && price.date <= to
-            );
+        let [quoteSymbol, baseSymbol] = SymbolUtils.destructSymbolString(
+          symbolInfo.name
+        );
+        let quote = await FetchChain("getAsset", quoteSymbol);
+        let base = await FetchChain("getAsset", baseSymbol);
+        let priceData = await getMarketHistory(
+          base,
+          quote,
+          supportedResolutions[resolution],
+          from,
+          to
+        );
         console.debug(
           "=====getBars running",
+          symbolInfo,
+          resolution,
           firstDataRequest,
           from,
-          to,
-          currentPriceData,
-          availableData
+          to
         );
-        if (!availableData.length) {
-          availableData = (await new Promise(resolve => {
-            let requestID = new Date().toISOString() + "$";
-            // console.debug("=====getBars running Greedy Fetch: ", requestID);
-            MarketHistoryActions.patchMarketHistory(
-              this.props.base,
-              this.props.quote,
-              this.props.bucketSize,
-              MarketHistoryStore,
-              false,
-              requestID
-            );
-            marketEvent.once(requestID, newPriceData => {
-              // console.debug(
-              //   "=====getBars running Greedy Fetched: ",
-              //   requestID,
-              //   newPriceData
-              // );
-              resolve(newPriceData);
-            });
-          })) as Cybex.SanitizedMarketHistory[];
-        }
-        // console.debug("=====getBars running after fetch", availableData);
 
+        if (firstDataRequest) {
+          this.latestTime = null;
+        }
         const updateHistory = priceData => {
           priceData.filter(p => {
             p.date >= from && p.date <= to;
@@ -258,6 +278,10 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
               prev.date > next.date ? 1 : prev.date < next.date ? -1 : 0
           );
           if (priceData.length > 1) {
+            console.debug("===getBars: FinalPrice", priceData);
+            if (!this.latestTime || priceData[0].date > this.latestTime) {
+              this.latestTime = priceData[0].date;
+            }
             onHistoryCallback(priceData, { noData: false });
           } else {
             // console.debug("=====getBar: NoData: ", priceData);
@@ -265,16 +289,16 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
             // onHistoryCallback([], { noData: true, nextTime: new Date(new Date().getTime() - 86400 * 1000 * 10) });
           }
         };
-        updateHistory(availableData);
+        updateHistory(priceData);
       }
     };
 
     const widgetOptions = {
       debug: false,
-      symbol:
-        this.props.quoteSymbol.replace("JADE.", "") +
-        "/" +
-        this.props.baseSymbol.replace("JADE.", ""),
+      symbol: SymbolUtils.constructSymbolString(
+        this.props.quoteSymbol,
+        this.props.baseSymbol
+      ),
       // datafeed: this.props.Datafeed,
       datafeed: Datafeed,
       interval: interval[this.props.bucketSize],
@@ -340,19 +364,25 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         this.tvWidget
           .activeChart()
           .setSymbol(
-            this.props.quoteSymbol.replace("JADE.", "") +
-              "/" +
-              this.props.baseSymbol.replace("JADE.", "")
+            SymbolUtils.constructSymbolString(
+              this.props.quoteSymbol,
+              this.props.baseSymbol
+            )
           );
+        // .setSymbol(
+        //   this.props.quoteSymbol.replace("JADE.", "") +
+        //     "/" +
+        //     this.props.baseSymbol.replace("JADE.", "")
+        // );
       };
-      this.tvWidget
-        .chart()
-        .onIntervalChanged()
-        .subscribe(null, (interval, obj) => {
-          console.debug("TVChart: ", "onIntervalChanged: ", interval, obj);
-          this.props.onChangeBucket(supportedResolutions[interval] || 86400);
-          // obj.timeframe = "12M";
-        });
+      // this.tvWidget
+      //   .chart()
+      //   .onIntervalChanged()
+      //   .subscribe(null, (interval, obj) => {
+      //     console.debug("TVChart: ", "onIntervalChanged: ", interval, obj);
+      //     this.props.onChangeBucket(supportedResolutions[interval] || 86400);
+      //     // obj.timeframe = "12M";
+      //   });
     });
   }
 
