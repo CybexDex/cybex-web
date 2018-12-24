@@ -33,7 +33,7 @@ const SpecialMarkets = {
     "JADE.BTC": 2,
     "JADE.EOS": 3,
     "JADE.MXC": 4,
-    // "JADE.LTC": 4,
+    "JADE.RING": 4,
     "JADE.XRP": 5
   }
 };
@@ -489,7 +489,7 @@ let MyMarkets = class extends React.Component<any, any> {
     let historyContainer = this.refs.favorites;
 
     if (this.state.activeTab === "find-market") {
-      this._lookupAssets("OPEN.", true);
+      this._lookupAssets("JADE.", true);
     }
   }
 
