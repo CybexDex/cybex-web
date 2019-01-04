@@ -67,35 +67,34 @@ class AssetName extends React.Component {
       realPrefix = realPrefix.length > 1 ? realPrefix[0] : null;
       if (realPrefix) realPrefix += ".";
       let optional = "";
-      try {
-        optional =
-          realPrefix || includeBitAssetDescription
-            ? counterpart.translate(
-                "gateway.assets." +
-                  (isBitAsset
-                    ? "bit"
-                    : realPrefix.replace(".", "").toLowerCase()),
-              {
-                asset: name,
-                backed: includeBitAssetDescription ? desc.main : replacedName
-              }
-              )
-            : "";
-      } catch (e) {}
-      if (isBitAsset && name === "CNY") {
-        optional = optional + counterpart.translate("gateway.assets.bitcny");
-      }
-      let tooltip = this.props.noTip
-        ? null
-        : `<div><strong>${
-            includeBitAssetDescription
-              ? "bit"
-              : (realPrefix ? realPrefix.toUpperCase() : realPrefix) || ""
-          }${replacedName}</strong><br />${
-            includeBitAssetDescription
-              ? ""
-              : "<br />" + (desc.short ? desc.short : desc.main || "")
-          }${!isBitAsset || includeBitAssetDescription ? optional : ""}</div>`;
+      // Todo Fix bitassetTip
+      // try {
+      //   optional =
+      //     realPrefix || includeBitAssetDescription
+      //       ? counterpart.translate(
+      //           "gateway.assets." +
+      //             (isBitAsset
+      //               ? "bit"
+      //               : realPrefix.replace(".", "").toLowerCase()),
+      //         {
+      //           asset: name,
+      //           backed: includeBitAssetDescription ? desc.main : replacedName
+      //         }
+      //         )
+      //       : "";
+      // } catch (e) {}
+      let tooltip = null;
+      // let tooltip = this.props.noTip
+      //   ? null
+      //   : `<div><strong>${
+      //       includeBitAssetDescription
+      //         ? "bit"
+      //         : (realPrefix ? realPrefix.toUpperCase() : realPrefix) || ""
+      //     }${replacedName}</strong><br />${
+      //       includeBitAssetDescription
+      //         ? ""
+      //         : "<br />" + (desc.short ? desc.short : desc.main || "")
+      //     }${!isBitAsset || includeBitAssetDescription ? optional : ""}</div>`;
 
       return (
         <div

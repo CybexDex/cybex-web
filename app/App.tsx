@@ -25,6 +25,7 @@ import { ModalActions } from "./actions/ModalActions";
 import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
+import ETHModal, { DEFAULT_ETHMODAL_ID } from "components/Modal/ETHModal";
 import Loadable from "react-loadable";
 import titleUtils from "common/titleUtils";
 import { LoadComponent } from "./Routes";
@@ -225,7 +226,7 @@ let App = class extends React.Component<any, any> {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
-  
+
   componentDidCatch(err, info) {
     console.error("App Catch: ", err, info);
     this.setState({ hasError: true });
@@ -304,8 +305,7 @@ let App = class extends React.Component<any, any> {
       // console.debug("Show Support Modal");
       ModalActions.showModal(DEFAULT_SUPPORT_MODAL, true);
     }
-    ModalActions.showModal("JCT_MODAL_ONE", true);
-    ModalActions.showModal("JCT_MODAL_TWO", true);
+    // ModalActions.showModal(DEFAULT_ETHMODAL_ID, true);
     // console.debug("Context: ", this);
     this.context.router.history.listen(this._rebuildTooltips);
     // Todo
@@ -507,6 +507,7 @@ let App = class extends React.Component<any, any> {
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />
+          <ETHModal modalId={DEFAULT_ETHMODAL_ID}></ETHModal>
         </div>
       </div>
     );

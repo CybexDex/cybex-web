@@ -6,14 +6,11 @@ import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import CachedPropertyStore from "stores/CachedPropertyStore";
 import BlockchainStore from "stores/BlockchainStore";
-import { ChainStore } from "cybexjs";
 import WalletDb from "stores/WalletDb";
 import SettingsStore from "stores/SettingsStore";
 import SettingsActions from "actions/SettingsActions";
-import Icon from "../Icon/Icon";
-import counterpart from "counterpart";
 import { Reconnect } from "./Reconnect";
-import { VolumnContainer } from "components/Utility/Volume";
+
 
 class Footer extends React.Component {
   static propTypes = {

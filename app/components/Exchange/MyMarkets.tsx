@@ -94,7 +94,9 @@ const FixedMarkets = {
 
 export class MarketGroup extends React.Component<any, any> {
   static defaultProps = {
-    maxRows: 20
+    maxRows: 40,
+    findMarketValue: "",
+    withFilter: true
   };
 
   constructor(props) {
@@ -188,84 +190,84 @@ export class MarketGroup extends React.Component<any, any> {
       marketStats,
       starredMarkets,
       current,
-      findMarketTab
+      findMarketTab,
+      findMarketValue,
+      allDefaultMarkets
     } = this.props;
     let { sortBy, inverseSort, open } = this.state;
-
-    if (!markets || !markets.length) {
-      return null;
-    }
+    markets = markets || [];
+    // if (!markets || !markets.length) {
+    //   return null;
+    // }
 
     let headers = columns.map(header => {
       switch (header.name) {
         case "market":
           return (
-            <span
+            <th
               key={header.name}
               className="clickable"
+              style={{ textAlign: "left" }}
               onClick={this._changeSort.bind(this, "name")}
             >
               <Translate content="exchange.market" />
-            </span>
+            </th>
           );
 
         case "vol":
           return (
-            <span
+            <th
               key={header.name}
               className="clickable"
               onClick={this._changeSort.bind(this, "volume")}
               style={{ textAlign: "right" }}
             >
               <Translate content="exchange.vol_short" />
-            </span>
+            </th>
           );
 
         case "price":
           return (
-            <span key={header.name} style={{ textAlign: "right" }}>
+            <th key={header.name} style={{ textAlign: "right" }}>
               <Translate content="exchange.price" />
-            </span>
+            </th>
           );
 
         case "quoteSupply":
           return (
-            <span key={header.name}>
+            <th key={header.name}>
               <Translate content="exchange.quote_supply" />
-            </span>
+            </th>
           );
 
         case "baseSupply":
           return (
-            <span key={header.name}>
+            <th key={header.name}>
               <Translate content="exchange.base_supply" />
-            </span>
+            </th>
           );
 
         case "change":
           return (
-            <span
+            <th
               key={header.name}
               className="clickable"
               onClick={this._changeSort.bind(this, "change")}
               style={{ textAlign: "right" }}
             >
               <Translate content="exchange.change" />
-            </span>
+            </th>
           );
 
         case "issuer":
           return (
-            <span key={header.name}>
+            <th key={header.name}>
               <Translate content="explorer.assets.issuer" />
-            </span>
+            </th>
           );
 
-        case "add":
-          return <span key={header.name} />;
-
         default:
-          return <span key={header.name} />;
+          return <th key={header.name}> </th>;
       }
     });
 
@@ -309,111 +311,138 @@ export class MarketGroup extends React.Component<any, any> {
       })
       .filter(a => {
         return a !== null;
-      })
-      .filter(a => {
-        return a.props.base in FilteredMarkets
-          ? !FilteredMarkets[a.props.base].has(a.props.quote)
-          : a;
-      })
-      .filter(a => {
-        return a.props.base in SpecialMarkets
-          ? a.props.quote in SpecialMarkets[a.props.base]
-          : a;
-      })
-      .sort((a, b) => {
-        if (a.props.base in SpecialMarkets) {
-          return (
-            SpecialMarkets[a.props.base][a.props.quote] -
-            SpecialMarkets[a.props.base][b.props.quote]
-          );
-        }
-        if (
-          a.props.base in FixedMarkets &&
-          (a.props.quote in FixedMarkets[a.props.base] ||
-            b.props.quote in FixedMarkets[a.props.base])
-        ) {
-          if (
-            a.props.quote in FixedMarkets[a.props.base] &&
-            b.props.quote in FixedMarkets[a.props.base]
-          ) {
-            return FixedMarkets[a.props.base][a.props.quote] <
-              FixedMarkets[a.props.base][b.props.quote]
-              ? -1
-              : 1;
-          }
-          return a.props.quote in FixedMarkets[a.props.base] ? -1 : 1;
-        }
-        let a_symbols = a.key.split("_");
-        let b_symbols = b.key.split("_");
-        let aStats = marketStats.get(a_symbols[0] + "_" + a_symbols[1]);
-        let bStats = marketStats.get(b_symbols[0] + "_" + b_symbols[1]);
+      });
 
-        switch (sortBy) {
-          case "name":
+    marketRows = this.props.withFilter
+      ? marketRows
+          .filter(a => {
+            return a.props.base in FilteredMarkets
+              ? !FilteredMarkets[a.props.base].has(a.props.quote)
+              : a;
+          })
+          .filter(a => {
+            return a.props.base in SpecialMarkets
+              ? a.props.quote in SpecialMarkets[a.props.base]
+              : a;
+          })
+      : marketRows.filter(
+          a =>
+            !allDefaultMarkets.has(a.props.quote) &&
+            utils.replaceName(a.props.quote).name.includes(findMarketValue)
+        );
+
+    marketRows = marketRows.sort((a, b) => {
+      if (a.props.base in SpecialMarkets) {
+        return (
+          SpecialMarkets[a.props.base][a.props.quote] -
+          SpecialMarkets[a.props.base][b.props.quote]
+        );
+      }
+      if (
+        a.props.base in FixedMarkets &&
+        (a.props.quote in FixedMarkets[a.props.base] ||
+          b.props.quote in FixedMarkets[a.props.base])
+      ) {
+        if (
+          a.props.quote in FixedMarkets[a.props.base] &&
+          b.props.quote in FixedMarkets[a.props.base]
+        ) {
+          return FixedMarkets[a.props.base][a.props.quote] <
+            FixedMarkets[a.props.base][b.props.quote]
+            ? -1
+            : 1;
+        }
+        return a.props.quote in FixedMarkets[a.props.base] ? -1 : 1;
+      }
+      let a_symbols = a.key.split("_");
+      let b_symbols = b.key.split("_");
+      let aStats = marketStats.get(a_symbols[0] + "_" + a_symbols[1]);
+      let bStats = marketStats.get(b_symbols[0] + "_" + b_symbols[1]);
+
+      switch (sortBy) {
+        case "name":
+          if (
+            utils.replaceName(a_symbols[0]).name >
+            utils.replaceName(b_symbols[0]).name
+          ) {
+            return inverseSort ? -1 : 1;
+          } else if (a_symbols[0] < b_symbols[0]) {
+            return inverseSort ? 1 : -1;
+          } else {
             if (
-              utils.replaceName(a_symbols[0]).name >
-              utils.replaceName(b_symbols[0]).name
+              utils.replaceName(a_symbols[1]).name >
+              utils.replaceName(b_symbols[1]).name
             ) {
               return inverseSort ? -1 : 1;
-            } else if (a_symbols[0] < b_symbols[0]) {
+            } else if (
+              utils.replaceName(a_symbols[1]).name <
+              utils.replaceName(b_symbols[1]).name
+            ) {
               return inverseSort ? 1 : -1;
             } else {
-              if (
-                utils.replaceName(a_symbols[1]).name >
-                utils.replaceName(b_symbols[1]).name
-              ) {
-                return inverseSort ? -1 : 1;
-              } else if (
-                utils.replaceName(a_symbols[1]).name <
-                utils.replaceName(b_symbols[1]).name
-              ) {
-                return inverseSort ? 1 : -1;
-              } else {
-                return 0;
-              }
-            }
-
-          case "volume":
-            if (aStats && bStats) {
-              if (inverseSort) {
-                return bStats.volumeBase - aStats.volumeBase;
-              } else {
-                return aStats.volumeBase - bStats.volumeBase;
-              }
-            } else {
               return 0;
             }
+          }
 
-          case "change":
-            if (aStats && bStats) {
-              if (inverseSort) {
-                return bStats.change - aStats.change;
-              } else {
-                return aStats.change - bStats.change;
-              }
+        case "volume":
+          if (aStats && bStats) {
+            if (inverseSort) {
+              return bStats.volumeBase - aStats.volumeBase;
             } else {
-              return 0;
+              return aStats.volumeBase - bStats.volumeBase;
             }
-        }
-      });
+          } else {
+            return 0;
+          }
+
+        case "change":
+          if (aStats && bStats) {
+            if (inverseSort) {
+              return bStats.change - aStats.change;
+            } else {
+              return aStats.change - bStats.change;
+            }
+          } else {
+            return 0;
+          }
+      }
+    });
 
     let caret = open ? <span>&#9660;</span> : <span>&#9650;</span>;
 
     return (
       open && (
-        <>
-          <div className="table table-hover">
-            <div className="table-row" style={{ paddingRight: "10px" }}>
-              {headers}
-            </div>
-          </div>
-          <div
-            className="table table-hover _scroll-bar"
+        <table className="">
+          <thead className="table-row" style={{ paddingRight: "10px" }}>
+            <tr>{headers}</tr>
+          </thead>
+
+          <tbody
+            className=""
             style={{ overflowY: "auto", paddingRight: "4px" }}
           >
-            {marketRows}
-          </div>
-        </>
+            {marketRows && marketRows.length ? (
+              marketRows
+            ) : (
+              <tr>
+                <td
+                  colSpan={columns.length}
+                  className="text-center"
+                  style={{ opacity: 0.6, height: "10rem" }}
+                >
+                  <Translate
+                    content={
+                      this.props.withFilter ||
+                      (!this.props.withFilter && this.props.findMarketValue)
+                        ? "markets.no_market"
+                        : "markets.find_market"
+                    }
+                  />
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       )
     );
   }
@@ -448,7 +477,7 @@ let MyMarkets = class extends React.Component<any, any> {
       inverseSort: props.viewSettings.get("myMarketsInvert", true),
       sortBy: props.viewSettings.get("myMarketsSort", "volume"),
       activeTab: props.viewSettings.get("favMarketTab", "my-market"),
-      activeMarketTab: props.viewSettings.get("activeMarketTab", 0),
+      activeMarketTab: 0,
       lookupQuote: quote,
       lookupBase: base,
       inputValue: inputValue,
@@ -561,7 +590,7 @@ let MyMarkets = class extends React.Component<any, any> {
       if (quote.length < 1 || (now as any) - (lastLookup as any) <= 250) {
         return false;
       }
-      // this.getAssetList(quote, 50);
+      this.getAssetList(quote, 50);
     } else {
       if (base && this.state.lookupBase !== base) {
         if (base.length < 1 || (now as any) - (lastLookup as any) <= 250) {
@@ -573,9 +602,9 @@ let MyMarkets = class extends React.Component<any, any> {
   }
 
   toggleActiveMarketTab(index) {
-    SettingsActions.changeViewSetting({
-      activeMarketTab: index
-    });
+    // SettingsActions.changeViewSetting({
+    //   activeMarketTab: index
+    // });
 
     this.setState({
       activeMarketTab: index
@@ -604,10 +633,11 @@ let MyMarkets = class extends React.Component<any, any> {
           overflow: "visible",
           width: "100%",
           textAlign: "left",
+          flexGrow: 0,
           padding: "0.75rem 0.5rem"
         }}
       >
-        <AssetSelector
+        {/* <AssetSelector
           onAssetSelect={this._onFoundBaseAsset.bind(this)}
           assets={defaultBases}
           className="small-12 medium-6"
@@ -620,16 +650,16 @@ let MyMarkets = class extends React.Component<any, any> {
           noLabel
           inputStyle={{ fontSize: "0.9rem" }}
           style={{ padding: 2 }}
-        />
+        /> */}
         <div
-          className="market-more small-12 medium-6"
-          style={{ padding: 2, marginTop: "-1px" }}
+          className="market-more small-12 medium-12"
+          style={{ marginTop: "-1px" }}
         >
-          <label>
+          {/* <label>
             <Translate content="account.user_issued_assets.name" />:
-          </label>
+          </label> */}
           <input
-            style={{ fontSize: "0.9rem", position: "relative", top: 1 }}
+            style={{ fontSize: "0.9rem", marginBottom: 0, height: 26 }}
             type="text"
             value={this.state.inputValue}
             onChange={this._onInputName.bind(this)}
@@ -662,10 +692,10 @@ let MyMarkets = class extends React.Component<any, any> {
 
     let defaultBases = preferredBases.map(a => a);
 
-    if (!myMarketTab) {
-      preferredBases = preferredBases.clear();
-      preferredBases = preferredBases.push(this.state.activeFindBase);
-    }
+    // if (!myMarketTab) {
+    //   preferredBases = preferredBases.clear();
+    //   preferredBases = preferredBases.push(this.state.activeFindBase);
+    // }
 
     // Add some default base options
     // let preferredBases = [coreSymbol, "BTC", "USD", "CNY"];
@@ -679,19 +709,19 @@ let MyMarkets = class extends React.Component<any, any> {
     if (!lookupQuote) lookupQuote = "OPEN.";
 
     /* In the find-market tab, only use market tab 0 */
-    if (!myMarketTab) activeMarketTab = 0;
+    // if (!myMarketTab) activeMarketTab = 0;
 
     searchAssets
-      .filter(a => {
-        // Always keep core asset as an option
-        // if (preferredBases.indexOf(a.symbol) === 0) {
-        //     return true;
-        // }
-        if (lookupBase && lookupBase.length) {
-          return a.symbol.indexOf(lookupBase) === 0;
-        }
-        return a.symbol.indexOf(lookupQuote) !== -1;
-      })
+      // .filter(a => {
+      //   // Always keep core asset as an option
+      //   // if (preferredBases.indexOf(a.symbol) === 0) {
+      //   //     return true;
+      //   // }
+      //   // if (lookupBase && lookupBase.length) {
+      //   //   return a.symbol.indexOf(lookupBase) === 0;
+      //   // }
+      //   return a.symbol.indexOf(lookupQuote) !== -1;
+      // })
       .forEach(asset => {
         if (lookupBase && lookupBase.length) {
           if (asset.symbol.indexOf(lookupBase) === 0) {
@@ -842,12 +872,12 @@ let MyMarkets = class extends React.Component<any, any> {
           >
             <Translate content="exchange.market_name" />
           </div>
-          {/* <div
+          <div
             className={allClass}
             onClick={this._changeTab.bind(this, "find-market")}
           >
             <Translate content="exchange.more" />
-          </div> */}
+          </div>
         </div>
         {this.props.controls && (
           <div className="small-12 medium-6" style={{ padding: "1rem 0" }}>
@@ -887,7 +917,7 @@ let MyMarkets = class extends React.Component<any, any> {
             style={{
               width: "100%",
               textAlign: "left",
-              padding: "0.5rem 0.5rem 0.25rem"
+              padding: "0.75rem 0.5rem"
             }}
           >
             <Checkbox
@@ -902,11 +932,10 @@ let MyMarkets = class extends React.Component<any, any> {
               <Icon icon="star" />
             </Checkbox>
             <FlexGrowDivider />
-            <div className="float-right">
+            <div>
               <input
                 style={{
-                  height: "inherit",
-                  padding: 5
+                  height: "inherit"
                 }}
                 className="no-margin"
                 type="text"
@@ -950,6 +979,7 @@ let MyMarkets = class extends React.Component<any, any> {
                 <MarketGroup
                   userMarkets={this.props.userMarkets}
                   defaultMarkets={this.props.defaultMarkets}
+                  allDefaultMarkets={this.props.allDefaultMarkets}
                   index={index}
                   allowChange={false}
                   key={base}
@@ -957,7 +987,10 @@ let MyMarkets = class extends React.Component<any, any> {
                   starredMarkets={starredMarkets}
                   marketStats={marketStats}
                   viewSettings={viewSettings}
+                  withFilter={myMarketTab}
+                  findMarketValue={this.state.inputValue}
                   columns={
+                    // columns
                     myMarketTab ? columns : this.props.findColumns || columns
                   }
                   markets={baseGroups[base]}
@@ -991,6 +1024,7 @@ export default connect(
         locale: IntlStore.getState().currentLocale,
         starredMarkets: SettingsStore.getState().starredMarkets,
         defaultMarkets: SettingsStore.getState().defaultMarkets,
+        allDefaultMarkets: SettingsStore.getState().allDefaultMarkets,
         viewSettings: SettingsStore.getState().viewSettings,
         preferredBases: SettingsStore.getState().preferredBases,
         marketStats: MarketsStore.getState().allMarketStats,

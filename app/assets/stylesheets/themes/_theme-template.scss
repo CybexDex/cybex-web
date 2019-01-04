@@ -941,6 +941,11 @@
     text-transform: uppercase;
     cursor: pointer;
   }
+  .market-markets {
+    th {
+      background-color: $panel-bg-color;
+    }
+  }
   div.exchange-content-header {
     background-color: $header-color !important;
   }

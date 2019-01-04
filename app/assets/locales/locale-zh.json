@@ -359,7 +359,7 @@
       "precision_warning": "警告：创建后该数值将无法更改。",
       "visible": "在搜索与市场中隐去资产",
       "cer_warning_1": "警告",
-      "cer_warning_2": "Make sure your core exchange rate is higher than the market price, otherwise people will buy your token from the market and drain your fee pool via implicit arbitrage. The core exchange rate should be updated regularly to reflect market pricing of your asset.",
+      "cer_warning_2": "请确保您设置的手续费汇率高于市场价格，避免他人从市场上购买您的资产并透过您的手续费资金池进行套利。为了及时反馈您资产的市场价格，请定期更新手续费汇率。",
       "vesting": "设置锁定期",
       "vesting_period": "锁定周期",
       "sell_end": "销售周期"
@@ -1212,7 +1212,7 @@
     "receive": "获得",
     "vertical": "垂直布局",
     "horizontal": "水平布局",
-    "market_name": "市场名称",
+    "market_name": "主要交易对",
     "filter_name": "筛选",
     "quote_supply": "报价资产供给量",
     "base_supply": "基础资产供给量",
@@ -1273,7 +1273,9 @@
     "search": "搜索",
     "base": "基准资产",
     "market_search": "交易对市场搜索",
-    "preferred": "我收藏的市场"
+    "preferred": "我收藏的市场",
+    "no_market": "未找到符合条件的交易对",
+    "find_market": "请输入需要查找的资产名称以查找交易对"
   },
   "login": {
     "error_name": "未找到此用户名，请检查后再试",
@@ -1969,5 +1971,12 @@
     "more_game": "更多游戏",
     "modal_deposit_title": "游戏充值",
     "modal_withdraw_title": "游戏币提现"
+  },
+  "ethmodal": {
+    "title": "致各位赛贝CYBEX用户：",
+    "p1": "赛贝CYBEX将于1月4日进行系统维护，维护时间15:00-16:00，维护期间无法进行充值和提现，给您带来的不便敬请谅解。",
+    "p2": "赛贝CYBEX交易所2.0官网：https://dex.cybex.io/",
+    "p3": "祝交易愉快！",
+    "footer": "赛贝团队<br>2019.01.04"
   }
 }

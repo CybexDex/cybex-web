@@ -309,7 +309,7 @@ export const JadePool: {
         contractAddress: "0x9288d6b823927f528aea244c5fa71a356b807112"
       }),
       "JADE.HER": new GatewayAsset("JADE.HER", "HER", ProtocolType.ERC20, {
-        name: "Hero Node",
+        name: "Herdius",
         contractAddress: "0x9ae559ac062de221eb5198d90c27e45e85fcaab2"
       }),
       "JADE.CTXC": new GatewayAsset("JADE.CTXC", "CTXC", ProtocolType.ERC20, {

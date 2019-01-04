@@ -9,7 +9,9 @@ export const RefreshTip = class extends React.Component<any> {
     WalletUnlockActions.lock();
     willTransitionTo(false, () => {
       console.debug("Reconnect Transition");
-      this.props.history.replace(currentPath);
+      try {
+        this.props.history.replace(currentPath);
+      } catch (e) {}
     });
   }
   render() {

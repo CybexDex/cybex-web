@@ -670,7 +670,7 @@ class ExchangeNew extends React.Component<any, any> {
   }
 
   _orderbookClick(order, dispalyPrice) {
-    console.log("click order ==========================",dispalyPrice);
+    console.log("click order ==========================", dispalyPrice);
     const isBid = order.isBid();
     /*
             * Because we are using a bid order to construct an ask and vice versa,
@@ -687,7 +687,7 @@ class ExchangeNew extends React.Component<any, any> {
 
     let current = this.state[isBid ? "bid" : "ask"];
     current.price = newPrice;
-    current.priceText = dispalyPrice;//newPrice.toReal();
+    current.priceText = dispalyPrice; //newPrice.toReal();
 
     let newState = {
       // If isBid is true, newState defines a new ask order and vice versa
@@ -697,7 +697,7 @@ class ExchangeNew extends React.Component<any, any> {
         to_receive: toReceive,
         toReceiveText: toReceive.getAmount({ real: true }),
         price: newPrice,
-        priceText: dispalyPrice//newPrice.toReal()
+        priceText: dispalyPrice //newPrice.toReal()
       }
     };
 
@@ -1296,7 +1296,11 @@ class ExchangeNew extends React.Component<any, any> {
             {/* Price history chart */}
             <TVChartContainer
               // priceData={this.props.priceData}
-              priceData={MarketHistoryStore.getState()[`${quoteSymbol}${baseSymbol}${bucketSize}`] || []}
+              priceData={
+                MarketHistoryStore.getState()[
+                  `${quoteSymbol}${baseSymbol}${bucketSize}`
+                ] || []
+              }
               onChangeBucket={this._changeBucketSize.bind(this)}
               // Datafeed={this.props.Datafeed}
               base={base}
@@ -1389,9 +1393,10 @@ class ExchangeNew extends React.Component<any, any> {
             ]}
             findColumns={[
               { name: "market", index: 1 },
-              { name: "issuer", index: 2 },
+              { name: "issuer", index: 5 },
               { name: "vol", index: 3 },
-              { name: "add", index: 4 }
+              { name: "price", index: 2 },
+              { name: "change", index: 4 }
             ]}
             current={`${quoteSymbol}_${baseSymbol}`}
           />

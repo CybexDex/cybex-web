@@ -85,6 +85,7 @@ class SettingsStore extends AbstractStore<any> {
   starredKey;
   marketsKey;
   preferredBases;
+  allDefaultMarkets;
   defaultMarkets;
   starredMarkets;
   userMarkets;
@@ -222,7 +223,7 @@ class SettingsStore extends AbstractStore<any> {
       this.starredKey = this._getChainKey("markets");
       this.marketsKey = this._getChainKey("userMarkets");
       this.fp = Math.floor(Math.random() * 100) + Date.now();
-
+      let allDefaultMarkets = new Set();
       let defaultMarkets = await Promise.all(
       [
           // Main Net
@@ -241,13 +242,17 @@ class SettingsStore extends AbstractStore<any> {
               ])
             )
             .then(([baseAsset, ...quoteAssets]) =>
-              quoteAssets.map(marketAsset => [
-                `${marketAsset.get("symbol")}_${baseAsset.get("symbol")}`,
-                {
-                  quote: marketAsset.get("symbol"),
-                  base: baseAsset.get("symbol")
-                }
-              ])
+              quoteAssets.map(marketAsset => {
+                allDefaultMarkets.add(marketAsset.get("symbol"));
+                allDefaultMarkets.add(baseAsset.get("symbol"));
+                return [
+                  `${marketAsset.get("symbol")}_${baseAsset.get("symbol")}`,
+                  {
+                    quote: marketAsset.get("symbol"),
+                    base: baseAsset.get("symbol")
+                  }
+                ];
+              })
             )
         )
       ).then(groupedMarkets =>
@@ -256,6 +261,7 @@ class SettingsStore extends AbstractStore<any> {
       let coreAsset = "CYB";
       this.defaults.unit[0] = coreAsset;
 
+      this.allDefaultMarkets = allDefaultMarkets;
       this.preferredBases = List(["CYB", "JADE.BTC", "JADE.ETH", "JADE.USDT"]);
 
       this.defaultMarkets = Map(defaultMarkets);

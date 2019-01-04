@@ -61,7 +61,24 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
+    table {
+      tr {
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+      td,
+      th {
+        height: 2em;
+        font-size: 1em;
+        padding: 0 4px;
+      }
+      th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+    }
     .table .table-row {
       display: flex;
       &:hover {

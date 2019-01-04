@@ -430,7 +430,7 @@ let Header = class extends React.Component<any, any> {
           style={{ overflow: "visible" }}
         >
           {dashboard}
-          <VolumeDisplay vol={this.props.vol} />
+          {/* <VolumeDisplay vol={this.props.vol} /> */}
           <Nav hideIcon={true} isVertical={false} />
           {/* <div id="context-hub" /> */}
         </div>

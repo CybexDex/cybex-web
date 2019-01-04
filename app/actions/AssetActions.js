@@ -6,6 +6,7 @@ import ApplicationApi from "api/ApplicationApi";
 import WalletDb from "stores/WalletDb";
 import { ChainStore } from "cybexjs";
 import big from "bignumber.js";
+import { isFootballAsset } from "qtb";
 
 let inProgress = {};
 
@@ -357,6 +358,7 @@ class AssetActions {
           .then(assets => {
             let bitAssetIDS = [];
             let dynamicIDS = [];
+            assets = assets.filter(asset => !isFootballAsset(asset.symbol));
 
             assets.forEach(asset => {
               ChainStore._updateObject(asset, false);

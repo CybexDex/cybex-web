@@ -31,7 +31,11 @@ class AccountLeftPanel extends React.Component<
   static propTypes = {
     account: PropTypes.object.isRequired,
     advancedMode: PropTypes.bool.isRequired,
-    linkedAccounts: PropTypes.object
+    linkedAccounts: PropTypes.object,
+  };
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -157,7 +161,7 @@ class AccountLeftPanel extends React.Component<
                 className="grid-container no-margin full-width-content"
                 style={{ paddingTop: 20, maxWidth: imageSize.width }}
               >
-                <div style={{ paddingBottom: 15 }}>
+                <div style={{ paddingBottom: 6 }}>
                   <Link to={`/transfer/?to=${account_name}`}>
                     <Translate
                       className="button block-button no-margin"
@@ -166,7 +170,7 @@ class AccountLeftPanel extends React.Component<
                   </Link>
                 </div>
                 {linkBtn}
-                {isMyAccount && (
+                {/* {isMyAccount && (
                   <Translate
                     component="button"
                     content="wallet.link_deposit_asset"
@@ -184,11 +188,26 @@ class AccountLeftPanel extends React.Component<
                     asset={utils.replaceName(PrimaryCoin[0]).name}
                     onClick={() => this._depositClick(0)}
                   />
-                )}
+                )} */}
+
+                <button
+                  className="margin-top button"
+                  onClick={() =>
+                    this.context.router.history.push(`/account/${account_name}/assets/`)
+                  }
+                >
+                  <Translate
+                    style={{ color: "#fff" }}
+                    content="account.user_issued_assets.issued_assets"
+                  />
+                </button>
               </div>
             </div>
             <section className="block-list">
-              <ul className="account-left-menu" style={{ marginBottom: 0 }}>
+              <ul
+                className="account-left-menu"
+                style={{ marginBottom: 0, marginTop: 10 }}
+              >
                 <li>
                   <NavLink
                     to={`/account/${account_name}/dashboard/`}
@@ -205,6 +224,14 @@ class AccountLeftPanel extends React.Component<
                     <Translate content="account.member.stats" />
                   </NavLink>
                 </li>
+                {/* <li>
+                  <NavLink
+                    to={`/account/${account_name}/assets/`}
+                    activeClassName="active"
+                  >
+                    <Translate content="account.user_issued_assets.issued_assets" />
+                  </NavLink>
+                </li> */}
                 {/* <li><Link to={`/account/${account_name}/orders/`} activeClassName="active"><Translate content="account.open_orders"/></Link></li> */}
                 <li>
                   <NavLink
@@ -254,14 +281,6 @@ class AccountLeftPanel extends React.Component<
                         activeClassName="active"
                       >
                         <Translate content="account.voting" />
-                      </NavLink>
-                    </li>
-                    <li>
-                      <NavLink
-                        to={`/account/${account_name}/assets/`}
-                        activeClassName="active"
-                      >
-                        <Translate content="account.user_issued_assets.issued_assets" />
                       </NavLink>
                     </li>
 

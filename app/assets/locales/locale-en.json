@@ -1245,7 +1245,9 @@
     "core_rate": "Core rate",
     "supply": "Supply",
     "search": "Search",
-    "preferred": "My Favorite Markets"
+    "preferred": "My Favorite Markets",
+    "no_market": "No matching markets",
+    "find_market": "Type the asset symbol into the search field to find more markets"
   },
   "login": {
     "error_name": "We can’t find this account name. Please, make sure its correct.",
@@ -1884,5 +1886,12 @@
     "faucet_is_out_of_money": "Faucet is out of money, please wait a minute.",
     "cannot_read_property": "Client error, refresh the page and try again, please",
     "max_supply": "The operation is illegal against the rule of max supply of asset"
+  },
+  "ethmodal": {
+    "title": "Dear CYBEXers,",
+    "p1": "CYBEX will conduct a round of system maintenance from 15:00-16:00, Jan 4, during which deposit or withdraw are not supported. We are sorry for your inconvenience!",
+    "p2": "Know more about token info: https://cybex.io/en/asset_infos",
+    "p3": "Hope you have a great time!",
+    "footer": "CYBEX Team<br>Jan 4, 2018"
   }
 }
