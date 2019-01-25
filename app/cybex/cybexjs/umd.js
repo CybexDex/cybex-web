@@ -4686,6 +4686,16 @@ ChainTypes.operations = {
     initiate_crowdfund: 45,
     participate_crowdfund: 46,
     withdraw_crowdfund: 47,
+    withdraw_crowdfund1: 48,
+    withdraw_crowdfund2: 49,
+    withdraw_crowdfund4: 50,
+    withdraw_crowdfund5: 51,
+    withdraw_all: 52,
+    initiate_dice_bet: 53,
+    deposit_dice_bet: 54,
+    withdraw_dice_bet: 55,
+    participate_dice_bet: 56,
+    settle_bet: 57
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (ChainTypes);

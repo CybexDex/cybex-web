@@ -41,6 +41,7 @@ export const MARKETS = [
   "JADE.MXC",
   "JADE.CENNZ",
   "JADE.NASH",
+  "JADE.NWT",
   "JADE.POLY",
   "JADE.JCT",
   "JADE.MCO",

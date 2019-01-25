@@ -13,6 +13,7 @@ import FormattedAsset from "../Utility/FormattedAsset";
 import AssetName from "../Utility/AssetName";
 import { Tabs, Tab } from "../Utility/Tabs";
 import { ChainStore } from "cybexjs";
+import utils from "common/utils";
 
 class Assets extends React.Component {
   constructor(props) {
@@ -54,8 +55,9 @@ class Assets extends React.Component {
       .last();
 
     if (assets.size === 0 || force) {
-      AssetActions.getAssetList.defer("A", 100);
-      this.setState({ assetsFetched: 100 });
+      console.debug("Asset: ", assets);
+      AssetActions.getAssetList.defer("A", 99);
+      this.setState({ assetsFetched: 99 });
     } else if (assets.size >= this.state.assetsFetched) {
       AssetActions.getAssetList.defer(lastAsset.symbol, 100);
       this.setState({ assetsFetched: this.state.assetsFetched + 99 });
@@ -78,6 +80,10 @@ class Assets extends React.Component {
 
   _onFilter(type, e) {
     this.setState({ [type]: e.target.value.toUpperCase() });
+    AssetActions.getAssetList.defer(
+      e.target.value && e.target.value.toUpperCase(),
+      50
+    );
     SettingsActions.changeViewSetting({
       [type]: e.target.value.toUpperCase()
     });
@@ -88,10 +94,13 @@ class Assets extends React.Component {
 
     let placeholder = counterpart.translate("markets.filter").toUpperCase();
     let coreAsset = ChainStore.getAsset("1.3.0");
-
+    console.debug("ASSETS: ", assets);
     let uia = assets
       .filter(a => {
-        return !a.market_asset && a.symbol.indexOf(this.state.filterUIA) !== -1;
+        return (
+          !a.market_asset &&
+          utils.replaceName(a.symbol).name.indexOf(this.state.filterUIA) !== -1
+        );
       })
       .map(asset => {
         let description = assetUtils.parseDescription(

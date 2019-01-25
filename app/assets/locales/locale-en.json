@@ -636,7 +636,14 @@
     "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
     "init_crowd": "{owner} launched a crowdfund for {asset}",
     "part_crowd": "{account} invested {amount} to a crowdfund",
-    "withdraw_crowd": "{account} withdrawed a crowdfund investment"
+    "withdraw_crowd": "{account} withdrawed a crowdfund investment",
+    "withdraw_all_all": "{account} cancelled all open orders.",
+    "withdraw_all": "{account} cancelled all open orders in market {quote}/{base}",
+    "initiate_dice_bet": "{account} created a bet game",
+    "deposit_dice_bet": "{account}  injected asset to a bet game asset pool",
+    "withdraw_dice_bet": "{account} withdrew from a bet game asset pool",
+    "participate_dice_bet": "{account} bet one time",
+    "settle_bet": "{account} got {amount} {asset} from a bet game"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}, with lockup period: {vesting}",
@@ -783,6 +790,13 @@
       "crowd_inited": "Crowdfunding",
       "initiate_crowdfund": "Initiate Crowdfund",
       "participate_crowdfund": "Participate Crowdfund",
+      "withdraw_all_all": "Cancel All Orders",
+      "withdraw_all": "Cancel Orders",
+      "initiate_dice_bet": "Create Game",
+      "deposit_dice_bet": "Game Deposit",
+      "withdraw_dice_bet": "Game Withdraw",
+      "participate_dice_bet": "Participate Game",
+      "settle_bet": "Game Clear",
       "withdraw_crowdfund": "Withdraw Crowdfund"
     },
     "feeGroups": {

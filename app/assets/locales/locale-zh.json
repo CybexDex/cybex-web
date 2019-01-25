@@ -659,7 +659,14 @@
     "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
     "init_crowd": "{owner} 发起了对于 {asset} 的众筹",
     "part_crowd": "{account} 向一笔众筹投资了 {amount}",
-    "withdraw_crowd": "{account} 撤回了一笔众筹"
+    "withdraw_crowd": "{account} 撤销所有订单",
+    "withdraw_all_all": "{account} 撤销所有订单",
+    "withdraw_all": "{account} 撤销 {quote}/{base} 交易对下的所有订单",
+    "initiate_dice_bet": "{account} 建立了一个竞猜游戏",
+    "deposit_dice_bet": "{account} 向竞猜游戏注资",
+    "withdraw_dice_bet": "{account} 从竞猜游戏资金池中提款",
+    "participate_dice_bet": "{account} 进行了一次竞猜游戏投注",
+    "settle_bet": "{account} 参与了一次竞猜游戏，获得 {amount} 个 {asset}"
   },
   "transaction": {
     "sent": "发送",
@@ -778,6 +785,13 @@
       "participate_crowdfund": "参与众筹",
       "withdraw_crowdfund": "撤回众筹",
       "crowd_inited": "资产众筹中",
+      "withdraw_all_all": "撤销所有订单",
+      "withdraw_all": "撤销特定资产订单",
+      "initiate_dice_bet": "建立竞猜",
+      "deposit_dice_bet": "竞猜游戏注资",
+      "withdraw_dice_bet": "竞猜游戏提款",
+      "participate_dice_bet": "竞猜游戏投注",
+      "settle_bet": "竞猜游戏提取",
       "all": "显示所有"
     },
     "confirm": "请确认交易",

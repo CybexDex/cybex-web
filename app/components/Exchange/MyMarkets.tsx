@@ -60,6 +60,7 @@ const BTC_MARKETS = [
   "JADE.XRP",
   "JADE.CENNZ",
   "JADE.NASH",
+  "JADE.NWT",
   "JADE.JCT",
   "JADE.MCO",
   // "JADE.HER",
@@ -412,7 +413,7 @@ export class MarketGroup extends React.Component<any, any> {
 
     return (
       open && (
-        <table className="">
+        <table className="" style={{ width: "100%" }}>
           <thead className="table-row" style={{ paddingRight: "10px" }}>
             <tr>{headers}</tr>
           </thead>

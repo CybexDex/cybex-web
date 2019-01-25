@@ -1100,9 +1100,74 @@ class Operation extends React.PureComponent<any, any> {
           />
         );
         break;
+      case "withdraw_all":
+        column = (
+          op[1].sell_asset_id === op[1].receive_asset_id && op[1].receive_asset_id === "1.3.0" ?
+          <TranslateWithLinks
+            string="operation.withdraw_all_all"
+            keys={[{ type: "account", value: op[1].seller, arg: "account" }]}
+          /> : 
+          <TranslateWithLinks
+            string="operation.withdraw_all"
+            keys={[
+              { type: "account", value: op[1].seller, arg: "account" },
+              { type: "asset", value: op[1].receive_asset_id, arg: "quote" },
+              { type: "asset", value: op[1].sell_asset_id, arg: "base" },
+          ]}
+          />
+        );
+        break;
+      case "initiate_dice_bet":
+        column = (
+          <TranslateWithLinks
+            string="operation.initiate_dice_bet"
+            keys={[{ type: "account", value: op[1].owner, arg: "account" }]}
+          />
+        );
+        break;
+      case "deposit_dice_bet":
+        column = (
+          <TranslateWithLinks
+            string="operation.deposit_dice_bet"
+            keys={[{ type: "account", value: op[1].owner, arg: "account" }]}
+          />
+        );
+        break;
+      case "withdraw_dice_bet":
+        column = (
+          <TranslateWithLinks
+            string="operation.withdraw_dice_bet"
+            keys={[{ type: "account", value: op[1].owner, arg: "account" }]}
+          />
+        );
+        break;
+      case "participate_dice_bet":
+        console.debug("Bet: ");
+        column = (
+          <TranslateWithLinks
+            string="operation.participate_dice_bet"
+            keys={[{ type: "account", value: op[1].payer, arg: "account"},{
+            type: "value", value: op[1].choice, arg: "amount"  }]}
+          />
+        );
+        break;
+      case "settle_bet":
+      console.debug("Bet: ");
+
+        column = (
+          <TranslateWithLinks
+            string="operation.settle_bet"
+            keys={[
+              { type: "account", value: op[1].payer, arg: "account" },
+              { type: "amount", value:{ asset_id: op[1].asset_id, amount: op[1].refund }, arg: "amount" },
+              { type: "asset", value: op[1].asset_id, arg: "asset" },
+          ]}
+          />
+        );
+        break;
 
       default:
-        console.log("unimplemented op:", op);
+        console.log("unimplemented op:", op, ops[op[0]], ops);
         column = (
           <span>
             <Link to={`/block/${block}`}>#{block}</Link>

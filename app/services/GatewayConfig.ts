@@ -293,8 +293,12 @@ export const JadePool: {
         contractAddress: "0x1122b6a0e00dce0563082b6e2953f3a943855c1f"
       }),
       "JADE.NASH": new GatewayAsset("JADE.NASH", "NASH", ProtocolType.ERC20, {
-        name: "Centrality",
+        name: "NeoWorld Cash",
         contractAddress: "0x4b94c8567763654101f690cf4d54957206383b75"
+      }),
+      "JADE.NWT": new GatewayAsset("JADE.NWT", "NWT", ProtocolType.ERC20, {
+        name: "NeoWorld Token",
+        contractAddress: "0x179201b6d8f1d984fae733313a5035e20d4f4869"
       }),
       "JADE.POLY": new GatewayAsset("JADE.POLY", "POLY", ProtocolType.ERC20, {
         name: "Polymath",

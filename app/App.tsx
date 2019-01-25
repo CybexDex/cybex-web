@@ -229,7 +229,7 @@ let App = class extends React.Component<any, any> {
 
   componentDidCatch(err, info) {
     console.error("App Catch: ", err, info);
-    this.setState({ hasError: true });
+    // this.setState({ hasError: true });
   }
   /**
    * Returns the current blocktime, or exception if not yet available

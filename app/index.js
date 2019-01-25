@@ -8,7 +8,7 @@ if (__PERFORMANCE_DEVTOOL__) {
   registerObserver();
 } else {
   console.debug = () => null;
-  console.error = () => null;
+  // console.error = () => null;
 }
 
 (function initApp() {

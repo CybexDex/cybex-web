@@ -1393,10 +1393,10 @@ class ExchangeNew extends React.Component<any, any> {
             ]}
             findColumns={[
               { name: "market", index: 1 },
-              { name: "issuer", index: 5 },
-              { name: "vol", index: 3 },
-              { name: "price", index: 2 },
-              { name: "change", index: 4 }
+              { name: "issuer", index: 2 },
+              { name: "price", index: 3 },
+              { name: "vol", index: 4 },
+              { name: "change", index: 5 }
             ]}
             current={`${quoteSymbol}_${baseSymbol}`}
           />

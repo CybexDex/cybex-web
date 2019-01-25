@@ -1138,54 +1138,59 @@ export const asset_claim_fees = new Serializer("asset_claim_fees", {
 });
 
 operation.st_operations = [
-  transfer,
-  limit_order_create,
-  limit_order_cancel,
-  call_order_update,
-  fill_order,
-  account_create,
-  account_update,
-  account_whitelist,
-  account_upgrade,
+  transfer, // 0
+  limit_order_create, // 1
+  limit_order_cancel, // 2
+  call_order_update, // 3
+  fill_order, // 4
+  account_create, // 5
+  account_update, // 6
+  account_whitelist, // 7
+  account_upgrade, // 8
   account_transfer,
   asset_create,
   asset_update,
   asset_update_bitasset,
   asset_update_feed_producers,
   asset_issue,
-  asset_reserve,
+  asset_reserve, // 15
   asset_fund_fee_pool,
   asset_settle,
   asset_global_settle,
   asset_publish_feed,
-  witness_create,
+  witness_create, // 20
   witness_update,
   proposal_create,
   proposal_update,
   proposal_delete,
-  withdraw_permission_create,
+  withdraw_permission_create, // 25
   withdraw_permission_update,
   withdraw_permission_claim,
   withdraw_permission_delete,
   committee_member_create,
-  committee_member_update,
+  committee_member_update, // 30
   committee_member_update_global_parameters,
   vesting_balance_create,
   vesting_balance_withdraw,
   worker_create,
-  custom,
+  custom, // 35
   assert,
   balance_claim,
   override_transfer,
   transfer_to_blind,
-  blind_transfer,
+  blind_transfer, // 40
   transfer_from_blind,
   asset_settle_cancel,
   asset_claim_fees,
   asset_settle_cancel,
-  initiate_crowdfund,
+  initiate_crowdfund, // 45
   participate_crowdfund,
-  withdraw_crowdfund
+  withdraw_crowdfund,
+  withdraw_crowdfund,
+  withdraw_crowdfund, // 
+  withdraw_crowdfund, // 50
+  withdraw_crowdfund, // 51
+  withdraw_crowdfund, // 52
 ];
 
 export const transaction = new Serializer("transaction", {
