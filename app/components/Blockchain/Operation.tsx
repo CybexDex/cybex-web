@@ -203,9 +203,10 @@ class Operation extends React.PureComponent<any, any> {
   render() {
     let { op, current, block } = this.props;
     let line = null,
-      column = null,
+      column: any = null,
+      column_append: any = null,
       color = "info";
-    let memoComponent = null;
+    let memoComponent: any = null;
     switch (
       ops[op[0]] // For a list of trx types, see chain_types.coffee
     ) {
@@ -213,9 +214,9 @@ class Operation extends React.PureComponent<any, any> {
         if (op[1].memo) {
           memoComponent = <MemoText memo={op[1].memo} fullLength={true} />;
         }
-        if (op[1].memo) {
-          memoComponent = <MemoText memo={op[1].memo} />;
-        }
+        // if (op[1].memo) {
+        //   memoComponent = <MemoText memo={op[1].memo} />;
+        // }
         let humanizeLocals = {
           zh: "zh_CN",
           en: "en"
@@ -241,7 +242,20 @@ class Operation extends React.PureComponent<any, any> {
         color = "success";
         op[1].amount.amount = parseFloat(op[1].amount.amount);
 
-        column = (
+        column = this.props.csvExportMode ? (
+          
+            <TranslateWithLinks
+              string="operation.transfer"
+              keys={[
+                { type: "account", value: op[1].from, arg: "from" },
+                { type: "amount", value: op[1].amount, arg: "amount" },
+                { type: "account", value: op[1].to, arg: "to" },
+                { value: vestingStr, arg: "vesting" }
+              ]}
+            />
+            
+          
+        ) : (
           <span className="right-td">
             <TranslateWithLinks
               string="operation.transfer"
@@ -255,7 +269,7 @@ class Operation extends React.PureComponent<any, any> {
             {memoComponent}
           </span>
         );
-
+        column_append = memoComponent;
         break;
 
       case "limit_order_create":
@@ -1101,21 +1115,23 @@ class Operation extends React.PureComponent<any, any> {
         );
         break;
       case "withdraw_all":
-        column = (
-          op[1].sell_asset_id === op[1].receive_asset_id && op[1].receive_asset_id === "1.3.0" ?
-          <TranslateWithLinks
-            string="operation.withdraw_all_all"
-            keys={[{ type: "account", value: op[1].seller, arg: "account" }]}
-          /> : 
-          <TranslateWithLinks
-            string="operation.withdraw_all"
-            keys={[
-              { type: "account", value: op[1].seller, arg: "account" },
-              { type: "asset", value: op[1].receive_asset_id, arg: "quote" },
-              { type: "asset", value: op[1].sell_asset_id, arg: "base" },
-          ]}
-          />
-        );
+        column =
+          op[1].sell_asset_id === op[1].receive_asset_id &&
+          op[1].receive_asset_id === "1.3.0" ? (
+            <TranslateWithLinks
+              string="operation.withdraw_all_all"
+              keys={[{ type: "account", value: op[1].seller, arg: "account" }]}
+            />
+          ) : (
+            <TranslateWithLinks
+              string="operation.withdraw_all"
+              keys={[
+                { type: "account", value: op[1].seller, arg: "account" },
+                { type: "asset", value: op[1].receive_asset_id, arg: "quote" },
+                { type: "asset", value: op[1].sell_asset_id, arg: "base" }
+              ]}
+            />
+          );
         break;
       case "initiate_dice_bet":
         column = (
@@ -1146,22 +1162,32 @@ class Operation extends React.PureComponent<any, any> {
         column = (
           <TranslateWithLinks
             string="operation.participate_dice_bet"
-            keys={[{ type: "account", value: op[1].payer, arg: "account"},{
-            type: "value", value: op[1].choice, arg: "amount"  }]}
+            keys={[
+              { type: "account", value: op[1].payer, arg: "account" },
+              {
+                type: "value",
+                value: op[1].choice,
+                arg: "amount"
+              }
+            ]}
           />
         );
         break;
       case "settle_bet":
-      console.debug("Bet: ");
+        console.debug("Bet: ");
 
         column = (
           <TranslateWithLinks
             string="operation.settle_bet"
             keys={[
               { type: "account", value: op[1].payer, arg: "account" },
-              { type: "amount", value:{ asset_id: op[1].asset_id, amount: op[1].refund }, arg: "amount" },
-              { type: "asset", value: op[1].asset_id, arg: "asset" },
-          ]}
+              {
+                type: "amount",
+                value: { asset_id: op[1].asset_id, amount: op[1].refund },
+                arg: "amount"
+              },
+              { type: "asset", value: op[1].asset_id, arg: "asset" }
+            ]}
           />
         );
         break;
@@ -1188,6 +1214,7 @@ class Operation extends React.PureComponent<any, any> {
           <div>{block_time ? block_time.toLocaleString() : ""}</div>
           <div>{ops[op[0]]}</div>
           <div>{column}</div>
+          {column_append && <div>{column_append}</div>}
           <div>
             <FormattedAsset
               amount={parseInt(op[1].fee.amount, 10)}
