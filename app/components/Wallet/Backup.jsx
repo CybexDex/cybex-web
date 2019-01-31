@@ -35,6 +35,10 @@ const connectObject = {
 
 //The default component is WalletManager.jsx
 class BackupCreate extends React.Component {
+  constructor(props) {
+    super(props);
+    // console.debug("This backup: ", props);
+  }
   render() {
     return (
       <div className="readable container">
@@ -292,7 +296,7 @@ class Download extends React.Component {
   }
 
   onDownload() {
-    // console.debug("Content: ", this.props.backup.contents);
+    // console.debug("Content: ", this.props);
     let blob = new Blob([this.props.backup.contents], {
       type: "application/octet-stream; charset=us-ascii"
     });
@@ -320,6 +324,7 @@ class Create extends React.Component {
       afterReset: false
     };
   }
+
   resetWallet = () => {
     WalletDb.resetBrainKeySequence().then(() => {
       WalletUnlockActions.lock();
@@ -367,7 +372,7 @@ class Create extends React.Component {
     let ready = WalletDb.getWallet() != null;
 
     let myAccounts = this.props.backup.myAccounts;
-    // console.debug("My Accounts: ", myAccounts);
+    // console.debug("Create Backup: ", this.state);
 
     return (
       <div>

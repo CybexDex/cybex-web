@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Translate from "react-translate-component";
 import notify from "actions/NotificationActions";
@@ -6,6 +7,7 @@ import cname from "classnames";
 import WalletDb from "stores/WalletDb";
 import PasswordConfirm from "./PasswordConfirm";
 import counterpart from "counterpart";
+import BackupActions from "actions/BackupActions";
 
 export default class WalletChangePassword extends React.Component {
   constructor() {
@@ -20,6 +22,8 @@ export default class WalletChangePassword extends React.Component {
       .then(() => {
         notify.success("Password changed");
         this.setState({ success: true });
+        BackupActions.reset();
+
         // window.history.back();
       })
       .catch(error => {
