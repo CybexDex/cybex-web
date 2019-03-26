@@ -1583,6 +1583,7 @@
     "find_asset": "Find an asset",
     "title": "Deposit & Withdraw",
     "no_balance": "No enough balance",
+    "disabled": "The operations of this asset are disabled for the moment",
     "your_account": "Your account",
     "bitkapital_text": "Choose an asset to deposit or withdraw:",
     "bitkapital_withdraw": "You are withdrawing",

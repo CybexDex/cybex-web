@@ -1611,6 +1611,7 @@
     "find_asset": "按资产名称筛选",
     "operation": "操作",
     "no_balance": "对应资产余额不足，无法提现",
+    "disabled": "该币种充提操作暂不可用",
     "title": "充值&提现",
     "your_account": "你的账户",
     "bridge": "桥接",

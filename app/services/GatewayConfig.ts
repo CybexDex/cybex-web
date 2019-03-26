@@ -134,6 +134,7 @@ export class GatewayAsset {
     [ProtocolType.ERC20]: CONTRACT_URLS.ERC20
     // [ProtocolType.NEO]: EXPLORER_URLS.GAS
   };
+  isDisabled = false;
   contractExplorer: string;
   constructor(
     public asset: string,
@@ -143,29 +144,33 @@ export class GatewayAsset {
   ) {
     this.contractExplorer = options.contractAddress
       ? this.getExplorerUrlByContract(options.contractAddress)
-      : null;
+      : "";
+    if (type === "JCT") {
+      this.isDisabled = true;
+    }
   }
 
-  getExplorerUrlByTx(tx: string): string | null {
-    if (!GatewayAsset.ExplorerAddress[this.protocol]) return null;
+  getExplorerUrlByTx(tx: string): string {
+    if (!GatewayAsset.ExplorerAddress[this.protocol]) return "";
     try {
       return (
         this.options.specificExplorer ||
-        GatewayAsset.ExplorerAddress[this.protocol]
+        GatewayAsset.ExplorerAddress[this.protocol] ||
+        ""
       ).replace("#{txid}", tx);
     } catch {
-      return null;
+      return "";
     }
   }
-  getExplorerUrlByContract(contractAddress: string): string | null {
-    if (!GatewayAsset.ContractAddress[this.protocol]) return null;
+  getExplorerUrlByContract(contractAddress: string): string {
+    if (!GatewayAsset.ContractAddress[this.protocol]) return "";
     try {
       return (
         this.options.specificContractExplorer ||
         GatewayAsset.ContractAddress[this.protocol]
       ).replace("#{contract}", contractAddress);
     } catch {
-      return null;
+      return "";
     }
   }
 }
@@ -288,10 +293,15 @@ export const JadePool: {
         name: "Machine Xchange Coin",
         contractAddress: "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
       }),
-      "JADE.CENNZ": new GatewayAsset("JADE.CENNZ", "CENNZ", ProtocolType.ERC20, {
-        name: "Centrality",
-        contractAddress: "0x1122b6a0e00dce0563082b6e2953f3a943855c1f"
-      }),
+      "JADE.CENNZ": new GatewayAsset(
+          "JADE.CENNZ",
+          "CENNZ",
+          ProtocolType.ERC20,
+        {
+          name: "Centrality",
+          contractAddress: "0x1122b6a0e00dce0563082b6e2953f3a943855c1f"
+        }
+        ),
       "JADE.NASH": new GatewayAsset("JADE.NASH", "NASH", ProtocolType.ERC20, {
         name: "NeoWorld Cash",
         contractAddress: "0x4b94c8567763654101f690cf4d54957206383b75"

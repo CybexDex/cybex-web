@@ -22,7 +22,7 @@ const WS_NODE_LIST = __TEST__ || __FOR_SECURITY__
     new ApiNode("shenzhen.51nebula.com/", "Shenzhen")
   ]
   : [
-    new ApiNode("shanghai.51nebula.com/", "shanghai"),
+    // new ApiNode("shanghai.51nebula.com/", "shanghai"),
     new ApiNode("hongkong.cybex.io/", "Hongkong"),
     new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
     new ApiNode("singapore-01.cybex.io/", "Singapore"),

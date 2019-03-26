@@ -39,6 +39,7 @@ const { ADDRESS_TYPES } = JadePool;
 const oriAssets = Object.keys(ADDRESS_TYPES);
 
 const noBalanceTip = counterpart.translate("gateway.no_balance");
+const gatewayDisabledTip = counterpart.translate("gateway.disabled");
 
 const GatewayOperaions = ({
   address,
@@ -100,7 +101,8 @@ let GatewayTable = class extends React.Component<any, any> {
             "balanceAmount",
             balOfAsset ? balOfAsset.get("balance") : balOfAsset
           )
-          .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0);
+          .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0)
+          .set("isDisabled", ADDRESS_TYPES[asset.get("symbol")].isDisabled);
         return a;
       }) || [];
     return (
@@ -149,18 +151,39 @@ let GatewayTable = class extends React.Component<any, any> {
             },
             {
               Header: counterpart.translate("gateway.deposit"),
-              accessor: asset => asset.get("symbol"),
+              accessor: asset => asset,
               id: "deposit",
               Cell: row => {
-                return (
+                let asset = row.original;
+                let symbol = asset.get("symbol");
+                console.debug("Asset: ", asset && asset.toJS());
+                return !asset.get("isDisabled") ? (
                   <a
                     onClick={this._showDepositWithdraw.bind(
                       this,
-                      row.original.get("symbol"),
+                      symbol,
                       false
                     )}
                   >
                     <Icon name="deposit" className="icon-14px" />
+                  </a>
+                ) : (
+                  <a
+                    href="javascript:;"
+                    data-for={"disabledDeposit" + symbol}
+                    data-place="right"
+                    data-offset="{ 'left': -6 }"
+                    className="disabled"
+                    style={{ opacity: 0.3 }}
+                    data-tip
+                  >
+                    <Icon name="deposit" className="icon-14px" />
+                    <ReactTooltip
+                      id={"disabledDeposit" + symbol}
+                      effect="solid"
+                    >
+                      {gatewayDisabledTip}
+                    </ReactTooltip>
                   </a>
                 );
               },
@@ -177,7 +200,25 @@ let GatewayTable = class extends React.Component<any, any> {
               accessor: asset => asset,
               Cell: row => {
                 let asset = row.original;
-                return asset.get("canWithdraw") ? (
+                return asset.get("isDisabled") ? (
+                  <a
+                    href="javascript:;"
+                    data-for={"disabledWithdraw" + asset.get("symbol")}
+                    data-place="right"
+                    data-offset="{ 'left': -6 }"
+                    className="disabled"
+                    style={{ opacity: 0.3 }}
+                    data-tip
+                  >
+                    <Icon name="deposit" className="icon-14px" />
+                    <ReactTooltip
+                      id={"disabledWithdraw" + asset.get("symbol")}
+                      effect="solid"
+                    >
+                      {gatewayDisabledTip}
+                    </ReactTooltip>
+                  </a>
+                ) : asset.get("canWithdraw") ? (
                   <a
                     onClick={this._showWithdrawModal.bind(
                       this,
