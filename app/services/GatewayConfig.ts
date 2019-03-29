@@ -145,9 +145,9 @@ export class GatewayAsset {
     this.contractExplorer = options.contractAddress
       ? this.getExplorerUrlByContract(options.contractAddress)
       : "";
-    if (type === "JCT") {
-      this.isDisabled = true;
-    }
+    // if (type === "JCT") {
+    //   this.isDisabled = true;
+    // }
   }
 
   getExplorerUrlByTx(tx: string): string {
@@ -320,7 +320,7 @@ export const JadePool: {
       }),
       "JADE.JCT": new GatewayAsset("JADE.JCT", "JCT", ProtocolType.ERC20, {
         name: "JCT",
-        contractAddress: "0x9288d6b823927f528aea244c5fa71a356b807112"
+        contractAddress: "0x7Fe92EC600F15cD25253b421bc151c51b0276b7D"
       }),
       "JADE.HER": new GatewayAsset("JADE.HER", "HER", ProtocolType.ERC20, {
         name: "Herdius",
