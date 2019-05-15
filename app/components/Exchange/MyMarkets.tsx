@@ -34,6 +34,7 @@ const SpecialMarkets = {
     "JADE.EOS": 3,
     "JADE.MXC": 4,
     "JADE.RING": 4,
+    "JADE.ATOM": 4,
     "JADE.XRP": 5
   }
 };
@@ -56,6 +57,8 @@ const BTC_MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.ATOM",
+  "JADE.IRIS",
   "JADE.RING",
   "JADE.XRP",
   "JADE.CENNZ",

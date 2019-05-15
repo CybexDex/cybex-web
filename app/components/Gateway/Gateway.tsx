@@ -102,7 +102,9 @@ let GatewayTable = class extends React.Component<any, any> {
             balOfAsset ? balOfAsset.get("balance") : balOfAsset
           )
           .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0)
-          .set("isDisabled", ADDRESS_TYPES[asset.get("symbol")].isDisabled);
+          .set("isDisabled", ADDRESS_TYPES[asset.get("symbol")].isDisabled)
+          .set("allowDeposit", ADDRESS_TYPES[asset.get("symbol")].allowDeposit)
+          .set("allowWithdraw", ADDRESS_TYPES[asset.get("symbol")].allowWithdraw)
         return a;
       }) || [];
     return (
@@ -157,7 +159,7 @@ let GatewayTable = class extends React.Component<any, any> {
                 let asset = row.original;
                 let symbol = asset.get("symbol");
                 console.debug("Asset: ", asset && asset.toJS());
-                return !asset.get("isDisabled") ? (
+                return !asset.get("isDisabled") && asset.get("allowDeposit") ? (
                   <a
                     onClick={this._showDepositWithdraw.bind(
                       this,
@@ -200,7 +202,7 @@ let GatewayTable = class extends React.Component<any, any> {
               accessor: asset => asset,
               Cell: row => {
                 let asset = row.original;
-                return asset.get("isDisabled") ? (
+                return asset.get("isDisabled") || !asset.get("allowWithdraw") ? (
                   <a
                     href="javascript:;"
                     data-for={"disabledWithdraw" + asset.get("symbol")}

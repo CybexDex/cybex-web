@@ -348,9 +348,13 @@ let AccountOverview = class extends React.Component<any, any> {
       const includeAsset = !hiddenAssets.includes(asset_type);
       const hasBalance = !!balanceObject.get("balance");
       const hasOnOrder = !!orders[asset_type];
-      const canDepositWithdraw = !!JadePool.ADDRESS_TYPES[asset.get("symbol")] && !JadePool.ADDRESS_TYPES[asset.get("symbol")].isDisabled;
+      const canDepositWithdraw =
+        !!JadePool.ADDRESS_TYPES[asset.get("symbol")] &&
+        !JadePool.ADDRESS_TYPES[asset.get("symbol")].isDisabled;
       const canWithdraw =
-        canDepositWithdraw && (hasBalance && balanceObject.get("balance") != 0);
+        canDepositWithdraw &&
+        JadePool.ADDRESS_TYPES[asset.get("symbol")].allowWithdraw &&
+        (hasBalance && balanceObject.get("balance") != 0);
 
       balances.push(
         <tr key={asset.get("symbol")} style={{ maxWidth: "100rem" }}>
@@ -804,18 +808,21 @@ let AccountOverview = class extends React.Component<any, any> {
       />
     );
 
-    includedBalances && includedBalances.push(
-      <tr key="portfolio" className="total-value">
-        <td style={{ textAlign: "left", paddingLeft: 10 }}>{totalValueText}</td>
-        <td />
-        <td className="column-hide-small" />
-        <td />
-        <td className="column-hide-small" style={{ textAlign: "right" }}>
-          {portFolioValue}
-        </td>
-        <td colSpan={9} />
-      </tr>
-    );
+    includedBalances &&
+      includedBalances.push(
+        <tr key="portfolio" className="total-value">
+          <td style={{ textAlign: "left", paddingLeft: 10 }}>
+            {totalValueText}
+          </td>
+          <td />
+          <td className="column-hide-small" />
+          <td />
+          <td className="column-hide-small" style={{ textAlign: "right" }}>
+            {portFolioValue}
+          </td>
+          <td colSpan={9} />
+        </tr>
+      );
 
     let showAssetPercent = settings.get("showAssetPercent", false);
 
@@ -1031,7 +1038,7 @@ let AccountOverview = class extends React.Component<any, any> {
                 </Tab>
               )}
               {true && (
-              // {this.props.isMyAccount && (
+                // {this.props.isMyAccount && (
                 <Tab title="account.vested">
                   <div className="content-block">
                     <div className="generic-bordered-box">

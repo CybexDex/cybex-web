@@ -16,6 +16,7 @@ export const EXPLORER_URLS = __TEST__
     GAS: "https://neoscan.io/transaction/#{txid}",
     EOS: "https://eosflare.io/tx/#{txid}",
     LTC: "https://chain.so/tx/LTC/#{txid}",
+    VET: "https://explore.veforge.com/transactions/#{txid}",
     QTUM: "https://explorer.qtum.org/tx/#{txid}"
   };
 
@@ -108,7 +109,10 @@ export enum ProtocolType {
   LTC,
   QTUM,
   NEO,
-  XRP
+  XRP,
+  COSMOS,
+  IRIS,
+  VET
 }
 
 export class GatewayAssetOptions {
@@ -116,6 +120,9 @@ export class GatewayAssetOptions {
   specificContractExplorer?: string;
   name?: string;
   contractAddress?;
+  allowDeposit? = true;
+  allowWithdraw? = true;
+  isDisabled? = false;
 }
 
 export class GatewayAsset {
@@ -136,18 +143,27 @@ export class GatewayAsset {
   };
   isDisabled = false;
   contractExplorer: string;
+  allowDeposit = true;
+  allowWithdraw = true;
   constructor(
     public asset: string,
     public type: string,
     public protocol: ProtocolType,
-    public options: GatewayAssetOptions = {}
+    public options: GatewayAssetOptions = new GatewayAssetOptions()
   ) {
     this.contractExplorer = options.contractAddress
       ? this.getExplorerUrlByContract(options.contractAddress)
       : "";
-    // if (type === "JCT") {
-    //   this.isDisabled = true;
-    // }
+    this.allowDeposit =
+      options.allowDeposit !== undefined
+        ? options.allowDeposit
+        : this.allowDeposit;
+    this.allowWithdraw =
+      options.allowWithdraw !== undefined
+        ? options.allowWithdraw
+        : this.allowWithdraw;
+    this.isDisabled =
+      options.isDisabled !== undefined ? options.isDisabled : this.isDisabled;
   }
 
   getExplorerUrlByTx(tx: string): string {
@@ -285,6 +301,19 @@ export const JadePool: {
         name: "TokenClub",
         contractAddress: "0x4824a7b64e3966b0133f4f4ffb1b9d6beb75fff7"
       }),
+      "JADE.ATOM": new GatewayAsset(
+          "JADE.ATOM",
+          "ATOM",
+          ProtocolType.COSMOS,
+        {
+          name: "COSMOS(ATOM)"
+            // allowWithdraw: false
+        }
+        ),
+      "JADE.IRIS": new GatewayAsset("JADE.IRIS", "IRIS", ProtocolType.IRIS, {
+        name: "IRIS Network (IRIS)"
+          // allowWithdraw: false
+      }),
       "JADE.RING": new GatewayAsset("JADE.RING", "RING", ProtocolType.ERC20, {
         name: "Evolution Land Global Token",
         contractAddress: "0x9469D013805bFfB7D3DEBe5E7839237e535ec483"
@@ -350,9 +379,9 @@ export const JadePool: {
         name: "FunFair",
         contractAddress: "0x419d0d8bdd9af5e606ae2232ed285aff190e711b"
       }),
-        // "JADE.VET": new GatewayAsset("JADE.VET", "VET", ProtocolType.ETH, {
-        //   name: "VeChain"
-        // }),
+      "JADE.VET": new GatewayAsset("JADE.VET", "VET", ProtocolType.VET, {
+        name: "VeChain"
+      }),
       "JADE.MVP": new GatewayAsset("JADE.MVP", "MVP", ProtocolType.ERC20, {
         name: "Merculet",
         contractAddress: "0x8a77e40936bbc27e80e9a3f526368c967869c86d"

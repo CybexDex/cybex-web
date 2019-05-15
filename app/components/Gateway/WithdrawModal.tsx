@@ -551,8 +551,11 @@ class WithdrawModal extends React.Component<props, state> {
     let assetName: string = utils.replaceName(this.props.asset.get("symbol"))
       .name;
     let isEOS =
-      assetName.indexOf("EOS") !== -1 || assetName.indexOf("XRP") !== -1;
-    let memoName = assetName.indexOf("XRP") !== -1 ? "tag" : "memo";
+      assetName.indexOf("EOS") !== -1 ||
+      assetName.indexOf("XRP") !== -1 ||
+      assetName.indexOf("IRIS") !== -1 ||
+      assetName.indexOf("ATOM") !== -1;
+    let memoName = assetName.indexOf("XRP") !== -1 ? "tag" : "memo/tag";
 
     return (
       <BaseModal modalId={modalId}>

@@ -16053,7 +16053,7 @@ class ChainStore
         else pending_request = { requests: 0 };
 
 
-        let most_recent = "1." + op_history + ".0";
+        let most_recent = "1." + op_history + ".1";
         let history = account.get( "history" );
 
         if( history && history.size )  most_recent = history.first().get("id");
