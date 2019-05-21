@@ -90,4 +90,5 @@ declare module "cybexjs" {
     get_random_key: any;
   };
   const EmitterInstance: any;
+  const types: any;
 }

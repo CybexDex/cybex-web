@@ -26,12 +26,11 @@ import AccountStore from "stores/AccountStore";
 import AccountActions from "actions/AccountActions";
 import { Gtag } from "services/Gtag";
 import { connect } from "alt-react";
+import { RouterStore } from "stores/RouterStore";
 
 let LoginCheck: any = class extends React.Component<any, any> {
   componentWillMount() {
-    if (
-      AccountStore.getState().currentAccount
-    ) {
+    if (AccountStore.getState().currentAccount) {
       this.props.history.push("/dashboard");
     } else {
       // SettingsActions.changeSetting({
@@ -205,6 +204,7 @@ let Login = class extends React.Component<any, any> {
     if (this.props.children) {
       return this.props.children;
     }
+    let redirectPath = RouterStore.getState().deferRedirect || "/dashboard";
     return [
       <LoginCheck key="loginCheck" />,
       <div
@@ -215,7 +215,7 @@ let Login = class extends React.Component<any, any> {
         <LeftSlide key="loginSlide" />
         <LoginMain
           key="loginMain"
-          resolve={() => this.props.history.push("/dashboard")}
+          resolve={() => this.props.history.push(redirectPath)}
         />
       </div>
     ];

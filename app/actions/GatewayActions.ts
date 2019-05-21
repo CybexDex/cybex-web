@@ -23,7 +23,7 @@ export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
 
 const pickKeys = (keys: string[], count = 1) => {
-  let res = [];
+  let res: any[] = [];
   for (let key of keys) {
     let privKey = WalletDb.getPrivateKey(key);
     if (privKey) {
@@ -38,7 +38,8 @@ const pickKeys = (keys: string[], count = 1) => {
 
 class GatewayActions {
   async showDepositModal(account, asset, modalId = DEPOSIT_MODAL_ID) {
-    let type = JadePool.ADDRESS_TYPES[asset] && JadePool.ADDRESS_TYPES[asset].type;
+    let type =
+      JadePool.ADDRESS_TYPES[asset] && JadePool.ADDRESS_TYPES[asset].type;
     if (!type) {
       return NotificationActions.error(
         `No suitable asset for ${asset} to be deposited`
@@ -51,7 +52,8 @@ class GatewayActions {
 
   async showWithdrawModal(asset) {
     debug("Withdraw: ", asset);
-    let type = JadePool.ADDRESS_TYPES[asset] && JadePool.ADDRESS_TYPES[asset].type;
+    let type =
+      JadePool.ADDRESS_TYPES[asset] && JadePool.ADDRESS_TYPES[asset].type;
     if (!type) {
       return NotificationActions.error(
         `No suitable asset for ${asset} to be withdrawn`

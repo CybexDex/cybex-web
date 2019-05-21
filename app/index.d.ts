@@ -1,5 +1,7 @@
 ///<reference types="immutable"  />
 
+declare const __FOR_SECURITY__;
+declare const __STAGING__;
 declare const __TEST__;
 declare const __DEV__;
 declare const __BASE_URL__;

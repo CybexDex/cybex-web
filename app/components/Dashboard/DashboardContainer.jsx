@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
 import MarketsStore from "stores/MarketsStore";

@@ -10,6 +10,7 @@ export type ButtonType =
   | "secondary"
   | "bid"
   | "ask"
+  | "hollow-primary"
   | "white-primary"
   | "white-secondary";
 export interface ButtonProps {
@@ -52,6 +53,26 @@ let Button = class extends React.Component<ButtonProps, any> {
     primary: {
       background: Colors.$colorGradientGoldex,
       color: Colors.$colorWhite,
+      ":hover": {
+        background: Colors.$colorOrangeLight
+      },
+      ":focus": {
+        background: Colors.$colorOrangeLight
+      },
+      ":active": {
+        background: Colors.$colorOrange
+      },
+      ":disabled": {
+        background: Colors.$colorGreyLightWhite,
+        cursor: "not-allowed",
+        color: Colors.$colorGreyLight,
+        opacity: "1"
+      }
+    },
+    "hollow-primary": {
+      background: "transparent",
+      color: Colors.$colorOrange,
+      border: `1px solid ${Colors.$colorOrange}`,
       ":hover": {
         background: Colors.$colorOrangeLight
       },

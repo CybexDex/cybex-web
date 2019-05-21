@@ -26,12 +26,13 @@ import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
 import ETHModal, { DEFAULT_ETHMODAL_ID } from "components/Modal/ETHModal";
-import Loadable from "react-loadable";
+import * as Loadable from "react-loadable";
 import titleUtils from "common/titleUtils";
 import { LoadComponent } from "./Routes";
 import counterpart from "counterpart";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { RefreshTip } from "RefreshTip";
+import { EtoRefer } from "services/eto";
 let patch = false;
 (function(window) {
   if (window) {
@@ -51,111 +52,115 @@ const Exchange = Loadable({
   loader: () =>
     import(/* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"),
   loading: LoadingIndicator
-});
+} as any);
 const Gateway = Loadable({
   loader: () =>
     import(/* webpackChunkName: "gateway" */ "./components/Gateway/Gateway"),
   loading: LoadingIndicator
-});
+} as any);
 const Eto = Loadable({
   loader: () => import(/* webpackChunkName: "ETO" */ "./components/Eo/index"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Explorer = Loadable({
   loader: () =>
     import(/* webpackChunkName: "explorer" */ "./components/Explorer/Explorer"),
   loading: LoadingIndicator
-});
+} as any);
 
 const AccountPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "account" */ "./components/Account/AccountPage"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Transfer = Loadable({
   loader: () =>
     import(/* webpackChunkName: "transfer" */ "./components/Transfer/Transfer"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Settings = Loadable({
   loader: () =>
     import(/* webpackChunkName: "settings" */ "./components/Settings/SettingsContainer"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Help = Loadable({
   loader: () => import(/* webpackChunkName: "help" */ "./components/Help"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Asset = Loadable({
   loader: () =>
     import(/* webpackChunkName: "asset" */ "./components/Blockchain/Asset"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Block = Loadable({
   loader: () =>
     import(/* webpackChunkName: "block" */ "./components/Blockchain/BlockContainer"),
   loading: LoadingIndicator
-});
+} as any);
 
 const DashboardPage = Loadable({
   loader: () =>
     import(/* webpackChunkName: "dashboard" */ "./components/Dashboard/DashboardContainer"),
   loading: LoadingIndicator
-});
+} as any);
 
 const WalletManager = Loadable({
   loader: () =>
     import(/* webpackChunkName: "wallet" */ "./components/Wallet/WalletManager"),
   loading: LoadingIndicator
-});
+} as any);
 const GameCenter = Loadable({
   loader: () =>
     import(/* webpackChunkName: "wallet" */ "./components/GameCenter/GameCenter"),
   loading: LoadingIndicator
-});
+} as any);
 
 const ExistingAccount = Loadable({
   loader: () =>
     import(/* webpackChunkName: "existing-account" */ "./components/Wallet/ExistingAccount"),
   loading: LoadingIndicator
-});
+} as any);
 
 const CreateWorker = Loadable({
   loader: () =>
     import(/* webpackChunkName: "create-worker" */ "./components/Account/CreateWorker"),
   loading: LoadingIndicator
-});
+} as any);
 const EtoStatic = Loadable({
   loader: () =>
     import(/* webpackChunkName: "EtoStatic" */ "./components/StaticPages/EtoStatic"),
   loading: LoadingIndicator
-});
+} as any);
 
 const Login = Loadable({
   loader: () => import("./components/Login/Login"),
   loading: LoadingIndicator
-});
+} as any);
 const CreateSelector = Loadable({
   loader: () => import("./components/Login/CreateSelector"),
   loading: LoadingIndicator
-});
+} as any);
 const BrainkeyWallet = Loadable({
   loader: () =>
     import("components/Wallet/WalletCreate").then(
       ({ CreateWalletFromBrainkey }) => CreateWalletFromBrainkey
     ),
   loading: LoadingIndicator
-});
+} as any);
 const Contact = Loadable({
   loader: () => import("./components/HelpDrawer/Contact"),
   loading: LoadingIndicator
-});
+} as any);
+const EtoV2 = Loadable({
+  loader: () => import("./components/Eto/Eto"),
+  loading: LoadingIndicator
+} as any);
 
 let App = class extends React.Component<any, any> {
   syncCheckInterval;
@@ -179,7 +184,11 @@ let App = class extends React.Component<any, any> {
   constructor(props) {
     super(props);
     // console.debug("APP: ", this.props, this.context);
-
+    let referrer = (location.href.match(/\?refer\=(.+?)(?:$|\&|\#|\/)/i) ||
+      [])[1];
+    if (referrer) {
+      sessionStorage.setItem(EtoRefer, referrer);
+    }
     // Check for mobile device to disable chat
     const user_agent = navigator.userAgent.toLowerCase();
     let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -395,7 +404,7 @@ let App = class extends React.Component<any, any> {
     let { isMobile, theme } = this.state;
     let { walletMode, location, match, ...others } = this.props;
 
-    let content = null;
+    let content: any = null;
 
     let showFooter = 1;
     // if(incognito && !incognitoWarningDismissed){
@@ -450,7 +459,7 @@ let App = class extends React.Component<any, any> {
 
               <Route path="/create-worker" component={CreateWorker} />
               <Route path="/eto-static" component={EtoStatic} />
-              <Route path="/eto" component={Eto} />
+              <Route path="/eto" component={EtoV2} />
 
               <Route path="/login" component={Login} />
               <Route
@@ -460,11 +469,6 @@ let App = class extends React.Component<any, any> {
               <Route path="/create-account" component={CreateSelector} />
               <Route path="/contact" component={Contact} />
 
-              {/* Help routes */}
-              <Route exact path="/help" component={Help} />
-              <Route exact path="/help/:path1" component={Help} />
-              <Route exact path="/help/:path1/:path2" component={Help} />
-              <Route exact path="/help/:path1/:path2/:path3" component={Help} />
               <Redirect from="/" to="/dashboard" />
             </Switch>
           </div>
@@ -507,7 +511,7 @@ let App = class extends React.Component<any, any> {
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />
-          <ETHModal modalId={DEFAULT_ETHMODAL_ID}></ETHModal>
+          <ETHModal modalId={DEFAULT_ETHMODAL_ID} />
         </div>
       </div>
     );

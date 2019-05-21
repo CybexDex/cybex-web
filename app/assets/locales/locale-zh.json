@@ -1993,5 +1993,18 @@
     "p2": "赛贝CYBEX交易所2.0官网：https://dex.cybex.io/",
     "p3": "祝交易愉快！",
     "footer": "赛贝团队<br>2019.01.04"
+  },
+  "eto_intro": {
+    "join_apply": "申购报名",
+    "join_rule": "了解规则",
+    "join_apply_already": "我已申购",
+    "join_date": "参与时间",
+    "join_date_content": "5月27日 - 6月15日",
+    "join_platform": "参与平台",
+    "join_platform_content": "Cybex赛贝去中心化交易所",
+    "about_eto_content": "ETO（Earlybirds Token Offering,早鸟轮）是一个通过去中心化交易所帮助优秀区块链项目募资的方式，帮助那些真正有价值，有技术的有规划的区块链项目发挥价值。时隔半年，Cybex 第三期ETO强势回归，挑选全球最优质的跨链项目——Polkadot，超优私募价格，ETO结束即开盘，无锁仓期，拿到即是赚到！",
+    "about_polka_title": "关于Polkadot",
+    "about_polka_content": "全球最优质的跨链项目——Polkadot，是以太坊隐形大脑的Gavin Wood领军的项目，Gavin Wood是以太坊技术黄皮书的撰写者，Partiy的创始人。",
+    "about_polka_content1": "Polkadaot被誉为区块链3.0, 旨在将现有各自独立的区块链串联起来，让不同区块链之间可以进行通信和数据的传递，是下一代价值互联网的基石。"
   }
 }

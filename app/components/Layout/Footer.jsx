@@ -10,7 +10,7 @@ import WalletDb from "stores/WalletDb";
 import SettingsStore from "stores/SettingsStore";
 import SettingsActions from "actions/SettingsActions";
 import { Reconnect } from "./Reconnect";
-
+import { Link } from "react-router-dom";
 
 class Footer extends React.Component {
   static propTypes = {
@@ -46,8 +46,6 @@ class Footer extends React.Component {
   }
 
   render() {
-    const { state } = this;
-    const { synced } = this.props;
     const connected = !(this.props.rpc_connection_status === "closed");
 
     // Current Node Details
@@ -55,10 +53,6 @@ class Footer extends React.Component {
     let currentNodePing = SettingsStore.getState().apiLatencies[currentNode];
 
     let block_height = this.props.dynGlobalObject.get("head_block_number");
-    let version_match = APP_VERSION.match(/2\.0\.(\d\w+)/);
-    let version = version_match ? `.${version_match[1]}` : ` ${APP_VERSION}`;
-    let updateStyles = { display: "inline-block", verticalAlign: "top" };
-    let logoProps = {};
 
     return (
       <div className="grid-block shrink footer">
@@ -70,18 +64,18 @@ class Footer extends React.Component {
             {/* <span className="version">
                                 {version}
                             </span> */}
-            <Translate
+            {/* <Translate
               className="contact highlight link hide-for-small-only"
               content="nav.help"
               component="div"
               onClick={this.onHelp}
-            />
-            <Translate
-              className="contact highlight link margin-left"
-              content="footer.contact"
-              component="div"
-              onClick={this.onContact}
-            />
+            /> */}
+            <Link to="/contact">
+              <Translate
+                className="contact link margin-left"
+                content="footer.contact"
+              />
+            </Link>
           </div>
           {/* {this.props.synced ?
                         null :

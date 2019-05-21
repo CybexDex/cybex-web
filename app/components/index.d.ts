@@ -19,11 +19,11 @@ declare module "alt-container" {
 
 declare module "alt-react" {
   const supplyFluxContext: any;
-  function connect<P, NP extends P, >(
+  function connect<P, NP extends P>(
     Component,
     injector: {
       listenTo?(): any[];
-      getProps?(props: any):{ [propName: string]: any };
+      getProps?(props: any): { [propName: string]: any };
     }
   ): React.ComponentClass<P>;
 }
@@ -55,12 +55,14 @@ declare module "alt-instance" {
   class BaseStore<S> {
     listen?(cb: (state: S) => void): void;
   }
-  export interface Store<S> {
+  export type Store<S> = {
     state: S;
-    getState?(): S;
-    setState?(state: any): S;
-    bindListeners?(listenerBinder: { [method: string]: Function }): void;
-  }
+    getState(): S;
+    listen(stateListener): void;
+    unlisten(stateListener): void;
+    setState(state: any): S;
+    bindListeners(listenerBinder: { [method: string]: Function }): void;
+  };
 
   export default alt;
 }

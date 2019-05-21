@@ -106,7 +106,7 @@ let Reconnect = class extends React.Component<ReconnectProps, { reconnect }> {
         <Link to="/settings">
           <Translate
             ref="toggle"
-            className={getClassName("reconnect-toggle text-center highlight", {
+            className={getClassName("reconnect-toggle text-center", {
               error: !online || apiStatus === "offline",
               warning: this.currentStatus !== "ok"
             })}
