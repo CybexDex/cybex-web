@@ -2008,9 +2008,48 @@
     "about_polka_content1": "Polkadaot被誉为区块链3.0, 旨在将现有各自独立的区块链串联起来，让不同区块链之间可以进行通信和数据的传递，是下一代价值互联网的基石。"
   },
   "eto_apply": {
+    "lock": {
+      "tip_heading": "温馨提示",
+      "tip_content_1": "1.您必须完成【申购意向表】并在6月8日12：00（北京时间）前完成锁仓操作，否则将无法参与活动；",
+      "tip_content_2": "2.在截止锁仓日期前，您可以进行多次锁仓操作；",
+      "tip_content_3": "3.账号需留有不少于5个额外的CYB用于支付手续费；",
+      "tip_content_4": "4.若您锁仓的金额不满足ETO相应轮次的要求，将视为无效参与；",
+      "tip_content_5": "5.本次活动将统一锁仓至6月14日，届时请勿忘记解锁CYB，并进行领取操作。"
+    },
+    "center": {
+      "greeting": "尊敬的 %(account)s",
+      "token": "投资币种",
+      "total": "锁仓总额",
+      "change": "更改",
+      "go_lock": "进行锁仓",
+      "go_trade": "购买CYB",
+      "flow": {
+        "title": "Polkadot ETO流程",
+        "step_1": "填写【申购意向表】",
+        "step_content_1": "6月8日12:00前",
+        "step_2": "锁仓操作",
+        "step_content_2": "6月8日12:00前",
+        "step_3": "ETO币种选择",
+        "step_content_3": "6月13日23:59前",
+        "step_4": "查看是否中签",
+        "step_content_4": "6月14日12:00",
+        "step_5": "查看第三轮&第四轮排名结果",
+        "step_content_5": "6月14日12:00",
+        "step_6": "解锁锁仓CYB",
+        "step_content_6": "6月14日14:00",
+        "step_7": "ETO抢购",
+        "step_content_7": "6月15日"
+      }
+    },
+    "apply_done": {
+      "tip": "您已完成【申购意向表】的填写，根据您的意向选择，请您在6月8日前按照流程进行锁仓操作，超时将无效。",
+      "go_lock": "已有CYB，现在就去锁仓",
+      "go_trade": "先购买一波CYB去",
+      "assistant": "添加小助手微信<br>了解详情"
+    },
     "form": {
       "wechat": "您的微信号",
-      "email": "您的邮箱地址",
+      "email": "您的邮箱地址*",
       "code": "您的推荐码"
     },
     "flow": {
@@ -2024,7 +2063,36 @@
       "buy": "抢购",
       "buy_content": "6月15日"
     },
+    "survey": {
+      "tip": "尊敬的 %(account)s 用户，感谢您选择Cybex！以下是本次ETO的【申购意向表】，选择将会影响您之后的认购资格，请按照您的申购意向和实际情况进行选择，感谢您的配合！",
+      "rule_content": "此次波卡ETO采取CYB锁仓+摇号中签的形式进行，根据不同的锁仓要求准备了多个认购场次；针对Cybex老用户，本次ETO也设计了币龄计算法。下面请仔细阅读各个认购场次的锁仓要求，并勾选您意向参与的轮次：",
+      "rule_known": "我已知晓规则",
+      "rule_title": "本次ETO规则",
+      "rule_table_th1": "参与锁仓门槛",
+      "rule_table_th2": "可以参与的轮次",
+      "rule_table_th3": "该轮次可申购份额",
+      "rule_table_row1_cell1": "1w≤锁仓量≤5w",
+      "rule_table_row1_cell2": "第一轮",
+      "rule_table_row1_cell3": "3 DOT定额",
+      "rule_table_row2_cell1": "5w<锁仓量≤50w",
+      "rule_table_row2_cell2": "第一轮&第二轮",
+      "rule_table_row2_cell3": "15 DOT定额",
+      "rule_table_row3_cell1": "活动期间锁仓量排名前100名",
+      "rule_table_row3_cell2": "第一轮或第二轮及第三轮",
+      "rule_table_row3_cell3": "最低1个DOT，上限50DOT/账户",
+      "rule_table_row4_cell1": "无锁仓，根据币龄计算法前50名用户",
+      "rule_table_row4_cell2": "第四轮",
+      "rule_table_row4_cell3": "最低1个DOT，上限50DOT/账户",
+      "option_title": "意向选择（自由多选）",
+      "option_1": "我意向参与第一轮",
+      "option_2": "我意向参与第二轮",
+      "option_3": "我意向参与第三轮",
+      "option_4": "我意向参与第四轮",
+      "finish": "完成申购"
+    },
     "tip": "尊敬的 %(account)s 用户，请按照流程完成本次Polkadot的【申购意向表】，认真阅读并填写个人信息，我们会严格保密您的资料。感谢您的支持！",
-    "agreement": "我已了解Polkadot项目，并有意向参与本次ETO"
+    "agreement": "我已了解Polkadot项目，并有意向参与本次ETO",
+    "explain": "Cybex拥有对本活动规则的最终解释权，并将根据情况对活动进行调整。",
+    "next": "下一步"
   }
 }

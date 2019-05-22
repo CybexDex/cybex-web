@@ -17,7 +17,8 @@ const debug = debugGen("EtoActions");
 
 export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
-
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
 const pickKeys = (keys: string[], count = 1) => {
   let res: any[] = [];
   for (let key of keys) {
@@ -56,6 +57,61 @@ class EtoActions {
           return info;
         });
     };
+  }
+  putBasic(basic: Eto.Info, account: AccountMap) {
+    return dispatch => {
+      this.signTx(1, basic, account)
+        .then(tx =>
+          fetch(
+            `${ETO_LOCK}api/v1/info/${account.get("name")}/${Eto.Fields.basic}`,
+            {
+              headers,
+              method: "PUT",
+              body: JSON.stringify(tx)
+            }
+          )
+            .then(res => res.json())
+            .then(res => new Eto.EtoInfo(res))
+            .catch(err => {
+              console.error(err);
+              return new Eto.EtoInfo();
+            })
+        )
+        .then(info => {
+          dispatch(info);
+          return info;
+        });
+    };
+  }
+  putSurvey(survey: Eto.Survey, account: AccountMap) {
+    return dispatch => {
+      this.signTx(2, survey, account)
+        .then(tx =>
+          fetch(
+            `${ETO_LOCK}api/v1/info/${account.get("name")}/${
+              Eto.Fields.survey
+            }`,
+            {
+              headers,
+              method: "PUT",
+              body: JSON.stringify(tx)
+            }
+          )
+            .then(res => res.json())
+            .then(res => new Eto.EtoInfo(res))
+            .catch(err => {
+              console.error(err);
+              return new Eto.EtoInfo();
+            })
+        )
+        .then(info => {
+          dispatch(info);
+          return info;
+        });
+    };
+  }
+  setApplyDone() {
+    return true;
   }
 
   /**

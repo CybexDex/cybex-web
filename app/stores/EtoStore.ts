@@ -15,16 +15,35 @@ const debug = debugGen("EtoStore");
 
 type State = Eto.EtoInfo;
 class EtoStore extends AbstractStore<State> {
-  state: State = { state: 0, info: null };
+  state: State = { state: Eto.EtoPersonalState.Uninit, info: null, sum: 0 };
   constructor() {
     super();
     this.bindListeners({
-      handleInfoUpdate: EtoActions.queryInfo
+      handleInfoUpdate: EtoActions.queryInfo,
+      handleSurveyUpdate: EtoActions.putSurvey,
+      handleApplyDone: EtoActions.setApplyDone,
+      handleBasicUpdate: EtoActions.putBasic
     });
   }
-
+  handleApplyDone() {
+    console.debug("GetState: ", this, (this as any).getInstance().getState());
+    let state = {
+      ...(this as any).getInstance().getState(),
+      state: Eto.EtoPersonalState.Lock
+    };
+    this.setState(state);
+  }
   handleInfoUpdate(info: Eto.EtoInfo) {
     console.debug("Personal Info: ", info);
+    this.setState(info);
+  }
+  handleBasicUpdate(info: Eto.EtoInfo) {
+    console.debug("Personal Info: ", info);
+    this.setState(info);
+  }
+  handleSurveyUpdate(info: Eto.EtoInfo) {
+    console.debug("Personal Info: ", info);
+    info.state = Eto.EtoPersonalState.ApplyDone;
     this.setState(info);
   }
 }

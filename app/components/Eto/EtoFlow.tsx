@@ -9,11 +9,16 @@ const flow = [
   { title: "eto_apply.flow.buy", content: "eto_apply.flow.buy_content" }
 ];
 
-export const EtoFlow = () => (
+const flowCenter = new Array(7).fill(1).map((_, step) => ({
+  title: `eto_apply.center.flow.step_${step + 1}`,
+  content: `eto_apply.center.flow.step_content_${step + 1}`
+}));
+
+export const EtoFlow = ({ center = false }) => (
   <EtoPanel>
     <h4>{counterpart.translate("eto_apply.flow.title")}</h4>
     <ul className="eto-flow">
-      {flow.map((step, index) => (
+      {(center ? flowCenter : flow).map((step, index) => (
         <li key={index}>
           <h4>{counterpart.translate(step.title)}</h4>
           <p>{counterpart.translate(step.content)}</p>

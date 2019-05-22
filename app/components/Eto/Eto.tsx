@@ -5,6 +5,7 @@ import counterpart from "counterpart";
 import { Button } from "../Common";
 import { withRouter } from "react-router-dom";
 import { EtoContent } from "./EtoPanel";
+import { EtoLock } from "./EtoLock";
 
 export const IntroBtn = withRouter<any>(
   props =>
@@ -107,6 +108,7 @@ export const Eto = () => {
       <Switch>
         <Route path="/eto/" exact component={EtoIntro as any} />
         <Route path="/eto/apply" component={EtoApply as any} />
+        <Route path="/eto/lock" component={EtoLock as any} />
         <Redirect from="*" to="/eto" />
       </Switch>
     </div>

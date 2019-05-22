@@ -1,6 +1,6 @@
 import { Serializer, types } from "cybexjs";
 
-const { static_variant, string, time_point_sec, array, bool } = types;
+const { static_variant, string, time_point_sec, array, bool, optional } = types;
 
 export namespace Eto {
   export enum Fields {
@@ -18,7 +18,9 @@ export namespace Eto {
   export enum EtoPersonalState {
     Uninit,
     Basic,
-    Locked
+    Survey,
+    Lock,
+    ApplyDone
   }
   export type Info = {
     email: string;
@@ -54,11 +56,22 @@ export namespace Eto {
   }
 
   export class EtoInfo {
-    state: EtoPersonalState = EtoPersonalState.Uninit;
+    state: EtoPersonalState = EtoPersonalState.Basic;
+    sum = 0;
     info: FullInfo | null = null;
     constructor(info?: FullInfo) {
       if (info) {
         this.info = info;
+        if (info[Fields.basic]) {
+          this.state = EtoPersonalState.Survey;
+        }
+        if (info[Fields.survey]) {
+          this.state = EtoPersonalState.Lock;
+        }
+        this.sum = (info.records || []).reduce(
+          (sum, next) => sum + next.value,
+          0
+        );
       }
     }
   }
@@ -70,8 +83,8 @@ const etoOps = {
   Survey: array(bool),
   Info: new Serializer("Info", {
     email: string,
-    wechat: string,
-    refer: string
+    wechat: optional(string),
+    refer: optional(string)
   })
 };
 
