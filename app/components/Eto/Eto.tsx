@@ -4,18 +4,9 @@ import { EtoApply } from "./Apply";
 import counterpart from "counterpart";
 import { Button } from "../Common";
 import { withRouter } from "react-router-dom";
+import { EtoContent } from "./EtoPanel";
 
-export const EtoPanel = ({ children }) => (
-  <div className="eto-panel">{children}</div>
-);
-export const EtoContent = ({ heading, contents }) => (
-  <EtoPanel>
-    <h4>{heading}</h4>
-    {contents.map((content, i) => <p key={i}>{content}</p>)}
-  </EtoPanel>
-);
-
-export const IntroBtn = withRouter(
+export const IntroBtn = withRouter<any>(
   props =>
     (
       <div {...props}>

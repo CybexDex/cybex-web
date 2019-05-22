@@ -10,6 +10,7 @@ import ChainTypes from "../Utility/ChainTypes";
 import { connect } from "alt-react";
 import { EtoStore } from "stores/EtoStore";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { EtoInfoForm } from "./EtoInfoForm";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -23,9 +24,9 @@ let EtoApply = class extends React.Component<EtoProps> {
   };
 
   render() {
-    return <h1>hello</h1>;
+    return <EtoInfoForm account={this.props.account.get("name")} />;
   }
-} as any;
+};
 EtoApply = BindToChainState(EtoApply);
 
 let EtoApplyWrapper = class extends React.Component<EtoProps> {

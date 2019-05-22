@@ -2006,5 +2006,25 @@
     "about_polka_title": "关于Polkadot",
     "about_polka_content": "全球最优质的跨链项目——Polkadot，是以太坊隐形大脑的Gavin Wood领军的项目，Gavin Wood是以太坊技术黄皮书的撰写者，Partiy的创始人。",
     "about_polka_content1": "Polkadaot被誉为区块链3.0, 旨在将现有各自独立的区块链串联起来，让不同区块链之间可以进行通信和数据的传递，是下一代价值互联网的基石。"
+  },
+  "eto_apply": {
+    "form": {
+      "wechat": "您的微信号",
+      "email": "您的邮箱地址",
+      "code": "您的推荐码"
+    },
+    "flow": {
+      "title": "Polkadot ETO流程",
+      "apply": "开始申购",
+      "apply_content": "5月27日 - 6月8日12:00",
+      "lock": "CYB锁仓期",
+      "lock_content": "6月8日 - 6月14日",
+      "draw": "摇号&公布结果",
+      "draw_content": "6月14日",
+      "buy": "抢购",
+      "buy_content": "6月15日"
+    },
+    "tip": "尊敬的 %(account)s 用户，请按照流程完成本次Polkadot的【申购意向表】，认真阅读并填写个人信息，我们会严格保密您的资料。感谢您的支持！",
+    "agreement": "我已了解Polkadot项目，并有意向参与本次ETO"
   }
 }
