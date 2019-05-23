@@ -15,6 +15,7 @@ let Input = Radium(
       name?;
       type;
       tip?;
+      append?;
       icon?;
       iconSize?;
       iconComponent?;
@@ -236,6 +237,7 @@ let Input = Radium(
         inputRef,
         iconStyle,
         valueFromOuter,
+        append,
         children
       } = this.props;
       let { type } = this.state;
@@ -254,20 +256,19 @@ let Input = Radium(
           }
         >
           {!!iconComponent && iconComponent}
-          {!iconComponent &&
-            icon && (
-              <Icon
-                style={
-                  [
-                    Input.styles.icon,
-                    Input.styles.size[size].icon,
-                    iconStyle
-                  ] as any
-                }
-                icon={icon}
-                type={error ? "error" : "base"}
-              />
-            )}
+          {!iconComponent && icon && (
+            <Icon
+              style={
+                [
+                  Input.styles.icon,
+                  Input.styles.size[size].icon,
+                  iconStyle
+                ] as any
+              }
+              icon={icon}
+              type={error ? "error" : "base"}
+            />
+          )}
           <div
             className="input-wrapper"
             style={Input.styles.inputWrapper as any}
@@ -333,6 +334,7 @@ let Input = Radium(
                   />
                 </a>
               )}
+            {append}
           </div>
           {children}
         </div>

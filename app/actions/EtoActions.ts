@@ -6,12 +6,13 @@ import WalletApi from "api/WalletApi";
 import { debugGen } from "utils";
 import * as moment from "moment";
 import { NotificationActions } from "actions//NotificationActions";
-import { ops, PrivateKey, Signature } from "cybexjs";
+import { ops, PrivateKey, Signature, TransactionBuilder } from "cybexjs";
 import { Map } from "immutable";
 import { CustomTx } from "CustomTx";
 import { Eto, etoTx } from "services/eto";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { ETO_LOCK } from "api/apiConfig";
+import TransactionConfirmActions from "actions/TransactionConfirmActions";
 
 const debug = debugGen("EtoActions");
 
@@ -36,7 +37,7 @@ const pickKeys = (keys: string[], count = 1) => {
 type AccountMap = Map<string, any>;
 
 class EtoActions {
-  queryInfo(account: AccountMap) {
+  queryInfo(account: AccountMap, onReject?) {
     return dispatch => {
       this.signTx(0, "query", account)
         .then(tx =>
@@ -48,6 +49,9 @@ class EtoActions {
             .then(res => res.json())
             .then(res => new Eto.EtoInfo(res))
             .catch(err => {
+              if (onReject) {
+                onReject(err);
+              }
               console.error(err);
               return new Eto.EtoInfo();
             })
@@ -56,6 +60,53 @@ class EtoActions {
           dispatch(info);
           return info;
         });
+    };
+  }
+  applyLock(value: number, account: AccountMap) {
+    return dispatch => {
+      WalletUnlockActions.unlock()
+        .then(() => {
+          console.debug("Account: ", account);
+          let availKeys = account
+            .getIn(["active", "key_auths"])
+            .filter(key => key.get(1) >= 1)
+            .map(key => key.get(0))
+            .toJS();
+          let privKey = pickKeys(availKeys)[0];
+          if (!privKey) {
+            throw Error("Privkey Not Found");
+          }
+          return { privKey, pubKey: privKey.toPublicKey().toPublicKeyString() };
+        })
+        .then(({ privKey, pubKey }) =>
+          this.signTx(4, { value, pubKey }, account)
+            .then(tx =>
+              fetch(`${ETO_LOCK}api/v1/apply/${account.get("name")}`, {
+                headers,
+                method: "POST",
+                body: JSON.stringify(tx)
+              })
+                .then(res => res.json())
+                .catch(err => {
+                  console.error(err);
+                  return new Eto.EtoInfo();
+                })
+            )
+            .then(tx => {
+              let newTx = TransactionBuilder.fromTx(tx);
+              newTx.add_signer(privKey);
+              return new Promise((resolve, reject) =>
+                TransactionConfirmActions.confirm(newTx, resolve, reject, null)
+              );
+            })
+            .then(tx => {
+              console.debug("TX: ", tx);
+              // let res = tx.broadcast().then(res => {
+              //   dispatch(res);
+              // });
+              return tx;
+            })
+        );
     };
   }
   putBasic(basic: Eto.Info, account: AccountMap) {
@@ -121,6 +172,7 @@ class EtoActions {
    * @memberof EtoActions
    */
   async signTx(opOrder: Eto.OpsOrder, op: Eto.Ops, account: AccountMap) {
+    // await WalletUnlockActions.unlock().catch(e => console.debug("Unlock Error"));
     await WalletUnlockActions.unlock();
     debug("[LoginEtoQuery]", account);
     debug("[LoginEtoQuery]", SettingsStore.getSetting("walletLockTimeout"));

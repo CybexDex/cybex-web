@@ -15,6 +15,7 @@ import { Eto } from "../../services/eto";
 import { EtoSurveyForm } from "./EtoSurveyForm";
 import { EtoApplyDone } from "./EtoApplyDone";
 import { EtoCenter } from "./EtoCenter";
+import WalletUnlockActions from "actions/WalletUnlockActions";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -31,14 +32,20 @@ let EtoApply = class extends React.Component<EtoProps> {
     let { etoState, account } = this.props as any;
     console.debug("Props: ", this.props);
     if (etoState.state === Eto.EtoPersonalState.Uninit) {
-      EtoActions.queryInfo(account);
+      WalletUnlockActions.unlock()
+        .then(() => {
+          EtoActions.queryInfo(account);
+        })
+        .catch(err => {
+          this.props.history.goBack();
+        });
     }
   }
 
   render() {
     let { etoState } = this.props as any;
     return etoState.state === Eto.EtoPersonalState.Uninit ? (
-      <h1>Hello</h1>
+      <h1 />
     ) : etoState.state === Eto.EtoPersonalState.Basic ? (
       <EtoInfoForm
         onSubmit={form => EtoActions.putBasic(form, this.props.account)}

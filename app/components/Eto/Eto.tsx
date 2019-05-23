@@ -7,36 +7,35 @@ import { withRouter } from "react-router-dom";
 import { EtoContent } from "./EtoPanel";
 import { EtoLock } from "./EtoLock";
 
-export const IntroBtn = withRouter<any>(
-  props =>
-    (
-      <div {...props}>
-        <Button
-          type="primary"
-          // loading={this.state.checking}
-          onClick={() => props.history.push("/eto/apply")}
-          style={{ marginBottom: "12px", width: "100%" }}
-        >
-          {counterpart.translate("eto_intro.join_apply")}
-        </Button>
-        <Button
-          type="primary"
-          // loading={this.state.checking}
-          style={{ marginBottom: "12px", width: "100%" }}
-        >
-          {counterpart.translate("eto_intro.join_rule")}
-        </Button>
-        <Button
-          type="hollow-primary"
-          onClick={() => props.history.push("/eto/apply")}
-          // loading={this.state.checking}
-          style={{ marginBottom: "12px", width: "100%" }}
-        >
-          {counterpart.translate("eto_intro.join_apply_already")}
-        </Button>
-      </div>
-    ) as any
-);
+export const IntroBtn = withRouter<any>(props => {
+  return (
+    <div {...props}>
+      <Button
+        type="primary"
+        // loading={this.state.checking}
+        onClick={() => props.history.push("/eto/apply")}
+        style={{ marginBottom: "12px", width: "100%" }}
+      >
+        {counterpart.translate("eto_intro.join_apply")}
+      </Button>
+      <Button
+        type="primary"
+        // loading={this.state.checking}
+        style={{ marginBottom: "12px", width: "100%" }}
+      >
+        {counterpart.translate("eto_intro.join_rule")}
+      </Button>
+      <Button
+        type="hollow-primary"
+        onClick={() => props.history.push("/eto/apply")}
+        // loading={this.state.checking}
+        style={{ marginBottom: "12px", width: "100%" }}
+      >
+        {counterpart.translate("eto_intro.join_apply_already")}
+      </Button>
+    </div>
+  ) as any;
+});
 
 export const EtoIntro = () => {
   return (

@@ -17,6 +17,7 @@ import { EtoCenter } from "./EtoCenter";
 import { EtoRule, EtoExplain } from "./EtoRule";
 import counterpart from "counterpart";
 import { EtoContent } from "./EtoPanel";
+import { EtoLockForm } from "./EtoLockForm";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -38,9 +39,13 @@ let EtoLock = class extends React.Component<EtoProps> {
   }
 
   render() {
-    let { etoState } = this.props as any;
+    let { etoState, account } = this.props as any;
     return (
       <>
+        <EtoLockForm
+          balance={this.props.account.getIn(["balances", "1.3.0"])}
+          onLock={value => EtoActions.applyLock(value, this.props.account)}
+        />
         <EtoRule />
         <EtoExplain />
         <EtoContent

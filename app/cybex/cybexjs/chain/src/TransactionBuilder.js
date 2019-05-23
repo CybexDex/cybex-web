@@ -18,6 +18,17 @@ class TransactionBuilder {
     // semi-private method bindings
     this._broadcast = _broadcast.bind(this);
   }
+  skipUpdate = false;
+  static fromTx(tx) {
+    let trx = new TransactionBuilder();
+    trx.skipUpdate = true;
+    tx.operations.forEach(op => trx.add_operation(op));
+    trx.signatures = tx.signatures;
+    trx.expiration = new Date(tx.expiration + "Z").valueOf() / 1000;
+    trx.ref_block_num = tx.ref_block_num;
+    trx.ref_block_prefix = tx.ref_block_prefix;
+    return trx;
+  }
 
   /**
         @arg {string} name - like "transfer"
@@ -106,16 +117,17 @@ class TransactionBuilder {
           .exec("get_objects", [["2.1.0"]])
           .then(r => {
             head_block_time_string = r[0].time;
-            if (this.expiration === 0)
-              this.expiration =
-                base_expiration_sec() + ChainConfig.expire_in_secs;
-            this.ref_block_num = r[0].head_block_number & 0xffff;
-            this.ref_block_prefix = new Buffer(
-              r[0].head_block_id,
-              "hex"
-            ).readUInt32LE(4);
-            //DEBUG console.log("ref_block",@ref_block_num,@ref_block_prefix,r)
-
+            if (!this.skipUpdate) {
+              if (this.expiration === 0)
+                this.expiration =
+                  base_expiration_sec() + ChainConfig.expire_in_secs;
+              this.ref_block_num = r[0].head_block_number & 0xffff;
+              this.ref_block_prefix = new Buffer(
+                r[0].head_block_id,
+                "hex"
+              ).readUInt32LE(4);
+              //DEBUG console.log("ref_block",@ref_block_num,@ref_block_prefix,r)
+            }
             var iterable = this.operations;
             for (var i = 0, op; i < iterable.length; i++) {
               op = iterable[i];
@@ -177,9 +189,9 @@ class TransactionBuilder {
     }
     if (name === "proposal_create") {
       /*
-            * Proposals involving the committee account require a review
-            * period to be set, look for them here
-            */
+       * Proposals involving the committee account require a review
+       * period to be set, look for them here
+       */
       let requiresReview = false,
         extraReview = 0;
       operation.proposed_ops.forEach(op => {
@@ -244,9 +256,9 @@ class TransactionBuilder {
             24 * 60 * 60 || ChainConfig.review_in_secs_committee
           );
         /*
-                * Expiration time must be at least equal to
-                * now + review_period_seconds, so we add one hour to make sure
-                */
+         * Expiration time must be at least equal to
+         * now + review_period_seconds, so we add one hour to make sure
+         */
         operation.expiration_time += 60 * 60 + extraReview;
       }
     }

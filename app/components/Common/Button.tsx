@@ -101,6 +101,19 @@ let Button = class extends React.Component<ButtonProps, any> {
         color: Colors.$colorWhite
       }
     },
+    "hollow-secondary": {
+      backgroundColor: "transparent",
+      color: Colors["$colorGrey"],
+      border: `1px solid`,
+      ":hover": {
+        backgroundColor: Colors["$colorIndependence"],
+        color: Colors.$colorWhite
+      },
+      ":active": {
+        backgroundColor: Colors["$colorAnchor"],
+        color: Colors.$colorWhite
+      }
+    },
     "white-primary": {
       backgroundColor: Colors.$colorAnchor,
       color: Colors.$colorGrey,

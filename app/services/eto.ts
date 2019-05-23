@@ -1,6 +1,14 @@
 import { Serializer, types } from "cybexjs";
 
-const { static_variant, string, time_point_sec, array, bool, optional } = types;
+const {
+  static_variant,
+  string,
+  time_point_sec,
+  array,
+  bool,
+  optional,
+  uint64
+} = types;
 
 export namespace Eto {
   export enum Fields {
@@ -37,13 +45,15 @@ export namespace Eto {
     [Fields.survey]: Survey;
     [Fields.records]: Records;
   };
+  export type LockApply = { pubKey: string; value: number };
   export type Query = "query";
-  export type Ops = Query | Info | Survey | Token;
+  export type Ops = Query | Info | Survey | Token | LockApply;
   export enum OpsOrder {
     Query = 0,
     Info,
     Survey,
-    Token
+    Token,
+    LockApply
   }
   export interface Request<T = Ops> {
     op: [number, T];
@@ -85,6 +95,10 @@ const etoOps = {
     email: string,
     wechat: optional(string),
     refer: optional(string)
+  }),
+  Lock: new Serializer("LockApply", {
+    pubKey: string,
+    value: uint64
   })
 };
 
@@ -92,7 +106,8 @@ const etoOp = static_variant([
   etoOps.Query,
   etoOps.Info,
   etoOps.Survey,
-  etoOps.Token
+  etoOps.Token,
+  etoOps.Lock
 ]);
 export const etoTx = new Serializer("EtoTx", {
   op: etoOp,

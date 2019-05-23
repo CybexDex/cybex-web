@@ -1,0 +1,96 @@
+import * as React from "react";
+import ChainTypes from "../Utility/ChainTypes";
+import BindToChainState from "../Utility/BindToChainState";
+import { EtoPanel } from "./EtoPanel";
+import { Input, Button } from "../Common";
+import counterpart from "counterpart";
+import { calcValue } from "../../utils/Asset";
+
+const { useState } = React;
+
+type EtoLockFormProps = { balance: string; onLock: (value: number) => void };
+
+const BtnPreset = [
+  { label: "10,000CYB", value: 10000 },
+  { label: "50,000CYB", value: 50000 },
+  { label: "500,000CYB", value: 500000 }
+];
+
+const EtoLockFormImpl = ({
+  balanceValue,
+  onLock
+}: {
+  balanceValue: number;
+  onLock: any;
+}) => {
+  const [value, setValue] = useState(0);
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+      }}
+    >
+      <EtoPanel>
+        <Input
+          append="CYB"
+          onChange={e => setValue(e.target.valueAsNumber)}
+          type="number"
+          value={value}
+          valueFromOuter
+        />
+        <div className="btn-group" style={{ display: "flex" }}>
+          {BtnPreset.map((preset, i) => (
+            <Button
+              style={{ marginLeft: i === 0 ? 0 : "8px", flexBasis: "33%" }}
+              size="small"
+              key={preset.value}
+              onClick={() => setValue(preset.value)}
+              type={value === preset.value ? "primary" : "hollow-secondary"}
+            >
+              {preset.label}
+            </Button>
+          ))}
+        </div>
+        <p style={{ display: "flex", justifyContent: "space-between" }}>
+          <span>{counterpart.translate("eto_apply.lock.balance")}</span>
+          <span>{balanceValue} CYB</span>
+        </p>
+        <Button
+          disabled={value > balanceValue || balanceValue === 0}
+          type="primary"
+          style={{ width: "100%" }}
+          onClick={() => onLock(value)}
+        >
+          {counterpart.translate("eto_apply.lock.lock")}
+        </Button>
+      </EtoPanel>
+    </form>
+  );
+};
+
+let EtoLockForm = class extends React.Component<EtoLockFormProps> {
+  static propTypes = {
+    balance: ChainTypes.ChainAsset
+  };
+
+  render() {
+    console.debug("Balance: ", this.props.balance);
+    return (
+      <EtoLockFormImpl
+        onLock={this.props.onLock}
+        balanceValue={+calcValue((this.props.balance as any).get("balance"), 5)}
+      />
+    );
+  }
+};
+EtoLockForm = BindToChainState(EtoLockForm, { keep_updating: true });
+
+const EtoLockFormWrapper = ({ balance, onLock }: EtoLockFormProps) =>
+  balance ? (
+    <EtoLockForm balance={balance} onLock={onLock} />
+  ) : (
+    <EtoLockFormImpl onLock={onLock} balanceValue={0} />
+  );
+
+export { EtoLockFormWrapper as EtoLockForm };
+export default EtoLockFormWrapper;
