@@ -53,17 +53,17 @@ export const rudexAPIs = {
 export const IEO_API = __FOR_SECURITY__
   ? "//eto-pre.cybex.io/api"
   : __STAGING__
-    ? "///eto.cybex.io/api"
-    : __DEV__ || __TEST__
-      ? "https://ieo-apitest.cybex.io/api"
-      : "///eto.cybex.io/api";
+  ? "///eto.cybex.io/api"
+  : __DEV__ || __TEST__
+  ? "https://ieo-apitest.cybex.io/api"
+  : "///eto.cybex.io/api";
 export const ETO_LOCK = __FOR_SECURITY__
   ? "//eto-pre.cybex.io/api"
   : __STAGING__
-    ? "///eto.cybex.io/api"
-    : __DEV__ || __TEST__
-      ? "http://localhost:5557/"
-      : "///eto.cybex.io/api";
+  ? "///eto.cybex.io/api"
+  : __DEV__ || __TEST__
+  ? "http://10.18.120.155:5557/"
+  : "///eto.cybex.io/api";
 
 export const PRICE_API = "https://app.cybex.io/price";
 

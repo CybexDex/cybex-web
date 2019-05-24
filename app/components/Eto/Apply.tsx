@@ -9,7 +9,6 @@ import BindToChainState from "../Utility/BindToChainState";
 import ChainTypes from "../Utility/ChainTypes";
 import { connect } from "alt-react";
 import { EtoStore } from "stores/EtoStore";
-import { Route, Switch, Redirect } from "react-router-dom";
 import { EtoInfoForm } from "./EtoInfoForm";
 import { Eto } from "../../services/eto";
 import { EtoSurveyForm } from "./EtoSurveyForm";
@@ -30,7 +29,6 @@ let EtoApply = class extends React.Component<EtoProps> {
 
   componentWillMount() {
     let { etoState, account } = this.props as any;
-    console.debug("Props: ", this.props);
     if (etoState.state === Eto.EtoPersonalState.Uninit) {
       WalletUnlockActions.unlock()
         .then(() => {

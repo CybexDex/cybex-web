@@ -16,8 +16,7 @@ import { EtoSurveyForm } from "./EtoSurveyForm";
 import { EtoCenter } from "./EtoCenter";
 import { EtoRule, EtoExplain } from "./EtoRule";
 import counterpart from "counterpart";
-import { EtoContent, EtoContentWrapper } from "./EtoPanel";
-import { EtoLockForm } from "./EtoLockForm";
+import { EtoContent } from "./EtoPanel";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -26,7 +25,7 @@ type EtoProps = {
   myIgnoredAccounts: any;
   passwordAccount: any;
 } & RouteComponentProps<{}>;
-let EtoLock = class extends React.Component<EtoProps> {
+let EtoToken = class extends React.Component<EtoProps> {
   static propTypes = {
     account: ChainTypes.ChainAccount.isRequired
   };
@@ -42,33 +41,14 @@ let EtoLock = class extends React.Component<EtoProps> {
     let { etoState, account } = this.props as any;
     return (
       <>
-        <EtoLockForm
-          balance={this.props.account.getIn(["balances", "1.3.0"])}
-          onLock={value =>
-            EtoActions.applyLock(value, this.props.account, () =>
-              this.props.history.push("/eto/apply")
-            )
-          }
-        />
-        <EtoRule />
-        <EtoContentWrapper>
-          <EtoExplain />
-        </EtoContentWrapper>
-        <EtoContent
-          heading={counterpart.translate("eto_apply.lock.tip_heading")}
-          contents={new Array(5)
-            .fill(1)
-            .map((_, i) =>
-              counterpart.translate(`eto_apply.lock.tip_content_${i + 1}`)
-            )}
-        />
+        <EtoExplain />
       </>
     );
   }
 };
-EtoLock = BindToChainState(EtoLock);
+EtoToken = BindToChainState(EtoToken);
 
-let EtoLockWrapper = class extends React.Component<EtoProps> {
+let EtoTokenWrapper = class extends React.Component<EtoProps> {
   componentWillMount() {
     let {
       linkedAccounts,
@@ -83,12 +63,12 @@ let EtoLockWrapper = class extends React.Component<EtoProps> {
     }
   }
   render() {
-    return <EtoLock {...this.props} />;
+    return <EtoToken {...this.props} />;
   }
 } as any;
 
-EtoLockWrapper = connect(
-  EtoLockWrapper,
+EtoTokenWrapper = connect(
+  EtoTokenWrapper,
   {
     listenTo() {
       return [AccountStore, RouterStore, EtoStore];
@@ -107,5 +87,5 @@ EtoLockWrapper = connect(
     }
   }
 ) as any;
-export { EtoLockWrapper as EtoLock };
-export default EtoLockWrapper;
+export { EtoTokenWrapper as EtoToken };
+export default EtoTokenWrapper;

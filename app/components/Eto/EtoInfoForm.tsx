@@ -1,17 +1,20 @@
 import * as React from "react";
 import counterpart from "counterpart";
 import { Input, Checkbox, Button, Colors } from "../Common";
-import { EtoPanel } from "./EtoPanel";
+import { EtoPanel, EtoContentWrapper } from "./EtoPanel";
 import { EtoFlow } from "./EtoFlow";
 import Translate from "react-translate-component";
 import { EtoExplain } from "./EtoRule";
+import { EtoRefer } from "../../services/eto";
 const { useState, useEffect } = React;
+const DefaultRefer = sessionStorage.getItem(EtoRefer);
 export const EtoInfoForm = ({ account, onSubmit }) => {
   const [agreement, setAgreement] = useState(false);
   const [wechat, setWechat] = useState(null);
   const [email, setEmail] = useState(null);
-  const [refer, setRefer] = useState(null);
-  const valid = email && agreement;
+  const [refer, setRefer] = useState(DefaultRefer);
+  const valid =
+    email && (email as any).toString().indexOf("@") !== -1 && agreement;
   return (
     <form
       onSubmit={e => {
@@ -26,10 +29,15 @@ export const EtoInfoForm = ({ account, onSubmit }) => {
         onSubmit(value);
       }}
     >
-      <EtoPanel>
-        <p>{counterpart.translate("eto_apply.tip", { account })}</p>
-      </EtoPanel>
-      <EtoPanel>
+      <EtoContentWrapper>
+        <p
+          className="color-steel"
+          style={{ fontSize: "12px", lineHeight: "20px", marginBottom: 0 }}
+        >
+          {counterpart.translate("eto_apply.tip", { account })}
+        </p>
+      </EtoContentWrapper>
+      <EtoPanel style={{ marginBottom: "12px" }}>
         <Input
           placeholder={counterpart.translate("eto_apply.form.wechat")}
           type="text"
@@ -43,7 +51,7 @@ export const EtoInfoForm = ({ account, onSubmit }) => {
         <Input
           placeholder={counterpart.translate("eto_apply.form.email")}
           size="small"
-          type="text"
+          type="email"
           value={email}
           valueFromOuter
           onChange={e => setEmail(e.target.value)}
@@ -62,31 +70,33 @@ export const EtoInfoForm = ({ account, onSubmit }) => {
         />
       </EtoPanel>
       <EtoFlow />
-      <EtoExplain />
-      <p className="agreement">
-        <Checkbox
-          onChange={v => setAgreement(v)}
-          size="large"
-          active={agreement}
+      <EtoContentWrapper>
+        <EtoExplain />
+        <p className="agreement">
+          <Checkbox
+            onChange={v => setAgreement(v)}
+            size="large"
+            active={agreement}
+          >
+            <Translate
+              style={{
+                fontSize: "0.8em",
+                userSelect: "none",
+                lineHeight: "1.8em"
+              }}
+              content="eto_apply.agreement"
+            />
+          </Checkbox>
+        </p>
+        <Button
+          type="primary"
+          disabled={!valid}
+          // loading={this.state.checking}
+          style={{ margin: "12px -12px", width: "calc(24px + 100%)" }}
         >
-          <Translate
-            style={{
-              fontSize: "0.8em",
-              userSelect: "none",
-              lineHeight: "1.8em"
-            }}
-            content="eto_apply.agreement"
-          />
-        </Checkbox>
-      </p>
-      <Button
-        type="primary"
-        disabled={!valid}
-        // loading={this.state.checking}
-        style={{ marginBottom: "12px", width: "100%" }}
-      >
-        {counterpart.translate("eto_apply.next")}
-      </Button>
+          {counterpart.translate("eto_apply.next")}
+        </Button>
+      </EtoContentWrapper>
     </form>
   );
 };

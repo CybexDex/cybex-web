@@ -16,12 +16,20 @@ const flowCenter = new Array(7).fill(1).map((_, step) => ({
 
 export const EtoFlow = ({ center = false }) => (
   <EtoPanel>
-    <h4>{counterpart.translate("eto_apply.flow.title")}</h4>
-    <ul className="eto-flow">
+    <h4 style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "16px" }}>
+      {counterpart.translate("eto_apply.flow.title")}
+    </h4>
+    <ul className="eto-flow" style={{ margin: 0 }}>
       {(center ? flowCenter : flow).map((step, index) => (
-        <li key={index}>
-          <h4>{counterpart.translate(step.title)}</h4>
-          <p>{counterpart.translate(step.content)}</p>
+        <li
+          key={index}
+          data-step={index + 1}
+          className={index < 3 ? "active" : ""}
+        >
+          <h4 style={{ color: "inherit", fontWeight: "bold" }}>
+            {counterpart.translate(step.title)}
+          </h4>
+          <p style={{ opacity: 0.85 }}>{counterpart.translate(step.content)}</p>
         </li>
       ))}
     </ul>

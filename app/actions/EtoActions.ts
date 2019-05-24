@@ -38,6 +38,7 @@ type AccountMap = Map<string, any>;
 
 class EtoActions {
   queryInfo(account: AccountMap, onReject?) {
+    this.addLoading();
     return dispatch => {
       this.signTx(0, "query", account)
         .then(tx =>
@@ -58,11 +59,13 @@ class EtoActions {
         )
         .then(info => {
           dispatch(info);
+          this.removeLoading();
           return info;
         });
     };
   }
-  applyLock(value: number, account: AccountMap) {
+  applyLock(value: number, account: AccountMap, onResolve?) {
+    this.addLoading();
     return dispatch => {
       WalletUnlockActions.unlock()
         .then(() => {
@@ -101,15 +104,26 @@ class EtoActions {
             })
             .then(tx => {
               console.debug("TX: ", tx);
-              // let res = tx.broadcast().then(res => {
-              //   dispatch(res);
-              // });
+              dispatch(tx);
+              if (onResolve) {
+                onResolve();
+              }
+              this.removeLoading();
               return tx;
+            })
+            .catch(err => {
+              console.error(err);
+              this.removeLoading();
+              if (onResolve) {
+                onResolve();
+              }
+              return new Eto.EtoInfo();
             })
         );
     };
   }
   putBasic(basic: Eto.Info, account: AccountMap) {
+    this.addLoading();
     return dispatch => {
       this.signTx(1, basic, account)
         .then(tx =>
@@ -130,11 +144,14 @@ class EtoActions {
         )
         .then(info => {
           dispatch(info);
+          this.removeLoading();
           return info;
         });
     };
   }
   putSurvey(survey: Eto.Survey, account: AccountMap) {
+    this.addLoading();
+
     return dispatch => {
       this.signTx(2, survey, account)
         .then(tx =>
@@ -157,6 +174,7 @@ class EtoActions {
         )
         .then(info => {
           dispatch(info);
+          this.removeLoading();
           return info;
         });
     };
@@ -205,6 +223,13 @@ class EtoActions {
 
     (tx as Eto.RequestWithSigner).signer = signedHex;
     return tx as Eto.RequestWithSigner;
+  }
+
+  addLoading() {
+    return 1;
+  }
+  removeLoading() {
+    return 1;
   }
 }
 

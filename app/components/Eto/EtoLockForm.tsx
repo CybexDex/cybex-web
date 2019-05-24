@@ -30,7 +30,10 @@ const EtoLockFormImpl = ({
         e.preventDefault();
       }}
     >
-      <EtoPanel>
+      <EtoPanel style={{ marginBottom: "12px" }}>
+        <h4 className="color-steel" style={{ marginBottom: "8px" }}>
+          {counterpart.translate("eto_apply.amount")}
+        </h4>
         <Input
           append="CYB"
           onChange={e => setValue(e.target.valueAsNumber)}
@@ -38,10 +41,17 @@ const EtoLockFormImpl = ({
           value={value}
           valueFromOuter
         />
-        <div className="btn-group" style={{ display: "flex" }}>
+        <div
+          className="btn-group"
+          style={{ display: "flex", marginTop: "12px" }}
+        >
           {BtnPreset.map((preset, i) => (
             <Button
-              style={{ marginLeft: i === 0 ? 0 : "8px", flexBasis: "33%" }}
+              style={{
+                marginLeft: i === 0 ? 0 : "8px",
+                flexBasis: "33%",
+                fontSize: "14px"
+              }}
               size="small"
               key={preset.value}
               onClick={() => setValue(preset.value)}
@@ -51,10 +61,19 @@ const EtoLockFormImpl = ({
             </Button>
           ))}
         </div>
-        <p style={{ display: "flex", justifyContent: "space-between" }}>
-          <span>{counterpart.translate("eto_apply.lock.balance")}</span>
+        <h4
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: "14px",
+            margin: "12px auto"
+          }}
+        >
+          <span className="color-steel">
+            {counterpart.translate("eto_apply.lock.balance")}
+          </span>
           <span>{balanceValue} CYB</span>
-        </p>
+        </h4>
         <Button
           disabled={value > balanceValue || balanceValue === 0}
           type="primary"

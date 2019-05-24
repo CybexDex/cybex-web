@@ -305,7 +305,8 @@ let Input = Radium(
                 style={
                   [
                     Input.styles.placeholder,
-                    (this.state.focused || this.state.value) &&
+                    (this.state.focused ||
+                      (valueFromOuter ? this.props.value : this.state.value)) &&
                       Input.styles.placeholder[":active"]
                   ] as any
                 }

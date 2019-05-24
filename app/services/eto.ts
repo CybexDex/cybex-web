@@ -21,7 +21,7 @@ export namespace Eto {
   }
   export enum Token {
     CYB = "CYB",
-    USDT = "JADE.USDT"
+    USDT = "USDT"
   }
   export enum EtoPersonalState {
     Uninit,

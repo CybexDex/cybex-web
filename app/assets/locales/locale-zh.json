@@ -2003,6 +2003,7 @@
     "join_platform": "参与平台",
     "join_platform_content": "Cybex赛贝去中心化交易所",
     "about_eto_content": "ETO（Earlybirds Token Offering,早鸟轮）是一个通过去中心化交易所帮助优秀区块链项目募资的方式，帮助那些真正有价值，有技术的有规划的区块链项目发挥价值。时隔半年，Cybex 第三期ETO强势回归，挑选全球最优质的跨链项目——Polkadot，超优私募价格，ETO结束即开盘，无锁仓期，拿到即是赚到！",
+    "about_eto_title": "关于 ETO",
     "about_polka_title": "关于Polkadot",
     "about_polka_content": "全球最优质的跨链项目——Polkadot，是以太坊隐形大脑的Gavin Wood领军的项目，Gavin Wood是以太坊技术黄皮书的撰写者，Partiy的创始人。",
     "about_polka_content1": "Polkadaot被誉为区块链3.0, 旨在将现有各自独立的区块链串联起来，让不同区块链之间可以进行通信和数据的传递，是下一代价值互联网的基石。"
@@ -2065,6 +2066,13 @@
       "buy": "抢购",
       "buy_content": "6月15日"
     },
+    "token": {
+      "label": "请选择您的认购币种",
+      "tip_heading": "温馨提示",
+      "tip_content_1": "1.您可以在6月13日23：59分前进行币种的选择更换，超过时间后将无法更改；",
+      "tip_content_2": "2.除福利场抢购必须使用CYB进行，其余三场均可自主选择CYB或USDT，一旦选择，前三场将统一使用同一币种进行抢购，请慎重选择！",
+      "tip_content_3": "3.如您选择使用USDT进行抢购，请确保账号内有足够的CYB用于手续费；"
+    },
     "survey": {
       "tip": "尊敬的 %(account)s 用户，感谢您选择Cybex！以下是本次ETO的【申购意向表】，选择将会影响您之后的认购资格，请按照您的申购意向和实际情况进行选择，感谢您的配合！",
       "rule_content": "此次波卡ETO采取CYB锁仓+摇号中签的形式进行，根据不同的锁仓要求准备了多个认购场次；针对Cybex老用户，本次ETO也设计了币龄计算法。下面请仔细阅读各个认购场次的锁仓要求，并勾选您意向参与的轮次：",
@@ -2074,27 +2082,29 @@
       "rule_table_th2": "可以参与的轮次",
       "rule_table_th3": "该轮次可申购份额",
       "rule_table_row1_cell1": "1w≤锁仓量≤5w",
-      "rule_table_row1_cell2": "第一轮",
+      "rule_table_row1_cell2": "黄金场",
       "rule_table_row1_cell3": "3 DOT定额",
       "rule_table_row2_cell1": "5w<锁仓量≤50w",
-      "rule_table_row2_cell2": "第一轮&第二轮",
+      "rule_table_row2_cell2": "黄金场&钻石场",
       "rule_table_row2_cell3": "15 DOT定额",
       "rule_table_row3_cell1": "活动期间锁仓量排名前100名",
-      "rule_table_row3_cell2": "第一轮或第二轮及第三轮",
+      "rule_table_row3_cell2": "黄金场或钻市场及王者场",
       "rule_table_row3_cell3": "最低1个DOT，上限50DOT/账户",
       "rule_table_row4_cell1": "无锁仓，根据币龄计算法前50名用户",
-      "rule_table_row4_cell2": "第四轮",
+      "rule_table_row4_cell2": "福利场",
       "rule_table_row4_cell3": "最低1个DOT，上限50DOT/账户",
       "option_title": "意向选择（自由多选）",
-      "option_1": "我意向参与第一轮",
-      "option_2": "我意向参与第二轮",
-      "option_3": "我意向参与第三轮",
-      "option_4": "我意向参与第四轮",
+      "option_1": "我意向参与黄金场",
+      "option_2": "我意向参与钻石场",
+      "option_3": "我意向参与王者场",
+      "option_4": "我意向参与福利场",
       "finish": "完成申购"
     },
     "tip": "尊敬的 %(account)s 用户，请按照流程完成本次Polkadot的【申购意向表】，认真阅读并填写个人信息，我们会严格保密您的资料。感谢您的支持！",
     "agreement": "我已了解Polkadot项目，并有意向参与本次ETO",
     "explain": "Cybex拥有对本活动规则的最终解释权，并将根据情况对活动进行调整。",
+    "change": "更改",
+    "amount": "数量",
     "next": "下一步"
   }
 }

@@ -106,16 +106,28 @@ $account-background: $panel-bg-color;
   p {
     font-size: 1em;
   }
-  
 
   .nav {
     .nav-items {
       a::after {
-        background: $color-orange;/*$color-gradient-foilex;*/
+        background: $color-orange; /*$color-gradient-foilex;*/
       }
     }
     .explorer-nav {
       background-color: $color-dark;
+    }
   }
+  .eto-panel {
+    background-color: $panel-bg-color;
+    box-shadow: 0 0 1px darken($panel-bg-color, 15%);
+  }
+  .eto-label {
+    color: $link-text-color;
+  }
+  .color-steel {
+    color: rgb(120, 129, 154);
+  }
+  .color-steel-light {
+    color: rgb(145, 152, 173);
   }
 }

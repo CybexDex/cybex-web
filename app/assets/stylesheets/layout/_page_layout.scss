@@ -579,6 +579,7 @@ a {
   .button-group {
     width: 100%;
   }
+  height: unset;
 }
 
 .cybex-records .__react_component_tooltip {
@@ -615,4 +616,45 @@ hr {
 
 #unlock_wallet_modal2 {
   height: unset;
+}
+
+.eto-flow {
+  margin: 0;
+  li {
+    position: relative;
+    padding-left: 2.5em;
+    color: rgb(120, 129, 154);
+    overflow: hidden;
+    &::before {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      content: attr(data-step);
+      height: 17px;
+      width: 17px;
+      text-align: center;
+      border-radius: 16px;
+      color: rgb(27, 34, 48);
+      line-height: 18px;
+      background: rgb(120, 129, 154);
+      z-index: 1;
+    }
+    &:not(:last-of-type)::after {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      content: "";
+      border-left: 1px solid;
+      height: 64px;
+    }
+  }
+  li.active {
+    color: rgb(255, 145, 67);
+    &::before {
+      background: rgb(255, 145, 67);
+    }
+    &:last-child {
+      color: rgb(120, 129, 154);
+    }
+  }
 }
