@@ -220,10 +220,10 @@ class PasswordInput extends React.Component<any, any> {
               this.props.isSimple
                 ? {}
                 : {
-                  fontSize: "1.25rem",
-                  height: "3.66667em",
-                  marginBottom: this.props.checkStrength ? 0 : null
-                }
+                    fontSize: "1.25rem",
+                    height: "3.66667em",
+                    marginBottom: this.props.checkStrength ? 0 : null
+                  }
             }
             id="accountNameTip"
             icon={this.props.isSimple ? null : "lock"}
@@ -250,10 +250,12 @@ class PasswordInput extends React.Component<any, any> {
                   max="5"
                   // min="0"
                 />,
-                this.passwordInput &&
-                  this.passwordInput.value && (
-                    <div key="passwordIndicator" className={scoreSet[score] || scoreSet[0]}>
-                      <Translate content="wallet.password_strength" />
+                this.passwordInput && this.passwordInput.value && (
+                  <div
+                    key="passwordIndicator"
+                    className={scoreSet[score] || scoreSet[0]}
+                  >
+                    {/* <Translate content="wallet.password_strength" />
                       <Translate
                         content={`wallet.strength_${scoreSet[score] ||
                           scoreSet[0]}`}
@@ -265,9 +267,9 @@ class PasswordInput extends React.Component<any, any> {
                             className="txtlabel warning"
                             content={"wallet.strength_tip"}
                           />
-                        )}
-                    </div>
-                  )
+                        )} */}
+                  </div>
+                )
               ]
             )
           ) : null}

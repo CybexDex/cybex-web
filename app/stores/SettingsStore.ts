@@ -142,7 +142,7 @@ class SettingsStore extends AbstractStore<any> {
     let apiServer = settingsAPIs.WS_NODE_LIST;
 
     let defaults = {
-      locale: ["zh", "en"],
+      locale: ["zh", "en", "vn"],
       apiServer: [],
       unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "BTC"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
@@ -228,13 +228,13 @@ class SettingsStore extends AbstractStore<any> {
       this.fp = Math.floor(Math.random() * 100) + Date.now();
       let allDefaultMarkets = new Set();
       let defaultMarkets = await Promise.all(
-      [
+        [
           // Main Net
-        "1.3.0",
-        "1.3.2",
-        "1.3.3",
-        "1.3.27"
-      ].map(baseId =>
+          "1.3.0",
+          "1.3.2",
+          "1.3.3",
+          "1.3.27"
+        ].map(baseId =>
           fetch(`https://app.cybex.io/market_list?base=${baseId}`)
             .then(res => res.json())
             .then(res => res.data)

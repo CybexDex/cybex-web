@@ -23,7 +23,8 @@ for (let localeCode of localeCodes) {
 
 const langSet = {
   en: "en-US",
-  zh: "zh-CN"
+  zh: "zh-CN",
+  vn: "vi-VN"
 };
 
 type Locale = {
@@ -34,7 +35,7 @@ const getLangFromNavi = () =>
   navigator.language.toLocaleLowerCase().startsWith("zh") ? "zh" : "en";
 
 class IntlStore extends AbstractStore<{ currentLocale }> {
-  locales = ["zh", "en"];
+  locales = ["zh", "en", "vn"];
   localesObject: { [locale: string]: any } = {
     zh: locale_cn
   };
@@ -74,6 +75,9 @@ class IntlStore extends AbstractStore<{ currentLocale }> {
         break;
       case "zh":
         counterpart.registerTranslations("zh", this.localesObject.zh);
+        break;
+      case "vn":
+        counterpart.registerTranslations("vn", this.localesObject.vn);
         break;
       default:
         counterpart.registerTranslations(locale, localeData);

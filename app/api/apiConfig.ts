@@ -58,12 +58,12 @@ export const IEO_API = __FOR_SECURITY__
   ? "https://ieo-apitest.cybex.io/api"
   : "///eto.cybex.io/api";
 export const ETO_LOCK = __FOR_SECURITY__
-  ? "//eto-pre.cybex.io/api"
+  ? "https://eto-lock.cybex.io/"
   : __STAGING__
-  ? "///eto.cybex.io/api"
+  ? "https://eto-lock.cybex.io/"
   : __DEV__ || __TEST__
   ? "http://192.168.1.6:5557/"
-  : "///eto.cybex.io/api";
+  : "https://eto-lock.cybex.io/";
 
 export const PRICE_API = "https://app.cybex.io/price";
 

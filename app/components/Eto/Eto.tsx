@@ -49,16 +49,18 @@ export const EtoSuperPoint = ({
   [other: string]: any;
 }) => (
   <span {...props}>
-    <Icon
-      icon="polkaCheck"
-      style={{
-        fontSize: "18px",
-        lineHeight: "28px",
-        verticalAlign: "middle",
-        marginRight: "4px"
-      }}
-    />
-    {content}
+    <span style={{ display: "flex" }}>
+      <Icon
+        icon="polkaCheck"
+        style={{
+          fontSize: "18px",
+          lineHeight: "28px",
+          verticalAlign: "middle",
+          marginRight: "4px"
+        }}
+      />
+      <span style={{ maxWidth: "180px", textAlign: "justify" }}>{content}</span>
+    </span>
   </span>
 );
 export const EtoBanner = () => (
@@ -84,11 +86,17 @@ export const EtoBanner = () => (
         right: 0,
         bottom: 0,
         textAlign: "center",
-        overflow: "hidden"
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-around",
+        padding: "12px"
       }}
     >
       <Translate
-        style={{ marginTop: "10%", marginBottom: "4%" }}
+        style={{ marginTop: "2em" }}
+        // style={{ marginTop: "10%", marginBottom: "4%" }}
         content="eto_intro.slogan"
         unsafe
         component="h4"
@@ -109,7 +117,7 @@ export const EtoBanner = () => (
           // width: "76%",
           display: "inline-block",
           padding: "0 5%",
-          margin: "6% auto",
+          // margin: "6% auto",
           whiteSpace: "pre-line"
         }}
       />
@@ -117,9 +125,9 @@ export const EtoBanner = () => (
         className="pointer-wrapper"
         style={{
           display: "table",
-          marginLeft: "auto",
-          minWidth: "296px",
-          margin: "auto"
+          // marginLeft: "auto",
+          minWidth: "296px"
+          // margin: "auto"
         }}
       >
         {new Array(2).fill(1).map((_, i) => (
@@ -130,7 +138,8 @@ export const EtoBanner = () => (
                 style={{
                   textAlign: "left",
                   display: "table-cell",
-                  lineHeight: 2.4,
+                  paddingBottom: "12px",
+                  lineHeight: "18px",
                   maxWidth: j === 1 ? "56%" : "44%"
                 }}
                 content={counterpart.translate(
