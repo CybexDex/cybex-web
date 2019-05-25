@@ -41,7 +41,8 @@ let EtoLock = class extends React.Component<EtoProps> {
   render() {
     let { etoState, account } = this.props as any;
     return (
-      <>
+      <div className="grid-container">
+        <div style={{ padding: "6px" }} />
         <EtoLockForm
           balance={this.props.account.getIn(["balances", "1.3.0"])}
           onLock={value =>
@@ -62,7 +63,7 @@ let EtoLock = class extends React.Component<EtoProps> {
               counterpart.translate(`eto_apply.lock.tip_content_${i + 1}`)
             )}
         />
-      </>
+      </div>
     );
   }
 };

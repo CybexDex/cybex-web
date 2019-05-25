@@ -16,7 +16,7 @@ import { EtoSurveyForm } from "./EtoSurveyForm";
 import { EtoCenter } from "./EtoCenter";
 import { EtoRule, EtoExplain } from "./EtoRule";
 import counterpart from "counterpart";
-import { EtoContent } from "./EtoPanel";
+import { EtoContent, EtoContentWrapper, EtoPanel } from "./EtoPanel";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -38,11 +38,48 @@ let EtoToken = class extends React.Component<EtoProps> {
   }
 
   render() {
-    let { etoState, account } = this.props as any;
+    let { etoState, account, history } = this.props as any;
     return (
-      <>
-        <EtoExplain />
-      </>
+      <div className="grid-container">
+        <div style={{ padding: "6px" }} />
+        <EtoPanel style={{ marginBottom: "12px" }}>
+          <h4 className="color-steel">
+            {counterpart.translate("eto_apply.token.label")}
+          </h4>
+          <select
+            onChange={e =>
+              EtoActions.putToken(e.target.value as Eto.Token, account, () =>
+                history.push("/eto/apply")
+              )
+            }
+          >
+            {["USDT", "CYB"].map(token => (
+              <option
+                selected={
+                  ((etoState as Eto.EtoInfo).info as Eto.FullInfo).token ===
+                  token
+                }
+                value={token}
+                key={token}
+              >
+                {token}
+              </option>
+            ))}
+          </select>
+        </EtoPanel>
+        <EtoContent
+          style={{ marginBottom: "12px" }}
+          heading={counterpart.translate("eto_apply.token.tip_heading")}
+          contents={[
+            counterpart.translate("eto_apply.token.tip_content_1"),
+            counterpart.translate("eto_apply.token.tip_content_2"),
+            counterpart.translate("eto_apply.token.tip_content_3")
+          ]}
+        />
+        <EtoContentWrapper>
+          <EtoExplain />
+        </EtoContentWrapper>
+      </div>
     );
   }
 };

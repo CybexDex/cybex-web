@@ -78,7 +78,12 @@ let EtoApplyWrapper = class extends React.Component<EtoProps> {
     }
   }
   render() {
-    return <EtoApply {...this.props} />;
+    return (
+      <div className="grid-container">
+        <div style={{ padding: "6px" }} />
+        <EtoApply {...this.props} />
+      </div>
+    );
   }
 } as any;
 

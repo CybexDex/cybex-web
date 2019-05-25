@@ -17,7 +17,7 @@ export const EtoCenterSummary = ({
   history;
 }) => {
   return (
-    <div>
+    <div className="grid-container">
       <h3 style={{ textAlign: "center" }}>
         {counterpart.translate("eto_apply.center.greeting", {
           account: etoState.info && etoState.info.accountName
@@ -93,7 +93,7 @@ export const EtoCenter = (props: any) => {
             // loading={this.state.checking}
             onClick={() => {
               EtoActions.setApplyDone();
-              props.history.push("/market/CYB_JADE.ETH");
+              props.history.push("/market/CYB_JADE.USDT");
             }}
             style={{ width: "50%", borderRadius: 0 }}
           >

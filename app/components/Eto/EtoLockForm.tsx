@@ -75,7 +75,9 @@ const EtoLockFormImpl = ({
           <span>{balanceValue} CYB</span>
         </h4>
         <Button
-          disabled={value > balanceValue || balanceValue === 0}
+          disabled={
+            value > balanceValue || balanceValue === 0 || value <= 0 || !value
+          }
           type="primary"
           style={{ width: "100%" }}
           onClick={() => onLock(value)}

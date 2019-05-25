@@ -62,7 +62,7 @@ export const ETO_LOCK = __FOR_SECURITY__
   : __STAGING__
   ? "///eto.cybex.io/api"
   : __DEV__ || __TEST__
-  ? "http://10.18.120.155:5557/"
+  ? "http://192.168.1.6:5557/"
   : "///eto.cybex.io/api";
 
 export const PRICE_API = "https://app.cybex.io/price";

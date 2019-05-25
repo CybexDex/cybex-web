@@ -1,4 +1,5 @@
 import { Serializer, types } from "cybexjs";
+import { calcValue } from "../utils/Asset";
 
 const {
   static_variant,
@@ -78,10 +79,17 @@ export namespace Eto {
         if (info[Fields.survey]) {
           this.state = EtoPersonalState.Lock;
         }
-        this.sum = (info.records || []).reduce(
-          (sum, next) => sum + next.value,
-          0
-        );
+        try {
+          this.sum = +calcValue(
+            (info.records || []).reduce(
+              (sum, next) => sum + next.op[1].amount.amount,
+              0
+            ),
+            5
+          );
+        } catch (e) {
+          this.sum = 0;
+        }
       }
     }
   }

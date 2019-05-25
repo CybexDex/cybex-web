@@ -19,7 +19,7 @@ export const EtoRule = props => (
     >
       {counterpart.translate("eto_apply.survey.rule_content")}
     </p>
-    <table>
+    <table style={{ width: "100%" }}>
       <thead>
         <tr>
           <th

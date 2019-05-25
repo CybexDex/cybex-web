@@ -41,7 +41,7 @@ const icons = {
   },
   help: {
     base: require("./icons/ic_help_outline.svg"),
-    active: require("./icons/ic_help_outline_active.svg"),
+    active: require("./icons/ic_help_outline_active.svg")
   },
   lock: {
     base: require("./icons/ic_lock_outline.svg")
@@ -68,31 +68,34 @@ const icons = {
     off: require("./icons/ic_visibility_off.svg")
   },
   cloudWallet: {
-    base: require("./icons/Icon_Cloud_Wallet.svg"),
+    base: require("./icons/Icon_Cloud_Wallet.svg")
   },
   localWallet: {
-    base: require("./icons/Icon_Local_Wallet.svg"),
+    base: require("./icons/Icon_Local_Wallet.svg")
   },
   singleAccount: {
-    base: require("./icons/Icon_Single_Account.svg"),
+    base: require("./icons/Icon_Single_Account.svg")
+  },
+  polkaCheck: {
+    base: require("./icons/polka_check.png")
   },
   pokerHeart: {
-    base: require("./icons/heart-normal.svg"),
+    base: require("./icons/heart-normal.svg")
   },
   pokerSpade: {
-    base: require("./icons/spade-normal.svg"),
+    base: require("./icons/spade-normal.svg")
   },
   pokerDiamond: {
-    base: require("./icons/diamond-normal.svg"),
+    base: require("./icons/diamond-normal.svg")
   },
   pokerClub: {
-    base: require("./icons/club-normal.svg"),
-  },
+    base: require("./icons/club-normal.svg")
+  }
 };
 
 export const getIcon = (icon, type = "base") =>
   icons[icon] && icons[icon][type]
     ? icons[icon][type]
     : icons[icon]
-      ? icons[icon]["base"]
-      : icons["add"]["base"];
+    ? icons[icon]["base"]
+    : icons["add"]["base"];

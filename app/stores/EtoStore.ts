@@ -30,6 +30,7 @@ class EtoStore extends AbstractStore<EtoState> {
       handleSurveyUpdate: EtoActions.putSurvey,
       handleApplyDone: EtoActions.setApplyDone,
       handleApplyLockImpl: EtoActions.applyLock,
+      handleTokenUpdate: EtoActions.putToken,
       handleBasicUpdate: EtoActions.putBasic
     });
   }
@@ -59,6 +60,10 @@ class EtoStore extends AbstractStore<EtoState> {
     console.debug("handleApplyLockImpl: ", info);
   }
   handleBasicUpdate(info: Eto.EtoInfo) {
+    console.debug("Personal Info: ", info);
+    this.setState({ ...(this as any).getInstance().getState(), ...info });
+  }
+  handleTokenUpdate(info: Eto.EtoInfo) {
     console.debug("Personal Info: ", info);
     this.setState({ ...(this as any).getInstance().getState(), ...info });
   }

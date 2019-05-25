@@ -3,7 +3,11 @@ import { EtoPanel } from "./EtoPanel";
 import counterpart from "counterpart";
 
 const flow = [
-  { title: "eto_apply.flow.apply", content: "eto_apply.flow.apply_content" },
+  {
+    title: "eto_apply.flow.apply",
+    content: "eto_apply.flow.apply_content",
+    active: true
+  },
   { title: "eto_apply.flow.lock", content: "eto_apply.flow.lock_content" },
   { title: "eto_apply.flow.draw", content: "eto_apply.flow.draw_content" },
   { title: "eto_apply.flow.buy", content: "eto_apply.flow.buy_content" }
@@ -11,7 +15,8 @@ const flow = [
 
 const flowCenter = new Array(7).fill(1).map((_, step) => ({
   title: `eto_apply.center.flow.step_${step + 1}`,
-  content: `eto_apply.center.flow.step_content_${step + 1}`
+  content: `eto_apply.center.flow.step_content_${step + 1}`,
+  active: step < 3
 }));
 
 export const EtoFlow = ({ center = false }) => (
@@ -24,7 +29,7 @@ export const EtoFlow = ({ center = false }) => (
         <li
           key={index}
           data-step={index + 1}
-          className={index < 3 ? "active" : ""}
+          className={step.active ? "active" : ""}
         >
           <h4 style={{ color: "inherit", fontWeight: "bold" }}>
             {counterpart.translate(step.title)}

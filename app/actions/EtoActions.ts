@@ -122,7 +122,7 @@ class EtoActions {
         );
     };
   }
-  putBasic(basic: Eto.Info, account: AccountMap) {
+  putBasic(basic: Eto.Info, account: AccountMap, onResolve?) {
     this.addLoading();
     return dispatch => {
       this.signTx(1, basic, account)
@@ -145,6 +145,9 @@ class EtoActions {
         .then(info => {
           dispatch(info);
           this.removeLoading();
+          if (onResolve) {
+            onResolve();
+          }
           return info;
         });
     };
@@ -175,6 +178,36 @@ class EtoActions {
         .then(info => {
           dispatch(info);
           this.removeLoading();
+          return info;
+        });
+    };
+  }
+  putToken(token: Eto.Token, account: AccountMap, onResolve?) {
+    this.addLoading();
+    return dispatch => {
+      this.signTx(3, token, account)
+        .then(tx =>
+          fetch(
+            `${ETO_LOCK}api/v1/info/${account.get("name")}/${Eto.Fields.token}`,
+            {
+              headers,
+              method: "PUT",
+              body: JSON.stringify(tx)
+            }
+          )
+            .then(res => res.json())
+            .then(res => new Eto.EtoInfo(res))
+            .catch(err => {
+              console.error(err);
+              return new Eto.EtoInfo();
+            })
+        )
+        .then(info => {
+          dispatch(info);
+          this.removeLoading();
+          if (onResolve) {
+            onResolve();
+          }
           return info;
         });
     };
