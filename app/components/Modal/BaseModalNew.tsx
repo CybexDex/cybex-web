@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { getClassName } from "utils//ClassName";
 import { connect } from "alt-react";
@@ -19,6 +20,7 @@ type props = {
   fade?;
   modalId;
   className?;
+  style?;
 };
 
 export class BaseModal extends React.Component<props, { fadeOut }> {
@@ -49,7 +51,7 @@ export class BaseModal extends React.Component<props, { fadeOut }> {
   };
 
   render() {
-    let { fade, overlay, noCloseBtn, overlayClose } = this.props;
+    let { fade, overlay, noCloseBtn, overlayClose, style } = this.props;
     let { fadeOut } = this.state;
     return (
       <div
@@ -60,7 +62,11 @@ export class BaseModal extends React.Component<props, { fadeOut }> {
         })}
         onClick={() => overlayClose && this.onClose()}
       >
-        <div id={this.props.modalId} className="modal with-shadow">
+        <div
+          id={this.props.modalId}
+          className="modal with-shadow"
+          style={...style || {}}
+        >
           {!noCloseBtn && (
             <a
               href="javascript:;"

@@ -10,6 +10,7 @@ import { connect } from "alt-react";
 import { EtoStore, EtoState } from "../../stores/EtoStore";
 import { EtoToken } from "./EtoToken";
 import Translate from "react-translate-component";
+import { LoadingIndicator } from "../LoadingIndicator";
 
 export const IntroBtn = withRouter<any>(props => {
   return (
@@ -65,6 +66,7 @@ export const EtoBanner = () => (
     className="banner"
     style={{
       paddingTop: "83.1%",
+      backgroundColor: "rgba(255,150,58,1)",
       backgroundImage: `url(https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/banner.png?x-oss-process=style/compress)`,
       backgroundSize: "cover",
       backgroundPosition: "center",
@@ -213,7 +215,20 @@ export const EtoIntro = () => {
 let Eto = ({ etoState }: { etoState: EtoState }) => {
   return (
     <>
-      {etoState.loading > 0 ? <h1>Loading...</h1> : null}
+      {etoState.loading > 0 ? (
+        <LoadingIndicator
+          style={{
+            height: "100vh",
+            position: "fixed",
+            width: "100vw",
+            textAlign: "center",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            lineHeight: "80vh",
+            zIndex: 1
+          }}
+          type="three-bounce"
+        />
+      ) : null}
       <div className="page-layout flex-start">
         <Switch>
           <Route path="/eto/" exact component={EtoIntro as any} />

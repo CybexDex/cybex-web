@@ -17,7 +17,7 @@ export const EtoPanel = ({
     {children}
   </div>
 );
-export const EtoPanelEtoContentWrapper = ({
+export const EtoContentWrapper = ({
   children,
   style
 }: {

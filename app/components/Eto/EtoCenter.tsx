@@ -64,6 +64,7 @@ export const EtoCenter = (props: any) => {
       <EtoPanel
         style={{
           marginBottom: "12px",
+          backgroundColor: "rgba(255,150,58,1)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundImage: `url(https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/banner.png?x-oss-process=style/compress)`

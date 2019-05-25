@@ -17,6 +17,10 @@ import { EtoCenter } from "./EtoCenter";
 import { EtoRule, EtoExplain } from "./EtoRule";
 import counterpart from "counterpart";
 import { EtoContent, EtoContentWrapper, EtoPanel } from "./EtoPanel";
+import { EtoConfirmModal } from "../Modal/EtoConfirm";
+import { ModalActions } from "../../actions/ModalActions";
+
+const EtoTokenComfirmModal = "#$EtoTokenComfirmModal";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -48,8 +52,11 @@ let EtoToken = class extends React.Component<EtoProps> {
           </h4>
           <select
             onChange={e =>
-              EtoActions.putToken(e.target.value as Eto.Token, account, () =>
-                history.push("/eto/apply")
+              EtoActions.putToken(
+                e.target.value as Eto.Token,
+                account,
+                () => ModalActions.showModal(EtoTokenComfirmModal)
+                // history.push("/eto/apply")
               )
             }
           >
@@ -75,6 +82,13 @@ let EtoToken = class extends React.Component<EtoProps> {
             counterpart.translate("eto_apply.token.tip_content_2"),
             counterpart.translate("eto_apply.token.tip_content_3")
           ]}
+        />
+        <EtoConfirmModal
+          modalId={EtoTokenComfirmModal}
+          onConfirm={() => {
+            ModalActions.hideModal(EtoTokenComfirmModal);
+            history.push("/eto/apply");
+          }}
         />
         <EtoContentWrapper>
           <EtoExplain />
