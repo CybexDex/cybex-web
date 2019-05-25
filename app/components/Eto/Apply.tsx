@@ -39,6 +39,22 @@ let EtoApply = class extends React.Component<EtoProps> {
         });
     }
   }
+  componentDidUpdate(prevProps) {
+    let { etoState, account } = this.props as any;
+    if (
+      etoState.state === Eto.EtoPersonalState.Uninit &&
+      etoState.state !== prevProps.etoState.state
+    ) {
+      WalletUnlockActions.unlock()
+        .then(() => {
+          EtoActions.queryInfo(account);
+        })
+        .catch(err => {
+          console.error(err);
+          this.props.history.goBack();
+        });
+    }
+  }
 
   render() {
     let { etoState } = this.props as any;
@@ -77,6 +93,7 @@ let EtoApplyWrapper = class extends React.Component<EtoProps> {
       RouterActions.setDeferRedirect("");
     }
   }
+
   render() {
     return (
       <div className="grid-container">

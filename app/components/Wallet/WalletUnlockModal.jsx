@@ -52,7 +52,9 @@ class WalletUnlockModal extends React.Component {
       this.setState({ account_name: np.passwordAccount });
     }
     if (np.resolve != this.props.resolve) {
-      this.refs.password_input.clear();
+      try {
+        this.refs.password_input.clear();
+      } catch (e) {}
     }
   }
 

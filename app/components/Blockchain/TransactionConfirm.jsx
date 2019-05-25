@@ -63,6 +63,7 @@ class TransactionConfirm extends React.Component {
 
   onCloseClick(e) {
     e.preventDefault();
+    this.props.reject("Cancel");
     TransactionConfirmActions.close();
   }
 
@@ -83,7 +84,8 @@ class TransactionConfirm extends React.Component {
           <div>
             <p>
               <Translate content="transaction.transaction_confirmed" />
-              &nbsp;&nbsp;<span>
+              &nbsp;&nbsp;
+              <span>
                 <Icon name="checkmark-circle" size="1x" className="success" />
               </span>
             </p>

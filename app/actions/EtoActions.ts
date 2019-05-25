@@ -49,6 +49,11 @@ class EtoActions {
           )
             .then(res => res.json())
             .then(res => new Eto.EtoInfo(res))
+            .then(info => {
+              dispatch(info);
+              this.removeLoading();
+              return info;
+            })
             .catch(err => {
               if (onReject) {
                 onReject(err);
@@ -57,10 +62,12 @@ class EtoActions {
               return new Eto.EtoInfo();
             })
         )
-        .then(info => {
-          dispatch(info);
-          this.removeLoading();
-          return info;
+        .catch(err => {
+          if (onReject) {
+            onReject(err);
+          }
+          console.error(err);
+          return new Eto.EtoInfo();
         });
     };
   }
@@ -88,12 +95,7 @@ class EtoActions {
                 headers,
                 method: "POST",
                 body: JSON.stringify(tx)
-              })
-                .then(res => res.json())
-                .catch(err => {
-                  console.error(err);
-                  return new Eto.EtoInfo();
-                })
+              }).then(res => res.json())
             )
             .then(tx => {
               let newTx = TransactionBuilder.fromTx(tx);
@@ -111,15 +113,11 @@ class EtoActions {
               this.removeLoading();
               return tx;
             })
-            .catch(err => {
-              console.error(err);
-              this.removeLoading();
-              if (onResolve) {
-                onResolve();
-              }
-              return new Eto.EtoInfo();
-            })
-        );
+        )
+        .catch(err => {
+          console.error(err);
+          this.removeLoading();
+        });
     };
   }
   putBasic(basic: Eto.Info, account: AccountMap, onResolve?) {
@@ -137,10 +135,6 @@ class EtoActions {
           )
             .then(res => res.json())
             .then(res => new Eto.EtoInfo(res))
-            .catch(err => {
-              console.error(err);
-              return new Eto.EtoInfo();
-            })
         )
         .then(info => {
           dispatch(info);
@@ -149,6 +143,10 @@ class EtoActions {
             onResolve();
           }
           return info;
+        })
+        .catch(err => {
+          console.error(err);
+          return;
         });
     };
   }
@@ -170,15 +168,15 @@ class EtoActions {
           )
             .then(res => res.json())
             .then(res => new Eto.EtoInfo(res))
-            .catch(err => {
-              console.error(err);
-              return new Eto.EtoInfo();
-            })
         )
         .then(info => {
           dispatch(info);
           this.removeLoading();
           return info;
+        })
+        .catch(err => {
+          console.error(err);
+          return new Eto.EtoInfo();
         });
     };
   }
@@ -197,10 +195,6 @@ class EtoActions {
           )
             .then(res => res.json())
             .then(res => new Eto.EtoInfo(res))
-            .catch(err => {
-              console.error(err);
-              return new Eto.EtoInfo();
-            })
         )
         .then(info => {
           dispatch(info);
@@ -209,6 +203,11 @@ class EtoActions {
             onResolve();
           }
           return info;
+        })
+        .catch(err => {
+          this.removeLoading();
+          console.error(err);
+          return;
         });
     };
   }

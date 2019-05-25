@@ -4,6 +4,7 @@ import alt from "alt-instance";
 import { Store } from "alt-instance";
 import { EtoActions } from "actions/EtoActions";
 import { debugGen } from "utils//Utils";
+import AccountActions from "actions/AccountActions";
 
 import ls from "lib/common/localStorage";
 import { AbstractStore } from "./AbstractStore";
@@ -24,6 +25,7 @@ class EtoStore extends AbstractStore<EtoState> {
   constructor() {
     super();
     this.bindListeners({
+      reset: AccountActions.setCurrentAccount,
       handleAddLoading: EtoActions.addLoading,
       handleRemoveLoading: EtoActions.removeLoading,
       handleInfoUpdate: EtoActions.queryInfo,
@@ -32,6 +34,14 @@ class EtoStore extends AbstractStore<EtoState> {
       handleApplyLockImpl: EtoActions.applyLock,
       handleTokenUpdate: EtoActions.putToken,
       handleBasicUpdate: EtoActions.putBasic
+    });
+  }
+  reset() {
+    this.setState({
+      state: Eto.EtoPersonalState.Uninit,
+      info: null,
+      sum: 0,
+      loading: 0
     });
   }
   handleAddLoading(count) {

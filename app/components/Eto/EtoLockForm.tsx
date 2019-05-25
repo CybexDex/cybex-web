@@ -24,6 +24,7 @@ const EtoLockFormImpl = ({
   onLock: any;
 }) => {
   const [value, setValue] = useState(0);
+  const formatter = value => (value ? +(value | 0) : value);
   return (
     <form
       onSubmit={e => {
@@ -36,7 +37,7 @@ const EtoLockFormImpl = ({
         </h4>
         <Input
           append="CYB"
-          onChange={e => setValue(e.target.valueAsNumber)}
+          onChange={e => setValue(formatter(e.target.valueAsNumber))}
           type="number"
           value={value}
           valueFromOuter
@@ -95,7 +96,6 @@ let EtoLockForm = class extends React.Component<EtoLockFormProps> {
   };
 
   render() {
-    console.debug("Balance: ", this.props.balance);
     return (
       <EtoLockFormImpl
         onLock={this.props.onLock}

@@ -37,6 +37,12 @@ let EtoLock = class extends React.Component<EtoProps> {
       EtoActions.queryInfo(account);
     }
   }
+  componentDidUpdate() {
+    let { etoState, account } = this.props as any;
+    if (etoState.state === Eto.EtoPersonalState.Uninit) {
+      EtoActions.queryInfo(account);
+    }
+  }
 
   render() {
     let { etoState, account } = this.props as any;

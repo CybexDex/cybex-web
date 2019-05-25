@@ -64,6 +64,7 @@ export const EtoInfoForm = ({ account, onSubmit }) => {
           type="text"
           value={refer}
           valueFromOuter
+          disabled={!!DefaultRefer}
           onChange={e => setRefer(e.target.value)}
           // error={counterpart.translate("login.error_name")}
           keepPlaceholder
