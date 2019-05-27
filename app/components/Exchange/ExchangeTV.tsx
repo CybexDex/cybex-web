@@ -673,9 +673,9 @@ class ExchangeNew extends React.Component<any, any> {
     console.log("click order ==========================", dispalyPrice);
     const isBid = order.isBid();
     /*
-            * Because we are using a bid order to construct an ask and vice versa,
-            * totalToReceive becomes forSale, and totalForSale becomes toReceive
-            */
+     * Because we are using a bid order to construct an ask and vice versa,
+     * totalToReceive becomes forSale, and totalForSale becomes toReceive
+     */
     let forSale = order.totalToReceive({ noCache: true });
     // let toReceive = order.totalForSale({noCache: true});
     let toReceive = forSale.times(order.sellPrice());
@@ -1079,8 +1079,8 @@ class ExchangeNew extends React.Component<any, any> {
           latestPrice.full === oldPrice.full
             ? ""
             : latestPrice.full - oldPrice.full > 0
-              ? "change-up"
-              : "change-down";
+            ? "change-up"
+            : "change-down";
       }
     }
 

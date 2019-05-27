@@ -18,6 +18,7 @@ import { EtoRule, EtoExplain } from "./EtoRule";
 import counterpart from "counterpart";
 import { EtoContent, EtoContentWrapper } from "./EtoPanel";
 import { EtoLockForm } from "./EtoLockForm";
+import { Gtag } from "services/Gtag";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -52,9 +53,10 @@ let EtoLock = class extends React.Component<EtoProps> {
         <EtoLockForm
           balance={this.props.account.getIn(["balances", "1.3.0"])}
           onLock={value =>
-            EtoActions.applyLock(value, this.props.account, () =>
-              this.props.history.push("/eto/apply")
-            )
+            EtoActions.applyLock(value, this.props.account, () => {
+              Gtag.eventActivity("Eto", "锁仓成功，跳转");
+              this.props.history.push("/eto/apply");
+            })
           }
         />
         <EtoRule />

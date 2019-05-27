@@ -40,7 +40,7 @@ let Checkbox = class extends React.Component<
     label: {
       base: {
         fontSize: "1em",
-        display: "flex",
+        // display: "flex",
         alignItems: "flex-start",
         opacity: "0.8",
         color: Colors.$colorWhite,
@@ -74,7 +74,8 @@ let Checkbox = class extends React.Component<
     },
     input: {
       base: {
-        margin: "0 0.5em 0 0",
+        margin: "0 0.5em 2px 0",
+        verticalAlign: "middle",
         backgroundImage: `url(${getIcon("checkbox")})`,
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -144,19 +145,19 @@ let Checkbox = class extends React.Component<
     return (
       <label
         htmlFor={this.id}
-        style={
-          [
-            labelStyles.base,
-            active && labelStyles.active,
-            disabled && labelStyles.disabled,
-            labelStyles.size[size],
-            labelStyle
-          ] as any
-        }
+        // style={
+        //   [
+        //     labelStyles.base,
+        //     active && labelStyles.active,
+        //     disabled && labelStyles.disabled,
+        //     labelStyles.size[size],
+        //     labelStyle
+        //   ] as any
+        // }
       >
         <input
           id={this.id}
-          className="no-appearance"
+          // className="no-appearance"
           type="checkbox"
           checked={active}
           disabled={disabled}

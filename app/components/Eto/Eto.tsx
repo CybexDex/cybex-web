@@ -11,6 +11,7 @@ import { EtoStore, EtoState } from "../../stores/EtoStore";
 import { EtoToken } from "./EtoToken";
 import Translate from "react-translate-component";
 import { LoadingIndicator } from "../LoadingIndicator";
+import { Gtag } from "services/Gtag";
 
 export const IntroBtn = withRouter<any>(props => {
   return (
@@ -18,21 +19,28 @@ export const IntroBtn = withRouter<any>(props => {
       <Button
         type="primary"
         // loading={this.state.checking}
-        onClick={() => props.history.push("/eto/apply")}
+        onClick={() => {
+          Gtag.eventActivity("Eto", "点击申购");
+          props.history.push("/eto/apply");
+        }}
         style={{ marginBottom: "12px", width: "100%" }}
       >
         {counterpart.translate("eto_intro.join_apply")}
       </Button>
       <Button
         type="primary"
+        link={counterpart.translate("eto_intro.rule_url")}
         // loading={this.state.checking}
-        style={{ marginBottom: "12px", width: "100%" }}
+        style={{ marginBottom: "12px", width: "100%", textAlign: "center" }}
       >
         {counterpart.translate("eto_intro.join_rule")}
       </Button>
       <Button
         type="hollow-primary"
-        onClick={() => props.history.push("/eto/apply")}
+        onClick={() => {
+          Gtag.eventActivity("Eto", "点击已申购");
+          props.history.push("/eto/apply");
+        }}
         // loading={this.state.checking}
         style={{ width: "100%" }}
       >

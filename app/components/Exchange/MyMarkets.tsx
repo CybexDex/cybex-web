@@ -481,7 +481,7 @@ let MyMarkets = class extends React.Component<any, any> {
       inverseSort: props.viewSettings.get("myMarketsInvert", true),
       sortBy: props.viewSettings.get("myMarketsSort", "volume"),
       activeTab: props.viewSettings.get("favMarketTab", "my-market"),
-      activeMarketTab: 0,
+      activeMarketTab: 3,
       lookupQuote: quote,
       lookupBase: base,
       inputValue: inputValue,

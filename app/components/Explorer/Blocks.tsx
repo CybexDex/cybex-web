@@ -279,7 +279,8 @@ class Blocks extends React.Component<any, any> {
                 />
               </span>
               <h2>
-                #{utils.format_number(
+                #
+                {utils.format_number(
                   dynGlobalObject.get("head_block_number"),
                   0
                 )}
@@ -294,7 +295,7 @@ class Blocks extends React.Component<any, any> {
                   content="explorer.blocks.active_witnesses"
                 />
               </span>
-              <h2 className="txtlabel warning">
+              <h2 className="txtlabel success">
                 {globalObject.get("active_witnesses").size}
               </h2>
             </div>
@@ -318,7 +319,7 @@ class Blocks extends React.Component<any, any> {
                   content="explorer.blocks.active_committee_members"
                 />
               </span>
-              <h2 className="txtlabel warning">
+              <h2 className="txtlabel success">
                 {globalObject.get("active_committee_members").size}
               </h2>
             </div>
@@ -439,7 +440,7 @@ class Blocks extends React.Component<any, any> {
         <div
           ref="transactionsBlock"
           className="block-right show-for-medium vertical grid-block no-overflow"
-          style={{padding: 0}}
+          style={{ padding: 0 }}
         >
           <div className="grid-block bgcolor-primary with-shadow small-12 vertical no-overflow">
             <div className="grid-block vertical no-overflow generic-bordered-box">

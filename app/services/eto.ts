@@ -82,7 +82,7 @@ export namespace Eto {
         try {
           this.sum = +calcValue(
             (info.records || []).reduce(
-              (sum, next) => sum + next.op[1].amount.amount,
+              (sum, next) => sum + +next.op[1].amount.amount,
               0
             ),
             5

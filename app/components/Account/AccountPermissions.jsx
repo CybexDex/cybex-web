@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import Immutable from "immutable";
 import Translate from "react-translate-component";
@@ -308,8 +309,7 @@ class AccountPermissions extends React.Component {
       this.isValidPubKey(this.state.memo_key)
         ? ""
         : " disabled");
-    let reset_buttons_class =
-      "button outline" + (this.isChanged() ? "" : " disabled");
+    let reset_buttons_class = "button" + (this.isChanged() ? "" : " disabled");
 
     let accountsList = Immutable.Set();
     accountsList = accountsList.add(this.props.account.get("id"));
@@ -382,7 +382,8 @@ class AccountPermissions extends React.Component {
                   data-tip={counterpart.translate("tooltip.sign_owner")}
                 >
                   <span>
-                    <Translate content="account.perm.sign_owner" />:&nbsp;&nbsp;
+                    <Translate content="account.perm.sign_owner" />
+                    :&nbsp;&nbsp;
                   </span>
                 </label>
                 <div
@@ -476,7 +477,6 @@ class AccountPermissions extends React.Component {
           <div className="divider" />
           <div style={{ paddingTop: 20 }}>
             <button
-              style={{ fontSize: "1.2rem" }}
               className={publish_buttons_class}
               onClick={this.onPublish}
               tabIndex={8}

@@ -535,6 +535,7 @@ a {
     grid-area: main;
     overflow-y: auto;
     flex-grow: 1;
+    height: calc(100vh - 86px);
   }
   & > .nav {
     grid-area: nav;

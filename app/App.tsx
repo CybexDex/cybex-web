@@ -50,7 +50,9 @@ let patch = false;
 
 const Exchange = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"),
+    import(
+      /* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"
+    ),
   loading: LoadingIndicator
 } as any);
 const Gateway = Loadable({
@@ -71,7 +73,9 @@ const Explorer = Loadable({
 
 const AccountPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "account" */ "./components/Account/AccountPage"),
+    import(
+      /* webpackChunkName: "account" */ "./components/Account/AccountPage"
+    ),
   loading: LoadingIndicator
 } as any);
 
@@ -83,7 +87,9 @@ const Transfer = Loadable({
 
 const Settings = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "settings" */ "./components/Settings/SettingsContainer"),
+    import(
+      /* webpackChunkName: "settings" */ "./components/Settings/SettingsContainer"
+    ),
   loading: LoadingIndicator
 } as any);
 
@@ -100,41 +106,55 @@ const Asset = Loadable({
 
 const Block = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "block" */ "./components/Blockchain/BlockContainer"),
+    import(
+      /* webpackChunkName: "block" */ "./components/Blockchain/BlockContainer"
+    ),
   loading: LoadingIndicator
 } as any);
 
 const DashboardPage = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "dashboard" */ "./components/Dashboard/DashboardContainer"),
+    import(
+      /* webpackChunkName: "dashboard" */ "./components/Dashboard/DashboardContainer"
+    ),
   loading: LoadingIndicator
 } as any);
 
 const WalletManager = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "wallet" */ "./components/Wallet/WalletManager"),
+    import(
+      /* webpackChunkName: "wallet" */ "./components/Wallet/WalletManager"
+    ),
   loading: LoadingIndicator
 } as any);
 const GameCenter = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "wallet" */ "./components/GameCenter/GameCenter"),
+    import(
+      /* webpackChunkName: "wallet" */ "./components/GameCenter/GameCenter"
+    ),
   loading: LoadingIndicator
 } as any);
 
 const ExistingAccount = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "existing-account" */ "./components/Wallet/ExistingAccount"),
+    import(
+      /* webpackChunkName: "existing-account" */ "./components/Wallet/ExistingAccount"
+    ),
   loading: LoadingIndicator
 } as any);
 
 const CreateWorker = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "create-worker" */ "./components/Account/CreateWorker"),
+    import(
+      /* webpackChunkName: "create-worker" */ "./components/Account/CreateWorker"
+    ),
   loading: LoadingIndicator
 } as any);
 const EtoStatic = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "EtoStatic" */ "./components/StaticPages/EtoStatic"),
+    import(
+      /* webpackChunkName: "EtoStatic" */ "./components/StaticPages/EtoStatic"
+    ),
   loading: LoadingIndicator
 } as any);
 

@@ -5,7 +5,7 @@ import willTransitionTo from "./routerTransition";
 export const RefreshTip = class extends React.Component<any> {
   componentDidMount() {
     let currentPath = location.pathname || "/";
-
+    location.reload();
     WalletUnlockActions.lock();
     willTransitionTo(false, () => {
       console.debug("Reconnect Transition");
@@ -41,7 +41,7 @@ export const RefreshTip = class extends React.Component<any> {
           <img src="/images/logo-main.png" />
         </div>
         <p style={{ fontSize: 18, marginTop: "2em" }}>
-          The connection has been broken; The site will be refreshed in some
+          The connection has been broken; The page will be refreshed in a few
           seconds;
         </p>
       </div>

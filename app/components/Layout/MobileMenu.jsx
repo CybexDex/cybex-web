@@ -129,11 +129,6 @@ class MobileMenu extends React.Component {
                 </a>
               </li>
               <li>
-                <a onClick={this._onNavigate.bind(this, "/game")}>
-                  <Translate content="nav.game" />
-                </a>
-              </li>
-              <li>
                 <a onClick={this._onNavigate.bind(this, "/settings")}>
                   <Translate content="header.settings" />
                 </a>

@@ -6,6 +6,8 @@ import { EtoPanel, EtoContentWrapper } from "./EtoPanel";
 import { EtoFlow } from "./EtoFlow";
 import Translate from "react-translate-component";
 import { EtoActions } from "../../actions/EtoActions";
+import { Gtag } from "services/Gtag";
+
 const { useState, useEffect } = React;
 export const EtoApplyDone = (props: any) => {
   return (
@@ -22,6 +24,7 @@ export const EtoApplyDone = (props: any) => {
           // loading={this.state.checking}
           onClick={() => {
             EtoActions.setApplyDone();
+            Gtag.eventActivity("Eto", "通过报名成功页进入锁仓");
             props.history.push("/eto/lock");
           }}
           style={{ marginBottom: "12px", width: "100%" }}
@@ -33,7 +36,7 @@ export const EtoApplyDone = (props: any) => {
           // loading={this.state.checking}
           onClick={() => {
             EtoActions.setApplyDone();
-            props.history.push("/market/CYB_JADE.ETH");
+            props.history.push("/market/CYB_JADE.USDT");
           }}
           style={{ marginBottom: "12px", width: "100%" }}
         >

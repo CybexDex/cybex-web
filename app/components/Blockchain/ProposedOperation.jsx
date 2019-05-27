@@ -165,7 +165,8 @@ class ProposedOperation extends React.Component {
         }
         let humanizeLocals = {
           zh: "zh_CN",
-          en: "en"
+          en: "en",
+          vn: "en",
         };
         let locale = IntlStore.getState().currentLocale;
         let vesting = getVestingPeriodFromOp(op[1]);

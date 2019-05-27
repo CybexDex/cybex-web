@@ -236,7 +236,6 @@ class Transfer extends React.Component<any, any> {
   }
 
   onAmountChanged({ amount, asset }) {
-
     if (!asset) {
       return;
     }
@@ -440,14 +439,16 @@ class Transfer extends React.Component<any, any> {
     } = this.state;
     let from_my_account =
       !from_account ||
-      AccountStore.getState().currentAccount === from_account.get("name") 
+      AccountStore.getState().currentAccount === from_account.get("name");
     if (from_account && !from_my_account && !propose) {
       from_error = (
         <span>
           {counterpart.translate("account.errors.not_yours")}
-          &nbsp;(<a onClick={this.onPropose.bind(this, true)}>
+          &nbsp;(
+          <a onClick={this.onPropose.bind(this, true)}>
             {counterpart.translate("propose")}
-          </a>)
+          </a>
+          )
         </span>
       );
     }
@@ -552,8 +553,8 @@ class Transfer extends React.Component<any, any> {
                   asset_types.length > 0 && asset
                     ? asset.get("id")
                     : asset_id
-                      ? asset_id
-                      : asset_types[0]
+                    ? asset_id
+                    : asset_types[0]
                 }
                 isNumber
                 assets={asset_types}
@@ -638,10 +639,10 @@ class Transfer extends React.Component<any, any> {
                   fee_asset_types.length && feeAmount
                     ? feeAmount.asset_id
                     : fee_asset_types.length === 1
-                      ? fee_asset_types[0]
-                      : fee_asset_id
-                        ? fee_asset_id
-                        : fee_asset_types[0]
+                    ? fee_asset_types[0]
+                    : fee_asset_id
+                    ? fee_asset_id
+                    : fee_asset_types[0]
                 }
                 assets={fee_asset_types}
                 tabIndex={tabIndex++}
@@ -653,9 +654,12 @@ class Transfer extends React.Component<any, any> {
               />
               {propose ? (
                 <button
-                  className={classnames("button float-right no-margin", {
-                    disabled: isSendNotValid
-                  })}
+                  className={classnames(
+                    "button primary float-right no-margin",
+                    {
+                      disabled: isSendNotValid
+                    }
+                  )}
                   type="submit"
                   value="Submit"
                   tabIndex={tabIndex++}
@@ -664,9 +668,12 @@ class Transfer extends React.Component<any, any> {
                 </button>
               ) : (
                 <button
-                  className={classnames("button float-right no-margin", {
-                    disabled: isSendNotValid
-                  })}
+                  className={classnames(
+                    "button primary float-right no-margin",
+                    {
+                      disabled: isSendNotValid
+                    }
+                  )}
                   type="submit"
                   value="Submit"
                   tabIndex={tabIndex++}
@@ -681,7 +688,8 @@ class Transfer extends React.Component<any, any> {
                             allows adjusting of the memo to / from parameters.
                         */}
             {propose ? (
-              <><div className="full-width-content form-group transfer-input">
+              <>
+                <div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="account.propose_from" />
                   </label>
@@ -690,7 +698,8 @@ class Transfer extends React.Component<any, any> {
                     onChange={this.onProposeAccount.bind(this)}
                     tabIndex={tabIndex++}
                   />
-                </div><div className="full-width-content form-group transfer-input">
+                </div>
+                <div className="full-width-content form-group transfer-input">
                   <label className="left-label">
                     <Translate content="proposal.expires" />
                   </label>

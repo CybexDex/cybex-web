@@ -96,10 +96,12 @@ let Row = class extends React.PureComponent<any, any> {
     if (block > last_irreversible_block_num) {
       pending = (
         <span>
-          (<Translate
+          (
+          <Translate
             content="operation.pending"
             blocks={block - last_irreversible_block_num}
-          />)
+          />
+          )
         </span>
       );
     }
@@ -219,7 +221,8 @@ class Operation extends React.PureComponent<any, any> {
         // }
         let humanizeLocals = {
           zh: "zh_CN",
-          en: "en"
+          en: "en",
+          vn: "en"
         };
         let locale = IntlStore.getState().currentLocale;
         let vesting = getVestingPeriodFromOp(op[1]);
@@ -227,34 +230,31 @@ class Operation extends React.PureComponent<any, any> {
           vesting === null
             ? "none"
             : humanize(vesting * 1000, {
-              language: humanizeLocals[locale],
-              unitMeasures: {
-                y: 365 * SECONDS_OF_ONE_DAY,
-                mo: 30 * SECONDS_OF_ONE_DAY,
-                w: 7 * SECONDS_OF_ONE_DAY,
-                d: SECONDS_OF_ONE_DAY,
-                h: 3600000,
-                m: 60000,
-                s: 1000
-              }
-            });
+                language: humanizeLocals[locale],
+                unitMeasures: {
+                  y: 365 * SECONDS_OF_ONE_DAY,
+                  mo: 30 * SECONDS_OF_ONE_DAY,
+                  w: 7 * SECONDS_OF_ONE_DAY,
+                  d: SECONDS_OF_ONE_DAY,
+                  h: 3600000,
+                  m: 60000,
+                  s: 1000
+                }
+              });
 
         color = "success";
         op[1].amount.amount = parseFloat(op[1].amount.amount);
 
         column = this.props.csvExportMode ? (
-          
-            <TranslateWithLinks
-              string="operation.transfer"
-              keys={[
-                { type: "account", value: op[1].from, arg: "from" },
-                { type: "amount", value: op[1].amount, arg: "amount" },
-                { type: "account", value: op[1].to, arg: "to" },
-                { value: vestingStr, arg: "vesting" }
-              ]}
-            />
-            
-          
+          <TranslateWithLinks
+            string="operation.transfer"
+            keys={[
+              { type: "account", value: op[1].from, arg: "from" },
+              { type: "amount", value: op[1].amount, arg: "amount" },
+              { type: "account", value: op[1].to, arg: "to" },
+              { value: vestingStr, arg: "vesting" }
+            ]}
+          />
         ) : (
           <span className="right-td">
             <TranslateWithLinks
@@ -273,7 +273,7 @@ class Operation extends React.PureComponent<any, any> {
         break;
 
       case "limit_order_create":
-        color = "warning";
+        color = "success";
         let o = op[1];
 
         column = (
@@ -440,8 +440,8 @@ class Operation extends React.PureComponent<any, any> {
           op[1].new_listing === listings.no_listing
             ? "unlisted_by"
             : op[1].new_listing === listings.white_listed
-              ? "whitelisted_by"
-              : "blacklisted_by";
+            ? "whitelisted_by"
+            : "blacklisted_by";
         column = (
           <span>
             <TranslateWithLinks
@@ -688,7 +688,8 @@ class Operation extends React.PureComponent<any, any> {
           column = (
             <span>
               <Translate component="span" content="transaction.witness_pay" />
-              &nbsp;<FormattedAsset amount={op[1].amount} asset={"1.3.0"} />
+              &nbsp;
+              <FormattedAsset amount={op[1].amount} asset={"1.3.0"} />
               <Translate component="span" content="transaction.to" />
               &nbsp;{this.linkToAccount(op[1].witness_account)}
             </span>
@@ -697,7 +698,8 @@ class Operation extends React.PureComponent<any, any> {
           column = (
             <span>
               <Translate component="span" content="transaction.received" />
-              &nbsp;<FormattedAsset amount={op[1].amount} asset={"1.3.0"} />
+              &nbsp;
+              <FormattedAsset amount={op[1].amount} asset={"1.3.0"} />
               <Translate component="span" content="transaction.from" />
               &nbsp;{this.linkToAccount(op[1].witness_account)}
             </span>
@@ -718,7 +720,8 @@ class Operation extends React.PureComponent<any, any> {
                     arg: "account"
                   }
                 ]}
-              />:
+              />
+              :
             </span>
             <div>
               {op[1].proposed_ops.map((o, index) => {
@@ -901,7 +904,8 @@ class Operation extends React.PureComponent<any, any> {
               component="span"
               content="transaction.vesting_balance_create"
             />
-            &nbsp;<FormattedAsset
+            &nbsp;
+            <FormattedAsset
               amount={op[1].amount.amount}
               asset={op[1].amount.asset_id}
             />
@@ -981,8 +985,10 @@ class Operation extends React.PureComponent<any, any> {
         column = (
           <span>
             {this.linkToAccount(op[1].from)}
-            &nbsp;<Translate component="span" content="transaction.sent" />
-            &nbsp;<FormattedAsset
+            &nbsp;
+            <Translate component="span" content="transaction.sent" />
+            &nbsp;
+            <FormattedAsset
               amount={op[1].amount.amount}
               asset={op[1].amount.asset_id}
             />
@@ -994,8 +1000,10 @@ class Operation extends React.PureComponent<any, any> {
         column = (
           <span>
             {this.linkToAccount(op[1].to)}
-            &nbsp;<Translate component="span" content="transaction.received" />
-            &nbsp;<FormattedAsset
+            &nbsp;
+            <Translate component="span" content="transaction.received" />
+            &nbsp;
+            <FormattedAsset
               amount={op[1].amount.amount}
               asset={op[1].amount.asset_id}
             />

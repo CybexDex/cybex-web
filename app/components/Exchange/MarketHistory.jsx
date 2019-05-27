@@ -167,7 +167,7 @@ class MarketHistory extends React.Component {
               <td>{parsed_order.receives}</td>
               {/*<td>{parsed_order.pays}</td>*/}
               {/*<td className="tooltip" data-tip={new Date(order.time)}>*/}
-                <td>
+              <td>
                 {counterpart.localize(new Date(order.time), {
                   type: "date",
                   format:
@@ -227,9 +227,9 @@ class MarketHistory extends React.Component {
                     </span>
                   </th>
                   {/*<th className="text-center">*/}
-                    {/*<span className="header-sub-title">*/}
-                      {/*<AssetName dataPlace="top" name={baseSymbol} />*/}
-                    {/*</span>*/}
+                  {/*<span className="header-sub-title">*/}
+                  {/*<AssetName dataPlace="top" name={baseSymbol} />*/}
+                  {/*</span>*/}
                   {/*</th>*/}
                   <th className="text-center">
                     <Translate
@@ -266,13 +266,16 @@ MarketHistory.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export default connect(MarketHistory, {
-  listenTo() {
-    return [SettingsStore];
-  },
-  getProps() {
-    return {
-      viewSettings: SettingsStore.getState().viewSettings
-    };
+export default connect(
+  MarketHistory,
+  {
+    listenTo() {
+      return [SettingsStore];
+    },
+    getProps() {
+      return {
+        viewSettings: SettingsStore.getState().viewSettings
+      };
+    }
   }
-});
+);

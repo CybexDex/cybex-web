@@ -198,9 +198,13 @@ class WalletUnlockModal extends React.Component {
         />
 
         <div>
-          <div className="button-group">
+          <div
+            className="button-group"
+            style={{ width: "100%", display: "flex" }}
+          >
             <button
-              className="button"
+              className="button primary"
+              style={{ flex: 1 }}
               data-place="bottom"
               data-html
               data-tip={counterpart.translate("tooltip.login")}
@@ -209,9 +213,12 @@ class WalletUnlockModal extends React.Component {
               <Translate content="header.unlock_short" />
             </button>
             <Trigger close={this.props.modalId}>
-              <div className=" button">
-                <Translate content="account.perm.cancel" />
-              </div>
+              <Translate
+                component="div"
+                style={{ flex: 1 }}
+                className="button"
+                content="account.perm.cancel"
+              />
             </Trigger>
           </div>
           {/* <div onClick={this._toggleLoginType.bind(this)} className="button small outline float-right"><Translate content="wallet.switch_model_password" /></div> */}

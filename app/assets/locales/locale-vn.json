@@ -1534,7 +1534,7 @@
       "title": "Private key QR code",
       "input_message": "Please enter a password used to encrypt the QR code.<br />An empty password will show an unencrypted QR code."
     },
-    "never": "Don't show me this tip again",
+    "never": "Không nhắc lại",
     "jct": {
       "jct_one_title": "JCT Air Drop",
       "jct_one_alt": "Click here to join in the JCT airdrop",
@@ -1912,28 +1912,29 @@
   },
   "eto_intro": {
     "slogan": "Cybex ETO đã trở lại<br/>Dự án cross-chain hàng đầu thế giới",
-    "sub_slogan": "Được phát triển bởi người đồng sáng<br/>lập ethereum, ông Gavin Wood",
+    "sub_slogan": "Được phát triển bởi Gavin Wood- người đồng sáng<br/>lập Ethereum",
     "tip_1": "Bán giới hạn trên toàn thế giới",
     "tip_2": "ETO kết thúc là mở phiên giao dịch",
     "tip_3": "Mã thông báo không kỳ khóa kho",
     "tip_4": "Hạn ngạch đầu tiên dành cho các nhà đầu tư thông thường",
     "join_apply": "Tham gia",
+    "rule_url": "https://support.cybex.io/hc/vi/articles/360000280201",
     "join_rule": "Quy tắc",
     "join_apply_already": "Đã đặt mua",
     "join_date": "Thời gian",
     "join_date_content": "27 tháng 05 - 15 tháng 06",
     "join_platform": "Nền tảng",
     "join_platform_content": "Sàn giao dịch Cybex",
-    "about_eto_content": "ETO (Earlybirds Token Offering) là một cách giúp tài trợ cho các dự án blockchain chất lượng thông qua sàn giao dịch, giúp những dự án blockchain có giá trị, có kỹ thuật có thể thể hiện hết giá trị của nó. Sau nửa năm, ETO kỳ thứ ba của Cybex đã trở lại đầy mạnh mẽ, lựa chọn dự án chuỗi chéo chất lượng tốt nhất thế giới – Polkadot. Giá riêng siêu ưu đãi / ETO kết thúc và mở lượt mới/ Mã thông báo ko có thời hạn khóa/ Có polkadot, có lợi nhuận",
+    "about_eto_content": "ETO (Earlybirds Token Offering) là một cách giúp tài trợ cho các dự án blockchain chất lượng thông qua sàn giao dịch, giúp những dự án blockchain có giá trị, có kỹ thuật có thể thể hiện hết giá trị của nó. Sau nửa năm, ETO kỳ thứ ba của Cybex đã trở lại đầy mạnh mẽ, lựa chọn dự án chuỗi chéo chất lượng tốt nhất thế giới – Polkadot. Giá riêng siêu ưu đãi; ETO kết thúc là mở phiên giao dịch; Mã thông báo ko có thời hạn khóa; Có polkadot, có lợi nhuận",
     "about_eto_title": "Giới thiệu về ETO",
     "about_polka_title": "Giới thiệu về Polkadot",
-    "about_polka_content": "Dự án chuỗi chéo tốt nhất thế giới, Polkadot, được lãnh đạo bởi Gavin Wood, bộ não vô hình của Ethereum. Gavin Wood cũng là tác giả của Sách vàng Công nghệ Ethereum, người sáng lập Partiy.",
+    "about_polka_content": "Dự án chuỗi chéo tốt nhất thế giới - Polkadot, phát triển bởi Gavin Wood- người đồng sáng lập Ethereum. Gavin Wood cũng là tác giả của Sách vàng Công nghệ Ethereum, người sáng lập Partiy.",
     "about_polka_content1": "Polkadaot được gọi là Blockchain 3.0, nhằm mục đích kết nối các blockchain độc lập hiện có để truyền thông và dữ liệu có thể được truyền giữa các blockchain khác nhau, là nền tảng của thế hệ Internet giá trị tiếp theo."
   },
   "eto_apply": {
     "lock": {
       "lock": "Số lượng",
-      "balance": "Cóthể sử dụng",
+      "balance": "Có thể sử dụng",
       "tip_heading": "Lưu ý",
       "tip_content_1": "1.Bạn phải hoàn thành [Mẫu đặt mua] và hoàn thành thao tác khóa trước 12:00 ngày 06/08 (tính theo giờ Bắc Kinh). Nếu không sẽ không được tham gia hoạt động lần này",
       "tip_content_2": "2.Trước ngày đóng kho hàng quy định, bạn có thể tiến hành thao tác khóa kho hàng nhiều lần.",
@@ -1942,7 +1943,7 @@
       "tip_content_5": "5.Hoạt động lần này sẽ kết thúc vào ngày 14 tháng 06. Đừng quên mở khóa và nhận CYB."
     },
     "center": {
-      "greeting": "Kính gửi money %(account)s",
+      "greeting": "Kính gửi %(account)s",
       "token": "Loại tiền đầu tư",
       "total": "Số lượng khóa kho",
       "change": "Thay đổi",
@@ -1980,25 +1981,25 @@
     "flow": {
       "title": "Quy trình ETO của Polkadot ",
       "apply": "Bắt đầu đặt mua",
-      "apply_content": "27/05 - 12:00 08/06",
+      "apply_content": "12:00 27/05 - 08/06",
       "lock": "Thời gian khóa kho CYB",
       "lock_content": "08/06 – 14/06",
-      "draw": "Số lô & thông báo kết quả",
+      "draw": "Quay số & thông báo kết quả",
       "draw_content": "14/06",
       "buy": "Giành mua",
       "buy_content": "15/06"
     },
     "token": {
       "label": "Vui lòng chọn loại tiền",
-      "set_done": "Set currency success",
+      "set_done": "Set currency done",
       "tip_heading": "Lưu ý",
-      "tip_content_1": "1.Bạn có thể đổi tiền trước 23:59 ngày 13 tháng 6 và bạn sẽ không thể đổi tiền sau khi qua thời quy định.",
-      "tip_content_2": "2.Ngoài Round 4 phải sử dụng CYB, ba vòng còn lại có thể chọn CYB hoặc USDT. Sau khi chọn, ba vòng đầu tiên sẽ sử dụng cùng loại tiền thống nhất. Xin vui lòng lựa chọn cẩn thận!",
-      "tip_content_3": "3.Nếu bạn chọn sử dụng USDT để mua hàng, vui lòng đảm bảo rằng trong tài khoản có đủ CYB cho phí xử lý."
+      "tip_content_1": "1. Bạn có thể đổi tiền trước 23:59 ngày 13 tháng 6 và bạn sẽ không thể đổi tiền sau khi qua thời quy định.",
+      "tip_content_2": "2. Ngoài Round 4 phải sử dụng CYB, ba vòng còn lại có thể chọn CYB hoặc USDT. Sau khi chọn, ba vòng đầu tiên sẽ sử dụng cùng loại tiền thống nhất. Xin vui lòng lựa chọn cẩn thận!",
+      "tip_content_3": "3. Nếu bạn chọn sử dụng USDT để mua hàng, vui lòng đảm bảo rằng trong tài khoản có đủ CYB cho phí xử lý."
     },
     "survey": {
-      "tip": "Kính gửi khách hàng %(account)s:Cảm ơn bạn đã chọn Cybex. Dưới đây là [Biểu mẫu đặt hàng] của ETO lần này. Sự lựa chọn của bạn sẽ ảnh hưởng đến tư cách đặt mua sau này của bạn. Vui lòng lựa chọn trên cơ sở ý định đặt mua hàng của bạn và tình hình thực tế. Cảm ơn sự hợp tác của bạn.",
-      "rule_content": "ETO của Polkadot được sử dụng thông qua CYB locked ups + lấy số & thông báo kết quả. Có nhiều đăng ký dựa trên các yêu cầu khóa khác nhau. Đối với người dùng thường xuyên của Cybex, ETO cũng đã thiết kế thuật toán tuổi coin. Xin vui lòng đọc các yêu cầu cẩn thận và chọn các vòng xử lý.",
+      "tip": "Kính gửi khách hàng %(account)s: Cảm ơn bạn đã chọn Cybex. Dưới đây là [Biểu mẫu đặt hàng] của ETO lần này. Sự lựa chọn của bạn sẽ ảnh hưởng đến tư cách đặt mua sau này của bạn. Vui lòng lựa chọn trên cơ sở ý định đặt mua hàng của bạn và tình hình thực tế. Cảm ơn sự hợp tác của bạn.",
+      "rule_content": "ETO của Polkadot được sử dụng thông qua CYB locked ups + Quay số & thông báo kết quả. Có nhiều đăng ký dựa trên các yêu cầu khóa khác nhau. Đối với người dùng thường xuyên của Cybex, ETO cũng đã thiết kế thuật toán tuổi coin. Xin vui lòng đọc các yêu cầu cẩn thận và chọn các vòng xử lý.",
       "rule_known": "Tôi đã nắm rõ các quy tắc",
       "rule_title": "Quy tắc ETO",
       "rule_table_th1": "Locked Threshold（CYB）",
@@ -2027,6 +2028,11 @@
     "agreement": "Tôi đã hiểu rõ về Polkadot và sẵn sàng tham gia ETO lần này",
     "explain": "Cybex có quyền giải thích cuối cùng các quy tắc và điều chỉnh nó cho phù hợp.",
     "change": "Thay đổi",
+    "refresh": "Làm mới",
+    "refresh_tip": "Xác nhận trên chuỗi mất 30 giây",
+    "refresh_ok": "Tôi đã biết",
+    "refresh_cancel": "Hủy bỏ",
+    "faq_url": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/DOT-Subscription-QA-YN.pdf",
     "amount": "Amount",
     "next": "Bước tiếp theo"
   }

@@ -537,12 +537,22 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 50%;
   font-size: 1rem;
   font-weight: 500;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
+  // border-bottom-width: 1px;
+  // border-bottom-style: solid;
   transition: border-color 0.3s ease 0s;
   overflow: hidden;
   flex: 1;
   @include exchange-header;
+
+  & > * {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+  &.inactive {
+    & > * {
+      border-bottom-width: 0;
+    }
+  }
 }
 
 .exchange-content-header {
@@ -832,4 +842,11 @@ tbody.orderbook > tr.my-order > td {
       margin-top: 0;
     }
   }
+}
+
+html,
+body {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }

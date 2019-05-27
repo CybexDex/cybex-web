@@ -1,4 +1,5 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 import AccountSelector from "./AccountSelector";
@@ -79,7 +80,7 @@ class AccountPermissionRow extends React.Component {
         <td>{this.props.weights[item_id]}</td>
         <td>
           <button
-            className="button outline"
+            className="button"
             onClick={this.props.onRemoveItem.bind(this, item_id, suffix)}
           >
             <Translate content="account.votes.remove_witness" />

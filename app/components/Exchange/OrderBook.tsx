@@ -95,8 +95,8 @@ const fixArray = (list, cutCondition, fixedLength, filler) => {
   return !cutCondition || !list || !Array.isArray(list) || !fixedLength
     ? list
     : list.length > fixedLength
-      ? list.slice(0, fixedLength)
-      : [...list, ...new Array(fixedLength - list.length).fill(filler)];
+    ? list.slice(0, fixedLength)
+    : [...list, ...new Array(fixedLength - list.length).fill(filler)];
 };
 
 const cellStyle = width => ({
@@ -206,8 +206,8 @@ let OrderBookRowVertical = class extends React.Component<
     let integerClass = isCall
       ? "orderHistoryCall"
       : isBid
-        ? "orderHistoryBid"
-        : "orderHistoryAsk";
+      ? "orderHistoryBid"
+      : "orderHistoryAsk";
 
     let price = (
       <PriceText
@@ -606,7 +606,11 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
       tooSmall,
       maxDigits: newMaxDigits
     };
-    if (state.digits > newMaxDigits || newMaxDigits != lastMaxDigits || tooSmall !== lastTooSmall) {
+    if (
+      state.digits > newMaxDigits ||
+      newMaxDigits != lastMaxDigits ||
+      tooSmall !== lastTooSmall
+    ) {
       newState.digits = tooSmall ? newMaxDigits : newMaxDigits - 2;
     }
     return newState;
@@ -781,23 +785,27 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
     //   accum += order.amount;
     //   order.accum = accum;
     // });
-    bidRows.filter(b => b).forEach(order => {
-      let amount = order.isBid()
-        ? order.amountToReceive().amount
-        : order.amountForSale().amount;
-      maxBid = Math.max(maxBid, amount);
-      accum += amount;
-      order["accum"] = accum;
-    });
+    bidRows
+      .filter(b => b)
+      .forEach(order => {
+        let amount = order.isBid()
+          ? order.amountToReceive().amount
+          : order.amountForSale().amount;
+        maxBid = Math.max(maxBid, amount);
+        accum += amount;
+        order["accum"] = accum;
+      });
     accum = 0;
-    askRows.filter(a => a).forEach(order => {
-      let amount = order.isBid()
-        ? order.amountToReceive().amount
-        : order.amountForSale().amount;
-      maxAsk = Math.max(maxAsk, amount);
-      accum += amount;
-      order["accum"] = accum;
-    });
+    askRows
+      .filter(a => a)
+      .forEach(order => {
+        let amount = order.isBid()
+          ? order.amountToReceive().amount
+          : order.amountForSale().amount;
+        maxAsk = Math.max(maxAsk, amount);
+        accum += amount;
+        order["accum"] = accum;
+      });
     let total = Math.max(
       ((bidRows as any).lastOne() && (bidRows as any).lastOne().accum) || 0,
       ((askRows as any).lastOne() && (askRows as any).lastOne().accum) || 0

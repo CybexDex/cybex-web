@@ -195,7 +195,7 @@ let Button = class extends React.Component<ButtonProps, any> {
     return link ? (
       <a
         href={link}
-        target="_blank"
+        target={navigator.userAgent.includes("iPhone") ? "" : "_blank"}
         {...this.props}
         className={classnames(loading ? "loading" : "", disabled)}
         style={

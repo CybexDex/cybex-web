@@ -227,6 +227,70 @@ class SettingsStore extends AbstractStore<any> {
       this.marketsKey = this._getChainKey("userMarkets");
       this.fp = Math.floor(Math.random() * 100) + Date.now();
       let allDefaultMarkets = new Set();
+      const DefaultM = {
+        "1.3.0": {
+          code: 0,
+          data: [
+            "1.3.28",
+            "1.3.5",
+            "1.3.4",
+            "1.3.6",
+            "1.3.11",
+            "1.3.9",
+            "1.3.23",
+            "1.3.24",
+            "1.3.21",
+            "1.3.506",
+            "1.3.999",
+            "1.3.1001",
+            "1.3.998"
+          ]
+        },
+        "1.3.2": {
+          code: 0,
+          data: [
+            "1.3.0",
+            "1.3.302",
+            "1.3.19",
+            "1.3.4",
+            "1.3.24",
+            "1.3.499",
+            "1.3.23",
+            "1.3.21",
+            "1.3.430",
+            "1.3.481",
+            "1.3.482",
+            "1.3.502",
+            "1.3.506",
+            "1.3.654",
+            "1.3.8",
+            "1.3.996",
+            "1.3.997",
+            "1.3.501",
+            "1.3.999",
+            "1.3.998",
+            "1.3.1001",
+            "1.3.1382",
+            "1.3.1383"
+          ]
+        },
+        "1.3.3": { code: 0, data: ["1.3.26", "1.3.1000"] },
+        "1.3.27": {
+          code: 0,
+          data: [
+            "1.3.0",
+            "1.3.2",
+            "1.3.3",
+            "1.3.4",
+            "1.3.26",
+            "1.3.999",
+            "1.3.1000",
+            "1.3.1001",
+            "1.3.1002",
+            "1.3.1382"
+          ]
+        }
+      };
       let defaultMarkets = await Promise.all(
         [
           // Main Net
@@ -235,8 +299,7 @@ class SettingsStore extends AbstractStore<any> {
           "1.3.3",
           "1.3.27"
         ].map(baseId =>
-          fetch(`https://app.cybex.io/market_list?base=${baseId}`)
-            .then(res => res.json())
+          Promise.resolve(DefaultM[baseId])
             .then(res => res.data)
             .then((quoteIds: string[]) =>
               Promise.all([

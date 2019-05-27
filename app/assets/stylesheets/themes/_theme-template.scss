@@ -218,10 +218,12 @@
   } // buttons
   .button {
     background: $button-bg-color;
+    border-radius: 4px;
+    border: 1px solid lighten($secondary-button-bg-color, 4%);
     &:hover,
     &:focus,
     &:active {
-      background-color: lighten($button-bg-color, 4%) !important;
+      background-color: lighten($secondary-button-bg-color, 4%) !important;
     }
     &.outline {
       color: $secondary-text-color;
@@ -249,20 +251,32 @@
       );
     }
   }
+  .button.primary {
+    @include color($primary-text-color, $success-color);
+    &:hover,
+    &:focus,
+    &:active {
+      @include color(
+        lighten($primary-text-color, 10%),
+        lighten($success-color, 10%),
+        true
+      );
+    }
+  }
   .header .button,
   .header .button:active {
     background-color: transparent !important;
   }
   .header a.button.create-account {
     transition: color 0s !important;
-    color: $button-bg-color !important;
+    color: $info-color !important;
     > span > svg > path {
-      fill: $button-bg-color;
+      fill: $info-color;
     }
     &:hover {
-      color: lighten($button-bg-color, 10%) !important;
+      color: lighten($info-color, 10%) !important;
       > span > svg > path {
-        fill: lighten($button-bg-color, 10%);
+        fill: lighten($info-color, 10%);
       }
     }
   }
@@ -775,15 +789,15 @@
     }
   } // Exchange
   .mymarkets-header {
-    border-bottom-color: $button-bg-color;
+    // border-bottom-color: $button-bg-color;
     &.inactive {
       border-bottom-color: transparent;
-      color: $secondary-text-color;
+      color: $link-text-color;
     }
   }
   .exchange-content-header {
     color: $light-text-color;
-    background-color: $header-color !important;
+    // background-color: $header-color !important;
     border-bottom: 1px solid $button-bg-color;
     &.bid {
       border-bottom: 1px solid $bid-color;
@@ -872,9 +886,9 @@
       background-color: $bg-color;
     }
   }
-  .mymarkets-header {
-    background-color: $header-color;
-  }
+  // .mymarkets-header {
+  //   background-color: $header-color;
+  // }
   tr.activeMarket,
   tr.activeMarket:hover {
     color: #4c85d8;
@@ -947,7 +961,7 @@
     }
   }
   div.exchange-content-header {
-    background-color: $header-color !important;
+    // background-color: $header-color !important;
   }
   .table > tbody > tr:nth-of-type(even) {
     background-color: lighten($bg-color, 4%);
@@ -1269,7 +1283,7 @@
     a {
       color: $light-text-color;
       &.active {
-        color: $warning-color;
+        color: $success-color;
       }
       &.unsupported {
         > td {
@@ -1331,7 +1345,7 @@
     a {
       color: $primary-text-color;
       &.active {
-        color: $warning-color;
+        color: $success-color;
       }
     }
   }
@@ -1374,7 +1388,6 @@
   .u-userLauncherColor:not([disabled]) {
     background-color: $success-color;
   }
-  
 }
 
 .olDarkTheme .gate_fee .amount-selector {

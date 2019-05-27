@@ -218,7 +218,8 @@ div.modal {
   border: 1px solid #008cba;
 }
 
-div.disabled, form.disabled {
+div.disabled,
+form.disabled {
   &,
   * {
     opacity: 0.8 !important;
@@ -667,4 +668,7 @@ body:not(.native-scroll) {
     content: ":";
     padding-right: 0.5em;
   }
+}
+.no-border {
+  border-width: 0;
 }

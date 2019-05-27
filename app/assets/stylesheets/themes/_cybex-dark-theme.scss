@@ -16,14 +16,15 @@ $panel-bg-color: $color-lead;
 $light-panel-bg-color: rgba(53, 55, 60, 0.89);
 // $light-panel-bg-color: #353742;
 $super-light-panel-bg-color: lighten($light-panel-bg-color, 8%);
-$button-bg-color: #4a90e2;
+$button-bg-color: transparent;
+// $button-bg-color: #4a90e2;
 $secondary-button-bg-color: #546979;
 $input-background: lighten($bg-color, 8%);
 
 $alert-color: $error-text-color;
 $info-color: #4a90e2;
-$success-color: #18bc9c;
-$warning-color: $color-orange;
+$success-color: $color-orange;
+$warning-color: $color-warn;
 $fee-color: $secondary-text-color;
 
 // Exchange colors

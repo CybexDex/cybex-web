@@ -46,6 +46,9 @@ const icons = {
   lock: {
     base: require("./icons/ic_lock_outline.svg")
   },
+  book: {
+    base: require("./icons/ic_book.png")
+  },
   lockWhite: {
     base: require("./icons/ic_info_outline_white.svg")
   },

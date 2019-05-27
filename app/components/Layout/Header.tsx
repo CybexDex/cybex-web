@@ -285,7 +285,7 @@ let Header = class extends React.Component<any, any> {
         {this.props.locked ? (
           <a
             style={{ padding: "1rem" }}
-            className="button"
+            className="button no-border"
             href="javascript:;"
             onClick={this._toggleLock.bind(this)}
             data-class="unlock-tooltip"
@@ -299,7 +299,7 @@ let Header = class extends React.Component<any, any> {
           <a
             style={{ padding: "1rem" }}
             href="javascript:;"
-            className="button"
+            className="button no-border"
             onClick={this._toggleLock.bind(this)}
             data-class="unlock-tooltip"
             data-tip={unlocked_tip}
@@ -311,7 +311,6 @@ let Header = class extends React.Component<any, any> {
         )}
       </div>
     ) : null;
-
 
     // Account selector: Only active inside the exchange
     let accountsDropDown = null,
@@ -485,7 +484,7 @@ let Header = class extends React.Component<any, any> {
               <div className="grp-menu-item">
                 <a
                   style={{ padding: "1rem" }}
-                  className="button"
+                  className="button no-border"
                   href="javascript:;"
                   onClick={this.logout}
                   data-tip={logout_tip}
@@ -525,8 +524,7 @@ Header = connect(
       return {
         contextMenu: ContextMenuStore.getState().menuStore[HeadContextMenuId],
         linkedAccounts: AccountStore.getState().linkedAccounts,
-        currentAccount:
-          AccountStore.getState().currentAccount,
+        currentAccount: AccountStore.getState().currentAccount,
         locked: WalletUnlockStore.getState().locked,
         current_wallet: WalletManagerStore.getState().current_wallet,
         lastMarket: SettingsStore.getState().viewSettings.get(
