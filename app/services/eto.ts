@@ -1,6 +1,6 @@
 import { Serializer, types } from "cybexjs";
 import { calcValue } from "../utils/Asset";
-
+import { BigNumber } from "bignumber.js";
 const {
   static_variant,
   string,
@@ -80,9 +80,10 @@ export namespace Eto {
           this.state = EtoPersonalState.Lock;
         }
         try {
-          this.sum = +calcValue(
+          this.sum = calcValue(
             (info.records || []).reduce(
-              (sum, next) => sum + +next.op[1].amount.amount,
+              (sum, next) =>
+                new BigNumber(sum).add(next.op[1].amount.amount).toNumber(),
               0
             ),
             5

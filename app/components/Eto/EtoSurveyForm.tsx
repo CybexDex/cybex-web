@@ -77,7 +77,7 @@ export const EtoSurveyForm = ({ account, onSubmit }) => {
         <div style={{ margin: "12px -12px" }}>
           <Button
             type="primary"
-            disabled={!agreement}
+            disabled={!agreement || ops.every(value => !value)}
             // loading={this.state.checking}
             style={{ width: "100%" }}
           >

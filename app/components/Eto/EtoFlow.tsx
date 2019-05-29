@@ -1,6 +1,7 @@
 import * as React from "react";
 import { EtoPanel } from "./EtoPanel";
 import counterpart from "counterpart";
+import { Icon } from "../Common";
 
 type FlowStep = {
   title: string;
@@ -9,9 +10,16 @@ type FlowStep = {
   append?: any;
 };
 
-const EtoAppendMark = () => {
-  return <h1>?</h1>;
-};
+const EtoAppendMark = () => (
+  <a
+    href={counterpart.translate("eto_apply.lottery_rule_url")}
+    target={navigator.userAgent.includes("iPhone") ? "" : "_blank"}
+  >
+    <sup>
+      <Icon icon="help" />
+    </sup>
+  </a>
+);
 
 const flow = [
   {
@@ -22,16 +30,17 @@ const flow = [
   { title: "eto_apply.flow.lock", content: "eto_apply.flow.lock_content" },
   {
     title: "eto_apply.flow.draw",
-    content: "eto_apply.flow.draw_content"
-    // append: () => <EtoAppendMark />
+    content: "eto_apply.flow.draw_content",
+    append: <EtoAppendMark />
   },
   { title: "eto_apply.flow.buy", content: "eto_apply.flow.buy_content" }
 ];
 
-const flowCenter = new Array(7).fill(1).map((_, step) => ({
+const flowCenter: FlowStep[] = new Array(7).fill(1).map((_, step) => ({
   title: `eto_apply.center.flow.step_${step + 1}`,
   content: `eto_apply.center.flow.step_content_${step + 1}`,
-  active: step < 3
+  active: step < 3,
+  append: step === 3 ? <EtoAppendMark /> : null
 }));
 
 export const EtoFlow = ({ center = false }) => (
@@ -49,6 +58,7 @@ export const EtoFlow = ({ center = false }) => (
           >
             <h4 style={{ color: "inherit", fontWeight: "bold" }}>
               {counterpart.translate(step.title)}
+              {step.append && step.append}
             </h4>
             <p style={{ opacity: 0.85 }}>
               {counterpart.translate(step.content)}
