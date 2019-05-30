@@ -14,13 +14,14 @@ let ss = new ls(STORAGE_KEY);
 
 const debug = debugGen("EtoStore");
 
-export type EtoState = Eto.EtoInfo & { loading: number };
+export type EtoState = Eto.EtoInfo & { loading: number; rank: null | Eto.Rank };
 class EtoStore extends AbstractStore<EtoState> {
   state: EtoState = {
     state: Eto.EtoPersonalState.Uninit,
     info: null,
     sum: 0,
-    loading: 0
+    loading: 0,
+    rank: null
   };
   constructor() {
     super();
@@ -33,8 +34,12 @@ class EtoStore extends AbstractStore<EtoState> {
       handleApplyDone: EtoActions.setApplyDone,
       handleApplyLockImpl: EtoActions.applyLock,
       handleTokenUpdate: EtoActions.putToken,
-      handleBasicUpdate: EtoActions.putBasic
+      handleBasicUpdate: EtoActions.putBasic,
+      handleRankUpdate: EtoActions.queryRank
     });
+  }
+  handleRankUpdate(rank) {
+    this.setState({ rank });
   }
   reset() {
     this.setState({

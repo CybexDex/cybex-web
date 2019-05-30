@@ -65,6 +65,11 @@ export namespace Eto {
     expiration: number;
     signer: string;
   }
+  export type Rank = {
+    coinAge: [string, number][];
+    lock: [string, number][];
+    timeStamp: Date;
+  };
 
   export class EtoInfo {
     state: EtoPersonalState = EtoPersonalState.Basic;

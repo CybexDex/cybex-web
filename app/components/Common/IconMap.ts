@@ -28,6 +28,12 @@ const icons = {
   logout: {
     base: require("./icons/ic_logout.svg")
   },
+  refresh: {
+    base: require("./icons/ic_refresh.png")
+  },
+  back: {
+    base: require("./icons/ic_back.png")
+  },
   checkbox: {
     base: require("./icons/ic_check_box.svg"),
     active: require("./icons/ic_check_box_active.svg"),

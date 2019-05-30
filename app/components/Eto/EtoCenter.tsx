@@ -11,6 +11,7 @@ import { EtoExplain } from "./EtoRule";
 import { EtoRefreshModal } from "../Modal/EtoRefreshModal";
 import { ModalActions } from "../../actions/ModalActions";
 import { Gtag } from "services/Gtag";
+import { Link } from "react-router-dom";
 
 const EtoRefreshModalID = "#$EtoRefreshModalID";
 
@@ -60,29 +61,33 @@ export const EtoCenterSummary = ({
           </a>
         </div>
         <div style={{ textAlign: "center" }}>
-          <span>{counterpart.translate("eto_apply.center.total")}</span>
+          <span>
+            {counterpart.translate("eto_apply.center.total")}{" "}
+            <a
+              href="javascript:;"
+              style={{ color: "white", textDecoration: "underline" }}
+              onClick={() => {
+                if (ss.get("modal_has_shown_" + EtoRefreshModalID, false)) {
+                  EtoActions.queryInfo(account);
+                } else {
+                  ModalActions.showModal(EtoRefreshModalID, true);
+                }
+              }}
+              // onClick={() => EtoActions.queryInfo(account)}
+            >
+              <Icon icon="refresh" />
+            </a>
+          </span>
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.sum}{" "}
             <small style={{ color: "white" }}>CYB</small>
           </h2>
-          <a
-            href="javascript:;"
+          <Link
+            to="/eto/rank"
             style={{ color: "white", textDecoration: "underline" }}
-            onClick={() => {
-              console.debug(
-                "Refresh: ",
-                ss.get("modal_has_shown_" + EtoRefreshModalID)
-              );
-              if (ss.get("modal_has_shown_" + EtoRefreshModalID, false)) {
-                EtoActions.queryInfo(account);
-              } else {
-                ModalActions.showModal(EtoRefreshModalID, true);
-              }
-            }}
-            // onClick={() => EtoActions.queryInfo(account)}
           >
-            {counterpart.translate("eto_apply.refresh")}
-          </a>
+            {counterpart.translate("eto_apply.rank")}
+          </Link>
         </div>
       </div>
     </div>

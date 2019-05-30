@@ -33,7 +33,11 @@ import LogoutModal, {
   DEFAULT_LOGOUT_MODAL_ID
 } from "components/Modal/LogoutModal";
 import { withRouter } from "react-router-dom";
-
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faBars } from "@fortawesome/fontawesome-free-solid";
+import { library } from "@fortawesome/fontawesome";
+library.add(faChevronLeft);
+library.add(faBars);
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
 import { CybexLogo } from "./Logo";
@@ -417,9 +421,39 @@ let Header = class extends React.Component<any, any> {
       <div className="header menu-group primary with-shadow">
         <div className="show-for-small-only">
           <ul className="primary menu-bar title">
-            <li>
-              <a href="javascript:;" onClick={this._triggerMenu}>
-                <Icon className="icon-32px" name="menu" />
+            <li
+              style={{
+                width: "100vw",
+                display: "flex",
+                justifyContent: "space-between"
+              }}
+            >
+              <a
+                style={{
+                  flex: 0,
+                  minWidth: "64px",
+                  fontSize: "24px",
+                  padding: "16px"
+                }}
+                href="javascript:;"
+                onClick={() => {
+                  ZfApi.publish("mobile-menu", "close");
+                  this.props.history.goBack();
+                }}
+              >
+                <FontAwesomeIcon icon={["fas", "chevron-left"]} />
+              </a>
+              <a
+                style={{
+                  flex: 0,
+                  minWidth: "64px",
+                  fontSize: "24px",
+                  padding: "16px"
+                }}
+                href="javascript:;"
+                onClick={this._triggerMenu}
+              >
+                <FontAwesomeIcon icon={["fas", "bars"]} />
               </a>
             </li>
           </ul>

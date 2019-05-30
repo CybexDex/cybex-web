@@ -12,6 +12,7 @@ import { EtoToken } from "./EtoToken";
 import Translate from "react-translate-component";
 import { LoadingIndicator } from "../LoadingIndicator";
 import { Gtag } from "services/Gtag";
+import { EtoRank } from "./EtoRank";
 
 export const IntroBtn = withRouter<any>(props => {
   return (
@@ -250,6 +251,7 @@ let Eto = ({ etoState }: { etoState: EtoState }) => {
         <Switch>
           <Route path="/eto/" exact component={EtoIntro as any} />
           <Route path="/eto/apply" component={EtoApply as any} />
+          <Route path="/eto/rank" component={EtoRank as any} />
           <Route path="/eto/lock" component={EtoLock as any} />
           <Route path="/eto/token" component={EtoToken as any} />
           <Redirect from="*" to="/eto" />

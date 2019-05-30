@@ -71,6 +71,24 @@ class EtoActions {
         });
     };
   }
+  queryRank(onReject?) {
+    this.addLoading();
+    return dispatch => {
+      fetch(`${ETO_LOCK}api/v1/rank`)
+        .then(res => res.json())
+        .then(rank => {
+          dispatch(rank);
+          this.removeLoading();
+        })
+        .catch(err => {
+          this.removeLoading();
+          if (onReject) {
+            onReject(err);
+          }
+          console.error(err);
+        });
+    };
+  }
   applyLock(value: number, account: AccountMap, onResolve?) {
     this.addLoading();
     return dispatch => {

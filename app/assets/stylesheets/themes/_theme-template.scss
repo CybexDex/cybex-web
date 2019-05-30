@@ -57,6 +57,9 @@
   } // select:hover {
   //   background-color: $panel-bg-color;
   // }
+  .color-success {
+    color: $success-color;
+  }
   .label.success {
     color: $success-color;
     border-color: $success-color;
@@ -175,7 +178,8 @@
       color: darken($secondary-text-color, 10%);
     }
   }
-  .panel-left {
+  .panel-left,
+  .panel-right {
     @include color($light-text-color, $light-panel-bg-color);
     .block-list li > a {
       color: $light-text-color;
