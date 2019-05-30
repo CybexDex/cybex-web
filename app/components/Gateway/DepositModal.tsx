@@ -87,7 +87,11 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       address = depositInfo.address;
     }
     let isEOS =
-      type === "EOS" || type === "ATOM" || type === "IRIS" || type === "XRP";
+      type === "EOS" ||
+      type === "ATOM" ||
+      type === "IRIS" ||
+      type === "XRP" ||
+      type === "LC";
     let memoName = type === "XRP" ? "tag" : "memo";
     return (
       <BaseModal modalId={modalId}>

@@ -22,6 +22,7 @@ export const MARKETS = [
   "JADE.ETH",
   "JADE.BTC",
   "JADE.EOS",
+  "JADE.LC",
   "JADE.LTC",
   "JADE.LHT",
   "JADE.INK",
