@@ -252,9 +252,12 @@ export const JadePool: {
         "JADE.EOS": new GatewayAsset("JADE.EOS", "EOS", ProtocolType.EOS, {
           name: "EOS"
         }),
+<<<<<<< HEAD
         "JADE.LC": new GatewayAsset("JADE.LC", "LC", ProtocolType.EOS, {
           name: "LC"
         }),
+=======
+>>>>>>> eto
         "JADE.XRP": new GatewayAsset("JADE.XRP", "XRP", ProtocolType.XRP, {
           name: "Ripple"
         }),
@@ -309,8 +312,13 @@ export const JadePool: {
           "ATOM",
           ProtocolType.COSMOS,
           {
+<<<<<<< HEAD
             name: "COSMOS(ATOM)"
             // allowWithdraw: false
+=======
+            name: "COSMOS(ATOM)",
+            isDisabled: true
+>>>>>>> eto
           }
         ),
         "JADE.IRIS": new GatewayAsset("JADE.IRIS", "IRIS", ProtocolType.IRIS, {
