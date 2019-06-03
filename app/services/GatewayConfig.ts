@@ -311,8 +311,8 @@ export const JadePool: {
           }
         ),
         "JADE.IRIS": new GatewayAsset("JADE.IRIS", "IRIS", ProtocolType.IRIS, {
-          name: "IRIS Network (IRIS)"
-          // allowWithdraw: false
+          name: "IRIS Network (IRIS)",
+          isDisabled: true
         }),
         "JADE.RING": new GatewayAsset("JADE.RING", "RING", ProtocolType.ERC20, {
           name: "Evolution Land Global Token",

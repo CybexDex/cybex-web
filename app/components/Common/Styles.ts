@@ -69,10 +69,10 @@ export const $styleSelect = (type = "base") => ({
       backgroundColor: isDisabled
         ? null
         : isFocused
-          ? Colors.$colorIndependence
-          : isSelected
-            ? Colors.$colorLead
-            : Colors.$colorAnchor,
+        ? Colors.$colorIndependence
+        : isSelected
+        ? Colors.$colorLead
+        : Colors.$colorAnchor,
       color: isSelected ? Colors.$colorWhite : Colors.$colorWhiteOp8,
       cursor: isDisabled ? "not-allowed" : "default"
     };
