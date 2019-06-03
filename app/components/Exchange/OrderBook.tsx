@@ -323,6 +323,7 @@ let OrderBookHeader = class extends React.PureComponent<
     onTypeChange?;
     maxDigits?;
     digits?;
+    depthStep?;
     onDepthChange;
   },
   any
@@ -349,6 +350,7 @@ let OrderBookHeader = class extends React.PureComponent<
       depthType,
       onTypeChange,
       onDepthTypeChange,
+      depthStep,
       onDepthChange
     } = this.props;
     let { maxDigits, digits } = this.props;
@@ -356,7 +358,7 @@ let OrderBookHeader = class extends React.PureComponent<
     console.debug("OrderBookHeader: ", this.props);
     const maxOption = Math.min(8, maxDigits);
     // const minOption = Math.max(1, maxDigits-2);
-    let combineOptions = new Array(Math.min(4, maxOption))
+    let combineOptions = new Array(depthStep || Math.min(4, maxOption))
       .fill(1)
       .map((v, i) => this.getDepthOption(maxOption - i));
     return (
@@ -843,6 +845,9 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
           onTypeChange={this.setType}
           maxDigits={maxDigits}
           digits={digits}
+          depthStep={
+            quoteSymbol === "CYB" && baseSymbol === "JADE.USDT" ? 6 : null
+          }
           depthType={this.state.depthType}
           onDepthTypeChange={this.setDepthType}
           // basePrecision={base.get("precision")}
