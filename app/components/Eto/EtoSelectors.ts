@@ -13,6 +13,12 @@ export const selectProject = (eto: EtoState) => (id: string) =>
   selectProjects(eto).find(project => project.id === id);
 
 export const selectBanners = (eto: EtoState) => eto.banners;
+export const selectIsUserStatus = (eto: EtoState, projectID: string) =>
+  eto.userInSet[projectID] || {};
+export const selectUserProjectStatus = (eto: EtoState, projectID: string) =>
+  eto.userProjectStatus[projectID] || { current_base_token_count: 0 };
+export const selectIsUserInProject = (eto: EtoState, projectID: string) =>
+  eto.userInSet[projectID] && eto.userInSet[projectID].status === "ok";
 
 export const selectProjectStatus = (etoProject: EtoProject.ProjectDetail) =>
   etoProject.status === EtoProject.EtoStatus.Unstart

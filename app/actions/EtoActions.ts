@@ -36,7 +36,7 @@ const pickKeys = (keys: string[], count = 1) => {
 };
 
 const ProjectServer = __DEV__
-  ? "http://10.18.120.241:3049/api"
+  ? "http://52.76.51.139:3049/api"
   : "http://10.18.120.241:3049/api";
 const ProjectUrls = {
   banner() {
@@ -51,10 +51,10 @@ const ProjectUrls = {
   projectDetailUpdate(projectID: string) {
     return `${ProjectServer}/cybex/project/current?project=${projectID}`;
   },
-  userState(accountName: string, projectID: string) {
+  userState(projectID: string, accountName: string) {
     return `${ProjectServer}/cybex/user/check_status?cybex_name=${accountName}&project=${projectID}`;
   },
-  user(accountName: string, projectID: string) {
+  user(projectID: string, accountName: string) {
     return `${ProjectServer}/cybex/user/current?cybex_name=${accountName}&project=${projectID}`;
   },
   userTradeList(accountName: string, page = 1, limit = 1) {
@@ -315,33 +315,114 @@ class EtoActions {
   }
   // 认购项目部分
   updateBanner() {
-    return dispatch => Promise.resolve(EtoMock.banner).then(dispatch);
-    // fetchUnwrap<EtoProject.Banner[]>(ProjectUrls.banner()).then(dispatch);
+    console.debug("Banner: ", EtoMock.banner);
+    return dispatch =>
+      fetchUnwrap<EtoProject.Banner[]>(ProjectUrls.banner()).then(dispatch);
+    // return dispatch => Promise.resolve(EtoMock.banner).then(dispatch);
   }
   updateProjectList() {
     return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
 
-    // fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
-    //   dispatch
-    // );
-  }
-  loadProjectDetail(id: string) {
-    return dispatch => Promise.resolve(EtoMock.detail).then(dispatch);
-
     // return dispatch =>
-    //   fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetail(id)).then(
+    //   fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
     //     dispatch
     //   );
   }
-  updateProject(id: string) {
+  loadProjectDetail(id: string) {
+    // return dispatch => Promise.resolve(EtoMock.detail).then(dispatch);
+
     return dispatch =>
-      Promise.resolve(EtoMock.current)
-        .then(p => ({ ...p, id }))
-        .then(dispatch);
+      fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetail(id)).then(
+        dispatch
+      );
+  }
+  updateProject(id: string) {
     // return dispatch =>
-    //   fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetailUpdate(id))
+    //   Promise.resolve(EtoMock.current)
     //     .then(p => ({ ...p, id }))
     //     .then(dispatch);
+    return dispatch =>
+      fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetailUpdate(id))
+        .then(p => ({ ...p, id }))
+        .then(dispatch);
+  }
+  updateProjectByUser(id: string, accountName: string) {
+    // return dispatch =>
+    //   Promise.resolve(EtoMock.current)
+    //     .then(p => ({ ...p, id }))
+    //     .then(dispatch);
+    return dispatch =>
+      fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.user(id, accountName))
+        .then(p => ({ ...p, id }))
+        .then(dispatch);
+  }
+  queryUserIn(id: string, accountName: string) {
+    // return dispatch =>
+    //   Promise.resolve(EtoMock.current)
+    //     .then(p => ({ ...p, id }))
+    //     .then(dispatch);
+    return dispatch =>
+      fetchUnwrap<EtoProject.ProjectDetail>(
+        ProjectUrls.userState(id, accountName)
+      )
+        .then(p => ({ ...p, id }))
+        .then(res => {
+          dispatch(res);
+        });
+  }
+
+  applyEto(
+    projectID: string,
+    amount: { asset_id: string; amount: number },
+    account: AccountMap,
+    onResolve?
+  ) {
+    this.addLoading();
+    return dispatch => {
+      WalletUnlockActions.unlock()
+        .then(() => {
+          console.debug("Account: ", account);
+          let availKeys = account
+            .getIn(["active", "key_auths"])
+            .filter(key => key.get(1) >= 1)
+            .map(key => key.get(0))
+            .toJS();
+          let privKey = pickKeys(availKeys)[0];
+          if (!privKey) {
+            throw Error("Privkey Not Found");
+          }
+          return { privKey, pubKey: privKey.toPublicKey().toPublicKeyString() };
+        })
+        .then(async ({ privKey, pubKey }) => {
+          let tx = new TransactionBuilder();
+          let op = tx.get_type_operation("exchange_participate", {
+            payer: account.get("id"),
+            exchange_to_pay: projectID,
+            amount
+          });
+          tx.add_operation(op);
+          await tx.update_head_block();
+          await tx.set_required_fees();
+          await tx.update_head_block();
+          tx.add_signer(privKey);
+          await tx.finalize();
+          await tx.sign();
+          return new Promise((resolve, reject) =>
+            TransactionConfirmActions.confirm(tx, resolve, reject, null)
+          ).then(tx => {
+            dispatch(tx);
+            if (onResolve) {
+              onResolve();
+            }
+            this.removeLoading();
+            return tx;
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.removeLoading();
+        });
+    };
   }
 
   // 其他

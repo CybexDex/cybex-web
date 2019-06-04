@@ -484,6 +484,22 @@ var fee_parameters = static_variant([
   asset_settle_cancel_operation_fee_parameters,
   initiate_crowdfund_operation_fee_parameters,
   participate_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters, // 52
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters
 ]);
 
@@ -1137,6 +1153,107 @@ export const asset_claim_fees = new Serializer("asset_claim_fees", {
   extensions: set(future_extensions)
 });
 
+///////////
+
+export const exchange_check_amount = new Serializer("exchange_check_amount", {
+  asset_id: protocol_id_type("asset"),
+  floor: int64,
+  ceil: int64
+});
+export const exchange_check_once_amount = new Serializer(
+  "exchange_check_once_amount",
+  {
+    asset_id: protocol_id_type("asset"),
+    floor: int64,
+    ceil: int64
+  }
+);
+export const exchange_check_divisible = new Serializer(
+  "exchange_check_divisible",
+  {
+    divisor: asset
+  }
+);
+export const exchange_vesting_policy_wrapper = new Serializer(
+  "exchange_vesting_policy_wrapper",
+  {
+    policy: vesting_policy_initializer
+  }
+);
+
+const eto_extensions = static_variant([
+  exchange_check_amount,
+  exchange_check_once_amount,
+  exchange_check_divisible,
+  exchange_vesting_policy_wrapper
+]);
+
+export const exchange_options = new Serializer("exchange_options", {
+  rate: price,
+  owner_permissions: uint32,
+  flags: uint32,
+  whitelist_authorities: set(protocol_id_type("account")),
+  blacklist_authorities: set(protocol_id_type("account")),
+  extensions: set(eto_extensions),
+  description: string
+});
+
+export const exchange_participate = new Serializer("exchange_participate", {
+  fee: asset,
+  payer: protocol_id_type("account"),
+  exchange_to_pay: protocol_id_type("exchange"),
+  amount: asset,
+  extensions: set(eto_extensions)
+});
+
+export const exchange_create = new Serializer("exchange_create", {
+  fee: asset,
+  name: string,
+  owner: protocol_id_type("account"),
+  options: exchange_options,
+  extensions: set(eto_extensions)
+});
+
+export const exchange_update = new Serializer("exchange_update", {
+  fee: asset,
+  owner: protocol_id_type("account"),
+  exchange_to_update: protocol_id_type("exchange"),
+  new_owner: optional(protocol_id_type("account")),
+  new_options: exchange_options,
+  extensions: set(eto_extensions)
+});
+
+export const exchange_withdraw = new Serializer("exchange_withdraw", {
+  fee: asset,
+  owner: protocol_id_type("account"),
+  exchange_to_withdraw: protocol_id_type("exchange"),
+  amount: asset,
+  extensions: set(eto_extensions)
+});
+export const exchange_deposit = new Serializer("exchange_deposit", {
+  fee: asset,
+  owner: protocol_id_type("account"),
+  exchange_to_deposit: protocol_id_type("exchange"),
+  amount: asset,
+  extensions: set(eto_extensions)
+});
+export const exchange_remove = new Serializer("exchange_remove", {
+  fee: asset,
+  owner: protocol_id_type("account"),
+  exchange_to_remove: protocol_id_type("exchange"),
+  amount: asset,
+  extensions: set(eto_extensions)
+});
+export const exchange_fill = new Serializer("exchange_fill", {
+  fee: asset,
+  payer: protocol_id_type("account"),
+  exchange: protocol_id_type("exchange"),
+  pay: asset,
+  receive: asset,
+  extensions: set(eto_extensions)
+});
+////////
+
 operation.st_operations = [
   transfer, // 0
   limit_order_create, // 1
@@ -1187,10 +1304,21 @@ operation.st_operations = [
   participate_crowdfund,
   withdraw_crowdfund,
   withdraw_crowdfund,
-  withdraw_crowdfund, // 
+  withdraw_crowdfund, //
   withdraw_crowdfund, // 50
   withdraw_crowdfund, // 51
   withdraw_crowdfund, // 52
+  withdraw_crowdfund, // 53
+  withdraw_crowdfund, // 54
+  withdraw_crowdfund, // 55
+  withdraw_crowdfund, // 56
+  withdraw_crowdfund, // 57
+  exchange_create, // 58,
+  exchange_update, // 59
+  exchange_withdraw, // 60
+  exchange_deposit, // 61
+  exchange_remove, // 62
+  exchange_participate // 63
 ];
 
 export const transaction = new Serializer("transaction", {

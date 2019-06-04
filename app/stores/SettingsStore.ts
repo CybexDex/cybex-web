@@ -309,15 +309,19 @@ class SettingsStore extends AbstractStore<any> {
             )
             .then(([baseAsset, ...quoteAssets]) =>
               quoteAssets.map(marketAsset => {
-                allDefaultMarkets.add(marketAsset.get("symbol"));
-                allDefaultMarkets.add(baseAsset.get("symbol"));
-                return [
-                  `${marketAsset.get("symbol")}_${baseAsset.get("symbol")}`,
-                  {
-                    quote: marketAsset.get("symbol"),
-                    base: baseAsset.get("symbol")
-                  }
-                ];
+                try {
+                  allDefaultMarkets.add(marketAsset.get("symbol"));
+                  allDefaultMarkets.add(baseAsset.get("symbol"));
+                  return [
+                    `${marketAsset.get("symbol")}_${baseAsset.get("symbol")}`,
+                    {
+                      quote: marketAsset.get("symbol"),
+                      base: baseAsset.get("symbol")
+                    }
+                  ];
+                } catch (err) {
+                  console.error(err);
+                }
               })
             )
         )

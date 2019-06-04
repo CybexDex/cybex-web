@@ -188,6 +188,14 @@ export namespace EtoProject {
     current_remain_quota_count: number;
   }
 
+  export type UserInStatus = {
+    kyc_status: string;
+    status: string;
+    reason: string;
+  };
+
+  export type UserProjectStatus = { current_base_token_count: number };
+
   export const enum EtoStatus {
     Unstart = "pre",
     Running = "ok",
@@ -223,3 +231,113 @@ export const etoTx = new Serializer("EtoTx", {
   expiration: time_point_sec
 });
 export const EtoRefer = "$#ETO_REFER";
+// import { Serializer } from "../cybex/serializer";
+import { Cybex } from "../../../server-src/cybex";
+
+export namespace EtoOps {
+  export enum exchange_owner_permission_flags {
+    exchange_allow_quote_to_base = 1 << 0 /** allow get base */,
+    exchange_allow_base_to_quote = 1 << 1 /** allow get quote */,
+    exchange_allow_deposit_base = 1 << 2 /** allow can deposit base */,
+    exchange_allow_withdraw_base = 1 << 3 /** allow can withdraw base */,
+    exchange_allow_deposit_quote = 1 << 4 /** allow can deposit quote */,
+    exchange_allow_withdraw_quote = 1 << 5 /** allow can withdraw quote */,
+    exchange_allow_charge_market_fee = 1 <<
+      6 /** allow charge market fee when pays out */,
+    exchange_allow_modify_rate = 1 << 7 /** allow modify rate */,
+    exchange_allow_only_white_list = 1 <<
+      8 /** allow only account in whitelist to participate */
+  }
+
+  export const EXCHANGE_OWNER_PERMISSION_MASK =
+    exchange_owner_permission_flags.exchange_allow_quote_to_base |
+    exchange_owner_permission_flags.exchange_allow_base_to_quote |
+    exchange_owner_permission_flags.exchange_allow_deposit_base |
+    exchange_owner_permission_flags.exchange_allow_withdraw_base |
+    exchange_owner_permission_flags.exchange_allow_deposit_quote |
+    exchange_owner_permission_flags.exchange_allow_withdraw_quote |
+    exchange_owner_permission_flags.exchange_allow_charge_market_fee |
+    exchange_owner_permission_flags.exchange_allow_modify_rate |
+    exchange_owner_permission_flags.exchange_allow_only_white_list;
+  export enum EtoOpsOrder {
+    "create_exchange" = 58,
+    "update_exchange" = 59,
+    "withdraw_exchange" = 60,
+    "deposit_exchange" = 61,
+    "remove_exchange" = 62,
+    "participate_exchange" = 63
+  }
+  export type Asset = {
+    asset_id: string;
+    amount: number | string;
+  };
+  export type Price = {
+    base: Asset;
+    quote: Asset;
+  };
+  export type ExchangeCheckAmount = {
+    asset_id: string;
+    floor: number;
+    ceil: number;
+  };
+  export type ExchangeVestingPolicyWrapper = {
+    policy: any;
+  };
+  export type ExchangeCheckOnceAmount = ExchangeCheckAmount;
+  export type ExchangeCheckDivisible = { divisor: Asset };
+  export type Extensions =
+    | [0, ExchangeCheckAmount]
+    | [1, ExchangeCheckOnceAmount]
+    | [2, ExchangeCheckDivisible]
+    | [3, ExchangeVestingPolicyWrapper];
+  export type ExchangeOptions = {
+    rate: Price;
+    owner_permissions: number;
+    flags: number;
+    whitelist_authorities: string[];
+    blacklist_authorities: string[];
+    extensions: Extensions[];
+    description: string;
+  };
+  export type exchange_create = {
+    name: string;
+    owner?: string;
+    options: ExchangeOptions;
+  };
+  export type ExchangeObj = exchange_create & {
+    id: string;
+    dynamic_exchange_data_id: string;
+    baseAsset: Cybex.Asset;
+    quoteAsset: Cybex.Asset;
+  };
+  export type ExchangeObjDym = {
+    id: string;
+    base_balance: string | number;
+    base_balance_value: number;
+    quote_balance: string | number;
+    quote_balance_value: number;
+    rate: number;
+  };
+  export type Exchange = { ex: ExchangeObj; exd: ExchangeObjDym };
+  export const DefaultFee = {
+    asset_id: "1.3.0",
+    amount: 0
+  };
+
+  export type exchange_update = {
+    owner?: string;
+    options: ExchangeOptions;
+  };
+  export type exchange_withdraw = {
+    name: string;
+    owner?: string;
+    exchange_to_withdraw: string;
+    amount: Asset;
+  };
+  export type exchange_deposit = {
+    name: string;
+    owner?: string;
+    exchange_to_deposit: string;
+    amount: Asset;
+  };
+}

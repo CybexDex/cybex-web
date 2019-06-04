@@ -24,7 +24,10 @@ ChainTypes.object_type = {
   worker: 14,
   balance: 15,
   crowdfund: 16,
-  crowdfund_contract: 17
+  crowdfund_contract: 17,
+  bet: 18,
+  some: 19,
+  exchange: 20
 };
 
 ChainTypes.impl_object_type = {
@@ -108,7 +111,13 @@ ChainTypes.operations = {
   deposit_dice_bet: 54,
   withdraw_dice_bet: 55,
   participate_dice_bet: 56,
-  settle_bet: 57
+  settle_bet: 57,
+  exchange_create: 58, // 58,
+  exchange_update: 59, // 59
+  exchange_withdraw: 60, // 60
+  exchange_deposit: 61, // 61
+  exchange_remove: 62, // 62
+  exchange_participate: 63 // 63
 };
 
 export default ChainTypes;

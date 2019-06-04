@@ -1,10 +1,11 @@
 import * as React from "react";
 import { EtoProject } from "../../services/eto";
 import * as moment from "moment";
-import { EtoTimer } from "./Timer";
+import { EtoTimer, EtoTimerFull } from "./Timer";
 import { BigNumber } from "../../../node_modules/bignumber.js";
 import { connect } from "alt-react";
 import IntlStore from "../../stores/IntlStore";
+import AccountStore from "stores/AccountStore";
 import {
   selectProjectKeywords,
   Locale,
@@ -14,9 +15,12 @@ import {
   selectBanner,
   selectAdv,
   selectTokenTotal,
-  EtoRate
+  EtoRate,
+  selectIsUserInProject,
+  selectIsUserStatus,
+  selectUserProjectStatus
 } from "./EtoSelectors";
-import { ProgressBar, Button, Colors } from "../Common";
+import { ProgressBar, Button, Colors, Checkbox } from "../Common";
 import { ProjectStatus } from "./ProjectStatus";
 import counterpart from "counterpart";
 import { withRouter, RouteComponentProps } from "react-router-dom";
@@ -24,6 +28,9 @@ import { EtoStore } from "../../stores/EtoStore";
 import { EtoActions } from "../../actions/EtoActions";
 import { EtoPanel } from "./EtoPanel";
 import Translate from "react-translate-component";
+import { RouterActions } from "../../actions/RouterActions";
+import { ModalActions } from "../../actions/ModalActions";
+import { DEFAULT_ETOMODAL_ID, EtoLegalModal } from "./EtoLegalModal";
 const InfoItem = ({ label, content }) => (
   <li style={{ fontSize: "14px" }}>
     <span
@@ -41,16 +48,41 @@ const InfoItem = ({ label, content }) => (
     </span>
   </li>
 );
+
 // const projectState
 type ProjectDetailProps = {
   project: EtoProject.ProjectDetail;
   locale?: Locale;
+  isUserIn: boolean;
   [other: string]: any;
 };
 let ProjectDetail = class extends React.Component<
   RouteComponentProps & ProjectDetailProps
 > {
   updateTimer;
+
+  state = { legal: false };
+
+  _renderLegalTip = () => {
+    return (
+      <Checkbox
+        onChange={legal => this.setState({ legal })}
+        active={this.state.legal}
+      >
+        <Translate
+          content="EIO.IHaveRead_1"
+          condition={
+            <a
+              href="javascipt:;"
+              onClick={() => ModalActions.showModal(DEFAULT_ETOMODAL_ID)}
+            >
+              {counterpart.translate("EIO.IHaveRead_2")}
+            </a>
+          }
+        />
+      </Checkbox>
+    );
+  };
   componentWillUnmount() {
     if (this.updateTimer) {
       clearInterval(this.updateTimer);
@@ -59,7 +91,12 @@ let ProjectDetail = class extends React.Component<
   componentWillMount() {
     EtoActions.loadProjectDetail(this.props.match.params["id"]);
     this.updateTimer = setInterval(() => {
+      EtoActions.queryUserIn(this.props.match.params["id"], this.props.account);
       EtoActions.updateProject(this.props.match.params["id"]);
+      EtoActions.updateProjectByUser(
+        this.props.match.params["id"],
+        this.props.account
+      );
     }, 3000);
   }
 
@@ -68,16 +105,12 @@ let ProjectDetail = class extends React.Component<
       return null;
     }
 
-    const { match, project, locale } = this.props;
+    const { match, project, locale, history, isLogin, isUserIn } = this.props;
     const isActive = selectProjectIsActive(project);
+    console.debug("ISACtive: ", isActive, project);
     const status = selectProjectStatus(project);
     const rate = new EtoRate(project);
-    const duration =
-      status === EtoProject.EtoStatus.Finished
-        ? new BigNumber(project.t_total_time || 0).times(1000).toNumber()
-        : new BigNumber(moment.utc(project.start_at).diff(moment(), "s"))
-            .times(1000)
-            .toNumber();
+
     return (
       <div
         className="grid-container row"
@@ -89,7 +122,7 @@ let ProjectDetail = class extends React.Component<
             <div style={{ flexGrow: 1 }}>
               <ProgressBar
                 styleType={isActive ? "primary" : "secondary"}
-                percent={project.current_percent * 100}
+                percent={(project.current_percent || 0) * 100}
               />
             </div>
             <span
@@ -121,12 +154,7 @@ let ProjectDetail = class extends React.Component<
             </h5>
           </div>
           <div style={{ textAlign: "left", margin: "16px 0" }}>
-            <EtoTimer
-              showTip
-              status={status}
-              duration={duration}
-              isActive={isActive}
-            />
+            <EtoTimerFull showTip project={project} />
           </div>
         </div>
         <div className="column small-12 medium-5">
@@ -176,7 +204,44 @@ let ProjectDetail = class extends React.Component<
               }
             />
           </ul>
-
+          <div style={{ margin: "12px" }}>
+            {isLogin ? (
+              (status === EtoProject.EtoStatus.Unstart ||
+                status === EtoProject.EtoStatus.Running) &&
+              !isUserIn ? (
+                <Button type="primary" disabled>
+                  {counterpart.translate("eto_project.fobidden")}
+                </Button>
+              ) : status === EtoProject.EtoStatus.Unstart && isUserIn ? (
+                <>
+                  {this._renderLegalTip()}
+                  <Button type="primary" disabled>
+                    {counterpart.translate("EIO.pre")}
+                  </Button>
+                </>
+              ) : status === EtoProject.EtoStatus.Running && isUserIn ? (
+                <>
+                  {this._renderLegalTip()}
+                  <Button
+                    type="primary"
+                    disabled={!this.state.legal}
+                    onClick={() => history.push(`/eto/join/${project.id}`)}
+                  >
+                    {counterpart.translate("EIO.participate")}
+                  </Button>
+                </>
+              ) : null
+            ) : (
+              <Button
+                onClick={() => {
+                  RouterActions.setDeferRedirect(history.location.pathname);
+                  history.push("/login");
+                }}
+              >
+                {counterpart.translate("EIO.Not_login")}
+              </Button>
+            )}
+          </div>
           {/* <h4>{selectProjectKeywords(project, locale)}</h4> */}
         </div>
         <div className="column small-12">
@@ -185,20 +250,48 @@ let ProjectDetail = class extends React.Component<
             <p style={{ fontSize: "14px" }}>{selectAdv(project, locale)}</p>
           </EtoPanel>
         </div>
+        <EtoLegalModal modalId={DEFAULT_ETOMODAL_ID} />
       </div>
     );
   }
 };
+
+export function isLogin(accountStore): boolean {
+  let state = {
+    account: AccountStore.getState().currentAccount,
+    linkedAccounts: AccountStore.getState().linkedAccounts,
+    myIgnoredAccounts: AccountStore.getState().myIgnoredAccounts,
+    passwordAccount: AccountStore.getState().passwordAccount
+  };
+  let accountCount =
+    state.linkedAccounts.size +
+    state.myIgnoredAccounts.size +
+    (state.passwordAccount && state.account ? 1 : 0);
+  return !!accountCount;
+}
+
 ProjectDetail = withRouter<RouteComponentProps & ProjectDetailProps>((connect(
   ProjectDetail,
   {
     listenTo() {
-      return [IntlStore, EtoStore];
+      return [IntlStore, EtoStore, AccountStore];
     },
     getProps({ match }) {
+      let project = selectProject(EtoStore.getState())(match.params.id);
+
       return {
-        project: selectProject(EtoStore.getState())(match.params.id),
-        locale: IntlStore.getState().currentLocale
+        isLogin: isLogin(AccountStore),
+        account: AccountStore.getState().currentAccount,
+        isUserIn: selectIsUserInProject(EtoStore.getState(), match.params.id),
+        locale: IntlStore.getState().currentLocale,
+        currentAccount: AccountStore.getState().currentAccount,
+        userStatus: selectIsUserStatus(EtoStore.getState(), match.params.id),
+        userProjectStatus: selectUserProjectStatus(
+          EtoStore.getState(),
+          match.params.id
+        ),
+        project,
+        asset: project && project.base_token
       };
     }
   }

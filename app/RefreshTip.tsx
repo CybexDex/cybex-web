@@ -5,7 +5,7 @@ import willTransitionTo from "./routerTransition";
 export const RefreshTip = class extends React.Component<any> {
   componentDidMount() {
     let currentPath = location.pathname || "/";
-    location.reload();
+    // location.reload();
     WalletUnlockActions.lock();
     willTransitionTo(false, () => {
       console.debug("Reconnect Transition");

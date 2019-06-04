@@ -14,6 +14,7 @@ export const ProjectList = ({
       .filter(p => selectProjectStatus(p) !== EtoProject.EtoStatus.Failed)
       .map((project, i) => (
         <EtoPanel
+          key={i}
           style={{
             flex: "1 0 calc(50% - 24px)",
             minWidth: "396px",
@@ -21,11 +22,12 @@ export const ProjectList = ({
           }}
         >
           <ProjectCard
-            // style={{
-            //   flex: "1 0 calc(50% - 24px)",
-            //   minWidth: "396px",
-            //   // margin: "12px"
-            // }}
+            style={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between"
+            }}
             key={i}
             project={project}
           />

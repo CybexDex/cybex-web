@@ -13,12 +13,19 @@ const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
 
 const debug = debugGen("EtoStore");
-
+type UserInStatus = {
+  [projectId: string]: EtoProject.UserInStatus;
+};
+type UserProjectStatus = {
+  [projectId: string]: EtoProject.UserProjectStatus;
+};
 export type EtoState = Eto.EtoInfo & {
   loading: number;
   rank: null | Eto.Rank;
   projects: EtoProject.ProjectDetail[];
   banners: EtoProject.Banner[];
+  userInSet: UserInStatus;
+  userProjectStatus: UserProjectStatus;
 };
 class EtoStore extends AbstractStore<EtoState> {
   state: EtoState = {
@@ -28,7 +35,9 @@ class EtoStore extends AbstractStore<EtoState> {
     loading: 0,
     rank: null,
     projects: [],
-    banners: []
+    banners: [],
+    userInSet: {},
+    userProjectStatus: {}
   };
   constructor() {
     super();
@@ -46,6 +55,8 @@ class EtoStore extends AbstractStore<EtoState> {
       handleBannerUpdate: EtoActions.updateBanner,
       handleProjectListUpdate: EtoActions.updateProjectList,
       handleProjectDetailUpdate: EtoActions.updateProject,
+      handleUserProjectDetail: EtoActions.updateProjectByUser,
+      handleUserIn: EtoActions.queryUserIn,
       handleProjectDetail: EtoActions.loadProjectDetail
     });
   }
@@ -123,6 +134,23 @@ class EtoStore extends AbstractStore<EtoState> {
   }
   handleProjectDetail(project: EtoProject.ProjectDetail) {
     this.handleProjectDetailUpdate(project);
+  }
+  handleUserProjectDetail(project: EtoProject.ProjectDetail) {
+    this.setState({
+      userProjectStatus: {
+        ...((this as any).getInstance().getState()
+          .userProjectStatus as UserProjectStatus),
+        [project.id]: project
+      }
+    });
+  }
+  handleUserIn(project: EtoProject.ProjectDetail) {
+    this.setState({
+      userInSet: {
+        ...((this as any).getInstance().getState().userInSet as UserInStatus),
+        [project.id]: project
+      }
+    });
   }
 }
 
