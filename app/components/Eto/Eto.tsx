@@ -13,7 +13,8 @@ import Translate from "react-translate-component";
 import { LoadingIndicator } from "../LoadingIndicator";
 import { Gtag } from "services/Gtag";
 import { EtoRank } from "./EtoRank";
-
+import { ProjectMain } from "./ProjectMain";
+import { ProjectDetail } from "./ProjectDetail";
 export const IntroBtn = withRouter<any>(props => {
   return (
     <div {...props}>
@@ -140,10 +141,10 @@ export const EtoBanner = () => (
         }}
       >
         {new Array(2).fill(1).map((_, i) => (
-          <div className="wrapper-row" style={{ display: "table-row" }}>
+          <div key={i} className="wrapper-row" style={{ display: "table-row" }}>
             {new Array(2).fill(1).map((_, j) => (
               <EtoSuperPoint
-                key={i + j}
+                key={`${i}${j}`}
                 style={{
                   textAlign: "left",
                   display: "table-cell",
@@ -187,6 +188,7 @@ export const EtoIntro = () => {
   return (
     <div className="grid-container">
       <div style={{ padding: "6px" }} />
+      <ProjectMain />
       <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
         <div
           className="column small-12 medium-6"
@@ -254,6 +256,8 @@ let Eto = ({ etoState }: { etoState: EtoState }) => {
           <Route path="/eto/rank" component={EtoRank as any} />
           <Route path="/eto/lock" component={EtoLock as any} />
           <Route path="/eto/token" component={EtoToken as any} />
+          <Route path="/eto/detail/:id" component={ProjectDetail as any} />
+          <Route path="/eto/join/:id" component={ProjectDetail as any} />
           <Redirect from="*" to="/eto" />
         </Switch>
       </div>

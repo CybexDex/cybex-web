@@ -101,6 +101,101 @@ export namespace Eto {
   }
 }
 
+export namespace EtoProject {
+  export type Banner = {
+    adds_banner: string;
+    adds_banner__lang_en: string;
+    adds_banner_mobile: string;
+    adds_banner_mobile__lang_en: string;
+    banner: number; // 排序
+    id: string; // 关联项目
+    index: number;
+  };
+  export type SelectedBanner = {
+    imgUrl: string;
+    projectLink: string;
+  };
+
+  export interface ProjectDetail {
+    eto_rate: string;
+    quote_accuracy: number;
+    user_buy_token: string;
+    lock_at: null;
+    update_at: string;
+    base_token: string;
+    type: string;
+    base_soft_cap: null;
+    base_min_quota: number;
+    status: string;
+    token: string;
+    quote_token_count: string;
+    receive_address: string;
+    offer_at: null;
+    current_user_count: number;
+    id: string;
+    base_token_count: number;
+    base_token_name: string;
+    finish_at: string;
+    close_at: null;
+    token_name: string;
+    start_at: string;
+    token_count: number;
+    base_accuracy: number;
+    base_max_quota: number;
+    end_at: string;
+    control_status: string;
+    current_base_token_count: number;
+    deleted: number;
+    created_at: string;
+    name: string;
+    score: number;
+    control: string;
+    banner: number;
+    is_user_in: string;
+    _id: string;
+    account: string;
+    project: string;
+    timestamp: string;
+    __v: number;
+    parent: string;
+    t_total_time: string;
+    create_user_type: string;
+    adds_logo: string;
+    adds_advantage: string;
+    adds_advantage__lang_en: string;
+    adds_token_total__lang_en: string;
+    adds_website__lang_en: string;
+    adds_whitepaper: string;
+    adds_website: string;
+    adds_banner_mobile: string;
+    adds_banner__lang_en: string;
+    adds_logo_mobile: string;
+    adds_keyword: string;
+    adds_buy_desc__lang_en: string;
+    adds_detail: string;
+    adds_buy_desc: string;
+    adds_whitepaper__lang_en: string;
+    adds_token_total: string;
+    adds_logo__lang_en: string;
+    adds_keyword__lang_en: string;
+    adds_detail__lang_en: string;
+    adds_logo_mobile__lang_en: string;
+    adds_banner: string;
+    adds_banner_mobile__lang_en: string;
+    current_percent: number;
+    index: number;
+    rate: string;
+    current_remain_quota_count: number;
+  }
+
+  export const enum EtoStatus {
+    Unstart = "pre",
+    Running = "ok",
+    Finished = "finish",
+    Failed = "fail"
+  }
+}
+
 const etoOps = {
   Query: string,
   Token: string,

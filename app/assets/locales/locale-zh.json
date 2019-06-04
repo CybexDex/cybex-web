@@ -113,7 +113,7 @@
   "EIO": {
     "ok": "正在进行",
     "pre": "即将开始",
-    "finish": "已经结束",
+    "finish": "已结束",
     "pause": "暂停",
     "current_ETH_balance": "当前您的ETH资产的可用余额为",
     "Popular_ETOs": "热门ETO",
@@ -151,6 +151,7 @@
     "Raised": "当前完成认购",
     "Redeeming_Ratio": "兑换比例",
     "Personal_Limit": "个人限额",
+    "Total": "总额",
     "Left": "距离结束",
     "In": "距离开始",
     "Ended": "完成时间",
@@ -2128,5 +2129,15 @@
     "amount": "数量",
     "lottery_rule_url": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/lotteryrules-CN.pdf",
     "next": "下一步"
+  },
+  "eto_project": {
+    "market": "开放交易对",
+    "more": "更多详情请关注",
+    "lockup": "ETO锁定期",
+    "no_lockup": "无锁定期",
+    "distribution": "代币分发",
+    "dist_cybex": "ETO结束后即上线Cybex交易所",
+    "current_currency": "目前流通量",
+    "no_currency": "尚未有DOT在市面流通"
   }
 }

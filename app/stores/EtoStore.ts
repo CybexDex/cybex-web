@@ -8,20 +8,27 @@ import AccountActions from "actions/AccountActions";
 
 import ls from "lib/common/localStorage";
 import { AbstractStore } from "./AbstractStore";
-import { Eto } from "services/eto";
+import { Eto, EtoProject } from "services/eto";
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
 
 const debug = debugGen("EtoStore");
 
-export type EtoState = Eto.EtoInfo & { loading: number; rank: null | Eto.Rank };
+export type EtoState = Eto.EtoInfo & {
+  loading: number;
+  rank: null | Eto.Rank;
+  projects: EtoProject.ProjectDetail[];
+  banners: EtoProject.Banner[];
+};
 class EtoStore extends AbstractStore<EtoState> {
   state: EtoState = {
     state: Eto.EtoPersonalState.Uninit,
     info: null,
     sum: 0,
     loading: 0,
-    rank: null
+    rank: null,
+    projects: [],
+    banners: []
   };
   constructor() {
     super();
@@ -35,7 +42,11 @@ class EtoStore extends AbstractStore<EtoState> {
       handleApplyLockImpl: EtoActions.applyLock,
       handleTokenUpdate: EtoActions.putToken,
       handleBasicUpdate: EtoActions.putBasic,
-      handleRankUpdate: EtoActions.queryRank
+      handleRankUpdate: EtoActions.queryRank,
+      handleBannerUpdate: EtoActions.updateBanner,
+      handleProjectListUpdate: EtoActions.updateProjectList,
+      handleProjectDetailUpdate: EtoActions.updateProject,
+      handleProjectDetail: EtoActions.loadProjectDetail
     });
   }
   handleRankUpdate(rank) {
@@ -86,6 +97,32 @@ class EtoStore extends AbstractStore<EtoState> {
     console.debug("Personal Info: ", info);
     info.state = Eto.EtoPersonalState.ApplyDone;
     this.setState({ ...(this as any).getInstance().getState(), ...info });
+  }
+
+  handleBannerUpdate(banners: EtoProject.Banner[]) {
+    this.setState({ banners });
+  }
+  handleProjectListUpdate(projects: EtoProject.ProjectDetail[]) {
+    this.setState({ projects });
+  }
+  handleProjectDetailUpdate(project: EtoProject.ProjectDetail) {
+    let newProjects = ((this as any).getInstance().getState()
+      .projects as EtoProject.ProjectDetail[]).map(oldP =>
+      project.id === oldP.id
+        ? {
+            ...oldP,
+            ...project
+          }
+        : oldP
+    );
+    if (!newProjects.find(p => p.id === project.id)) {
+      newProjects = [project];
+    }
+    console.debug("NewProject: ", newProjects);
+    this.setState({ projects: newProjects });
+  }
+  handleProjectDetail(project: EtoProject.ProjectDetail) {
+    this.handleProjectDetailUpdate(project);
   }
 }
 

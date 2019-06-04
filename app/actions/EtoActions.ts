@@ -9,10 +9,11 @@ import { NotificationActions } from "actions//NotificationActions";
 import { ops, PrivateKey, Signature, TransactionBuilder } from "cybexjs";
 import { Map } from "immutable";
 import { CustomTx } from "CustomTx";
-import { Eto, etoTx } from "services/eto";
+import { Eto, etoTx, EtoProject } from "services/eto";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { ETO_LOCK } from "api/apiConfig";
 import TransactionConfirmActions from "actions/TransactionConfirmActions";
+import { EtoMock } from "../components/Eto/mock";
 
 const debug = debugGen("EtoActions");
 
@@ -34,9 +35,48 @@ const pickKeys = (keys: string[], count = 1) => {
   return res;
 };
 
+const ProjectServer = __DEV__
+  ? "http://10.18.120.241:3049/api"
+  : "http://10.18.120.241:3049/api";
+const ProjectUrls = {
+  banner() {
+    return `${ProjectServer}/cybex/projects/banner`;
+  },
+  projects(limit = 10) {
+    return `${ProjectServer}/cybex/projects?limit=${limit}`;
+  },
+  projectDetail(projectID: string) {
+    return `${ProjectServer}/cybex/project/detail?project=${projectID}`;
+  },
+  projectDetailUpdate(projectID: string) {
+    return `${ProjectServer}/cybex/project/current?project=${projectID}`;
+  },
+  userState(accountName: string, projectID: string) {
+    return `${ProjectServer}/cybex/user/check_status?cybex_name=${accountName}&project=${projectID}`;
+  },
+  user(accountName: string, projectID: string) {
+    return `${ProjectServer}/cybex/user/current?cybex_name=${accountName}&project=${projectID}`;
+  },
+  userTradeList(accountName: string, page = 1, limit = 1) {
+    return `${ProjectServer}/cybex/trade/list?cybex_name=${accountName}&page=${page}&limit=${limit}`;
+  }
+};
+
+const fetchUnwrap = <T = any>(url: string) =>
+  fetch(url)
+    .then(res => res.json())
+    .then(res => {
+      if (res.code === 0) {
+        return res.result as T;
+      } else {
+        throw new Error(res.code);
+      }
+    });
+
 type AccountMap = Map<string, any>;
 
 class EtoActions {
+  /// Eto 锁仓查询部分
   queryInfo(account: AccountMap, onReject?) {
     this.addLoading();
     return dispatch => {
@@ -232,7 +272,6 @@ class EtoActions {
   setApplyDone() {
     return true;
   }
-
   /**
    * 注册一个查询签名
    *
@@ -274,7 +313,38 @@ class EtoActions {
     (tx as Eto.RequestWithSigner).signer = signedHex;
     return tx as Eto.RequestWithSigner;
   }
+  // 认购项目部分
+  updateBanner() {
+    return dispatch => Promise.resolve(EtoMock.banner).then(dispatch);
+    // fetchUnwrap<EtoProject.Banner[]>(ProjectUrls.banner()).then(dispatch);
+  }
+  updateProjectList() {
+    return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
 
+    // fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
+    //   dispatch
+    // );
+  }
+  loadProjectDetail(id: string) {
+    return dispatch => Promise.resolve(EtoMock.detail).then(dispatch);
+
+    // return dispatch =>
+    //   fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetail(id)).then(
+    //     dispatch
+    //   );
+  }
+  updateProject(id: string) {
+    return dispatch =>
+      Promise.resolve(EtoMock.current)
+        .then(p => ({ ...p, id }))
+        .then(dispatch);
+    // return dispatch =>
+    //   fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetailUpdate(id))
+    //     .then(p => ({ ...p, id }))
+    //     .then(dispatch);
+  }
+
+  // 其他
   addLoading() {
     return 1;
   }

@@ -74,7 +74,8 @@ let Button = class extends React.Component<ButtonProps, any> {
       color: Colors.$colorOrange,
       border: `1px solid ${Colors.$colorOrange}`,
       ":hover": {
-        background: Colors.$colorOrangeLight
+        background: Colors.$colorOrangeLight,
+        color: Colors.$colorWhite
       },
       ":focus": {
         background: Colors.$colorOrangeLight
