@@ -304,6 +304,10 @@ export const JadePool: {
           name: "TokenClub",
           contractAddress: "0x4824a7b64e3966b0133f4f4ffb1b9d6beb75fff7"
         }),
+        "JADE.POS": new GatewayAsset("JADE.POS", "POS", ProtocolType.ERC20, {
+          name: "Pos",
+          contractAddress: "0x73c0d0abe065acdbb52b25412593c9600366f78b"
+        }),
         "JADE.ATOM": new GatewayAsset(
           "JADE.ATOM",
           "ATOM",

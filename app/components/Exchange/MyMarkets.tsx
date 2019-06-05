@@ -57,6 +57,7 @@ const BTC_MARKETS = [
   "JADE.GNX",
   "JADE.KEY",
   "JADE.TCT",
+  "JADE.POS",
   "JADE.ATOM",
   "JADE.IRIS",
   "JADE.RING",
@@ -286,9 +287,8 @@ export class MarketGroup extends React.Component<any, any> {
             name={
               base === "others" ? (
                 <span>
-                  <AssetName name={market.quote} />:<AssetName
-                    name={market.base}
-                  />
+                  <AssetName name={market.quote} />:
+                  <AssetName name={market.base} />
                 </span>
               ) : (
                 <AssetName dataPlace="left" name={market.quote} />
