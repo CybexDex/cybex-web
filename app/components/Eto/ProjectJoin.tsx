@@ -466,7 +466,15 @@ let ProjectJoin = class extends React.Component<
         ),
         asset_id: this.props.asset.get("id")
       },
-      this.props.currentAccount as any
+      this.props.currentAccount as any,
+      <Translate
+        component="h4"
+        content="eto_project.join_confirm"
+        quoteAsset={project.token_name}
+        quoteAmount={amount}
+        baseAsset={project.base_token_name}
+        baseAmount={rate.convertQuoteToBase(amount)}
+      />
     );
   };
 

@@ -320,11 +320,11 @@ class EtoActions {
     // return dispatch => Promise.resolve(EtoMock.banner).then(dispatch);
   }
   updateProjectList() {
-    // return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
-    return dispatch =>
-      fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
-        dispatch
-      );
+    return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
+    // return dispatch =>
+    //   fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
+    //     dispatch
+    //   );
   }
   loadProjectDetail(id: string) {
     // return dispatch => Promise.resolve(EtoMock.detail).then(dispatch);
@@ -372,6 +372,7 @@ class EtoActions {
     projectID: string,
     amount: { asset_id: string; amount: number },
     account: AccountMap,
+    append: any,
     onResolve?
   ) {
     this.addLoading();
@@ -405,12 +406,9 @@ class EtoActions {
           await tx.finalize();
           await tx.sign();
           return new Promise((resolve, reject) =>
-            TransactionConfirmActions.confirm(tx, resolve, reject, null)
+            TransactionConfirmActions.confirm(tx, resolve, reject, append)
           ).then(tx => {
             dispatch(tx);
-            if (onResolve) {
-              onResolve();
-            }
             this.removeLoading();
             return tx;
           });

@@ -669,7 +669,8 @@
     "deposit_dice_bet": "{account} 向竞猜游戏注资",
     "withdraw_dice_bet": "{account} 从竞猜游戏资金池中提款",
     "participate_dice_bet": "{account} 进行了一次竞猜游戏投注",
-    "settle_bet": "{account} 参与了一次竞猜游戏，获得 {amount} 个 {asset}"
+    "settle_bet": "{account} 参与了一次竞猜游戏，获得 {amount} 个 {asset}",
+    "exchange_participate": "{account} 使用 {amount} 个 {asset} 参与了一次ETO认购"
   },
   "transaction": {
     "sent": "发送",
@@ -737,6 +738,7 @@
     "create_worker": "创建雇员，要求报酬为",
     "custom": "创建自定义操作",
     "order_id": "订单ID",
+    "exchange_participate": "参与ETO认购",
     "trxTypes": {
       "transfer": "转账",
       "limit_order_create": "限价单",
@@ -2143,6 +2145,7 @@
     "distribution": "代币分发",
     "dist_cybex": "ETO结束后即上线Cybex交易所",
     "current_currency": "目前流通量",
+    "join_confirm": "将使用%(baseAmount)s %(baseAsset)s 认购 %(quoteAmount)s %(quoteAsset)s",
     "no_currency": "尚未有DOT在市面流通"
   }
 }

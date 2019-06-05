@@ -1182,11 +1182,25 @@ class Operation extends React.PureComponent<any, any> {
         );
         break;
       case "settle_bet":
-        console.debug("Bet: ");
-
         column = (
           <TranslateWithLinks
             string="operation.settle_bet"
+            keys={[
+              { type: "account", value: op[1].payer, arg: "account" },
+              {
+                type: "amount",
+                value: { asset_id: op[1].asset_id, amount: op[1].refund },
+                arg: "amount"
+              },
+              { type: "asset", value: op[1].asset_id, arg: "asset" }
+            ]}
+          />
+        );
+        break;
+      case "exchange_participate":
+        column = (
+          <TranslateWithLinks
+            string="operation.exchange_participate"
             keys={[
               { type: "account", value: op[1].payer, arg: "account" },
               {

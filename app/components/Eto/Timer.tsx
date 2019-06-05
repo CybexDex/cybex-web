@@ -43,40 +43,54 @@ export const EtoTimer = connect<
 
     status: EtoProject.EtoStatus;
     locale?: any;
-  }) => (
-    <div
-      style={{
-        fontSize: "20px",
-        textAlign: "center",
-        display: "inline-flex",
-        alignItems: "center",
-        color:
-          status === EtoProject.EtoStatus.Finished
-            ? Colors.$colorWhite
-            : Colors.$colorOrange
-      }}
-    >
-      <Icon icon="time" />
-      {showTip && (
-        <Translate
-          style={{ marginLeft: "6px" }}
-          content={
-            status === EtoProject.EtoStatus.Unstart
-              ? "EIO.In"
-              : status === EtoProject.EtoStatus.Finished
-              ? "EIO.Ended"
-              : "EIO.Left"
-          }
-        />
-      )}
-      <span style={{ marginLeft: "12px" }}>
-        {human(duration, {
-          language: Intl[locale] || "en"
-          // units: ["d", "h", "m", "s"]
-        })}
-      </span>
-    </div>
-  ),
+  }) => {
+    let language = Intl[locale] || "en";
+    let humanizer = human.humanizer({
+      language,
+      languages: {
+        en: {
+          y: () => "y",
+          mo: () => "mo",
+          w: () => "w",
+          d: () => "d",
+          h: () => "h",
+          m: () => "m",
+          s: () => "s",
+          ms: () => "ms"
+        }
+      }
+    });
+    let durStr = humanizer(duration);
+    return (
+      <div
+        style={{
+          fontSize: "20px",
+          textAlign: "center",
+          display: "inline-flex",
+          alignItems: "center",
+          color:
+            status === EtoProject.EtoStatus.Finished
+              ? Colors.$colorWhite
+              : Colors.$colorOrange
+        }}
+      >
+        <Icon icon="time" />
+        {showTip && (
+          <Translate
+            style={{ marginLeft: "6px" }}
+            content={
+              status === EtoProject.EtoStatus.Unstart
+                ? "EIO.In"
+                : status === EtoProject.EtoStatus.Finished
+                ? "EIO.Ended"
+                : "EIO.Left"
+            }
+          />
+        )}
+        <span style={{ marginLeft: "12px" }}>{durStr}</span>
+      </div>
+    );
+  },
   {
     listenTo() {
       return [IntlStore];
@@ -133,6 +147,25 @@ export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
     if (duration === null || duration === undefined) {
       return null;
     }
+    let language = Intl[locale] || "en";
+    let humanizer = human.humanizer({
+      language,
+      languages: {
+        en: {
+          y: () => "y",
+          mo: () => "mo",
+          w: () => "w",
+          d: () => "d",
+          h: () => "h",
+          m: () => "m",
+          s: () => "s",
+          ms: () => "ms"
+        }
+      }
+    });
+    let durStr = humanizer(duration, {
+      units: ["d", "h", "m", "s"]
+    });
     const status = project.status;
     return (
       <div
@@ -161,12 +194,7 @@ export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
             }
           />
         )}
-        <span style={{ marginLeft: "12px" }}>
-          {human(duration, {
-            language: Intl[locale] || "en",
-            units: ["d", "h", "m", "s"]
-          })}
-        </span>
+        <span style={{ marginLeft: "12px" }}>{durStr}</span>
       </div>
     );
   },

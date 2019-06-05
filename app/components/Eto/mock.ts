@@ -19,7 +19,7 @@ export const EtoMock = {
       id: "1.20.13",
       base_token_count: 7350,
       base_token_name: "USDT",
-      finish_at: "",
+      finish_at: "2019-05-31 08:49:02",
       close_at: null,
       token_name: "DOT",
       start_at: "2019-05-31 07:50:00",
