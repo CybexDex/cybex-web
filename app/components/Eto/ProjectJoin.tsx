@@ -224,7 +224,13 @@ let ProjectJoin = class extends React.Component<
       this.setState({ fee_asset_id: "1.3.0" }, this._updateFee);
     }
     if (!balanceObject || !feeAmount) return;
-    const hasBalance = checkBalance(amount, asset, feeAmount, balanceObject);
+    let rate = new EtoRate(this.props.project);
+    const hasBalance = checkBalance(
+      rate.convertQuoteToBase(amount || 0),
+      asset,
+      feeAmount,
+      balanceObject
+    );
     if (hasBalance === null) return;
     this.setState({ balanceError: !hasBalance });
   }
@@ -242,11 +248,7 @@ let ProjectJoin = class extends React.Component<
         checkFeeStatusAsync({
           accountID: account.get("id"),
           feeID: a,
-          options: ["price_per_kbyte"],
-          data: {
-            type: "memo",
-            content: this.state.memo
-          }
+          type: "exchange_participate"
         })
       );
     });
@@ -315,11 +317,8 @@ let ProjectJoin = class extends React.Component<
     checkFeeStatusAsync({
       accountID: from_account.get("id"),
       feeID: fee_asset_id,
-      options: ["price_per_kbyte"],
-      data: {
-        type: "memo",
-        content: state.memo
-      }
+      type: "exchange_participate",
+      options: ["exchange_participate"]
     }).then(({ fee, hasBalance, hasPoolBalance }) => {
       this.setState({
         feeAmount: fee,
@@ -460,6 +459,10 @@ let ProjectJoin = class extends React.Component<
     EtoActions.applyEto(
       project.id,
       {
+        amount: 0,
+        asset_id: this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0"
+      },
+      {
         amount: calcAmount(
           rate.convertQuoteToBase(amount).toString(),
           this.props.asset.get("precision")
@@ -467,19 +470,23 @@ let ProjectJoin = class extends React.Component<
         asset_id: this.props.asset.get("id")
       },
       this.props.currentAccount as any,
-      <Translate
-        component="h4"
-        content="eto_project.join_confirm"
-        quoteAsset={project.token_name}
-        quoteAmount={amount}
-        baseAsset={project.base_token_name}
-        baseAmount={rate.convertQuoteToBase(amount)}
-      />
+      // <Translate
+      //   component="h4"
+      //   style={{ textAlign: "center", margin: "12px" }}
+      //   content="eto_project.join_confirm"
+      //   quoteAsset={project.token_name}
+      //   quoteAmount={amount}
+      //   baseAsset={project.base_token_name}
+      //   baseAmount={rate.convertQuoteToBase(amount)}
+      // />
+      {
+        title: project.name,
+        quote: { value: amount, asset: project.token_name }
+      }
     );
   };
 
   render() {
-    console.log(this.state);
     if (
       !this.props.project ||
       !this.props.userStatus ||
@@ -539,14 +546,14 @@ let ProjectJoin = class extends React.Component<
         let feeID = feeAsset ? feeAsset.get("id") : "1.3.0";
         balance = (
           <span
-            style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }}
-            onClick={this._setTotal.bind(
-              this,
-              current_asset_id,
-              account_balances[current_asset_id],
-              fee,
-              feeID
-            )}
+          // style={{ borderBottom: "#A09F9F 1px dotted", cursor: "pointer" }}
+          // onClick={this._setTotal.bind(
+          //   this,
+          //   current_asset_id,
+          //   account_balances[current_asset_id],
+          //   fee,
+          //   feeID
+          // )}
           >
             <Translate component="span" content="transfer.available" />:{" "}
             {account_balances[current_asset_id] ? (
@@ -563,11 +570,13 @@ let ProjectJoin = class extends React.Component<
     let crowd_asset =
       base_token && ChainStore.getAsset(base_token.toString().toUpperCase());
     const rate = new EtoRate(this.props.project);
-
+    let account_balances = currentAccount.get("balances").toJS();
+    let current_asset_id = asset ? asset.get("id") : null;
     const amountValue = rate.convertQuoteToBase(
       parseFloat(String.prototype.replace.call(amount, /,/g, "")) || 0
     );
     const isAmountValid = amountValue && !isNaN(amountValue);
+
     const projectStat = getProjectStat(data as any, statusData);
     const isAmountIntTimes = new BigNumber(amountValue || 1)
       .mod(projectStat.precision)

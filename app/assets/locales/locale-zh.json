@@ -670,7 +670,8 @@
     "withdraw_dice_bet": "{account} 从竞猜游戏资金池中提款",
     "participate_dice_bet": "{account} 进行了一次竞猜游戏投注",
     "settle_bet": "{account} 参与了一次竞猜游戏，获得 {amount} 个 {asset}",
-    "exchange_participate": "{account} 使用 {amount} 个 {asset} 参与了一次ETO认购"
+    "exchange_participate": "{account} 使用 {amount} 个 {asset} 参与了一次ETO认购",
+    "exchange_fill": "{account} 使用 {amount} 参与了一次ETO认购, 取得了 {quoteAmount} "
   },
   "transaction": {
     "sent": "发送",
@@ -739,6 +740,7 @@
     "custom": "创建自定义操作",
     "order_id": "订单ID",
     "exchange_participate": "参与ETO认购",
+    "exchange_fill": "ETO认购发放",
     "trxTypes": {
       "transfer": "转账",
       "limit_order_create": "限价单",
@@ -797,6 +799,8 @@
       "withdraw_dice_bet": "竞猜游戏提款",
       "participate_dice_bet": "竞猜游戏投注",
       "settle_bet": "竞猜游戏提取",
+      "exchange_participate": "参与ETO认购",
+      "exchange_fill": "ETO认购发放",
       "all": "显示所有"
     },
     "confirm": "请确认交易",
@@ -1901,7 +1905,7 @@
     "int_times": "ETO参与金额需为最小认购单位的整数倍",
     "warning_lower": "本次认购金额需大于单次最小可认购额度",
     "warning_overflow": "本次认购金额需小于剩余可认购额度",
-    "overflow": "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">“ETO项目记录”</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
+    "overflow": "您的实际成功参与额度以项目方最终确认结果为准，您可在<span class=\"highlight\">活动记录</span>中进行查看。如有因超出个人额度或项目整体超募等情况产生的未确认份额，超出部分将在项目结束后统一退回至您的Cybex帐号",
     "be_patient": "最终确认ETO参与结果需要一定时间，请耐心等待，如有疑问请联系客服小助手，微信：CybexServiceA",
     "records": {
       "project_id": "项目名称",
@@ -2146,6 +2150,8 @@
     "dist_cybex": "ETO结束后即上线Cybex交易所",
     "current_currency": "目前流通量",
     "join_confirm": "将使用%(baseAmount)s %(baseAsset)s 认购 %(quoteAmount)s %(quoteAsset)s",
-    "no_currency": "尚未有DOT在市面流通"
+    "no_currency": "尚未有DOT在市面流通",
+    "project_name": "项目名称",
+    "exchange_amount": "换取"
   }
 }

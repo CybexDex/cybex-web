@@ -169,7 +169,7 @@ let RecentTransactions = class extends React.Component<any, any> {
     this.setState({
       limit: this.state.limit + 100000
     });
-  }
+  };
 
   _getHistory(accountsList, filterOp, customFilter) {
     let history = [];
@@ -280,6 +280,8 @@ let RecentTransactions = class extends React.Component<any, any> {
         "account_update",
         "asset_create",
         "witness_withdraw_pay",
+        "exchange_fill",
+        "exchange_participate",
         "balance_claim"
       ].map(type => {
         return (
@@ -343,7 +345,8 @@ let RecentTransactions = class extends React.Component<any, any> {
           ) : null}
         </td>
         <td style={{ textAlign: "center" }}>
-          &nbsp;{(this.props.showMore && historyCount > this.props.limit) ||
+          &nbsp;
+          {(this.props.showMore && historyCount > this.props.limit) ||
           (20 && limit < historyCount) ? (
             <a onClick={this._onIncreaseLimit.bind(this)}>
               <Icon name="chevron-down" className="icon-14px" />
@@ -417,29 +420,28 @@ let RecentTransactions = class extends React.Component<any, any> {
               </TransitionWrapper>
             </table>
           </div>
-          {historyCount > 0 &&
-            this.state.csvExport && (
-              <div id="csv_export_container" style={{ display: "none" }}>
-                <div>
-                  <div>DATE</div>
-                  <div>OPERATION</div>
-                  <div>MEMO</div>
-                  <div>AMOUNT</div>
-                </div>
-                {history.map(o => {
-                  return (
-                    <Operation
-                      key={o.id}
-                      op={o.op}
-                      result={o.result}
-                      block={o.block_num}
-                      inverted={false}
-                      csvExportMode
-                    />
-                  );
-                })}
+          {historyCount > 0 && this.state.csvExport && (
+            <div id="csv_export_container" style={{ display: "none" }}>
+              <div>
+                <div>DATE</div>
+                <div>OPERATION</div>
+                <div>MEMO</div>
+                <div>AMOUNT</div>
               </div>
-            )}
+              {history.map(o => {
+                return (
+                  <Operation
+                    key={o.id}
+                    op={o.op}
+                    result={o.result}
+                    block={o.block_num}
+                    inverted={false}
+                    csvExportMode
+                  />
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     );

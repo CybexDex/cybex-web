@@ -120,7 +120,7 @@ class Transaction extends React.Component {
   }
 
   render() {
-    let { trx } = this.props;
+    let { trx, appendParams } = this.props;
     let info = null;
     info = [];
 
@@ -145,7 +145,8 @@ class Transaction extends React.Component {
               <td className="memo">{text}</td>
             ) : !text && isMine ? (
               <td>
-                <Translate content="transfer.memo_unlock" />&nbsp;
+                <Translate content="transfer.memo_unlock" />
+                &nbsp;
                 <a href onClick={this._toggleLock.bind(this)}>
                   <Icon name="locked" />
                 </a>
@@ -196,6 +197,55 @@ class Transaction extends React.Component {
               : null;
           }
 
+          break;
+        case "exchange_participate":
+          color = "success";
+          console.debug("App: ", appendParams);
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate
+                  component="span"
+                  content="eto_project.project_name"
+                />
+              </td>
+              <td>{appendParams.title}</td>
+            </tr>
+          );
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate component="span" content="transfer.from" />
+              </td>
+              <td>{this.linkToAccount(op[1].payer)}</td>
+            </tr>
+          );
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate component="span" content="transfer.amount" />
+              </td>
+              <td>
+                <FormattedAsset
+                  amount={op[1].amount.amount}
+                  asset={op[1].amount.asset_id}
+                />
+              </td>
+            </tr>
+          );
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate
+                  component="span"
+                  content="eto_project.exchange_amount"
+                />
+              </td>
+              <td>
+                {appendParams.quote.value} {appendParams.quote.asset}
+              </td>
+            </tr>
+          );
           break;
 
         case "limit_order_create":
@@ -839,7 +889,8 @@ class Transaction extends React.Component {
               <td>{text}</td>
             ) : !text && isMine ? (
               <td>
-                <Translate content="transfer.memo_unlock" />&nbsp;
+                <Translate content="transfer.memo_unlock" />
+                &nbsp;
                 <a href onClick={this._toggleLock.bind(this)}>
                   <Icon name="locked" />
                 </a>

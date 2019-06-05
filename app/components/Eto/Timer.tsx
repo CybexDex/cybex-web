@@ -107,8 +107,22 @@ type FullTimerProps = {
   showTip: boolean;
   locale?: any;
 };
+
+const { useState, useEffect } = React;
+
 export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
   ({ locale, showTip = false, project }: FullTimerProps) => {
+    const [counter, setCounter] = useState(0);
+    let timer;
+    useEffect(() => {
+      timer = setInterval(() => setCounter(counter + 1), 1000);
+      return () => {
+        if (timer) {
+          clearInterval(timer);
+        }
+      };
+    }, []);
+
     const duration = (function() {
       if (!project.start_at) {
         return null;

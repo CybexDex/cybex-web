@@ -117,7 +117,8 @@ ChainTypes.operations = {
   exchange_withdraw: 60, // 60
   exchange_deposit: 61, // 61
   exchange_remove: 62, // 62
-  exchange_participate: 63 // 63
+  exchange_participate: 63, // 63
+  exchange_fill: 64 // 63
 };
 
 export default ChainTypes;

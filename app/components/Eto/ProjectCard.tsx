@@ -65,7 +65,10 @@ let ProjectCard = withRouter<RouteComponentProps & ProjectCardProps>(((
             />
           </div>
           <span style={{ marginLeft: "1em" }}>
-            {project.current_percent * 100}%
+            {new BigNumber(
+              (project.current_percent * 100 || 0).toFixed(6)
+            ).toFixed(2, 1)}
+            %
           </span>
         </div>
       )}

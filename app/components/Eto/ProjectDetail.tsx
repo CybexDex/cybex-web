@@ -90,13 +90,20 @@ let ProjectDetail = class extends React.Component<
   }
   componentWillMount() {
     EtoActions.loadProjectDetail(this.props.match.params["id"]);
+    EtoActions.queryUserIn(this.props.match.params["id"], this.props.account);
+    EtoActions.updateProject(this.props.match.params["id"]);
+    EtoActions.updateProjectByUser(
+      this.props.match.params["id"],
+      this.props.account
+    );
+
     this.updateTimer = setInterval(() => {
       EtoActions.queryUserIn(this.props.match.params["id"], this.props.account);
-      EtoActions.updateProject(this.props.match.params["id"]);
       EtoActions.updateProjectByUser(
         this.props.match.params["id"],
         this.props.account
       );
+      EtoActions.updateProject(this.props.match.params["id"]);
     }, 3000);
   }
 
@@ -131,7 +138,10 @@ let ProjectDetail = class extends React.Component<
                 color: isActive ? Colors.$colorOrange : Colors.$colorWhite
               }}
             >
-              {project.current_percent * 100}%
+              {new BigNumber(
+                (project.current_percent * 100 || 0).toFixed(6)
+              ).toFixed(2, 1)}
+              %
             </span>
           </div>
           <div>
@@ -233,6 +243,7 @@ let ProjectDetail = class extends React.Component<
               ) : null
             ) : (
               <Button
+                type="primary"
                 onClick={() => {
                   RouterActions.setDeferRedirect(history.location.pathname);
                   history.push("/login");

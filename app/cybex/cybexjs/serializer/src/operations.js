@@ -424,6 +424,12 @@ export const transfer_from_blind_operation_fee_parameters = new Serializer(
     fee: uint64
   }
 );
+export const exchange_participate_fee_parameters = new Serializer(
+  "exchange_participate_fee_parameters",
+  {
+    fee: uint64
+  }
+);
 
 export const asset_settle_cancel_operation_fee_parameters = new Serializer(
   "asset_settle_cancel_operation_fee_parameters"
@@ -492,10 +498,10 @@ var fee_parameters = static_variant([
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters, // 60
+  withdraw_crowdfund_operation_fee_parameters, // 61
+  withdraw_crowdfund_operation_fee_parameters, // 62
+  exchange_participate_fee_parameters, // 63
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
@@ -1318,7 +1324,8 @@ operation.st_operations = [
   exchange_withdraw, // 60
   exchange_deposit, // 61
   exchange_remove, // 62
-  exchange_participate // 63
+  exchange_participate, // 63,
+  exchange_fill
 ];
 
 export const transaction = new Serializer("transaction", {

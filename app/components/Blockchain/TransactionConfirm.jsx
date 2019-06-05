@@ -235,8 +235,7 @@ class TransactionConfirm extends React.Component {
               </div>
             ) : null}
             {header}
-
-            {appendParams}
+            {/* {appendParams} */}
             <div
               className="grid-content shrink"
               style={{
@@ -250,6 +249,7 @@ class TransactionConfirm extends React.Component {
                 trx={this.props.transaction.serialize()}
                 index={0}
                 no_links={true}
+                appendParams={appendParams}
               />
             </div>
             <div className="grid-content shrink" style={{ padding: "1rem" }}>

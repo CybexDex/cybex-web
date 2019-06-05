@@ -78,9 +78,9 @@ function checkFeeStatusAsync({
           let hasValidCER = true;
 
           /*
-          ** If the fee is to be paid in a non-core asset, check the fee
-          ** pool and convert the amount using the CER
-          */
+           ** If the fee is to be paid in a non-core asset, check the fee
+           ** pool and convert the amount using the CER
+           */
           if (feeID !== "1.3.0") {
             // Convert the amount using the CER
             let cer = feeAsset.getIn(["options", "core_exchange_rate"]);
@@ -99,9 +99,9 @@ function checkFeeStatusAsync({
             let quote = new Asset(q);
 
             /*
-                    ** If the CER is incorrectly configured, the multiplication
-                    ** will fail, so catch the error and default to core
-                    */
+             ** If the CER is incorrectly configured, the multiplication
+             ** will fail, so catch the error and default to core
+             */
             try {
               let price = new Price({ base, quote });
               fee = fee.times(price, true);

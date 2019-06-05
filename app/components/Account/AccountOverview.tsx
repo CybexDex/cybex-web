@@ -542,8 +542,8 @@ let AccountOverview = class extends React.Component<any, any> {
             let preferredMarket = market
               ? market
               : core_asset
-                ? core_asset.get("symbol")
-                : "CYB";
+              ? core_asset.get("symbol")
+              : "CYB";
             let directMarketLink = notCore ? (
               <Link to={`/market/${asset.get("symbol")}_${preferredMarket}`}>
                 <Icon name="trade" className="icon-14px" />
@@ -915,9 +915,8 @@ let AccountOverview = class extends React.Component<any, any> {
                         className="column-hide-small clickable"
                         style={{ textAlign: "right" }}
                       >
-                        <Translate content="exchange.price" /> (<AssetName
-                          name={preferredUnit}
-                        />)
+                        <Translate content="exchange.price" /> (
+                        <AssetName name={preferredUnit} />)
                       </th>
                       <th
                         onClick={this._toggleSortOrder.bind(
@@ -1048,14 +1047,14 @@ let AccountOverview = class extends React.Component<any, any> {
                 </Tab>
               )}
               {/* {this.props.isMyAccount && ( */}
-              <Tab title="account.crowdfund">
+              {/* <Tab title="account.crowdfund">
                 <div className="content-block">
                   <div className="generic-bordered-box">
-                    {/* <CrowdFund account={account} /> */}
+                    <CrowdFund account={account} />
                     <AccountIEO account={account} />
                   </div>
                 </div>
-              </Tab>
+              </Tab> */}
               {/* )} */}
               {/* <Tab title="markets.title" subText={hiddenSubText}>
 

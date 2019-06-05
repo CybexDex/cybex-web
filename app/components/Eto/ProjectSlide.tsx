@@ -30,13 +30,16 @@ export const ProjectSlide = ({
         type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
       />
-      <Slider {...settings}>
-        {slides.map(project => (
-          <div key={project.projectLink}>
+      <div
+        style={{ height: "460px", width: "100%" }}
+        // key={project.projectLink}
+      >
+        <Slider {...settings}>
+          {slides.map(project => (
             <img src={project.imgUrl} />
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
+      </div>
     </>
   );
 };

@@ -320,11 +320,11 @@ class EtoActions {
     // return dispatch => Promise.resolve(EtoMock.banner).then(dispatch);
   }
   updateProjectList() {
-    return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
-    // return dispatch =>
-    //   fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
-    //     dispatch
-    //   );
+    // return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
+    return dispatch =>
+      fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
+        dispatch
+      );
   }
   loadProjectDetail(id: string) {
     // return dispatch => Promise.resolve(EtoMock.detail).then(dispatch);
@@ -370,6 +370,7 @@ class EtoActions {
 
   applyEto(
     projectID: string,
+    fee: { asset_id: string; amount: number },
     amount: { asset_id: string; amount: number },
     account: AccountMap,
     append: any,
@@ -394,6 +395,7 @@ class EtoActions {
         .then(async ({ privKey, pubKey }) => {
           let tx = new TransactionBuilder();
           let op = tx.get_type_operation("exchange_participate", {
+            fee,
             payer: account.get("id"),
             exchange_to_pay: projectID,
             amount

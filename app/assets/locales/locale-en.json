@@ -118,6 +118,7 @@
     "Start_date": "Start Date",
     "Load_more": "Load More",
     "Add": "Confirm",
+    "Total": "Total",
     "man": "people",
     "Not_login": "You haven't logged in",
     "Stop_reserve": "Stop Reserving",
@@ -1812,12 +1813,12 @@
 
   "eto": {
     "crowd_project": "ETO of %(project)s",
-    "amount_remain": "Remaining Quota:",
-    "account_limit_cap": "Personal Hard Cap:",
+    "amount_remain": "Remaining Quota: ",
+    "account_limit_cap": "Personal Hard Cap: ",
     "account_limit_unit": "Minimum Purchasing Unit: ",
     "account_limit_lower": "Minimum Purchasing: ",
     "Redeeming_Ratio": "Exchange Ratio: ",
-    "current_state_used": "You have subscribed: ",
+    "current_state_used": "You Have Subscribed: ",
     "current_state_avail": "Remaining Quota: ",
     "closed_tip": "The current project %(project)s has ended, please understand",
     "take_in": "JOIN ETO",
@@ -1833,7 +1834,7 @@
     "int_times": "The quantity has to be the integral multiple of the minimum purchasing unit",
     "warning_lower": "Your subscription cannot lower than the minimum one-time quota of the project",
     "warning_overflow": "Your subscription cannot exceed the remaning quota of the project",
-    "overflow": "Your final subscription will be subject to the verification by the project holder. You can check through <span class=\"highlight\">\"ETO Project History\"</span>. When circumstances like personal hard cap exceeded or project.Quota oversubscription happens, the unconfirmed excess quota will be refunded to relevant CYBEX accounts when project ETO ends. ",
+    "overflow": "Your final subscription will be subject to the verification by the project holder. You can check through <span class=\"highlight\">\"Activity\"</span>. When circumstances like personal hard cap exceeded or project. Quota oversubscription happens, the unconfirmed excess quota will be refunded to relevant CYBEX accounts when project ETO ends. ",
     "be_patient": "The final ETO participation result takes time to be confirmed. Please wait patiently. If you have any questions, please contact our community assistant through WeChat account: CybexServiceA.",
     "records": {
       "project_id": "Project",
@@ -2045,5 +2046,21 @@
     "lottery_rule_url": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/lotteryrules-EN.pdf",
     "amount": "Amount",
     "next": "Next Step"
+  },
+  "eto_project": {
+    "polkadot_eto": "Polkadot ETO",
+    "eto_more": "More Projects",
+    "market": "Open Trading Pairs",
+    "fobidden": "该项目仅限中签账户参加",
+    "more": "For more information, please refer to:",
+    "lockup": "ETO Lockup Period",
+    "no_lockup": "No Lockup",
+    "distribution": "Token Distribution",
+    "dist_cybex": "The token will be listed on Cybex exchange right after the ETO ends",
+    "current_currency": "Current Criculation",
+    "join_confirm": "Use %(baseAmount)s %(baseAsset)s to Purchase %(quoteAmount)s %(quoteAsset)s",
+    "no_currency": "No DOT circulated in the market",
+    "project_name": "Project Name",
+    "exchange_amount": "To Exchange"
   }
 }

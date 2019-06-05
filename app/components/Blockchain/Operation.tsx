@@ -105,8 +105,11 @@ let Row = class extends React.PureComponent<any, any> {
         </span>
       );
     }
-
-    fee.amount = parseInt(fee.amount, 10);
+    try {
+      fee.amount = parseInt(fee.amount, 10);
+    } catch (e) {
+      console.error("Fee Error: ", this.props);
+    }
 
     return (
       <tr>
@@ -1198,6 +1201,7 @@ class Operation extends React.PureComponent<any, any> {
         );
         break;
       case "exchange_participate":
+        console.debug("Exchange OP: ", op);
         column = (
           <TranslateWithLinks
             string="operation.exchange_participate"
@@ -1205,10 +1209,42 @@ class Operation extends React.PureComponent<any, any> {
               { type: "account", value: op[1].payer, arg: "account" },
               {
                 type: "amount",
-                value: { asset_id: op[1].asset_id, amount: op[1].refund },
+                value: {
+                  asset_id: op[1].amount.asset_id,
+                  amount: op[1].amount.amount
+                },
                 arg: "amount"
               },
-              { type: "asset", value: op[1].asset_id, arg: "asset" }
+              { type: "asset", value: op[1].amount.asset_id, arg: "asset" }
+            ]}
+          />
+        );
+        break;
+      case "exchange_fill":
+        console.debug("ExchangeFill OP: ", op);
+        column = (
+          <TranslateWithLinks
+            string="operation.exchange_fill"
+            keys={[
+              { type: "account", value: op[1].payer, arg: "account" },
+              {
+                type: "amount",
+                value: {
+                  asset_id: op[1].pay.asset_id,
+                  amount: op[1].pay.amount
+                },
+                arg: "amount"
+              },
+              // { type: "asset", value: op[1].pay.asset_id, arg: "asset" },
+              {
+                type: "amount",
+                value: {
+                  asset_id: op[1].receive.asset_id,
+                  amount: op[1].receive.amount
+                },
+                arg: "quoteAmount"
+              },
+              // { type: "asset", value: op[1].receive.asset_id, arg: "quoteAsset" }
             ]}
           />
         );
