@@ -27,16 +27,17 @@ let lastLookup = new Date();
 
 // Tempoary for GET
 const SpecialMarkets = {
-  "JADE.USDT": {
-    CYB: 0,
-    "JADE.ETH": 1,
-    "JADE.BTC": 2,
-    "JADE.EOS": 3,
-    "JADE.MXC": 4,
-    "JADE.RING": 4,
-    "JADE.ATOM": 4,
-    "JADE.XRP": 5
-  }
+  // "JADE.USDT": {
+  //   CYB: 0,
+  //   "JADE.ETH": 1,
+  //   "JADE.BTC": 2,
+  //   "JADE.EOS": 3,
+  //   "JADE.MXC": 4,
+  //   "JADE.RING": 4,
+  //   "JADE.ATOM": 4,
+  //   "JADE.LC": 4,
+  //   "JADE.XRP": 5
+  // }
 };
 
 const BTC_MARKETS = [
@@ -84,7 +85,7 @@ const BTC_MARKETS = [
   // "JADE.ENG"
 ];
 const FilteredMarkets = {
-  CYB: new Set(["JADE.JCT", "JADE.NES", "JADE.MXC", "JADE.NASH"]),
+  CYB: new Set(["JADE.JCT", "JADE.NES", "JADE.MXC", "JADE.NASH", "JADE.LC"]),
   "JADE.ETH": new Set(["JADE.LTC", "JADE.MXC"]),
   "JADE.EOS": new Set(["JADE.LTC"]),
   "JADE.BTC": new Set(BTC_MARKETS)
@@ -92,7 +93,7 @@ const FilteredMarkets = {
 };
 const FixedMarkets = {
   // CYB: { "JADE.NES": -1 },
-  "JADE.ETH": { "JADE.NES": -1, "JADE.NASH": -2 }
+  // "JADE.ETH": { "JADE.NES": -1, "JADE.NASH": -2 }
   // "JADE.BTC": { "JADE.MVP": -1 },
   // "JADE.EOS": { "JADE.MVP": -1 }
 };

@@ -273,7 +273,8 @@ class SettingsStore extends AbstractStore<any> {
             "1.3.998",
             "1.3.1001",
             "1.3.1382",
-            "1.3.1383"
+            "1.3.1383",
+            "1.3.1386"
           ]
         },
         "1.3.3": { code: 0, data: ["1.3.26", "1.3.1000"] },
@@ -289,6 +290,7 @@ class SettingsStore extends AbstractStore<any> {
             "1.3.1000",
             "1.3.1001",
             "1.3.1002",
+            "1.3.1386",
             "1.3.1382"
           ]
         }
