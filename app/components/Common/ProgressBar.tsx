@@ -124,7 +124,7 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
 
   getPercent = () => {
     return this.props.percent !== undefined
-      ? this.props.percent
+      ? Number(this.props.percent).toFixed(2)
       : (this.props.current / this.props.max).toFixed(2);
   };
 

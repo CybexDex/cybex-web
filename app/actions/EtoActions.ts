@@ -36,8 +36,8 @@ const pickKeys = (keys: string[], count = 1) => {
 };
 
 const ProjectServer = __DEV__
-  ? "http://52.76.51.139:3049/api"
-  : "http://10.18.120.241:3049/api";
+  ? "https://etoapi.cybex.io/api"
+  : "https://etoapi.cybex.io/api";
 const ProjectUrls = {
   banner() {
     return `${ProjectServer}/cybex/projects/banner`;
@@ -315,22 +315,19 @@ class EtoActions {
   }
   // 认购项目部分
   updateBanner() {
-    console.debug("Banner: ", EtoMock.banner);
     return dispatch =>
       fetchUnwrap<EtoProject.Banner[]>(ProjectUrls.banner()).then(dispatch);
     // return dispatch => Promise.resolve(EtoMock.banner).then(dispatch);
   }
   updateProjectList() {
-    return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
-
-    // return dispatch =>
-    //   fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
-    //     dispatch
-    //   );
+    // return dispatch => Promise.resolve(EtoMock.details).then(dispatch);
+    return dispatch =>
+      fetchUnwrap<EtoProject.ProjectDetail[]>(ProjectUrls.projects()).then(
+        dispatch
+      );
   }
   loadProjectDetail(id: string) {
     // return dispatch => Promise.resolve(EtoMock.detail).then(dispatch);
-
     return dispatch =>
       fetchUnwrap<EtoProject.ProjectDetail>(ProjectUrls.projectDetail(id)).then(
         dispatch
