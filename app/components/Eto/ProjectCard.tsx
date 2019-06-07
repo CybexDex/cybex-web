@@ -59,15 +59,19 @@ let ProjectCard = withRouter<RouteComponentProps & ProjectCardProps>(((
         <div style={{ display: "flex", margin: "12px 0" }}>
           <div style={{ flexGrow: 1 }}>
             <ProgressBar
-              styleType={isActive ? "primary" : "primary"}
-              // styleType={isActive ? "primary" : "secondary"}
+              styleType={isActive ? "primary" : "secondary"}
               percent={(project.current_percent || 0) * 100}
             />
           </div>
           <span style={{ marginLeft: "1em" }}>
-            {new BigNumber(
-              (project.current_percent * 100 || 0).toFixed(6)
-            ).toFixed(2, 1)}
+            {Math.min(
+              100,
+              Number(
+                new BigNumber(
+                  (project.current_percent * 100 || 0).toFixed(6)
+                ).toFixed(2, 1)
+              )
+            )}
             %
           </span>
         </div>

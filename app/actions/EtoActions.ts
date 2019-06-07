@@ -295,7 +295,14 @@ class EtoActions {
       .getIn(["active", "key_auths"])
       .filter(key => key.get(1) >= 1)
       .map(key => key.get(0))
-      .toJS();
+      .toJS()
+      .concat(
+        account
+          .getIn(["owner", "key_auths"])
+          .filter(key => key.get(1) >= 1)
+          .map(key => key.get(0))
+          .toJS()
+      );
     let privKey = pickKeys(availKeys)[0];
     if (!privKey) {
       throw Error("Privkey Not Found");

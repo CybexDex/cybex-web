@@ -49,16 +49,16 @@ export const BaseColors = {
 export const GridentColors = {
   $colorGradientFoilex: "linear-gradient(-135deg, #e7ac5f, #e76536)",
   $colorGradientGoldex: "linear-gradient(-131deg, #ffc478, #ff9143)",
-  $colorGradientFlame: `linear-gradient(90deg, ${BaseColors.$colorFlameLight}, ${
-    BaseColors.$colorFlame
-  })`,
-  $colorGradientGrass: `linear-gradient(90deg, ${BaseColors.$colorGrassLight}, ${
-    BaseColors.$colorGrass
-  })`,
+  $colorGradientFlame: `linear-gradient(90deg, ${
+    BaseColors.$colorFlameLight
+  }, ${BaseColors.$colorFlame})`,
+  $colorGradientGrass: `linear-gradient(90deg, ${
+    BaseColors.$colorGrassLight
+  }, ${BaseColors.$colorGrass})`,
   $colorGradientSilvex:
-    "linear-gradient(48deg,rgba(255, 255, 255, 50),rgba(255, 255, 255, 100))",
+    "linear-gradient(to right, rgba(120, 129, 154, 0.5), #78819a)",
   $colorGradientGreyex:
-    "linear-gradient(48deg,rgba(120, 129, 154, 50),rgba(120, 129, 154, 100))"
+    "linear-gradient(48deg,rgba(120, 129, 154, 0.5),rgba(120, 129, 154, 1))"
 };
 
 export const Colors = {
@@ -70,6 +70,5 @@ export enum CommonType {
   Primary,
   Secondary
 }
-
 
 export default Colors;

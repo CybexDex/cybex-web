@@ -9,7 +9,7 @@ import { ProjectSlide } from "./ProjectSlide";
 import IntlStore from "../../stores/IntlStore";
 import Translate from "react-translate-component";
 import { Colors } from "../Common";
-import { EtoPanel } from "./EtoPanel";
+import { EtoPanel, EtoContentWrapper } from "./EtoPanel";
 
 const EtoHeading = ({ content }) => (
   <Translate
@@ -54,15 +54,19 @@ export const ProjectMain = connect(
 
     return (
       <>
-        <ProjectSlide
-          slides={banners.map(banner => selectBanner(banner, locale))}
-        />
-        <EtoHeading content="eto_project.polkadot_eto" />
+        <EtoContentWrapper style={{ padding: 0 }}>
+          <ProjectSlide
+            slides={banners.map(banner => selectBanner(banner, locale))}
+          />
+        </EtoContentWrapper>
+        <EtoContentWrapper style={{ padding: 0 }}>
+          <EtoHeading content="eto_project.polkadot_eto" />
+        </EtoContentWrapper>
         <ProjectList projects={projects} />
-        <EtoHeading content="eto_project.eto_more" />
-        <EtoPanel
-          style={{ margin: 0, marginBottom: "36px", textAlign: "center" }}
-        >
+        <EtoContentWrapper style={{ padding: 0 }}>
+          <EtoHeading content="eto_project.eto_more" />
+        </EtoContentWrapper>
+        <EtoPanel style={{ marginBottom: "36px", textAlign: "center" }}>
           <div
             className=""
             style={{

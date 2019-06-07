@@ -17,7 +17,7 @@ export const ProjectList = ({
           key={i}
           style={{
             flex: "1 0 calc(50% - 24px)",
-            minWidth: "396px",
+            minWidth: "246px",
             margin: "6px"
           }}
         >

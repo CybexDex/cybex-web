@@ -22,7 +22,9 @@ export const selectIsUserInProject = (eto: EtoState, projectID: string) =>
 
 export const selectProjectStatus = (etoProject: EtoProject.ProjectDetail) =>
   etoProject.status === EtoProject.EtoStatus.Unstart
-    ? EtoProject.EtoStatus.Unstart
+    ? moment.utc(etoProject.start_at).isAfter(moment())
+      ? EtoProject.EtoStatus.Unstart
+      : EtoProject.EtoStatus.Running
     : etoProject.status === EtoProject.EtoStatus.Running
     ? EtoProject.EtoStatus.Running
     : etoProject.status === EtoProject.EtoStatus.Finished

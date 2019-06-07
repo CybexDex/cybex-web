@@ -114,7 +114,6 @@ let ProjectDetail = class extends React.Component<
 
     const { match, project, locale, history, isLogin, isUserIn } = this.props;
     const isActive = selectProjectIsActive(project);
-    console.debug("ISACtive: ", isActive, project);
     const status = selectProjectStatus(project);
     const rate = new EtoRate(project);
 
@@ -138,9 +137,14 @@ let ProjectDetail = class extends React.Component<
                 color: isActive ? Colors.$colorOrange : Colors.$colorWhite
               }}
             >
-              {new BigNumber(
-                (project.current_percent * 100 || 0).toFixed(6)
-              ).toFixed(2, 1)}
+              {Math.min(
+                100,
+                Number(
+                  new BigNumber(
+                    (project.current_percent * 100 || 0).toFixed(6)
+                  ).toFixed(2, 1)
+                )
+              )}
               %
             </span>
           </div>
@@ -215,7 +219,7 @@ let ProjectDetail = class extends React.Component<
             />
           </ul>
           <div style={{ margin: "12px" }}>
-            {isLogin ? (
+            {status === EtoProject.EtoStatus.Finished ? null : isLogin ? (
               (status === EtoProject.EtoStatus.Unstart ||
                 status === EtoProject.EtoStatus.Running) &&
               !isUserIn ? (

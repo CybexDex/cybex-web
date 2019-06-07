@@ -680,6 +680,7 @@ let ProjectJoin = class extends React.Component<
           <div className="content-block transfer-input">
             <MultiAmountSelector
               label="transfer.amount"
+              isNumber
               amount={amount}
               rate={rate}
               onChange={this.onAmountChanged.bind(this)}

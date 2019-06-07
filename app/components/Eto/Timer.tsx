@@ -7,6 +7,7 @@ import { EtoProject } from "../../services/eto";
 import Translate from "react-translate-component";
 import BigNumber from "bignumber.js";
 import * as moment from "moment";
+import { selectProjectStatus } from "./EtoSelectors";
 
 enum Intl {
   zh = "zh_CN",
@@ -115,19 +116,20 @@ export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
     const [counter, setCounter] = useState(0);
     let timer;
     useEffect(() => {
-      timer = setInterval(() => setCounter(counter + 1), 1000);
+      timer = setInterval(() => setCounter(counter + 1), 500);
       return () => {
         if (timer) {
           clearInterval(timer);
         }
       };
     }, []);
+    const status = selectProjectStatus(project);
 
     const duration = (function() {
       if (!project.start_at) {
         return null;
       }
-      if (project.status === EtoProject.EtoStatus.Finished) {
+      if (status === EtoProject.EtoStatus.Finished) {
         if (project.t_total_time) {
           return new BigNumber(project.t_total_time || 0)
             .times(1000)
@@ -144,12 +146,14 @@ export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
         }
         return null;
       }
-      if (project.status === EtoProject.EtoStatus.Unstart) {
-        return new BigNumber(moment.utc(project.start_at).diff(moment(), "s"))
-          .times(1000)
-          .toNumber();
+      if (status === EtoProject.EtoStatus.Unstart) {
+        return moment.utc(project.start_at).isAfter(moment())
+          ? new BigNumber(moment.utc(project.start_at).diff(moment(), "s"))
+              .times(1000)
+              .toNumber()
+          : 0;
       }
-      if (project.status === EtoProject.EtoStatus.Running) {
+      if (status === EtoProject.EtoStatus.Running) {
         if (!project.end_at) {
           return null;
         }
@@ -180,7 +184,6 @@ export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
     let durStr = humanizer(duration, {
       units: ["d", "h", "m", "s"]
     });
-    const status = project.status;
     return (
       <div
         style={{

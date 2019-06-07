@@ -122,14 +122,17 @@ class EtoStore extends AbstractStore<EtoState> {
       project.id === oldP.id
         ? {
             ...oldP,
-            ...project
+            ...project,
+            current_percent: Math.max(
+              Number(project.current_percent),
+              Number(oldP.current_percent)
+            )
           }
         : oldP
     );
     if (!newProjects.find(p => p.id === project.id)) {
       newProjects = [project];
     }
-    console.debug("NewProject: ", newProjects);
     this.setState({ projects: newProjects });
   }
   handleProjectDetail(project: EtoProject.ProjectDetail) {

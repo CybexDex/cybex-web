@@ -31,14 +31,19 @@ export const ProjectSlide = ({
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
       />
       <div
-        style={{ height: "460px", width: "100%" }}
+        style={{ width: "100%", paddingTop: "51.11%", position: "relative" }}
+        // style={{ height: "460px", width: "100%", paddingTop: "51.11%" }}
         // key={project.projectLink}
       >
-        <Slider {...settings}>
-          {slides.map(project => (
-            <img src={project.imgUrl} />
-          ))}
-        </Slider>
+        <div
+          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
+        >
+          <Slider {...settings}>
+            {slides.map(project => (
+              <img style={{ width: "100%" }} src={project.imgUrl} />
+            ))}
+          </Slider>
+        </div>
       </div>
     </>
   );
