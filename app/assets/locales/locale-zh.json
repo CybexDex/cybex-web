@@ -2125,6 +2125,7 @@
     "refresh_tip": "链上确认需要30秒",
     "refresh_ok": "我知道了",
     "refresh_cancel": "取消",
+    "overtime": "本次ETO锁仓操作期已过",
     "rank": "排行榜",
     "ranking": "排名",
     "rank_type_lock": "锁仓排行榜",

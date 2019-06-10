@@ -18,7 +18,8 @@ export namespace Eto {
     accountID = "accountID",
     token = "token",
     survey = "survey",
-    records = "records"
+    records = "records",
+    result = "result"
   }
   export enum Token {
     CYB = "CYB",
@@ -38,6 +39,7 @@ export namespace Eto {
   };
   export type Survey = any[];
   export type Records = any[];
+  export type Result = [boolean, boolean, boolean, boolean];
   export type FullInfo = {
     [Fields.basic]: Info;
     [Fields.accountID]: string;
@@ -45,6 +47,7 @@ export namespace Eto {
     [Fields.token]: Token;
     [Fields.survey]: Survey;
     [Fields.records]: Records;
+    [Fields.result]?: Result;
   };
   export type LockApply = { pubKey: string; value: number };
   export type Query = "query";

@@ -21,11 +21,12 @@ export const IntroBtn = withRouter<any>(props => {
     <div {...props}>
       <Button
         type="primary"
+        disabled
         // loading={this.state.checking}
-        onClick={() => {
-          Gtag.eventActivity("Eto", "点击申购");
-          props.history.push("/eto/apply");
-        }}
+        // onClick={() => {
+        //   Gtag.eventActivity("Eto", "点击申购");
+        //   props.history.push("/eto/apply");
+        // }}
         style={{ marginBottom: "12px", width: "100%" }}
       >
         {counterpart.translate("eto_intro.join_apply")}
@@ -189,7 +190,7 @@ export const EtoIntro = () => {
   return (
     <div className="grid-container">
       <div style={{ padding: "6px" }} />
-      {/* <ProjectMain /> */}
+      <ProjectMain />
       <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
         <div
           className="column small-12 medium-6"

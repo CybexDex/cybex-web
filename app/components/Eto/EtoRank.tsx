@@ -56,7 +56,7 @@ const RankTable = ({
     </thead>
     <tbody>
       {data.map((user, i) => (
-        <tr key={user[0]} style={{ fontSize: "14px" }}>
+        <tr key={i} style={{ fontSize: "14px" }}>
           <td
             className="color-success"
             style={{

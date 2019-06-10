@@ -25,6 +25,7 @@ export const EtoCenterSummary = ({
   history
 }: {
   etoState: Eto.EtoInfo;
+  account;
   history;
 }) => {
   return (
@@ -37,7 +38,7 @@ export const EtoCenterSummary = ({
         }}
       >
         {counterpart.translate("eto_apply.center.greeting", {
-          account: etoState.info && etoState.info.accountName
+          account: (etoState.info && etoState.info.accountName) || ""
         })}
       </h3>
       <div
@@ -114,7 +115,7 @@ export const EtoCenter = (props: any) => {
             marginBottom: "-12px"
           }}
         >
-          <Button
+          {/* <Button
             type="secondary"
             // loading={this.state.checking}
             onClick={() => {
@@ -125,7 +126,7 @@ export const EtoCenter = (props: any) => {
             style={{ width: "50%", borderRadius: 0 }}
           >
             {counterpart.translate("eto_apply.center.go_lock")}
-          </Button>
+          </Button> */}
           <Button
             type="secondary"
             // loading={this.state.checking}
@@ -133,7 +134,7 @@ export const EtoCenter = (props: any) => {
               EtoActions.setApplyDone();
               props.history.push("/market/CYB_JADE.USDT");
             }}
-            style={{ width: "50%", borderRadius: 0 }}
+            style={{ width: "100%", borderRadius: 0 }}
           >
             {counterpart.translate("eto_apply.center.go_trade")}
           </Button>
@@ -163,6 +164,30 @@ export const EtoCenter = (props: any) => {
       >
         <Icon icon="book" />
       </a>
+      {props.overtime && (
+        <div
+          className="closed-mask"
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            backgroundColor: Colors.$colorDark,
+            opacity: 0.8,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <Translate
+            component="h4"
+            content="eto_apply.overtime"
+            project={name}
+          />
+        </div>
+      )}
     </>
   );
 };
