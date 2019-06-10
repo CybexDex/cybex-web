@@ -10,13 +10,13 @@ type FlowStep = {
   append?: any;
 };
 
-const EtoAppendMark = () => (
+const EtoAppendMark = ({ active = false }: { active?: boolean }) => (
   <a
     href={counterpart.translate("eto_apply.lottery_rule_url")}
     target={navigator.userAgent.includes("iPhone") ? "" : "_blank"}
   >
     <sup>
-      <Icon icon="help" />
+      <Icon icon="help" active={active} />
     </sup>
   </a>
 );
@@ -39,8 +39,8 @@ const flow = [
 const flowCenter: FlowStep[] = new Array(7).fill(1).map((_, step) => ({
   title: `eto_apply.center.flow.step_${step + 1}`,
   content: `eto_apply.center.flow.step_content_${step + 1}`,
-  active: step < 3,
-  append: step === 3 ? <EtoAppendMark /> : null
+  active: step < 5,
+  append: step === 3 ? <EtoAppendMark active /> : null
 }));
 
 export const EtoFlow = ({ center = false }) => (
