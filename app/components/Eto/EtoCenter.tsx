@@ -1,7 +1,7 @@
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 import counterpart from "counterpart";
-import { Input, Checkbox, Button, Colors, Icon } from "../Common";
+import { Input, Checkbox, Button, Colors, Icon, Radio } from "../Common";
 import { EtoPanel, EtoContentWrapper } from "./EtoPanel";
 import { EtoFlow } from "./EtoFlow";
 import Translate from "react-translate-component";
@@ -96,6 +96,12 @@ export const EtoCenterSummary = ({
 };
 
 export const EtoCenter = (props: any) => {
+  const result =
+    ((props.etoState as Eto.EtoInfo).info &&
+      ((props.etoState as Eto.EtoInfo).info as Eto.FullInfo)[
+        Eto.Fields.result
+      ]) ||
+    ([] as any[]);
   return (
     <>
       <EtoPanel
@@ -127,7 +133,7 @@ export const EtoCenter = (props: any) => {
           >
             {counterpart.translate("eto_apply.center.go_lock")}
           </Button> */}
-          <Button
+          {/* <Button
             type="secondary"
             // loading={this.state.checking}
             onClick={() => {
@@ -137,7 +143,51 @@ export const EtoCenter = (props: any) => {
             style={{ width: "100%", borderRadius: 0 }}
           >
             {counterpart.translate("eto_apply.center.go_trade")}
-          </Button>
+          </Button> */}
+          <div
+            className="result"
+            style={{ backgroundColor: "rgb(27,34,48)", paddingBottom: "8px" }}
+          >
+            <Translate
+              content="eto_result.result_title"
+              component="h5"
+              className="text-center"
+              style={{ fontSize: "14px", lineHeight: "40px", marginBottom: 0 }}
+            />
+            {result.map(
+              (round, i) =>
+                round && (
+                  <Radio
+                    labelStyle={{
+                      fontSize: "12px",
+                      textAlign: "center",
+                      justifyContent: "center",
+                      padding: "4px",
+                      cursor: "default",
+                      color: Colors.$colorGrey
+                    }}
+                    bindTo={round}
+                    value={true}
+                    key={i}
+                    label={counterpart.translate(
+                      `eto_result.result_result_${i + 1}`
+                    )}
+                  />
+                )
+            )}
+            {result.every(r => !r) && (
+              <Translate
+                component="h5"
+                style={{
+                  fontSize: "12px",
+                  textAlign: "center",
+                  color: Colors.$colorGrey
+                }}
+                unsafe
+                content="eto_result.result_empty"
+              />
+            )}
+          </div>
         </div>
       </EtoPanel>
       <EtoFlow center />

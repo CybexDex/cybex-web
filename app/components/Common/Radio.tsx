@@ -59,6 +59,8 @@ let Radio = ({
   bindTo = "",
   disabled = false,
   value,
+  labelStyle = {},
+  inputStyle = {},
   onClick = (...any) => void 0
 }) => {
   let labelStyles = styles.label;
@@ -71,7 +73,8 @@ let Radio = ({
         [
           labelStyles.base,
           active && labelStyles.active,
-          disabled && labelStyles.disabled
+          disabled && labelStyles.disabled,
+          labelStyle
         ] as any
       }
     >
@@ -85,7 +88,8 @@ let Radio = ({
           [
             inputStyles.base,
             active && inputStyles.active,
-            disabled && active && inputStyles.disabledActive
+            disabled && active && inputStyles.disabledActive,
+            inputStyle
           ] as any
         }
       />

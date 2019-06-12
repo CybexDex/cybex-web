@@ -2154,5 +2154,13 @@
     "no_currency": "尚未有DOT在市面流通",
     "project_name": "项目名称",
     "exchange_amount": "换取"
+  },
+  "eto_result": {
+    "result_title": "中签结果",
+    "result_empty": "感谢您的参与！很抱歉您未抽中！<br>更多关于DOT交易信息请等待官方通知。",
+    "result_result_1": "第一轮参与资格",
+    "result_result_2": "第二轮参与资格",
+    "result_result_3": "第三轮参与资格",
+    "result_result_4": "第四轮参与资格"
   }
 }
