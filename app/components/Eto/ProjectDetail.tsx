@@ -104,7 +104,7 @@ let ProjectDetail = class extends React.Component<
         this.props.account
       );
       EtoActions.updateProject(this.props.match.params["id"]);
-    }, 3000);
+    }, 1000);
   }
 
   render() {
@@ -201,7 +201,7 @@ let ProjectDetail = class extends React.Component<
               label="eto_project.distribution"
               content={counterpart.translate("eto_project.dist_cybex")}
             />
-            <InfoItem label="eto_project.market" content="CYB/DOT USDT/DOT" />
+            <InfoItem label="eto_project.market" content="USDT/DOT" />
           </ul>
           <ul>
             <InfoItem label="eto_project.more" content="" />

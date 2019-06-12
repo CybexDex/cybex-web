@@ -157,9 +157,11 @@ export const EtoTimerFull = connect<FullTimerProps, FullTimerProps>(
         if (!project.end_at) {
           return null;
         }
-        return new BigNumber(moment.utc(project.end_at).diff(moment(), "s"))
-          .times(1000)
-          .toNumber();
+        return moment.utc(project.end_at).isAfter(moment())
+          ? new BigNumber(moment.utc(project.end_at).diff(moment(), "s"))
+              .times(1000)
+              .toNumber()
+          : 0;
       }
     })();
     if (duration === null || duration === undefined) {

@@ -1884,7 +1884,7 @@
   },
   "eto": {
     "crowd_project": "%(project)s 项目ETO",
-    "amount_remain": "项目剩余额度：",
+    "amount_remain": "本轮剩余额度：",
     "account_limit_cap": "每账号限额：",
     "account_limit_unit": "最小认购单位：",
     "account_limit_lower": "单笔最低限额：",

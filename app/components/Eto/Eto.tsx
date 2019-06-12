@@ -191,7 +191,7 @@ export const EtoIntro = () => {
     <div className="grid-container">
       <div style={{ padding: "6px" }} />
       <ProjectMain />
-      <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
+      {/* <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
         <div
           className="column small-12 medium-6"
           style={{ display: "flex", flexDirection: "column" }}
@@ -229,7 +229,7 @@ export const EtoIntro = () => {
             <EtoSchema className="hide-for-small-only" />
           </EtoPanel>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

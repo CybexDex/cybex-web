@@ -128,6 +128,13 @@ let ProgressBar = class extends React.Component<ProgressBarProps, any> {
       : (this.props.current / this.props.max).toFixed(2);
   };
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.percent < this.props.percent) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     let {
       children,

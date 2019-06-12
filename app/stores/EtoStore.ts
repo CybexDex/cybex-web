@@ -114,7 +114,23 @@ class EtoStore extends AbstractStore<EtoState> {
     this.setState({ banners });
   }
   handleProjectListUpdate(projects: EtoProject.ProjectDetail[]) {
-    this.setState({ projects });
+    let oldProjects =
+      ((this as any).getInstance().getState()
+        .projects as EtoProject.ProjectDetail[]) || [];
+    let newProjects = projects.map(p => {
+      let op = oldProjects.find(op => op.id === p.id);
+      return op
+        ? {
+            ...op,
+            ...p,
+            current_percent: Math.max(
+              Number(p.current_percent),
+              Number(op.current_percent)
+            )
+          }
+        : p;
+    });
+    this.setState({ projects: newProjects });
   }
   handleProjectDetailUpdate(project: EtoProject.ProjectDetail) {
     let newProjects = ((this as any).getInstance().getState()

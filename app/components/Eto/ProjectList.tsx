@@ -28,7 +28,7 @@ export const ProjectList = ({
               flexDirection: "column",
               justifyContent: "space-between"
             }}
-            key={i}
+            key={project.id}
             project={project}
           />
         </EtoPanel>

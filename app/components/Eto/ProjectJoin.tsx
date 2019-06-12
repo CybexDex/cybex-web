@@ -76,14 +76,16 @@ class ProjectStat {
   }
 
   get amountRemained() {
-    if (!this.pDetail.base_token_count) {
-      return this.pDetail.base_token_count;
+    if (!this.pDetail.current_remain_quota_count) {
+      return this.pDetail.current_remain_quota_count;
     }
     let { current_base_token_count } = this.pDetail;
 
-    return new BigNumber(this.pDetail.base_token_count)
-      .minus(current_base_token_count)
-      .toNumber();
+    return new EtoRate(this.pDetail).convertBaseToQuote(
+      new BigNumber(this.pDetail.base_token_count)
+        .minus(current_base_token_count)
+        .toNumber()
+    );
   }
 
   get pAvail() {
@@ -137,6 +139,7 @@ let ProjectJoin = class extends React.Component<
   btnTimer;
   timer;
   timerCounter = 0;
+  inited = false;
 
   constructor(props) {
     super(props);
@@ -174,13 +177,17 @@ let ProjectJoin = class extends React.Component<
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (!prevProps.project && this.props.project) {
+    if (
+      (!prevProps.project && this.props.project) ||
+      (this.props.project && !this.inited)
+    ) {
       this.onAmountChanged({
         amount: new EtoRate(this.props.project).convertBaseToQuote(
           this.props.project.base_min_quota
         ),
         asset: this.props.asset
       });
+      this.inited = true;
       // this.setState({
       //   amount: new EtoRate(this.props.project).convertBaseToQuote(
       //     this.props.project.base_min_quota
@@ -616,16 +623,16 @@ let ProjectJoin = class extends React.Component<
           />
           {/* Project Stat */}
           <div className="top-list">
-            {/* <div>
-                  <Translate
-                    className="item-label"
-                    content="eto.amount_remain"
-                    component="td"
-                  />
-                  <td className="text-right" data-unit={base_token_name}>
-                    {projectStat.amountRemained}
-                  </td>
-                </div> */}
+            <div>
+              <Translate
+                className="item-label"
+                content="eto.amount_remain"
+                component="td"
+              />
+              <td className="text-right" data-unit={token_name}>
+                {projectStat.amountRemained}
+              </td>
+            </div>
             <div className="list-item">
               <Translate
                 className="item-label"
@@ -823,7 +830,7 @@ let ProjectJoin = class extends React.Component<
           <Translate content="eto.overflow" unsafe component="li" />
           <Translate content="eto.be_patient" component="li" />
         </ul>
-        {(!isOpen || !canJoin) && (
+        {/* {(!isOpen || !canJoin) && (
           <div
             className="closed-mask"
             style={{
@@ -854,7 +861,7 @@ let ProjectJoin = class extends React.Component<
               />
             )}
           </div>
-        )}
+        )} */}
       </div>
     );
   }

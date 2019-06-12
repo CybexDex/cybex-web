@@ -44,7 +44,7 @@ export const ProjectMain = connect(
       EtoActions.updateProjectList();
       const timer = setInterval(() => {
         EtoActions.updateProjectList();
-      }, 3000);
+      }, 1000);
       return () => {
         if (timer) {
           clearInterval(timer);
