@@ -5,27 +5,22 @@ import AccountStore from "stores/AccountStore";
 import SettingsStore from "stores/SettingsStore";
 import VolumeActions from "actions/VolumeActions";
 import NotificationStore from "stores/NotificationStore";
-import SyncError from "./components/SyncError";
+// import SyncError from "./components/SyncError";
 import LoadingIndicator from "./components/LoadingIndicator";
-import Header from "components/Layout/Header";
-import MobileMenu from "components/Layout/MobileMenu";
+// import Header from "components/Layout/Header";
 import ReactTooltip from "react-tooltip";
 import NotificationSystem from "react-notification-system";
-import TransactionConfirm from "./components/Blockchain/TransactionConfirm";
-import WalletUnlockModal from "./components/Wallet/WalletUnlockModal";
-import BrowserSupportModal, {
-  DEFAULT_SUPPORT_MODAL
-} from "./components/Modal/BrowserSupportModal";
+// import MobileMenu from "components/Layout/MobileMenu";
+// import TransactionConfirm from "./components/Blockchain/TransactionConfirm";
+// import WalletUnlockModal from "./components/Wallet/WalletUnlockModal";
+// import { DEFAULT_SUPPORT_MODAL } from "./components/Modal/BrowserSupportModal";
+// import BackupModal from "components/Modal/BackupModal";
 import WalletDb from "stores/WalletDb";
-import CachedPropertyStore from "stores/CachedPropertyStore";
-import BackupModal from "components/Modal/BackupModal";
-import { withRouter } from "react-router-dom";
 import Footer from "./components/Layout/Footer";
+import CachedPropertyStore from "stores/CachedPropertyStore";
+import { withRouter } from "react-router-dom";
 import { ModalActions } from "./actions/ModalActions";
-import LogoutModal, {
-  DEFAULT_LOGOUT_MODAL_ID
-} from "components/Modal/LogoutModal";
-import ETHModal, { DEFAULT_ETHMODAL_ID } from "components/Modal/ETHModal";
+// import { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 import * as Loadable from "react-loadable";
 import titleUtils from "common/titleUtils";
 import { LoadComponent } from "./Routes";
@@ -33,6 +28,10 @@ import counterpart from "counterpart";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { RefreshTip } from "RefreshTip";
 import { EtoRefer } from "services/eto";
+import {
+  DEFAULT_SUPPORT_MODAL,
+  DEFAULT_LOGOUT_MODAL_ID
+} from "./components/Modal/ModalID";
 let patch = false;
 (function(window) {
   if (window) {
@@ -47,7 +46,65 @@ let patch = false;
 })(window);
 
 // Router
-
+// import MobileMenu from "components/Layout/MobileMenu";
+// import TransactionConfirm from "./components/Blockchain/TransactionConfirm";
+// import WalletUnlockModal from "./components/Wallet/WalletUnlockModal";
+// import BrowserSupportModal, {
+//   DEFAULT_SUPPORT_MODAL
+// } from "./components/Modal/BrowserSupportModal";
+// import BackupModal from "components/Modal/BackupModal";
+const BrowserSupportModal: any = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "syncerror" */ "./components/Modal/BrowserSupportModal"
+    ),
+  loading: LoadingIndicator
+} as any);
+const BackupModal: any = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "syncerror" */ "./components/Modal/BackupModal"
+    ),
+  loading: LoadingIndicator
+} as any);
+const LogoutModal: any = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "syncerror" */ "./components/Modal/LogoutModal"
+    ),
+  loading: LoadingIndicator
+} as any);
+const MobileMenu: any = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "syncerror" */ "./components/Layout/MobileMenu"
+    ),
+  loading: LoadingIndicator
+} as any);
+const TransactionConfirm: any = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "syncerror" */ "./components/Blockchain/TransactionConfirm"
+    ),
+  loading: LoadingIndicator
+} as any);
+const WalletUnlockModal: any = Loadable({
+  loader: () =>
+    import(
+      /* webpackChunkName: "syncerror" */ "./components/Wallet/WalletUnlockModal"
+    ),
+  loading: LoadingIndicator
+} as any);
+const SyncError = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "syncerror" */ "./components/SyncError"),
+  loading: LoadingIndicator
+} as any);
+const Header = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "header" */ "./components/Layout/Header"),
+  loading: LoadingIndicator
+} as any);
 const Exchange = Loadable({
   loader: () =>
     import(
@@ -532,7 +589,6 @@ let App = class extends React.Component<any, any> {
           {/* Logout Modal*/}
           <LogoutModal modalId={DEFAULT_LOGOUT_MODAL_ID} />
           <BrowserSupportModal modalId={DEFAULT_SUPPORT_MODAL} />
-          <ETHModal modalId={DEFAULT_ETHMODAL_ID} />
         </div>
       </div>
     );

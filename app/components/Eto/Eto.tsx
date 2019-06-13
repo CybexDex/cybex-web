@@ -190,8 +190,8 @@ export const EtoIntro = () => {
   return (
     <div className="grid-container">
       <div style={{ padding: "6px" }} />
-      <ProjectMain />
-      {/* <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
+      {/* <ProjectMain /> */}
+      <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
         <div
           className="column small-12 medium-6"
           style={{ display: "flex", flexDirection: "column" }}
@@ -229,7 +229,15 @@ export const EtoIntro = () => {
             <EtoSchema className="hide-for-small-only" />
           </EtoPanel>
         </div>
-      </div> */}
+      </div>
+    </div>
+  );
+};
+export const EtoProjects = () => {
+  return (
+    <div className="grid-container">
+      <div style={{ padding: "6px" }} />
+      <ProjectMain />
     </div>
   );
 };
@@ -258,6 +266,7 @@ let Eto = ({ etoState }: { etoState: EtoState }) => {
           <Route path="/eto/rank" component={EtoRank as any} />
           <Route path="/eto/lock" component={EtoLock as any} />
           <Route path="/eto/token" component={EtoToken as any} />
+          <Route path="/eto/projects" component={EtoProjects as any} />
           <Route path="/eto/detail/:id" component={ProjectDetail as any} />
           <Route path="/eto/join/:id" component={ProjectJoin as any} />
           <Redirect from="*" to="/eto" />

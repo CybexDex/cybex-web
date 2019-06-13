@@ -25,8 +25,6 @@ const STORAGE_KEY = "__graphene__";
 const KEYS_TO_REMOVE = ["currentAccount", "passwordAccount"];
 let ss = new ls(STORAGE_KEY);
 
-export const DEFAULT_LOGOUT_MODAL_ID = "cybexLogoutModal";
-
 type props = { locale; modalId; open?; walletMode?; current; walletState? };
 
 class LogoutModal extends React.Component<

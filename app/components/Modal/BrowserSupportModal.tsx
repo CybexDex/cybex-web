@@ -8,10 +8,10 @@ import BaseModal from "./BaseModalNew";
 import { ModalActions } from "actions/ModalActions";
 import { ModalStore } from "stores/ModalStore";
 import { connect } from "alt-react";
-export const DEFAULT_SUPPORT_MODAL = "support_modal";
-export let BrowserSupportModal = class extends React.Component<{modalId, open?}, any> {
-  
-
+export let BrowserSupportModal = class extends React.Component<
+  { modalId; open? },
+  any
+> {
   _openLink() {
     let newWnd = window.open(
       "https://www.google.com/chrome/browser/desktop/",
@@ -35,21 +35,20 @@ export let BrowserSupportModal = class extends React.Component<{modalId, open?},
   render() {
     let version = /Chrome\/(.+)(?=\s)/i.exec(navigator.userAgent);
     let versionNum = version && parseInt(version[1]);
-    let {modalId, open} = this.props;
+    let { modalId, open } = this.props;
     return this.props.open ? (
       <BaseModal modalId={modalId} overlay={true}>
         <div className="grid-block vertical no-overflow">
           <Translate component="h3" content="init_error.browser" />
           <Translate component="p" content="init_error.browser_text" />
           <br />
-          {version &&
-            versionNum < 60 && (
-              <Translate
-                component="p"
-                content="init_error.browser_version"
-                version={version}
-              />
-            )}
+          {version && versionNum < 60 && (
+            <Translate
+              component="p"
+              content="init_error.browser_version"
+              version={version}
+            />
+          )}
           <p>
             <a onClick={this._openLink}>Google Chrome</a>
           </p>
@@ -79,15 +78,18 @@ export let BrowserSupportModal = class extends React.Component<{modalId, open?},
   }
 };
 
-BrowserSupportModal = connect(BrowserSupportModal, {
-  listenTo() {
-    return [ModalStore];
-  },
-  getProps(props) {
-    return {
-      open: ModalStore.getState().showingModals.has(props.modalId)
-    };
+BrowserSupportModal = connect(
+  BrowserSupportModal,
+  {
+    listenTo() {
+      return [ModalStore];
+    },
+    getProps(props) {
+      return {
+        open: ModalStore.getState().showingModals.has(props.modalId)
+      };
+    }
   }
-});
+);
 
 export default BrowserSupportModal;

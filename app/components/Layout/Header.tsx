@@ -29,9 +29,9 @@ import { VolumeDisplay } from "./VolumeDisplay";
 import Nav from "components/Layout/Nav";
 import { Icon as NewIcon } from "components/Common";
 import { ModalActions } from "actions/ModalActions";
-import LogoutModal, {
-  DEFAULT_LOGOUT_MODAL_ID
-} from "components/Modal/LogoutModal";
+// import LogoutModal, {
+//   DEFAULT_LOGOUT_MODAL_ID
+// } from "components/Modal/LogoutModal";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import * as faBars from "@fortawesome/fontawesome-free-solid/faBars";
@@ -42,6 +42,7 @@ library.add(faBars);
 var logo = require("assets/logo-text.png");
 // var logo = require("assets/cybex-logo.png");
 import { CybexLogo } from "./Logo";
+import { DEFAULT_LOGOUT_MODAL_ID } from "../Modal/ModalID";
 
 const FlagImage = ({ flag, width = 20, height = 20 }) => {
   return (
@@ -136,7 +137,7 @@ let Header = class extends React.Component<any, any> {
 
   componentWillUnmount() {
     if (this.unlisten) {
-      this.unlisten();
+      (this as any).unlisten();
       this.unlisten = null;
     }
   }

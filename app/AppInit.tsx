@@ -12,11 +12,22 @@ import { connect, supplyFluxContext } from "alt-react";
 import { IntlProvider } from "react-intl";
 import willTransitionTo from "./routerTransition";
 import LoadingIndicator from "./components/LoadingIndicator";
-import InitError from "./components/InitError";
-import SyncError from "./components/SyncError";
+// import InitError from "./components/InitError";
+// import SyncError from "./components/SyncError";
 import counterpart from "counterpart";
 import Radium from "radium";
+import * as Loadable from "react-loadable";
 
+const SyncError = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "syncerror" */ "components/SyncError"),
+  loading: LoadingIndicator
+} as any);
+const InitError = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "InitError" */ "components/InitError"),
+  loading: LoadingIndicator
+} as any);
 let { StyleRoot } = Radium;
 
 // class Test extends React.Component<any> {
@@ -75,7 +86,7 @@ let AppInit = class extends React.Component<any, any> {
   }
 
   removeLoadingMask = () => {
-    let loadingMask = document.getElementById("globalLoading");
+    let loadingMask: any = document.getElementById("globalLoading");
     if (loadingMask) {
       loadingMask.classList.add("fade-out");
       setTimeout(() => loadingMask.remove(), 200);

@@ -53,18 +53,18 @@ export const EtoCenterSummary = ({
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.info.token}
           </h2>
-          <a
+          {/* <a
             style={{ color: "white", textDecoration: "underline" }}
             href="javascript:;"
-            onClick={() => history.push("/eto/token")}
+            // onClick={() => history.push("/eto/token")}
           >
             {counterpart.translate("eto_apply.change")}
-          </a>
+          </a> */}
         </div>
         <div style={{ textAlign: "center" }}>
           <span>
             {counterpart.translate("eto_apply.center.total")}{" "}
-            <a
+            {/* <a
               href="javascript:;"
               style={{ color: "white", textDecoration: "underline" }}
               onClick={() => {
@@ -77,7 +77,7 @@ export const EtoCenterSummary = ({
               // onClick={() => EtoActions.queryInfo(account)}
             >
               <Icon icon="refresh" />
-            </a>
+            </a> */}
           </span>
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.sum}{" "}
@@ -133,75 +133,83 @@ export const EtoCenter = (props: any) => {
           >
             {counterpart.translate("eto_apply.center.go_lock")}
           </Button> */}
-          {/* <Button
-            type="secondary"
-            // loading={this.state.checking}
-            onClick={() => {
-              EtoActions.setApplyDone();
-              props.history.push("/market/CYB_JADE.USDT");
-            }}
-            style={{ width: "100%", borderRadius: 0 }}
-          >
-            {counterpart.translate("eto_apply.center.go_trade")}
-          </Button> */}
-          <div
-            className="result"
-            style={{ backgroundColor: "rgb(27,34,48)", paddingBottom: "8px" }}
-          >
-            <Translate
-              content="eto_result.result_title"
-              component="h5"
-              className="text-center"
-              style={{ fontSize: "14px", lineHeight: "40px", marginBottom: 0 }}
-            />
-            {result.map(
-              (round, i) =>
-                round && (
-                  <Radio
-                    labelStyle={{
-                      fontSize: "12px",
-                      textAlign: "center",
-                      justifyContent: "center",
-                      padding: "4px",
-                      cursor: "default",
-                      color: Colors.$colorGrey
-                    }}
-                    bindTo={round}
-                    value={true}
-                    key={i}
-                    label={counterpart.translate(
-                      `eto_result.result_result_${i + 1}`
-                    )}
-                  />
-                )
-            )}
-            {result.every(r => !r) && (
+          {true && (
+            <Button
+              type="secondary"
+              // loading={this.state.checking}
+              onClick={() => {
+                EtoActions.setApplyDone();
+                props.history.push("/market/CYB_JADE.USDT");
+              }}
+              style={{ width: "100%", borderRadius: 0 }}
+            >
+              {counterpart.translate("eto_apply.center.go_trade")}
+            </Button>
+          )}
+          {false && (
+            <div
+              className="result"
+              style={{ backgroundColor: "rgb(27,34,48)", paddingBottom: "8px" }}
+            >
               <Translate
+                content="eto_result.result_title"
                 component="h5"
+                className="text-center"
                 style={{
-                  fontSize: "12px",
-                  textAlign: "center",
-                  color: Colors.$colorGrey
+                  fontSize: "14px",
+                  lineHeight: "40px",
+                  marginBottom: 0
                 }}
-                unsafe
-                content="eto_result.result_empty"
               />
-            )}
-          </div>
+              {result.map(
+                (round, i) =>
+                  round && (
+                    <Radio
+                      labelStyle={{
+                        fontSize: "12px",
+                        textAlign: "center",
+                        justifyContent: "center",
+                        padding: "4px",
+                        cursor: "default",
+                        color: Colors.$colorGrey
+                      }}
+                      bindTo={round}
+                      value={true}
+                      key={i}
+                      label={counterpart.translate(
+                        `eto_result.result_result_${i + 1}`
+                      )}
+                    />
+                  )
+              )}
+              {result.every(r => !r) && (
+                <Translate
+                  component="h5"
+                  style={{
+                    fontSize: "12px",
+                    textAlign: "center",
+                    color: Colors.$colorGrey
+                  }}
+                  unsafe
+                  content="eto_result.result_empty"
+                />
+              )}
+            </div>
+          )}
         </div>
       </EtoPanel>
       <EtoFlow center />
       <EtoContentWrapper>
         <EtoExplain />
       </EtoContentWrapper>
-      <EtoRefreshModal
+      {/* <EtoRefreshModal
         modalId={EtoRefreshModalID}
         onConfirm={() => {
           EtoActions.queryInfo(props.account);
           ModalActions.hideModal(EtoRefreshModalID);
         }}
         onCancel={() => ModalActions.hideModal(EtoRefreshModalID)}
-      />
+      /> */}
       <a
         href={counterpart.translate("eto_apply.faq_url")}
         target="_blank"

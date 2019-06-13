@@ -11,13 +11,14 @@ import { Apis } from "cybexjs-ws";
 import Translate from "react-translate-component";
 // For logout
 import { ModalActions } from "actions/ModalActions";
-import { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
+// import { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 import { NavItem } from "components/Common";
 import { Colors } from "components/Common/Colors";
 import LoadingIndicator from "components/LoadingIndicator";
 import * as Loadable from "react-loadable";
 import { ExplorerNav } from "components/Explorer/ExplorerNav";
 import IntlStore from "stores/IntlStore";
+import { DEFAULT_LOGOUT_MODAL_ID } from "../../Modal/ModalID";
 // const ExplorerNav = Loadable({
 //   loading: LoadingIndicator,
 //   loader: () =>

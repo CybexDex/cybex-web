@@ -1,8 +1,8 @@
 import { cloneDeep } from "lodash";
 import { NetworkStore } from "stores/NetworkStore";
-import ReconnectingWebSocket from "reconnecting-websocket";
-let WebSocketClient = ReconnectingWebSocket;
+// import ReconnectingWebSocket from "reconnecting-websocket";
 // let WebSocketClient = ReconnectingWebSocket;
+let WebSocketClient = WebSocket;
 
 var SOCKET_DEBUG = false;
 
