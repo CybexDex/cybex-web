@@ -15,16 +15,14 @@ import { addLocaleData } from "react-intl";
 
 import localeCodes from "assets/locales";
 import { AbstractStore } from "./AbstractStore";
-for (let localeCode of localeCodes) {
-  import(`react-intl/locale-data/${localeCode}`).then(res => {
-    addLocaleData(res.default);
-  });
-}
+import * as en from "react-intl/locale-data/en";
+import * as zh from "react-intl/locale-data/zh";
+addLocaleData([...en, ...zh]);
 
 const langSet = {
   en: "en-US",
-  zh: "zh-CN",
-  vn: "vi-VN"
+  zh: "zh-CN"
+  // vn: "vi-VN"
 };
 
 type Locale = {
@@ -35,7 +33,11 @@ const getLangFromNavi = () =>
   navigator.language.toLocaleLowerCase().startsWith("zh") ? "zh" : "en";
 
 class IntlStore extends AbstractStore<{ currentLocale }> {
-  locales = ["zh", "en", "vn"];
+  locales = [
+    "zh",
+    "en"
+    // , "vn"
+  ];
   localesObject: { [locale: string]: any } = {
     zh: locale_cn
   };
@@ -76,9 +78,9 @@ class IntlStore extends AbstractStore<{ currentLocale }> {
       case "zh":
         counterpart.registerTranslations("zh", this.localesObject.zh);
         break;
-      case "vn":
-        counterpart.registerTranslations("vn", this.localesObject.vn);
-        break;
+      // case "vn":
+      //   counterpart.registerTranslations("vn", this.localesObject.vn);
+      //   break;
       default:
         counterpart.registerTranslations(locale, localeData);
         break;

@@ -48,12 +48,7 @@ export default {
       inst.setRpcConnectionStatusCallback(this.statusCb);
 
       if (inst && connect) {
-        inst.connect(
-          cs,
-          connectTimeout,
-          optionalApis,
-          closeCb
-        );
+        inst.connect(cs, connectTimeout, optionalApis, closeCb);
       }
 
       return inst;
@@ -72,11 +67,7 @@ export default {
     }
 
     if (inst && connect) {
-      inst.connect(
-        cs,
-        connectTimeout,
-        optionalApis
-      );
+      inst.connect(cs, connectTimeout, optionalApis);
     }
     if (closeCb) inst.closeCb = closeCb;
     return inst;
@@ -139,6 +130,7 @@ class ApisInstance {
         }
       }
     );
+    console.debug("[Timing] Init RPC");
     this.init_promise = this.ws_rpc
       .login(rpc_user, rpc_password)
       .then(() => {

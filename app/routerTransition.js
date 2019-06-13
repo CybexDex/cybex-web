@@ -134,7 +134,7 @@ class RouterTransitioner {
    * @returns {Promise}
    */
   doLatencyUpdate(refresh = true, range = null, race = false) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       // if for some reason this method is called before connections are setup via willTransitionTo,
       // initialize the manager
       console.debug("Latency Update", "Start");

@@ -11,14 +11,20 @@ import { Apis } from "cybexjs-ws";
 import Translate from "react-translate-component";
 // For logout
 import { ModalActions } from "actions/ModalActions";
-import LogoutModal, {
-  DEFAULT_LOGOUT_MODAL_ID
-} from "components/Modal/LogoutModal";
+import { DEFAULT_LOGOUT_MODAL_ID } from "components/Modal/LogoutModal";
 import { NavItem } from "components/Common";
 import { Colors } from "components/Common/Colors";
+import LoadingIndicator from "components/LoadingIndicator";
+import * as Loadable from "react-loadable";
 import { ExplorerNav } from "components/Explorer/ExplorerNav";
 import IntlStore from "stores/IntlStore";
-
+// const ExplorerNav = Loadable({
+//   loading: LoadingIndicator,
+//   loader: () =>
+//     import(
+//       /* webpackChunkName: "exchangenav" */ "components/Explorer/ExplorerNav"
+//     )
+// } as any);
 interface NavLink {
   id: string;
   routeTo?: ((...args: any[]) => string) | string;
@@ -199,9 +205,8 @@ let Nav = class extends React.PureComponent<
         })}
       >
         <div className="nav-items">
-          {NavLinks.filter(
-            link =>
-              link.displayOnlyWhen ? !!this.props[link.displayOnlyWhen] : true
+          {NavLinks.filter(link =>
+            link.displayOnlyWhen ? !!this.props[link.displayOnlyWhen] : true
           ).map(link => {
             let routeTo = this.getRoute(link);
 

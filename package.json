@@ -1,5 +1,9 @@
 {
   "name": "cybex-web",
+  "sideEffects": [
+    "./app/Main.js",
+    "*.css"
+  ],
   "version": "1.5.0",
   "description": "An Advanced wallet interface, inspired by bitshares-ui",
   "author": "CybexDEX",
@@ -167,6 +171,7 @@
     "lzma": "2.1.6",
     "marked": "^0.3.9",
     "moment": "^2.19.4",
+    "moment-locales-webpack-plugin": "^1.0.7",
     "node-fetch": "^1.3.1",
     "numeral": "^2.0.6",
     "object-assign": "^4.0.1",

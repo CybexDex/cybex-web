@@ -1,46 +1,62 @@
-import * as React from "react"; import * as PropTypes from "prop-types";
+import * as React from "react";
+import * as PropTypes from "prop-types";
 import Translate from "react-translate-component";
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faTelegram } from '@fortawesome/fontawesome-free-brands';
-import { library } from '@fortawesome/fontawesome';
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import * as faTelegram from "@fortawesome/fontawesome-free-brands/faTelegram";
+import { library } from "@fortawesome/fontawesome";
 
 library.add(faTelegram);
 
 export class Contact extends React.Component<any, any> {
   render() {
     return (
-      <div className="contact-wrapper text-center" style={{marginTop: "5%"}}>
-        <Translate component="h2" className="text-center contact-title" content="contact.title" />
-        <table className="contact-table" style={{display: "inline-table", textAlign: "left"}}>
+      <div className="contact-wrapper text-center" style={{ marginTop: "5%" }}>
+        <Translate
+          component="h2"
+          className="text-center contact-title"
+          content="contact.title"
+        />
+        <table
+          className="contact-table"
+          style={{ display: "inline-table", textAlign: "left" }}
+        >
           <tbody>
             <tr>
               <td className="bigger">
-                <FontAwesomeIcon icon={["fab","telegram"]} />
+                <FontAwesomeIcon icon={["fab", "telegram"]} />
               </td>
               <td className="bigger">
-                <Translate component="strong" content="contact.telegram"/>
+                <Translate component="strong" content="contact.telegram" />
               </td>
               <td>
                 <p>
-                  中文：<a href="https://t.me/CYBEXChinese" target="_blank">https://t.me/CYBEXChinese</a>
+                  中文：
+                  <a href="https://t.me/CYBEXChinese" target="_blank">
+                    https://t.me/CYBEXChinese
+                  </a>
                 </p>
                 <p>
-                  English: <a href="https://t.me/CYBEXEnglish" target="_blank">https://t.me/CYBEXEnglish</a>
+                  English:{" "}
+                  <a href="https://t.me/CYBEXEnglish" target="_blank">
+                    https://t.me/CYBEXEnglish
+                  </a>
                 </p>
               </td>
             </tr>
             <tr>
               <td className="bigger">
-                <FontAwesomeIcon icon={["fab","telegram"]} />
+                <FontAwesomeIcon icon={["fab", "telegram"]} />
               </td>
               <td className="bigger">
-                <Translate component="strong" content="contact.email"/>
+                <Translate component="strong" content="contact.email" />
               </td>
               <td>
                 <p>
-                  <a href="mailto:service@cybex.io" target="_blank">service@cybex.io</a>
+                  <a href="mailto:service@cybex.io" target="_blank">
+                    service@cybex.io
+                  </a>
                 </p>
-                <Translate unsafe component="p" content="contact.email_tip"/>
+                <Translate unsafe component="p" content="contact.email_tip" />
               </td>
             </tr>
           </tbody>

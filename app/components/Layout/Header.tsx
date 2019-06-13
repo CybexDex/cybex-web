@@ -34,7 +34,8 @@ import LogoutModal, {
 } from "components/Modal/LogoutModal";
 import { withRouter } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faBars } from "@fortawesome/fontawesome-free-solid";
+import * as faBars from "@fortawesome/fontawesome-free-solid/faBars";
+import * as faChevronLeft from "@fortawesome/fontawesome-free-solid/faChevronLeft";
 import { library } from "@fortawesome/fontawesome";
 library.add(faChevronLeft);
 library.add(faBars);

@@ -2,9 +2,11 @@
 require("file-loader?name=favicon.ico!./favicon.ico");
 // require("file-loader?name=dictionary.json!common/dictionary_en.json");
 // require("file-loader?name=insiders.json!./insiders.json");
+/////
 require("babel-polyfill");
-require("whatwg-fetch");
+// require("whatwg-fetch");
 require("indexeddbshim");
+////
 require("./stylesheets/app.scss");
 // require("./asset-symbols/symbols.js");
 require("./language-dropdown/flags.js");

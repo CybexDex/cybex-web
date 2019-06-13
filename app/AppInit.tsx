@@ -33,9 +33,9 @@ let { StyleRoot } = Radium;
 // }
 
 /*
-* Electron does not support browserHistory, so we need to use hashHistory.
-* The same is true for servers without configuration options, such as Github Pages
-*/
+ * Electron does not support browserHistory, so we need to use hashHistory.
+ * The same is true for servers without configuration options, such as Github Pages
+ */
 import { HashRouter, BrowserRouter } from "react-router-dom";
 const Router = BrowserRouter;
 
@@ -65,7 +65,7 @@ class RootIntl extends React.Component<any> {
 let AppInit = class extends React.Component<any, any> {
   constructor(props) {
     super(props);
-
+    console.debug("[Timing] Init APP");
     this.state = {
       apiConnected: false,
       apiError: false,

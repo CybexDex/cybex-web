@@ -1,7 +1,10 @@
 import alt from "alt-instance";
 
-import localeCodes from "assets/locales";
-
+// import localeCodes from "assets/locales";
+const loadzh = () =>
+  import(/* webpackChunkName: "locale-zh" */ "assets/locales/locale-zh.json");
+const loaden = () =>
+  import(/* webpackChunkName: "locale-en" */ "assets/locales/locale-en.json");
 class IntlActions {
   switchLocale(locale) {
     // var locale = "cn"
@@ -10,7 +13,7 @@ class IntlActions {
     //   return { locale };
     // }
     return dispatch => {
-      import("assets/locales/locale-" + locale + ".json")
+      (locale === "cn" || locale === "zh" ? loadzh : loaden)()
         .then(result => {
           dispatch({
             locale,

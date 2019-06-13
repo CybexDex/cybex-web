@@ -19,6 +19,7 @@ const webpack = require("webpack");
 const UglifyPlugin = require("uglifyjs-webpack-plugin");
 var OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MomentLocalesPlugin = require("moment-locales-webpack-plugin");
 const cssLoaders = [
   {
     test: /\.css$/,
@@ -75,6 +76,7 @@ const prodPlugins = plugins.concat([
     filename: "index.html",
     template: path.resolve(BASE_URL, "app/assets/index.html")
   }),
+
   new Clean(cleanDirectories, {
     root: BASE_URL
   }),
@@ -99,7 +101,10 @@ const prodPlugins = plugins.concat([
   new BundleAnalyzerPlugin(),
   // Here is useful when use some spec lib, eg. Rxjs6
   new webpack.optimize.ModuleConcatenationPlugin(),
-  new CompressionPlugin()
+  new CompressionPlugin(),
+  new MomentLocalesPlugin({
+    localesToKeep: ["es-us", "zh-cn", "vi"]
+  })
 ]);
 
 const config = {
@@ -126,8 +131,7 @@ const config = {
     fs: "empty"
   },
   optimization: {
-    splitChunks: 
-    {
+    splitChunks: {
       cacheGroups: {
         styles: {
           name: "styles",
@@ -250,30 +254,36 @@ const config = {
           enforce: true
         },
         react: {
-          test: /react/,
-          name: "framework",
+          test: /react-dom/,
+          name: "react-dom",
           chunks: "initial",
           enforce: true
         },
-        asset: {
-          test: /asset/,
-          name: "asset",
-          chunks: "all",
+        reactdom: {
+          test: /^react$/,
+          name: "react",
+          chunks: "initial",
           enforce: true
         },
+        // asset: {
+        //   test: /asset/,
+        //   name: "asset",
+        //   chunks: "all"
+        //   // enforce: true
+        // },
         d3: {
           test: /d3/,
           name: "d3",
           chunks: "all",
           enforce: true
-        },
-        commons: {
-          test: /node_modules/,
-          name: "commons",
-          chunks: "initial",
-          enforce: true,
-          priority: -20
-        },
+        }
+        // commons: {
+        //   test: /node_modules/,
+        //   name: "commons",
+        //   chunks: "initial",
+        //   enforce: true,
+        //   priority: -20
+        // }
       }
     },
     minimizer: [

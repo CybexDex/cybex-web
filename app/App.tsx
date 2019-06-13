@@ -93,10 +93,10 @@ const Settings = Loadable({
   loading: LoadingIndicator
 } as any);
 
-const Help = Loadable({
-  loader: () => import(/* webpackChunkName: "help" */ "./components/Help"),
-  loading: LoadingIndicator
-} as any);
+// const Help = Loadable({
+//   loader: () => import(/* webpackChunkName: "help" */ "./components/Help"),
+//   loading: LoadingIndicator
+// } as any);
 
 const Asset = Loadable({
   loader: () =>
@@ -315,6 +315,7 @@ let App = class extends React.Component<any, any> {
   }
 
   componentDidMount() {
+    console.debug("[Timing] APP Start");
     this._setListeners();
     this.syncCheckInterval = setInterval(this._syncStatus, 5000);
     const user_agent = navigator.userAgent.toLowerCase();

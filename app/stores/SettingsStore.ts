@@ -144,7 +144,11 @@ class SettingsStore extends AbstractStore<any> {
     let apiServer = settingsAPIs.WS_NODE_LIST;
 
     let defaults = {
-      locale: ["zh", "en", "vn"],
+      locale: [
+        "zh",
+        "en"
+        // , "vn"
+      ],
       apiServer: [],
       unit: [CORE_ASSET, "JADE.ETH", "JADE.USDT", "BTC"],
       showSettles: [{ translate: "yes" }, { translate: "no" }],
