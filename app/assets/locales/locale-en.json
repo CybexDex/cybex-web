@@ -1721,7 +1721,8 @@
     "cybex_bet": "Cybex Bet",
     "help": "Documents",
     "game": "Game Center",
-    "eto": "ETO"
+    "eto": "ETO",
+    "eto_apply": "ETO Subscription"
   },
   "vesting": {
     "progress": "Unlock Progress",
@@ -2062,5 +2063,13 @@
     "no_currency": "No DOT circulated in the market",
     "project_name": "Project Name",
     "exchange_amount": "To Exchange"
+  },
+  "eto_result": {
+    "result_title": "Results Announcement",
+    "result_empty": "Thank you for your participation!<br>For more informaiton on DOT, please wait for CYBEX announcement.",
+    "result_result_1": "Round 1",
+    "result_result_2": "Round 2",
+    "result_result_3": "Round 3",
+    "result_result_4": "Round 4"
   }
 }

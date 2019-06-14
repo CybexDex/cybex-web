@@ -133,7 +133,7 @@ export const EtoCenter = (props: any) => {
           >
             {counterpart.translate("eto_apply.center.go_lock")}
           </Button> */}
-          {true && (
+          {false && (
             <Button
               type="secondary"
               // loading={this.state.checking}
@@ -146,7 +146,7 @@ export const EtoCenter = (props: any) => {
               {counterpart.translate("eto_apply.center.go_trade")}
             </Button>
           )}
-          {false && (
+          {true && (
             <div
               className="result"
               style={{ backgroundColor: "rgb(27,34,48)", paddingBottom: "8px" }}
@@ -182,7 +182,7 @@ export const EtoCenter = (props: any) => {
                     />
                   )
               )}
-              {result.every(r => !r) && (
+              {!!result.length && result.every(r => !r) && (
                 <Translate
                   component="h5"
                   style={{

@@ -676,3 +676,48 @@ body:not(.native-scroll) {
 #react-select-2-input {
   display: none;
 }
+
+[data-unit]::after {
+  content: attr(data-unit);
+  padding-left: 0.4em;
+}
+
+.join-wrapper {
+  padding: 0 1em;
+  .illustration-list,
+  .top-list {
+    line-height: 1.5;
+    margin-bottom: 2em;
+  }
+
+  li {
+    list-style-type: initial;
+    .highlight {
+      background: unset;
+      color: unset;
+      filter: brightness(1.36);
+    }
+  }
+
+  .input-group {
+    height: 3.3334em !important;
+  }
+
+  .error-wrapper {
+    margin-top: 1em;
+  }
+}
+.top-list {
+  display: flex;
+  flex-direction: column;
+  height: 3.6em;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  .item-label {
+    color: #ccc;
+  }
+  .item-lable:not(:first-of-type) {
+    padding-left: 1.5em;
+  }
+}

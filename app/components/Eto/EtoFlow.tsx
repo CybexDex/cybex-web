@@ -39,9 +39,8 @@ const flow = [
 const flowCenter: FlowStep[] = new Array(7).fill(1).map((_, step) => ({
   title: `eto_apply.center.flow.step_${step + 1}`,
   content: `eto_apply.center.flow.step_content_${step + 1}`,
-  active: step < 3,
-  append: step === 3 ? <EtoAppendMark /> : null
-  // append: step === 3 ? <EtoAppendMark active /> : null
+  active: step < 6,
+  append: step === 3 ? <EtoAppendMark active /> : null
 }));
 
 export const EtoFlow = ({ center = false }) => (
@@ -57,7 +56,7 @@ export const EtoFlow = ({ center = false }) => (
             data-step={index + 1}
             className={step.active ? "active" : ""}
           >
-            <h4 style={{ color: "inherit", fontWeight: "bold" }}>
+            <h4 style={{ color: "inherit", fontWeight: "bold", margin: 0 }}>
               {counterpart.translate(step.title)}
               {step.append && step.append}
             </h4>

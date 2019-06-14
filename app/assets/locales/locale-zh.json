@@ -1793,7 +1793,8 @@
     "cybex_bet": "足球竞猜",
     "help": "帮助文档",
     "game": "游戏中心",
-    "eto": "ETO"
+    "eto": "ETO",
+    "eto_apply": "ETO申购"
   },
   "vesting": {
     "progress": "解锁进度",

@@ -44,7 +44,15 @@ const NavLinks: Array<NavLink> = [
     id: "eto",
     routeTo: "/eto",
     // routeTo: "/eto",
-    activeMatcher: /^\/eto/,
+    activeMatcher: /^\/eto\/?$/,
+    name: "eto_apply",
+    icon: "ETO"
+  },
+  {
+    id: "eto",
+    routeTo: "/eto/projects",
+    // routeTo: "/eto",
+    activeMatcher: /^\/eto\/projects/,
     name: "eto",
     icon: "ETO"
   },

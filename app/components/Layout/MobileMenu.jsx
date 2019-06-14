@@ -110,7 +110,14 @@ class MobileMenu extends React.Component {
                 </a>
               </li>
               <li>
-                <a onClick={this._onNavigate.bind(this, "/eto")}>ETO</a>
+                <a onClick={this._onNavigate.bind(this, "/eto")}>
+                  <Translate content="nav.eto_apply" />
+                </a>
+              </li>
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/eto/projects")}>
+                  ETO
+                </a>
               </li>
               {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
