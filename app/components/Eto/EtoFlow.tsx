@@ -36,11 +36,11 @@ const flow = [
   { title: "eto_apply.flow.buy", content: "eto_apply.flow.buy_content" }
 ];
 
-const flowCenter: FlowStep[] = new Array(7).fill(1).map((_, step) => ({
+const flowCenter: FlowStep[] = new Array(6).fill(1).map((_, step) => ({
   title: `eto_apply.center.flow.step_${step + 1}`,
   content: `eto_apply.center.flow.step_content_${step + 1}`,
-  active: step < 6,
-  append: step === 3 ? <EtoAppendMark active /> : null
+  active: step < 3,
+  append: step === 3 ? <EtoAppendMark /> : null
 }));
 
 export const EtoFlow = ({ center = false }) => (

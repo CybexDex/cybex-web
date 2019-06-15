@@ -1940,11 +1940,10 @@
       "lock": "Confirm",
       "balance": "Available",
       "tip_heading": "Tips",
-      "tip_content_1": "1.You have to complete [Subscription Intention Form] and lock up CYB on June 8 12:00 p.m.(BeiJing Time). Otherwise, you cannot participate in the activity.",
+      "tip_content_1": "1.You have to complete [Subscription Intention Form] and lock up CYB on June 25 12:00 p.m.(BeiJing Time). Otherwise, you cannot participate in the activity.",
       "tip_content_2": "2.CYB can be locked up multiple times by the end of the date.",
-      "tip_content_3": "3.There are at least 5 extra CYB in your account for the fees.",
-      "tip_content_4": "4.If your locked amount does not meet the requirements of ETO rounds, you cannot participate in.",
-      "tip_content_5": "5.The lockup period will be end on June 14th. Please don’t forget to unlock CYB to receive it."
+      "tip_content_3": "3.If your locked amount does not meet the requirements of ETO rounds, you cannot participate in.",
+      "tip_content_4": "4.The lockup period will be end on June 14th. Please don’t forget to unlock CYB to receive it."
     },
     "center": {
       "greeting": "Dear %(account)s",
@@ -1956,19 +1955,19 @@
       "flow": {
         "title": "Polkadot ETO process",
         "step_1": "Fill in [Subscription Intention Form]",
-        "step_content_1": "June 8th 12:00 p.m.",
+        "step_content_1": "June 20th 12:00 p.m.",
         "step_2": "Lock up",
-        "step_content_2": "June 8th 12:00 p.m.",
+        "step_content_2": "June 20th 12:00 p.m.",
         "step_3": "Selection for ETO Currencies",
-        "step_content_3": "June 13th 11:59 p.m.",
+        "step_content_3": "June 25th 11:59 p.m.",
         "step_4": "Results Announcement",
-        "step_content_4": "June 14th 2:00 p.m.",
+        "step_content_4": "June 26th 2:00 p.m.",
         "step_5": "Ranking of Round 3 & Round 4",
-        "step_content_5": "12:00 on June",
+        "step_content_5": "12:00 on June 26th",
         "step_6": "Unlock CYB",
-        "step_content_6": "June 14th 2:00 p.m.",
+        "step_content_6": "June 26th 2:00 p.m.",
         "step_7": "ETO Rush Purchase",
-        "step_content_7": "On June 15th"
+        "step_content_7": "On June 27th"
       }
     },
     "apply_done": {
@@ -1985,19 +1984,19 @@
     "flow": {
       "title": "Polkadot ETO process",
       "apply": "Subscription",
-      "apply_content": "From 12:00 on May 27 to 12:00 June 8",
+      "apply_content": "From 12:00 on June 17 to 12:00 June 27",
       "lock": "CYB Lock-up Period",
-      "lock_content": "June 8 - June 14",
+      "lock_content": "June 20 - June 26",
       "draw": "Lottery Drawing & Announcement",
-      "draw_content": "June 14",
+      "draw_content": "June 26",
       "buy": "Rush Purchase",
-      "buy_content": "June 15"
+      "buy_content": "June 27"
     },
     "token": {
-      "label": "Please select the currency ",
+      "label": "Please select the coin",
       "set_done": "Set currency success",
       "tip_heading": "Tips",
-      "tip_content_1": "1.You can change the currency on June 13th 11:59 p.m..  After that, it cannot be changed.",
+      "tip_content_1": "You can change the coin on June 25th 24:00. Please make a choice carefully, as, once it is made, a unified coin will be used for rush purchase in the first three rounds.",
       "tip_content_2": "2.In Round 4, CYB must be used in rush purchase; while in other three rounds, you can use CYB or USDT as you like. Please make a choice carefully, as, once it is made, a unified coin will be used for rush purchase in the first three rounds.",
       "tip_content_3": "3.If you use USDT to prepare rush purchase, please make sure the account has enough CYB for the fees."
     },
@@ -2009,13 +2008,13 @@
       "rule_table_th1": "Requirement（CYB）",
       "rule_table_th2": "Round",
       "rule_table_th3": "Purchase Amount Available",
-      "rule_table_row1_cell1": "10k≤locked amount≤50k",
+      "rule_table_row1_cell1": "locked amount >=5k",
       "rule_table_row1_cell2": "Round 1",
-      "rule_table_row1_cell3": "3 DOT Fixed",
-      "rule_table_row2_cell1": "50k<locked amount≤500k",
+      "rule_table_row1_cell3": "2 DOT Fixed",
+      "rule_table_row2_cell1": "locked amount >=25k",
       "rule_table_row2_cell2": "Round 1 & Round 2",
-      "rule_table_row2_cell3": "15 DOT Fixed",
-      "rule_table_row3_cell1": "Top 100 locked amount during the activity",
+      "rule_table_row2_cell3": "10 DOT Fixed",
+      "rule_table_row3_cell1": "Top 50 locked amount during the activity",
       "rule_table_row3_cell2": "Round 1 or Round 2 and Round 3",
       "rule_table_row3_cell3": "1-50 DOT/Accounts",
       "rule_table_row4_cell1": "No lock-up period, top 50 users based on the coin age algorithm",

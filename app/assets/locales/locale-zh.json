@@ -2031,11 +2031,10 @@
       "lock": "确认锁仓",
       "balance": "可用余额",
       "tip_heading": "温馨提示",
-      "tip_content_1": "1.您必须完成【申购意向表】并在6月8日12：00（北京时间）前完成锁仓操作，否则将无法参与活动；",
+      "tip_content_1": "1.您必须完成【申购意向表】并在6月20日12：00（北京时间）前完成锁仓操作，否则将无法参与活动；",
       "tip_content_2": "2.在截止锁仓日期前，您可以进行多次锁仓操作；",
-      "tip_content_3": "3.账号需留有不少于5个额外的CYB用于支付手续费；",
-      "tip_content_4": "4.若您锁仓的金额不满足ETO相应轮次的要求，将视为无效参与；",
-      "tip_content_5": "5.本次活动将统一锁仓至6月14日，届时请勿忘记解锁CYB，并进行领取操作。"
+      "tip_content_3": "3.若您锁仓的金额不满足ETO相应轮次的要求，将视为无效参与；",
+      "tip_content_4": "4.本次活动将统一锁仓至6月26日，届时请勿忘记解锁CYB，并进行领取操作。"
     },
     "center": {
       "greeting": "尊敬的 %(account)s",
@@ -2047,19 +2046,19 @@
       "flow": {
         "title": "Polkadot ETO流程",
         "step_1": "填写【申购意向表】",
-        "step_content_1": "6月8日12:00前",
+        "step_content_1": "6月20日12：00前",
         "step_2": "锁仓操作",
-        "step_content_2": "6月8日12:00前",
+        "step_content_2": "6月20日12：00前",
         "step_3": "ETO币种选择",
-        "step_content_3": "6月13日23:59前",
+        "step_content_3": "6月25日23：59前",
         "step_4": "查看是否中签",
-        "step_content_4": "6月14日12:00",
-        "step_5": "查看第三轮&第四轮排名结果",
-        "step_content_5": "6月14日12:00",
+        "step_content_4": "6月26日12：00",
+        "step_5": "查看第三轮",
+        "step_content_5": "6月26日12：00",
         "step_6": "解锁锁仓CYB",
-        "step_content_6": "6月14日14:00",
+        "step_content_6": "6月26日14：00",
         "step_7": "ETO抢购",
-        "step_content_7": "6月15日"
+        "step_content_7": "6月27日"
       }
     },
     "apply_done": {
@@ -2076,39 +2075,39 @@
     "flow": {
       "title": "Polkadot ETO流程",
       "apply": "开始申购",
-      "apply_content": "5月27日 - 6月8日12:00",
+      "apply_content": "6月17日-6月27日12：00",
       "lock": "CYB锁仓期",
-      "lock_content": "6月8日 - 6月14日",
+      "lock_content": "6月20日-6月26日",
       "draw": "摇号&公布结果",
-      "draw_content": "6月14日",
+      "draw_content": "6月26日",
       "buy": "抢购",
-      "buy_content": "6月15日"
+      "buy_content": "6月27日"
     },
     "token": {
       "label": "请选择您的认购币种",
       "set_done": "申购币种修改成功",
       "tip_heading": "温馨提示",
-      "tip_content_1": "1.您可以在6月13日23：59分前进行币种的选择更换，超过时间后将无法更改；",
-      "tip_content_2": "2.除第四轮抢购必须使用CYB进行，其余三场均可自主选择CYB或USDT，一旦选择，前三场将统一使用同一币种进行抢购，请慎重选择！",
+      "tip_content_1": "1.您可以在6月25日24点前更改您的投资币种，一经选择，您的第一二三轮将用统一币种进行认购，请谨慎选择",
+      "tip_content_2": "2.本次ETO均可自主选择CYB或USDT，一旦选择，前3轮将统一使用同一币种进行抢购，请慎重选择！",
       "tip_content_3": "3.如您选择使用USDT进行抢购，请确保账号内有足够的CYB用于手续费；"
     },
     "survey": {
       "tip": "尊敬的 %(account)s 用户，感谢您选择Cybex！以下是本次ETO的【申购意向表】，选择将会影响您之后的认购资格，请按照您的申购意向和实际情况进行选择，感谢您的配合！",
-      "rule_content": "此次波卡ETO采取CYB锁仓+摇号中签的形式进行，根据不同的锁仓要求准备了多个认购场次；针对Cybex老用户，本次ETO也设计了币龄计算法。下面请仔细阅读各个认购场次的锁仓要求，并勾选您意向参与的轮次：",
+      "rule_content": "此次波卡ETO采取CYB锁仓+此次波卡ETO采取CYB锁仓+摇号中签的形式进行，根据不同的锁仓要求准备了多个认购场次。下面请仔细阅读各个认购场次的锁仓要求，并勾选您意向参与的轮次：",
       "rule_known": "我已知晓规则",
       "rule_title": "本次ETO规则",
-      "rule_table_th1": "参与锁仓门槛",
+      "rule_table_th1": "参与锁仓门槛（CYB）",
       "rule_table_th2": "可以参与的轮次",
       "rule_table_th3": "该轮次可申购份额",
-      "rule_table_row1_cell1": "1w≤锁仓量≤5w",
+      "rule_table_row1_cell1": "锁仓量>=5K",
       "rule_table_row1_cell2": "第一轮",
-      "rule_table_row1_cell3": "3 DOT定额",
-      "rule_table_row2_cell1": "5w<锁仓量≤50w",
+      "rule_table_row1_cell3": "2 DOT 定额",
+      "rule_table_row2_cell1": "锁仓量>=25K",
       "rule_table_row2_cell2": "第一轮&第二轮",
-      "rule_table_row2_cell3": "15 DOT定额",
-      "rule_table_row3_cell1": "活动期间锁仓量排名前100名",
+      "rule_table_row2_cell3": "10 DOT 定额",
+      "rule_table_row3_cell1": "活动期间锁仓量排名前50名",
       "rule_table_row3_cell2": "第一轮或第二轮及第三轮",
-      "rule_table_row3_cell3": "最低1个DOT，上限50DOT/账户",
+      "rule_table_row3_cell3": "最低1个DOT，上限50DOT/账号",
       "rule_table_row4_cell1": "无锁仓，根据币龄计算法前50名用户",
       "rule_table_row4_cell2": "第四轮",
       "rule_table_row4_cell3": "最低1个DOT，上限50DOT/账户",
@@ -2163,5 +2162,9 @@
     "result_result_2": "第二轮参与资格",
     "result_result_3": "第三轮参与资格",
     "result_result_4": "第四轮参与资格"
+  },
+  "eto_token_modal": {
+    "title": "请预先选择您的投资币种",
+    "tip_1": "您可以在6月25日24点前更改您的投资币种，一经选择，您的第一二三轮将用统一币种进行认购，请谨慎选择。"
   }
 }

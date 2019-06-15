@@ -116,7 +116,7 @@ let EtoRank = ({
   }, []);
   return (
     <>
-      <div className="grid-container show-for-small-only">
+      {/* <div className="grid-container show-for-small-only">
         <div className="rank-selection text-center" style={{ margin: "12px" }}>
           <div
             className="btn-group"
@@ -146,20 +146,20 @@ let EtoRank = ({
             ))}
           </div>
         </div>
-        {/* <EtoPanel style={{ marginBottom: "12px" }}> */}
+        <EtoPanel style={{ marginBottom: "12px" }}>
         {rank && rank.lock && (
           <RankTable
             data={type === RankType.Lock ? rank.lock : rank.coinAge}
             type={type}
           />
         )}
-        {/* </EtoPanel> */}
-      </div>
-      <div className="grid-container hide-for-small-only">
+        </EtoPanel>
+      </div> */}
+      <div className="grid-container">
         <div style={{ padding: "6px" }} />
         <div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
           <div
-            className="column small-12 medium-6"
+            className="column small-12 medium-12"
             style={{ display: "flex", flexDirection: "column" }}
           >
             <EtoContentWrapper>
@@ -171,7 +171,7 @@ let EtoRank = ({
               )}
             </EtoPanel>
           </div>
-          <div
+          {/* <div
             className="column small-12 medium-6"
             style={{ display: "flex", flexDirection: "column" }}
           >
@@ -184,7 +184,7 @@ let EtoRank = ({
                 <RankTable data={rank.coinAge} type={RankType.CoinAge} />
               )}
             </EtoPanel>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

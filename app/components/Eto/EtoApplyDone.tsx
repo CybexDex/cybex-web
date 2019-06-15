@@ -7,6 +7,8 @@ import { EtoFlow } from "./EtoFlow";
 import Translate from "react-translate-component";
 import { EtoActions } from "../../actions/EtoActions";
 import { Gtag } from "services/Gtag";
+import { ModalActions } from "../../actions/ModalActions";
+import { DEFAULT_ETO_CHECK_TOKEN } from "../Modal/ModalID";
 
 const { useState, useEffect } = React;
 export const EtoApplyDone = (props: any) => {
@@ -23,9 +25,14 @@ export const EtoApplyDone = (props: any) => {
           type="primary"
           // loading={this.state.checking}
           onClick={() => {
-            EtoActions.setApplyDone();
-            Gtag.eventActivity("Eto", "通过报名成功页进入锁仓");
-            props.history.push("/eto/lock");
+            ModalActions.showModal(DEFAULT_ETO_CHECK_TOKEN, false, {
+              onResolve: () => {
+                Gtag.eventActivity("Eto", "通过报名成功页进入锁仓");
+                EtoActions.setApplyDone();
+                props.history.push("/eto/lock");
+              },
+              onReject: () => void 0
+            });
           }}
           style={{ marginBottom: "12px", width: "100%" }}
         >
@@ -35,8 +42,13 @@ export const EtoApplyDone = (props: any) => {
           type="primary"
           // loading={this.state.checking}
           onClick={() => {
-            EtoActions.setApplyDone();
-            props.history.push("/market/CYB_JADE.USDT");
+            ModalActions.showModal(DEFAULT_ETO_CHECK_TOKEN, false, {
+              onResolve: () => {
+                EtoActions.setApplyDone();
+                props.history.push("/market/CYB_JADE.USDT");
+              },
+              onReject: () => void 0
+            });
           }}
           style={{ marginBottom: "12px", width: "100%" }}
         >

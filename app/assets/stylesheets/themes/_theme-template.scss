@@ -142,7 +142,8 @@
     color: $primary-text-color;
   }
   .modal {
-    @include color($light-text-color, $light-panel-bg-color);
+    @include color($light-text-color, $bg-color);
+    border-radius: 8px;
     .close-button {
       color: $secondary-text-color;
       &:hover {

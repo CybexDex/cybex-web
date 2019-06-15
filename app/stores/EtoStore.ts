@@ -68,7 +68,9 @@ class EtoStore extends AbstractStore<EtoState> {
       state: Eto.EtoPersonalState.Uninit,
       info: null,
       sum: 0,
-      loading: 0
+      loading: 0,
+      userProjectStatus: {},
+      projects: []
     });
   }
   handleAddLoading(count) {
@@ -100,9 +102,16 @@ class EtoStore extends AbstractStore<EtoState> {
     console.debug("Personal Info: ", info);
     this.setState({ ...(this as any).getInstance().getState(), ...info });
   }
-  handleTokenUpdate(info: Eto.EtoInfo) {
+  handleTokenUpdate({ info, onResolve }: { info: Eto.EtoInfo; onResolve? }) {
     console.debug("Personal Info: ", info);
-    this.setState({ ...(this as any).getInstance().getState(), ...info });
+    this.setState({
+      ...(this as any).getInstance().getState(),
+      ...info,
+      state: (this as any).getInstance().getState().state
+    });
+    if (onResolve) {
+      setTimeout(onResolve, 500);
+    }
   }
   handleSurveyUpdate(info: Eto.EtoInfo) {
     console.debug("Personal Info: ", info);

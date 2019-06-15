@@ -21,7 +21,18 @@ import { EtoConfirmModal } from "../Modal/EtoConfirm";
 import { ModalActions } from "../../actions/ModalActions";
 
 const EtoTokenComfirmModal = "#$EtoTokenComfirmModal";
-
+export const EtoTokenTips = (props: any = {}) => (
+  <EtoContent
+    {...props}
+    style={{ marginBottom: "12px", ...(props.style || {}) }}
+    heading={counterpart.translate("eto_apply.token.tip_heading")}
+    contents={[
+      counterpart.translate("eto_apply.token.tip_content_1"),
+      counterpart.translate("eto_apply.token.tip_content_2"),
+      counterpart.translate("eto_apply.token.tip_content_3")
+    ]}
+  />
+);
 type EtoProps = {
   linkedAccounts: any;
   etoState: Eto.EtoInfo;
@@ -74,15 +85,7 @@ let EtoToken = class extends React.Component<EtoProps> {
             ))}
           </select>
         </EtoPanel>
-        <EtoContent
-          style={{ marginBottom: "12px" }}
-          heading={counterpart.translate("eto_apply.token.tip_heading")}
-          contents={[
-            counterpart.translate("eto_apply.token.tip_content_1"),
-            counterpart.translate("eto_apply.token.tip_content_2"),
-            counterpart.translate("eto_apply.token.tip_content_3")
-          ]}
-        />
+        {<EtoTokenTips />}
         <EtoConfirmModal
           modalId={EtoTokenComfirmModal}
           onConfirm={() => {

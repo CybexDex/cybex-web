@@ -255,11 +255,13 @@ class EtoActions {
             .then(res => new Eto.EtoInfo(res))
         )
         .then(info => {
-          dispatch(info);
+          dispatch({ info, onResolve });
+          // setTimeout(() => {
+          //   if (onResolve) {
+          //     onResolve();
+          //   }
+          // }, 1000);
           this.removeLoading();
-          if (onResolve) {
-            onResolve();
-          }
           return info;
         })
         .catch(err => {

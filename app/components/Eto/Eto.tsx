@@ -16,17 +16,19 @@ import { EtoRank } from "./EtoRank";
 import { ProjectMain } from "./ProjectMain";
 import { ProjectDetail } from "./ProjectDetail";
 import { ProjectJoin } from "./ProjectJoin";
+import { EtoTokenModal } from "./EtoCheckToken";
+import { DEFAULT_ETO_CHECK_TOKEN } from "../Modal/ModalID";
 export const IntroBtn = withRouter<any>(props => {
   return (
     <div {...props}>
       <Button
         type="primary"
-        disabled
+        // disabled
         // loading={this.state.checking}
-        // onClick={() => {
-        //   Gtag.eventActivity("Eto", "点击申购");
-        //   props.history.push("/eto/apply");
-        // }}
+        onClick={() => {
+          Gtag.eventActivity("Eto", "点击申购");
+          props.history.push("/eto/apply");
+        }}
         style={{ marginBottom: "12px", width: "100%" }}
       >
         {counterpart.translate("eto_intro.join_apply")}

@@ -32,7 +32,7 @@ const styles = {
   },
   input: {
     base: {
-      margin: 0,
+      margin: "0 0.5em 0 0",
       backgroundImage: `url(${getIcon("radio")})`,
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -41,8 +41,7 @@ const styles = {
       WebkitAppearance: "none",
       MozAppearance: "none",
       width: "1.4em",
-      height: "1.4em",
-      marginRight: "0.5em"
+      height: "1.4em"
     },
     active: {
       backgroundImage: `url(${getIcon("radio", "active")})`
@@ -61,7 +60,7 @@ let Radio = ({
   value,
   labelStyle = {},
   inputStyle = {},
-  onClick = (...any) => void 0
+  onClick = (...any) => void 0 as any
 }) => {
   let labelStyles = styles.label;
   let inputStyles = styles.input;

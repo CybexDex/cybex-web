@@ -17,6 +17,8 @@ import { EtoCenter } from "./EtoCenter";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { Gtag } from "services/Gtag";
 import { LoadingIndicator } from "../LoadingIndicator";
+import EtoTokenModal from "./EtoCheckToken";
+import { DEFAULT_ETO_CHECK_TOKEN } from "../Modal/ModalID";
 
 type EtoProps = {
   linkedAccounts: any;
@@ -59,30 +61,6 @@ let EtoApply = class extends React.Component<EtoProps> {
     }
   }
 
-  render() {
-    let { etoState } = this.props as any;
-    return etoState.state === Eto.EtoPersonalState.Uninit ? (
-      <LoadingIndicator
-        style={{
-          height: "100vh",
-          position: "fixed",
-          width: "100vw",
-          textAlign: "center",
-          backgroundColor: "rgba(0,0,0,0.4)",
-          lineHeight: "80vh",
-          zIndex: 1
-        }}
-        type="three-bounce"
-      />
-    ) : etoState.state === Eto.EtoPersonalState.Basic ||
-      etoState.state === Eto.EtoPersonalState.Survey ? (
-      <EtoCenter overtime {...this.props} />
-    ) : etoState.state === Eto.EtoPersonalState.Lock ? (
-      <EtoCenter {...this.props} />
-    ) : (
-      <h1>Unknown</h1>
-    );
-  }
   // render() {
   //   let { etoState } = this.props as any;
   //   return etoState.state === Eto.EtoPersonalState.Uninit ? (
@@ -98,24 +76,53 @@ let EtoApply = class extends React.Component<EtoProps> {
   //       }}
   //       type="three-bounce"
   //     />
-  //   ) : etoState.state === Eto.EtoPersonalState.Basic ? (
-  //     <EtoInfoForm
-  //       onSubmit={form => EtoActions.putBasic(form, this.props.account)}
-  //       account={this.props.account.get("name")}
-  //     />
-  //   ) : etoState.state === Eto.EtoPersonalState.Survey ? (
-  //     <EtoSurveyForm
-  //       onSubmit={form => EtoActions.putSurvey(form, this.props.account)}
-  //       account={this.props.account.get("name")}
-  //     />
-  //   ) : etoState.state === Eto.EtoPersonalState.ApplyDone ? (
-  //     <EtoApplyDone {...this.props} />
+  //   ) : etoState.state === Eto.EtoPersonalState.Basic ||
+  //     etoState.state === Eto.EtoPersonalState.Survey ? (
+  //     <EtoCenter overtime {...this.props} />
   //   ) : etoState.state === Eto.EtoPersonalState.Lock ? (
   //     <EtoCenter {...this.props} />
   //   ) : (
   //     <h1>Unknown</h1>
   //   );
   // }
+  render() {
+    let { etoState, account } = this.props as any;
+    return (
+      <>
+        {etoState.state === Eto.EtoPersonalState.Uninit ? (
+          <LoadingIndicator
+            style={{
+              height: "100vh",
+              position: "fixed",
+              width: "100vw",
+              textAlign: "center",
+              backgroundColor: "rgba(0,0,0,0.4)",
+              lineHeight: "80vh",
+              zIndex: 1
+            }}
+            type="three-bounce"
+          />
+        ) : etoState.state === Eto.EtoPersonalState.Basic ? (
+          <EtoInfoForm
+            onSubmit={form => EtoActions.putBasic(form, this.props.account)}
+            account={this.props.account.get("name")}
+          />
+        ) : etoState.state === Eto.EtoPersonalState.Survey ? (
+          <EtoSurveyForm
+            onSubmit={form => EtoActions.putSurvey(form, this.props.account)}
+            account={this.props.account.get("name")}
+          />
+        ) : etoState.state === Eto.EtoPersonalState.ApplyDone ? (
+          <EtoApplyDone {...this.props} />
+        ) : etoState.state === Eto.EtoPersonalState.Lock ? (
+          <EtoCenter {...this.props} />
+        ) : (
+          <h1>Unknown</h1>
+        )}
+        <EtoTokenModal modalId={DEFAULT_ETO_CHECK_TOKEN} account={account} />
+      </>
+    );
+  }
 };
 EtoApply = BindToChainState(EtoApply);
 

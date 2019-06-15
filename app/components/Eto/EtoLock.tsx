@@ -65,7 +65,7 @@ let EtoLock = class extends React.Component<EtoProps> {
         </EtoContentWrapper>
         <EtoContent
           heading={counterpart.translate("eto_apply.lock.tip_heading")}
-          contents={new Array(5)
+          contents={new Array(4)
             .fill(1)
             .map((_, i) =>
               counterpart.translate(`eto_apply.lock.tip_content_${i + 1}`)

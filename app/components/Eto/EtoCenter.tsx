@@ -12,10 +12,11 @@ import { EtoRefreshModal } from "../Modal/EtoRefreshModal";
 import { ModalActions } from "../../actions/ModalActions";
 import { Gtag } from "services/Gtag";
 import { Link } from "react-router-dom";
-
+const { useEffect } = React;
 const EtoRefreshModalID = "#$EtoRefreshModalID";
 
 import ls from "lib/common/localStorage";
+import { checkToken } from "./EtoCheckToken";
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
 
@@ -53,13 +54,17 @@ export const EtoCenterSummary = ({
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.info.token}
           </h2>
-          {/* <a
-            style={{ color: "white", textDecoration: "underline" }}
+          <a
+            style={{
+              color: "white",
+              textDecoration: "underline",
+              cursor: "pointer"
+            }}
             href="javascript:;"
-            // onClick={() => history.push("/eto/token")}
+            onClick={() => history.push("/eto/token")}
           >
             {counterpart.translate("eto_apply.change")}
-          </a> */}
+          </a>
         </div>
         <div style={{ textAlign: "center" }}>
           <span>
@@ -94,7 +99,6 @@ export const EtoCenterSummary = ({
     </div>
   );
 };
-
 export const EtoCenter = (props: any) => {
   const result =
     ((props.etoState as Eto.EtoInfo).info &&
@@ -102,6 +106,19 @@ export const EtoCenter = (props: any) => {
         Eto.Fields.result
       ]) ||
     ([] as any[]);
+
+  useEffect(() => {
+    if (
+      (props.etoState as Eto.EtoInfo).state !== Eto.EtoPersonalState.Uninit &&
+      !((props.etoState as Eto.EtoInfo).info as Eto.FullInfo)[Eto.Fields.token]
+    ) {
+      console.debug("Show Token Modal");
+      checkToken()
+        .then(console.debug)
+        .catch(console.debug);
+    }
+  }, [(props.etoState as Eto.EtoInfo).info]);
+
   return (
     <>
       <EtoPanel
@@ -121,19 +138,21 @@ export const EtoCenter = (props: any) => {
             marginBottom: "-12px"
           }}
         >
-          {/* <Button
-            type="secondary"
-            // loading={this.state.checking}
-            onClick={() => {
-              EtoActions.setApplyDone();
-              Gtag.eventActivity("Eto", "通过中心页进入锁仓");
-              props.history.push("/eto/lock");
-            }}
-            style={{ width: "50%", borderRadius: 0 }}
-          >
-            {counterpart.translate("eto_apply.center.go_lock")}
-          </Button> */}
-          {false && (
+          {true && (
+            <Button
+              type="secondary"
+              // loading={this.state.checking}
+              onClick={() => {
+                EtoActions.setApplyDone();
+                Gtag.eventActivity("Eto", "通过中心页进入锁仓");
+                props.history.push("/eto/lock");
+              }}
+              style={{ width: "50%", borderRadius: 0 }}
+            >
+              {counterpart.translate("eto_apply.center.go_lock")}
+            </Button>
+          )}
+          {true && (
             <Button
               type="secondary"
               // loading={this.state.checking}
@@ -141,12 +160,12 @@ export const EtoCenter = (props: any) => {
                 EtoActions.setApplyDone();
                 props.history.push("/market/CYB_JADE.USDT");
               }}
-              style={{ width: "100%", borderRadius: 0 }}
+              style={{ width: "50%", borderRadius: 0 }}
             >
               {counterpart.translate("eto_apply.center.go_trade")}
             </Button>
           )}
-          {true && (
+          {false && (
             <div
               className="result"
               style={{ backgroundColor: "rgb(27,34,48)", paddingBottom: "8px" }}
