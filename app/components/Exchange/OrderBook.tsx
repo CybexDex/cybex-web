@@ -846,7 +846,10 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
           maxDigits={maxDigits}
           digits={digits}
           depthStep={
-            quoteSymbol === "CYB" && baseSymbol === "JADE.USDT" ? 6 : null
+            (quoteSymbol === "CYB" && baseSymbol === "JADE.USDT") ||
+            (quoteSymbol === "JADE.DOT" && baseSymbol === "JADE.USDT")
+              ? 7
+              : null
           }
           depthType={this.state.depthType}
           onDepthTypeChange={this.setDepthType}

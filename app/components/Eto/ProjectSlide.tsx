@@ -38,11 +38,14 @@ export const ProjectSlide = ({
         <div
           style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
         >
-          <Slider {...settings}>
-            {slides.map(project => (
+          {slides
+            .filter(banner => !!banner.imgUrl)
+            .slice(0, 1)
+            .map(project => (
               <img style={{ width: "100%" }} src={project.imgUrl} />
             ))}
-          </Slider>
+          {/* <Slider {...settings}>
+          </Slider> */}
         </div>
       </div>
     </>
