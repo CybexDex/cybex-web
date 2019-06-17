@@ -48,14 +48,14 @@ const NavLinks: Array<NavLink> = [
     name: "eto_apply",
     icon: "ETO"
   },
-  {
-    id: "eto",
-    routeTo: "/eto/projects",
-    // routeTo: "/eto",
-    activeMatcher: /^\/eto\/projects/,
-    name: "eto",
-    icon: "ETO"
-  },
+  // {
+  //   id: "eto",
+  //   routeTo: "/eto/projects",
+  //   // routeTo: "/eto",
+  //   activeMatcher: /^\/eto\/projects/,
+  //   name: "eto",
+  //   icon: "ETO"
+  // },
   {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,

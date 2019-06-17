@@ -2013,11 +2013,12 @@
     "tip_3": "代币无锁仓期",
     "tip_4": "额度首次面向普通投资者开放",
     "join_apply": "申购报名",
-    "rule_url": "https://support.cybex.io/hc/zh-cn/articles/360000281782",
+    "rule_url": "https://support.cybex.io/hc/zh-cn/articles/360000303142",
+    "img_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/polka_slogan_zh_0615.jpeg?x-oss-process=style/compress",
     "join_rule": "了解规则",
     "join_apply_already": "我已申购",
     "join_date": "参与时间",
-    "join_date_content": "5月27日 - 6月15日",
+    "join_date_content": "6月17日 - 6月27日",
     "join_platform": "参与平台",
     "join_platform_content": "Cybex赛贝去中心化交易所",
     "about_eto_content": "ETO（Earlybirds Token Offering,早鸟轮）是一个通过去中心化交易所帮助优秀区块链项目募资的方式，帮助那些真正有价值，有技术的有规划的区块链项目发挥价值。时隔半年，Cybex 第三期ETO强势回归，挑选全球最优质的跨链项目——Polkadot，超优私募价格，ETO结束即开盘，无锁仓期，拿到即是赚到！",
@@ -2062,7 +2063,7 @@
       }
     },
     "apply_done": {
-      "tip": "您已完成【申购意向表】的填写，根据您的意向选择，请您在6月8日前按照流程进行锁仓操作，超时将无效。",
+      "tip": "您已完成【申购意向表】的填写，根据您的意向选择，请您在6月20日12：00前按照流程进行锁仓操作，超时将无效。",
       "go_lock": "已有CYB，现在就去锁仓",
       "go_trade": "先购买一波CYB去",
       "assistant": "添加小助手微信<br>了解详情"
@@ -2075,7 +2076,7 @@
     "flow": {
       "title": "Polkadot ETO流程",
       "apply": "开始申购",
-      "apply_content": "6月17日-6月27日12：00",
+      "apply_content": "6月17日-6月20日12：00",
       "lock": "CYB锁仓期",
       "lock_content": "6月20日-6月26日",
       "draw": "摇号&公布结果",

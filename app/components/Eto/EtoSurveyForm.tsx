@@ -11,9 +11,9 @@ export const EtoSurveyForm = ({ account, onSubmit }) => {
   const [op1, setOp1] = useState(false);
   const [op2, setOp2] = useState(false);
   const [op3, setOp3] = useState(false);
-  const [op4, setOp4] = useState(false);
-  const ops = [op1, op2, op3, op4];
-  const setOps = [setOp1, setOp2, setOp3, setOp4];
+  // const [op4, setOp4] = useState(false);
+  const ops = [op1, op2, op3];
+  const setOps = [setOp1, setOp2, setOp3];
   return (
     <form
       onSubmit={e => {

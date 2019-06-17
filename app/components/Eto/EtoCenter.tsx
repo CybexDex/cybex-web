@@ -69,7 +69,7 @@ export const EtoCenterSummary = ({
         <div style={{ textAlign: "center" }}>
           <span>
             {counterpart.translate("eto_apply.center.total")}{" "}
-            {/* <a
+            <a
               href="javascript:;"
               style={{ color: "white", textDecoration: "underline" }}
               onClick={() => {
@@ -82,7 +82,7 @@ export const EtoCenterSummary = ({
               // onClick={() => EtoActions.queryInfo(account)}
             >
               <Icon icon="refresh" />
-            </a> */}
+            </a>
           </span>
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.sum}{" "}
@@ -221,14 +221,14 @@ export const EtoCenter = (props: any) => {
       <EtoContentWrapper>
         <EtoExplain />
       </EtoContentWrapper>
-      {/* <EtoRefreshModal
+      <EtoRefreshModal
         modalId={EtoRefreshModalID}
         onConfirm={() => {
           EtoActions.queryInfo(props.account);
           ModalActions.hideModal(EtoRefreshModalID);
         }}
         onCancel={() => ModalActions.hideModal(EtoRefreshModalID)}
-      /> */}
+      />
       <a
         href={counterpart.translate("eto_apply.faq_url")}
         target="_blank"

@@ -1921,12 +1921,13 @@
     "tip_2": "The End of ETO, the Listing of Polkadot",
     "tip_3": "Token Without the Lockup Period",
     "tip_4": "The amount is open to ordinary investors for the first time.",
+    "img_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/polka_slogan_en_0615.jpeg?x-oss-process=style/compress",
     "join_apply": "Sign Up",
     "join_rule": "Rules",
-    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000281762",
+    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000301981",
     "join_apply_already": "Subscribed",
     "join_date": "Time",
-    "join_date_content": "May 27 - June 15",
+    "join_date_content": "June 17 - June 27",
     "join_platform": "Platform",
     "join_platform_content": "Cybex Decentralized Exchange",
     "about_eto_content": "ETO (Earlybirds Token Offering) is a way to fundraise the excellent blockchain projects to help the valuable, technological and planned ones to realize the value. After half a year, the third Cybex ETO comes back, which selects Polkadot, the best cross-chain project in the world, with favourable private placement price. The end of ETO is the listing of Polkadot without the lockup period. If you get the polkadot, you make a profit.",
@@ -1971,7 +1972,7 @@
       }
     },
     "apply_done": {
-      "tip": "You have filled in [Subscription Intention Form]. Please lock up CYB before June 8th on the basis of the process. It is invalid with timeout.",
+      "tip": "You have filled in [Subscription Intention Form]. Please lock up CYB before June 20th on the basis of the process. It is invalid with timeout.",
       "go_lock": "Lock up CYB",
       "go_trade": "Purchase CYB first",
       "assistant": "Add Assistant Wechat<br>Center for Individual Subscription"
@@ -1984,7 +1985,7 @@
     "flow": {
       "title": "Polkadot ETO process",
       "apply": "Subscription",
-      "apply_content": "From 12:00 on June 17 to 12:00 June 27",
+      "apply_content": "From 12:00 on June 17 to 12:00 June 20",
       "lock": "CYB Lock-up Period",
       "lock_content": "June 20 - June 26",
       "draw": "Lottery Drawing & Announcement",

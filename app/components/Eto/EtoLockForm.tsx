@@ -11,9 +11,9 @@ const { useState } = React;
 type EtoLockFormProps = { balance: string; onLock: (value: number) => void };
 
 const BtnPreset = [
-  { label: "10,000CYB", value: 10000 },
-  { label: "50,000CYB", value: 50000 },
-  { label: "500,000CYB", value: 500000 }
+  { label: "5,000CYB", value: 5000 },
+  { label: "25,000CYB", value: 25000 },
+  { label: "250,000CYB", value: 250000 }
 ];
 
 const EtoLockFormImpl = ({

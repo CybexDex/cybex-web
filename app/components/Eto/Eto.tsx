@@ -83,7 +83,7 @@ export const EtoBanner = () => (
     style={{
       paddingTop: "83.1%",
       backgroundColor: "rgba(255,150,58,1)",
-      backgroundImage: `url(https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/banner.png?x-oss-process=style/compress)`,
+      backgroundImage: `url(${counterpart.translate("eto_intro.img_url")})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       position: "relative",
@@ -108,7 +108,7 @@ export const EtoBanner = () => (
         padding: "12px"
       }}
     >
-      <Translate
+      {/* <Translate
         style={{ marginTop: "2em" }}
         // style={{ marginTop: "10%", marginBottom: "4%" }}
         content="eto_intro.slogan"
@@ -163,7 +163,7 @@ export const EtoBanner = () => (
             ))}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   </div>
 );
