@@ -2044,6 +2044,7 @@
       "change": "更改",
       "go_lock": "进行锁仓",
       "go_trade": "购买CYB",
+      "fund_usdt": "充值USDT",
       "flow": {
         "title": "Polkadot ETO流程",
         "step_1": "填写【申购意向表】",
@@ -2128,6 +2129,7 @@
     "refresh_cancel": "取消",
     "overtime": "本次ETO锁仓操作期已过",
     "rank": "排行榜",
+    "rank_tip": "每30分钟更新一次",
     "ranking": "排名",
     "rank_type_lock": "锁仓排行榜",
     "rank_type_age": "币龄排行榜",
@@ -2159,9 +2161,9 @@
   "eto_result": {
     "result_title": "中签结果",
     "result_empty": "感谢您的参与！很抱歉您未抽中！<br>更多关于DOT交易信息请等待官方通知。",
-    "result_result_1": "第一轮参与资格",
-    "result_result_2": "第二轮参与资格",
-    "result_result_3": "第三轮参与资格",
+    "result_result_1": "恭喜您，获得第一轮认购资格，认购数量为：2DOT",
+    "result_result_2": "恭喜您，获得第二轮认购资格，认购数量为：10DOT",
+    "result_result_3": "恭喜您，获得第三轮抢购资格，抢购数量为：1-50 DOT",
     "result_result_4": "第四轮参与资格"
   },
   "eto_token_modal": {

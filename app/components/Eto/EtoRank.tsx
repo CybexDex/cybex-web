@@ -7,6 +7,7 @@ import Translate from "react-translate-component";
 import { Eto } from "../../services/eto";
 const { useEffect, useState } = React;
 import counterpart from "counterpart";
+import { EtoExplain } from "./EtoRule";
 
 enum RankType {
   Lock,
@@ -164,6 +165,7 @@ let EtoRank = ({
           >
             <EtoContentWrapper>
               <Translate component="h5" content="eto_apply.rank_type_lock" />
+              <EtoExplain content="eto_apply.rank_tip" />
             </EtoContentWrapper>
             <EtoPanel style={{ marginBottom: "12px" }}>
               {rank && rank.lock && (

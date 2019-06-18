@@ -85,9 +85,9 @@ export const EtoRule = props => (
   </EtoPanel>
 );
 
-export const EtoExplain = () => (
+export const EtoExplain = ({ content = "eto_apply.explain" }) => (
   <p style={{ marginBottom: "0" }}>
     <span style={{ color: Colors.$colorFlame }}>*</span>
-    <small>{counterpart.translate("eto_apply.explain")}</small>
+    <small style={{ fontSize: "11px" }}>{counterpart.translate(content)}</small>
   </p>
 );

@@ -1948,6 +1948,7 @@
       "total": "Số lượng khóa kho",
       "change": "Thay đổi",
       "go_lock": "Khóa kho",
+      "fund_usdt": "Nạp USDT",
       "go_trade": "Mua CYB",
       "flow": {
         "title": "Quy trình ETO của Polkadot ",
@@ -2034,6 +2035,7 @@
     "refresh_cancel": "Hủy bỏ",
     "rank": "Bảng xếp hạng",
     "ranking": "Xếp hạng",
+    "rank_tip": "Cập nhật 30 phút một lần",
     "rank_type_lock": "Bảng xếp hạng khóa kho",
     "rank_type_age": "Bảng xếp hạng tuổi coin",
     "account_name": "Tên tài khoản",
@@ -2043,5 +2045,12 @@
     "lottery_rule_url": "https://ieo.oss-cn-hangzhou.aliyuncs.com/KYC-course/lotteryrules-YN.pdf",
     "amount": "Amount",
     "next": "Bước tiếp theo"
+  },"eto_result": {
+    "result_title": "Results Announcement",
+    "result_empty": "Thank you for your participation!<br>For more informaiton on DOT, please wait for CYBEX announcement.",
+    "result_result_1": "Xin chúc mừng! Bạn đã đủ điều kiện tham gia vòng đầu tiên, số lượng đặt mua là: 2 DOT",
+    "result_result_2": "Xin chúc mừng! Bạn đã đủ điều kiện tham gia vòng thứ hai, số lượng đặt mua là: 10 DOT",
+    "result_result_3": "Xin chúc mừng! Bạn đã đủ điều kiện tham gia vòng thứ ba, số lượng đặt mua là: 1-50 DOT",
+    "result_result_4": "Round 4"
   }
 }

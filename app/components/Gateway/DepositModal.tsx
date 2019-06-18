@@ -217,5 +217,5 @@ DepositModalWrapper = connect(
     }
   }
 );
-
+export { DepositModalWrapper as DepositModal };
 export default DepositModalWrapper;

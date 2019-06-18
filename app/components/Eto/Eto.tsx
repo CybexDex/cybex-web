@@ -254,7 +254,9 @@ let Eto = ({ etoState }: { etoState: EtoState }) => {
             position: "fixed",
             width: "100vw",
             textAlign: "center",
-            backgroundColor: "rgba(0,0,0,0.4)",
+            top: 0,
+            left: 0,
+            // backgroundColor: "rgba(0,0,0,0.4)",
             lineHeight: "80vh",
             zIndex: 1
           }}

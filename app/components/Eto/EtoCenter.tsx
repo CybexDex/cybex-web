@@ -17,6 +17,7 @@ const EtoRefreshModalID = "#$EtoRefreshModalID";
 
 import ls from "lib/common/localStorage";
 import { checkToken } from "./EtoCheckToken";
+import { GatewayActions, DEPOSIT_MODAL_ID } from "../../actions/GatewayActions";
 const STORAGE_KEY = "__graphene__";
 let ss = new ls(STORAGE_KEY);
 
@@ -152,6 +153,23 @@ export const EtoCenter = (props: any) => {
               {counterpart.translate("eto_apply.center.go_lock")}
             </Button>
           )}
+          {false && (
+            <Button
+              type="secondary"
+              // loading={this.state.checking}
+              onClick={() => {
+                Gtag.eventActivity("Eto", "通过中心页点击充值");
+                GatewayActions.showDepositModal(
+                  props.account && props.account.get("name"),
+                  "JADE.USDT",
+                  DEPOSIT_MODAL_ID
+                );
+              }}
+              style={{ width: "50%", borderRadius: 0 }}
+            >
+              {counterpart.translate("eto_apply.center.fund_usdt")}
+            </Button>
+          )}
           {true && (
             <Button
               type="secondary"
@@ -165,21 +183,31 @@ export const EtoCenter = (props: any) => {
               {counterpart.translate("eto_apply.center.go_trade")}
             </Button>
           )}
-          {false && (
-            <div
-              className="result"
-              style={{ backgroundColor: "rgb(27,34,48)", paddingBottom: "8px" }}
-            >
-              <Translate
-                content="eto_result.result_title"
-                component="h5"
-                className="text-center"
-                style={{
-                  fontSize: "14px",
-                  lineHeight: "40px",
-                  marginBottom: 0
-                }}
-              />
+        </div>
+      </EtoPanel>
+      {true && (
+        <EtoPanel style={{ marginBottom: "12px" }}>
+          <div
+            className="result"
+            style={{
+              backgroundColor: "rgb(27,34,48)",
+              paddingBottom: "8px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center"
+            }}
+          >
+            <Translate
+              content="eto_result.result_title"
+              component="h5"
+              className="text-center"
+              style={{
+                fontSize: "14px",
+                lineHeight: "40px",
+                marginBottom: 0
+              }}
+            />
+            <div>
               {result.map(
                 (round, i) =>
                   round && (
@@ -187,7 +215,7 @@ export const EtoCenter = (props: any) => {
                       labelStyle={{
                         fontSize: "12px",
                         textAlign: "center",
-                        justifyContent: "center",
+                        justifyContent: "flex-start",
                         padding: "4px",
                         cursor: "default",
                         color: Colors.$colorGrey
@@ -201,22 +229,22 @@ export const EtoCenter = (props: any) => {
                     />
                   )
               )}
-              {!!result.length && result.every(r => !r) && (
-                <Translate
-                  component="h5"
-                  style={{
-                    fontSize: "12px",
-                    textAlign: "center",
-                    color: Colors.$colorGrey
-                  }}
-                  unsafe
-                  content="eto_result.result_empty"
-                />
-              )}
             </div>
-          )}
-        </div>
-      </EtoPanel>
+            {!!result.length && result.every(r => !r) && (
+              <Translate
+                component="h5"
+                style={{
+                  fontSize: "12px",
+                  textAlign: "center",
+                  color: Colors.$colorGrey
+                }}
+                unsafe
+                content="eto_result.result_empty"
+              />
+            )}
+          </div>
+        </EtoPanel>
+      )}
       <EtoFlow center />
       <EtoContentWrapper>
         <EtoExplain />

@@ -19,10 +19,14 @@ import { Gtag } from "services/Gtag";
 import { LoadingIndicator } from "../LoadingIndicator";
 import EtoTokenModal from "./EtoCheckToken";
 import { DEFAULT_ETO_CHECK_TOKEN } from "../Modal/ModalID";
+import { DepositModal } from "../Gateway/DepositModal";
+import { DEPOSIT_MODAL_ID } from "../../actions/GatewayActions";
+import { GatewayStore } from "../../stores/GatewayStore";
 
 type EtoProps = {
   linkedAccounts: any;
   account: any;
+  depositModal?: boolean;
   accountsReady: any;
   myIgnoredAccounts: any;
   passwordAccount: any;
@@ -96,8 +100,9 @@ let EtoApply = class extends React.Component<EtoProps> {
               position: "fixed",
               width: "100vw",
               textAlign: "center",
-              backgroundColor: "rgba(0,0,0,0.4)",
-              lineHeight: "80vh",
+              top: 0,
+              left: 0,
+              lineHeight: "100vh",
               zIndex: 1
             }}
             type="three-bounce"
@@ -120,6 +125,13 @@ let EtoApply = class extends React.Component<EtoProps> {
           <h1>Unknown</h1>
         )}
         <EtoTokenModal modalId={DEFAULT_ETO_CHECK_TOKEN} account={account} />
+        {this.props.depositModal && (
+          <DepositModal
+            balances={account.get("balances", null)}
+            modalId={DEPOSIT_MODAL_ID}
+            fade={true}
+          />
+        )}
       </>
     );
   }
@@ -163,6 +175,7 @@ EtoApplyWrapper = connect(
     },
     getProps() {
       return {
+        depositModal: GatewayStore.getState().modals.get(DEPOSIT_MODAL_ID),
         etoState: EtoStore.getState(),
         account: AccountStore.getState().currentAccount,
         linkedAccounts: AccountStore.getState().linkedAccounts,

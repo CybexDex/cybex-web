@@ -1951,6 +1951,7 @@
       "token": "Currency",
       "total": "Locked Amount",
       "change": "Change",
+      "fund_usdt": "Deposit USDT",
       "go_lock": "Lock Up",
       "go_trade": "Purchase CYB",
       "flow": {
@@ -2037,6 +2038,7 @@
     "refresh_cancel": "Cancel",
     "rank": "Ranking",
     "ranking": "No.",
+    "rank_tip": "Update every 30 Minutes",
     "rank_type_lock": "Lockup Ranking",
     "rank_type_age": "Coin Age Ranking",
     "account_name": "Name",
@@ -2067,9 +2069,9 @@
   "eto_result": {
     "result_title": "Results Announcement",
     "result_empty": "Thank you for your participation!<br>For more informaiton on DOT, please wait for CYBEX announcement.",
-    "result_result_1": "Round 1",
-    "result_result_2": "Round 2",
-    "result_result_3": "Round 3",
+    "result_result_1": "Congratulations！You are eligible for Round 1. The purchase amount is 2 DOT.",
+    "result_result_2": "Congratulations！You are eligible for Round 2. The purchase amount is 10 DOT.",
+    "result_result_3": "Congratulations！You are eligible for Round 3. The amount of rush purchase is 1-50 DOT.",
     "result_result_4": "Round 4"
   }
 }

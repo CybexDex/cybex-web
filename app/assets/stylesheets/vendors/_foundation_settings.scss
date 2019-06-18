@@ -35,32 +35,32 @@
 // Set a component to "false" to prevent the CSS classes from being printed.
 // You can still use the mixins even if the value is false.
 $include-css: (
-        accordion: true,
-        action-sheet: true,
-        block-list: true,
-        button: true,
-        button-group: true,
-        card: true,
-        coloring: true,
-        extras: true,
-        forms: true,
-        grid: true,
-//        iconic: true,
-        label: true,
-        badge: true,
-        list: true,
-        menu-bar: true,
-        modal: true,
-        motion: true,
-//        notification: true,
-//        off-canvas: true,
-        panel: true,
-        popup: true,
-        switch: true,
-        tabs: true,
-        title-bar: true,
-        typography: true,
-        utilities: true
+  accordion: true,
+  action-sheet: true,
+  block-list: true,
+  button: true,
+  button-group: true,
+  card: true,
+  coloring: true,
+  extras: true,
+  forms: true,
+  grid: true,
+  //        iconic: true,
+    label: true,
+  badge: true,
+  list: true,
+  menu-bar: true,
+  modal: true,
+  motion: true,
+  //        notification: true,
+    //        off-canvas: true,
+    panel: true,
+  popup: true,
+  switch: true,
+  tabs: true,
+  title-bar: true,
+  typography: true,
+  utilities: true
 );
 
 // 2. Global Styles
@@ -124,7 +124,7 @@ $breakpoints: (
   medium: 640,
   large: 1200,
   xlarge: 1360,
-  xxlarge: 1920,
+  xxlarge: 1920
 );
 
 // All of the names in this list will be output as classes in your CSS,
@@ -234,7 +234,7 @@ $breakpoint-classes: (small medium large xlarge);
 
 $container-width: 75rem;
 // $block-padding: $global-padding;
-   $total-columns: 12;
+$total-columns: 12;
 // $block-grid-max-size: 6;
 
 // 6. Accordion
@@ -448,7 +448,7 @@ $container-width: 75rem;
 // );
 
 // $modal-overlay-class: 'modal-overlay';
-// $modal-overlay-background: rgba(#333, 0.7);
+$modal-overlay-background: rgba(#171d2a, 0.3);
 
 // 18. Motion UI
 // - - - - - - - - - - - - - - - - - - - -

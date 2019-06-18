@@ -411,7 +411,7 @@ let OrderBookHeader = class extends React.PureComponent<
           key="depthType-switcher"
           onChange={this.handleDepthChange}
           styles={$styleSelect("orderbook")}
-          options={combineOptions}
+          options={combineOptions.filter(s => s.value >= 0)}
           value={this.getDepthOption(digits)}
         />
       </>
