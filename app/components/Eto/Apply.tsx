@@ -93,21 +93,21 @@ let EtoApply = class extends React.Component<EtoProps> {
     let { etoState, account } = this.props as any;
     return (
       <>
-        {etoState.state === Eto.EtoPersonalState.Uninit ? (
-          <LoadingIndicator
-            style={{
-              height: "100vh",
-              position: "fixed",
-              width: "100vw",
-              textAlign: "center",
-              top: 0,
-              left: 0,
-              lineHeight: "100vh",
-              zIndex: 1
-            }}
-            type="three-bounce"
-          />
-        ) : etoState.state === Eto.EtoPersonalState.Basic ? (
+        {etoState.state ===
+        Eto.EtoPersonalState.Uninit ? null : // <LoadingIndicator
+        //   style={{
+        //     height: "100vh",
+        //     position: "fixed",
+        //     width: "100vw",
+        //     textAlign: "center",
+        //     top: 0,
+        //     left: 0,
+        //     lineHeight: "100vh",
+        //     zIndex: 1
+        //   }}
+        //   type="three-bounce"
+        // />
+        etoState.state === Eto.EtoPersonalState.Basic ? (
           <EtoInfoForm
             onSubmit={form => EtoActions.putBasic(form, this.props.account)}
             account={this.props.account.get("name")}
