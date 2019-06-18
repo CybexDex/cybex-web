@@ -185,7 +185,7 @@ export const EtoCenter = (props: any) => {
           )}
         </div>
       </EtoPanel>
-      {true && (
+      {false && (
         <EtoPanel style={{ marginBottom: "12px" }}>
           <div
             className="result"
