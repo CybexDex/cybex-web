@@ -346,7 +346,7 @@ let AccountOverview = class extends React.Component<any, any> {
       );
 
       const includeAsset = !hiddenAssets.includes(asset_type);
-      const hasBalance = !!balanceObject.get("balance");
+      const hasBalance = !!balanceObject && !!balanceObject.get("balance");
       const hasOnOrder = !!orders[asset_type];
       const canDepositWithdraw =
         !!JadePool.ADDRESS_TYPES[asset.get("symbol")] &&
@@ -354,7 +354,7 @@ let AccountOverview = class extends React.Component<any, any> {
       const canWithdraw =
         canDepositWithdraw &&
         JadePool.ADDRESS_TYPES[asset.get("symbol")].allowWithdraw &&
-        (hasBalance && balanceObject.get("balance") != 0);
+        (hasBalance && !!balanceObject && balanceObject.get("balance") != 0);
 
       balances.push(
         <tr key={asset.get("symbol")} style={{ maxWidth: "100rem" }}>
