@@ -98,8 +98,23 @@ class ApisInstance {
   statusCb: CallableFunction | undefined;
   closeCb: CallableFunction | undefined;
   init_promise: Promise<any> | undefined;
+
   constructor(cs: string) {
     this.url = cs;
+    this.ws_rpc = new ChainWebSocket(
+      cs,
+      this.statusCb,
+      60 * 1000,
+      autoReconnect,
+      closed => {
+        if (this._db && !closed) {
+          this._db.exec("get_objects", [["2.1.0"]]).catch(e => {});
+        }
+      }
+    );
+    this._db = new GrapheneApi(this.ws_rpc, "database");
+    this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
+    this._hist = new GrapheneApi(this.ws_rpc, "history");
   }
   /** @arg {string} connection .. */
   connect(
@@ -138,9 +153,6 @@ class ApisInstance {
       }
     );
 
-    this._db = new GrapheneApi(this.ws_rpc, "database");
-    this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
-    this._hist = new GrapheneApi(this.ws_rpc, "history");
     console.debug("[Timing] Init RPC");
     this.init_promise = this.ws_rpc
       .login(rpc_user, rpc_password)
