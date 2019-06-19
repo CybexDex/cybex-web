@@ -78,7 +78,7 @@ class ValueComponent extends MarketStatsCheck {
       toStats = marketStats.get(toSymbol + "_" + coreSymbol);
       fromStats = marketStats.get(fromSymbol + "_" + coreSymbol);
     }
-    console.debug("Close Stat: ", fromStats, toStats);
+    // console.debug("Close Stat: ", fromStats, toStats);
     // let price = utils.convertPrice(
     //   fromStats && fromStats.close
     //     ? fromStats.close
@@ -98,7 +98,7 @@ class ValueComponent extends MarketStatsCheck {
         ? utils.convertPrice(fromAsset, toAsset, fromID, toID)
         : (marketStats.get(fromSymbol + "_" + toSymbol) || {}).price || null;
 
-    console.debug("Price: ", price);
+    // console.debug("Price: ", price);
     let eqValue = price
       ? utils.convertValue(price, amount, fromAsset, toAsset)
       : null;

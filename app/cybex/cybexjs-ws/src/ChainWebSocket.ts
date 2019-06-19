@@ -1,4 +1,3 @@
-import { cloneDeep } from "lodash";
 import { NetworkStore } from "stores/NetworkStore";
 // import ReconnectingWebSocket from "reconnecting-websocket";
 // let WebSocketClient = ReconnectingWebSocket;
@@ -20,14 +19,36 @@ let keep_alive_interval = 5000;
 let max_send_life = 2;
 // let max_send_life = 5;
 let max_recv_life = max_send_life * 4;
-
+type CallbackMap = {
+  [id: string]: any;
+};
 class ChainWebSocket {
+  url: string;
+  statusCb: any;
+  connectionTimeout: NodeJS.Timeout;
+  keepalive_timer: NodeJS.Timeout | undefined;
+  current_reject: any;
+  on_reconnect: any;
+  closed: boolean;
+  send_life: number;
+  recv_life: number;
+  keepAliveCb: CallableFunction | null;
+  ws: WebSocket | undefined;
+  connect_promise: Promise<any>;
+  cbId = 0;
+  responseCbId = 0;
+  cbs: CallbackMap = {};
+  subs: CallbackMap = {};
+  unsub: CallbackMap = {};
+  closeCb: undefined | CallableFunction;
+  _closeCb: undefined | CallableFunction;
+  on_close: undefined | CallableFunction | null;
   constructor(
     ws_server,
     statusCb,
     connectTimeout = 5000,
     autoReconnect = true,
-    keepAliveCb = null
+    keepAliveCb: any = null
   ) {
     this.url = ws_server;
     this.statusCb = statusCb;
@@ -50,7 +71,7 @@ class ChainWebSocket {
     this.send_life = max_send_life;
     this.recv_life = max_recv_life;
     this.keepAliveCb = keepAliveCb;
-    NetworkStore.updateApiStatus("connecting");
+    (NetworkStore as any).updateApiStatus("connecting");
 
     this.connect_promise = new Promise((resolve, reject) => {
       this.current_reject = reject;
@@ -58,8 +79,8 @@ class ChainWebSocket {
       try {
         this.ws = new WsClient(ws_server);
       } catch (error) {
-        this.ws = { readyState: 3, close: () => {} }; // DISCONNECTED
-        reject(new Error("Invalid url", ws_server, " closed"));
+        this.ws = { readyState: 3, close: () => {} } as any; // DISCONNECTED
+        reject(new Error("Invalid url" + ws_server + " closed"));
         // return this.close().then(() => {
         //     console.log("Invalid url", ws_server, " closed");
         //     // throw new Error("Invalid url", ws_server, " closed")
@@ -67,8 +88,8 @@ class ChainWebSocket {
         // })
       }
 
-      this.ws.onopen = () => {
-        NetworkStore.updateApiStatus("online");
+      (this.ws as WebSocket).onopen = () => {
+        (NetworkStore as any).updateApiStatus("online");
         clearTimeout(this.connectionTimeout);
         if (this.statusCb) this.statusCb("open");
         if (this.on_reconnect) this.on_reconnect();
@@ -76,19 +97,19 @@ class ChainWebSocket {
           this.recv_life--;
           // console.debug("RecvLife: ", this.recv_life);
           if (this.recv_life === max_recv_life - 1) {
-            NetworkStore.updateApiStatus("online");
+            (NetworkStore as any).updateApiStatus("online");
           }
           if (this.recv_life < max_recv_life - 2) {
-            NetworkStore.updateApiStatus("blocked");
+            (NetworkStore as any).updateApiStatus("blocked");
           }
           if (this.recv_life == 0) {
             console.error(this.url + " connection is dead, terminating ws");
-            NetworkStore.updateApiStatus("offline");
+            (NetworkStore as any).updateApiStatus("offline");
 
-            if (this.ws.terminate) {
-              this.ws.terminate();
+            if (this.ws && (this.ws as any).terminate) {
+              (this.ws as any).terminate();
             } else {
-              this.ws.close();
+              this.ws && this.ws.close();
             }
             this.close();
             // clearInterval(this.keepalive_timer);
@@ -109,39 +130,44 @@ class ChainWebSocket {
         this.current_reject = null;
         resolve();
       };
-      this.ws.onerror = error => {
-        if (this.keepalive_timer) {
-          clearInterval(this.keepalive_timer);
-          this.keepalive_timer = undefined;
-        }
-        clearTimeout(this.connectionTimeout);
-        if (this.statusCb) this.statusCb("error");
-        NetworkStore.updateApiStatus("error");
+      this.ws &&
+        (this.ws.onerror = error => {
+          if (this.keepalive_timer) {
+            clearInterval(this.keepalive_timer);
+            this.keepalive_timer = undefined;
+          }
+          clearTimeout(this.connectionTimeout);
+          if (this.statusCb) this.statusCb("error");
+          (NetworkStore as any).updateApiStatus("error");
 
-        if (this.current_reject) {
-          this.current_reject(error);
-        }
-      };
-      this.ws.onmessage = message => {
-        this.recv_life = max_recv_life;
-        this.listener(JSON.parse(message.data));
-      };
-      this.ws.onclose = () => {
-        this.closed = true;
-        if (this.keepalive_timer) {
-          clearInterval(this.keepalive_timer);
-          this.keepalive_timer = undefined;
-        }
-        var err = new Error("connection closed");
-        for (var cbId = this.responseCbId + 1; cbId <= this.cbId; cbId += 1) {
-          this.cbs[cbId] && this.cbs[cbId].reject && this.cbs[cbId].reject(err);
-        }
-        NetworkStore.updateApiStatus("error");
-        if (this.statusCb) this.statusCb("closed");
-        if (this.closeCb) this.closeCb();
-        if (this._closeCb) this._closeCb();
-        if (this.on_close) this.on_close();
-      };
+          if (this.current_reject) {
+            this.current_reject(error);
+          }
+        });
+      this.ws &&
+        (this.ws.onmessage = message => {
+          this.recv_life = max_recv_life;
+          this.listener(JSON.parse(message.data));
+        });
+      this.ws &&
+        (this.ws.onclose = () => {
+          this.closed = true;
+          if (this.keepalive_timer) {
+            clearInterval(this.keepalive_timer);
+            this.keepalive_timer = undefined;
+          }
+          var err = new Error("connection closed");
+          for (var cbId = this.responseCbId + 1; cbId <= this.cbId; cbId += 1) {
+            this.cbs[cbId] &&
+              this.cbs[cbId].reject &&
+              this.cbs[cbId].reject(err);
+          }
+          (NetworkStore as any).updateApiStatus("error");
+          if (this.statusCb) this.statusCb("closed");
+          if (this.closeCb) this.closeCb();
+          if (this._closeCb) this._closeCb();
+          if (this.on_close) this.on_close();
+        });
     });
     this.cbId = 0;
     this.responseCbId = 0;
@@ -151,7 +177,7 @@ class ChainWebSocket {
   }
 
   call(params) {
-    if (this.ws.readyState !== 1) {
+    if (this.ws && this.ws.readyState !== 1) {
       return Promise.reject(
         new Error("websocket state error:" + this.ws.readyState)
       );
@@ -209,6 +235,7 @@ class ChainWebSocket {
     }
 
     var request = {
+      id: 0,
       method: "call",
       params: params
     };
@@ -221,7 +248,7 @@ class ChainWebSocket {
         resolve: resolve,
         reject: reject
       };
-      this.ws.send(JSON.stringify(request));
+      this.ws && this.ws.send(JSON.stringify(request));
     });
   }
 

@@ -27,9 +27,8 @@ declare module "cybexjs-ws" {
     close: Promise<any>;
     reset: Promise<any>;
     setAutoReconnect(auto: boolean): void;
-    chainId(): string;
   };
-  
+
   const ChainConfig: {
     core_asset: string;
     address_prefix: string;
