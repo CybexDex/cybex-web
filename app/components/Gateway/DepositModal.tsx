@@ -194,7 +194,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
     );
   }
 }
-let DepositModalWrapper = BindToChainState(DepositModal, {
+let DepositModalWrapper: any = BindToChainState(DepositModal, {
   keep_updating: true,
   show_loader: true
 });

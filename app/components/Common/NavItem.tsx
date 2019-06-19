@@ -46,7 +46,7 @@ let NavItem = ({
   icon = "exchange",
   children = null,
   linkTo = "",
-  onClick = (...any) => void 0
+  onClick = (...any) => void 0 as any
 }) => {
   return (
     <a

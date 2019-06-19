@@ -1793,6 +1793,7 @@
     "cybex_bet": "足球竞猜",
     "help": "帮助文档",
     "game": "游戏中心",
+    "edge": "edge",
     "eto": "ETO",
     "eto_apply": "ETO申购"
   },
@@ -2169,5 +2170,20 @@
   "eto_token_modal": {
     "title": "请预先选择您的投资币种",
     "tip_1": "您可以在6月25日24点前更改您的投资币种，一经选择，您的第一二三轮将用统一币种进行认购，请谨慎选择。"
+  },
+  "edge": {
+    "lockup_period": "锁仓期",
+    "lockup_period_3": "3个月",
+    "lockup_period_6": "6个月",
+    "lockup_period_12": "12个月",
+    "lockup_amount": "锁仓数量",
+    "record": "参与记录",
+    "lock": "立即锁仓",
+    "records": {
+      "lockup_value": "锁仓金额",
+      "period_remain": "距离锁仓期结束",
+      "drop_weight": "空投权重",
+      "lockup_from": "锁仓时间"
+    }
   }
 }

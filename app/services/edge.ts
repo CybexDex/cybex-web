@@ -10,8 +10,54 @@ const {
   optional,
   uint64
 } = types;
+export namespace CybexRecord {
+  export interface BlockSummary {
+    previous: string;
+    timestamp: string;
+    witness: string;
+    transaction_merkle_root: string;
+    extensions: any[];
+  }
+  export interface Record {
+    id: string;
+    op: [number, OpClass];
+    result: Array<ResultClass | number>;
+    block_num: number;
+    trx_in_block: number;
+    op_in_trx: number;
+    virtual_op: number;
+  }
 
-export namespace Eto {
+  export interface OpClass {
+    fee: Amount;
+    from: string;
+    to: string;
+    amount: Amount;
+    memo: Memo;
+    extensions: Array<[number, ExtensionClass]>;
+  }
+
+  export interface Amount {
+    amount: number;
+    asset_id: string;
+  }
+
+  export interface ExtensionClass {
+    vesting_period: number;
+    public_key: string;
+  }
+
+  export interface Memo {
+    from: string;
+    to: string;
+    nonce: string;
+    message: string;
+  }
+
+  export interface ResultClass {}
+}
+
+export namespace Edge {
   export enum Fields {
     basic = "basic",
     accountName = "accountName",
@@ -25,7 +71,7 @@ export namespace Eto {
     CYB = "CYB",
     USDT = "USDT"
   }
-  export enum EtoPersonalState {
+  export enum EdgePersonalState {
     Uninit,
     Basic,
     Survey,
@@ -38,7 +84,7 @@ export namespace Eto {
     refer: string;
   };
   export type Survey = any[];
-  export type Records = any[];
+  export type Records = CybexRecord.Record[];
   export type Result = [boolean, boolean, boolean, boolean];
   export type FullInfo = {
     [Fields.basic]: Info;
@@ -49,7 +95,7 @@ export namespace Eto {
     [Fields.records]: Records;
     [Fields.result]?: Result;
   };
-  export type LockApply = { pubKey: string; value: number };
+  export type LockApply = { pubKey: string; value: number; period: number };
   export type Query = "query";
   export type Ops = Query | Info | Survey | Token | LockApply;
   export enum OpsOrder {
@@ -74,18 +120,18 @@ export namespace Eto {
     timeStamp: Date;
   };
 
-  export class EtoInfo {
-    state: EtoPersonalState = EtoPersonalState.Basic;
+  export class EdgeInfo {
+    state: EdgePersonalState = EdgePersonalState.Basic;
     sum = 0;
     info: FullInfo | null = null;
     constructor(info?: FullInfo) {
       if (info) {
         this.info = info;
         if (info[Fields.basic]) {
-          this.state = EtoPersonalState.Survey;
+          this.state = EdgePersonalState.Survey;
         }
         if (info[Fields.survey]) {
-          this.state = EtoPersonalState.Lock;
+          this.state = EdgePersonalState.Lock;
         }
         try {
           this.sum = calcValue(
@@ -104,7 +150,7 @@ export namespace Eto {
   }
 }
 
-export namespace EtoProject {
+export namespace EdgeProject {
   export type Banner = {
     adds_banner: string;
     adds_banner__lang_en: string;
@@ -199,7 +245,7 @@ export namespace EtoProject {
 
   export type UserProjectStatus = { current_base_token_count: number };
 
-  export const enum EtoStatus {
+  export const enum EdgeStatus {
     Unstart = "pre",
     Running = "ok",
     Finished = "finish",
@@ -207,7 +253,7 @@ export namespace EtoProject {
   }
 }
 
-const etoOps = {
+const edgeOps = {
   Query: string,
   Token: string,
   Survey: array(bool),
@@ -218,25 +264,25 @@ const etoOps = {
   }),
   Lock: new Serializer("LockApply", {
     pubKey: string,
-    value: uint64
+    value: uint64,
+    period: uint64
   })
 };
 
-const etoOp = static_variant([
-  etoOps.Query,
-  etoOps.Info,
-  etoOps.Survey,
-  etoOps.Token,
-  etoOps.Lock
+const edgeOp = static_variant([
+  edgeOps.Query,
+  edgeOps.Info,
+  edgeOps.Survey,
+  edgeOps.Token,
+  edgeOps.Lock
 ]);
-export const etoTx = new Serializer("EtoTx", {
-  op: etoOp,
+export const edgeTx = new Serializer("EdgeTx", {
+  op: edgeOp,
   expiration: time_point_sec
 });
-export const EtoRefer = "$#ETO_REFER";
+export const EdgeRefer = "$#EDGE_REFER";
 // import { Serializer } from "../cybex/serializer";
-
-export namespace EtoOps {
+export namespace EdgeOps {
   export enum exchange_owner_permission_flags {
     exchange_allow_quote_to_base = 1 << 0 /** allow get base */,
     exchange_allow_base_to_quote = 1 << 1 /** allow get quote */,
@@ -261,7 +307,7 @@ export namespace EtoOps {
     exchange_owner_permission_flags.exchange_allow_charge_market_fee |
     exchange_owner_permission_flags.exchange_allow_modify_rate |
     exchange_owner_permission_flags.exchange_allow_only_white_list;
-  export enum EtoOpsOrder {
+  export enum EdgeOpsOrder {
     "create_exchange" = 58,
     "update_exchange" = 59,
     "withdraw_exchange" = 60,

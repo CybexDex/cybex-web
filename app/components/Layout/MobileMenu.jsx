@@ -33,7 +33,7 @@ class MobileMenu extends React.Component {
   }
 
   render() {
-    let { id, currentAccount, linkedAccounts, myAccounts } = this.props;
+    let { id, currentAccount, linkedAccounts } = this.props;
     let accounts = null;
 
     if (linkedAccounts.size > 1) {

@@ -44,9 +44,17 @@ const NavLinks: Array<NavLink> = [
     id: "eto",
     routeTo: "/eto",
     // routeTo: "/eto",
-    activeMatcher: /^\/eto\/?$/,
+    activeMatcher: /^\/eto\/?/,
     name: "eto_apply",
     icon: "ETO"
+  },
+  {
+    id: "edge",
+    routeTo: "/edge",
+    // routeTo: "/eto",
+    activeMatcher: /^\/edge\/?/,
+    name: "edge",
+    icon: "edgeware"
   },
   // {
   //   id: "eto",
@@ -135,7 +143,7 @@ type NavProps = {
 
 const getNavId = id => `$nav__${id}`;
 
-let Nav = class extends React.PureComponent<
+let Nav: any = class extends React.PureComponent<
   NavProps,
   { isExpand; siderTop; siderLeft }
 > {
