@@ -21,7 +21,7 @@ export const IntroBtn = withRouter<any>(props => {
         // loading={this.state.checking}
         onClick={() => {
           // Gtag.eventActivity("Edge", "点击锁仓按钮");
-          props.history.push("/edge/apply");
+          props.history.push("/lockdrop/apply");
         }}
         style={{ marginBottom: "12px", width: "100%" }}
       >
@@ -31,7 +31,7 @@ export const IntroBtn = withRouter<any>(props => {
         type="primary"
         onClick={() => {
           // Gtag.eventActivity("Edge", "查看记录");
-          props.history.push("/edge/record");
+          props.history.push("/lockdrop/record");
         }}
         // loading={this.state.checking}
         style={{ marginBottom: "12px", width: "100%", textAlign: "center" }}
@@ -172,12 +172,12 @@ export const EdgeSchema = props => (
   <section {...props}>
     {[
       {
-        label: counterpart.translate("eto_intro.join_date"),
-        content: counterpart.translate("eto_intro.join_date_content")
+        label: counterpart.translate("edge.intro.event_start_time"),
+        content: counterpart.translate("edge.intro.event_start_time_content")
       },
       {
-        label: counterpart.translate("eto_intro.join_platform"),
-        content: counterpart.translate("eto_intro.join_platform_content")
+        label: counterpart.translate("edge.intro.event_end_time"),
+        content: counterpart.translate("edge.intro.event_end_time_content")
       }
     ].map(info => (
       <p key={info.label}>
@@ -216,15 +216,14 @@ export const EdgeIntro = () => {
         >
           <EdgeContent
             style={{ marginBottom: "12px", flex: "1" }}
-            heading={counterpart.translate("eto_intro.about_eto_title")}
-            contents={[counterpart.translate("eto_intro.about_eto_content")]}
+            heading={counterpart.translate("edge.intro.about_edge_title")}
+            contents={[counterpart.translate("edge.intro.about_edge_content")]}
           />
           <EdgeContent
             style={{ marginBottom: "12px", flex: "1" }}
-            heading={counterpart.translate("eto_intro.about_polka_title")}
+            heading={counterpart.translate("edge.intro.about_lockdrop_title")}
             contents={[
-              counterpart.translate("eto_intro.about_polka_content"),
-              counterpart.translate("eto_intro.about_polka_content1")
+              counterpart.translate("edge.intro.about_lockdrop_content")
             ]}
           />
           <EdgePanel>
@@ -257,11 +256,11 @@ let Edge = ({ edgeState }: { edgeState: EdgeState }) => {
       ) : null}
       <div className="page-layout flex-start">
         <Switch>
-          <Route path="/edge/" exact component={EdgeIntro as any} />
-          <Route path="/edge/apply" component={EdgeApply as any} />
-          <Route path="/edge/lock" component={EdgeLock as any} />
-          <Route path="/edge/record" component={EdgeRecords as any} />
-          <Redirect from="*" to="/edge" />
+          <Route path="/lockdrop/" exact component={EdgeIntro as any} />
+          <Route path="/lockdrop/apply" component={EdgeApply as any} />
+          <Route path="/lockdrop/lock" component={EdgeLock as any} />
+          <Route path="/lockdrop/record" component={EdgeRecords as any} />
+          <Redirect from="*" to="/lockdrop" />
         </Switch>
       </div>
     </>

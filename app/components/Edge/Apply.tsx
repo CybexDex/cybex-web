@@ -137,7 +137,7 @@ EdgeApplyWrapper = connect(
   EdgeApplyWrapper,
   {
     listenTo() {
-      return [AccountStore, RouterStore, EdgeStore];
+      return [AccountStore, RouterStore, EdgeStore, GatewayStore];
     },
     getProps() {
       return {

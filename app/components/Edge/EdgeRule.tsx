@@ -2,13 +2,15 @@ import * as React from "react";
 import counterpart from "counterpart";
 import { EdgePanel } from "./EdgePanel";
 import { Colors } from "../Common";
+import Translate from "react-translate-component";
 
 export const EdgeRule = props => (
   <EdgePanel {...props}>
     <h4 style={{ fontSize: "14px" }}>
-      {counterpart.translate("eto_apply.survey.rule_title")}
+      {counterpart.translate("edge.lockup.rule_title")}
     </h4>
-    <p
+    <Translate
+      component="p"
       className="color-steel"
       style={{
         fontSize: "12px",
@@ -16,9 +18,9 @@ export const EdgeRule = props => (
         lineHeight: "20px",
         margin: "12px auto"
       }}
-    >
-      {counterpart.translate("eto_apply.survey.rule_content")}
-    </p>
+      unsafe
+      content="edge.lockup.rule_content_1"
+    />
     <table style={{ width: "100%" }}>
       <thead>
         <tr>
@@ -32,18 +34,29 @@ export const EdgeRule = props => (
               lineHeight: "14px"
             }}
           >
-            {counterpart.translate("eto_apply.survey.rule_table_th1")}
+            {counterpart.translate("edge.lockup.rule_table_th1")}
           </th>
           <th
             className="color-steel-light"
             style={{
-              textAlign: "left",
+              textAlign: "center",
               fontSize: "10px",
               lineHeight: "14px",
               padding: "0 8px"
             }}
           >
-            {counterpart.translate("eto_apply.survey.rule_table_th2")}
+            {counterpart.translate("edge.lockup.rule_table_th2")}
+          </th>
+          <th
+            className="color-steel-light"
+            style={{
+              fontSize: "10px",
+              lineHeight: "14px",
+              textAlign: "center",
+              paddingLeft: "8px"
+            }}
+          >
+            {counterpart.translate("edge.lockup.rule_table_th3")}
           </th>
           <th
             className="color-steel-light"
@@ -54,7 +67,83 @@ export const EdgeRule = props => (
               paddingLeft: "8px"
             }}
           >
-            {counterpart.translate("eto_apply.survey.rule_table_th3")}
+            {counterpart.translate("edge.lockup.rule_table_th4")}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {new Array(3).fill(1).map((_, i) => (
+          <tr key={i}>
+            {new Array(4).fill(1).map((_, j) => (
+              <td
+                key={j}
+                className="color-steel"
+                style={{
+                  padding:
+                    j === 0 ? "0 8px 0 0" : j === 1 ? "0 8px" : "0 0 0 8px",
+                  fontSize: "10px",
+                  height: "30px",
+                  textAlign: j === 0 ? "left" : j === 3 ? "right" : "center"
+                }}
+              >
+                {counterpart.translate(
+                  `edge.lockup.rule_table_row${i + 1}_cell${j + 1}`
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <Translate
+      component="p"
+      className="color-steel"
+      style={{
+        fontSize: "12px",
+        textAlign: "justify",
+        lineHeight: "20px",
+        margin: "12px auto"
+      }}
+      unsafe
+      content="edge.lockup.rule_content_2"
+    />
+    <table style={{ width: "100%" }}>
+      <thead>
+        <tr>
+          <th
+            className="color-steel-light"
+            style={{
+              textAlign: "left",
+              height: "30px",
+              width: "30%",
+              paddingRight: "8px",
+              fontSize: "10px",
+              lineHeight: "14px"
+            }}
+          >
+            {counterpart.translate("edge.lockup.rule_table2_th1")}
+          </th>
+          <th
+            className="color-steel-light"
+            style={{
+              textAlign: "center",
+              fontSize: "10px",
+              lineHeight: "14px",
+              padding: "0 8px"
+            }}
+          >
+            {counterpart.translate("edge.lockup.rule_table2_th2")}
+          </th>
+          <th
+            className="color-steel-light"
+            style={{
+              fontSize: "10px",
+              lineHeight: "14px",
+              textAlign: "right",
+              paddingLeft: "8px"
+            }}
+          >
+            {counterpart.translate("edge.lockup.rule_table2_th3")}
           </th>
         </tr>
       </thead>
@@ -70,11 +159,11 @@ export const EdgeRule = props => (
                     j === 0 ? "0 8px 0 0" : j === 1 ? "0 8px" : "0 0 0 8px",
                   fontSize: "10px",
                   height: "30px",
-                  textAlign: j < 2 ? "left" : "right"
+                  textAlign: j === 0 ? "left" : j === 2 ? "right" : "center"
                 }}
               >
                 {counterpart.translate(
-                  `eto_apply.survey.rule_table_row${i + 1}_cell${j + 1}`
+                  `edge.lockup.rule_table2_row${i + 1}_cell${j + 1}`
                 )}
               </td>
             ))}
@@ -82,6 +171,21 @@ export const EdgeRule = props => (
         ))}
       </tbody>
     </table>
+    {[3, 4, 5, 6].map(num => (
+      <Translate
+        key={num}
+        component="p"
+        className="color-steel"
+        style={{
+          fontSize: "12px",
+          textAlign: "justify",
+          lineHeight: "20px",
+          margin: "12px auto"
+        }}
+        unsafe
+        content={`edge.lockup.rule_content_${num}`}
+      />
+    ))}
   </EdgePanel>
 );
 

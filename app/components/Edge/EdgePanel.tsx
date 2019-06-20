@@ -19,9 +19,11 @@ export const EdgePanel = ({
 );
 export const EdgeContentWrapper = ({
   children,
-  style
+  style,
+  ol
 }: {
   style?;
+  ol?;
   children;
 }) => (
   <div style={{ padding: "12px", margin: "0 12px", ...style }}>{children}</div>
@@ -29,10 +31,32 @@ export const EdgeContentWrapper = ({
 export const EdgeContent = ({ heading, contents, ...props }) => (
   <EdgePanel {...props}>
     <h4 style={{ marginBottom: "12px" }}>{heading}</h4>
-    {contents.map((content, i) => (
-      <p className="eto-label" key={i} style={{ textAlign: "justify" }}>
-        {content}
-      </p>
-    ))}
+    {props.ol ? (
+      <ol>
+        {contents.map((content, i) => (
+          <li
+            className="eto-label"
+            key={i}
+            style={{
+              textAlign: "justify",
+              listStyle: "inherit",
+              lineHeight: 2
+            }}
+          >
+            {content}
+          </li>
+        ))}
+      </ol>
+    ) : (
+      contents.map((content, i) => (
+        <p
+          className="eto-label"
+          key={i}
+          style={{ textAlign: "justify", lineHeight: 2 }}
+        >
+          {content}
+        </p>
+      ))
+    )}
   </EdgePanel>
 );

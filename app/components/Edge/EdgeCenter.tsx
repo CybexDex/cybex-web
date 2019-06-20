@@ -2,7 +2,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 import counterpart from "counterpart";
 import { Input, Checkbox, Button, Colors, Icon, Radio } from "../Common";
-import { EdgePanel, EdgeContentWrapper } from "./EdgePanel";
+import { EdgePanel, EdgeContentWrapper, EdgeContent } from "./EdgePanel";
 import { EdgeFlow } from "./EdgeFlow";
 import Translate from "react-translate-component";
 import { EdgeActions } from "../../actions/EdgeActions";
@@ -103,7 +103,7 @@ export const EdgeCenter = (props: any) => {
             // loading={this.state.checking}
             onClick={() => {
               // Gtag.eventActivity("Edge", "通过中心页进入锁仓");
-              props.history.push("/edge/lock");
+              props.history.push("/lockdrop/lock");
             }}
             style={{ width: "50%", borderRadius: 0 }}
           >
@@ -122,36 +122,18 @@ export const EdgeCenter = (props: any) => {
             }}
             style={{ width: "50%", borderRadius: 0 }}
           >
-            {counterpart.translate("edge.center.fund_usdt")}
+            {counterpart.translate("edge.fund_eth")}
           </Button>
         </div>
       </EdgePanel>
-      {false && (
-        <EdgePanel style={{ marginBottom: "12px" }}>
-          <div
-            className="result"
-            style={{
-              backgroundColor: "rgb(27,34,48)",
-              paddingBottom: "8px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
-            <Translate
-              content="eto_result.result_title"
-              component="h5"
-              className="text-center"
-              style={{
-                fontSize: "14px",
-                lineHeight: "40px",
-                marginBottom: 0
-              }}
-            />
-          </div>
-        </EdgePanel>
-      )}
-      <EdgeFlow center />
+      <EdgeContent
+        style={{ margin: "12px" }}
+        heading={counterpart.translate("edge.flow_title")}
+        ol
+        contents={new Array(3)
+          .fill(1)
+          .map((_, i) => counterpart.translate(`edge.flow_content_${i + 1}`))}
+      />
       <EdgeContentWrapper>
         <EdgeExplain />
       </EdgeContentWrapper>
@@ -163,42 +145,6 @@ export const EdgeCenter = (props: any) => {
         }}
         onCancel={() => ModalActions.hideModal(EdgeRefreshModalID)}
       /> */}
-      <a
-        href={counterpart.translate("eto_apply.faq_url")}
-        target="_blank"
-        style={{
-          position: "fixed",
-          bottom: "52px",
-          right: "36px",
-          fontSize: "36px"
-        }}
-      >
-        <Icon icon="book" />
-      </a>
-      {props.overtime && (
-        <div
-          className="closed-mask"
-          style={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1,
-            backgroundColor: Colors.$colorDark,
-            opacity: 0.8,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Translate
-            component="h4"
-            content="eto_apply.overtime"
-            project={name}
-          />
-        </div>
-      )}
     </>
   );
 };

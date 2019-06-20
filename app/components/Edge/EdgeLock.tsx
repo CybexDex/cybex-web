@@ -48,23 +48,25 @@ let EdgeLock = class extends React.Component<EdgeProps> {
           balance={this.props.account.getIn(["balances", "1.3.2"])}
           onLock={({ value, period }) =>
             EdgeActions.applyLock(value, period, this.props.account, () => {
-              Gtag.eventActivity("Edge", "锁仓成功，跳转");
-              this.props.history.push("/edge/apply");
+              // Gtag.eventActivity("Edge", "锁仓成功，跳转");
+              this.props.history.push("/lockdrop/apply");
             })
           }
         />
         <EdgeRule />
+        <EdgeContent
+          style={{ margin: "12px" }}
+          heading={counterpart.translate("eto_apply.lock.tip_heading")}
+          ol
+          contents={new Array(3)
+            .fill(1)
+            .map((_, i) =>
+              counterpart.translate(`edge.lockup.tip_content_${i + 1}`)
+            )}
+        />
         <EdgeContentWrapper>
           <EdgeExplain />
         </EdgeContentWrapper>
-        <EdgeContent
-          heading={counterpart.translate("eto_apply.lock.tip_heading")}
-          contents={new Array(4)
-            .fill(1)
-            .map((_, i) =>
-              counterpart.translate(`eto_apply.lock.tip_content_${i + 1}`)
-            )}
-        />
       </div>
     );
   }
@@ -82,7 +84,7 @@ let EdgeLockWrapper = class extends React.Component<EdgeProps> {
     let accountCount =
       linkedAccounts.size + myIgnoredAccounts.size + (passwordAccount ? 1 : 0);
     if (!accountCount || edgeState.state === Edge.EdgePersonalState.Uninit) {
-      this.props.history.push("/edge/apply");
+      this.props.history.push("/lockdrop/apply");
     }
   }
   render() {

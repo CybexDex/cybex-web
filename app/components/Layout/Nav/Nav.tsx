@@ -49,12 +49,12 @@ const NavLinks: Array<NavLink> = [
     icon: "ETO"
   },
   {
-    id: "edge",
-    routeTo: "/edge",
+    id: "lockdrop",
+    routeTo: "/lockdrop",
     // routeTo: "/eto",
-    activeMatcher: /^\/edge\/?/,
-    name: "edge",
-    icon: "edgeware"
+    activeMatcher: /^\/lockdrop\/?/,
+    name: "lockdrop",
+    icon: "lockdrop"
   },
   // {
   //   id: "eto",
