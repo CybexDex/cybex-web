@@ -139,7 +139,7 @@ export const EtoCenter = (props: any) => {
             marginBottom: "-12px"
           }}
         >
-          {true && (
+          {false && (
             <Button
               type="secondary"
               // loading={this.state.checking}
@@ -153,7 +153,7 @@ export const EtoCenter = (props: any) => {
               {counterpart.translate("eto_apply.center.go_lock")}
             </Button>
           )}
-          {false && (
+          {true && (
             <Button
               type="secondary"
               // loading={this.state.checking}
