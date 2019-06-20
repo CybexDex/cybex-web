@@ -20,7 +20,7 @@ export const IntroBtn = withRouter<any>(props => {
         // disabled
         // loading={this.state.checking}
         onClick={() => {
-          Gtag.eventActivity("Edge", "点击锁仓按钮");
+          // Gtag.eventActivity("Edge", "点击锁仓按钮");
           props.history.push("/edge/apply");
         }}
         style={{ marginBottom: "12px", width: "100%" }}
@@ -30,7 +30,7 @@ export const IntroBtn = withRouter<any>(props => {
       <Button
         type="primary"
         onClick={() => {
-          Gtag.eventActivity("Edge", "查看记录");
+          // Gtag.eventActivity("Edge", "查看记录");
           props.history.push("/edge/record");
         }}
         // loading={this.state.checking}
@@ -42,7 +42,7 @@ export const IntroBtn = withRouter<any>(props => {
         type="hollow-primary"
         link={counterpart.translate("edge.rule_url")}
         onClick={() => {
-          Gtag.eventActivity("Edge", "点击已申购");
+          // Gtag.eventActivity("Edge", "点击已申购");
           props.history.push("/eto/record");
         }}
         // loading={this.state.checking}
@@ -81,7 +81,9 @@ export const EdgeBanner = () => (
     style={{
       paddingTop: "83.1%",
       backgroundColor: "rgba(255,150,58,1)",
-      backgroundImage: `url(${counterpart.translate("eto_intro.img_url")})`,
+      backgroundImage: `url(${counterpart.translate(
+        "edge.intro.banner_bg_url"
+      )})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       position: "relative",

@@ -81,7 +81,7 @@ let EdgeLockWrapper = class extends React.Component<EdgeProps> {
     } = this.props;
     let accountCount =
       linkedAccounts.size + myIgnoredAccounts.size + (passwordAccount ? 1 : 0);
-    if (!accountCount || edgeState.state !== Edge.EdgePersonalState.Lock) {
+    if (!accountCount || edgeState.state === Edge.EdgePersonalState.Uninit) {
       this.props.history.push("/edge/apply");
     }
   }

@@ -102,7 +102,7 @@ export const EdgeCenter = (props: any) => {
             type="secondary"
             // loading={this.state.checking}
             onClick={() => {
-              Gtag.eventActivity("Edge", "通过中心页进入锁仓");
+              // Gtag.eventActivity("Edge", "通过中心页进入锁仓");
               props.history.push("/edge/lock");
             }}
             style={{ width: "50%", borderRadius: 0 }}
@@ -113,7 +113,7 @@ export const EdgeCenter = (props: any) => {
             type="secondary"
             // loading={this.state.checking}
             onClick={() => {
-              Gtag.eventActivity("Edge", "通过中心页点击充值");
+              // Gtag.eventActivity("Edge", "通过中心页点击充值");
               GatewayActions.showDepositModal(
                 props.account && props.account.get("name"),
                 "JADE.ETH",

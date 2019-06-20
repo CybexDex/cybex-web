@@ -2183,7 +2183,14 @@
       "lockup_value": "锁仓金额",
       "period_remain": "距离锁仓期结束",
       "drop_weight": "空投权重",
-      "lockup_from": "锁仓时间"
+      "lockup_from": "锁仓时间",
+      "lockup_period": "%(months)s个月",
+      "lockup_remains": "%(days)s天"
+    },
+    "intro": {
+      "event_start_time": "活动开始时间",
+      "event_end_time": "活动结束时间",
+      "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/edge_zh_0620.png?x-oss-process=style/compress"
     }
   }
 }
