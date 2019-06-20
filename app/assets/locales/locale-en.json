@@ -1722,7 +1722,7 @@
     "help": "Documents",
     "game": "Game Center",
     "eto": "ETO",
-    "lockdrop": "Lockdrop",
+    "lockdrop": "lockdrop",
     "eto_apply": "ETO Subscription"
   },
   "vesting": {
@@ -2126,25 +2126,25 @@
       "rule_table_row3_cell2": "Lock up ETH",
       "rule_table_row3_cell3": "2.20",
       "rule_table_row3_cell4": "The launch of Mainnet",
-      "rule_content_2": "2. The earlier you participate in, the more tokens you receive (Earlybirds Rewards)<br/>In addition to the lockup period, the participation time also affects the amount of EDG tokens. The official EDG Lockdrop event, expired on August 31, totally has seven periods, which means the earlier you order, the higher bonus coefficient you get. Rewards will be released by the end of July 30. For the detailed information on rewards, please refer to the following table:",
+      "rule_content_2": "2. The earlier you participate in, the more tokens you receive (Earlybirds Rewards)<br/>In addition to the lockup period, the participation time also affects the amount of EDG tokens. The official EDG Lockdrop event, expired on August 31, totally has seven periods, which means the earlier you order, the higher bonus coefficient you get. Rewards will be released by the end of July 14. For the detailed information on rewards, please refer to the following table:",
       "rule_table2_th1": "Data Range (2019)",
       "rule_table2_th2": "Bonus Coefficient",
       "rule_table2_th3": "ETH Cap",
       "rule_table2_row1_cell1": "June 21 - June 30",
       "rule_table2_row1_cell2": "1.45",
       "rule_table2_row1_cell3": "No Cap",
-      "rule_table2_row2_cell1": "July 1 - July 15",
+      "rule_table2_row2_cell1": "July 1 - July 14",
       "rule_table2_row2_cell2": "1.33",
       "rule_table2_row2_cell3": "No Cap",
       "rule_table2_row3_cell1": "July 16 - July 30",
       "rule_table2_row3_cell2": "1.14",
       "rule_table2_row3_cell3": "No Cap",
       "rule_content_3": "Note: CYBEX Exchange will take 10%% airdrop as the delegated fees based on the bonus coefficient.",
-      "rule_content_4": "Time for the one-click subscription is from 14:00 on June 21, 2019 (GMT+8) to 18:00 on July 30 (GMT+8) to ensure the maximum benefit of all CYBEXers. During the event, CYBEX will count users who participate in EDG official Lockdrop to ensure all users can get the bonus coefficient in the specific period.",
+      "rule_content_4": "Time for the one-click subscription is from 14:00 on June 21, 2019 (GMT+8) to 18:00 on July 14 (GMT+8) to ensure the maximum benefit of all CYBEXers. During the event, CYBEX will count users who participate in EDG official Lockdrop to ensure all users can get the bonus coefficient in the specific period.",
       "rule_content_5": "3. The more locked-up ETH you have, more tokens you receive<br/>Edgeware will determine the total amount of EDG to be distributed based on the amount of locking-up ETH, and distribute tokens in proportion on the basis of the lockup period and participation time. So, in the case of the same lockup period and participation time, the more locked-up ETH you have, more tokens you receive.",
       "rule_content_6": "In summary, every user chooses the most suitable method to participate in the event based on the above three factors.",
       "tip_content_1": "The content data of the event rules, which is from the content of Lockdrop event, is only organized and publicized by CYBEX. All Lockdrop is open and transparent. Users can view it on CYBEX official account and Edgeware at any time.",
-      "tip_content_2": "The CYBEX [Delegated Locking] will not open the Signal session. And the subscription on CYBEX  will end at 23:59 on July 30 (GMT+8).",
+      "tip_content_2": "The CYBEX [Delegated Locking] will not open the Signal session. And the subscription on CYBEX  will end at 23:59 on July 14 (GMT+8).",
       "tip_content_3": "Please ensure that your account has enough CYB since the locking up will charge for a certain amount of CYB as processing fees."
     }
   }

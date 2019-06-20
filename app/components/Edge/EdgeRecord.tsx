@@ -13,6 +13,7 @@ import { Colors } from "../Common";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { calcValue } from "../../utils/Asset";
 import * as moment from "moment";
+import { calcBonusCoefficient } from "./utils";
 const { useState, useEffect } = React;
 const blockCache = {};
 const fetchBlock = (blockNum: number) => {
@@ -60,9 +61,9 @@ const calcEndMomentOfLockup = (
 };
 
 const DropWeight = {
-  3: "1.0",
-  6: "1.3",
-  12: "2.2"
+  3: 1.0,
+  6: 1.3,
+  12: 2.2
 };
 
 const RecordStyles = {
@@ -151,7 +152,10 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                   {counterpart.translate("edge.records.drop_weight")}:{" "}
                 </span>
                 <span style={RecordStyles.contentText}>
-                  {DropWeight[calcPeriodFromDuration(period_in_secs)]}
+                  {calcBonusCoefficient(
+                    moment(sanitizeDate(blockSummary.timestamp)),
+                    DropWeight[calcPeriodFromDuration(period_in_secs)]
+                  )}
                 </span>
               </td>
             </tr>

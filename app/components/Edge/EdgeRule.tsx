@@ -148,7 +148,7 @@ export const EdgeRule = props => (
         </tr>
       </thead>
       <tbody>
-        {new Array(3).fill(1).map((_, i) => (
+        {new Array(2).fill(1).map((_, i) => (
           <tr key={i}>
             {new Array(3).fill(1).map((_, j) => (
               <td
