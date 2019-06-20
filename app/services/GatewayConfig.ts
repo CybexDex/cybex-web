@@ -13,7 +13,7 @@ export const EXPLORER_URLS = __TEST__
       USDT: "https://www.omniexplorer.info/tx/#{txid}",
       ETH: "https://etherscan.io/tx/#{txid}",
       XRP: "https://xrpcharts.ripple.com/#/transactions/#{txid}",
-      GAS: "https://neoscan.io/transaction/#{txid}",
+      GAS: "https://neotracker.io/tx/#{txid}",
       EOS: "https://eosflare.io/tx/#{txid}",
       LTC: "https://chain.so/tx/LTC/#{txid}",
       VET: "https://explore.veforge.com/transactions/#{txid}",
@@ -417,6 +417,10 @@ export const JadePool: {
         "JADE.ENG": new GatewayAsset("JADE.ENG", "ENG", ProtocolType.ERC20, {
           name: "Enigma",
           contractAddress: "0xf0ee6b27b759c9893ce4f094b49ad28fd15a23e4"
+        }),
+        "JADE.QLC": new GatewayAsset("JADE.QLC", "QLC", ProtocolType.NEO, {
+          name: "QLC Chain",
+          contractAddress: "0d821bd7b6d53f5c2b40e217c6defc8bbe896cf5"
         })
       }
     };
