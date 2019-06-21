@@ -41,10 +41,6 @@ export const IntroBtn = withRouter<any>(props => {
       <Button
         type="hollow-primary"
         link={counterpart.translate("edge.rule_url")}
-        onClick={() => {
-          // Gtag.eventActivity("Edge", "点击已申购");
-          props.history.push("/eto/record");
-        }}
         // loading={this.state.checking}
         style={{ width: "100%", textAlign: "center" }}
       >
