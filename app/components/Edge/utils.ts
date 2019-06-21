@@ -1,8 +1,8 @@
 import * as moment from "moment";
 import BigNumber from "bignumber.js";
 export const zonePoints = [
-  { value: 1.45, point: moment("2019-06-30T23:59:59.999Z") },
-  { value: 1.33, point: moment("2019-07-14T23:59:59.999Z") }
+  { value: 1.35, point: moment("2019-06-30T00:00:00.000Z") },
+  { value: 1.23, point: moment("2019-07-14T23:59:59.999Z") }
 ];
 let con = new BigNumber(0.97);
 export const calcBonusCoefficient = (moment: moment.Moment, weight: number) => {

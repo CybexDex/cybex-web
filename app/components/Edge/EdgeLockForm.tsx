@@ -74,6 +74,9 @@ const EdgeLockFormImpl = ({
           style={{ marginBottom: "8px", fontSize: "14px", marginTop: "12px" }}
         >
           {counterpart.translate("edge.lockup_amount")}
+          <small style={{ marginLeft: "12px" }}>
+            ({counterpart.translate("edge.lockup_tip")})
+          </small>
         </h4>
         <Input
           append="ETH"

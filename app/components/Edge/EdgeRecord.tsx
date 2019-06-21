@@ -9,7 +9,7 @@ import { RouterStore } from "../../stores/RouterStore";
 import { connect } from "alt-react";
 import { EdgeActions } from "../../actions/EdgeActions";
 import counterpart from "counterpart";
-import { Colors } from "../Common";
+import { Colors, Icon } from "../Common";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { calcValue } from "../../utils/Asset";
 import * as moment from "moment";
@@ -148,14 +148,28 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                 })}
               </td>
               <td align="right">
-                <span style={RecordStyles.labelText}>
-                  {counterpart.translate("edge.records.drop_weight")}:{" "}
-                </span>
+                <a
+                  href={counterpart.translate("edge.records.drop_weight_url")}
+                  target={
+                    navigator.userAgent.includes("iPhone") ? "" : "_blank"
+                  }
+                >
+                  <span style={RecordStyles.labelText}>
+                    <Icon
+                      icon="help"
+                      style={{ marginRight: "4px", verticalAlign: "bottom" }}
+                    />
+                    {counterpart.translate("edge.records.drop_weight")}:
+                    {/* <sup> */}
+                    {/* </sup> */}
+                  </span>
+                </a>{" "}
                 <span style={RecordStyles.contentText}>
                   {calcBonusCoefficient(
                     moment(sanitizeDate(blockSummary.timestamp)),
                     DropWeight[calcPeriodFromDuration(period_in_secs)]
                   )}
+                  {/* {DropWeight[calcPeriodFromDuration(period_in_secs)]} */}
                 </span>
               </td>
             </tr>
