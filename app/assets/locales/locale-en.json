@@ -2090,6 +2090,7 @@
     "flow_content_1": "Log in your Cybex account and read [Delegated Locking] rules carefully, then choose the suitable way to lock up your ETH.",
     "flow_content_2": "Select [Lockup Period] to enter the lockup amount to lock up ETH. Once successful, users can not receive the lockup amount until the lockup period expires.",
     "flow_content_3": "Please wait patiently for the expiration time after locking up your ETH. Users can lock up more ETH for multiple times. Airdrop weight and bonus coefficient are different as the time for locking up ETH differs. But CYBEX will calculate the airdrop weight and bonus coefficient for you.",
+    "flow_content_4": "The upper limit of total investment is 1000 ETH.",
     "records": {
       "lockup_value": "Lockup Amount",
       "period_remain": "Lockup Period Countdown",
@@ -2149,7 +2150,8 @@
       "rule_content_6": "In summary, every user chooses the most suitable method to participate in the event based on the above three factors.",
       "tip_content_1": "The content data of the event rules, which is from the content of Lockdrop event, is only organized and publicized by CYBEX. All Lockdrop is open and transparent. Users can view it on CYBEX official account and Edgeware at any time.",
       "tip_content_2": "The CYBEX [Delegated Locking] will not open the Signal session. And the subscription on CYBEX  will end at 23:59 on July 14 (GMT+8).",
-      "tip_content_3": "Please ensure that your account has enough CYB since the locking up will charge for a certain amount of CYB as processing fees."
+      "tip_content_3": "Please ensure that your account has enough CYB since the locking up will charge for a certain amount of CYB as processing fees.",
+      "tip_content_4": "The upper limit of total investment is 1000 ETH."
     }
   }
 }

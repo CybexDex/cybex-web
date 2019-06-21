@@ -130,7 +130,7 @@ export const EdgeCenter = (props: any) => {
         style={{ margin: "12px" }}
         heading={counterpart.translate("edge.flow_title")}
         ol
-        contents={new Array(3)
+        contents={new Array(4)
           .fill(1)
           .map((_, i) => counterpart.translate(`edge.flow_content_${i + 1}`))}
       />
