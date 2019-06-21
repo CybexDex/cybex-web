@@ -140,7 +140,7 @@ export namespace Edge {
                 new BigNumber(sum).add(next.op[1].amount.amount).toNumber(),
               0
             ),
-            5
+            6
           );
         } catch (e) {
           this.sum = 0;

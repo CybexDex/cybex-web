@@ -73,7 +73,8 @@ export const EDGE_LOCK = __FOR_SECURITY__
   ? "https://edge-lock.cybex.io/"
   : __DEV__ || __TEST__
   ? // ? "https://eto-lock.cybex.io/"
-    "https://edge-lock.cybex.io/"
+    // "https://edge-lock.cybex.io/"
+    "http://10.18.120.155:5558/"
   : // "http://10.18.120.155:5558/"
     "https://edge-lock.cybex.io/";
 

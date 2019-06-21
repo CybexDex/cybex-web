@@ -114,6 +114,11 @@ class MobileMenu extends React.Component {
                   <Translate content="nav.eto_apply" />
                 </a>
               </li>
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/lockdrop")}>
+                  <Translate content="nav.lockdrop" />
+                </a>
+              </li>
               {/* <li>
                 <a onClick={this._onNavigate.bind(this, "/eto/projects")}>
                   ETO

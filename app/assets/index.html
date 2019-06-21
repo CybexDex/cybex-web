@@ -345,6 +345,11 @@
           callback = callback || function() {};
 
           return new Promise(function(resolve, reject) {
+            var ua = window.navigator.userAgent,
+              ua_lc = ua.toLowerCase();
+            if (!/iphone|ipad/i.test(ua_lc)) {
+              return resolve(false);
+            }
             // @Chrome
             if (window.webkitRequestFileSystem) {
               detectInChrome(resolve, reject, callback);
