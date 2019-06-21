@@ -77,7 +77,7 @@ const EtoLockFormImpl = ({
         </h4>
         <Button
           disabled={
-            value > balanceValue || balanceValue === 0 || value < 2 || !value
+            value > balanceValue || balanceValue === 0 || value < 0 || !value
           }
           type="primary"
           style={{ width: "100%" }}

@@ -14,6 +14,7 @@ import WalletUnlockActions from "actions/WalletUnlockActions";
 import { calcValue } from "../../utils/Asset";
 import * as moment from "moment";
 import { calcBonusCoefficient } from "./utils";
+import { EdgePanel } from "./EdgePanel";
 const { useState, useEffect } = React;
 const blockCache = {};
 const fetchBlock = (blockNum: number) => {
@@ -225,6 +226,15 @@ let EdgeRecords = ({
   }, []);
   return (
     <div className="grid-container" style={{ padding: "12px 0" }}>
+      {((edgeState.info && !edgeState.info[Edge.Fields.records]) ||
+        (edgeState.info &&
+          edgeState.info[Edge.Fields.records].length === 0)) && (
+        <EdgePanel>
+          <h4 style={{ textAlign: "center", color: Colors.$colorWhiteOp3 }}>
+            {counterpart.translate("edge.records.no_data")}
+          </h4>
+        </EdgePanel>
+      )}
       {((edgeState.info && edgeState.info[Edge.Fields.records]) || []).map(
         record => (
           <EdgeRecord

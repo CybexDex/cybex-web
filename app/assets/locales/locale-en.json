@@ -2081,6 +2081,7 @@
     "lockup_period_6": "6 months",
     "lockup_period_12": "12 months",
     "lockup_amount": "Lockup Amount",
+    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000311181",
     "lockup_tip": "The least lock amount is 2 ETH",
     "fund_eth": "Deposit ETH",
     "record": "Record",
@@ -2092,7 +2093,9 @@
     "records": {
       "lockup_value": "Lockup Amount",
       "period_remain": "Lockup Period Countdown",
+      "no_data": "No available records",
       "drop_weight": "Airdrop Weight",
+      "drop_weight_url": "https://support.cybex.io/hc/en-us/articles/360000311181",
       "lockup_from": "Time for Locking up ETH",
       "lockup_period": "%(months)s months",
       "lockup_remains": "%(days)s days"
