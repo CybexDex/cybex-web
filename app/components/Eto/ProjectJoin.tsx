@@ -98,7 +98,7 @@ class ProjectStat {
   }
 
   get precision() {
-    return getPrecision(this.pDetail.base_accuracy);
+    return getPrecision(this.pDetail.quote_accuracy);
   }
 }
 
