@@ -327,13 +327,16 @@ let ProjectJoin = class extends React.Component<
       type: "exchange_participate",
       options: ["exchange_participate"]
     }).then(({ fee, hasBalance, hasPoolBalance }) => {
-      this.setState({
-        feeAmount: fee,
-        fee_asset_id: fee.asset_id,
-        hasBalance,
-        hasPoolBalance,
-        error: !hasBalance || !hasPoolBalance
-      });
+      this.setState(
+        {
+          feeAmount: fee,
+          fee_asset_id: fee.asset_id,
+          hasBalance,
+          hasPoolBalance,
+          error: !hasBalance || !hasPoolBalance
+        },
+        this._checkBalance
+      );
     });
   }
 
@@ -698,12 +701,6 @@ let ProjectJoin = class extends React.Component<
               isI18n={true}
               tips={[
                 {
-                  name: "insufficient",
-                  isError: this.state.balanceError,
-                  isI18n: true,
-                  message: "transfer.errors.insufficient"
-                },
-                {
                   name: "int_times",
                   isError: intTimeError,
                   isI18n: true,
@@ -720,6 +717,12 @@ let ProjectJoin = class extends React.Component<
                   isError: isOverflow,
                   isI18n: true,
                   message: "eto.warning_overflow"
+                },
+                {
+                  name: "insufficient",
+                  isError: this.state.balanceError,
+                  isI18n: true,
+                  message: "transfer.errors.insufficient"
                 }
               ]}
               muiltTips={false}
