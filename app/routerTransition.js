@@ -540,7 +540,7 @@ class RouterTransitioner {
     this.statusCallback(counterpart.translate("app_init.database"));
     this._connectInProgress = true;
     if (Apis.instance()) {
-      if (!Apis.instance().orders_api())
+      if (!Apis.instance().orders_api)
         console.log(`${Apis.instance().url} does not support the orders api`);
       let currentUrl = Apis.instance().url;
       SettingsActions.changeSetting({

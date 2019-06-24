@@ -59,7 +59,7 @@ export default {
     closeCb
   ) {
     if (!inst) {
-      inst = new ApisInstance(cs);
+      inst = new ApisInstance();
       inst.setRpcConnectionStatusCallback(this.statusCb);
     }
 
@@ -89,7 +89,7 @@ export default {
 };
 
 class ApisInstance {
-  url: string;
+  url: string = "";
   chain_id: string | undefined;
   ws_rpc: ChainWebSocket | undefined | null;
   _db: GrapheneApi | undefined;
@@ -99,23 +99,23 @@ class ApisInstance {
   closeCb: CallableFunction | undefined;
   init_promise: Promise<any> | undefined;
 
-  constructor(cs: string) {
-    this.url = cs;
-    this.ws_rpc = new ChainWebSocket(
-      cs,
-      this.statusCb,
-      60 * 1000,
-      autoReconnect,
-      closed => {
-        if (this._db && !closed) {
-          this._db.exec("get_objects", [["2.1.0"]]).catch(e => {});
-        }
-      }
-    );
-    this._db = new GrapheneApi(this.ws_rpc, "database");
-    this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
-    this._hist = new GrapheneApi(this.ws_rpc, "history");
-  }
+  // constructor(cs: string) {
+  //   this.url = cs;
+  //   this.ws_rpc = new ChainWebSocket(
+  //     cs,
+  //     this.statusCb,
+  //     60 * 1000,
+  //     autoReconnect,
+  //     closed => {
+  //       if (this._db && !closed) {
+  //         this._db.exec("get_objects", [["2.1.0"]]).catch(e => {});
+  //       }
+  //     }
+  //   );
+  //   this._db = new GrapheneApi(this.ws_rpc, "database");
+  //   this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
+  //   this._hist = new GrapheneApi(this.ws_rpc, "history");
+  // }
   /** @arg {string} connection .. */
   connect(
     cs,
@@ -157,14 +157,10 @@ class ApisInstance {
     this.init_promise = this.ws_rpc
       .login(rpc_user, rpc_password)
       .then(() => {
-        //console.log("Connected to API node:", cs);
-        // this._db = new GrapheneApi(this.ws_rpc, "database");
-        // this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
-        // this._hist = new GrapheneApi(this.ws_rpc, "history");
-        // if (optionalApis.enableOrders)
-        //   this._orders = new GrapheneApi(this.ws_rpc, "orders");
-        // if (optionalApis.enableCrypto)
-        //   this._crypt = new GrapheneApi(this.ws_rpc, "crypto");
+        console.log("Connected to API node:", cs);
+        this._db = new GrapheneApi(this.ws_rpc, "database");
+        this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
+        this._hist = new GrapheneApi(this.ws_rpc, "history");
         var db_promise = this._db.init().then(() => {
           //https://github.com/cryptonomex/graphene/wiki/chain-locked-tx
           return this._db.exec("get_chain_id", []).then(_chain_id => {
