@@ -15,7 +15,7 @@ let autoReconnect = false; // by default don't use reconnecting-websocket
     Additional usage: Apis.instance().db_api().exec("method", ["method", "parm1", 2, 3, ...]).  Returns a promise with results.
 */
 
-export default {
+export const ApiInst = {
   statusCb: null,
   setRpcConnectionStatusCallback: function(callback) {
     this.statusCb = callback;
@@ -53,13 +53,14 @@ export default {
   // },
   instance: function(
     cs = "ws://localhost:8090",
-    connect,
+    connect?,
     connectTimeout = 4000,
-    optionalApis,
-    closeCb
+    optionalApis?,
+    closeCb?
   ) {
     if (!inst) {
       inst = new ApisInstance();
+      // inst = new ApisInstance(cs);
       inst.setRpcConnectionStatusCallback(this.statusCb);
     }
 
@@ -88,6 +89,8 @@ export default {
   // orders: (method, ...args) => Apis.instance().orders_api().exec(method, toStrings(args))
 };
 
+export default ApiInst;
+
 class ApisInstance {
   url: string = "";
   chain_id: string | undefined;
@@ -98,6 +101,7 @@ class ApisInstance {
   statusCb: CallableFunction | undefined;
   closeCb: CallableFunction | undefined;
   init_promise: Promise<any> | undefined;
+  connectTimeout = 3000;
 
   // constructor(cs: string) {
   //   this.url = cs;
@@ -124,6 +128,7 @@ class ApisInstance {
   ) {
     // console.log("INFO\tApiInstances\tconnect\t", cs);
     this.url = cs;
+    this.connectTimeout = connectTimeout;
     let rpc_user = "",
       rpc_password = "";
     if (
@@ -161,6 +166,10 @@ class ApisInstance {
         this._db = new GrapheneApi(this.ws_rpc, "database");
         this._net = new GrapheneApi(this.ws_rpc, "network_broadcast");
         this._hist = new GrapheneApi(this.ws_rpc, "history");
+        // if (optionalApis.enableOrders)
+        //   this._orders = new GrapheneApi(this.ws_rpc, "orders");
+        // if (optionalApis.enableCrypto)
+        //   this._crypt = new GrapheneApi(this.ws_rpc, "crypto");
         var db_promise = this._db.init().then(() => {
           //https://github.com/cryptonomex/graphene/wiki/chain-locked-tx
           return this._db.exec("get_chain_id", []).then(_chain_id => {
@@ -195,6 +204,10 @@ class ApisInstance {
         // if (optionalApis.enableCrypto) initPromises.push(this._crypt.init());
         return Promise.all(initPromises);
       })
+      .then(res => {
+        initPromise = null;
+        return res;
+      })
       .catch(err => {
         console.error(
           cs,
@@ -219,17 +232,35 @@ class ApisInstance {
     this.ws_rpc = null;
     return Promise.resolve();
   }
-
+  get wsReady() {
+    // console.debug(
+    //   "Check WsReady: ",
+    //   this.ws_rpc,
+    //   this.ws_rpc && this.ws_rpc.ws,
+    //   this.ws_rpc && this.ws_rpc.ws && this.ws_rpc.ws.readyState === 1,
+    //   this._db,
+    //   this._db && this._db.exec
+    // );
+    return !!(
+      this.ws_rpc &&
+      this.ws_rpc.ws &&
+      this.ws_rpc.ws.readyState === 1 &&
+      this._db &&
+      this._db.exec
+    );
+  }
   db_api() {
-    return this._db;
+    return (this.wsReady && this._db) || new DeferedApi(ApiType.Database, this);
   }
 
   network_api() {
-    return this._net;
+    return (this.wsReady && this._net) || new DeferedApi(ApiType.Network, this);
   }
 
   history_api() {
-    return this._hist;
+    return (
+      (this.wsReady && this._hist) || new DeferedApi(ApiType.History, this)
+    );
   }
 
   // crypto_api() {
@@ -242,5 +273,62 @@ class ApisInstance {
 
   setRpcConnectionStatusCallback(callback) {
     this.statusCb = callback;
+  }
+}
+enum ApiType {
+  Database = "database",
+  Network = "network_broadcast",
+  History = "history"
+}
+
+let initPromise: null | Promise<any> = null;
+
+class DeferedApi {
+  constructor(public apiType: ApiType, public apiInstance: ApisInstance) {}
+  exec(...args) {
+    return new Promise(async (resolve, reject) => {
+      let _this = this;
+      let count = 0;
+      (async function impl() {
+        if (!ApiInst.instance().wsReady && !_this.apiInstance.wsReady) {
+          if (!initPromise) {
+            initPromise = ApiInst.instance(
+              ApiInst.instance().url,
+              true,
+              ApiInst.instance().connectTimeout
+            ).init_promise.catch(err => {
+              initPromise = null;
+            });
+          }
+        }
+        await initPromise;
+        let instance = ApiInst.instance().wsReady
+          ? ApiInst.instance()
+          : _this.apiInstance;
+        if (instance.wsReady) {
+          switch (_this.apiType) {
+            case ApiType.Database:
+              return instance
+                .db_api()
+                .exec(...args)
+                .then(resolve);
+            case ApiType.Network:
+              return instance
+                .network_api()
+                .exec(...args)
+                .then(resolve);
+            case ApiType.History:
+              return instance
+                .history_api()
+                .exec(...args)
+                .then(resolve);
+          }
+        } else if (count++ < 5) {
+          setTimeout(impl, 750);
+        } else {
+          reject();
+        }
+      })();
+    });
   }
 }
