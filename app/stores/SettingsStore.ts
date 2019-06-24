@@ -298,7 +298,8 @@ class SettingsStore extends AbstractStore<any> {
             "1.3.1386",
             "1.3.1382",
             "1.3.1385",
-            "1.3.1391"
+            "1.3.1391",
+            "1.3.1392"
           ]
         }
       };
