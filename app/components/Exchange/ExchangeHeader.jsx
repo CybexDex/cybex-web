@@ -13,6 +13,7 @@ import cnames from "classnames";
 export default class ExchangeHeader extends React.Component {
   _addMarket(quote, base) {
     let marketID = `${quote}_${base}`;
+    if (!this.props.starredMarkets) return;
     if (!this.props.starredMarkets.has(marketID)) {
       SettingsActions.addStarMarket(quote, base);
     } else {
@@ -49,7 +50,10 @@ export default class ExchangeHeader extends React.Component {
 
     // Favorite star
     const marketID = `${quoteSymbol}_${baseSymbol}`;
-    const starClass = starredMarkets.has(marketID) ? "gold-star" : "grey-star";
+    const starClass =
+      starredMarkets && starredMarkets.has(marketID)
+        ? "gold-star"
+        : "grey-star";
 
     // Market stats
     const dayChange = marketStats.get("change");
@@ -58,14 +62,14 @@ export default class ExchangeHeader extends React.Component {
       parseFloat(dayChange) === 0
         ? ""
         : parseFloat(dayChange) < 0
-          ? "negative"
-          : "positive";
+        ? "negative"
+        : "positive";
     const dayChangeArrow =
       dayChangeClass === ""
         ? ""
         : dayChangeClass === "positive"
-          ? "change-up"
-          : "change-down";
+        ? "change-up"
+        : "change-down";
     const volumeBase = marketStats.get("volumeBase");
     const volumeQuote = marketStats.get("volumeQuote");
 

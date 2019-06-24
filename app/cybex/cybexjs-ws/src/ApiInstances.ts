@@ -291,7 +291,7 @@ class DeferedApi {
       let count = 0;
       (async function impl() {
         if (!ApiInst.instance().wsReady && !_this.apiInstance.wsReady) {
-          if (!initPromise) {
+          if (!initPromise && ApiInst.instance().url) {
             initPromise = ApiInst.instance(
               ApiInst.instance().url,
               true,

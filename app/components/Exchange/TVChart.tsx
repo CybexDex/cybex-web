@@ -268,12 +268,11 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
           priceData.filter(p => {
             p.date >= from && p.date <= to;
           });
-          priceData = priceData.sort(
-            (prev, next) =>
-              prev.date > next.date ? 1 : prev.date < next.date ? -1 : 0
+          priceData = priceData.sort((prev, next) =>
+            prev.date > next.date ? 1 : prev.date < next.date ? -1 : 0
           );
           if (priceData.length > 1) {
-            console.debug("===getBars: FinalPrice", priceData);
+            // console.debug("===getBars: FinalPrice", priceData);
             if (!this.latestTime || priceData[0].date > this.latestTime) {
               this.latestTime = priceData[0].date;
             }
