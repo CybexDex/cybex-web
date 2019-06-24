@@ -93,25 +93,33 @@ let GatewayTable = class extends React.Component<any, any> {
         };
       }, {});
     let assetRows =
-      assets.filter(a => !!a && a.get).map(asset => {
-        let balOfAsset = balancesMap[asset.get("id")];
-        let a = asset
-          .set("balance", balOfAsset ? balOfAsset.get("id") : balOfAsset)
-          .set(
-            "balanceAmount",
-            balOfAsset ? balOfAsset.get("balance") : balOfAsset
-          )
-          .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0)
-          .set("isDisabled", ADDRESS_TYPES[asset.get("symbol")].isDisabled)
-          .set("allowDeposit", ADDRESS_TYPES[asset.get("symbol")].allowDeposit)
-          .set("allowWithdraw", ADDRESS_TYPES[asset.get("symbol")].allowWithdraw)
-        return a;
-      }) || [];
+      assets
+        .filter(a => !!a && a.get)
+        .map(asset => {
+          let balOfAsset = balancesMap[asset.get("id")];
+          let a = asset
+            .set("balance", balOfAsset ? balOfAsset.get("id") : balOfAsset)
+            .set(
+              "balanceAmount",
+              balOfAsset ? balOfAsset.get("balance") : balOfAsset
+            )
+            .set("canWithdraw", balOfAsset && balOfAsset.get("balance") > 0)
+            .set("isDisabled", ADDRESS_TYPES[asset.get("symbol")].isDisabled)
+            .set(
+              "allowDeposit",
+              ADDRESS_TYPES[asset.get("symbol")].allowDeposit
+            )
+            .set(
+              "allowWithdraw",
+              ADDRESS_TYPES[asset.get("symbol")].allowWithdraw
+            );
+          return a;
+        }) || [];
     return (
       <div className="cybex-records">
         <Table
           showPagination={false}
-          defaultPageSize={assetRows.length}
+          defaultPageSize={Object.keys(JadePool.ADDRESS_TYPES).length}
           noDataText={counterpart.translate("gateway.no_filterd_asset")}
           className="text-center"
           data={assetRows}
@@ -202,7 +210,8 @@ let GatewayTable = class extends React.Component<any, any> {
               accessor: asset => asset,
               Cell: row => {
                 let asset = row.original;
-                return asset.get("isDisabled") || !asset.get("allowWithdraw") ? (
+                return asset.get("isDisabled") ||
+                  !asset.get("allowWithdraw") ? (
                   <a
                     href="javascript:;"
                     data-for={"disabledWithdraw" + asset.get("symbol")}

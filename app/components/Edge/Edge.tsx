@@ -1,61 +1,55 @@
 import * as React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { EtoApply } from "./Apply";
+import { EdgeApply } from "./Apply";
 import counterpart from "counterpart";
 import { Button, Icon } from "../Common";
 import { withRouter } from "react-router-dom";
-import { EtoContent, EtoPanel } from "./EtoPanel";
-import { EtoLock } from "./EtoLock";
+import { EdgeContent, EdgePanel } from "./EdgePanel";
+import { EdgeLock } from "./EdgeLock";
 import { connect } from "alt-react";
-import { EtoStore, EtoState } from "../../stores/EtoStore";
-import { EtoToken } from "./EtoToken";
-import Translate from "react-translate-component";
+import { EdgeStore, EdgeState } from "../../stores/EdgeStore";
 import { LoadingIndicator } from "../LoadingIndicator";
 import { Gtag } from "services/Gtag";
-import { EtoRank } from "./EtoRank";
-import { ProjectMain } from "./ProjectMain";
-import { ProjectDetail } from "./ProjectDetail";
-import { ProjectJoin } from "./ProjectJoin";
-import { EtoTokenModal } from "./EtoCheckToken";
-import { DEFAULT_ETO_CHECK_TOKEN } from "../Modal/ModalID";
+import { EdgeRank } from "./EdgeRank";
+import { EdgeRecords } from "./EdgeRecord";
 export const IntroBtn = withRouter<any>(props => {
   return (
     <div {...props}>
       <Button
         type="primary"
-        disabled
+        // disabled
         // loading={this.state.checking}
-        // onClick={() => {
-        //   Gtag.eventActivity("Eto", "点击申购");
-        //   props.history.push("/eto/apply");
-        // }}
+        onClick={() => {
+          // Gtag.eventActivity("Edge", "点击锁仓按钮");
+          props.history.push("/lockdrop/apply");
+        }}
         style={{ marginBottom: "12px", width: "100%" }}
       >
-        {counterpart.translate("eto_intro.join_apply")}
+        {counterpart.translate("edge.lock")}
       </Button>
       <Button
         type="primary"
-        link={counterpart.translate("eto_intro.rule_url")}
+        onClick={() => {
+          // Gtag.eventActivity("Edge", "查看记录");
+          props.history.push("/lockdrop/record");
+        }}
         // loading={this.state.checking}
         style={{ marginBottom: "12px", width: "100%", textAlign: "center" }}
       >
-        {counterpart.translate("eto_intro.join_rule")}
+        {counterpart.translate("edge.record")}
       </Button>
       <Button
         type="hollow-primary"
-        onClick={() => {
-          Gtag.eventActivity("Eto", "点击已申购");
-          props.history.push("/eto/apply");
-        }}
+        link={counterpart.translate("edge.rule_url")}
         // loading={this.state.checking}
-        style={{ width: "100%" }}
+        style={{ width: "100%", textAlign: "center" }}
       >
-        {counterpart.translate("eto_intro.join_apply_already")}
+        {counterpart.translate("eto_intro.join_rule")}
       </Button>
     </div>
   ) as any;
 });
-export const EtoSuperPoint = ({
+export const EdgeSuperPoint = ({
   content,
   ...props
 }: {
@@ -77,13 +71,15 @@ export const EtoSuperPoint = ({
     </span>
   </span>
 );
-export const EtoBanner = () => (
+export const EdgeBanner = () => (
   <div
     className="banner"
     style={{
       paddingTop: "83.1%",
       backgroundColor: "rgba(255,150,58,1)",
-      backgroundImage: `url(${counterpart.translate("eto_intro.img_url")})`,
+      backgroundImage: `url(${counterpart.translate(
+        "edge.intro.banner_bg_url"
+      )})`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       position: "relative",
@@ -147,7 +143,7 @@ export const EtoBanner = () => (
         {new Array(2).fill(1).map((_, i) => (
           <div key={i} className="wrapper-row" style={{ display: "table-row" }}>
             {new Array(2).fill(1).map((_, j) => (
-              <EtoSuperPoint
+              <EdgeSuperPoint
                 key={`${i}${j}`}
                 style={{
                   textAlign: "left",
@@ -168,16 +164,16 @@ export const EtoBanner = () => (
   </div>
 );
 
-export const EtoSchema = props => (
+export const EdgeSchema = props => (
   <section {...props}>
     {[
       {
-        label: counterpart.translate("eto_intro.join_date"),
-        content: counterpart.translate("eto_intro.join_date_content")
+        label: counterpart.translate("edge.intro.event_start_time"),
+        content: counterpart.translate("edge.intro.event_start_time_content")
       },
       {
-        label: counterpart.translate("eto_intro.join_platform"),
-        content: counterpart.translate("eto_intro.join_platform_content")
+        label: counterpart.translate("edge.intro.event_end_time"),
+        content: counterpart.translate("edge.intro.event_end_time_content")
       }
     ].map(info => (
       <p key={info.label}>
@@ -188,7 +184,7 @@ export const EtoSchema = props => (
   </section>
 );
 
-export const EtoIntro = () => {
+export const EdgeIntro = () => {
   return (
     <div className="grid-container">
       <div style={{ padding: "6px" }} />
@@ -198,56 +194,47 @@ export const EtoIntro = () => {
           className="column small-12 medium-6"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <EtoPanel style={{ marginBottom: "12px" }}>
-            <EtoBanner />
-            <EtoSchema className="show-for-small-only" />
+          <EdgePanel style={{ marginBottom: "12px" }}>
+            <EdgeBanner />
+            <EdgeSchema className="show-for-small-only" />
             <IntroBtn className="show-for-small-only" />
-          </EtoPanel>
-          <EtoPanel
+          </EdgePanel>
+          <EdgePanel
             className="eto-panel hide-for-small-only"
             style={{ flex: "1" }}
           >
             <IntroBtn />
-          </EtoPanel>
+          </EdgePanel>
         </div>
         <div
           className="column small-12 medium-6"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <EtoContent
+          <EdgeContent
             style={{ marginBottom: "12px", flex: "1" }}
-            heading={counterpart.translate("eto_intro.about_eto_title")}
-            contents={[counterpart.translate("eto_intro.about_eto_content")]}
+            heading={counterpart.translate("edge.intro.about_edge_title")}
+            contents={[counterpart.translate("edge.intro.about_edge_content")]}
           />
-          <EtoContent
+          <EdgeContent
             style={{ marginBottom: "12px", flex: "1" }}
-            heading={counterpart.translate("eto_intro.about_polka_title")}
+            heading={counterpart.translate("edge.intro.about_lockdrop_title")}
             contents={[
-              counterpart.translate("eto_intro.about_polka_content"),
-              counterpart.translate("eto_intro.about_polka_content1")
+              counterpart.translate("edge.intro.about_lockdrop_content")
             ]}
           />
-          <EtoPanel>
-            <EtoSchema className="hide-for-small-only" />
-          </EtoPanel>
+          <EdgePanel>
+            <EdgeSchema className="hide-for-small-only" />
+          </EdgePanel>
         </div>
       </div>
     </div>
   );
 };
-export const EtoProjects = () => {
-  return (
-    <div className="grid-container">
-      <div style={{ padding: "6px" }} />
-      <ProjectMain />
-    </div>
-  );
-};
 
-let Eto = ({ etoState }: { etoState: EtoState }) => {
+let Edge = ({ edgeState }: { edgeState: EdgeState }) => {
   return (
     <>
-      {etoState.loading > 0 ? (
+      {edgeState.loading > 0 ? (
         <LoadingIndicator
           style={{
             height: "100vh",
@@ -255,7 +242,7 @@ let Eto = ({ etoState }: { etoState: EtoState }) => {
             width: "100vw",
             textAlign: "center",
             top: 0,
-            left: 0,
+            edgeStatet: 0,
             // backgroundColor: "rgba(0,0,0,0.4)",
             lineHeight: "80vh",
             zIndex: 1
@@ -265,32 +252,28 @@ let Eto = ({ etoState }: { etoState: EtoState }) => {
       ) : null}
       <div className="page-layout flex-start">
         <Switch>
-          <Route path="/eto/" exact component={EtoIntro as any} />
-          <Route path="/eto/apply" component={EtoApply as any} />
-          <Route path="/eto/rank" component={EtoRank as any} />
-          <Route path="/eto/lock" component={EtoLock as any} />
-          <Route path="/eto/token" component={EtoToken as any} />
-          <Route path="/eto/projects" component={EtoProjects as any} />
-          <Route path="/eto/detail/:id" component={ProjectDetail as any} />
-          <Route path="/eto/join/:id" component={ProjectJoin as any} />
-          <Redirect from="*" to="/eto" />
+          <Route path="/lockdrop/" exact component={EdgeIntro as any} />
+          <Route path="/lockdrop/apply" component={EdgeApply as any} />
+          <Route path="/lockdrop/lock" component={EdgeLock as any} />
+          <Route path="/lockdrop/record" component={EdgeRecords as any} />
+          <Redirect from="*" to="/lockdrop" />
         </Switch>
       </div>
     </>
   );
 };
-Eto = connect(
-  Eto,
+Edge = connect(
+  Edge,
   {
     listenTo() {
-      return [EtoStore];
+      return [EdgeStore];
     },
     getProps() {
       return {
-        etoState: EtoStore.getState()
+        edgeState: EdgeStore.getState()
       };
     }
   }
 ) as any;
-export { Eto };
-export default Eto;
+export { Edge };
+export default Edge;

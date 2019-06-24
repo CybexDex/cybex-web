@@ -33,7 +33,7 @@ class MobileMenu extends React.Component {
   }
 
   render() {
-    let { id, currentAccount, linkedAccounts, myAccounts } = this.props;
+    let { id, currentAccount, linkedAccounts } = this.props;
     let accounts = null;
 
     if (linkedAccounts.size > 1) {
@@ -112,6 +112,11 @@ class MobileMenu extends React.Component {
               <li>
                 <a onClick={this._onNavigate.bind(this, "/eto")}>
                   <Translate content="nav.eto_apply" />
+                </a>
+              </li>
+              <li>
+                <a onClick={this._onNavigate.bind(this, "/lockdrop")}>
+                  <Translate content="nav.lockdrop" />
                 </a>
               </li>
               {/* <li>

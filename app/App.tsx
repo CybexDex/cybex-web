@@ -117,11 +117,6 @@ const Gateway = Loadable({
     import(/* webpackChunkName: "gateway" */ "./components/Gateway/Gateway"),
   loading: LoadingIndicator
 } as any);
-const Eto = Loadable({
-  loader: () => import(/* webpackChunkName: "ETO" */ "./components/Eo/index"),
-  loading: LoadingIndicator
-} as any);
-
 const Explorer = Loadable({
   loader: () =>
     import(/* webpackChunkName: "explorer" */ "./components/Explorer/Explorer"),
@@ -207,13 +202,6 @@ const CreateWorker = Loadable({
     ),
   loading: LoadingIndicator
 } as any);
-const EtoStatic = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "EtoStatic" */ "./components/StaticPages/EtoStatic"
-    ),
-  loading: LoadingIndicator
-} as any);
 
 const Login = Loadable({
   loader: () => import("./components/Login/Login"),
@@ -236,6 +224,10 @@ const Contact = Loadable({
 } as any);
 const EtoV2 = Loadable({
   loader: () => import("./components/Eto/Eto"),
+  loading: LoadingIndicator
+} as any);
+const Edge = Loadable({
+  loader: () => import("./components/Edge/Edge"),
   loading: LoadingIndicator
 } as any);
 
@@ -536,8 +528,8 @@ let App = class extends React.Component<any, any> {
               <Route path="/existing-account" component={ExistingAccount} />
 
               <Route path="/create-worker" component={CreateWorker} />
-              <Route path="/eto-static" component={EtoStatic} />
               <Route path="/eto" component={EtoV2} />
+              <Route path="/lockdrop" component={Edge} />
 
               <Route path="/login" component={Login} />
               <Route
@@ -563,7 +555,7 @@ let App = class extends React.Component<any, any> {
 
     return (
       <div
-        style={{ backgroundColor: !this.state.theme ? "#2a2a2a" : null }}
+        style={{ backgroundColor: !this.state.theme ? "#2a2a2a" : undefined }}
         className={this.state.theme}
       >
         <div id="content-wrapper">

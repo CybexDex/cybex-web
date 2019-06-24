@@ -11,6 +11,7 @@ export type ButtonType =
   | "bid"
   | "ask"
   | "hollow-primary"
+  | "hollow-secondary"
   | "white-primary"
   | "white-secondary";
 export interface ButtonProps {

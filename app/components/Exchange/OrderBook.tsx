@@ -106,7 +106,7 @@ const cellStyle = width => ({
 });
 
 export class Order {
-  accum: number;
+  accum: number = 0;
 
   constructor(
     public price: number,
@@ -151,7 +151,7 @@ type RteOrderPrice = string;
 type RteOrderAmount = string;
 type RteOrder = [RteOrderPrice, RteOrderAmount];
 
-let OrderBookRowVertical = class extends React.Component<
+let OrderBookRowVertical: any = class extends React.Component<
   {
     index?;
     currentAccount;
@@ -564,9 +564,9 @@ const getMaxDigits = latest => {
   };
 };
 
-let OrderBook = class extends React.Component<OrderBook.Props, any> {
-  marketPair: string;
-  askWrapper: HTMLDivElement;
+let OrderBook: any = class extends React.Component<OrderBook.Props, any> {
+  marketPair: any;
+  askWrapper: any;
   static defaultProps = {
     bids: [],
     asks: [],
@@ -703,7 +703,8 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
     // let countOfRow = 16;
     let countOfRow = document.getElementById("orderBook")
       ? Math.floor(
-          (document.getElementById("orderBook").offsetHeight / priceRowHeight -
+          ((document.getElementById("orderBook") as any).offsetHeight /
+            priceRowHeight -
             3) /
             2
         )
@@ -735,7 +736,7 @@ let OrderBook = class extends React.Component<OrderBook.Props, any> {
               if (!orderSet.has(orderPrice)) {
                 orderSet.set(orderPrice, order);
               } else {
-                let newOrder = orderSet.get(orderPrice).sum(order);
+                let newOrder = (orderSet as any).get(orderPrice).sum(order);
                 orderSet.set(orderPrice, newOrder);
               }
               return orderSet;
