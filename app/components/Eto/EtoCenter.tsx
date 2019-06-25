@@ -55,17 +55,19 @@ export const EtoCenterSummary = ({
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.info.token}
           </h2>
-          <a
-            style={{
-              color: "white",
-              textDecoration: "underline",
-              cursor: "pointer"
-            }}
-            href="javascript:;"
-            onClick={() => history.push("/eto/token")}
-          >
-            {counterpart.translate("eto_apply.change")}
-          </a>
+          {false && (
+            <a
+              style={{
+                color: "white",
+                textDecoration: "underline",
+                cursor: "pointer"
+              }}
+              href="javascript:;"
+              onClick={() => history.push("/eto/token")}
+            >
+              {counterpart.translate("eto_apply.change")}
+            </a>
+          )}
         </div>
         <div style={{ textAlign: "center" }}>
           <span>
