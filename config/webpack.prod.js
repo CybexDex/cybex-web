@@ -80,9 +80,7 @@ const prodPlugins = plugins.concat([
   new Clean(cleanDirectories, {
     root: BASE_URL
   }),
-  new PreloadWebpackPlugin({
-    rel: "prefetch"
-  }),
+  new PreloadWebpackPlugin({}),
   new webpack.DefinePlugin({
     "process.env": {
       NODE_ENV: JSON.stringify("production")
