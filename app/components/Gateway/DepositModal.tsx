@@ -91,6 +91,7 @@ class DepositModal extends React.Component<props, { fadeOut }> {
       type === "ATOM" ||
       type === "IRIS" ||
       type === "XRP" ||
+      type === "PCX" ||
       type === "LC";
     let memoName = type === "XRP" ? "tag" : "memo";
     return (
