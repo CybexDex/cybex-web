@@ -18,7 +18,8 @@ export const EXPLORER_URLS = __TEST__
       LTC: "https://chain.so/tx/LTC/#{txid}",
       VET: "https://explore.veforge.com/transactions/#{txid}",
       QTUM: "https://explorer.qtum.org/tx/#{txid}",
-      ZEC: "https://zcashnetwork.info/tx/#{txid}"
+      ZEC: "https://zcashnetwork.info/tx/#{txid}",
+      PCX: "https://scan.chainx.org/txs/#{txid}"
     };
 
 export const CONTRACT_URLS = __TEST__
@@ -114,7 +115,8 @@ export enum ProtocolType {
   COSMOS,
   IRIS,
   VET,
-  ZEC
+  ZEC,
+  PCX
 }
 
 export class GatewayAssetOptions {
@@ -138,7 +140,8 @@ export class GatewayAsset {
     [ProtocolType.QTUM]: EXPLORER_URLS.QTUM,
     [ProtocolType.XRP]: EXPLORER_URLS.XRP,
     [ProtocolType.NEO]: EXPLORER_URLS.GAS,
-    [ProtocolType.ZEC]: EXPLORER_URLS.ZEC
+    [ProtocolType.ZEC]: EXPLORER_URLS.ZEC,
+    [ProtocolType.PCX]: EXPLORER_URLS.PCX
   };
   static ContractAddress = {
     [ProtocolType.ERC20]: CONTRACT_URLS.ERC20
@@ -427,6 +430,9 @@ export const JadePool: {
         }),
         "JADE.ZEC": new GatewayAsset("JADE.ZEC", "ZEC", ProtocolType.ZEC, {
           name: "Zcash"
-        })
+        }),
+        "JADE.PCX": new GatewayAsset("JADE.PCX", "PCX", ProtocolType.PCX, {
+          name: "ChainX"
+        }),
       }
     };

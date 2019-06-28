@@ -554,6 +554,7 @@ class WithdrawModal extends React.Component<props, state> {
       assetName.indexOf("EOS") !== -1 ||
       assetName === "LC" ||
       assetName.indexOf("XRP") !== -1 ||
+      assetName.indexOf("PCX") !== -1 ||
       assetName.indexOf("IRIS") !== -1 ||
       assetName.indexOf("ATOM") !== -1;
     let memoName = assetName.indexOf("XRP") !== -1 ? "tag" : "memo/tag";
