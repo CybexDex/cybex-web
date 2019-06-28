@@ -119,11 +119,11 @@ class MobileMenu extends React.Component {
                   <Translate content="nav.lockdrop" />
                 </a>
               </li>
-              {/* <li>
+              <li>
                 <a onClick={this._onNavigate.bind(this, "/eto/projects")}>
                   ETO
                 </a>
-              </li> */}
+              </li>
               {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
               )}

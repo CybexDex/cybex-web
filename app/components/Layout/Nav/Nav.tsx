@@ -44,26 +44,26 @@ const NavLinks: Array<NavLink> = [
     id: "eto",
     routeTo: "/eto",
     // routeTo: "/eto",
-    activeMatcher: /^\/eto\/?/,
+    activeMatcher: /^\/eto(\/apply)?\/?$/,
     name: "eto_apply",
     icon: "ETO"
   },
-  {
-    id: "lockdrop",
-    routeTo: "/lockdrop",
-    // routeTo: "/eto",
-    activeMatcher: /^\/lockdrop\/?/,
-    name: "lockdrop",
-    icon: "lockdrop"
-  },
   // {
-  //   id: "eto",
-  //   routeTo: "/eto/projects",
+  //   id: "lockdrop",
+  //   routeTo: "/lockdrop",
   //   // routeTo: "/eto",
-  //   activeMatcher: /^\/eto\/projects/,
-  //   name: "eto",
-  //   icon: "ETO"
+  //   activeMatcher: /^\/lockdrop\/?/,
+  //   name: "lockdrop",
+  //   icon: "lockdrop"
   // },
+  {
+    id: "etoProject",
+    routeTo: "/eto/projects",
+    // routeTo: "/eto",
+    activeMatcher: /^\/eto\/projects/,
+    name: "eto",
+    icon: "ETO"
+  },
   {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,

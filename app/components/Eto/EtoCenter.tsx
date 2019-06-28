@@ -12,6 +12,7 @@ import { EtoRefreshModal } from "../Modal/EtoRefreshModal";
 import { ModalActions } from "../../actions/ModalActions";
 import { Gtag } from "services/Gtag";
 import { Link } from "react-router-dom";
+import * as moment from "moment";
 const { useEffect } = React;
 const EtoRefreshModalID = "#$EtoRefreshModalID";
 
@@ -55,7 +56,7 @@ export const EtoCenterSummary = ({
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.info.token}
           </h2>
-          {false && (
+          {moment().isBefore(moment("2019-06-25T16:00:00Z")) && (
             <a
               style={{
                 color: "white",
@@ -187,7 +188,7 @@ export const EtoCenter = (props: any) => {
           )}
         </div>
       </EtoPanel>
-      {false && (
+      {true && (
         <EtoPanel style={{ marginBottom: "12px" }}>
           <div
             className="result"
@@ -218,9 +219,13 @@ export const EtoCenter = (props: any) => {
                         fontSize: "12px",
                         textAlign: "center",
                         justifyContent: "flex-start",
+                        alignItems: "flex-start",
                         padding: "4px",
                         cursor: "default",
                         color: Colors.$colorGrey
+                      }}
+                      inputStyle={{
+                        flexShrink: 0
                       }}
                       bindTo={round}
                       value={true}
