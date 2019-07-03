@@ -40,30 +40,30 @@ interface NavLink {
 }
 
 const NavLinks: Array<NavLink> = [
-  {
-    id: "eto",
-    routeTo: "/eto",
-    // routeTo: "/eto",
-    activeMatcher: /^\/eto(\/apply)?\/?$/,
-    name: "eto_apply",
-    icon: "ETO"
-  },
   // {
-  //   id: "lockdrop",
-  //   routeTo: "/lockdrop",
+  //   id: "eto",
+  //   routeTo: "/eto",
   //   // routeTo: "/eto",
-  //   activeMatcher: /^\/lockdrop\/?/,
-  //   name: "lockdrop",
-  //   icon: "lockdrop"
+  //   activeMatcher: /^\/eto(\/apply)?\/?$/,
+  //   name: "eto_apply",
+  //   icon: "ETO"
   // },
   {
-    id: "etoProject",
-    routeTo: "/eto/projects",
+    id: "lockdrop",
+    routeTo: "/lockdrop",
     // routeTo: "/eto",
-    activeMatcher: /^\/eto\/projects/,
-    name: "eto",
-    icon: "ETO"
+    activeMatcher: /^\/lockdrop\/?/,
+    name: "lockdrop",
+    icon: "lockdrop"
   },
+  // {
+  //   id: "etoProject",
+  //   routeTo: "/eto/projects",
+  //   // routeTo: "/eto",
+  //   activeMatcher: /^\/eto\/projects/,
+  //   name: "eto",
+  //   icon: "ETO"
+  // },
   {
     id: "account",
     routeTo: accountName => `/account/${accountName}/dashboard`,
@@ -79,13 +79,13 @@ const NavLinks: Array<NavLink> = [
     name: "exchange",
     icon: "exchange"
   },
-  {
-    id: "gateway",
-    routeTo: "/gateway",
-    name: "gateway",
-    icon: "gateway",
-    displayOnlyWhen: "currentAccount"
-  },
+  // {
+  //   id: "gateway",
+  //   routeTo: "/gateway",
+  //   name: "gateway",
+  //   icon: "gateway",
+  //   displayOnlyWhen: "currentAccount"
+  // },
   {
     id: "transfer",
     routeTo: "/transfer",

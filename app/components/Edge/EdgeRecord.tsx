@@ -113,7 +113,7 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                     color: Colors.$colorWhite
                   }}
                 >
-                  {calcValue(amount, asset.get("precision"))}
+                  {calcValue(amount, asset.get("precision"))} PCX
                 </span>
               </td>
               <td align="right">
@@ -123,9 +123,9 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                     color: `rgba(255, 255, 255, 0.5)`
                   }}
                 >
-                  {counterpart.translate("edge.lockup_period")}:{" "}
+                  {counterpart.translate("edge.lockup_period")}
                 </span>
-                <span
+                {/* <span
                   style={{
                     fontSize: "14px",
                     color: Colors.$colorWhite
@@ -134,7 +134,7 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                   {counterpart.translate("edge.records.lockup_period", {
                     months: calcPeriodFromDuration(period_in_secs)
                   })}
-                </span>
+                </span> */}
               </td>
             </tr>
             <tr>
@@ -148,7 +148,7 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                   )
                 })}
               </td>
-              <td align="right">
+              {/* <td align="right">
                 <a
                   href={counterpart.translate("edge.records.drop_weight_url")}
                   target={
@@ -161,8 +161,6 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                       style={{ marginRight: "4px", verticalAlign: "bottom" }}
                     />
                     {counterpart.translate("edge.records.drop_weight")}:
-                    {/* <sup> */}
-                    {/* </sup> */}
                   </span>
                 </a>{" "}
                 <span style={RecordStyles.contentText}>
@@ -170,9 +168,9 @@ let EdgeRecord = ({ amount, asset, period_in_secs, block }) => {
                     moment(sanitizeDate(blockSummary.timestamp)),
                     DropWeight[calcPeriodFromDuration(period_in_secs)]
                   )}
-                  {/* {DropWeight[calcPeriodFromDuration(period_in_secs)]} */}
+                  {DropWeight[calcPeriodFromDuration(period_in_secs)]}
                 </span>
-              </td>
+              </td> */}
             </tr>
             <tr>
               <td style={{ height: "20px" }}>

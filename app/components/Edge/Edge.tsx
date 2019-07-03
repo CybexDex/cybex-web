@@ -213,15 +213,18 @@ export const EdgeIntro = () => {
           <EdgeContent
             style={{ marginBottom: "12px", flex: "1" }}
             heading={counterpart.translate("edge.intro.about_edge_title")}
-            contents={[counterpart.translate("edge.intro.about_edge_content")]}
+            contents={[
+              counterpart.translate("edge.intro.about_edge_content"),
+              counterpart.translate("edge.intro.about_edge_content1")
+            ]}
           />
-          <EdgeContent
+          {/* <EdgeContent
             style={{ marginBottom: "12px", flex: "1" }}
             heading={counterpart.translate("edge.intro.about_lockdrop_title")}
             contents={[
               counterpart.translate("edge.intro.about_lockdrop_content")
             ]}
-          />
+          /> */}
           <EdgePanel>
             <EdgeSchema className="hide-for-small-only" />
           </EdgePanel>

@@ -14,9 +14,9 @@ type EdgeLockFormProps = {
 };
 
 const BtnPreset = [
-  { label: "5 ETH", value: 5 },
-  { label: "10 ETH", value: 10 },
-  { label: "50 ETH", value: 50 }
+  { label: "30 PCX", value: 30 },
+  { label: "200 PCX", value: 200 },
+  { label: "500 PCX", value: 500 }
 ];
 const PeriodPreset = [
   { label: "edge.lockup_period_3", value: 3 },
@@ -49,7 +49,7 @@ const EdgeLockFormImpl = ({
         >
           {counterpart.translate("edge.lockup_period")}
         </h4>
-        <div
+        {/* <div
           className="btn-group"
           style={{ display: "flex", marginTop: "12px" }}
         >
@@ -68,7 +68,7 @@ const EdgeLockFormImpl = ({
               {counterpart.translate(preset.label)}
             </Button>
           ))}
-        </div>
+        </div> */}
         <h4
           className="color-steel"
           style={{ marginBottom: "8px", fontSize: "14px", marginTop: "12px" }}
@@ -79,7 +79,7 @@ const EdgeLockFormImpl = ({
           </small>
         </h4>
         <Input
-          append="ETH"
+          append="PCX"
           onChange={e => setValue(formatter(e.target.value))}
           type="number"
           value={value}
@@ -117,11 +117,11 @@ const EdgeLockFormImpl = ({
           <span className="color-steel">
             {counterpart.translate("eto_apply.lock.balance")}
           </span>
-          <span>{balanceValue} ETH</span>
+          <span>{balanceValue} PCX</span>
         </h4>
         <Button
           disabled={
-            value > balanceValue || balanceValue === 0 || value < 2 || !value
+            value > balanceValue || balanceValue === 0 || value < 30 || !value
           }
           type="primary"
           style={{ width: "100%" }}

@@ -109,11 +109,11 @@ class MobileMenu extends React.Component {
                   <Translate content="header.payments" />
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a onClick={this._onNavigate.bind(this, "/eto")}>
                   <Translate content="nav.eto_apply" />
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a onClick={this._onNavigate.bind(this, "/lockdrop")}>
                   <Translate content="nav.lockdrop" />
@@ -127,13 +127,13 @@ class MobileMenu extends React.Component {
               {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
               )}
-              {linkedAccounts.size === 0 && !currentAccount ? null : (
+              {/* {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>
                   <a onClick={this._onNavigate.bind(this, "/gateway")}>
                     <Translate content="nav.gateway" />
                   </a>
                 </li>
-              )}
+              )} */}
               {/* {currentAccount && myAccounts.indexOf(currentAccount) !== -1 ? <li onClick={this.onClick}><Link to={"/deposit-withdraw/"}><Translate content="account.deposit_withdraw" /></Link></li> : null} */}
               <li>
                 <a onClick={this._onNavigate.bind(this, "/explorer")}>

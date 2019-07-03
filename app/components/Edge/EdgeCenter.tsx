@@ -65,7 +65,7 @@ export const EdgeCenterSummary = ({
           </span>
           <h2 style={{ margin: "8px" }}>
             {edgeState.info && edgeState.sum}{" "}
-            <small style={{ color: "white" }}>ETH</small>
+            <small style={{ color: "white" }}>PCX</small>
           </h2>
           {/* <Link
             to="/eto/record"
@@ -105,32 +105,32 @@ export const EdgeCenter = (props: any) => {
               // Gtag.eventActivity("Edge", "通过中心页进入锁仓");
               props.history.push("/lockdrop/lock");
             }}
-            style={{ width: "50%", borderRadius: 0 }}
+            style={{ width: "100%", borderRadius: 0 }}
           >
             {counterpart.translate("eto_apply.center.go_lock")}
           </Button>
-          <Button
+          {/* <Button
             type="secondary"
             // loading={this.state.checking}
             onClick={() => {
               // Gtag.eventActivity("Edge", "通过中心页点击充值");
               GatewayActions.showDepositModal(
                 props.account && props.account.get("name"),
-                "JADE.ETH",
+                "JADE.PCX",
                 DEPOSIT_MODAL_ID
               );
             }}
             style={{ width: "50%", borderRadius: 0 }}
           >
             {counterpart.translate("edge.fund_eth")}
-          </Button>
+          </Button> */}
         </div>
       </EdgePanel>
       <EdgeContent
         style={{ margin: "12px" }}
         heading={counterpart.translate("edge.flow_title")}
         ol
-        contents={new Array(4)
+        contents={new Array(3)
           .fill(1)
           .map((_, i) => counterpart.translate(`edge.flow_content_${i + 1}`))}
       />

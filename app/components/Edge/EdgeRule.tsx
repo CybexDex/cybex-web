@@ -21,7 +21,7 @@ export const EdgeRule = props => (
       unsafe
       content="edge.lockup.rule_content_1"
     />
-    <table style={{ width: "100%" }}>
+    {/* <table style={{ width: "100%" }}>
       <thead>
         <tr>
           <th
@@ -94,8 +94,8 @@ export const EdgeRule = props => (
           </tr>
         ))}
       </tbody>
-    </table>
-    <Translate
+    </table> */}
+    {/* <Translate
       component="p"
       className="color-steel"
       style={{
@@ -106,8 +106,8 @@ export const EdgeRule = props => (
       }}
       unsafe
       content="edge.lockup.rule_content_2"
-    />
-    <table style={{ width: "100%" }}>
+    /> */}
+    {/* <table style={{ width: "100%" }}>
       <thead>
         <tr>
           <th
@@ -170,8 +170,8 @@ export const EdgeRule = props => (
           </tr>
         ))}
       </tbody>
-    </table>
-    {[3, 4, 5, 6].map(num => (
+    </table> */}
+    {[].map(num => (
       <Translate
         key={num}
         component="p"

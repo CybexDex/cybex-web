@@ -45,7 +45,7 @@ let EdgeLock = class extends React.Component<EdgeProps> {
       <div className="grid-container">
         <div style={{ padding: "6px" }} />
         <EdgeLockForm
-          balance={this.props.account.getIn(["balances", "1.3.2"])}
+          balance={this.props.account.getIn(["balances", "1.3.1393"])}
           onLock={({ value, period }) =>
             EdgeActions.applyLock(value, period, this.props.account, () => {
               // Gtag.eventActivity("Edge", "锁仓成功，跳转");
@@ -58,7 +58,7 @@ let EdgeLock = class extends React.Component<EdgeProps> {
           style={{ margin: "12px" }}
           heading={counterpart.translate("eto_apply.lock.tip_heading")}
           ol
-          contents={new Array(4)
+          contents={new Array(5)
             .fill(1)
             .map((_, i) =>
               counterpart.translate(`edge.lockup.tip_content_${i + 1}`)
