@@ -1,6 +1,6 @@
 const BITSHARES_NODE = "wss://fake.automatic-selection.com";
 const DEFAULT_FAUCET = __TEST__
-  ? "https://faucet.51nebula.com"
+  ? "https://uatfaucet.51nebula.com"
   : "https://faucet.cybex.io/";
 
 class ApiNode {
@@ -20,10 +20,7 @@ class ApiNode {
 
 const WS_NODE_LIST =
   __TEST__ || __FOR_SECURITY__
-    ? [
-        new ApiNode("hangzhou.51nebula.com/", "Hangzhou"),
-        new ApiNode("shenzhen.51nebula.com/", "Shenzhen")
-      ]
+    ? [new ApiNode("uatfn.51nebula.com/", "UAT")]
     : [
         // new ApiNode("shanghai.51nebula.com/", "shanghai"),
         new ApiNode("shanghai.51nebula.com/", "Shanghai"),
