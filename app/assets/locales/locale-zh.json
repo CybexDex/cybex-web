@@ -1793,7 +1793,7 @@
     "cybex_bet": "足球竞猜",
     "help": "帮助文档",
     "game": "游戏中心",
-    "lockdrop": "Lockdrop",
+    "lockdrop": "PCX存币挖矿",
     "eto": "ETO",
     "eto_apply": "ETO申购"
   },
@@ -2044,7 +2044,7 @@
       "total": "锁仓总额",
       "change": "更改",
       "go_lock": "进行锁仓",
-      "go_trade": "购买CYB",
+      "go_trade": "购买",
       "fund_usdt": "充值USDT",
       "flow": {
         "title": "Polkadot ETO流程",
@@ -2185,7 +2185,7 @@
     "flow_title": "参与流程",
     "flow_content_1": "将PCX充值至Cybex赛贝交易所，在活动时间内，点击参与【PCX存币挖矿】活动",
     "flow_content_2": "活动期间，用户可以多次进行PCX的锁仓,直到7月5日14:00活动结束",
-    "flow_content_3": "锁仓截止后Cybex将统一记录锁仓金额，并操作至Chainx进行投票挖矿。此次锁仓操作锁仓时间统一为20天，用户赎回日期为3天，您可在锁仓日23天后即可解锁并申领账号里的PCX，7月29日当天可以获得存币挖矿应得的PCX收益",
+    "flow_content_3": "锁仓截止后Cybex将统一记录锁仓金额，并操作至Chainx进行投票挖矿。此次锁仓操作锁仓时间统一为20天，用户赎回日期为3天，即7月28日用户即可统一解锁并申领账号里的PCX，7月29日可以获得存币挖矿应得的PCX收益。",
     "records": {
       "lockup_value": "锁仓金额",
       "period_remain": "距离锁仓期结束",
@@ -2203,8 +2203,8 @@
       "event_end_time_content": "7月5日14:00（GMT+8）",
       "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/pcx_slogan_zh_0703.jpeg?x-oss-process=style/compress",
       "about_edge_title": "关于ChainX（PCX）",
-      "about_edge_content": "PCX是ChainX的生态代币，总发行量2100万。ChianX是基于波卡（Polkadot)ChianX是基于波卡（Polkadot)的资产跨链项目，是波卡官方的合作项目，目前已经支持BTC跨链，接下来会逐步支持ETH、EOS、BNB等主流币种；PCX是ChainX的生态代币，总发行量2100万。",
-      "about_edge_content1": "ChainX ChainX 首创了投票挖矿机制，投票挖矿指用户把挖矿所得的PCX，手动投票给某些节点，折合的PCX市值和手动的PCX投票，就是用户的总挖矿权重。根据所有用户挖矿的总权重平分每个周期的PCX挖矿收益，收到的PCX可继续参与选举投票，或等待所持有的跨链资产升值，来获得更大的挖矿权重。",
+      "about_edge_content": "ChainX是基于波卡（Polkadot)的资产跨链项目，是波卡官方的合作项目，目前已经支持BTC跨链，接下来会逐步支持ETH、EOS、BNB等主流币种；PCX是ChainX的生态代币，总发行量2100万。",
+      "about_edge_content1": "ChainX 首创了投票挖矿机制，投票挖矿指用户把挖矿所得的PCX，手动投票给某些节点，折合的PCX市值和手动的PCX投票，就是用户的总挖矿权重。根据所有用户挖矿的总权重平分每个周期的PCX挖矿收益，收到的PCX可继续参与选举投票，或等待所持有的跨链资产升值，来获得更大的挖矿权重。",
       "about_lockdrop_title": "活动规则",
       "about_lockdrop_content": "Cybex根据ChainX【投票挖矿】活动，推出了“锁仓23天，即可享受预计高达20%%”挖矿收益的活动，用户只要一键锁仓，等待23天，即可拿到挖矿收益！Cybex赛贝交易所最终会收取3%%的PCX挖矿收益作为手续费。"
     },

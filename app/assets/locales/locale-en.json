@@ -1722,7 +1722,7 @@
     "help": "Documents",
     "game": "Game Center",
     "eto": "ETO",
-    "lockdrop": "lockdrop",
+    "lockdrop": "PCX Mining",
     "eto_apply": "ETO Subscription"
   },
   "vesting": {
@@ -1954,7 +1954,7 @@
       "change": "Change",
       "fund_usdt": "Deposit USDT",
       "go_lock": "Lock Up",
-      "go_trade": "Purchase CYB",
+      "go_trade": "Purchase",
       "flow": {
         "title": "Polkadot ETO process",
         "step_1": "Fill in [Subscription Intention Form]",
@@ -2108,7 +2108,7 @@
       "event_end_time_content": "July 5, 2019 14:00 (GMT+8)",
       "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/pcx_slogan_en_0703.jpeg?x-oss-process=style/compress",
       "about_edge_title": "About ChainX (PCX):",
-      "about_edge_content": "PCX is the ecological (ECO) token of ChainX with a total amount of 21 million. ChainX is a asset inter-chain project based on Polkadot, and it is also an official cooperaion project of Polkadot. It has already supported BTC inter-chain, and will gradually support ETH, EOS, BNB and other mainstream coins.",
+      "about_edge_content": "PCX is the ecological (ECO) token of ChainX with a total amount of 21 million. ChainX is an asset inter-chain project based on Polkadot, and it is also an official cooperation project of Polkadot. It has already supported BTC inter-chain, and will gradually support ETH, EOS, BNB and other mainstream coins.",
       "about_edge_content1": "ChainX pioneered the voting mechanism to mine PCX, which refers to the PCX that the user mined can be used to manually vote for some validators, and PCX value and PCX vote are total weight for mining PCX of the user. Total weight of the user will be equally split, and the received PCX can continue to vote or wait for the increase in value of inter-chain assets to receive more mining weight.",
       "about_lockdrop_title": "Rules of the Event",
       "about_lockdrop_content": "Based on the event - [Voting for Mining PCX] of ChainX, Cybex launches the event - Lock up PCX for 23 days to Enjoy Expected 20%% Benefits! Users shall one-click lock up their PCX and wait for 23 days, to receive benefits from mining PCX. CYBEX will charge for 3%% benefits from mining PCX as processing fee."

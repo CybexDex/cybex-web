@@ -105,7 +105,7 @@ export const EdgeCenter = (props: any) => {
               // Gtag.eventActivity("Edge", "通过中心页进入锁仓");
               props.history.push("/lockdrop/lock");
             }}
-            style={{ width: "100%", borderRadius: 0 }}
+            style={{ width: "50%", borderRadius: 0 }}
           >
             {counterpart.translate("eto_apply.center.go_lock")}
           </Button>
@@ -124,6 +124,18 @@ export const EdgeCenter = (props: any) => {
           >
             {counterpart.translate("edge.fund_eth")}
           </Button> */}
+          {true && (
+            <Button
+              type="secondary"
+              // loading={this.state.checking}
+              onClick={() => {
+                props.history.push("/market/JADE.PCX_JADE.USDT");
+              }}
+              style={{ width: "50%", borderRadius: 0 }}
+            >
+              {counterpart.translate("eto_apply.center.go_trade")} PCX
+            </Button>
+          )}
         </div>
       </EdgePanel>
       <EdgeContent
