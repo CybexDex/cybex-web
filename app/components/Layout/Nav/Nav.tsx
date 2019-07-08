@@ -48,14 +48,14 @@ const NavLinks: Array<NavLink> = [
   //   name: "eto_apply",
   //   icon: "ETO"
   // },
-  {
-    id: "lockdrop",
-    routeTo: "/lockdrop",
-    // routeTo: "/eto",
-    activeMatcher: /^\/lockdrop\/?/,
-    name: "lockdrop",
-    icon: "lockdrop"
-  },
+  // {
+  //   id: "lockdrop",
+  //   routeTo: "/lockdrop",
+  //   // routeTo: "/eto",
+  //   activeMatcher: /^\/lockdrop\/?/,
+  //   name: "lockdrop",
+  //   icon: "lockdrop"
+  // },
   // {
   //   id: "etoProject",
   //   routeTo: "/eto/projects",

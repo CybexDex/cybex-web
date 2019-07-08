@@ -1,6 +1,6 @@
 const BITSHARES_NODE = "wss://fake.automatic-selection.com";
 const DEFAULT_FAUCET = __TEST__
-  ? "https://uatfaucet.51nebula.com"
+  ? "http://uatfaucet.51nebula.com"
   : "https://faucet.cybex.io/";
 
 class ApiNode {
@@ -11,7 +11,7 @@ class ApiNode {
     //   location && location.protocol.indexOf("https") !== -1
     //     ? "wss://"
     //     : "wss://";
-    let schema = "wss://";
+    let schema = "ws://";
     let url = schema + host;
     this.url = url;
     this.location = name;
