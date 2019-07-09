@@ -77,9 +77,9 @@ class ChainStore {
    */
   clearCache() {
     /*
-        * Tracks specific objects such as accounts that can trigger additional
-        * fetching that should only happen if we're actually interested in the account
-        */
+     * Tracks specific objects such as accounts that can trigger additional
+     * fetching that should only happen if we're actually interested in the account
+     */
     this.subbed_accounts = new Set();
     this.subbed_witnesses = new Set();
     this.subbed_committee = new Set();
@@ -145,11 +145,11 @@ class ChainStore {
               let optional_object = optional_objects[i];
               if (optional_object) {
                 /*
-                        ** Because 2.1.0 gets fetched here before the set_subscribe_callback,
-                        ** the new witness_node subscription model makes it so we
-                        ** never get subscribed to that object, therefore
-                        ** this._updateObject is commented out here
-                        */
+                 ** Because 2.1.0 gets fetched here before the set_subscribe_callback,
+                 ** the new witness_node subscription model makes it so we
+                 ** never get subscribed to that object, therefore
+                 ** this._updateObject is commented out here
+                 */
                 // this._updateObject( optional_object, true );
 
                 let head_time = new Date(
@@ -940,7 +940,8 @@ class ChainStore {
               registrar_name,
               lifetime_referrer_name,
               votes,
-              proposals
+              proposals,
+              htlcs
             } = full_account;
 
             this.accounts_by_name.set(account.name, account.id);
@@ -951,6 +952,7 @@ class ChainStore {
             account.balances = {};
             account.orders = new Immutable.Set();
             account.vesting_balances = new Immutable.Set();
+            account.htlcs = new Immutable.Set(htlcs);
             account.balances = new Immutable.Map();
             account.call_orders = new Immutable.Set();
             account.proposals = new Immutable.Set();
@@ -1207,8 +1209,8 @@ class ChainStore {
     }
 
     /*
-        * A lot of objects get spammed by the API that we don't care about, filter these out here
-        */
+     * A lot of objects get spammed by the API that we don't care about, filter these out here
+     */
     // Transaction object
     if (
       object.id.substring(0, transaction_prefix.length) == transaction_prefix
@@ -1280,10 +1282,10 @@ class ChainStore {
       object.id.substring(0, 4) === "5.1."
     ) {
       /*
-            ** The witness node spams these random objects related to markets,
-            ** they are never needed by the GUI and thus only fill up the memory,
-            ** so we ignore them
-            */
+       ** The witness node spams these random objects related to markets,
+       ** they are never needed by the GUI and thus only fill up the memory,
+       ** so we ignore them
+       */
       return;
     }
 

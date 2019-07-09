@@ -205,7 +205,10 @@ declare namespace Cybex {
     interval: number;
     time: number;
   };
-
+  type Amount = {
+    amount: string | number;
+    asset_id: string;
+  };
   type Asset = {
     satoshi;
     asset_id;

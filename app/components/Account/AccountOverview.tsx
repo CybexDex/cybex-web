@@ -285,7 +285,7 @@ let AccountOverview = class extends React.Component<any, any> {
     const emptyCell = "-";
     balanceList.forEach(balance => {
       let balanceObject = ChainStore.getObject(balance);
-      if (!balanceObject) return;
+      if (!balanceObject || !balanceObject.get) return;
       let asset_type = balanceObject.get("asset_type");
       let asset = ChainStore.getObject(asset_type);
 
@@ -661,6 +661,7 @@ let AccountOverview = class extends React.Component<any, any> {
   render() {
     let { account, hiddenAssets, settings, orders } = this.props;
     let { showHidden } = this.state;
+    console.debug("Account: ", account);
 
     if (!account) {
       return null;
@@ -712,6 +713,7 @@ let AccountOverview = class extends React.Component<any, any> {
         let balanceObject = ChainStore.getObject(a);
         // console.debug("BalanceObject: ", balanceObject);
         // Hide for Wcup
+        if (!balanceObject) return false;
         let asset = ChainStore.getAsset(balanceObject.get("asset_type"));
         if (!asset || isFootballAsset(asset.get("symbol"))) {
           return false;

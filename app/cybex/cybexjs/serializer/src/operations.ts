@@ -1,5 +1,5 @@
 import types from "./types";
-import SerializerImpl from "./serializer";
+import Serializer from "./serializer";
 
 var {
   //id_type,
@@ -49,10 +49,6 @@ var operation = static_variant();
 
 export { operation };
 // For module.exports
-var Serializer = function(operation_name, serilization_types_object) {
-  return new SerializerImpl(operation_name, serilization_types_object);
-  // return module.exports[operation_name] = s;
-};
 
 export var void_ext = new Serializer("void_ext");
 
@@ -229,6 +225,13 @@ export const withdraw_crowdfund_operation_fee_parameters = new Serializer(
   {
     fee: uint64,
     price_per_kbyte: uint32
+  }
+);
+export const htlc_create_operation_fee_parameters = new Serializer(
+  "htlc_create_operation_fee_parameters",
+  {
+    fee: uint64,
+    fee_per_day: uint64
   }
 );
 
@@ -502,9 +505,9 @@ var fee_parameters = static_variant([
   withdraw_crowdfund_operation_fee_parameters, // 61
   withdraw_crowdfund_operation_fee_parameters, // 62
   exchange_participate_fee_parameters, // 63
-  withdraw_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters,
+  htlc_create_operation_fee_parameters,
+  htlc_create_operation_fee_parameters,
+  htlc_create_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters
 ]);
@@ -1259,6 +1262,19 @@ export const exchange_fill = new Serializer("exchange_fill", {
   extensions: set(eto_extensions)
 });
 ////////
+/** HTLC */
+const htlc_hash = static_variant([bytes(20), bytes(20), bytes(32)]);
+
+export const htlc_create = new Serializer("htlc_create", {
+  fee: asset,
+  from: protocol_id_type("account"),
+  to: protocol_id_type("account"),
+  amount: asset,
+  preimage_hash: htlc_hash,
+  preimage_size: uint16,
+  claim_period_seconds: uint32,
+  extensions: set(future_extensions)
+});
 
 operation.st_operations = [
   transfer, // 0
@@ -1325,7 +1341,8 @@ operation.st_operations = [
   exchange_deposit, // 61
   exchange_remove, // 62
   exchange_participate, // 63,
-  exchange_fill
+  exchange_fill,
+  htlc_create
 ];
 
 export const transaction = new Serializer("transaction", {

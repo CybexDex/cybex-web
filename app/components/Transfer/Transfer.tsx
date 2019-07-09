@@ -22,6 +22,8 @@ import { Asset } from "common/MarketClasses";
 import { Period } from "components/Forms/Period";
 
 import { PublicKeySelector } from "components/Forms/PublicKeySelector";
+import { HtlcActions } from "../../actions/HtlcActions";
+import { Htlc } from "../../services/htlc";
 
 class Transfer extends React.Component<any, any> {
   nestedRef;
@@ -73,7 +75,10 @@ class Transfer extends React.Component<any, any> {
       feeStatus: {},
       vestingPeriod: 0,
       public_key: "",
-      enableVesting: false
+      enableVesting: false,
+      enableHtlc: false,
+      hashAlgo: Htlc.HashAlgo.Sha256,
+      preimage: ""
     };
   }
 
@@ -153,7 +158,7 @@ class Transfer extends React.Component<any, any> {
       utils.sortID
     );
     let feeStatus = {};
-    let p = [];
+    let p: any[] = [];
     assets.forEach(a => {
       p.push(
         checkFeeStatusAsync({
@@ -281,8 +286,18 @@ class Transfer extends React.Component<any, any> {
 
   onPeriodSwitchChange = e => {
     let enableVesting = e.target.checked;
-    this.setState({
+    let state: any = {
       enableVesting
+    };
+    if (!enableVesting) {
+      state.enableHtlc = false;
+    }
+    this.setState(state);
+  };
+  onHtlcSwitchChange = e => {
+    let enableHtlc = e.target.checked;
+    this.setState({
+      enableHtlc
     });
   };
 
@@ -309,6 +324,7 @@ class Transfer extends React.Component<any, any> {
       asset,
       amount,
       enableVesting,
+      enableHtlc,
       vestingPeriod,
       public_key
     } = this.state;
@@ -320,15 +336,33 @@ class Transfer extends React.Component<any, any> {
     let vest = enableVesting
       ? { vesting_period: vestingPeriod, public_key }
       : null;
-    AccountActions.transfer(
-      this.state.from_account.get("id"),
-      this.state.to_account.get("id"),
-      sendAmount.getAmount(),
-      asset.get("id"),
-      this.state.memo ? new Buffer(this.state.memo, "utf-8") : this.state.memo,
-      this.state.propose ? this.state.propose_account : null,
-      this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0",
-      vest
+    (
+      (!enableHtlc &&
+        AccountActions.transfer(
+          this.state.from_account.get("id"),
+          this.state.to_account.get("id"),
+          sendAmount.getAmount(),
+          asset.get("id"),
+          this.state.memo
+            ? new Buffer(this.state.memo, "utf-8")
+            : this.state.memo,
+          this.state.propose ? this.state.propose_account : null,
+          this.state.feeAsset ? this.state.feeAsset.get("id") : "1.3.0",
+          vest
+        )) ||
+      (vest &&
+        enableHtlc &&
+        HtlcActions.createRawHtlc(
+          this.state.from_account.get("id"),
+          this.state.to_account.get("id"),
+          { amount: sendAmount.getAmount(), asset_id: asset.get("id") },
+          this.state.from_account,
+          this.state.preimage,
+          this.state.hashAlgo,
+          vest && vest.vesting_period,
+          null,
+          null
+        ))
     )
       .then(() => {
         this.resetForm.call(this);
@@ -381,8 +415,8 @@ class Transfer extends React.Component<any, any> {
     }
 
     const { from_account, from_error } = state;
-    let asset_types = [],
-      fee_asset_types = [];
+    let asset_types: any[] = [],
+      fee_asset_types: any[] = [];
     if (!(from_account && from_account.get("balances") && !from_error)) {
       return { asset_types, fee_asset_types };
     }
@@ -417,7 +451,7 @@ class Transfer extends React.Component<any, any> {
   }
 
   render() {
-    let from_error = null;
+    let from_error: any = null;
     let {
       propose,
       from_account,
@@ -454,7 +488,7 @@ class Transfer extends React.Component<any, any> {
     }
 
     let { asset_types, fee_asset_types } = this._getAvailableAssets();
-    let balance = null;
+    let balance: any = null;
 
     // Estimate fee
     let fee = this.state.feeAmount.getAmount({ real: true });
@@ -486,7 +520,7 @@ class Transfer extends React.Component<any, any> {
 
     let propose_incomplete = propose && !propose_account;
     const amountValue = parseFloat(
-      String.prototype.replace.call(amount, /,/g, "")
+      String.prototype.replace.call(amount, /,/g, "" as any)
     );
     const isAmountValid = amountValue && !isNaN(amountValue);
     const isToAccountValid = to_account && to_account.get("name") === to_name;
@@ -569,12 +603,32 @@ class Transfer extends React.Component<any, any> {
             </div>
             {/* Vesting Period */}
             <div className="content-block">
-              <label htmlFor="issueVesting">
+              <label
+                htmlFor="issueVesting"
+                style={{ width: "50%", display: "inline-block" }}
+              >
                 <Translate component="span" content="transfer.vesting_period" />
                 <input
                   style={{ marginLeft: "0.5em" }}
                   type="checkbox"
                   onChange={this.onPeriodSwitchChange}
+                />
+              </label>
+              <label
+                htmlFor="issueVesting"
+                style={{
+                  width: "50%",
+                  display: `${
+                    !this.state.enableVesting ? "none" : "inline-block"
+                  }`
+                }}
+              >
+                <Translate component="span" content="transfer.htlc" />
+                <input
+                  style={{ marginLeft: "0.5em" }}
+                  type="checkbox"
+                  checked={this.state.enableHtlc}
+                  onChange={this.onHtlcSwitchChange}
                 />
               </label>
               <PublicKeySelector
@@ -591,6 +645,55 @@ class Transfer extends React.Component<any, any> {
                 tabIndex={(tabIndex += 2)}
                 onPeriodChange={this.onPeriodChange.bind(this)}
               />
+              <div
+                className="htlc-wrapper"
+                style={{
+                  display: `${!this.state.enableHtlc ? "none" : "flex"} `,
+                  marginTop: "10px"
+                }}
+              >
+                <div className="preimage-wrapper">
+                  <label htmlFor="preimage">
+                    <Translate content="transfer.preimage" />
+                  </label>
+                  <input
+                    id="preimage"
+                    type="text"
+                    onChange={e => this.setState({ preimage: e.target.value })}
+                  />
+                </div>
+                <div
+                  className="htlc-alge-wrapper"
+                  style={{ marginLeft: "10px" }}
+                >
+                  <label htmlFor="htlcAlgo">
+                    <Translate content="transfer.htlcAlgo" />
+                  </label>
+                  <select
+                    id="htlcAlgo"
+                    onChange={e => this.setState({ hashAlgo: e.target.value })}
+                  >
+                    <option
+                      selected={this.state.hashAlgo === Htlc.HashAlgo.Ripemd160}
+                      value={Htlc.HashAlgo.Ripemd160}
+                    >
+                      Ripemd160
+                    </option>
+                    <option
+                      selected={this.state.hashAlgo === Htlc.HashAlgo.Sha1}
+                      value={Htlc.HashAlgo.Sha1}
+                    >
+                      Sha1
+                    </option>
+                    <option
+                      selected={this.state.hashAlgo === Htlc.HashAlgo.Sha256}
+                      value={Htlc.HashAlgo.Sha256}
+                    >
+                      Sha256
+                    </option>
+                  </select>
+                </div>
+              </div>
             </div>
             {/*  M E M O  */}
             <div className="content-block transfer-input">
@@ -606,6 +709,7 @@ class Transfer extends React.Component<any, any> {
               />
               <textarea
                 style={{ marginBottom: 0 }}
+                disabled={this.state.enableHtlc}
                 rows={1}
                 value={memo}
                 tabIndex={tabIndex++}

@@ -587,6 +587,7 @@
     "final": "转账后余额",
     "balances": "余额",
     "vesting_period": "带锁定期转账",
+    "htlc": "HTLC转账",
     "public_key": "目标账户有多个有效权限，请选择一个权限作为锁定资产存贮池",
     "errors": {
       "req": "必填信息",

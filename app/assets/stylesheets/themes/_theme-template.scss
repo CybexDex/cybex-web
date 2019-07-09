@@ -1393,6 +1393,9 @@
   .u-userLauncherColor:not([disabled]) {
     background-color: $success-color;
   }
+  textarea[disabled] {
+    opacity: 0.5;
+  }
 }
 
 .olDarkTheme .gate_fee .amount-selector {

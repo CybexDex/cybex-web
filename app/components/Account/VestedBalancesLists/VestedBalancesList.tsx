@@ -2,9 +2,10 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { connect } from "alt-react";
 import * as Immutable from "immutable";
-
+import { Apis } from "cybexjs-ws";
 import PrivateKeyStore from "stores/PrivateKeyStore";
 import BalanceClaimActiveStore from "stores/BalanceClaimActiveStore";
+import AccountStore from "stores/AccountStore";
 import BalanceClaimActiveActions from "actions/BalanceClaimActiveActions";
 import FormattedAsset from "components/Utility/FormattedAsset";
 import Translate from "react-translate-component";
@@ -68,62 +69,65 @@ let VestedBalancesLists = class extends React.PureComponent<any> {
             </tr>
           </thead>
           <tbody>
-            {balances &&
-              balances.filter(v => !!v.vesting_policy).map(vestingItem => {
-                let index = vestingItem["id"];
-                let { vesting_policy, public_key_string } = vestingItem;
-                let endDate = moment
-                  .utc(vesting_policy.begin_timestamp)
-                  .add(vesting_policy.vesting_cliff_seconds, "s");
-                let now = moment.utc();
-                let progress =
-                  vesting_policy.vesting_cliff_seconds -
-                  (endDate.valueOf() - now.valueOf()) / 1000;
-                return (
-                  <tr key={index}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        // checked={!!this.props.checked.get(index)}
-                        onChange={e => this.onCheckbox(index, vestingItem, e)}
-                        disabled={now.isBefore(endDate)}
-                      />
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      {vesting_policy.begin_balance ? (
-                        <FormattedAsset
-                          amount={vestingItem.balance.amount}
-                          asset={vestingItem.balance.asset_id}
-                          hide_amount
+            {(balances &&
+              balances
+                .filter(v => !!v.vesting_policy)
+                .map(vestingItem => {
+                  let index = vestingItem["id"];
+                  let { vesting_policy, public_key_string } = vestingItem;
+                  let endDate = moment
+                    .utc(vesting_policy.begin_timestamp)
+                    .add(vesting_policy.vesting_cliff_seconds, "s");
+                  let now = moment.utc();
+                  let progress =
+                    vesting_policy.vesting_cliff_seconds -
+                    (endDate.valueOf() - now.valueOf()) / 1000;
+                  return (
+                    <tr key={index}>
+                      <td>
+                        <input
+                          type="checkbox"
+                          // checked={!!this.props.checked.get(index)}
+                          onChange={e => this.onCheckbox(index, vestingItem, e)}
+                          disabled={now.isBefore(endDate)}
                         />
-                      ) : null}
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      {vesting_policy.begin_balance ? (
-                        <div>
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {vesting_policy.begin_balance ? (
                           <FormattedAsset
                             amount={vestingItem.balance.amount}
                             asset={vestingItem.balance.asset_id}
-                            hide_asset
+                            hide_amount
                           />
-                        </div>
-                      ) : null}
-                    </td>
-                    <td style={{ textAlign: "center" }}>
-                      {endDate.format("YYYY-MM-DD HH:mm:ss zZ")}
-                    </td>
-                    <td>
-                      {vesting_policy.begin_timestamp && (
-                        <progress
-                          value={progress}
-                          max={vesting_policy.vesting_cliff_seconds}
-                        />
-                      )}
-                    </td>
-                    <td>{public_key_string}</td>
-                  </tr>
-                );
-              }) || null}
+                        ) : null}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {vesting_policy.begin_balance ? (
+                          <div>
+                            <FormattedAsset
+                              amount={vestingItem.balance.amount}
+                              asset={vestingItem.balance.asset_id}
+                              hide_asset
+                            />
+                          </div>
+                        ) : null}
+                      </td>
+                      <td style={{ textAlign: "center" }}>
+                        {endDate.format("YYYY-MM-DD HH:mm:ss zZ")}
+                      </td>
+                      <td>
+                        {vesting_policy.begin_timestamp && (
+                          <progress
+                            value={progress}
+                            max={vesting_policy.vesting_cliff_seconds}
+                          />
+                        )}
+                      </td>
+                      <td>{public_key_string}</td>
+                    </tr>
+                  );
+                })) ||
+              null}
             {!this.props.total_by_account_asset ||
               (this.props.total_by_account_asset.size === 0 && (
                 <tr>
@@ -174,10 +178,14 @@ VestedBalancesLists = connect(
   VestedBalancesLists,
   {
     listenTo() {
-      return [BalanceClaimActiveStore];
+      return [BalanceClaimActiveStore, AccountStore];
     },
     getProps() {
       let props = BalanceClaimActiveStore.getState();
+      let account = AccountStore.getState().currentAccount;
+      // Apis.instance()
+      //     .db_api()
+      //     .exec("list_assets", [start, count])
       // console.debug("Props: ", props);
       let { balances, address_to_pubkey } = props;
       // console.debug("Balance: ", balances && balances.toJS());

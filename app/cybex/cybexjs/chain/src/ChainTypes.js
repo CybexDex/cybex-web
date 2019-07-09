@@ -118,7 +118,9 @@ ChainTypes.operations = {
   exchange_deposit: 61, // 61
   exchange_remove: 62, // 62
   exchange_participate: 63, // 63
-  exchange_fill: 64 // 63
+  exchange_fill: 64, // 63,
+  htlc_create: 65, // 63,
+  exchange_fill: 66 // 63,
 };
 
 export default ChainTypes;

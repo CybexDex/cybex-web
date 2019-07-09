@@ -194,7 +194,7 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         subscribeUID,
         onResetCacheNeededCallback
       ) => {
-        console.debug("=====subscribeBars runnning", symbolInfo, subscribeUID);
+        // console.debug("=====subscribeBars runnning", symbolInfo, subscribeUID);
         this.updateCbs.resetCache = () => onResetCacheNeededCallback();
         this.updateCbs.realtimeUpdate = onRealtimeCallback;
         let [quoteSymbol, baseSymbol] = SymbolUtils.destructSymbolString(
@@ -207,11 +207,11 @@ export class TVChartContainer extends React.PureComponent<TVChartProps> {
         );
         subCenter.addSub(subscribeUID);
         subCenter.addListener(subscribeUID, data => {
-          console.debug(
-            "=====subscribeBars: Update Data: ",
-            data,
-            this.latestTime
-          );
+          // console.debug(
+          //   "=====subscribeBars: Update Data: ",
+          //   data,
+          //   this.latestTime
+          // );
           if (data && data.length) {
             if (this.latestTime) {
               data = data.filter(d => d.date >= this.latestTime);
