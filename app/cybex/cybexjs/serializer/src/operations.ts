@@ -234,6 +234,13 @@ export const htlc_create_operation_fee_parameters = new Serializer(
     fee_per_day: uint64
   }
 );
+export const htlc_redeem_operation_fee_parameters = new Serializer(
+  "htlc_redeem_operation_fee_parameters",
+  {
+    fee: uint64,
+    fee_per_kb: uint64
+  }
+);
 
 export const asset_reserve_operation_fee_parameters = new Serializer(
   "asset_reserve_operation_fee_parameters",
@@ -456,7 +463,7 @@ var fee_parameters = static_variant([
   account_whitelist_operation_fee_parameters,
   account_upgrade_operation_fee_parameters,
   account_transfer_operation_fee_parameters,
-  asset_create_operation_fee_parameters,
+  asset_create_operation_fee_parameters, // 10
   asset_update_operation_fee_parameters,
   asset_update_bitasset_operation_fee_parameters,
   asset_update_feed_producers_operation_fee_parameters,
@@ -466,37 +473,42 @@ var fee_parameters = static_variant([
   asset_settle_operation_fee_parameters,
   asset_global_settle_operation_fee_parameters,
   asset_publish_feed_operation_fee_parameters,
-  witness_create_operation_fee_parameters,
+  witness_create_operation_fee_parameters, // 20
   witness_update_operation_fee_parameters,
   proposal_create_operation_fee_parameters,
   proposal_update_operation_fee_parameters,
   proposal_delete_operation_fee_parameters,
-  withdraw_permission_create_operation_fee_parameters,
+  withdraw_permission_create_operation_fee_parameters, // 25
   withdraw_permission_update_operation_fee_parameters,
   withdraw_permission_claim_operation_fee_parameters,
   withdraw_permission_delete_operation_fee_parameters,
   committee_member_create_operation_fee_parameters,
-  committee_member_update_operation_fee_parameters,
+  committee_member_update_operation_fee_parameters, // 30
   committee_member_update_global_parameters_operation_fee_parameters,
   vesting_balance_create_operation_fee_parameters,
   vesting_balance_withdraw_operation_fee_parameters,
   worker_create_operation_fee_parameters,
-  custom_operation_fee_parameters,
+  custom_operation_fee_parameters, // 35
   assert_operation_fee_parameters,
   balance_claim_operation_fee_parameters,
   override_transfer_operation_fee_parameters,
   transfer_to_blind_operation_fee_parameters,
-  blind_transfer_operation_fee_parameters,
+  blind_transfer_operation_fee_parameters, // 40
   transfer_from_blind_operation_fee_parameters,
   asset_settle_cancel_operation_fee_parameters,
   asset_claim_fees_operation_fee_parameters,
   asset_settle_cancel_operation_fee_parameters,
-  initiate_crowdfund_operation_fee_parameters,
+  initiate_crowdfund_operation_fee_parameters, // 45
   participate_crowdfund_operation_fee_parameters,
-  withdraw_crowdfund_operation_fee_parameters, // 52
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters, // 50
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters,
+  withdraw_crowdfund_operation_fee_parameters, // 55
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters,
@@ -505,9 +517,9 @@ var fee_parameters = static_variant([
   withdraw_crowdfund_operation_fee_parameters, // 61
   withdraw_crowdfund_operation_fee_parameters, // 62
   exchange_participate_fee_parameters, // 63
-  htlc_create_operation_fee_parameters,
-  htlc_create_operation_fee_parameters,
-  htlc_create_operation_fee_parameters,
+  htlc_create_operation_fee_parameters, // 64
+  htlc_create_operation_fee_parameters, // 65
+  htlc_redeem_operation_fee_parameters, // 66
   withdraw_crowdfund_operation_fee_parameters,
   withdraw_crowdfund_operation_fee_parameters
 ]);
@@ -1275,6 +1287,13 @@ export const htlc_create = new Serializer("htlc_create", {
   claim_period_seconds: uint32,
   extensions: set(future_extensions)
 });
+export const htlc_redeem = new Serializer("htlc_redeem", {
+  fee: asset,
+  htlc_id: protocol_id_type("htlc"),
+  redeemer: protocol_id_type("account"),
+  preimage: bytes(),
+  extensions: set(future_extensions)
+});
 
 operation.st_operations = [
   transfer, // 0
@@ -1342,7 +1361,8 @@ operation.st_operations = [
   exchange_remove, // 62
   exchange_participate, // 63,
   exchange_fill,
-  htlc_create
+  htlc_create,
+  htlc_redeem
 ];
 
 export const transaction = new Serializer("transaction", {

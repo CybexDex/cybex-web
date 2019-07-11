@@ -27,7 +27,8 @@ ChainTypes.object_type = {
   crowdfund_contract: 17,
   bet: 18,
   some: 19,
-  exchange: 20
+  exchange: 20,
+  htlc: 21
 };
 
 ChainTypes.impl_object_type = {
@@ -120,7 +121,7 @@ ChainTypes.operations = {
   exchange_participate: 63, // 63
   exchange_fill: 64, // 63,
   htlc_create: 65, // 63,
-  exchange_fill: 66 // 63,
+  htlc_redeem: 66 // 63,
 };
 
 export default ChainTypes;

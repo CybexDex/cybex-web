@@ -22,7 +22,10 @@ headers.append("Content-Type", "application/json");
 const pickKeys = (keys: string[], count = 1) => {
   let res: any[] = [];
   for (let key of keys) {
-    let privKey = WalletDb.getPrivateKey(key);
+    let privKey = WalletDb.getPrivateKey(
+      "CYB7ffSGtJXBqauKsR1mHxDc2A7PcsZHPXnu3jmD9r2DT2PCGpo3r"
+    );
+    // let privKey = WalletDb.getPrivateKey(key);
     if (privKey) {
       res.push(privKey);
       if (res.length >= count) {
@@ -139,7 +142,28 @@ class HtlcActions {
         });
     };
   }
-
+  redeemHtlc(
+    htlc_id: string,
+    redeemer: string,
+    preimage: string,
+    account: any,
+    append?: any,
+    onResolve?
+  ) {
+    this.addLoading();
+    return dispatch => {
+      WalletUnlockActions.unlock()
+        .then(() => {
+          let htlcRedeem = new Htlc.HtlcRedeem(htlc_id, redeemer, preimage);
+          debug("[HtlcRedeem]", htlcRedeem);
+          return this.signTx("htlc_redeem", htlcRedeem, account);
+        })
+        .catch(err => {
+          console.error(err);
+          this.removeLoading();
+        });
+    };
+  }
   // 其他
   addLoading() {
     return 1;

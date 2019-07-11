@@ -279,7 +279,7 @@ let GatewayTable = class extends React.Component<any, any> {
   }
 };
 
-GatewayTable = BindToChainState(GatewayTable, { keep_update: true });
+GatewayTable = BindToChainState(GatewayTable, { keep_updating: true });
 
 let GatewayRecords = class extends React.Component<
   { account; isLocked?: boolean; fundRecords?: FundRecordRes; login? },

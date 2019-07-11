@@ -41,6 +41,7 @@ import { DEPOSIT_MODAL_ID, GatewayActions } from "actions/GatewayActions";
 import { JadePool } from "services/GatewayConfig";
 import { isFootballAsset } from "qtb";
 import { AccountIEO } from "components/Account/AccountIEO";
+import HtlcOverview from "./Htlc";
 
 const sortFunctions = {
   alphabetic: function(a, b, force) {
@@ -199,6 +200,9 @@ let AccountOverview = class extends React.Component<any, any> {
       !utils.are_equal_shallow(nextProps.backedCoins, this.props.backedCoins) ||
       !utils.are_equal_shallow(nextProps.balances, this.props.balances) ||
       nextProps.account !== this.props.account ||
+      (nextProps.account.get &&
+        nextProps.account.get("htlcs") !== this.props.account.get("htlcs")) ||
+      nextProps.isMyAccount !== this.props.isMyAccount ||
       nextProps.isMyAccount !== this.props.isMyAccount ||
       nextProps.settings !== this.props.settings ||
       nextProps.hiddenAssets !== this.props.hiddenAssets ||
@@ -1044,6 +1048,16 @@ let AccountOverview = class extends React.Component<any, any> {
                   <div className="content-block">
                     <div className="generic-bordered-box">
                       <AccountVestedBalances account={account} />
+                    </div>
+                  </div>
+                </Tab>
+              )}
+              {true && (
+                // {this.props.isMyAccount && (
+                <Tab title="account.htlc">
+                  <div className="content-block">
+                    <div className="generic-bordered-box">
+                      <HtlcOverview account={account} />
                     </div>
                   </div>
                 </Tab>

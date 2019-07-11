@@ -2,10 +2,26 @@ import { sha256, sha1, ripemd160 } from "../cybex/cybexjs/ecc/src/hash";
 
 export namespace Htlc {
   export enum HashAlgo {
-    Ripemd160,
-    Sha1,
-    Sha256
+    Ripemd160 = 0,
+    Sha1 = 1,
+    Sha256 = 2
   }
+  export type HtlcRecord = {
+    id: string;
+    transfer: {
+      from: string;
+      to: string;
+      amount: number;
+      asset_id: string;
+    };
+    conditions: {
+      hash_lock: {
+        preimage_hash: [number, string];
+        preimage_size: 5;
+      };
+      time_lock: { expiration: "2019-07-09T10:01:09" };
+    };
+  };
   export class HtlcCreateByRawPreimage {
     preimage_size: number;
     preimage_hash: [number, string];
@@ -44,6 +60,20 @@ export namespace Htlc {
       public claimPeriodSecond: number
     ) {}
   }
+  export class HtlcRedeem {
+    preimage: string;
+    constructor(
+      public htlc_id: string,
+      public redeemer: string,
+      preimage: string
+      // public preimage: string
+    ) {
+      this.preimage = Buffer.from(preimage).toString("hex");
+    }
+  }
 
-  export type Ops = HtlcCreateByRawPreimage | HtlcCreateByHashedPreimage;
+  export type Ops =
+    | HtlcCreateByRawPreimage
+    | HtlcCreateByHashedPreimage
+    | HtlcRedeem;
 }

@@ -1803,7 +1803,11 @@
     "end_time": "锁定期到期时间",
     "detail": "详情",
     "pubkey_tip": "您的锁定资产与相应的公钥相关联，一旦失去对于此公钥的控制，则无法申领对应锁定资产",
-    "pubkey": "所属公钥"
+    "pubkey": "所属公钥",
+    "from": "发起人",
+    "to": "接收人",
+    "hash_algo": "哈希算法",
+    "hashed_preimage": "哈希值"
   },
   "period": {
     "seconds": "秒",

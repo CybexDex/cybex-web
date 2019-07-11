@@ -671,7 +671,9 @@ class Transfer extends React.Component<any, any> {
                   </label>
                   <select
                     id="htlcAlgo"
-                    onChange={e => this.setState({ hashAlgo: e.target.value })}
+                    onChange={e =>
+                      this.setState({ hashAlgo: Number(e.target.value) })
+                    }
                   >
                     <option
                       selected={this.state.hashAlgo === Htlc.HashAlgo.Ripemd160}
@@ -679,12 +681,12 @@ class Transfer extends React.Component<any, any> {
                     >
                       Ripemd160
                     </option>
-                    <option
+                    {/* <option
                       selected={this.state.hashAlgo === Htlc.HashAlgo.Sha1}
                       value={Htlc.HashAlgo.Sha1}
                     >
                       Sha1
-                    </option>
+                    </option> */}
                     <option
                       selected={this.state.hashAlgo === Htlc.HashAlgo.Sha256}
                       value={Htlc.HashAlgo.Sha256}
