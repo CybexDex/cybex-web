@@ -11,7 +11,7 @@ class ApiNode {
     //   location && location.protocol.indexOf("https") !== -1
     //     ? "wss://"
     //     : "wss://";
-    let schema = "ws://";
+    let schema = "wss://";
     let url = schema + host;
     this.url = url;
     this.location = name;

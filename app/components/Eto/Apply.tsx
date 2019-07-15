@@ -64,65 +64,22 @@ let EtoApply = class extends React.Component<EtoProps> {
         });
     }
   }
-
-  render() {
-    let { etoState, account } = this.props as any;
-    return (
-      <>
-        {etoState.state ===
-        Eto.EtoPersonalState.Uninit ? null : etoState.state ===
-            Eto.EtoPersonalState.Basic ||
-          etoState.state === Eto.EtoPersonalState.Survey ? (
-          <EtoCenter overtime {...this.props} />
-        ) : etoState.state === Eto.EtoPersonalState.Lock ? (
-          <EtoCenter {...this.props} />
-        ) : (
-          <h1>Unknown</h1>
-        )}
-        {/* <EtoTokenModal modalId={DEFAULT_ETO_CHECK_TOKEN} account={account} /> */}
-        {this.props.depositModal && (
-          <DepositModal
-            balances={account.get("balances", null)}
-            modalId={DEPOSIT_MODAL_ID}
-            fade={true}
-          />
-        )}
-      </>
-    );
-  }
+  // 申请期结束 开这个
   // render() {
   //   let { etoState, account } = this.props as any;
   //   return (
   //     <>
   //       {etoState.state ===
-  //       Eto.EtoPersonalState.Uninit ? null : //     position: "fixed", //     height: "100vh", //   style={{ // <LoadingIndicator
-  //       //     width: "100vw",
-  //       //     textAlign: "center",
-  //       //     top: 0,
-  //       //     left: 0,
-  //       //     lineHeight: "100vh",
-  //       //     zIndex: 1
-  //       //   }}
-  //       //   type="three-bounce"
-  //       // />
-  //       etoState.state === Eto.EtoPersonalState.Basic ? (
-  //         <EtoInfoForm
-  //           onSubmit={form => EtoActions.putBasic(form, this.props.account)}
-  //           account={this.props.account.get("name")}
-  //         />
-  //       ) : etoState.state === Eto.EtoPersonalState.Survey ? (
-  //         <EtoSurveyForm
-  //           onSubmit={form => EtoActions.putSurvey(form, this.props.account)}
-  //           account={this.props.account.get("name")}
-  //         />
-  //       ) : etoState.state === Eto.EtoPersonalState.ApplyDone ? (
-  //         <EtoApplyDone {...this.props} />
+  //       Eto.EtoPersonalState.Uninit ? null : etoState.state ===
+  //           Eto.EtoPersonalState.Basic ||
+  //         etoState.state === Eto.EtoPersonalState.Survey ? (
+  //         <EtoCenter overtime {...this.props} />
   //       ) : etoState.state === Eto.EtoPersonalState.Lock ? (
   //         <EtoCenter {...this.props} />
   //       ) : (
   //         <h1>Unknown</h1>
   //       )}
-  //       <EtoTokenModal modalId={DEFAULT_ETO_CHECK_TOKEN} account={account} />
+  //       {/* <EtoTokenModal modalId={DEFAULT_ETO_CHECK_TOKEN} account={account} /> */}
   //       {this.props.depositModal && (
   //         <DepositModal
   //           balances={account.get("balances", null)}
@@ -133,6 +90,49 @@ let EtoApply = class extends React.Component<EtoProps> {
   //     </>
   //   );
   // }
+  // 申请进行时 开这个
+  render() {
+    let { etoState, account } = this.props as any;
+    return (
+      <>
+        {etoState.state ===
+        Eto.EtoPersonalState.Uninit ? null : //     width: "100vw", //     position: "fixed", //     height: "100vh", //   style={{ // <LoadingIndicator
+        //     textAlign: "center",
+        //     top: 0,
+        //     left: 0,
+        //     lineHeight: "100vh",
+        //     zIndex: 1
+        //   }}
+        //   type="three-bounce"
+        // />
+        etoState.state === Eto.EtoPersonalState.Basic ? (
+          <EtoInfoForm
+            onSubmit={form => EtoActions.putBasic(form, this.props.account)}
+            account={this.props.account.get("name")}
+          />
+        ) : etoState.state === Eto.EtoPersonalState.Survey ? (
+          <EtoSurveyForm
+            onSubmit={form => EtoActions.putSurvey(form, this.props.account)}
+            account={this.props.account.get("name")}
+          />
+        ) : etoState.state === Eto.EtoPersonalState.ApplyDone ? (
+          <EtoApplyDone {...this.props} />
+        ) : etoState.state === Eto.EtoPersonalState.Lock ? (
+          <EtoCenter {...this.props} />
+        ) : (
+          <h1>Unknown</h1>
+        )}
+        <EtoTokenModal modalId={DEFAULT_ETO_CHECK_TOKEN} account={account} />
+        {this.props.depositModal && (
+          <DepositModal
+            balances={account.get("balances", null)}
+            modalId={DEPOSIT_MODAL_ID}
+            fade={true}
+          />
+        )}
+      </>
+    );
+  }
 };
 EtoApply = BindToChainState(EtoApply);
 

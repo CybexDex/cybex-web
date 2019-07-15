@@ -23,12 +23,12 @@ export const IntroBtn = withRouter<any>(props => {
     <div {...props}>
       <Button
         type="primary"
-        disabled
+        // disabled
         // loading={this.state.checking}
-        // onClick={() => {
-        //   Gtag.eventActivity("Eto", "点击申购");
-        //   props.history.push("/eto/apply");
-        // }}
+        onClick={() => {
+          Gtag.eventActivity("Eto", "点击申购");
+          props.history.push("/eto/apply");
+        }}
         style={{ marginBottom: "12px", width: "100%" }}
       >
         {counterpart.translate("eto_intro.join_apply")}

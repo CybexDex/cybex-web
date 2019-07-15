@@ -1294,6 +1294,26 @@ export const htlc_redeem = new Serializer("htlc_redeem", {
   preimage: bytes(),
   extensions: set(future_extensions)
 });
+export const htlc_redeemed = new Serializer("htlc_redeemed", {
+  fee: asset,
+  htlc_id: protocol_id_type("htlc"),
+  redeemer: protocol_id_type("account"),
+  from: protocol_id_type("account"),
+  to: protocol_id_type("account"),
+  extensions: set(future_extensions)
+});
+export const htlc_extend = new Serializer("htlc_extend", {
+  fee: asset,
+  htlc_id: protocol_id_type("htlc"),
+  update_issuer: protocol_id_type("account"),
+  seconds_to_add: uint32,
+  extensions: set(future_extensions)
+});
+export const htlc_refund = new Serializer("htlc_refund", {
+  fee: asset,
+  htlc_id: protocol_id_type("htlc"),
+  to: protocol_id_type("account")
+});
 
 operation.st_operations = [
   transfer, // 0
@@ -1361,8 +1381,11 @@ operation.st_operations = [
   exchange_remove, // 62
   exchange_participate, // 63,
   exchange_fill,
-  htlc_create,
-  htlc_redeem
+  htlc_create, // 65
+  htlc_redeem,
+  htlc_redeemed,
+  htlc_extend,
+  htlc_refund
 ];
 
 export const transaction = new Serializer("transaction", {

@@ -22,10 +22,7 @@ headers.append("Content-Type", "application/json");
 const pickKeys = (keys: string[], count = 1) => {
   let res: any[] = [];
   for (let key of keys) {
-    let privKey = WalletDb.getPrivateKey(
-      "CYB7ffSGtJXBqauKsR1mHxDc2A7PcsZHPXnu3jmD9r2DT2PCGpo3r"
-    );
-    // let privKey = WalletDb.getPrivateKey(key);
+    let privKey = WalletDb.getPrivateKey(key);
     if (privKey) {
       res.push(privKey);
       if (res.length >= count) {
@@ -156,7 +153,14 @@ class HtlcActions {
         .then(() => {
           let htlcRedeem = new Htlc.HtlcRedeem(htlc_id, redeemer, preimage);
           debug("[HtlcRedeem]", htlcRedeem);
-          return this.signTx("htlc_redeem", htlcRedeem, account);
+          return this.signTx("htlc_redeem", htlcRedeem, account).then(res => {
+            if (onResolve) {
+              setTimeout(() => {
+                onResolve();
+              }, 0);
+            }
+            return res;
+          });
         })
         .catch(err => {
           console.error(err);
@@ -164,6 +168,21 @@ class HtlcActions {
         });
     };
   }
+
+  updateHtlcRecords(accountID: string) {
+    return dispatch =>
+      Promise.all([
+        Apis.instance()
+          .db_api()
+          .exec("get_htlc_by_from", [accountID, "1.21.0", 100]),
+        Apis.instance()
+          .db_api()
+          .exec("get_htlc_by_to", [accountID, "1.21.0", 100])
+      ])
+        .then(([from, to]) => [...from, ...to])
+        .then(records => dispatch({ accountID, records }));
+  }
+
   // 其他
   addLoading() {
     return 1;

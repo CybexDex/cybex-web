@@ -652,9 +652,9 @@ class Transfer extends React.Component<any, any> {
                   marginTop: "10px"
                 }}
               >
-                <div className="preimage-wrapper">
+                <div className="preimage-wrapper" style={{ flexBasis: "50%" }}>
                   <label htmlFor="preimage">
-                    <Translate content="transfer.preimage" />
+                    <Translate content="htlc.preimage" />
                   </label>
                   <input
                     id="preimage"
@@ -664,10 +664,10 @@ class Transfer extends React.Component<any, any> {
                 </div>
                 <div
                   className="htlc-alge-wrapper"
-                  style={{ marginLeft: "10px" }}
+                  style={{ marginLeft: "10px", flexBasis: "50%" }}
                 >
                   <label htmlFor="htlcAlgo">
-                    <Translate content="transfer.htlcAlgo" />
+                    <Translate content="vesting.hash_algo" />
                   </label>
                   <select
                     id="htlcAlgo"

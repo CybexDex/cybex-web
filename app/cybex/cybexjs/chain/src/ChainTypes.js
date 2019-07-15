@@ -121,7 +121,10 @@ ChainTypes.operations = {
   exchange_participate: 63, // 63
   exchange_fill: 64, // 63,
   htlc_create: 65, // 63,
-  htlc_redeem: 66 // 63,
+  htlc_redeem: 66, // 63,
+  htlc_redeemed: 67, // 63,
+  htlc_extend: 68, // 63,
+  htlc_refund: 69 // 63,
 };
 
 export default ChainTypes;

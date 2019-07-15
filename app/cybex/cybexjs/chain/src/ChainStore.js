@@ -952,17 +952,10 @@ class ChainStore {
             account.balances = {};
             account.orders = new Immutable.Set();
             account.vesting_balances = new Immutable.Set();
-            account.htlcs = new Immutable.Set();
+            account.htlcs = new Immutable.Map();
             account.balances = new Immutable.Map();
             account.call_orders = new Immutable.Set();
             account.proposals = new Immutable.Set();
-            account.htlcs = account.htlcs.withMutations(set => {
-              htlcs.forEach(vb => {
-                this._updateObject(vb);
-                set.add(vb);
-                // set.add(vb.id);
-              });
-            });
             account.vesting_balances = account.vesting_balances.withMutations(
               set => {
                 vesting_balances.forEach(vb => {
@@ -976,6 +969,13 @@ class ChainStore {
 
             votes.forEach(v => this._updateObject(v));
 
+            account.htlcs = account.htlcs.withMutations(map => {
+              htlcs.forEach(vb => {
+                this._updateObject(vb);
+                map.set(vb.id, vb);
+                // set.add(vb.id);
+              });
+            });
             account.balances = account.balances.withMutations(map => {
               full_account.balances.forEach(b => {
                 this._updateObject(b);

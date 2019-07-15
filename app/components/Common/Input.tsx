@@ -25,6 +25,7 @@ let Input = Radium(
       onFocus?;
       onInvalid?;
       inputRef?;
+      inputStyle?;
       disabled?;
       placeholder?;
       keepPlaceholder?;
@@ -234,6 +235,7 @@ let Input = Radium(
         onFocus,
         onInvalid,
         onValid,
+        inputStyle,
         inputRef,
         iconStyle,
         valueFromOuter,
@@ -285,7 +287,7 @@ let Input = Radium(
               onChange={this.onChange}
               onKeyDown={this.props.onKeyDown}
               value={valueFromOuter ? this.props.value : this.state.value}
-              style={[Input.styles.input] as any}
+              style={[Input.styles.input, inputStyle] as any}
             />
             {error && (
               <p

@@ -56,7 +56,8 @@ export const EtoCenterSummary = ({
           <h2 style={{ margin: "8px" }}>
             {etoState.info && etoState.info.token}
           </h2>
-          {moment().isBefore(moment("2019-06-25T16:00:00Z")) && (
+          {moment().isBefore(moment("2019-07-25T16:00:00Z")) && (
+            // {moment().isBefore(moment("2019-06-25T16:00:00Z")) && (
             <a
               style={{
                 color: "white",
@@ -142,7 +143,7 @@ export const EtoCenter = (props: any) => {
             marginBottom: "-12px"
           }}
         >
-          {false && (
+          {true && (
             <Button
               type="secondary"
               // loading={this.state.checking}
@@ -156,7 +157,7 @@ export const EtoCenter = (props: any) => {
               {counterpart.translate("eto_apply.center.go_lock")}
             </Button>
           )}
-          {true && (
+          {false && (
             <Button
               type="secondary"
               // loading={this.state.checking}
@@ -188,7 +189,7 @@ export const EtoCenter = (props: any) => {
           )}
         </div>
       </EtoPanel>
-      {true && (
+      {false && (
         <EtoPanel style={{ marginBottom: "12px" }}>
           <div
             className="result"

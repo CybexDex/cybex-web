@@ -190,6 +190,9 @@ let AccountOverview = class extends React.Component<any, any> {
   // componentWillUnmount() {
   //     clearInterval(this.tableHeightMountIntervalInstance);
   // }
+  componentDidUpdate() {
+    console.debug("[AccountOverview]", "componentDidUpdate", this.props);
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     return (
@@ -199,6 +202,7 @@ let AccountOverview = class extends React.Component<any, any> {
       ) ||
       !utils.are_equal_shallow(nextProps.backedCoins, this.props.backedCoins) ||
       !utils.are_equal_shallow(nextProps.balances, this.props.balances) ||
+      !utils.are_equal_shallow(nextProps.account, this.props.account) ||
       nextProps.account !== this.props.account ||
       (nextProps.account.get &&
         nextProps.account.get("htlcs") !== this.props.account.get("htlcs")) ||

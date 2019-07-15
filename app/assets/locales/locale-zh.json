@@ -256,6 +256,7 @@
     "login_create": "注册新账户",
     "login_suffix": "即可开始交易",
     "assets": "资产",
+    "htlc": "哈希锁定资产",
     "market_value": "市值",
     "hour_24": "日涨跌幅%",
     "hour_24_short": "24hr",
@@ -635,6 +636,11 @@
     "balance_claim": "{account} 领取了余额 {amount}",
     "publish_feed": "{account} 发布了喂价 {price}",
     "set_proxy": "{account} 设置 {proxy} 为他的投票代理",
+    "htlc_create": "{from} 已锁定 {amount} , {to} 可以在锁定超时之前进行兑换",
+    "htlc_extend": "{update_issuer} 将 {seconds_to_add} 秒添加到HTLC {htlc_id} 的兑换周期",
+    "htlc_redeem": "{redeemer} 请求兑换HTLC {htlc_id} ",
+    "htlc_redeemed": "{to} 兑换了 {amount} , 来自 {from}的HTLC {htlc_id}",
+    "htlc_refund": "{to} 获得HTLC {htlc_id}的退款 ",
     "update_account": "{account} 更新了它的账户信息",
     "limit_order_sell": "{account} 提交卖单，希望卖出 {amount_to_sell}{asset_to_sell}, 最少换取 {amount_to_buy}{asset_to_buy}, 卖出价格为：{price}",
     "limit_order_buy": "{account} 提交买单，希望至少买入 {amount_to_buy}{asset_to_buy}, 可以用 {amount_to_sell}{asset_to_sell} 交换, 购买价格为：{price}",
@@ -773,6 +779,11 @@
       "withdraw_permission_claim": "主张提取权限",
       "withdraw_permission_delete": "删除提取权限",
       "fill_order": "订单撮合",
+      "htlc_create": "HTLC 创建",
+      "htlc_extend": "HTLC 延长",
+      "htlc_redeem": "HTLC 兑换",
+      "htlc_redeemed": "HTLC 已兑换",
+      "htlc_refund": "HTLC 退款",
       "delegate_update_global_parameters": "全局参数更新",
       "vesting_balance_create": "创建冻结账目余额",
       "vesting_balance_withdraw": "提取解冻账户余额",
@@ -2255,5 +2266,13 @@
       "tip_content_4": "由于ChainX 在进行第一届信托换届，开放btc充值和锁仓挖矿后，全网算力分布及收益会发生比较大的变化，收益会有浮动，最终收益以官方为准;",
       "tip_content_5": "数字货币投资存在风险，请您谨慎操作！"
     }
+  },
+  "htlc": {
+    "htlc_redeem": "兑换HTLC",
+    "from": "来自",
+    "to": "发往",
+    "redeem": "兑换",
+    "preimage": "原像",
+    "hash": "原像Hash"
   }
 }

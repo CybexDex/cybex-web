@@ -23,6 +23,7 @@ import * as humanize from "humanize-duration";
 import IntlStore from "stores/IntlStore";
 
 import { pickContent } from "lib/qtb";
+import { Htlc } from "../../services/htlc";
 
 const { operations } = grapheneChainTypes;
 require("./operations.scss");
@@ -1243,8 +1244,137 @@ class Operation extends React.PureComponent<any, any> {
                   amount: op[1].receive.amount
                 },
                 arg: "quoteAmount"
-              },
+              }
               // { type: "asset", value: op[1].receive.asset_id, arg: "quoteAsset" }
+            ]}
+          />
+        );
+        break;
+      case "htlc_create":
+        console.debug("[Operation]", op);
+        column = (
+          <TranslateWithLinks
+            string="operation.htlc_create"
+            keys={[
+              {
+                type: "account",
+                value: (op[1] as Htlc.HtlcCreateByRawPreimage).from,
+                arg: "from"
+              },
+              {
+                type: "account",
+                value: (op[1] as Htlc.HtlcCreateByRawPreimage).to,
+                arg: "to"
+              },
+              {
+                type: "amount",
+                value: {
+                  asset_id: (op[1] as Htlc.HtlcCreateByRawPreimage).amount
+                    .asset_id,
+                  amount: (op[1] as Htlc.HtlcCreateByRawPreimage).amount.amount
+                },
+                arg: "amount"
+              }
+              // { type: "asset", value: op[1].pay.asset_id, arg: "asset" },
+              // {
+              //   type: "period",
+              //   value: (op[1] as Htlc.HtlcCreateByRawPreimage)
+              //     .claim_period_seconds,
+              //   arg: "lock_period"
+              // }
+              // { type: "asset", value: op[1].receive.asset_id, arg: "quoteAsset" }
+            ]}
+          />
+        );
+        break;
+      case "htlc_redeem":
+        console.debug("[Operation]", "htlc_redeem", op);
+        column = (
+          <TranslateWithLinks
+            string="operation.htlc_redeem"
+            keys={[
+              {
+                type: "account",
+                value: op[1].redeemer,
+                arg: "redeemer"
+              },
+              {
+                value: op[1].htlc_id,
+                arg: "htlc_id"
+              }
+              // { type: "asset", value: op[1].receive.asset_id, arg: "quoteAsset" }
+            ]}
+          />
+        );
+        break;
+      case "htlc_redeemed":
+        console.debug("[Operation]", "htlc_redeemed", op);
+        column = (
+          <TranslateWithLinks
+            string="operation.htlc_redeemed"
+            keys={[
+              {
+                type: "account",
+                value: op[1].to,
+                arg: "to"
+              },
+              {
+                type: "account",
+                value: op[1].from,
+                arg: "from"
+              },
+              {
+                type: "amount",
+                value: op[1].amount,
+                arg: "amount",
+              },
+              {
+                value: op[1].htlc_id,
+                arg: "htlc_id"
+              }
+            ]}
+          />
+        );
+        break;
+      case "htlc_refund":
+        console.debug("[Operation]", "htlc_refund", op);
+        column = (
+          <TranslateWithLinks
+            string="operation.htlc_refund"
+            keys={[
+              {
+                value: op[1].htlc_id,
+                arg: "htlc_id"
+              },
+              {
+                type: "account",
+                value: op[1].to,
+                arg: "to"
+              }
+            ]}
+          />
+        );
+        break;
+      case "htlc_extend":
+        console.debug("[Operation]", "htlc_refund", op);
+        column = (
+          <TranslateWithLinks
+            string="operation.htlc_refund"
+            keys={[
+              {
+                type: "account",
+                value: op[1].update_issuer,
+                arg: "update_issuer"
+              },
+              {
+                type: "timespan",
+                arg: "seconds_to_add",
+                value: op[1].seconds_to_add
+              },
+              {
+                value: op[1].htlc_id,
+                arg: "htlc_id"
+              }
             ]}
           />
         );
