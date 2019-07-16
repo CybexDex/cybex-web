@@ -410,7 +410,7 @@ let AccountOverview = class extends React.Component<any, any> {
           ) : null}
           <td>{transferLink}</td>
 
-          <td>
+          {/* <td>
             {canDepositWithdraw && this.props.isMyAccount ? (
               <span>
                 <a
@@ -450,7 +450,7 @@ let AccountOverview = class extends React.Component<any, any> {
             ) : (
               emptyCell
             )}
-          </td>
+          </td> */}
           <td>{directMarketLink}</td>
           <td>
             {isBitAsset ? (
@@ -960,12 +960,12 @@ let AccountOverview = class extends React.Component<any, any> {
                       {/* <th>
                         <Translate content="exchange.buy" />
                       </th> */}
-                      <th>
+                      {/* <th>
                         <Translate content="modal.deposit.submit" />
                       </th>
                       <th>
                         <Translate content="modal.withdraw.submit" />
-                      </th>
+                      </th> */}
                       <th>
                         <Translate content="account.trade" />
                       </th>

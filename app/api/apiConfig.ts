@@ -11,7 +11,7 @@ class ApiNode {
     //   location && location.protocol.indexOf("https") !== -1
     //     ? "wss://"
     //     : "wss://";
-    let schema = "ws://";
+    let schema = "wss://";
     let url = schema + host;
     this.url = url;
     this.location = name;
@@ -70,9 +70,9 @@ export const EDGE_LOCK = __FOR_SECURITY__
   ? "https://edge-lock.cybex.io/"
   : __DEV__ || __TEST__
   ? // ? "https://eto-lock.cybex.io/"
-    // "https://edge-lock.cybex.io/"
-    "http://10.18.120.155:5558/"
+    "https://edge-lock.cybex.io/"
   : // "http://10.18.120.155:5558/"
+    // "http://10.18.120.155:5558/"
     "https://edge-lock.cybex.io/";
 
 export const PRICE_API = "https://app.cybex.io/price";
