@@ -50,15 +50,18 @@ export namespace Htlc {
     }
   }
   export class HtlcCreateByHashedPreimage {
+    preimage_hash: [number, string];
     constructor(
       public from: string,
       public to: string,
       public amount: Cybex.Amount,
       public hashAlgo: HashAlgo,
-      public preimageSize: string,
-      public preimageHash: string,
-      public claimPeriodSecond: number
-    ) {}
+      public preimage_size: number,
+      public preimage_hashed: string,
+      public claim_period_seconds: number
+    ) {
+      this.preimage_hash = [hashAlgo, preimage_hashed];
+    }
   }
   export class HtlcRedeem {
     preimage: string;

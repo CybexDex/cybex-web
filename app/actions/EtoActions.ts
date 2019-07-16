@@ -14,11 +14,14 @@ import WalletUnlockActions from "actions/WalletUnlockActions";
 import { ETO_LOCK } from "api/apiConfig";
 import TransactionConfirmActions from "actions/TransactionConfirmActions";
 import { EtoMock } from "../components/Eto/mock";
-
+import { Htlc } from "../services/htlc";
+import { calcAmount } from "../utils/Asset";
 const debug = debugGen("EtoActions");
 
 export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
+export const HASHED_PREIMAGE =
+  "da22691374e5427715038e80344fa55f258c2a45b42cafbb088cd8d455c9e059";
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 const pickKeys = (keys: string[], count = 1) => {
@@ -34,7 +37,8 @@ const pickKeys = (keys: string[], count = 1) => {
   }
   return res;
 };
-
+const DestTimeOfLock = "2019-07-29T00:00:00Z";
+const EndTimeOfLock = "2019-07-15T10:20:00Z";
 const ProjectServer = __DEV__
   ? "https://etoapi.cybex.io/api"
   : "https://etoapi.cybex.io/api";
@@ -88,6 +92,19 @@ class EtoActions {
             }&signer=${tx.signer}`
           )
             .then(res => res.json())
+            .then(res =>
+              Apis.instance()
+                .db_api()
+                .exec("get_htlc_by_from", [account.get("id"), "1.21.0", 100])
+                .then(records => ({
+                  ...res,
+                  records: records.filter(
+                    (record: Htlc.HtlcRecord) =>
+                      record.conditions.hash_lock.preimage_hash[1] ===
+                      HASHED_PREIMAGE
+                  )
+                }))
+            )
             .then(res => new Eto.EtoInfo(res))
             .then(info => {
               dispatch(info);
@@ -146,32 +163,35 @@ class EtoActions {
           }
           return { privKey, pubKey: privKey.toPublicKey().toPublicKeyString() };
         })
-        .then(({ privKey, pubKey }) =>
-          this.signTx(4, { value, pubKey }, account)
-            .then(tx =>
-              fetch(`${ETO_LOCK}api/v1/apply/${account.get("name")}`, {
-                headers,
-                method: "POST",
-                body: JSON.stringify(tx)
-              }).then(res => res.json())
-            )
-            .then(tx => {
-              let newTx = TransactionBuilder.fromTx(tx);
-              newTx.add_signer(privKey);
-              return new Promise((resolve, reject) =>
-                TransactionConfirmActions.confirm(newTx, resolve, reject, null)
-              );
-            })
-            .then(tx => {
-              console.debug("TX: ", tx);
-              dispatch(tx);
-              if (onResolve) {
-                onResolve();
-              }
-              this.removeLoading();
-              return tx;
-            })
-        )
+        .then(async ({ privKey, pubKey }) => {
+          let tx = new TransactionBuilder();
+          let htlc = new Htlc.HtlcCreateByHashedPreimage(
+            account.get("id"),
+            account.get("id"),
+            { asset_id: "1.3.0", amount: calcAmount(value.toString(), 5) },
+            Htlc.HashAlgo.Sha256,
+            42,
+            HASHED_PREIMAGE,
+            moment(DestTimeOfLock).diff(moment(), "seconds")
+          );
+          tx.add_type_operation("htlc_create", htlc);
+          await tx.set_required_fees();
+          await tx.finalize();
+          await tx.add_signer(privKey);
+          await tx.sign();
+          return new Promise((resolve, reject) =>
+            TransactionConfirmActions.confirm(tx, resolve, reject, null)
+          );
+        })
+        .then(tx => {
+          console.debug("TX: ", tx);
+          dispatch(tx);
+          if (onResolve) {
+            onResolve();
+          }
+          this.removeLoading();
+          return tx;
+        })
         .catch(err => {
           console.error(err);
           this.removeLoading();

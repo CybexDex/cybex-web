@@ -14,9 +14,9 @@ type EdgeLockFormProps = {
 };
 
 const BtnPreset = [
-  { label: "30 PCX", value: 30 },
-  { label: "200 PCX", value: 200 },
-  { label: "500 PCX", value: 500 }
+  { label: "0.05 BTC", value: 0.05 },
+  { label: "0.5 BTC", value: 0.5 },
+  { label: "1 BTC", value: 1 }
 ];
 const PeriodPreset = [
   { label: "edge.lockup_period_3", value: 3 },
@@ -79,7 +79,7 @@ const EdgeLockFormImpl = ({
           </small>
         </h4>
         <Input
-          append="PCX"
+          append="BTC"
           onChange={e => setValue(formatter(e.target.value))}
           type="number"
           value={value}
@@ -117,12 +117,10 @@ const EdgeLockFormImpl = ({
           <span className="color-steel">
             {counterpart.translate("eto_apply.lock.balance")}
           </span>
-          <span>{balanceValue} PCX</span>
+          <span>{balanceValue} BTC</span>
         </h4>
         <Button
-          disabled={
-            value > balanceValue || balanceValue === 0 || value < 30 || !value
-          }
+          disabled={value > balanceValue || balanceValue === 0 || !value}
           type="primary"
           style={{ width: "100%" }}
           onClick={() => onLock({ value, period })}
@@ -143,7 +141,7 @@ let EdgeLockForm = class extends React.Component<EdgeLockFormProps> {
     return (
       <EdgeLockFormImpl
         onLock={this.props.onLock}
-        balanceValue={+calcValue((this.props.balance as any).get("balance"), 6)}
+        balanceValue={+calcValue((this.props.balance as any).get("balance"), 8)}
       />
     );
   }

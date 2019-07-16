@@ -45,9 +45,9 @@ let EdgeLock = class extends React.Component<EdgeProps> {
       <div className="grid-container">
         <div style={{ padding: "6px" }} />
         <EdgeLockForm
-          balance={this.props.account.getIn(["balances", "1.3.1393"])}
+          balance={this.props.account.getIn(["balances", "1.3.3"])}
           onLock={({ value, period }) =>
-            EdgeActions.applyLock(value, period, this.props.account, () => {
+            EdgeActions.applyLock(value, this.props.account, () => {
               // Gtag.eventActivity("Edge", "锁仓成功，跳转");
               this.props.history.push("/lockdrop/apply");
             })

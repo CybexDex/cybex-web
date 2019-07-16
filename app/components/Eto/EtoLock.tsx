@@ -55,6 +55,7 @@ let EtoLock = class extends React.Component<EtoProps> {
           onLock={value =>
             EtoActions.applyLock(value, this.props.account, () => {
               Gtag.eventActivity("Eto", "锁仓成功，跳转");
+              EtoActions.queryInfo(this.props.account);
               this.props.history.push("/eto/apply");
             })
           }

@@ -91,7 +91,7 @@ export namespace Eto {
           this.sum = calcValue(
             (info.records || []).reduce(
               (sum, next) =>
-                new BigNumber(sum).add(next.op[1].amount.amount).toNumber(),
+                new BigNumber(sum).add(next.transfer.amount).toNumber(),
               0
             ),
             5

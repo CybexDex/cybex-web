@@ -13,11 +13,17 @@ import { Edge, edgeTx, EdgeProject } from "services/edge";
 import WalletUnlockActions from "actions/WalletUnlockActions";
 import { EDGE_LOCK } from "api/apiConfig";
 import TransactionConfirmActions from "actions/TransactionConfirmActions";
+import { Htlc } from "../services/htlc";
+import { calcAmount } from "../utils/Asset";
 
 const debug = debugGen("EdgeActions");
 
 export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
+export const HASHED_PREIMAGE_FOR_LOCK_BTC =
+  "5c38b43cd494818ae03e2d6c15bb250df9513b194ea71c8f29e596e399cfe355";
+export const DEST_TIME = "2019-08-02T10:00:00Z";
+
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 const pickKeys = (keys: string[], count = 1) => {
@@ -81,12 +87,25 @@ class EdgeActions {
     return dispatch => {
       this.signTx(0, "query", account)
         .then(tx =>
-          fetch(
-            `${EDGE_LOCK}api/v1/info/${account.get("name")}?expiration=${
-              tx.expiration
-            }&signer=${tx.signer}`
-          )
-            .then(res => res.json())
+          Promise.resolve({
+            basic: {
+              accountName: account.get("name"),
+              accountID: account.get("id")
+            }
+          } as any)
+            .then(res =>
+              Apis.instance()
+                .db_api()
+                .exec("get_htlc_by_from", [account.get("id"), "1.21.0", 100])
+                .then(records => ({
+                  ...res,
+                  records: records.filter(
+                    (record: Htlc.HtlcRecord) =>
+                      record.conditions.hash_lock.preimage_hash[1] ===
+                      HASHED_PREIMAGE_FOR_LOCK_BTC
+                  )
+                }))
+            )
             .then(res => new Edge.EdgeInfo(res))
             .then(info => {
               dispatch(info);
@@ -128,7 +147,7 @@ class EdgeActions {
         });
     };
   }
-  applyLock(value: number, period: number, account: AccountMap, onResolve?) {
+  applyLock(value: number, account: AccountMap, onResolve?) {
     this.addLoading();
     return dispatch => {
       WalletUnlockActions.unlock()
@@ -145,38 +164,90 @@ class EdgeActions {
           }
           return { privKey, pubKey: privKey.toPublicKey().toPublicKeyString() };
         })
-        .then(({ privKey, pubKey }) =>
-          this.signTx(4, { value, pubKey, period }, account)
-            .then(tx =>
-              fetch(`${EDGE_LOCK}api/v1/apply/${account.get("name")}`, {
-                headers,
-                method: "POST",
-                body: JSON.stringify(tx)
-              }).then(res => res.json())
-            )
-            .then(tx => {
-              let newTx = TransactionBuilder.fromTx(tx);
-              newTx.add_signer(privKey);
-              return new Promise((resolve, reject) =>
-                TransactionConfirmActions.confirm(newTx, resolve, reject, null)
-              );
-            })
-            .then(tx => {
-              console.debug("TX: ", tx);
-              dispatch(tx);
-              if (onResolve) {
-                onResolve();
-              }
-              this.removeLoading();
-              return tx;
-            })
-        )
+        .then(async ({ privKey, pubKey }) => {
+          let tx = new TransactionBuilder();
+          let htlc = new Htlc.HtlcCreateByHashedPreimage(
+            account.get("id"),
+            account.get("id"),
+            { asset_id: "1.3.3", amount: calcAmount(value.toString(), 8) },
+            Htlc.HashAlgo.Sha256,
+            42,
+            HASHED_PREIMAGE_FOR_LOCK_BTC,
+            moment(DEST_TIME).diff(moment(), "seconds")
+          );
+          tx.add_type_operation("htlc_create", htlc);
+          await tx.set_required_fees();
+          await tx.finalize();
+          await tx.add_signer(privKey);
+          await tx.sign();
+          return new Promise((resolve, reject) =>
+            TransactionConfirmActions.confirm(tx, resolve, reject, null)
+          );
+        })
+        .then(tx => {
+          console.debug("TX: ", tx);
+          dispatch(tx);
+          if (onResolve) {
+            onResolve();
+          }
+          this.removeLoading();
+          return tx;
+        })
         .catch(err => {
           console.error(err);
           this.removeLoading();
         });
     };
   }
+  // applyLock(value: number, period: number, account: AccountMap, onResolve?) {
+  //   this.addLoading();
+  //   return dispatch => {
+  //     WalletUnlockActions.unlock()
+  //       .then(() => {
+  //         console.debug("Account: ", account);
+  //         let availKeys = account
+  //           .getIn(["active", "key_auths"])
+  //           .filter(key => key.get(1) >= 1)
+  //           .map(key => key.get(0))
+  //           .toJS();
+  //         let privKey = pickKeys(availKeys)[0];
+  //         if (!privKey) {
+  //           throw Error("Privkey Not Found");
+  //         }
+  //         return { privKey, pubKey: privKey.toPublicKey().toPublicKeyString() };
+  //       })
+  //       .then(({ privKey, pubKey }) =>
+  //         this.signTx(4, { value, pubKey, period }, account)
+  //           .then(tx =>
+  //             fetch(`${EDGE_LOCK}api/v1/apply/${account.get("name")}`, {
+  //               headers,
+  //               method: "POST",
+  //               body: JSON.stringify(tx)
+  //             }).then(res => res.json())
+  //           )
+  //           .then(tx => {
+  //             let newTx = TransactionBuilder.fromTx(tx);
+  //             newTx.add_signer(privKey);
+  //             return new Promise((resolve, reject) =>
+  //               TransactionConfirmActions.confirm(newTx, resolve, reject, null)
+  //             );
+  //           })
+  //           .then(tx => {
+  //             console.debug("TX: ", tx);
+  //             dispatch(tx);
+  //             if (onResolve) {
+  //               onResolve();
+  //             }
+  //             this.removeLoading();
+  //             return tx;
+  //           })
+  //       )
+  //       .catch(err => {
+  //         console.error(err);
+  //         this.removeLoading();
+  //       });
+  //   };
+  // }
   /**
    * 注册一个查询签名
    *

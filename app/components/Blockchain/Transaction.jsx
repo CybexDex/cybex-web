@@ -247,6 +247,46 @@ class Transaction extends React.Component {
             </tr>
           );
           break;
+        case "htlc_create":
+          color = "success";
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate component="span" content="transfer.from" />
+              </td>
+              <td>{this.linkToAccount(op[1].from)}</td>
+            </tr>
+          );
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate component="span" content="transfer.to" />
+              </td>
+              <td>{this.linkToAccount(op[1].to)}</td>
+            </tr>
+          );
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate component="span" content="transfer.amount" />
+              </td>
+              <td>
+                <FormattedAsset
+                  amount={op[1].amount.amount}
+                  asset={op[1].amount.asset_id}
+                />
+              </td>
+            </tr>
+          );
+          rows.push(
+            <tr key={key++}>
+              <td>
+                <Translate component="span" content="htlc.hash" />
+              </td>
+              <td>{op[1].preimage_hash[1]}</td>
+            </tr>
+          );
+          break;
 
         case "limit_order_create":
           color = "warning";

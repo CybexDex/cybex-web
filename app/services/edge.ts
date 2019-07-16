@@ -84,7 +84,7 @@ export namespace Edge {
     refer: string;
   };
   export type Survey = any[];
-  export type Records = CybexRecord.Record[];
+  export type Records = any[];
   export type Result = [boolean, boolean, boolean, boolean];
   export type FullInfo = {
     [Fields.basic]: Info;
@@ -137,10 +137,10 @@ export namespace Edge {
           this.sum = calcValue(
             (info.records || []).reduce(
               (sum, next) =>
-                new BigNumber(sum).add(next.op[1].amount.amount).toNumber(),
+                new BigNumber(sum).add(next.transfer.amount).toNumber(),
               0
             ),
-            6
+            8
           );
         } catch (e) {
           this.sum = 0;

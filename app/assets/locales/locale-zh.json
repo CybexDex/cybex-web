@@ -748,6 +748,7 @@
     "order_id": "订单ID",
     "exchange_participate": "参与ETO认购",
     "exchange_fill": "ETO认购发放",
+    "operation": "操作",
     "trxTypes": {
       "transfer": "转账",
       "limit_order_create": "限价单",
