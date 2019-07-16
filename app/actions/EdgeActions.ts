@@ -22,7 +22,8 @@ export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
 export const HASHED_PREIMAGE_FOR_LOCK_BTC =
   "5c38b43cd494818ae03e2d6c15bb250df9513b194ea71c8f29e596e399cfe355";
-export const DEST_TIME = "2019-08-02T10:00:00Z";
+export const DEST_TIME = "2019-08-22T16:00:00Z";
+export const RECEIVER = "btc-lock";
 
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
@@ -88,11 +89,10 @@ class EdgeActions {
       this.signTx(0, "query", account)
         .then(tx =>
           Promise.resolve({
-            basic: {
-              accountName: account.get("name"),
-              accountID: account.get("id")
-            }
-          } as any)
+            accountName: account.get("name"),
+            accountID: account.get("id"),
+            basic: {}
+          })
             .then(res =>
               Apis.instance()
                 .db_api()
@@ -152,7 +152,6 @@ class EdgeActions {
     return dispatch => {
       WalletUnlockActions.unlock()
         .then(() => {
-          console.debug("Account: ", account);
           let availKeys = account
             .getIn(["active", "key_auths"])
             .filter(key => key.get(1) >= 1)
@@ -166,9 +165,12 @@ class EdgeActions {
         })
         .then(async ({ privKey, pubKey }) => {
           let tx = new TransactionBuilder();
+          let destAccount = await Apis.instance()
+            .db_api()
+            .exec("get_account_by_name", [RECEIVER]);
           let htlc = new Htlc.HtlcCreateByHashedPreimage(
             account.get("id"),
-            account.get("id"),
+            destAccount.id,
             { asset_id: "1.3.3", amount: calcAmount(value.toString(), 8) },
             Htlc.HashAlgo.Sha256,
             42,

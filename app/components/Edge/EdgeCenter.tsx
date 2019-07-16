@@ -65,7 +65,7 @@ export const EdgeCenterSummary = ({
           </span>
           <h2 style={{ margin: "8px" }}>
             {edgeState.info && edgeState.sum}{" "}
-            <small style={{ color: "white" }}>PCX</small>
+            <small style={{ color: "white" }}>BTC</small>
           </h2>
           {/* <Link
             to="/eto/record"
@@ -129,11 +129,11 @@ export const EdgeCenter = (props: any) => {
               type="secondary"
               // loading={this.state.checking}
               onClick={() => {
-                props.history.push("/market/JADE.PCX_JADE.USDT");
+                props.history.push("/market/JADE.BTC_JADE.USDT");
               }}
               style={{ width: "50%", borderRadius: 0 }}
             >
-              {counterpart.translate("eto_apply.center.go_trade")} PCX
+              {counterpart.translate("eto_apply.center.go_trade")} BTC
             </Button>
           )}
         </div>

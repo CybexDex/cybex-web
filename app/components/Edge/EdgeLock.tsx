@@ -49,6 +49,7 @@ let EdgeLock = class extends React.Component<EdgeProps> {
           onLock={({ value, period }) =>
             EdgeActions.applyLock(value, this.props.account, () => {
               // Gtag.eventActivity("Edge", "锁仓成功，跳转");
+              EdgeActions.queryInfo(this.props.account);
               this.props.history.push("/lockdrop/apply");
             })
           }

@@ -40,14 +40,14 @@ interface NavLink {
 }
 
 const NavLinks: Array<NavLink> = [
-  {
-    id: "eto",
-    routeTo: "/eto",
-    // routeTo: "/eto",
-    activeMatcher: /^\/eto(\/apply)?\/?$/,
-    name: "eto_apply",
-    icon: "ETO"
-  },
+  // {
+  //   id: "eto",
+  //   routeTo: "/eto",
+  //   // routeTo: "/eto",
+  //   activeMatcher: /^\/eto(\/apply)?\/?$/,
+  //   name: "eto_apply",
+  //   icon: "ETO"
+  // },
   {
     id: "lockdrop",
     routeTo: "/lockdrop",

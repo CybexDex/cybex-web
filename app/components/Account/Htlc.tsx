@@ -49,6 +49,7 @@ let HtlcOverview = class extends React.Component<
         <table className="table dashboard-table vest-table">
           <thead>
             <tr>
+              <th style={{ textAlign: "center" }}>ID</th>
               <th style={{ textAlign: "center" }}>
                 <Translate content="account.asset" />
               </th>
@@ -80,6 +81,7 @@ let HtlcOverview = class extends React.Component<
               (Object.entries(htlcs).map(h => h[1]) as Htlc.HtlcRecord[]).map(
                 htlc => (
                   <tr key={htlc.id}>
+                    <td style={{ textAlign: "center" }}>{htlc.id}</td>
                     <td style={{ textAlign: "center" }}>
                       <FormattedAsset
                         asset={htlc.transfer.asset_id}

@@ -179,7 +179,14 @@ class HtlcActions {
           .db_api()
           .exec("get_htlc_by_to", [accountID, "1.21.0", 100])
       ])
-        .then(([from, to]) => [...from, ...to])
+        .then(([from, to]) =>
+          Object.entries(
+            [...from, ...to].reduce(
+              (dict, next) => ({ ...dict, [next.id]: next }),
+              {}
+            )
+          ).map(record => record[1])
+        )
         .then(records => dispatch({ accountID, records }));
   }
 

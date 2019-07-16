@@ -27,7 +27,7 @@ export const IntroBtn = withRouter<any>(props => {
       >
         {counterpart.translate("edge.lock")}
       </Button>
-      <Button
+      {/* <Button
         type="primary"
         onClick={() => {
           // Gtag.eventActivity("Edge", "查看记录");
@@ -37,7 +37,7 @@ export const IntroBtn = withRouter<any>(props => {
         style={{ marginBottom: "12px", width: "100%", textAlign: "center" }}
       >
         {counterpart.translate("edge.record")}
-      </Button>
+      </Button> */}
       <Button
         type="hollow-primary"
         link={counterpart.translate("edge.rule_url")}
