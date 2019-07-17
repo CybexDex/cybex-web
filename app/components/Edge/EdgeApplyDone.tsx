@@ -23,12 +23,10 @@ export const EdgeApplyDone = (props: any) => {
         </p>
         <Button
           type="primary"
-          // loading={this.state.checking}
           onClick={() => {
             ModalActions.showModal(DEFAULT_ETO_CHECK_TOKEN, false, {
               onResolve: () => {
                 Gtag.eventActivity("Edge", "通过报名成功页进入锁仓");
-                EdgeActions.setApplyDone();
                 props.history.push("/eto/lock");
               },
               onReject: () => void 0
@@ -44,7 +42,6 @@ export const EdgeApplyDone = (props: any) => {
           onClick={() => {
             ModalActions.showModal(DEFAULT_ETO_CHECK_TOKEN, false, {
               onResolve: () => {
-                EdgeActions.setApplyDone();
                 props.history.push("/market/CYB_JADE.USDT");
               },
               onReject: () => void 0

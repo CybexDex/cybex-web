@@ -56,6 +56,14 @@ const NavLinks: Array<NavLink> = [
     name: "lockdrop",
     icon: "lockdrop"
   },
+  {
+    id: "lockc",
+    routeTo: "/lockc",
+    // routeTo: "/eto",
+    activeMatcher: /^\/lockc\/?/,
+    name: "lockc",
+    icon: "lockc"
+  },
   // {
   //   id: "etoProject",
   //   routeTo: "/eto/projects",

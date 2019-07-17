@@ -32,6 +32,7 @@ import {
   DEFAULT_SUPPORT_MODAL,
   DEFAULT_LOGOUT_MODAL_ID
 } from "./components/Modal/ModalID";
+import LockC from "./components/LockC/LockC";
 let patch = false;
 (function(window) {
   if (window) {
@@ -530,6 +531,7 @@ let App = class extends React.Component<any, any> {
               <Route path="/create-worker" component={CreateWorker} />
               <Route path="/eto" component={EtoV2} />
               <Route path="/lockdrop" component={Edge} />
+              <Route path="/lockc" component={LockC} />
 
               <Route path="/login" component={Login} />
               <Route
