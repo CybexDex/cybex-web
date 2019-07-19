@@ -170,7 +170,7 @@ class EtoActions {
             account.get("id"),
             { asset_id: "1.3.0", amount: calcAmount(value.toString(), 5) },
             Htlc.HashAlgo.Sha256,
-            42,
+            45,
             HASHED_PREIMAGE,
             moment(DestTimeOfLock).diff(moment(), "seconds")
           );

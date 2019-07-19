@@ -14,14 +14,9 @@ type LockCLockFormProps = {
 };
 
 const BtnPreset = [
-  { label: "0.05 CYB", value: 0.05 },
-  { label: "0.5 CYB", value: 0.5 },
-  { label: "1 CYB", value: 1 }
-];
-const PeriodPreset = [
-  { label: "lockC.lockup_period_3", value: 3 },
-  { label: "lockC.lockup_period_6", value: 6 },
-  { label: "lockC.lockup_period_12", value: 12 }
+  { label: "10000 CYB", value: 10000 },
+  { label: "50000 CYB", value: 50000 },
+  { label: "100000 CYB", value: 100000 }
 ];
 
 const LockCLockFormImpl = ({
@@ -121,7 +116,10 @@ const LockCLockFormImpl = ({
         </h4>
         <Button
           disabled={
-            value > balanceValue || balanceValue === 0 || value < 0.01 || !value
+            value > balanceValue ||
+            balanceValue === 0 ||
+            value < 10000 ||
+            !value
           }
           type="primary"
           style={{ width: "100%" }}

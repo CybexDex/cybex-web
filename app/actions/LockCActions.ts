@@ -15,6 +15,7 @@ import { EDGE_LOCK } from "api/apiConfig";
 import TransactionConfirmActions from "actions/TransactionConfirmActions";
 import { Htlc } from "../services/htlc";
 import { calcAmount } from "../utils/Asset";
+import { HASHED_PREIMAGE } from "./EtoActions";
 
 const debug = debugGen("LockCActions");
 
@@ -22,9 +23,11 @@ export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
 export const HASHED_PREIMAGE_FOR_LOCK_CYB =
   "b5fc0b94782e68a2982fb76f63a915ff0a899c2dbf032e2a2ff1696a5696e741";
-export const DEST_TIME = "2019-07-31T16:00:00Z";
-// export const DEST_TIME = "2019-12-31T16:00:00Z";
-export const RECEIVER = "btc-lock";
+export const ORIGIN_TIME = "2019-07-31T16:00:00Z";
+// export const DEST_TIME = "2019-07-31T16:00:00Z";
+export const DEST_TIME = "2019-12-31T16:00:00Z";
+// export const RECEIVER = "ldw-format";
+export const RECEIVER = "ksma-airdrop";
 
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
@@ -78,7 +81,9 @@ class LockCActions {
               records: records.filter(
                 (record: Htlc.HtlcRecord) =>
                   record.conditions.hash_lock.preimage_hash[1] ===
-                  HASHED_PREIMAGE_FOR_LOCK_CYB
+                    HASHED_PREIMAGE_FOR_LOCK_CYB ||
+                  record.conditions.hash_lock.preimage_hash[1] ===
+                    HASHED_PREIMAGE
               )
             }))
         )
@@ -123,7 +128,7 @@ class LockCActions {
             destAccount.id,
             { asset_id: "1.3.0", amount: calcAmount(value.toString(), 5) },
             Htlc.HashAlgo.Sha256,
-            42,
+            45,
             HASHED_PREIMAGE_FOR_LOCK_CYB,
             moment(DEST_TIME).diff(moment(), "seconds")
           );

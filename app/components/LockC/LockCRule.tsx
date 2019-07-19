@@ -21,6 +21,24 @@ export const LockCRule = props => (
       unsafe
       content="lockC.lockup.rule_content_1"
     />
+    <table style={{ width: "100%" }}>
+      <tbody>
+        <tr>
+          <td style={{ color: Colors.$colorFlameLight, height: "24px" }}>
+            {counterpart.translate("lockC.lockup.rule_example_title")}:{" "}
+          </td>
+          <Translate content="lockC.lockup.rule_example_0" unsafe />
+        </tr>
+        <tr>
+          <td style={{ height: "24px" }} />
+          <Translate content="lockC.lockup.rule_example_1" unsafe />
+        </tr>
+        <tr>
+          <td style={{ height: "24px" }} />
+          <Translate content="lockC.lockup.rule_example_2" unsafe />
+        </tr>
+      </tbody>
+    </table>
     {/* <table style={{ width: "100%" }}>
       <thead>
         <tr>

@@ -74,9 +74,17 @@ export namespace Htlc {
       this.preimage = Buffer.from(preimage).toString("hex");
     }
   }
+  export class HtlcExtend {
+    constructor(
+      public htlc_id: string,
+      public update_issuer: string,
+      public seconds_to_add: number // public preimage: string
+    ) {}
+  }
 
   export type Ops =
     | HtlcCreateByRawPreimage
     | HtlcCreateByHashedPreimage
+    | HtlcExtend
     | HtlcRedeem;
 }

@@ -105,12 +105,11 @@ export const LockCCenter = (props: any) => {
               }}
               style={{ width: "50%", borderRadius: 0 }}
             >
-              {counterpart.translate("eto_apply.cCYBer.go_trade")} CYB
+              {counterpart.translate("eto_apply.center.go_trade")} CYB
             </Button>
           )}
         </div>
       </LockCPanel>
-      CYB
       <LockCContent
         style={{ margin: "12px" }}
         heading={counterpart.translate("lockC.flow_title")}

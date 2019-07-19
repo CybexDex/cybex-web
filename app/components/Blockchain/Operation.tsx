@@ -1326,7 +1326,7 @@ class Operation extends React.PureComponent<any, any> {
               {
                 type: "amount",
                 value: op[1].amount,
-                arg: "amount",
+                arg: "amount"
               },
               {
                 value: op[1].htlc_id,
@@ -1359,7 +1359,7 @@ class Operation extends React.PureComponent<any, any> {
         console.debug("[Operation]", "htlc_refund", op);
         column = (
           <TranslateWithLinks
-            string="operation.htlc_refund"
+            string="operation.htlc_extend"
             keys={[
               {
                 type: "account",

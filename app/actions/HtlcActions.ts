@@ -168,6 +168,39 @@ class HtlcActions {
         });
     };
   }
+  extendHtlc(
+    htlc_id: string,
+    update_issuer: string,
+    seconds_to_add: number,
+    account: any,
+    append?: any,
+    onResolve?
+  ) {
+    this.addLoading();
+    return dispatch => {
+      WalletUnlockActions.unlock()
+        .then(() => {
+          let htlcExtend = new Htlc.HtlcExtend(
+            htlc_id,
+            update_issuer,
+            seconds_to_add
+          );
+          debug("[HtlcExtends]", htlcExtend);
+          return this.signTx("htlc_extend", htlcExtend, account).then(res => {
+            if (onResolve) {
+              setTimeout(() => {
+                onResolve();
+              }, 0);
+            }
+            return res;
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.removeLoading();
+        });
+    };
+  }
 
   updateHtlcRecords(accountID: string) {
     return dispatch =>
