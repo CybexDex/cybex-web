@@ -34,18 +34,31 @@ let HtlcOverview = class extends React.Component<
     records?: Htlc.HtlcRecord[];
     isCurrentAccount?: boolean;
   },
-  { htlcRedeem: Htlc.HtlcRecord | null; htlcExtend: Htlc.HtlcRecord | null }
+  {
+    htlcRedeem: Htlc.HtlcRecord | null;
+    htlcExtend: Htlc.HtlcRecord | null;
+    extend: boolean;
+  }
 > {
   state = {
     htlcRedeem: null,
-    htlcExtend: null
+    htlcExtend: null,
+    extend: false
   };
   static propTypes = {
     account: ChainTypes.ChainAccount.isRequired
   };
-
+  timer;
   componentDidMount() {
     this.updateHtlc();
+    this.timer = setInterval(() => {
+      this.updateHtlc();
+    }, 3000);
+  }
+  componentWillUnmount() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
   }
   componentWillMount() {
     this.updateHtlc();
@@ -184,6 +197,7 @@ let HtlcOverview = class extends React.Component<
                     </td>
                     <td>
                       {this.props.isCurrentAccount &&
+                      !this.state.extend &&
                       htlc.transfer.from === this.props.account.get("id") &&
                       (htlc.conditions.hash_lock.preimage_hash[1] ===
                         HASHED_PREIMAGE_FOR_LOCK_CYB ||
@@ -196,10 +210,16 @@ let HtlcOverview = class extends React.Component<
                           size="smaller"
                           type="hollow-secondary"
                           onClick={() => {
+                            this.setState({ extend: true });
                             HtlcActions.extendHtlc(
                               htlc.id,
                               htlc.transfer.from,
-                              moment(DEST_TIME).diff(moment(ORIGIN_TIME), "s"),
+                              moment(DEST_TIME).diff(
+                                moment(
+                                  htlc.conditions.time_lock.expiration + "Z"
+                                ),
+                                "s"
+                              ),
                               this.props.account
                             );
                           }}

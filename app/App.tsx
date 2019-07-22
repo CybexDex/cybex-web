@@ -530,7 +530,7 @@ let App = class extends React.Component<any, any> {
 
               <Route path="/create-worker" component={CreateWorker} />
               {/* <Route path="/eto" component={EtoV2} /> */}
-              <Route path="/lockdrop" component={Edge} />
+              {/* <Route path="/lockdrop" component={Edge} /> */}
               <Route path="/lockc" component={LockC} />
 
               <Route path="/login" component={Login} />

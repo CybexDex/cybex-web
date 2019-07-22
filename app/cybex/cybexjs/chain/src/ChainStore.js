@@ -166,7 +166,7 @@ class ChainStore {
                 // let progress_delta = head_time - start;
                 // this.progress = progress_delta / (now-start);
 
-                if (delta < 60) {
+                if (delta < 600000) {
                   Apis.instance()
                     .db_api()
                     .exec("set_subscribe_callback", [
