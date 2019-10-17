@@ -2082,15 +2082,15 @@
     "lockup_period_6": "6 months",
     "lockup_period_12": "12 months",
     "lockup_amount": "Lockup Amount",
-    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000336202",
+    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000382362",
     "lockup_tip": "The minimum Lock-up Amount: 0.01 BTC",
     "fund_eth": "Deposit ETH",
     "record": "Record",
     "lock": "Lock Up",
     "flow_title": "Participation Process",
     "flow_content_1": "Deposit BTC on CYBEX Exchange, and then, click to participate in the event - Lock up BTC Token to Mine BTC during the event time.",
-    "flow_content_2": "Users can add lock up more BTC for multiple times before the expiration of the event on July 19 18:00(GMT+8:00).",
-    "flow_content_3": "CYBEX will record the lock-up amount after the end of lock-up period and deposit BTC to mine PCX on ChainX. The lock-up period is 30 days, and the redemption time is 3 days, which is users can unlock the assets to claim BTC on August 22, and they can receive PCX benefits from locking up BTC to mine PCX on August 23.",
+    "flow_content_2": "Users can add lock up more BTC for multiple times before the expiration of the event on August 27 23:59.",
+    "flow_content_3": "CYBEX will record the lock-up amount after the end of lock-up period and deposit BTC to mine PCX on ChainX. The lock-up period is 30 days, and the redemption time is 3 days, which is users can unlock the assets to claim BTC on September 28, and they can receive PCX benefits from locking up BTC to mine PCX on September 30.",
     "flow_content_4": "The upper limit of total investment is 1000 ETH.",
     "records": {
       "lockup_value": "Lockup Amount",
@@ -2103,14 +2103,14 @@
       "lockup_remains": "%(days)s days"
     },
     "intro": {
-      "event_start_time": "Event Start Time",
-      "event_start_time_content": "July 16, 2019 14:00 (GMT+8)",
-      "event_end_time": "Event End Time",
-      "event_end_time_content": "July 19, 2019 14:00 (GMT+8)",
-      "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/btc_lock_en_0716.jpeg?x-oss-process=style/compress",
+      "event_start_time": "Start Time",
+      "event_start_time_content": "August 26, 2019 12:00 (GMT+8)",
+      "event_end_time": "End Time",
+      "event_end_time_content": "August 27, 2019 23:59 (GMT+8)",
+      "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/btc_pcx_stage2_en_0825.jpg?x-oss-process=style/compress",
       "about_edge_title": "About ChainX (PCX):",
-      "about_edge_content": "PCX is the ecological (ECO) token of ChainX with a total amount of 21 million. ChainX is an asset inter-chain project based on Polkadot, and it is also an official cooperation project of Polkadot. It has already supported BTC inter-chain, and will gradually support ETH, EOS, BNB and other mainstream coins.",
-      "about_edge_content1": "Based on the event - [Deposit for Mining PCX] of ChainX, Cybex launches the event - Lock up BTC to Mine PCX. Users shall one-click lock up their BTC and wait for 30 days, to receive benefits from mining PCX. CYBEX will charge for 10%% benefits from mining PCX as processing fee.",
+      "about_edge_content": "ChainX is an asset inter-chain project based on Polkadot, and it is also an official cooperation project of Polkadot. It has already supported BTC inter-chain, and will gradually support ETH, EOS, BNB and other mainstream coins. PCX is the ecological (ECO) token of ChainX with a total amount of 21 million. ",
+      "about_edge_content1": "ChainX has pioneered voting mining mechanism, which means users manually vote for nodes from mining PCX. Converted PCX value and PCX vote are total mining weight of users. Based on users’ total mining weight, PCX mining benefits in each cycle are equally shared, and users can use received PCX to continue to vote for validators. Or, users can wait for the increase of all inter-chain assets to receive more mining weight.",
       "about_lockdrop_title": "Rules of the Event",
       "about_lockdrop_content": "Based on the event - [Deposit for Mining PCX] of ChainX, Cybex launches the event - Lock up BTC to Mine PCX. Users shall one-click lock up their BTC and wait for 30 days, to receive benefits from mining PCX. CYBEX will charge for 10%% benefits from mining PCX as processing fee."
     },
@@ -2150,11 +2150,10 @@
       "rule_content_4": "Time for the one-click subscription is from 18:00 on July 16, 2019 (GMT+8) to 18:00 on July 19 (GMT+8) to ensure the maximum benefit of all CYBEXers. During the event, CYBEX will count users who participate in EDG official Lockdrop to ensure all users can get the bonus coefficient in the specific period.",
       "rule_content_5": "3. The more locked-up ETH you have, more tokens you receive<br/>Edgeware will determine the total amount of EDG to be distributed based on the amount of locking-up ETH, and distribute tokens in proportion on the basis of the lockup period and participation time. So, in the case of the same lockup period and participation time, the more locked-up ETH you have, more tokens you receive.",
       "rule_content_6": "In summary, every user chooses the most suitable method to participate in the event based on the above three factors.",
-      "tip_content_1": "The minimum lock-up amount is 50 PCX in the event. Please ensure that your account has enough CYB since the locking up will charge for a certian amount of CYB as processing fee.",
-      "tip_content_2": "CYBEX will calculate the lock-up benefits on July 20 for the convenience, which means users can receive the benefit from locking up BTC tokens to mine PCX on August 23.",
-      "tip_content_3": "Voting for Mining PCX was carried out by Hashquark, a witness node of ChainX commissioned by CYBEX.",
-      "tip_content_4": "ChainX is carrying out the first cycle of trust, opening BTC deposit and launching locking up BTC tokens to mine PCX. After that, power distribution and benefits will udergo huge changes, and the profits will fluctuate. The final profits are subject to the official.",
-      "tip_content_5": "Cryptocurrency investment is subject to high market risk. Please make your investments cautiously."
+      "tip_content_1": "The minimum lock-up amount is 0.01 BTC in the event. Please ensure that your account has enough CYB since the locking up will charge for a certain amount of CYB as processing fee.",
+      "tip_content_2": "CYBEX will calculate the lock-up benefits on August 28 for the convenience, which means users can receive the benefit from locking up BTC to mine PCX on September 30.",
+      "tip_content_3": "ChainX is carrying out the first cycle of trust, opening BTC deposit and launching locking up BTC tokens to mine PCX. After that, power distribution and benefits will udergo huge changes, and the profits will fluctuate. The final profits are subject to the official.",
+      "tip_content_4": "Cryptocurrency investment is subject to high market risk. Please make your investments cautiously."
     }
   },
   "lockC": {

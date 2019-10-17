@@ -459,7 +459,7 @@ let AccountOverview = class extends React.Component<any, any> {
               emptyCell
             )}
           </td> */}
-          <td>{directMarketLink}</td>
+          {/* <td>{directMarketLink}</td> */}
           <td>
             {isBitAsset ? (
               <div
@@ -591,7 +591,7 @@ let AccountOverview = class extends React.Component<any, any> {
                     )}
                   </td>
                   <td>{emptyCell}</td>
-                  <td style={{ textAlign: "center" }}>{directMarketLink}</td>
+                  {/* <td style={{ textAlign: "center" }}>{directMarketLink}</td> */}
                   <td>
                     {isBitAsset ? (
                       <div
@@ -976,9 +976,9 @@ let AccountOverview = class extends React.Component<any, any> {
                       <th>
                         <Translate content="modal.withdraw.submit" />
                       </th> */}
-                      <th>
+                      {/* <th>
                         <Translate content="account.trade" />
-                      </th>
+                      </th> */}
                       <th>
                         <Translate content="exchange.borrow" />
                       </th>

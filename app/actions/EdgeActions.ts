@@ -21,8 +21,8 @@ const debug = debugGen("EdgeActions");
 export const DEPOSIT_MODAL_ID = "DEPOSIT_MODAL_ID";
 export const WITHDRAW_MODAL_ID = "WITHDRAW_MODAL_ID";
 export const HASHED_PREIMAGE_FOR_LOCK_BTC =
-  "5c38b43cd494818ae03e2d6c15bb250df9513b194ea71c8f29e596e399cfe355";
-export const DEST_TIME = "2019-08-22T16:00:00Z";
+  "0dafe1579c1d37054d466ac6f8b40378e3cb4978160d87c8a947cd3a9edbcf92";
+export const DEST_TIME = "2019-09-27T16:00:00Z";
 export const RECEIVER = "btc-lock";
 
 const headers = new Headers();
@@ -173,7 +173,7 @@ class EdgeActions {
             destAccount.id,
             { asset_id: "1.3.3", amount: calcAmount(value.toString(), 8) },
             Htlc.HashAlgo.Sha256,
-            42,
+            45,
             HASHED_PREIMAGE_FOR_LOCK_BTC,
             moment(DEST_TIME).diff(moment(), "seconds")
           );

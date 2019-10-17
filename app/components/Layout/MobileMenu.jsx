@@ -114,11 +114,11 @@ class MobileMenu extends React.Component {
                   <Translate content="nav.eto_apply" />
                 </a>
               </li> */}
-              <li>
+              {/* <li>
                 <a onClick={this._onNavigate.bind(this, "/lockdrop")}>
                   <Translate content="nav.lockdrop" />
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a onClick={this._onNavigate.bind(this, "/lockc")}>
                   <Translate content="nav.lockc" />
@@ -129,9 +129,9 @@ class MobileMenu extends React.Component {
                   ETO
                 </a>
               </li> */}
-              {linkedAccounts.size === 0 && !currentAccount ? null : (
+              {/* {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>{tradeLink}</li>
-              )}
+              )} */}
               {/* {linkedAccounts.size === 0 && !currentAccount ? null : (
                 <li>
                   <a onClick={this._onNavigate.bind(this, "/gateway")}>

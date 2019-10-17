@@ -34,7 +34,7 @@ import {
 } from "./components/Modal/ModalID";
 import LockC from "./components/LockC/LockC";
 let patch = false;
-(function(window) {
+(function (window) {
   if (window) {
     let agent = window.navigator.userAgent;
     // Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36"
@@ -106,13 +106,13 @@ const Header = Loadable({
     import(/* webpackChunkName: "header" */ "./components/Layout/Header"),
   loading: LoadingIndicator
 } as any);
-const Exchange = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"
-    ),
-  loading: LoadingIndicator
-} as any);
+// const Exchange = Loadable({
+//   loader: () =>
+//     import(
+//       /* webpackChunkName: "exchange" */ "./components/Exchange/ExchangeContainer"
+//     ),
+//   loading: LoadingIndicator
+// } as any);
 const Gateway = Loadable({
   loader: () =>
     import(/* webpackChunkName: "gateway" */ "./components/Gateway/Gateway"),
@@ -265,7 +265,7 @@ let App = class extends React.Component<any, any> {
 
     let syncFail =
       ChainStore.subError &&
-      ChainStore.subError.message ===
+        ChainStore.subError.message ===
         "ChainStore sync error, please check your system clock"
         ? true
         : false;
@@ -436,7 +436,7 @@ let App = class extends React.Component<any, any> {
     if (ChainStore.subscribed !== this.state.synced || ChainStore.subError) {
       let syncFail =
         ChainStore.subError &&
-        ChainStore.subError.message ===
+          ChainStore.subError.message ===
           "ChainStore sync error, please check your system clock"
           ? true
           : false;
@@ -507,7 +507,7 @@ let App = class extends React.Component<any, any> {
               <Route path="/account/:account_name" component={AccountPage} />
 
               {/* <Route path="/accounts" component={DashboardAccountsOnly} /> */}
-              <Route path="/market/:marketID" component={Exchange} />
+              {/* <Route path="/market/:marketID" component={Exchange} /> */}
               <Route path="/settings/:tab" component={Settings} />
               <Route path="/settings" component={Settings} />
 
@@ -529,8 +529,8 @@ let App = class extends React.Component<any, any> {
               <Route path="/existing-account" component={ExistingAccount} />
 
               <Route path="/create-worker" component={CreateWorker} />
-              {/* <Route path="/eto" component={EtoV2} /> */}
-              {/* <Route path="/lockdrop" component={Edge} /> */}
+              <Route path="/eto" component={EtoV2} />
+              <Route path="/lockdrop" component={Edge} />
               <Route path="/lockc" component={LockC} />
 
               <Route path="/login" component={Login} />

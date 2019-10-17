@@ -59,7 +59,7 @@ let EdgeLock = class extends React.Component<EdgeProps> {
           style={{ margin: "12px" }}
           heading={counterpart.translate("eto_apply.lock.tip_heading")}
           ol
-          contents={new Array(5)
+          contents={new Array(4)
             .fill(1)
             .map((_, i) =>
               counterpart.translate(`edge.lockup.tip_content_${i + 1}`)

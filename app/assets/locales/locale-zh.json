@@ -2196,14 +2196,14 @@
     "lockup_period_12": "12个月",
     "lockup_amount": "锁仓数量",
     "lockup_tip": "最小锁仓金额：0.01BTC",
-    "rule_url": "https://support.cybex.io/hc/zh-cn/articles/360000334281",
+    "rule_url": "https://support.cybex.io/hc/zh-cn/articles/360000382342",
     "fund_eth": "充值PCX",
     "record": "参与记录",
     "lock": "立即锁仓",
     "flow_title": "参与流程",
     "flow_content_1": "将BTC充值至Cybex赛贝交易所，在活动时间内，点击参与【BTC存币挖矿】活动",
-    "flow_content_2": "活动期间，用户可以多次进行BTC的锁仓,直到7月19日18:00活动结束",
-    "flow_content_3": "锁仓截止后Cybex将统一记录锁仓金额，并操作至Chainx进行充值挖矿。此次锁仓操作锁仓时间统一为30天，用户赎回日期为3天，8月22日将自动申领锁仓BTC至锁仓账户，8月23日即可获得BTC存币挖矿应得的PCX收益。",
+    "flow_content_2": "活动期间，用户可以多次进行BTC的锁仓,直到8月27日23:59活动结束",
+    "flow_content_3": "锁仓截止后Cybex将统一记录锁仓金额，并操作至Chainx进行充值挖矿。此次锁仓操作锁仓时间统一为30天，用户赎回日期为3天，9月28日将自动解锁BTC至锁仓账户，9月30日可以获得存币挖矿应得的PCX收益。",
     "records": {
       "lockup_value": "锁仓金额",
       "period_remain": "距离锁仓期结束",
@@ -2216,13 +2216,13 @@
     },
     "intro": {
       "event_start_time": "活动开始时间",
-      "event_start_time_content": "7月16日18:00（GMT+8）",
+      "event_start_time_content": "2019年8月26日 12:00 (GMT+8)",
       "event_end_time": "活动结束时间",
-      "event_end_time_content": "7月19日18:00（GMT+8）",
-      "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/btc_lock_zh_0716_1500.jpeg?x-oss-process=style/compress",
+      "event_end_time_content": "2019年8月27日 23:59 (GMT+8)",
+      "banner_bg_url": "https://cybex-assets.oss-cn-hangzhou.aliyuncs.com/polka/btc_pcx_stage2_zh_0825.jpg?x-oss-process=style/compress",
       "about_edge_title": "关于ChainX（PCX）",
       "about_edge_content": "ChainX是基于波卡（Polkadot）的资产跨链项目，是波卡官方的合作项目，目前已经支持BTC跨链，接下来会逐步支持ETH、EOS、BNB等主流币种；PCX是ChainX的生态代币，总发行量2100万。",
-      "about_edge_content1": "Cybex根据ChainX充值挖矿，推出了“BTC存币挖PCX”挖矿活动，用户只要一键锁仓，等待30天，即可拿到收益！锁到就是赚到！",
+      "about_edge_content1": "ChainX 首创了投票挖矿机制，投票挖矿指用户把挖矿所得的PCX，手动投票给某些节点，折合的PCX市值和手动的PCX投票，就是用户的总挖矿权重。根据所有用户挖矿的总权重平分每个周期的PCX挖矿收益，收到的PCX可继续参与选举投票，或等待所持有的跨链资产升值，来获得更大的挖矿权重。",
       "about_lockdrop_title": "活动规则",
       "about_lockdrop_content": "Cybex根据ChainX【充值挖矿】活动，推出了“锁仓30天，即可享受预计高达20%%”挖矿收益的活动，用户只要一键锁仓，等待30天，即可拿到挖矿收益！Cybex赛贝交易所最终会收取10%%的PCX挖矿收益作为手续费。"
     },
@@ -2263,10 +2263,9 @@
       "rule_content_5": "设置档位： 30PCX、200 PCX、500PCX",
       "rule_content_6": "综上，请每位用户综合考虑以上3个要素，选择最合适的参与策略。",
       "tip_content_1": "本次活动最低锁仓金额为0.01个BTC，请账户里留有足够的CYB作为手续费;",
-      "tip_content_2": "为了操作方便，Cybex赛贝交易锁锁仓收益的统一计算开始时间为7月20日，即用户可以在8月23日收到锁仓的挖矿收益;",
-      "tip_content_3": "此次充值挖矿是Cybex 委托 ChainX见证人节点之一的Hashquark进行;",
-      "tip_content_4": "由于ChainX 在进行第一届信托换届，开放BTC充值和锁仓挖矿后，全网算力分布及收益会发生比较大的变化，收益会有浮动，最终收益以官方为准;",
-      "tip_content_5": "数字货币投资存在风险，请您谨慎操作！"
+      "tip_content_2": "为了操作方便，Cybex赛贝交易锁锁仓收益的统一计算开始时间为8月28日，即用户可以在9月30日收到锁仓的挖矿收益;",
+      "tip_content_3": "由于ChainX 在进行第一届信托换届，开放BTC充值和锁仓挖矿后，全网算力分布及收益会发生比较大的变化，收益会有浮动，最终收益以官方为准;",
+      "tip_content_4": "数字货币投资存在风险，请您谨慎操作！"
     }
   },
   "lockC": {

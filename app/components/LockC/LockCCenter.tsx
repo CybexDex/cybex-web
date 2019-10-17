@@ -92,22 +92,22 @@ export const LockCCenter = (props: any) => {
             onClick={() => {
               props.history.push("/lockc/lock");
             }}
-            style={{ width: "50%", borderRadius: 0 }}
+            style={{ width: "100%", borderRadius: 0 }}
           >
             {counterpart.translate("eto_apply.center.go_lock")}
           </Button>
-          {true && (
-            <Button
-              type="secondary"
-              // loading={this.state.checking}
-              onClick={() => {
-                props.history.push("/market/CYB_JADE.USDT");
-              }}
-              style={{ width: "50%", borderRadius: 0 }}
-            >
-              {counterpart.translate("eto_apply.center.go_trade")} CYB
-            </Button>
-          )}
+          {/* {true && (
+            // <Button
+            //   type="secondary"
+            //   // loading={this.state.checking}
+            //   onClick={() => {
+            //     props.history.push("/market/CYB_JADE.USDT");
+            //   }}
+            //   style={{ width: "50%", borderRadius: 0 }}
+            // >
+            //   {counterpart.translate("eto_apply.center.go_trade")} CYB
+            // </Button>
+          )} */}
         </div>
       </LockCPanel>
       <LockCContent

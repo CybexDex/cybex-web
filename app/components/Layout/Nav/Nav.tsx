@@ -48,14 +48,14 @@ const NavLinks: Array<NavLink> = [
   //   name: "eto_apply",
   //   icon: "ETO"
   // },
-  // {
-  //   id: "lockdrop",
-  //   routeTo: "/lockdrop",
-  //   // routeTo: "/eto",
-  //   activeMatcher: /^\/lockdrop\/?/,
-  //   name: "lockdrop",
-  //   icon: "lockdrop"
-  // },
+  {
+    id: "lockdrop",
+    routeTo: "/lockdrop",
+    // routeTo: "/eto",
+    activeMatcher: /^\/lockdrop\/?/,
+    name: "lockdrop",
+    icon: "lockdrop"
+  },
   {
     id: "lockc",
     routeTo: "/lockc",
@@ -80,13 +80,13 @@ const NavLinks: Array<NavLink> = [
     icon: "wallet",
     displayOnlyWhen: "currentAccount"
   },
-  {
-    id: "exchange",
-    routeTo: lastMarket => `/market/${lastMarket}`,
-    activeMatcher: /^\/market/,
-    name: "exchange",
-    icon: "exchange"
-  },
+  // {
+  //   id: "exchange",
+  //   routeTo: lastMarket => `/market/${lastMarket}`,
+  //   activeMatcher: /^\/market/,
+  //   name: "exchange",
+  //   icon: "exchange"
+  // },
   // {
   //   id: "gateway",
   //   routeTo: "/gateway",
