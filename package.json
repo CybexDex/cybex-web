@@ -218,7 +218,7 @@
     "tcomb": "2.5.2",
     "utf-8-validate": "^4.0.2",
     "whatwg-fetch": "^2.0.1",
-    "ws": "^2.2.0",
+    "ws": "^7.1.2",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
