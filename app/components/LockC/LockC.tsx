@@ -196,10 +196,17 @@ export const LockCIntro = () => {
         >
           <LockCContent
             style={{ marginBottom: "12px", flex: "1" }}
-            heading={counterpart.translate("lockC.intro.about_lockC_title")}
+            heading={counterpart.translate("lockC.intro.about_lockC_title1")}
             contents={[
-              counterpart.translate("lockC.intro.about_lockC_content"),
-              counterpart.translate("lockC.intro.about_lockC_content1")
+              counterpart.translate("lockC.intro.about_lockC_content1"),
+            ]}
+          />
+          <LockCContent
+            style={{ marginBottom: "12px", flex: "1" }}
+            heading={counterpart.translate("lockC.intro.about_lockC_title2")}
+            contents={[
+              counterpart.translate("lockC.intro.about_lockC_title21"),
+              counterpart.translate("lockC.intro.about_lockC_content21"),
             ]}
           />
           {/* <LockCContent

@@ -21,9 +21,45 @@ export const LockCRule = props => (
       unsafe
       content="lockC.lockup.rule_content_1"
     />
-    <table style={{ width: "100%" }}>
+    <p style={{ paddingBottom: 10, marginBottom: "0" }}>
+      <span style={{ color: Colors.$colorFlame }}>*</span>
+      <small style={{ fontSize: "11px" }}>{counterpart.translate("lockC.lockup.rule_table_title")}</small>
+    </p>
+    <table style={{ width: "100%", marginLeft: 10, marginRight: 10 }}>
       <tbody>
         <tr>
+          <td style={{ fontSize: "1.1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>
+            {counterpart.translate("lockC.lockup.table_title1")}
+          </td>
+          <td style={{ fontSize: "1.1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>
+            {counterpart.translate("lockC.lockup.table_title2")}
+          </td>
+          <td style={{ fontSize: "1.1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>
+            {counterpart.translate("lockC.lockup.table_title3")}
+          </td>
+          <td style={{ fontSize: "1.1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>
+            {counterpart.translate("lockC.lockup.table_title4")}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>1-10</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>50%</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>35%</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>15%</td>
+        </tr>
+        <tr>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>11-50</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>80%</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>60%</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 5 }}>20%</td>
+        </tr>
+        <tr>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 10 }}>50+</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 10 }}>100%</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 10 }}>70%</td>
+          <td style={{ fontSize: "1rem", fontWeight: "bolod", paddingTop: 5, paddingBottom: 10 }}>30%</td>
+        </tr>
+        {/* <tr>
           <td style={{ color: Colors.$colorFlameLight, height: "24px" }}>
             {counterpart.translate("lockC.lockup.rule_example_title")}:{" "}
           </td>
@@ -36,9 +72,13 @@ export const LockCRule = props => (
         <tr>
           <td style={{ height: "24px" }} />
           <Translate content="lockC.lockup.rule_example_2" unsafe />
-        </tr>
+        </tr> */}
       </tbody>
     </table>
+    <p style={{ paddingBottom: 5, marginBottom: "0" }}>
+      <span style={{ color: Colors.$colorFlame }}>*</span>
+      <small style={{ fontSize: "11px" }}>{counterpart.translate("lockC.lockup.rule_table_last")}</small>
+    </p>
     {/* <table style={{ width: "100%" }}>
       <thead>
         <tr>

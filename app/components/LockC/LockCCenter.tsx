@@ -114,7 +114,7 @@ export const LockCCenter = (props: any) => {
         style={{ margin: "12px" }}
         heading={counterpart.translate("lockC.flow_title")}
         ol
-        contents={new Array(3)
+        contents={new Array(5)
           .fill(1)
           .map((_, i) => counterpart.translate(`lockC.flow_content_${i + 1}`))}
       />
