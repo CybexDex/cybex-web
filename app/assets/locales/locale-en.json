@@ -2160,7 +2160,7 @@
     "lockup_period": "Time for locking up your CYB: as of December 31, 2019",
     "lockup_amount": "Lockup Amount",
     "lockup_tip": "the minimum lockup amount is 50,000 CYB",
-    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000336261",
+    "rule_url": "https://support.cybex.io/hc/en-us/articles/360000627082",
     "lock": "Lock up",
     "flow_title": "Participation Process",
     "flow_content_1": "Lock up CYB with the lockup amount ≥50000",
