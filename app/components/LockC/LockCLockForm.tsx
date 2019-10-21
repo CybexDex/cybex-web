@@ -14,9 +14,9 @@ type LockCLockFormProps = {
 };
 
 const BtnPreset = [
-  { label: "10000 CYB", value: 10000 },
   { label: "50000 CYB", value: 50000 },
-  { label: "100000 CYB", value: 100000 }
+  { label: "100000 CYB", value: 100000 },
+  { label: "150000 CYB", value: 150000 }
 ];
 
 const LockCLockFormImpl = ({
