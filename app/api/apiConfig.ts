@@ -26,8 +26,10 @@ const WS_NODE_LIST =
         // new ApiNode("shanghai.51nebula.com/", "Shanghai"),
         // new ApiNode("beijing.51nebula.com/", "Beijing"),
         new ApiNode("hongkong.cybex.io/", "Hongkong"),
+        new ApiNode("hongkong01.cybex.io/", "Hongkong01"),
+        new ApiNode("hongkong-gce01.cybex.io/", "Hongkonggce"),
         // new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
-        new ApiNode("singapore-01.cybex.io/", "Singapore"),
+        // new ApiNode("singapore-01.cybex.io/", "Singapore"),
         // new ApiNode("europe01.cybex.io/", "Europe"),
         // new ApiNode("korea-01.cybex.io/", "Korea")
       ];
