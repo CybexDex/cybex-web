@@ -23,8 +23,8 @@ const WS_NODE_LIST =
     ? [new ApiNode("uatfn.51nebula.com/", "UAT")]
     : [
         // new ApiNode("shanghai.51nebula.com/", "shanghai"),
-        new ApiNode("shanghai.51nebula.com/", "Shanghai"),
-        new ApiNode("beijing.51nebula.com/", "Beijing"),
+        // new ApiNode("shanghai.51nebula.com/", "Shanghai"),
+        // new ApiNode("beijing.51nebula.com/", "Beijing"),
         new ApiNode("hongkong.cybex.io/", "Hongkong"),
         new ApiNode("tokyo-01.cybex.io/", "Tokyo"),
         new ApiNode("singapore-01.cybex.io/", "Singapore"),
