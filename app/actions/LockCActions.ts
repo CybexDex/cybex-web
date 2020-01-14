@@ -25,7 +25,7 @@ export const HASHED_PREIMAGE_FOR_LOCK_CYB =
   "b5fc0b94782e68a2982fb76f63a915ff0a899c2dbf032e2a2ff1696a5696e741";
 export const ORIGIN_TIME = "2019-07-31T16:00:00Z";
 // export const DEST_TIME = "2019-07-31T16:00:00Z";
-export const DEST_TIME = "2019-12-31T16:00:00Z";
+export const DEST_TIME = "2020-04-13T11:59:00Z";
 // export const RECEIVER = "ldw-format";
 export const RECEIVER = "ksma-airdrop";
 
