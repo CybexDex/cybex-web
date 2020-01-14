@@ -54,24 +54,24 @@ let LockCLock = class extends React.Component<LockCProps> {
             })
           }
         />
-        <LockCRule />
+        {/* <LockCRule /> */}
         <LockCContent
           style={{ margin: "12px" }}
           heading={counterpart.translate("lockC.lockup.commission_rule")}
           ol
-          contents={new Array(6)
+          contents={new Array(4)
             .fill(1)
             .map((_, i) =>
               counterpart.translate(`lockC.lockup.tip_content_${i + 1}`)
             )}
         />
-        <LockCContent
+        {/* <LockCContent
             style={{ marginBottom: "12px", flex: "1" }}
             heading={counterpart.translate("lockC.lockup.attention")}
             contents={[
               counterpart.translate("lockC.lockup.attention_info"),
             ]}
-          />
+          /> */}
         <LockCContentWrapper>
           <LockCExplain />
         </LockCContentWrapper>
