@@ -2157,26 +2157,26 @@
     }
   },
   "lockC": {
-    "lockup_period": "Deadline for locking up CYB: April 13, 2020 11:59",
+    "lockup_period": "Deadline for locking up CYB: July 13, 2020 11:59",
     "lockup_amount": "Lockup Amount",
     "lockup_tip": "the minimum lockup amount is 10,000 CYB",
-    "rule_url": "https://support.cybex.io/hc/en-us/articles/900000094083",
+    "rule_url": "https://support.cybex.io/hc/zh-cn/articles/360000647081",
     "lock": "Lock up",
     "flow_title": "Participation Process",
     "flow_content_1": "Please refer to detailed rules for each event respectively",
     "flow_content_2": "Lock up CYB according to the requirements of the event",
-    "flow_content_3": "WeChat Assistant: CybexServiceE",
+    "flow_content_3": "WeChat Assistant: CybexServiceB",
     "intro": {
       "event_start_time": "Event Start Time",
-      "event_start_time_content": "12:00, January 13, 2020 (GMT + 8)",
+      "event_start_time_content": "12:00, April 14, 2020 (GMT + 8)",
       "event_end_time": "Event End Time",
-      "event_end_time_content": "11:59, April 13, 2020 (GMT + 8)",
+      "event_end_time_content": "11:59, July 13, 2020 (GMT + 8)",
       "banner_bg_url": "https://cybex-duobao.oss-cn-hongkong.aliyuncs.com/cyebxevent/LockbannerBannerEn.png",
       "about_lockC_title1": "Exclusive Benefits",
       "about_lockC_content1": "To thank regular users for their support, and to give more benefits to investors, CYBEX now opens the channel to whitelist. Users can get the whitelist qualification via locking up CYB to enjoy the privilege to participate in specific welfare events in the Cybex ecology.",
       "about_lockC_title2": "Welfare Project",
       "about_lockC_title21": "1. Acquire the BBB exclusive referral right",
-      "about_lockC_content21": "2. Exclusively earn 20 percent of PCX voting bonus from CYBEX nodes"
+      "about_lockC_content21": "1. Exclusively earn 20 percent of PCX voting bonus from CYBEX nodes"
     },
     "lockup": {
       "rule_title": "Rules of [Referral-Rebates via Locking up CYB] Event:",

@@ -205,7 +205,7 @@ export const LockCIntro = () => {
             style={{ marginBottom: "12px", flex: "1" }}
             heading={counterpart.translate("lockC.intro.about_lockC_title2")}
             contents={[
-              counterpart.translate("lockC.intro.about_lockC_title21"),
+              // counterpart.translate("lockC.intro.about_lockC_title21"),
               counterpart.translate("lockC.intro.about_lockC_content21"),
             ]}
           />
